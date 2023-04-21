@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Domain;
+using Company.Videomatic.Drivers.YouTube.Options;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;

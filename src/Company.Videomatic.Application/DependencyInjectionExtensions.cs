@@ -1,5 +1,5 @@
-﻿using Company.Videomatic.Application;
-using Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Application.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

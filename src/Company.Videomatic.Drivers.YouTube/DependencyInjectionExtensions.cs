@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Drivers.YouTube;
+using Company.Videomatic.Drivers.YouTube.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

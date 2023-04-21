@@ -13,4 +13,15 @@
     <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Settings\Queries\" />
+    <Folder Include="Features\Settings\Commands\" />
+    <Folder Include="Features\Videos\Commands\DeleteVideo\" />
+    <Folder Include="Features\Videos\Commands\ImportVideo\" />
+    <Folder Include="Features\Settings\Commands\UpdateSettings\" />
+    <Folder Include="Features\Videos\Commands\UpdateVideo\" />
+    <Folder Include="Features\Videos\" />
+    <Folder Include="Features\Videos\Queries\GetVideos\" />
+  </ItemGroup>
+
 </Project>

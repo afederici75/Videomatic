@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Drivers.GoogleDrive;
+using Company.Videomatic.Drivers.GoogleDrive.Options;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;

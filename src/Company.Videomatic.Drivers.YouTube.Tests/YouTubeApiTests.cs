@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Drivers.YouTube.Options;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
