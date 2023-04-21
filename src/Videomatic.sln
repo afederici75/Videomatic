@@ -3,9 +3,81 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{71D366F8-EC64-4EDF-9D08-8213F4C77EE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Application", "Company.Videomatic.Application\Company.Videomatic.Application.csproj", "{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Domain", "Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{39957660-CF9D-407D-8317-9B713A394B3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2-5F63-469D-A6D4-873ECAD4F908}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Application.Tests", "Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_misc", "_misc", "{596AE698-D09B-4046-B4E3-1E71AB62280F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.GoogleDrive", "Company.Videomatic.Drivers.GoogleDrive\Company.Videomatic.Drivers.GoogleDrive.csproj", "{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.YouTube", "Company.Videomatic.Drivers.YouTube\Company.Videomatic.Drivers.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.YouTube.Tests", "Company.Videomatic.Drivers.YouTube.Tests\Company.Videomatic.Drivers.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Integration.Tests", "Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.GoogleDrive.Tests", "Company.Videomatic.Drivers.GoogleDrive.Tests\Company.Videomatic.Drivers.GoogleDrive.Tests.csproj", "{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
+		{39957660-CF9D-407D-8317-9B713A394B3F} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
+		{8ED54D7E-C2CC-4B49-9497-F3174699BF29} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
+		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{4D3C829C-2B96-4D13-BD40-C08194647EEA} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
+		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
+		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}

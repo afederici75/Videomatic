@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
+  </ItemGroup>
+
+</Project>

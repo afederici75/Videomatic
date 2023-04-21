@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <Authors>Alessandro Federici</Authors>        
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>    
+        <AssemblyVersion>0.0.3</AssemblyVersion>	
+    </PropertyGroup>
+</Project>
