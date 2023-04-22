@@ -2,10 +2,12 @@
 
 public class Video
 {
-    public required string Id { get; set; }
+    public int Id { get; set; }
+    public required string ProviderId { get; set; }
     public required string VideoUrl { get; set; }
-    public required string Title { get; set; }
+    public required string Title { get; set; }    
+    public required string Source { get; set; }
     public string? Description { get; set; }
-    public string? OriginalDescription { get; set; }
-    public string? ThumbnailUrl { get; set; }    
+    public IEnumerable<Thumbnail> Thumbnails { get; set; } = Array.Empty<Thumbnail>();
+    public Transcript? Transcript { get; set; }
 }

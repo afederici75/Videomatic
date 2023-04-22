@@ -26,19 +26,21 @@ public class MockYouTubeVideoProvider : IVideoProvider
             {
                 new Video
                 {
-                    Id = "1",
+                    Source = "Mock",
+                    ProviderId = "1",
                     Title = "Introduction to C#",
                     Description = "A beginner's guide to C# programming language.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
                 new Video
                 {
-                    Id = "2",
+                    Source = "Mock",
+                    ProviderId = "2",
                     Title = "Advanced Python",
                     Description = "Learn how to write advanced Python code.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 }
             }
         };
@@ -50,27 +52,30 @@ public class MockYouTubeVideoProvider : IVideoProvider
             {
                 new Video
                 {
-                    Id = "3",
+                    Source = "Mock",
+                    ProviderId = "3",
                     Title = "How to build a birdhouse",
                     Description = "A step-by-step guide to building a birdhouse.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
                 new Video
                 {
-                    Id = "4",
+                    Source = "Mock",
+                    ProviderId = "4",
                     Title = "Furniture Restoration",
                     Description = "Learn how to restore old furniture.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
                 new Video
                 {
-                    Id = "5",
+                    Source = "Mock",
+                    ProviderId = "5",
                     Title = "Gardening Tips",
                     Description = "Learn how to create and maintain a beautiful garden.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 }
             }
         };
@@ -82,19 +87,21 @@ public class MockYouTubeVideoProvider : IVideoProvider
             {
                 new Video
                 {
-                    Id = "6",
+                    Source = "Mock",
+                    ProviderId = "6",
                     Title = "Introduction to Zen Buddhism",
                     Description = "Learn the basics of Zen Buddhism.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
                 new Video
                 {
-                    Id = "7",
+                    Source = "Mock",
+                    ProviderId = "7",
                     Title = "Meditation Techniques",
                     Description = "Learn different meditation techniques.",
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                    ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                    //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
             }
         }
         };
@@ -106,19 +113,21 @@ public class MockYouTubeVideoProvider : IVideoProvider
         {
             new Video
             {
-                Id = "8",
+                Source = "Mock",
+                ProviderId = "8",
                 Title = "Introduction to Aristotle",
                 Description = "Learn about the philosophy of Aristotle.",
                 VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
             },
             new Video
             {
-                Id = "9",
+                Source = "Mock",
+                ProviderId = "9",
                 Title = "Philosophy of Science",
                 Description = "Explore the relationship between philosophy and science.",
                 VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
+                //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
             }
         }
         };

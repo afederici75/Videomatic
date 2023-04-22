@@ -21,7 +21,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                     {
                         new Video
                         {
-                            Id = "1",
+                            ProviderId = "1",
                             Title = "Trip to Thailand",
                             Description = "A travelogue of a trip to Thailand.",
                             VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -29,7 +29,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                         },
                         new Video
                         {
-                            Id = "2",
+                            ProviderId = "2",
                             Title = "Exploring Japan",
                             Description = "A tour of Japan's most beautiful sights.",
                             VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -49,7 +49,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                             {
                                 new Video
                                 {
-                                    Id = "3",
+                                    ProviderId = "3",
                                     Title = "Carnivale in Venice",
                                     Description = "Experience the beauty of Venice during Carnivale.",
                                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -57,7 +57,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                                 },
                                 new Video
                                 {
-                                    Id = "4",
+                                    ProviderId = "4",
                                     Title = "Tuscan Wine Festival",
                                     Description = "Join us as we taste the best wines of Tuscany.",
                                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -72,7 +72,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                             {
                                 new Video
                                 {
-                                    Id = "5",
+                                    ProviderId = "5",
                                     Title = "Burning Man Documentary",
                                     Description = "Go behind the scenes of the world's biggest art festival.",
                                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -97,7 +97,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                     {
                         new Video
                         {
-                            Id = "6",
+                            ProviderId = "6",
                             Title = "A Trip to Italy",
                             Description = "A romantic comedy about two friends who go to Italy.",
                             VideoUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
@@ -111,7 +111,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                     {
                         new Video
                         {
-                            Id = "7",
+                            ProviderId = "7",
                             Title = "Life on the Road",
                             Description = "Join us on our journey through America's national parks.",
                             VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
