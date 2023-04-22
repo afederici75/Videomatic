@@ -17,9 +17,8 @@
   <ItemGroup>
     <Folder Include="Features\Settings\Queries\" />
     <Folder Include="Features\Settings\Commands\" />
-    <Folder Include="Features\Videos\Commands\DeleteVideoLink\" />
     <Folder Include="Features\Settings\Commands\UpdateSettings\" />
-    <Folder Include="Features\Videos\Commands\UpdateVideoLink\" />
+    <Folder Include="Features\Videos\Commands\UpdateVideo\" />
     <Folder Include="Features\Videos\Queries\GetVideos\" />
   </ItemGroup>
 

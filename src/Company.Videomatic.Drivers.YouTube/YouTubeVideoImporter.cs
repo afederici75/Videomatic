@@ -17,7 +17,7 @@ public class YouTubeVideoImporter : IVideoImporter
     {
         _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
     }
-    public async Task<VideoLink> Import(Uri location)
+    public async Task<Video> Import(Uri location)
     {
         if (location == null)
         {
@@ -46,14 +46,13 @@ public class YouTubeVideoImporter : IVideoImporter
         var videoItem = videoResponse.Items[0];
         
         // Create and return the Video object
-        var video = new VideoLink
+        var video = new Video
         {
             ProviderId = videoId,
             VideoUrl = location.ToString(),
             Title = videoItem.Snippet.Title,
-            Source = "YouTube",
             Description = videoItem.Snippet.Description,
-            Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
+            //Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
             Transcript = ImportTranscript(videoId)
         };
 

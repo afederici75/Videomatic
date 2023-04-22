@@ -1,2 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Company.Videomatic.Domain.Video">
+    <Position X="8.5" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAgAEAABAAABAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Video.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Folder">
+    <Position X="2.5" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEQAQAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Folder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Thumbnail">
+    <Position X="14.5" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAEAAAAEAAAAAgAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Thumbnail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.VideoTranscript">
+    <Position X="9.25" Y="3.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>VideoTranscript.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.VideoTranscriptItem">
+    <Position X="11" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAACAAAEAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>VideoTranscriptItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Company.Videomatic.Domain.ThumbnailResolution">
+    <Position X="5.25" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAgAAIAAAAIAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>ThumbnailResolution.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

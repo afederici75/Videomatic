@@ -10,7 +10,7 @@ namespace Company.Videomatic.Application.Tests;
 
 internal class MockVideoImporter : IVideoImporter
 {
-    public Task<VideoLink> Import(Uri uri)
+    public Task<Video> Import(Uri uri)
     {
         var transcriptLines = new List<VideoTranscriptItem>();
         transcriptLines.Add(new VideoTranscriptItem
@@ -58,16 +58,16 @@ internal class MockVideoImporter : IVideoImporter
         };
 
 
-        var video = new VideoLink
+        var video = new Video
         {
             ProviderId = "dQw4w9WgXcQ",
             Title = "Just three sentences",
             VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            Source = "YouTube",
             Description = "Just 3 sencences and a link to Rick Astley's official music video for “Never Gonna Give You Up”",            
             Transcript = transcript,
-            Thumbnails = new [] { thumbnail1, thumbnail2}
+            //Thumbnails = new [] { thumbnail1, thumbnail2}
         };
+        video.Thumbnails.Add(thumbnail1);
 
         return Task.FromResult(video);
     }

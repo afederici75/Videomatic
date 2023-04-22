@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Company.Videomatic.Application.Abstractions;
 
-public interface IVideoLinkStorage
+public interface IVideoStorage
 {
-    Task<int> UpdateVideoLink(VideoLink link);
-    Task DeleteVideoLink(int id);
+    Task<int> UpdateVideo(Video link);
+    Task<bool> DeleteVideo(int id);
 }

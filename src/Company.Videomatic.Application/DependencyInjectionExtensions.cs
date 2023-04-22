@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Application.Implementations;
 using Company.Videomatic.Application.Options;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ public static class DependencyInjectionExtensions
         });
 
         // Services
+        services.AddScoped<IVideoStorage, InMemoryVideoStorage>();
+
         return services;
     }   
 }
