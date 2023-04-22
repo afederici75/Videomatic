@@ -3,14 +3,9 @@ using Company.Videomatic.Domain;
 using Company.Videomatic.Drivers.YouTube.Options;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
-//using Google.Apis.YouTube.v3.Data;
-//using Google.Apis.YouTube.v3.Data;
 using Microsoft.Extensions.Options;
-using System.Text;
 using System.Web;
-using Thumbnail = Company.Videomatic.Domain.Thumbnail;
-using Video = Company.Videomatic.Domain.Video;
+using YoutubeTranscriptApi;
 
 namespace Company.Videomatic.Drivers.YouTube;
 
@@ -22,14 +17,14 @@ public class YouTubeVideoImporter : IVideoImporter
     {
         _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
     }
-    public async Task<Video> Import(Uri location)
+    public async Task<VideoLink> Import(Uri location)
     {
         if (location == null)
         {
             throw new ArgumentNullException(nameof(location));
         }
 
-        // Extract the video ID from the YouTube URL
+        // Extract the video ID from the YouTube URL (e.g. 'dQw4w9WgXcQ' from https://www.youtube.com/watch?v=dQw4w9WgXcQ)
         var videoId = ExtractVideoId(location);
 
         // Call the YouTube API to get information about the video
@@ -49,21 +44,9 @@ public class YouTubeVideoImporter : IVideoImporter
         }
 
         var videoItem = videoResponse.Items[0];
-
-        // Retrieve the captions for the video
-        CaptionsResource.ListRequest captionsListRequest = youtubeService.Captions.List("snippet", videoItem.Id);
-        CaptionListResponse captionsListResponse = await captionsListRequest.ExecuteAsync();
-        Caption caption = captionsListResponse.Items?.FirstOrDefault();
-
         
-        // Convert the captions to our Transcript class
-        var transcript = new Transcript
-        {
-            //Lines = ParseTranscript(caption?. GetFormattedText())
-        };
-
         // Create and return the Video object
-        var video = new Video
+        var video = new VideoLink
         {
             ProviderId = videoId,
             VideoUrl = location.ToString(),
@@ -71,50 +54,34 @@ public class YouTubeVideoImporter : IVideoImporter
             Source = "YouTube",
             Description = videoItem.Snippet.Description,
             Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
-            Transcript = transcript
+            Transcript = ImportTranscript(videoId)
         };
 
         return video;
     }
 
-    IEnumerable<TranscriptLine> ParseTranscript(string formattedText)
+    private VideoTranscript ImportTranscript(string videoId)
     {
-        if (string.IsNullOrWhiteSpace(formattedText))
+        // Retrieve the captions for the video
+        using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
         {
-            return Array.Empty<TranscriptLine>();
+            var transcriptItems = youTubeTranscriptApi.GetTranscript(videoId);
+            
+            var newLines = transcriptItems.Select(ti => new VideoTranscriptItem
+            {                
+                Text = ti.Text,
+                Duration = TimeSpan.FromSeconds(ti.Duration),
+                StartsAt = TimeSpan.FromSeconds(ti.Start) // There can be 'mismatches': https://github.com/jdepoix/youtube-transcript-api/issues/21
+            });
+
+            var transcript = new VideoTranscript()
+            { 
+                Lines = newLines.ToArray()
+            };
+
+            return transcript;
         }
-
-        var lines = new List<TranscriptLine>();
-        var parts = formattedText.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        var timemark = TimeSpan.Zero;
-        var text = new StringBuilder();
-        foreach (var part in parts)
-        {
-            if (part.StartsWith("00:"))
-            {
-                if (text.Length > 0)
-                {
-                    lines.Add(new TranscriptLine { Text = text.ToString().Trim(), Timemark = timemark });
-                    text.Clear();
-                }
-
-                var parts2 = part.Split(new[] { ':', '.' }, StringSplitOptions.RemoveEmptyEntries);
-                timemark = new TimeSpan(0, 0, int.Parse(parts2[0]), int.Parse(parts2[1]), int.Parse(parts2[2]) * 1000 + int.Parse(parts2[3]));
-            }
-            else
-            {
-                text.AppendLine(part);
-            }
-        }
-
-        if (text.Length > 0)
-        {
-            lines.Add(new TranscriptLine { Text = text.ToString().Trim(), Timemark = timemark });
-        }
-
-        return lines;
-    }
-
+    }   
 
     IEnumerable<Thumbnail> ImportThumbnails(Google.Apis.YouTube.v3.Data.ThumbnailDetails thumbnails)
     {

@@ -22,9 +22,9 @@ public class MockYouTubeVideoProvider : IVideoProvider
         var developmentFolder = new Folder
         {
             Name = "Development",
-            Videos = new List<Video>
+            Videos = new List<VideoLink>
             {
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "1",
@@ -33,7 +33,7 @@ public class MockYouTubeVideoProvider : IVideoProvider
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                     //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "2",
@@ -48,9 +48,9 @@ public class MockYouTubeVideoProvider : IVideoProvider
         var diyFolder = new Folder
         {
             Name = "DIY",
-            Videos = new List<Video>
+            Videos = new List<VideoLink>
             {
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "3",
@@ -59,7 +59,7 @@ public class MockYouTubeVideoProvider : IVideoProvider
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                     //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "4",
@@ -68,7 +68,7 @@ public class MockYouTubeVideoProvider : IVideoProvider
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                     //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "5",
@@ -83,9 +83,9 @@ public class MockYouTubeVideoProvider : IVideoProvider
         var easternPhilosophyFolder = new Folder
         {
             Name = "Eastern Philosophy",
-            Videos = new List<Video>
+            Videos = new List<VideoLink>
             {
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "6",
@@ -94,7 +94,7 @@ public class MockYouTubeVideoProvider : IVideoProvider
                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                     //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                 },
-                new Video
+                new VideoLink
                 {
                     Source = "Mock",
                     ProviderId = "7",
@@ -109,9 +109,9 @@ public class MockYouTubeVideoProvider : IVideoProvider
         var westernPhilosophyFolder = new Folder
         {
             Name = "Western Philosophy",
-            Videos = new List<Video>
+            Videos = new List<VideoLink>
         {
-            new Video
+            new VideoLink
             {
                 Source = "Mock",
                 ProviderId = "8",
@@ -120,7 +120,7 @@ public class MockYouTubeVideoProvider : IVideoProvider
                 VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                 //ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
             },
-            new Video
+            new VideoLink
             {
                 Source = "Mock",
                 ProviderId = "9",

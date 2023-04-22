@@ -17,9 +17,9 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                 new Folder
                 {
                     Name = "Travel",
-                    Videos = new List<Video>
+                    Videos = new List<VideoLink>
                     {
-                        new Video
+                        new VideoLink
                         {
                             ProviderId = "1",
                             Title = "Trip to Thailand",
@@ -27,7 +27,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                             VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                             ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                         },
-                        new Video
+                        new VideoLink
                         {
                             ProviderId = "2",
                             Title = "Exploring Japan",
@@ -45,9 +45,9 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                         new Folder
                         {
                             Name = "Italy",
-                            Videos = new List<Video>
+                            Videos = new List<VideoLink>
                             {
-                                new Video
+                                new VideoLink
                                 {
                                     ProviderId = "3",
                                     Title = "Carnivale in Venice",
@@ -55,7 +55,7 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                                     VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                                     ThumbnailUrl = "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg"
                                 },
-                                new Video
+                                new VideoLink
                                 {
                                     ProviderId = "4",
                                     Title = "Tuscan Wine Festival",
@@ -68,9 +68,9 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                         new Folder
                         {
                             Name = "Burning Man",
-                            Videos = new List<Video>
+                            Videos = new List<VideoLink>
                             {
-                                new Video
+                                new VideoLink
                                 {
                                     ProviderId = "5",
                                     Title = "Burning Man Documentary",
@@ -93,9 +93,9 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                 new Folder
                 {
                     Name = "Trip to Italy",
-                    Videos = new List<Video>
+                    Videos = new List<VideoLink>
                     {
-                        new Video
+                        new VideoLink
                         {
                             ProviderId = "6",
                             Title = "A Trip to Italy",
@@ -107,9 +107,9 @@ public class MockGoogleDriveVideoProvider : IVideoProvider
                 new Folder
                 {
                     Name = "Van Life",
-                    Videos = new List<Video>
+                    Videos = new List<VideoLink>
                     {
-                        new Video
+                        new VideoLink
                         {
                             ProviderId = "7",
                             Title = "Life on the Road",

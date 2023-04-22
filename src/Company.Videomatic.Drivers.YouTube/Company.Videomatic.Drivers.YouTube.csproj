@@ -1,6 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="MockYouTubeVideoProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MockYouTubeVideoProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Apis.Auth" Version="1.60.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.60.0" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.2945" />

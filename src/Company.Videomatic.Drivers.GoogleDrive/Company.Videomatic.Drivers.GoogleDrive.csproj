@@ -1,6 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="MockGoogleDriveVideoProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MockGoogleDriveVideoProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
   </ItemGroup>
 

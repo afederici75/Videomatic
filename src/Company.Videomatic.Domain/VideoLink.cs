@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain;
 
-public class Video
+public class VideoLink
 {
     public int Id { get; set; }
     public required string ProviderId { get; set; }
@@ -9,5 +9,5 @@ public class Video
     public required string Source { get; set; }
     public string? Description { get; set; }
     public IEnumerable<Thumbnail> Thumbnails { get; set; } = Array.Empty<Thumbnail>();
-    public Transcript? Transcript { get; set; }
+    public VideoTranscript? Transcript { get; set; }
 }

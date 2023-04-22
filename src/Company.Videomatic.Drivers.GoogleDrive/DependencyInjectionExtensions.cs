@@ -14,7 +14,7 @@ public static class DependencyInjectionExtensions
         services.Configure<GoogleDriveOptions>(section);
 
         // Services
-        services.AddScoped<IVideoProvider, MockGoogleDriveVideoProvider>();
+        //services.AddScoped<IVideoProvider, MockGoogleDriveVideoProvider>();
         return services;
     }   
 }

@@ -4,6 +4,6 @@ public class Folder
 {
     public Folder? Parent { get; set; }
     public required string Name { get; set; }
-    public IEnumerable<Video> Videos { get; set; } = Array.Empty<Video>();
+    public IEnumerable<VideoLink> Videos { get; set; } = Array.Empty<VideoLink>();
     public IEnumerable<Folder> Children { get; set; } = Array.Empty<Folder>();
 }
