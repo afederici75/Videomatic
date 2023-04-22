@@ -55,6 +55,7 @@ public class YouTubeVideoImporter : IVideoImporter
         CaptionListResponse captionsListResponse = await captionsListRequest.ExecuteAsync();
         Caption caption = captionsListResponse.Items?.FirstOrDefault();
 
+        
         // Convert the captions to our Transcript class
         var transcript = new Transcript
         {
