@@ -13,7 +13,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
-        var section = configuration.GetRequiredSection("Application");
+        var section = configuration.GetSection("Application");
         services.Configure<ApplicationOptions>(section);
 
         services.AddMediatR(cfg => {

@@ -12,30 +12,40 @@ internal class MockVideoImporter : IVideoImporter
 {
     public Task<Video> Import(Uri uri)
     {
-        var transcriptLines = new List<VideoTranscriptItem>();
-        transcriptLines.Add(new VideoTranscriptItem
+        var video = new Video
+        {            
+            ProviderId = "dQw4w9WgXcQ",
+            Title = "Just three sentences",
+            VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            Description = "Just 3 sencences and a link to Rick Astley's official music video for “Never Gonna Give You Up”",
+            //Transcript = transcript,
+            //Thumbnails = new [] { thumbnail1, thumbnail2}
+        };
+
+        var transcriptLines = new List<TranscriptLine>();
+        transcriptLines.Add(new TranscriptLine
         {
             Duration = TimeSpan.FromSeconds(2),
             StartsAt = TimeSpan.FromSeconds(0),
             Text = "First sentence..."
         });
 
-        transcriptLines.Add(new VideoTranscriptItem
+        transcriptLines.Add(new TranscriptLine
         {
             Duration = TimeSpan.FromSeconds(2.5),
             StartsAt = TimeSpan.FromSeconds(2),
             Text = "Second sentence..."
         });
 
-        transcriptLines.Add(new VideoTranscriptItem
+        transcriptLines.Add(new TranscriptLine
         {
             Duration = TimeSpan.FromSeconds(1.8),
             StartsAt = TimeSpan.FromSeconds(5),
             Text = "Third and final sentence"
         });
 
-        var transcript = new VideoTranscript 
-        { 
+        var transcript = new Transcript 
+        {
             Lines = transcriptLines
         };
 
@@ -58,15 +68,6 @@ internal class MockVideoImporter : IVideoImporter
         };
 
 
-        var video = new Video
-        {
-            ProviderId = "dQw4w9WgXcQ",
-            Title = "Just three sentences",
-            VideoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            Description = "Just 3 sencences and a link to Rick Astley's official music video for “Never Gonna Give You Up”",            
-            Transcript = transcript,
-            //Thumbnails = new [] { thumbnail1, thumbnail2}
-        };
         video.Thumbnails.Add(thumbnail1);
 
         return Task.FromResult(video);

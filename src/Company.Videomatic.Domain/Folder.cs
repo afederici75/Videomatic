@@ -2,6 +2,7 @@
 
 public class Folder
 {
+    public int Id { get; set; }
     public Folder? Parent { get; set; }
     public required string Name { get; set; }
     public IEnumerable<Video> Videos { get; set; } = Array.Empty<Video>();

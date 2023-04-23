@@ -10,7 +10,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddGoogleDriveDrivers(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
-        var section = configuration.GetRequiredSection("GoogleDrive");
+        var section = configuration.GetSection("GoogleDrive");
         services.Configure<GoogleDriveOptions>(section);
 
         // Services

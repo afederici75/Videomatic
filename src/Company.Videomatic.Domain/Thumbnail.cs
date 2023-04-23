@@ -2,6 +2,10 @@
 
 public class Thumbnail
 { 
+    public int Id { get; set; }
+
+    public int VideoId { get; set; }
+
     public ThumbnailResolution Resolution { get; set; }
     public required string Url { get; set; }
     

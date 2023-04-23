@@ -27,5 +27,4 @@ public class VideoLinksTests
         var deleteResult = await storage.DeleteVideo(video.Id);
         deleteResult.Should().BeTrue();
     }
-
 }

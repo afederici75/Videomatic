@@ -52,37 +52,37 @@ public class YouTubeVideoImporter : IVideoImporter
             VideoUrl = location.ToString(),
             Title = videoItem.Snippet.Title,
             Description = videoItem.Snippet.Description,
-            //Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
+            Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
             Transcript = ImportTranscript(videoId)
         };
 
         return video;
     }
 
-    private VideoTranscript ImportTranscript(string videoId)
+    private Domain.Transcript ImportTranscript(string videoId)
     {
         // Retrieve the captions for the video
         using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
         {
             var transcriptItems = youTubeTranscriptApi.GetTranscript(videoId);
             
-            var newLines = transcriptItems.Select(ti => new VideoTranscriptItem
-            {                
-                Text = ti.Text,
-                Duration = TimeSpan.FromSeconds(ti.Duration),
-                StartsAt = TimeSpan.FromSeconds(ti.Start) // There can be 'mismatches': https://github.com/jdepoix/youtube-transcript-api/issues/21
-            });
+            var newLines = transcriptItems
+                .Select(ti => new TranscriptLine
+                {                
+                    Text = ti.Text,
+                    Duration = TimeSpan.FromSeconds(ti.Duration),
+                    StartsAt = TimeSpan.FromSeconds(ti.Start) // There can be 'mismatches': https://github.com/jdepoix/youtube-transcript-api/issues/21
+                })
+                .ToList();
 
-            var transcript = new VideoTranscript()
-            { 
-                Lines = newLines.ToArray()
+            return new Domain.Transcript()
+            {
+                Lines = newLines
             };
-
-            return transcript;
         }
     }   
 
-    IEnumerable<Thumbnail> ImportThumbnails(Google.Apis.YouTube.v3.Data.ThumbnailDetails thumbnails)
+    IList<Thumbnail> ImportThumbnails(Google.Apis.YouTube.v3.Data.ThumbnailDetails thumbnails)
     {
         // create a thumbnail for each resolution
         var thumbnailList = new List<Thumbnail>();

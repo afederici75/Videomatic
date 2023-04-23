@@ -11,16 +11,20 @@ public class ImportVideoCommand : IRequest<ImportVideoResponse>
     public class ImportVideoLinkHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
     {
         readonly IVideoImporter _importer;
+        readonly IVideoStorage _storage;
 
-        public ImportVideoLinkHandler(IVideoImporter importer)
+        public ImportVideoLinkHandler(IVideoImporter importer, IVideoStorage storage)
         {
             _importer = importer;
+            this._storage = storage;
         }
 
         public async Task<ImportVideoResponse> Handle(ImportVideoCommand request, CancellationToken cancellationToken)
         {
             var video = await _importer.Import(new Uri(request.VideoUrl));
-            return new ImportVideoResponse { VideoLinkId = 0 };
+            var videoId = await _storage.UpdateVideo(video);
+
+            return new ImportVideoResponse { VideoId = videoId };
         }
 
     }

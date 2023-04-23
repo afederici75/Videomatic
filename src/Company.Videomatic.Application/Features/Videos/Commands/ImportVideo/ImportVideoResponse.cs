@@ -2,5 +2,5 @@
 
 public class ImportVideoResponse
 { 
-    public int VideoLinkId { get; set; }
+    public int VideoId { get; set; }
 }
