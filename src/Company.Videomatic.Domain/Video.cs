@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
 
 namespace Company.Videomatic.Domain;
 
@@ -15,19 +14,20 @@ public class Video
     public IEnumerable<Thumbnail> Thumbnails
     {
         get { return _thumbnails.AsReadOnly(); }
-        private set { _thumbnails = value.ToList(); }
+        set { _thumbnails = value.ToList(); }
     }
                 
     public IEnumerable<Transcript> Transcripts
     {
         get { return _transcripts.AsReadOnly(); }
-        private set { _transcripts = value?.ToList() ?? new List<Transcript>(); }
+        set { _transcripts = value?.ToList() ?? new List<Transcript>(); }
     }
     
     private List<Transcript> _transcripts = new List<Transcript>();
     private List<Thumbnail> _thumbnails = new List<Thumbnail>();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    [JsonConstructor]
     public Video()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     { 

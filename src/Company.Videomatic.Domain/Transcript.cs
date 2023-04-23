@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Newtonsoft.Json;
+
+namespace Company.Videomatic.Domain;
 
 public class Transcript
 {
@@ -13,6 +15,7 @@ public class Transcript
 
 
 #pragma warning disable CS8618 
+    [JsonConstructor]
     public Transcript()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Tests;
 
@@ -44,15 +44,19 @@ public class DomainTests
     public void SerializesNicely()
     {
         var video = MockDataGenerator.CreateRickAstleyVideo(true, true);
-        var json = JsonSerializer.Serialize(video, new JsonSerializerOptions
+        
+        var settings = new JsonSerializerSettings
         {
-            WriteIndented = true,
-            ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+            Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
+        var json = JsonConvert.SerializeObject(video, settings);
 
-        });
         json.Should().Contain("Rick Astley - Never Gonna Give You Up"); 
         
-        var newVideo = JsonSerializer.Deserialize<Video>(json); 
+        var newVideo = JsonConvert.DeserializeObject<Video>(json, settings); 
+
         newVideo.Should().NotBeNull();
         
         newVideo!.ProviderId.Should().Be(video.ProviderId);

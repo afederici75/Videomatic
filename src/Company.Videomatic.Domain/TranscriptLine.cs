@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Newtonsoft.Json;
+
+namespace Company.Videomatic.Domain;
 
 public class TranscriptLine
 {
@@ -10,6 +12,7 @@ public class TranscriptLine
     public TimeSpan? StartsAt { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    [JsonConstructor]
     public TranscriptLine()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
