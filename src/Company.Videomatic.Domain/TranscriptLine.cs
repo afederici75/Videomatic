@@ -17,7 +17,7 @@ public class TranscriptLine
         // For entity framework
     }
 
-    public TranscriptLine(string text, TimeSpan? duration, TimeSpan? startsAt)
+    public TranscriptLine(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {
         Text = text ?? throw new ArgumentNullException(nameof(text));
         Duration = duration;

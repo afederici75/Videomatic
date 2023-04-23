@@ -9,10 +9,10 @@ public class Transcript
     public string? Language { get; set; }
 
     [JsonIgnore]
-    public IReadOnlyList<TranscriptLine> Lines => _lines.AsReadOnly();
+    public IEnumerable<TranscriptLine> Lines => _lines.AsReadOnly();
 
     [JsonProperty(PropertyName = nameof(Lines))]
-    private readonly List<TranscriptLine> _lines = new List<TranscriptLine>();
+    private List<TranscriptLine> _lines = new List<TranscriptLine>();
 
 
 #pragma warning disable CS8618 
@@ -26,6 +26,7 @@ public class Transcript
     public Transcript(string? language = null)
     {        
         Language = language;
+       //_lines = lines?.ToList() ?? new List<TranscriptLine>();
     }
 
     public Transcript AddLines(params TranscriptLine[] lines)

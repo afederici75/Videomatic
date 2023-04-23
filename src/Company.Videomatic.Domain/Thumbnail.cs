@@ -20,7 +20,7 @@ public class Thumbnail
     }
 
 
-    public Thumbnail(string url, ThumbnailResolution? resolution, int? height = null, int? width = null)
+    public Thumbnail(string url, ThumbnailResolution? resolution = null, int? height = null, int? width = null)
     {
         Url = url ?? throw new ArgumentNullException(nameof(url));
         Resolution = resolution;

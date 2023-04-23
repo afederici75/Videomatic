@@ -8,9 +8,9 @@ builder.Configuration.AddUserSecrets<WebApplication>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddApplication(builder.Configuration);
-builder.Services.AddGoogleDriveDrivers(builder.Configuration);
-builder.Services.AddYouTubeDrivers(builder.Configuration);
+//builder.Services.AddApplication(builder.Configuration);
+//builder.Services.AddGoogleDriveDrivers(builder.Configuration);
+//builder.Services.AddYouTubeDrivers(builder.Configuration);
 builder.Services.AddSqlServerDriver(builder.Configuration);
 
 var app = builder.Build();

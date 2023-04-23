@@ -1,0 +1,69 @@
+using Company.Videomatic.Domain.Tests;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using Xunit.DependencyInjection;
+
+namespace Company.Videomatic.Drivers.SqlServer.Tests;
+
+
+public class SqlServerFixture : IDisposable
+{
+    public SqlServerFixture(VideomaticDbContext context)
+    {
+        Context = context;
+        Context.Database.EnsureDeleted();
+        Context.Database.EnsureCreated();
+    }
+
+    public VideomaticDbContext Context { get; }
+
+    public void Dispose()
+    {
+        //Context.Database.EnsureDeleted();
+    }
+}
+
+public class SqlServerTests : IClassFixture<SqlServerFixture>
+{
+    public SqlServerTests(SqlServerFixture fixture)
+    {
+        Fixture = fixture;
+    }
+
+    public SqlServerFixture Fixture { get; }
+
+    [Theory]
+    [InlineData(null)]
+    public async Task CanCreateDbContext([FromServices] VideomaticDbContext db)
+    {
+        var cnt = await db.Videos.CountAsync();
+        cnt.Should().Be(0); 
+    }
+
+    [Theory]
+    [InlineData(null)]
+    public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
+    {
+        var video = MockDataGenerator.CreateRickAstleyVideo(true, true);
+        db.Add(video);
+        db.SaveChanges();
+
+        db.ChangeTracker.Clear();
+
+        var record = await db.Videos
+            .AsNoTracking()
+            .Include(x => x.Transcripts)
+            .ThenInclude(x => x.Lines)
+            .Include(x => x.Thumbnails)
+            .FirstAsync(v => v.Id == video.Id);
+
+        record.Should().NotBeNull();
+        record!.Id.Should().Be(video.Id);
+        record!.Title.Should().Be(video.Title);
+        record!.Description.Should().Be(video.Description);
+
+        record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
+        record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);        
+    }
+}

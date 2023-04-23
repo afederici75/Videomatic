@@ -2,8 +2,13 @@
 -Investigating into DDD class design.
 	1. https://ssw.com.au/rules/rules-to-better-clean-architecture/
 	2. https://www.thereformedprogrammer.net/creating-domain-driven-design-entity-classes-with-entity-framework-core/
-
-
+	3. https://stackoverflow.com/questions/20886049/ef-code-first-foreign-key-without-navigation-property
+		Very good explanation of how to design classes following DDD conventions. See init properties all over the place.
+		"I don't need navigation properties (although they're nice) because I am practicing DDD and I want Parent and Child 
+		to be two separate aggregate roots. I want them to be able to talk to each other via foreign key not through 
+		infrastructure-specific Entity Framework navigation properties.
+		All you have to do is to configure the relationship on one side using HasOne and WithMany without specifying the 
+		navigation properties (they're not there after all)."
 
 4/22
 

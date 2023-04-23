@@ -24,13 +24,13 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
 
 
         // Relationships
-        //builder.HasMany(x => x.Thumbnails)
-        //       .WithOne(x => x.Video)
-        //       .IsRequired(true);
-        //
-        //builder.HasMany(x => x.Transcripts)
-        //       .WithOne(x => x.Video)
-        //       .IsRequired(true);
+        builder.HasMany(x => x.Thumbnails)
+               .WithOne()
+               .IsRequired(true);
+        
+        builder.HasMany(x => x.Transcripts)
+               .WithOne()
+               .IsRequired(true);
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();
