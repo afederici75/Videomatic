@@ -12,10 +12,7 @@ public class Video
     public string? Description { get; set; }
 
     [JsonIgnore]
-    public IEnumerable<Thumbnail> Thumbnails
-    {
-        get { return _thumbnails.AsReadOnly(); }        
-    }
+    public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();     
 
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly(); 
@@ -56,13 +53,13 @@ public class Video
         //_transcripts = transcripts?.ToList() ?? new List<Transcript?>();
     }
 
-    public Video AddThumbnails(params Thumbnail[] thumbnails)
+    public override string ToString()
     {
-        foreach (var thumbnail in thumbnails)
-        {
-            thumbnail.SetVideo(this);
+        return $"[{ProviderId}, Thumbnails: {_thumbnails.Count}, Transcripts: {_transcripts.Count}] {Title}";
+    }
 
-        }
+    public Video AddThumbnails(params Thumbnail[] thumbnails)
+    {        
         _thumbnails.AddRange(thumbnails);
         
         return this;
@@ -70,10 +67,7 @@ public class Video
 
     public Video AddTranscripts(params Transcript[] transcripts)
     {
-        foreach (var transcript in transcripts)
-        { 
-            transcript.SetVideo(this);  
-        }
+       
         _transcripts.AddRange(transcripts);
 
         return this;

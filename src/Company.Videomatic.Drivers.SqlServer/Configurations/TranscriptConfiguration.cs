@@ -13,9 +13,9 @@ public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
                .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
         
         // Relationships
-        builder.HasMany(x => x.Lines)
-               .WithOne(x => x.Transcript)               
-               .IsRequired(true);
+        //builder.HasMany(x => x.Lines)
+        //       .WithOne(x => x.Transcript)               
+        //       .IsRequired(true);
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

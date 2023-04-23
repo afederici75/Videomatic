@@ -66,14 +66,13 @@ public class YouTubeVideoImporter : IVideoImporter
         {
             var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderId);
             
-            var transcript = new Domain.Transcript(video: video, language: "US");
+            var transcript = new Domain.Transcript(language: "US");
             
             var lines = transcriptItems
                 .Select(ti => new TranscriptLine(
-                    transcript: transcript,
+                    text: ti.Text,
                     startsAt: TimeSpan.FromSeconds(ti.Start),
-                    duration: TimeSpan.FromSeconds(ti.Duration),
-                    text: ti.Text))
+                    duration: TimeSpan.FromSeconds(ti.Duration)))
                 .ToArray();
 
             transcript.AddLines(lines);
@@ -89,7 +88,6 @@ public class YouTubeVideoImporter : IVideoImporter
         if (thumbnails.Default__ != null)
         {
             thumbnailList.Add(new Thumbnail(
-                video: video,
                 resolution: ThumbnailResolution.Default,
                 url: thumbnails.Default__.Url,
                 height: Convert.ToInt32(thumbnails.Default__.Height),
@@ -99,7 +97,6 @@ public class YouTubeVideoImporter : IVideoImporter
         if (thumbnails.High != null)
         {
             thumbnailList.Add(new Thumbnail(
-                video: video,
                 resolution: ThumbnailResolution.High,
                 url: thumbnails.High.Url,
                 height: Convert.ToInt32(thumbnails.High.Height),
@@ -109,7 +106,6 @@ public class YouTubeVideoImporter : IVideoImporter
         if (thumbnails.Medium != null)
         {
             thumbnailList.Add(new Thumbnail(
-                video: video,
                 resolution: ThumbnailResolution.Medium,
                 url: thumbnails.Medium.Url,
                 height: Convert.ToInt32(thumbnails.Medium.Height),
@@ -120,7 +116,6 @@ public class YouTubeVideoImporter : IVideoImporter
         if (thumbnails.Standard != null)
         {
             thumbnailList.Add(new Thumbnail(
-                video: video,                
                 resolution: ThumbnailResolution.Standard,
                 url: thumbnails.Standard.Url,
                 height: Convert.ToInt32(thumbnails.Standard.Height),
@@ -130,7 +125,6 @@ public class YouTubeVideoImporter : IVideoImporter
         if (thumbnails.Maxres != null)
         {
             thumbnailList.Add(new Thumbnail(
-                video: video,
                 resolution: ThumbnailResolution.MaxRes,
                 url: thumbnails.Maxres.Url,
                 height:  Convert.ToInt32(thumbnails.Maxres.Height),

@@ -5,7 +5,6 @@ namespace Company.Videomatic.Domain;
 public class Thumbnail
 {
     public int Id { get; init; }
-    public Video Video { get; private set; }    
     public string Url { get; init; }
 
     public ThumbnailResolution? Resolution { get; set; }
@@ -21,18 +20,12 @@ public class Thumbnail
     }
 
 
-    public Thumbnail(Video video, string url, ThumbnailResolution? resolution, int? height = null, int? width = null)
+    public Thumbnail(string url, ThumbnailResolution? resolution, int? height = null, int? width = null)
     {
-        Video = video ?? throw new ArgumentNullException(nameof(video));
         Url = url ?? throw new ArgumentNullException(nameof(url));
         Resolution = resolution;
         Height = height;
         Width = width;
-    }
-
-    public void SetVideo(Video video)
-    {
-        Video = video ?? throw new ArgumentNullException(nameof(video));
     }
 
     public override string ToString()

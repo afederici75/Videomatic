@@ -4,13 +4,14 @@ namespace Company.Videomatic.Domain;
 
 public class Transcript
 {
-    public int Id { get; private set; }
-    public Video Video { get; private set; }
+    public int Id { get; init; }
 
     public string? Language { get; set; }
 
+    [JsonIgnore]
     public IReadOnlyList<TranscriptLine> Lines => _lines.AsReadOnly();
-    
+
+    [JsonProperty(PropertyName = nameof(Lines))]
     private readonly List<TranscriptLine> _lines = new List<TranscriptLine>();
 
 
@@ -22,24 +23,13 @@ public class Transcript
         // For entity framework
     }
 
-    public Transcript(Video video, string? language = null)
+    public Transcript(string? language = null)
     {        
-        Video = video ?? throw new ArgumentNullException(nameof(video));
         Language = language;
     }
 
-    public void SetVideo(Video video)
-    {
-        Video = video ?? throw new ArgumentNullException(nameof(video));
-    }
-
     public Transcript AddLines(params TranscriptLine[] lines)
-    {
-        foreach (var line in lines)
-        {
-            line.SetTranscript(this);
-        }
-
+    {       
         _lines.AddRange(lines);
 
         return this;

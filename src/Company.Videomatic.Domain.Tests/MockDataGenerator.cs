@@ -20,14 +20,12 @@ public static class MockDataGenerator
         {
             newVideo.AddThumbnails(
                 new Thumbnail(
-                    video: newVideo,
                     url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
                     resolution: ThumbnailResolution.High,
                     height: 360,
                     width: 480),
 
                 new Thumbnail(
-                     video: newVideo,
                      url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
                      resolution: ThumbnailResolution.High,
                      height: 360,
@@ -36,30 +34,26 @@ public static class MockDataGenerator
 
         if (includeTranscript)
         {
-            var transcript = new Transcript(newVideo, "US");
+            var transcript = new Transcript("US");
             newVideo.AddTranscripts(transcript);
 
             transcript.AddLines(
                 new TranscriptLine(
-                    transcript, 
                     text: "[Music]", 
                     duration: TimeSpan.FromSeconds(0), 
                     startsAt: TimeSpan.FromSeconds(22)),
                 
                 new TranscriptLine(
-                    transcript, 
                     text: "you know the rules", 
                     duration: TimeSpan.FromSeconds(6), 
                     startsAt: TimeSpan.FromSeconds(22)),
 
                 new TranscriptLine(
-                    transcript, 
                     text: "[Music]", 
                     duration: TimeSpan.FromSeconds(12), 
                     startsAt: TimeSpan.FromSeconds(28)),
 
                 new TranscriptLine(
-                    transcript, 
                     text: "gotta make you understand", 
                     duration: TimeSpan.FromSeconds(4), 
                     startsAt: TimeSpan.FromSeconds(40))
