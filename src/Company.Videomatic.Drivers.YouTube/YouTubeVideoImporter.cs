@@ -92,9 +92,8 @@ public class YouTubeVideoImporter : IVideoImporter
             {
                 Resolution = ThumbnailResolution.Default,
                 Url = thumbnails.Default__.Url,
-                Height = thumbnails.Default__.Height,
-                Width = thumbnails.Default__.Width,
-                ETag = thumbnails.Default__.ETag
+                Height = Convert.ToInt32(thumbnails.Default__.Height),
+                Width = Convert.ToInt32(thumbnails.Default__.Width),
             });
         }
         
@@ -104,9 +103,8 @@ public class YouTubeVideoImporter : IVideoImporter
             {
                 Resolution = ThumbnailResolution.High,
                 Url = thumbnails.High.Url,
-                Height = thumbnails.High.Height,
-                Width = thumbnails.High.Width,
-                ETag = thumbnails.High.ETag
+                Height = Convert.ToInt32(thumbnails.High.Height),
+                Width = Convert.ToInt32(thumbnails.High.Width),
             });
         }
 
@@ -116,9 +114,8 @@ public class YouTubeVideoImporter : IVideoImporter
             {
                 Resolution = ThumbnailResolution.Medium,
                 Url = thumbnails.Medium.Url,
-                Height = thumbnails.Medium.Height,
-                Width = thumbnails.Medium.Width,
-                ETag = thumbnails.Medium.ETag
+                Height = Convert.ToInt32(thumbnails.Medium.Height),
+                Width = Convert.ToInt32(thumbnails.Medium.Width),
             });
         }
 
@@ -129,9 +126,8 @@ public class YouTubeVideoImporter : IVideoImporter
             {
                 Resolution = ThumbnailResolution.Standard,
                 Url = thumbnails.Standard.Url,
-                Height = thumbnails.Standard.Height,
-                Width = thumbnails.Standard.Width,
-                ETag = thumbnails.Standard.ETag
+                Height = Convert.ToInt32(thumbnails.Standard.Height),
+                Width = Convert.ToInt32(thumbnails.Standard.Width),
             });
         }
 
@@ -141,9 +137,8 @@ public class YouTubeVideoImporter : IVideoImporter
             {
                 Resolution = ThumbnailResolution.MaxRes,
                 Url = thumbnails.Maxres.Url,
-                Height = thumbnails.Maxres.Height,
-                Width = thumbnails.Maxres.Width,
-                ETag = thumbnails.Maxres.ETag
+                Height = Convert.ToInt32(thumbnails.Maxres.Height),
+                Width = Convert.ToInt32(thumbnails.Maxres.Width),
             });
         }
 

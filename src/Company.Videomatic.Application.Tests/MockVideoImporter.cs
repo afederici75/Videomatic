@@ -53,7 +53,6 @@ internal class MockVideoImporter : IVideoImporter
         {
             Resolution = ThumbnailResolution.Default,
             Url = "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-            ETag = "Wxsa",
             Height = 200,   
             Width = 200        
         };
@@ -62,7 +61,6 @@ internal class MockVideoImporter : IVideoImporter
         {
             Resolution = ThumbnailResolution.MaxRes,
             Url = "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-            ETag = "Wxsa",
             Height = 500,
             Width = 500
         };

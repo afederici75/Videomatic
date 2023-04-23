@@ -9,10 +9,8 @@ public class Thumbnail
     public ThumbnailResolution Resolution { get; set; }
     public required string Url { get; set; }
     
-    public string? ETag { get; set; }
+    public int? Height { get; set; }
 
-    public long? Height { get; set; }
-
-    public long? Width { get; set; }
+    public int? Width { get; set; }
 }
 
