@@ -1,4 +1,5 @@
 using FluentAssertions;
+using System.Text.Json;
 
 namespace Company.Videomatic.Domain.Tests;
 
@@ -7,35 +8,61 @@ public class DomainTests
     [Fact]
     public void MockDataGeneratorCreatesRickAstleyVideoWithoutDetails()
     {
-        var newVideo = MockDataGenerator.CreateRickAstleyVideo(false, false);
-        newVideo.Transcripts.Count.Should().Be(0);
-        newVideo.Thumbnails.Count.Should().Be(0);
+        var video = MockDataGenerator.CreateRickAstleyVideo(false, false);
+        video.Transcripts.Count().Should().Be(0);
+        video.Thumbnails.Count().Should().Be(0);
 
-        newVideo.ProviderId.Should().Be("YOUTUBE");
-        newVideo.VideoUrl.Should().Contain("youtube.com");
-        newVideo.Title.Should().Contain("Rick");
-        newVideo.Description.Should().Contain("2009");
+        video.ProviderId.Should().Be("YOUTUBE");
+        video.VideoUrl.Should().Contain("youtube.com");
+        video.Title.Should().Contain("Rick");
+        video.Description.Should().Contain("2009");
     }
 
     [Fact]
     public void CanUpdateVideosProperties()
     {
-        var newVideo = MockDataGenerator.CreateRickAstleyVideo(false, false);
+        var video = MockDataGenerator.CreateRickAstleyVideo(false, false);
         // Test that the video title and description are updated
         
         const string Updated = "(Updated)";
 
-        newVideo.Title += Updated;
-        newVideo.Description += Updated;
-        newVideo.Title.Should().EndWith(Updated);
-        newVideo.Description.Should().EndWith(Updated);
+        video.Title += Updated;
+        video.Description += Updated;
+        video.Title.Should().EndWith(Updated);
+        video.Description.Should().EndWith(Updated);
     }
 
     [Fact]
     public void MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
     {
         var newVideo = MockDataGenerator.CreateRickAstleyVideo(true, true);
-        newVideo.Thumbnails.Count.Should().Be(2);
-        newVideo.Transcripts.Count.Should().Be(1);
+        newVideo.Thumbnails.Count().Should().Be(2);
+        newVideo.Transcripts.Count().Should().Be(1);
+    }
+
+    [Fact]
+    public void SerializesNicely()
+    {
+        var video = MockDataGenerator.CreateRickAstleyVideo(true, true);
+        var json = JsonSerializer.Serialize(video, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
+
+        });
+        json.Should().Contain("Rick Astley - Never Gonna Give You Up"); 
+        
+        var newVideo = JsonSerializer.Deserialize<Video>(json); 
+        newVideo.Should().NotBeNull();
+        
+        newVideo!.ProviderId.Should().Be(video.ProviderId);
+        newVideo!.VideoUrl.Should().Be(video.VideoUrl);
+        newVideo!.Title.Should().Be(video.Title);   
+        newVideo!.Description.Should().Be(video.Description);
+
+        newVideo!.Thumbnails.Count().Should().Be(video.Thumbnails.Count());
+        newVideo!.Transcripts.Count().Should().Be(video.Transcripts.Count());
+        
+        
     }
 }

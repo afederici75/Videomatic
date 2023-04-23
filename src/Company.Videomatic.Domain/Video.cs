@@ -1,33 +1,59 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+namespace Company.Videomatic.Domain;
 
 public class Video 
 {
-    public int Id { get; private set; }
-    public string ProviderId { get; private set; }
-    public string VideoUrl { get; private set; }
+    public int Id { get; init; }
+    public string ProviderId { get; init; }
+    public string VideoUrl { get; init; }
 
     public string? Title { get; set; }
     public string? Description { get; set; }
 
-    public IReadOnlyList<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();
-    public IReadOnlyList<Transcript?> Transcripts => _transcripts.AsReadOnly();
-
-    private readonly List<Transcript?> _transcripts = new List<Transcript?>();
-    private readonly List<Thumbnail> _thumbnails = new List<Thumbnail>();
+    public IEnumerable<Thumbnail> Thumbnails
+    {
+        get { return _thumbnails.AsReadOnly(); }
+        private set { _thumbnails = value.ToList(); }
+    }
+                
+    public IEnumerable<Transcript> Transcripts
+    {
+        get { return _transcripts.AsReadOnly(); }
+        private set { _transcripts = value?.ToList() ?? new List<Transcript>(); }
+    }
+    
+    private List<Transcript> _transcripts = new List<Transcript>();
+    private List<Thumbnail> _thumbnails = new List<Thumbnail>();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Video()
+    public Video()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     { 
         // For entity framework
     }
 
-    public Video(string providerId, string videoUrl, string? title = null, string? description = null)
+    public Video(string providerId, string videoUrl, string? title = null, string? description = null,
+        IEnumerable<Thumbnail>? thumbnails = null, IEnumerable<Transcript>? transcripts = null)
     {
+        if (string.IsNullOrWhiteSpace(providerId))
+        {
+            throw new ArgumentException($"'{nameof(providerId)}' cannot be null or whitespace.", nameof(providerId));
+        }
+
+        if (string.IsNullOrWhiteSpace(videoUrl))
+        {
+            throw new ArgumentException($"'{nameof(videoUrl)}' cannot be null or whitespace.", nameof(videoUrl));
+        }
+
         ProviderId = providerId;
         VideoUrl = videoUrl;
         Title = title;
         Description = description;
+
+        //_thumbnails = thumbnails?.ToList() ?? new List<Thumbnail?> ();
+        //_transcripts = transcripts?.ToList() ?? new List<Transcript?>();
     }
 
     public Video AddThumbnails(params Thumbnail[] thumbnails)
@@ -50,6 +76,18 @@ public class Video
         }
         _transcripts.AddRange(transcripts);
 
+        return this;
+    }
+
+    public Video ClearTranscripts()
+    { 
+        _transcripts.Clear();
+        return this;
+    }
+
+    public Video ClearThumbnails()
+    {
+        _thumbnails.Clear();
         return this;
     }
 }

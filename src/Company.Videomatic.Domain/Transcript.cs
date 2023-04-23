@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Company.Videomatic.Domain;
+﻿namespace Company.Videomatic.Domain;
 
 public class Transcript
 {
@@ -14,8 +12,8 @@ public class Transcript
     private readonly List<TranscriptLine> _lines = new List<TranscriptLine>();
 
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Transcript()
+#pragma warning disable CS8618 
+    public Transcript()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         // For entity framework
@@ -41,6 +39,12 @@ public class Transcript
 
         _lines.AddRange(lines);
 
+        return this;
+    }
+
+    public Transcript ClearLines()
+    {
+        _lines.Clear();
         return this;
     }
 

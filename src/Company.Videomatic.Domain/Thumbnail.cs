@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Newtonsoft.Json;
+
+namespace Company.Videomatic.Domain;
 
 public class Thumbnail
 {
@@ -11,7 +13,8 @@ public class Thumbnail
     public int? Width { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Thumbnail()
+    [JsonConstructor]
+    public Thumbnail()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         // For entity framework
