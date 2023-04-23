@@ -6,32 +6,14 @@ using Xunit.DependencyInjection;
 
 namespace Company.Videomatic.Drivers.SqlServer.Tests;
 
-
-public class SqlServerFixture : IDisposable
+public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
 {
-    public SqlServerFixture(VideomaticDbContext context)
+    public SqlServerTests(VideomaticDbContextFixture fixture)
     {
-        Context = context;
-        Context.Database.EnsureDeleted();
-        Context.Database.EnsureCreated();
+        Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
     }
 
-    public VideomaticDbContext Context { get; }
-
-    public void Dispose()
-    {
-        //Context.Database.EnsureDeleted();
-    }
-}
-
-public class SqlServerTests : IClassFixture<SqlServerFixture>
-{
-    public SqlServerTests(SqlServerFixture fixture)
-    {
-        Fixture = fixture;
-    }
-
-    public SqlServerFixture Fixture { get; }
+    public VideomaticDbContextFixture Fixture { get; }
 
     [Theory]
     [InlineData(null)]

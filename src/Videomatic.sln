@@ -15,15 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.GoogleDrive", "Company.Videomatic.Drivers.GoogleDrive\Company.Videomatic.Drivers.GoogleDrive.csproj", "{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.YouTube", "Company.Videomatic.Drivers.YouTube\Company.Videomatic.Drivers.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.YouTube.Tests", "Company.Videomatic.Drivers.YouTube.Tests\Company.Videomatic.Drivers.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integration.Tests", "Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.GoogleDrive.Tests", "Company.Videomatic.Drivers.GoogleDrive.Tests\Company.Videomatic.Drivers.GoogleDrive.Tests.csproj", "{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.SqlServer", "Company.Videomatic.Drivers.SqlServer\Company.Videomatic.Drivers.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
 EndProject
@@ -38,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_misc", "_misc", "{A6487429
 		Notes.txt = Notes.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Domain.Tests", "Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain.Tests", "Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +54,6 @@ Global
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -74,10 +66,6 @@ Global
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -102,11 +90,9 @@ Global
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{39957660-CF9D-407D-8317-9B713A394B3F} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
-		{D3CE0BF5-174F-4D96-BD64-284C1DB831E8} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
-		{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{0920B386-81EA-4731-A28F-D99416377589} = {C354FC42-1916-406F-B2AC-7604C423A028}

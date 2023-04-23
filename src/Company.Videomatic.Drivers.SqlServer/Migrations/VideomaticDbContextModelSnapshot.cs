@@ -142,8 +142,8 @@ namespace Company.Videomatic.Drivers.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR IdSequence");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("FolderId")
                         .HasColumnType("int");
@@ -154,8 +154,8 @@ namespace Company.Videomatic.Drivers.SqlServer.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("VideoUrl")
                         .IsRequired()
@@ -163,8 +163,6 @@ namespace Company.Videomatic.Drivers.SqlServer.Migrations
                         .HasColumnType("nvarchar(1024)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Description");
 
                     b.HasIndex("FolderId");
 

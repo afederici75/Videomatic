@@ -5,8 +5,6 @@ namespace Company.Videomatic.Drivers.SqlServer;
 
 public class VideomaticDbContext : DbContext
 {
-
-
     public VideomaticDbContext(DbContextOptions<VideomaticDbContext> options) 
         : base(options)
     {

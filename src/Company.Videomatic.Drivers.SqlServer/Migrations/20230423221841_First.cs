@@ -39,8 +39,8 @@ namespace Company.Videomatic.Drivers.SqlServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
                     ProviderId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     VideoUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
                     FolderId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -159,11 +159,6 @@ namespace Company.Videomatic.Drivers.SqlServer.Migrations
                 name: "IX_Transcripts_VideoId",
                 table: "Transcripts",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_Description",
-                table: "Videos",
-                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_FolderId",

@@ -33,10 +33,9 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
                .IsRequired(true);
 
         // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
         builder.HasIndex(x => x.ProviderId);
         builder.HasIndex(x => x.VideoUrl);
         builder.HasIndex(x => x.Title);
-        builder.HasIndex(x => x.Description);        
+        //builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
     }
 }
