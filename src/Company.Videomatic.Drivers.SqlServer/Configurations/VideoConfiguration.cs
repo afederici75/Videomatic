@@ -25,12 +25,11 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
 
         // Relationships
         builder.HasMany(x => x.Thumbnails)
-               .WithOne()
-               .HasForeignKey(x => x.VideoId)
+               .WithOne(x => x.Video)
                .IsRequired(true);
 
-        builder.HasOne(x => x.Transcript)
-               .WithOne()
+        builder.HasMany(x => x.Transcripts)
+               .WithOne(x => x.Video)
                .IsRequired(true);
 
         // Indices

@@ -16,8 +16,6 @@ public class ThumbnailConfiguration : IEntityTypeConfiguration<Thumbnail>
                .HasMaxLength(DbConstants.FieldLengths.Url);               
 
         // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
-        builder.HasIndex(x => x.VideoId);
         builder.HasIndex(x => x.Resolution);
         builder.HasIndex(x => x.Url);
         builder.HasIndex(x => x.Height);

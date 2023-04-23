@@ -25,13 +25,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.GoogleDrive.Tests", "Company.Videomatic.Drivers.GoogleDrive.Tests\Company.Videomatic.Drivers.GoogleDrive.Tests.csproj", "{0B74F4FE-7397-4C82-8A4B-39BCAEA14FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.SqlServer", "Company.Videomatic.Drivers.SqlServer\Company.Videomatic.Drivers.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.SqlServer", "Company.Videomatic.Drivers.SqlServer\Company.Videomatic.Drivers.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Drivers.SqlServer.Tests", "Company.Videomatic.Drivers.SqlServer.Tests\Company.Videomatic.Drivers.SqlServer.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.SqlServer.Tests", "Company.Videomatic.Drivers.SqlServer.Tests\Company.Videomatic.Drivers.SqlServer.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoMaticBlazorApp", "VideoMaticBlazorApp\VideoMaticBlazorApp.csproj", "{0920B386-81EA-4731-A28F-D99416377589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoMaticBlazorApp", "VideoMaticBlazorApp\VideoMaticBlazorApp.csproj", "{0920B386-81EA-4731-A28F-D99416377589}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_misc", "_misc", "{A6487429-7E34-492B-A45E-611C8B7DC19B}"
+	ProjectSection(SolutionItems) = preProject
+		Notes.txt = Notes.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Domain.Tests", "Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +90,10 @@ Global
 		{0920B386-81EA-4731-A28F-D99416377589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0920B386-81EA-4731-A28F-D99416377589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0920B386-81EA-4731-A28F-D99416377589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +110,7 @@ Global
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{0920B386-81EA-4731-A28F-D99416377589} = {C354FC42-1916-406F-B2AC-7604C423A028}
+		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}

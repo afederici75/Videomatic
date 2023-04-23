@@ -14,8 +14,7 @@ public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
         
         // Relationships
         builder.HasMany(x => x.Lines)
-               .WithOne()
-               .HasForeignKey(x => x.TranscriptId)
+               .WithOne(x => x.Transcript)               
                .IsRequired(true);
 
         // Indices

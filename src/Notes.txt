@@ -1,4 +1,13 @@
+4/23
+-Investigating into DDD class design.
+	1. https://ssw.com.au/rules/rules-to-better-clean-architecture/
+	2. https://www.thereformedprogrammer.net/creating-domain-driven-design-entity-classes-with-entity-framework-core/
 
+
+
+4/22
+
+The layout for ChatGPT
 |---------------------------------------------------------|
 | Videomatic | Search Box                | Icon1 | Icon 2 |
 |---------------------------------------------------------|

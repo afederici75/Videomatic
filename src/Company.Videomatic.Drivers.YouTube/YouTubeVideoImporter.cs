@@ -44,105 +44,100 @@ public class YouTubeVideoImporter : IVideoImporter
         }
 
         var videoItem = videoResponse.Items[0];
-        
+
         // Create and return the Video object
-        var video = new Video
-        {
-            ProviderId = videoId,
-            VideoUrl = location.ToString(),
-            Title = videoItem.Snippet.Title,
-            Description = videoItem.Snippet.Description,
-            Thumbnails = ImportThumbnails(videoItem.Snippet.Thumbnails),
-            Transcript = ImportTranscript(videoId)
-        };
+        var video = new Video(
+            providerId: videoId,
+            videoUrl: location.ToString(),
+            title: videoItem.Snippet.Title,
+            description: videoItem.Snippet.Description);
+        
+        video
+            .AddThumbnails(ImportThumbnails(video, videoItem.Snippet.Thumbnails))
+            .AddTranscripts(ImportTranscript(video));
 
         return video;
     }
 
-    private Domain.Transcript ImportTranscript(string videoId)
+    private Domain.Transcript ImportTranscript(Video video)
     {
         // Retrieve the captions for the video
         using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
         {
-            var transcriptItems = youTubeTranscriptApi.GetTranscript(videoId);
+            var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderId);
             
-            var newLines = transcriptItems
-                .Select(ti => new TranscriptLine
-                {                
-                    Text = ti.Text,
-                    Duration = TimeSpan.FromSeconds(ti.Duration),
-                    StartsAt = TimeSpan.FromSeconds(ti.Start) // There can be 'mismatches': https://github.com/jdepoix/youtube-transcript-api/issues/21
-                })
-                .ToList();
+            var transcript = new Domain.Transcript(video: video, language: "US");
+            
+            var lines = transcriptItems
+                .Select(ti => new TranscriptLine(
+                    transcript: transcript,
+                    startsAt: TimeSpan.FromSeconds(ti.Start),
+                    duration: TimeSpan.FromSeconds(ti.Duration),
+                    text: ti.Text))
+                .ToArray();
 
-            return new Domain.Transcript()
-            {
-                Lines = newLines
-            };
+            transcript.AddLines(lines);
+
+            return transcript;
         }
     }   
 
-    IList<Thumbnail> ImportThumbnails(Google.Apis.YouTube.v3.Data.ThumbnailDetails thumbnails)
+    Thumbnail[] ImportThumbnails(Video video, Google.Apis.YouTube.v3.Data.ThumbnailDetails thumbnails)
     {
         // create a thumbnail for each resolution
         var thumbnailList = new List<Thumbnail>();
         if (thumbnails.Default__ != null)
         {
-            thumbnailList.Add(new Thumbnail
-            {
-                Resolution = ThumbnailResolution.Default,
-                Url = thumbnails.Default__.Url,
-                Height = Convert.ToInt32(thumbnails.Default__.Height),
-                Width = Convert.ToInt32(thumbnails.Default__.Width),
-            });
+            thumbnailList.Add(new Thumbnail(
+                video: video,
+                resolution: ThumbnailResolution.Default,
+                url: thumbnails.Default__.Url,
+                height: Convert.ToInt32(thumbnails.Default__.Height),
+                width: Convert.ToInt32(thumbnails.Default__.Width)));
         }
         
         if (thumbnails.High != null)
         {
-            thumbnailList.Add(new Thumbnail
-            {
-                Resolution = ThumbnailResolution.High,
-                Url = thumbnails.High.Url,
-                Height = Convert.ToInt32(thumbnails.High.Height),
-                Width = Convert.ToInt32(thumbnails.High.Width),
-            });
+            thumbnailList.Add(new Thumbnail(
+                video: video,
+                resolution: ThumbnailResolution.High,
+                url: thumbnails.High.Url,
+                height: Convert.ToInt32(thumbnails.High.Height),
+                width: Convert.ToInt32(thumbnails.High.Width)));
         }
 
         if (thumbnails.Medium != null)
         {
-            thumbnailList.Add(new Thumbnail
-            {
-                Resolution = ThumbnailResolution.Medium,
-                Url = thumbnails.Medium.Url,
-                Height = Convert.ToInt32(thumbnails.Medium.Height),
-                Width = Convert.ToInt32(thumbnails.Medium.Width),
-            });
+            thumbnailList.Add(new Thumbnail(
+                video: video,
+                resolution: ThumbnailResolution.Medium,
+                url: thumbnails.Medium.Url,
+                height: Convert.ToInt32(thumbnails.Medium.Height),
+                width: Convert.ToInt32(thumbnails.Medium.Width)));
         }
 
             
         if (thumbnails.Standard != null)
         {
-            thumbnailList.Add(new Thumbnail
-            {
-                Resolution = ThumbnailResolution.Standard,
-                Url = thumbnails.Standard.Url,
-                Height = Convert.ToInt32(thumbnails.Standard.Height),
-                Width = Convert.ToInt32(thumbnails.Standard.Width),
-            });
+            thumbnailList.Add(new Thumbnail(
+                video: video,                
+                resolution: ThumbnailResolution.Standard,
+                url: thumbnails.Standard.Url,
+                height: Convert.ToInt32(thumbnails.Standard.Height),
+                width: Convert.ToInt32(thumbnails.Standard.Width)));
         }
 
         if (thumbnails.Maxres != null)
         {
-            thumbnailList.Add(new Thumbnail
-            {
-                Resolution = ThumbnailResolution.MaxRes,
-                Url = thumbnails.Maxres.Url,
-                Height = Convert.ToInt32(thumbnails.Maxres.Height),
-                Width = Convert.ToInt32(thumbnails.Maxres.Width),
-            });
+            thumbnailList.Add(new Thumbnail(
+                video: video,
+                resolution: ThumbnailResolution.MaxRes,
+                url: thumbnails.Maxres.Url,
+                height:  Convert.ToInt32(thumbnails.Maxres.Height),
+                width:  Convert.ToInt32(thumbnails.Maxres.Width)));
         }
 
-        return thumbnailList;       
+        return thumbnailList.ToArray();       
     }
 
     private string ExtractVideoId(Uri location)
