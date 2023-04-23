@@ -64,7 +64,7 @@ public class DomainTests
         newVideo!.Title.Should().Be(video.Title);   
         newVideo!.Description.Should().Be(video.Description);
 
-        newVideo!.Thumbnails.Count().Should().Be(video.Thumbnails.Count());
+        newVideo!.Thumbnails.Count().Should().Be(video.Thumbnails.Count());                
         newVideo!.Transcripts.Count().Should().Be(video.Transcripts.Count());
         
         

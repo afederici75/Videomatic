@@ -11,24 +11,24 @@ public class Video
     public string? Title { get; set; }
     public string? Description { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<Thumbnail> Thumbnails
     {
-        get { return _thumbnails.AsReadOnly(); }
-        set { _thumbnails = value.ToList(); }
+        get { return _thumbnails.AsReadOnly(); }        
     }
-                
-    public IEnumerable<Transcript> Transcripts
-    {
-        get { return _transcripts.AsReadOnly(); }
-        set { _transcripts = value?.ToList() ?? new List<Transcript>(); }
-    }
-    
+
+    [JsonIgnore]
+    public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly(); 
+
+    [JsonProperty(PropertyName = nameof(Transcripts))]
     private List<Transcript> _transcripts = new List<Transcript>();
+
+    [JsonProperty(PropertyName = nameof(Thumbnails))]
     private List<Thumbnail> _thumbnails = new List<Thumbnail>();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [JsonConstructor]
-    public Video()
+    [Newtonsoft.Json.JsonConstructor]
+    private Video()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     { 
         // For entity framework

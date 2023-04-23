@@ -4,9 +4,9 @@ namespace Company.Videomatic.Domain;
 
 public class Thumbnail
 {
-    public int Id { get; private set; }
-    public Video Video { get; private set; }
-    public string Url { get; private set; }
+    public int Id { get; init; }
+    public Video Video { get; private set; }    
+    public string Url { get; init; }
 
     public ThumbnailResolution? Resolution { get; set; }
     public int? Height { get; set; }
@@ -14,7 +14,7 @@ public class Thumbnail
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]
-    public Thumbnail()
+    private Thumbnail()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         // For entity framework
