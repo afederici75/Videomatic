@@ -13,6 +13,6 @@ public class VideomaticDbContextFixture : IDisposable
 
     public void Dispose()
     {
-        //Context.Database.EnsureDeleted();
+        DbContext.Database.EnsureDeleted();
     }
 }

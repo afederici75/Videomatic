@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Company.Videomatic.Drivers.SqlServer;
 
-public class VideomaticDbContext : DbContext
+public partial class VideomaticDbContext : DbContext
 {
     public VideomaticDbContext(DbContextOptions<VideomaticDbContext> options) 
         : base(options)

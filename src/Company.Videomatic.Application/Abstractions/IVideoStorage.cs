@@ -9,6 +9,6 @@ namespace Company.Videomatic.Application.Abstractions;
 
 public interface IVideoStorage
 {
-    Task<int> UpdateVideo(Video link);
+    Task<int> UpdateVideo(Video video);
     Task<bool> DeleteVideo(int id);
 }

@@ -4,6 +4,8 @@ namespace Company.Videomatic.Domain;
 
 public class Video 
 {
+    public static Video WithId(int id) => new Video { Id = id };   
+
     public int Id { get; init; }
     public string ProviderId { get; init; }
     public string VideoUrl { get; init; }

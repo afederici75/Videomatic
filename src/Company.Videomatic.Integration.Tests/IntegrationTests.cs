@@ -17,19 +17,28 @@ public class IntegrationTests : IClassFixture<VideomaticDbContextFixture>
     public VideomaticDbContextFixture Fixture { get; }
 
     [Theory]
-    [InlineData(null)]
-    public async Task GetRickAsleyAndPersistToDb([FromServices] IVideoImporter importer)
-    {
+    [InlineData("https://www.youtube.com/watch?v=dQw4w9WgXcQ", null, null)]
+    [InlineData("https://www.youtube.com/watch?v=n1kmKpjk_8E", null, null)]
+    [InlineData("https://www.youtube.com/watch?v=BBd3aHnVnuE", null, null)]
+    [InlineData("https://www.youtube.com/watch?v=Y0YXLVOdXtg", null, null)]
+    public async Task ImportVideoAndPersistToDb(
+        string url, 
+        [FromServices] IVideoImporter importer,
+        [FromServices] IVideoStorage storage)
+    {        
+        // Imports 
+        Video video = await importer.Import(new Uri(url));        
+        video.Transcripts.Should().HaveCountGreaterThan(0);
+        video.Transcripts.First().Lines.Should().HaveCountGreaterThan(0);
+        video.Thumbnails.Should().HaveCountGreaterThan(0);
+
+        // Persists
+        await storage.UpdateVideo(video);
+        
+        // Now reads
+        video.Id.Should().BeGreaterThan(0);
+
         var db = Fixture.DbContext;
-        Video video = await importer.Import(
-            new Uri("https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUkcmljayBhc3RsZXkgbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXAg"));
-
-        Assert.Equal("dQw4w9WgXcQ", video.ProviderId);
-        Assert.Equal("Rick Astley - Never Gonna Give You Up (Official Music Video)", video.Title);
-
-        db.Add(video);
-        await db.SaveChangesAsync();
-
         db.ChangeTracker.Clear();
 
         var record = await db.Videos

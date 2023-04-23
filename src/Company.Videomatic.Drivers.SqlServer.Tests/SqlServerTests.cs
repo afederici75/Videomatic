@@ -47,5 +47,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
 
         record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
         record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);        
+
+        await db.DeleteVideo(video.Id);
     }
 }

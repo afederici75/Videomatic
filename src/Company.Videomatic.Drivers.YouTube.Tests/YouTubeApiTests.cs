@@ -16,7 +16,7 @@ namespace Company.Videomatic.Drivers.YouTube.Tests;
 
 public class YouTubeApiTests
 {
-    [Theory]
+    [Theory(Skip = "R&D Stuff")]
     [InlineData(null)]
     public async Task GetAllPlaylists_ShouldReturnAllPlaylistNamesAndVideos(
         [FromServices] IOptions<YouTubeOptions> options)

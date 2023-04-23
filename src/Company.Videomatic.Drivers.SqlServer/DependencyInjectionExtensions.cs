@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Drivers.SqlServer;
+﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Drivers.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -16,6 +17,9 @@ public static class DependencyInjectionExtensions
             builder.EnableSensitiveDataLogging()
                    .UseSqlServer(connStr);
         });
+
+        // Services
+        services.AddScoped<IVideoStorage, VideomaticDbContext>();
 
         return services;
     }   
