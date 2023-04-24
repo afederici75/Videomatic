@@ -1,10 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
@@ -17,7 +12,7 @@ public class DeleteVideoCommand : IRequest<DeleteVideoResponse>
         readonly IVideoStorage _repository;
         public DeleteVideoLinkHandler(IVideoStorage repository)
         {
-            _repository = repository;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)

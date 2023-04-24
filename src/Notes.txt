@@ -1,3 +1,6 @@
+4/24
+-Need to create test for the application Commands and Queries
+
 4/23
 -Investigating into DDD class design.
 	1. https://ssw.com.au/rules/rules-to-better-clean-architecture/
@@ -9,18 +12,19 @@
 		infrastructure-specific Entity Framework navigation properties.
 		All you have to do is to configure the relationship on one side using HasOne and WithMany without specifying the 
 		navigation properties (they're not there after all)."
+-Seems to work well. I like the fact I didn't use *ANY* navigation properties in EF. It's much cleaner, or so it seems at the moment.
 
 4/22
-
-The layout for ChatGPT
-|---------------------------------------------------------|
-| Videomatic | Search Box                | Icon1 | Icon 2 |
-|---------------------------------------------------------|
-| Home              |                        |            |
-| YouTube Playlists |                        |   Expand   |
-| Google Drive      |  Infinite scroll area  |    Hide    |
-| Updates           |                        |    Area    |
-| FAQ               |                        |            |
-|---------------------------------------------------------|
-|Text1 | Text2                                     |Text3 |
-|---------------------------------------------------------|
+-Talked to ChatGPT to help me make this layout.
+	
+	|---------------------------------------------------------|
+	| Videomatic | Search Box                | Icon1 | Icon 2 |
+	|---------------------------------------------------------|
+	| Home              |                        |            |
+	| YouTube Playlists |                        |   Expand   |
+	| Google Drive      |  Infinite scroll area  |    Hide    |
+	| Updates           |                        |    Area    |
+	| FAQ               |                        |            |
+	|---------------------------------------------------------|
+	|Text1 | Text2                                     |Text3 |
+	|---------------------------------------------------------|

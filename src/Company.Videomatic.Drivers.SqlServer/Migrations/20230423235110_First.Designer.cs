@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Videomatic.Drivers.SqlServer.Migrations
 {
     [DbContext(typeof(VideomaticDbContext))]
-    [Migration("20230423221841_First")]
+    [Migration("20230423235110_First")]
     partial class First
     {
         /// <inheritdoc />

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <None Remove="Skills\TranscriptSkill\Summarize\config.json" />
+    <None Remove="Skills\TranscriptSkill\Summarize\skprompt.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Skills\TranscriptSkill\Summarize\config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skills\TranscriptSkill\Summarize\skprompt.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.11.146.1-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
+  </ItemGroup>
+
+</Project>

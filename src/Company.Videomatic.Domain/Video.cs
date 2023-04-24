@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace Company.Videomatic.Domain;
 
@@ -41,9 +42,6 @@ public class Video
         VideoUrl = videoUrl;
         Title = title;
         Description = description;
-
-        //_thumbnails = thumbnails?.ToList() ?? _thumbnails;
-        //_transcripts = transcripts?.ToList() ?? _transcripts;        
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -77,12 +75,14 @@ public class Video
     public Video ClearTranscripts()
     { 
         _transcripts.Clear();
+
         return this;
     }
 
     public Video ClearThumbnails()
     {
         _thumbnails.Clear();
+
         return this;
     }
 }

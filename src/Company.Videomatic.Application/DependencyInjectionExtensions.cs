@@ -1,9 +1,6 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Options;
-using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net.NetworkInformation;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -12,17 +9,14 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
-        var section = configuration.GetSection("Application");
-        services.Configure<ApplicationOptions>(section);
 
+        // Services
         services.AddMediatR(cfg => {
-            cfg.RegisterServicesFromAssembly(typeof(ApplicationOptions).Assembly);
+            cfg.RegisterServicesFromAssembly(typeof(IVideoAnalyzer).Assembly);
             //cfg.AddBehavior<IPipelineBehavior<Ping, Pong>, PingPongBehavior>();
             //cfg.AddOpenBehavior(typeof(GenericBehavior<,>));
         });
 
-        // Services
-        //services.AddScoped<IVideoStorage, InMemoryVideoStorage>();
 
         return services;
     }   

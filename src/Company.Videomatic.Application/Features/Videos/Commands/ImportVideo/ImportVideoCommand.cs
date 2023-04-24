@@ -15,8 +15,8 @@ public class ImportVideoCommand : IRequest<ImportVideoResponse>
 
         public ImportVideoLinkHandler(IVideoImporter importer, IVideoStorage storage)
         {
-            _importer = importer;
-            this._storage = storage;
+            _importer = importer ?? throw new ArgumentNullException(nameof(importer));
+            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
         }
 
         public async Task<ImportVideoResponse> Handle(ImportVideoCommand request, CancellationToken cancellationToken)
