@@ -1,36 +1,85 @@
-﻿namespace Company.Videomatic.SemanticKernel;
-
-using Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Domain;
+using Company.Videomatic.SemanticKernel.Options;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.KernelExtensions;
-using Microsoft.SemanticKernel.Orchestration;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+
+namespace Company.Videomatic.SemanticKernel;
 
 public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
 {
     private readonly ILogger<SemanticKernelVideoAnalyzer> _logger;
+    private readonly SemanticKernelOptions _options;
     private readonly IKernel _kernel;
-    private readonly IDictionary<string, ISKFunction> _transcriptSkill;
 
     public SemanticKernelVideoAnalyzer(
         ILogger<SemanticKernelVideoAnalyzer> logger,
+        IOptions<SemanticKernelOptions> options,
         IKernel kernel)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _options = options.Value;
         _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
-        _transcriptSkill = _kernel.ImportSemanticSkillFromDirectory("Skills", "TranscriptSkill");
+        //_kernel.Config.AddOpenAITextCompletionService("text", _options.Model, _options.ApiKey, _options.Organization, true);
     }
 
     public async Task<string> SummarizeTranscript(Transcript transcript)
     {
-        var myContext = new ContextVariables();
-        myContext.Set("input", transcript.ToString());
+        // Summarize the following transcript of a YouTube video in a page or so of text. 
+        string summarizeBlurbFlex = """
+Write a summary of what the following transcript of a YouTube video discusses. 
+The summary it should be no longer than 3 sentences and it will be used in a TL;DR section.
 
-        var myResult = await _kernel.RunAsync(myContext, _transcriptSkill["Summarize"]);
+---Begin Text---
+{{$INPUT}}
+---End Text---
+""";
 
-        return myResult.ToString();
+        // MaxTokens = 1000,
+        // Temperature = 0.2,
+        // TopP = 0.5,
+
+        var mySummarizeFunction = _kernel.CreateSemanticFunction(summarizeBlurbFlex, 
+            maxTokens: 2000,
+            temperature: 0.2,
+            topP: 0.5);
+
+        var transcriptText = transcript.ToString();
+
+        var myOutput = await _kernel.RunAsync(
+            transcriptText,
+            mySummarizeFunction);        
+
+        return myOutput.ToString();
+    }
+
+    public async Task<string> ReviewTranscript(Transcript transcript)
+    {
+        // Summarize the following transcript of a YouTube video in a page or so of text. 
+        string summarizeBlurbFlex = """
+Write an extensive review of the following transcript of a YouTube video. Divide the review into three sections
+and title each section as follows:  
+1. A summary of the video.
+2. A discussion of the video's strengths.
+3. A discussion of the video's weaknesses.
+
+---Begin Text---
+{{$INPUT}}
+---End Text---
+""";
+
+        var mySummarizeFunction = _kernel.CreateSemanticFunction(summarizeBlurbFlex,
+            maxTokens: 2000,
+            temperature: 0.2,
+            topP: 0.5);
+
+        var transcriptText = transcript.ToString();
+
+        var myOutput = await _kernel.RunAsync(
+            transcriptText,
+            mySummarizeFunction);
+
+        return myOutput.ToString();
     }
 }

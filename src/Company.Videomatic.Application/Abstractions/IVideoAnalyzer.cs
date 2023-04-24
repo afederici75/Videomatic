@@ -10,4 +10,5 @@ namespace Company.Videomatic.Application.Abstractions;
 public interface IVideoAnalyzer
 {
     Task<string> SummarizeTranscript(Transcript transcript);
+    Task<string> ReviewTranscript(Transcript transcript);
 }
