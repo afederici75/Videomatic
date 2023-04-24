@@ -21,43 +21,32 @@ public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _options = options.Value;
         _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
-        //_kernel.Config.AddOpenAITextCompletionService("text", _options.Model, _options.ApiKey, _options.Organization, true);
     }
 
-    public async Task<string> SummarizeTranscript(Transcript transcript)
-    {
-        // Summarize the following transcript of a YouTube video in a page or so of text. 
-        string summarizeBlurbFlex = """
+    public async Task<string> SummarizeVideo(Video video)
+    {        
+        var func = _kernel.CreateSemanticFunction("""
 Write a summary of what the following transcript of a YouTube video discusses. 
 The summary it should be no longer than 3 sentences and it will be used in a TL;DR section.
 
 ---Begin Text---
 {{$INPUT}}
 ---End Text---
-""";
-
-        // MaxTokens = 1000,
-        // Temperature = 0.2,
-        // TopP = 0.5,
-
-        var mySummarizeFunction = _kernel.CreateSemanticFunction(summarizeBlurbFlex, 
+""", 
             maxTokens: 2000,
             temperature: 0.2,
             topP: 0.5);
-
-        var transcriptText = transcript.ToString();
-
+        
         var myOutput = await _kernel.RunAsync(
-            transcriptText,
-            mySummarizeFunction);        
+            video.Transcripts.First().ToString(), // TODO: should account for all transcripts
+            func);        
 
         return myOutput.ToString();
     }
 
-    public async Task<string> ReviewTranscript(Transcript transcript)
-    {
-        // Summarize the following transcript of a YouTube video in a page or so of text. 
-        string summarizeBlurbFlex = """
+    public async Task<string> ReviewVideo(Video video)
+    {   
+        var func = _kernel.CreateSemanticFunction("""
 Write an extensive review of the following transcript of a YouTube video. Divide the review into three sections
 and title each section as follows:  
 1. A summary of the video.
@@ -67,18 +56,14 @@ and title each section as follows:
 ---Begin Text---
 {{$INPUT}}
 ---End Text---
-""";
-
-        var mySummarizeFunction = _kernel.CreateSemanticFunction(summarizeBlurbFlex,
+""",
             maxTokens: 2000,
             temperature: 0.2,
             topP: 0.5);
 
-        var transcriptText = transcript.ToString();
-
         var myOutput = await _kernel.RunAsync(
-            transcriptText,
-            mySummarizeFunction);
+            video.Transcripts.First().ToString(),// TODO: should account for all transcripts
+            func);
 
         return myOutput.ToString();
     }

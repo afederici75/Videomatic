@@ -23,7 +23,7 @@ namespace Company.Videomatic.SemanticKernel.Tests
         {
             var video = await GetHuxleysDancingShiva();
 
-            var result = await videoAnalyzer.SummarizeTranscript(video.Transcripts.First());
+            var result = await videoAnalyzer.SummarizeVideo(video);
 
             result.Should().NotBeNullOrWhiteSpace();
             result.Should().Contain("Shiva");
@@ -44,7 +44,7 @@ namespace Company.Videomatic.SemanticKernel.Tests
         {
             var video = await GetHuxleysDancingShiva();
 
-            var result = await videoAnalyzer.ReviewTranscript(video.Transcripts.First());
+            var result = await videoAnalyzer.ReviewVideo(video);
 
             result.Should().NotBeNullOrWhiteSpace();
             result.Should().Contain("1.");

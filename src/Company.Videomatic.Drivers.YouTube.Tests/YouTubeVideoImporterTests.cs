@@ -16,6 +16,8 @@ public class YouTubeVideoImporterTests
 
         video.ProviderId.Should().Be("dQw4w9WgXcQ");
         video.Title.Should().Be("Rick Astley - Never Gonna Give You Up (Official Music Video)");
+        video.Transcripts.Should().HaveCount(1); 
+        video.Thumbnails.Should().HaveCount(5);
     }
 
     [Theory]
@@ -26,6 +28,8 @@ public class YouTubeVideoImporterTests
             new Uri("https://www.youtube.com/watch?v=n1kmKpjk_8E"));
 
         video.ProviderId.Should().Be("n1kmKpjk_8E");
-        video.Title.Should().Be("Aldous Huxley - The Dancing Shiva");        
+        video.Title.Should().Be("Aldous Huxley - The Dancing Shiva");
+        video.Transcripts.Should().HaveCount(1);
+        video.Thumbnails.Should().HaveCount(5);
     }
 }
