@@ -2,6 +2,16 @@
 
 
   <ItemGroup>
+    <None Remove="Features\Videos\Commands\DeleteVideo\README.md" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="Features\Videos\Commands\DeleteVideo\README.md" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />

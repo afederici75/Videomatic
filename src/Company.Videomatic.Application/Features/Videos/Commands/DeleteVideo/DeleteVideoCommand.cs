@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using MediatR;
-
-namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
 public class DeleteVideoCommand : IRequest<DeleteVideoResponse>
 {

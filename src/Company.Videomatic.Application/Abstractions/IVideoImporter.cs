@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain;
-
-namespace Company.Videomatic.Application.Abstractions;
+﻿namespace Company.Videomatic.Application.Abstractions;
 
 public interface IVideoImporter
 {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
-{
+{    
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
@@ -19,5 +19,5 @@ public static class DependencyInjectionExtensions
 
 
         return services;
-    }   
+    }       
 }

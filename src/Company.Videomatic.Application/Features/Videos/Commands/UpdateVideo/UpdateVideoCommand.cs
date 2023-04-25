@@ -1,8 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
-using MediatR;
-
-namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
 public class UpdateVideoCommand : IRequest<UpdateVideoResponse>
 {

@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using MediatR;
-
-namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 
 public class ImportVideoCommand : IRequest<ImportVideoResponse>
 {
