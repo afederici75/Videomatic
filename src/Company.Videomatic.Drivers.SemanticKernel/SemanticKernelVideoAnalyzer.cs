@@ -23,7 +23,7 @@ public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
         _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
     }
 
-    public async Task<string> SummarizeVideo(Video video)
+    public async Task<Artifact> SummarizeVideo(Video video)
     {        
         var func = _kernel.CreateSemanticFunction("""
 Write a summary of what the following transcript of a YouTube video discusses. 
@@ -39,12 +39,12 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
         
         var myOutput = await _kernel.RunAsync(
             video.Transcripts.First().ToString(), // TODO: should account for all transcripts
-            func);        
+            func);
 
-        return myOutput.ToString();
+        return new Artifact(title: "Summary", text: myOutput.ToString());
     }
 
-    public async Task<string> ReviewVideo(Video video)
+    public async Task<Artifact> ReviewVideo(Video video)
     {   
         var func = _kernel.CreateSemanticFunction("""
 Write an extensive review of the following transcript of a YouTube video. Divide the review into three sections
@@ -65,6 +65,6 @@ and title each section as follows:
             video.Transcripts.First().ToString(),// TODO: should account for all transcripts
             func);
 
-        return myOutput.ToString();
+        return new Artifact(title: "Review", myOutput.ToString());
     }
 }

@@ -25,10 +25,10 @@ namespace Company.Videomatic.SemanticKernel.Tests
 
             var result = await videoAnalyzer.SummarizeVideo(video);
 
-            result.Should().NotBeNullOrWhiteSpace();
-            result.Should().Contain("Shiva");
+            result.Text.Should().NotBeNullOrWhiteSpace();
+            result.Text.Should().Contain("Shiva");
 
-            var words = result.Split();
+            var words = result.Text?.Split();
             words.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
             
             // Example result:
@@ -44,15 +44,15 @@ namespace Company.Videomatic.SemanticKernel.Tests
         {
             var video = await GetHuxleysDancingShiva();
 
-            var result = await videoAnalyzer.ReviewVideo(video);
+            Artifact result = await videoAnalyzer.ReviewVideo(video);
 
-            result.Should().NotBeNullOrWhiteSpace();
-            result.Should().Contain("1.");
-            result.Should().Contain("2.");
-            result.Should().Contain("3.");
+            result.Text.Should().NotBeNullOrWhiteSpace();
+            result.Text.Should().Contain("1.");
+            result.Text.Should().Contain("2.");
+            result.Text.Should().Contain("3.");
 
-            var words = result.Split();
-            words.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
+            var words = result.Text?.Split();
+            words?.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
 
             // Example result:
             // 1.The video discusses the Dancing Shiva, a symbol of Hinduism, and how it is a
