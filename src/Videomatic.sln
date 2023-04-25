@@ -13,17 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application.Tests", "Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Drivers", "Drivers", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.YouTube", "Company.Videomatic.Drivers.YouTube\Company.Videomatic.Drivers.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube", "Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.YouTube.Tests", "Company.Videomatic.Drivers.YouTube.Tests\Company.Videomatic.Drivers.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube.Tests", "Company.Videomatic.Infrastructure.YouTube.Tests\Company.Videomatic.Infrastructure.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integration.Tests", "Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.SqlServer", "Company.Videomatic.Drivers.SqlServer\Company.Videomatic.Drivers.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SqlServer", "Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Drivers.SqlServer.Tests", "Company.Videomatic.Drivers.SqlServer.Tests\Company.Videomatic.Drivers.SqlServer.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SqlServer.Tests", "Company.Videomatic.Infrastructure.SqlServer.Tests\Company.Videomatic.Infrastructure.SqlServer.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
 EndProject
@@ -36,9 +36,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_misc", "_misc", "{A6487429
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain.Tests", "Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.SemanticKernel", "Company.Videomatic.Drivers.SemanticKernel\Company.Videomatic.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel", "Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.SemanticKernel.Tests", "Company.Videomatic.SemanticKernel.Tests\Company.Videomatic.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel.Tests", "Company.Videomatic.Infrastructure.SemanticKernel.Tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UserSecretsId>eef99c8f-727b-4b54-a57c-ddef8e206ed8</UserSecretsId>
+    <UserSecretsId>7088ed3b-c274-405e-ba19-cafdb35dd046</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TestData\HuxleysDancingShiva.json" />
+    <None Remove="testSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\HuxleysDancingShiva.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="testSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
@@ -26,11 +44,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer.Tests\Company.Videomatic.Infrastructure.SqlServer.Tests.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
   </ItemGroup>
 
 </Project>

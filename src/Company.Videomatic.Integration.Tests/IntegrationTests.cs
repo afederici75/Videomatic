@@ -1,6 +1,6 @@
 ﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Domain;
-using Company.Videomatic.Drivers.SqlServer.Tests;
+using Company.Videomatic.Infrastructure.SqlServer.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit.DependencyInjection;
@@ -31,13 +31,13 @@ public class IntegrationTests : IClassFixture<VideomaticDbContextFixture>
         [FromServices] IVideoStorage storage)
     {        
         // Imports 
-        Video video = await importer.Import(new Uri(url));        
+        Video video = await importer.ImportAsync(new Uri(url));        
         video.Transcripts.Should().HaveCountGreaterThan(0);
         video.Transcripts.First().Lines.Should().HaveCountGreaterThan(0);
         video.Thumbnails.Should().HaveCountGreaterThan(0);
 
         // Persists
-        await storage.UpdateVideo(video);
+        await storage.UpdateVideoAsync(video);
         
         // Now reads
         video.Id.Should().BeGreaterThan(0);

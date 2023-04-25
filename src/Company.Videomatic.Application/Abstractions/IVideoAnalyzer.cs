@@ -9,6 +9,6 @@ namespace Company.Videomatic.Application.Abstractions;
 
 public interface IVideoAnalyzer
 {
-    Task<Artifact> SummarizeVideo(Video video);
-    Task<Artifact> ReviewVideo(Video video);
+    Task<Artifact> SummarizeVideoAsync(Video video);
+    Task<Artifact> ReviewVideoAsync(Video video);
 }

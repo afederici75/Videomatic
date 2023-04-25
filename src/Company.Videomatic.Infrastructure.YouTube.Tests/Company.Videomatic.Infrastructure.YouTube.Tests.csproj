@@ -3,15 +3,27 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UserSecretsId>eef99c8f-727b-4b54-a57c-ddef8e206ed8</UserSecretsId>
+    <UserSecretsId>49d7974e-b349-459e-a89d-b96d06d8670a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="testSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="testSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.2945" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="FluentAssertions" Version="6.8.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="Xunit.DependencyInjection" Version="8.6.1" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
@@ -27,9 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer.Tests\Company.Videomatic.Infrastructure.SqlServer.Tests.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 

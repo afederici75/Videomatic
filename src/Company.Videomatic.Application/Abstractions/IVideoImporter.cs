@@ -4,5 +4,5 @@ namespace Company.Videomatic.Application.Abstractions;
 
 public interface IVideoImporter
 {
-    public Task<Video> Import(Uri location);
+    public Task<Video> ImportAsync(Uri location);
 }
