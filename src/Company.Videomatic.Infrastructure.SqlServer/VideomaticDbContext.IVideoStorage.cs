@@ -1,14 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Company.Videomatic.Infrastructure.SqlServer;
+﻿namespace Company.Videomatic.Infrastructure.SqlServer;
 
 public partial class VideomaticDbContext : IVideoStorage
 {

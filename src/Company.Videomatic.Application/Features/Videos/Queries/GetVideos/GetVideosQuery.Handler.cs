@@ -45,7 +45,9 @@ public partial class GetVideosQuery : IRequest<GetVideosResponse>
 
         private IQueryable<Video> ApplySort(IQueryable<Video> query, SortOptions? sortOptions)
         {
-            throw new NotImplementedException();
+            query = query.OrderBy(v => v.Id);
+
+            return query;
         }
 
         private IQueryable<Video> ApplyFilter(IQueryable<Video> query, VideosFilter? filter)
