@@ -1,3 +1,6 @@
+4/25
+-Renamed Drivers to Infrastructure. It's a better name and more DDD-ish.	
+
 4/24
 -Need to create test for the application Commands and Queries
 

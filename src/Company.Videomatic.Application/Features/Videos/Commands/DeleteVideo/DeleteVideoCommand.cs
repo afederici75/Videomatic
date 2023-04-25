@@ -17,7 +17,7 @@ public class DeleteVideoCommand : IRequest<DeleteVideoResponse>
 
         public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
         {
-            var res = await _repository.DeleteVideo(request.VideoId);
+            var res = await _repository.DeleteVideoAsync(request.VideoId);
             
             return new DeleteVideoResponse 
             {

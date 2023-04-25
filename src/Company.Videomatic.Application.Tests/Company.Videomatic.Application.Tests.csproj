@@ -33,7 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />    
+    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
   </ItemGroup>
 
 </Project>

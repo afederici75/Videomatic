@@ -8,7 +8,7 @@ public class DomainTests
     [Fact]
     public void MockDataGeneratorCreatesRickAstleyVideoWithoutDetails()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(false, false);
+        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.None);
         video.Transcripts.Count().Should().Be(0);
         video.Thumbnails.Count().Should().Be(0);
 
@@ -21,7 +21,7 @@ public class DomainTests
     [Fact]
     public void CanUpdateVideosProperties()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(false, false);
+        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.None);
         // Test that the video title and description are updated
         
         const string Updated = "(Updated)";
@@ -35,15 +35,16 @@ public class DomainTests
     [Fact]
     public void MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
     {
-        var newVideo = MockDataGenerator.CreateRickAstleyVideo(true, true);
+        var newVideo = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.All);
         newVideo.Thumbnails.Count().Should().Be(2);
         newVideo.Transcripts.Count().Should().Be(1);
+        newVideo.Artifacts.Count().Should().Be(2);        
     }
 
     [Fact]
     public void SerializesNicely()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(true, true);
+        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.All);
         
         var settings = new JsonSerializerSettings
         {

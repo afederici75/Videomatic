@@ -10,7 +10,7 @@ namespace Company.Videomatic.Application.Tests;
 
 internal class MockVideoImporter : IVideoImporter
 {
-    public Task<Video> Import(Uri uri)
+    public Task<Video> ImportAsync(Uri uri)
     {
         var video = new Video(
             providerId: "dQw4w9WgXcQ",

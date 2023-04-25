@@ -22,7 +22,7 @@ public class Video
     public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();     
 
     [JsonIgnore]
-    public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly(); 
+    public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
     
     public Video(string providerId, string videoUrl, string? title = null, string? description = null)
     {
@@ -58,6 +58,14 @@ public class Video
     {
        
         _transcripts.AddRange(transcripts);
+
+        return this;
+    }
+
+    public Video AddArtifacts(params Artifact[] artifacts)
+    {
+
+        _artifacts.AddRange(artifacts);
 
         return this;
     }
