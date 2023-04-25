@@ -1,6 +1,7 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 
-public class ImportVideoResponse
-{ 
-    public int VideoId { get; set; }
-}
+/// <summary>
+/// The response returned by ImportVideoCommand.
+/// </summary>
+/// <param name="VideoId"></param>
+public record ImportVideoResponse(int VideoId);

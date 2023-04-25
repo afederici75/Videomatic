@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
-public class DeleteVideoResponse
-{ 
-    public bool Deleted { get; init; }
-}
+/// <summary>
+/// This response is returned by DeleteVideoCommand.
+/// </summary>
+public record DeleteVideoResponse(int VideoId, bool Deleted);

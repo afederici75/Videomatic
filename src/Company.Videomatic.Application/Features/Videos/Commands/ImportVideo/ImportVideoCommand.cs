@@ -1,36 +1,19 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 
-public class ImportVideoCommand : IRequest<ImportVideoResponse>
+/// <summary>
+/// This command is used to import video data located at a given url.
+/// </summary>
+public partial class ImportVideoCommand : IRequest<ImportVideoResponse>
 {
-    public required string VideoUrl { get; set; }
-
-    public class ImportVideoLinkHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
+    public ImportVideoCommand(string videoUrl)
     {
-        readonly IVideoImporter _importer;
-        readonly IVideoStorage _storage;
-        readonly IVideoAnalyzer _analyzer;
-
-        public ImportVideoLinkHandler(
-            IVideoImporter importer, 
-            IVideoStorage storage, 
-            IVideoAnalyzer analyzer)
+        if (string.IsNullOrEmpty(videoUrl))
         {
-            _importer = importer ?? throw new ArgumentNullException(nameof(importer));
-            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
-            _analyzer = analyzer;
+            throw new ArgumentException($"'{nameof(videoUrl)}' cannot be null or empty.", nameof(videoUrl));
         }
 
-        public async Task<ImportVideoResponse> Handle(ImportVideoCommand request, CancellationToken cancellationToken)
-        {
-            var video = await _importer.ImportAsync(new Uri(request.VideoUrl));
-            
-            var summary = _analyzer.SummarizeVideoAsync(video);
-            var review = _analyzer.ReviewVideoAsync(video);
-
-            var videoId = await _storage.UpdateVideoAsync(video);
-
-            return new ImportVideoResponse { VideoId = videoId };
-        }
-
+        VideoUrl = videoUrl;
     }
+
+    public string VideoUrl { get; init; }    
 }

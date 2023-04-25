@@ -1,33 +1,27 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
-public class UpdateVideoCommand : IRequest<UpdateVideoResponse>
+/// <summary>
+/// This command is used to update a video in the repository.
+/// </summary>
+public partial class UpdateVideoCommand : IRequest<UpdateVideoResponse>
 {
-    public int VideoId { get; set; }
-    public string? Title { get; set; }
-    public string? Description { get; set; }
-
-
-    public class UpdateVideoCommandHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
+    public UpdateVideoCommand(int videoId, string? title = default, string? description = default)
     {
-        private readonly IVideoStorage _storage;
-        
-        public UpdateVideoCommandHandler(IVideoStorage videoStorage)
-        {
-            _storage = videoStorage;        
-        }
-
-        public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
-        {
-            Video? video = await _storage.GetVideoByIdAsync(request.VideoId, VideoQueryOptions.Default);
-            if (video is null)
-                return new UpdateVideoResponse { Updated = false };
-
-            video.Title = request.Title;
-            video.Description = request.Description;
-
-            var res = await _storage.UpdateVideoAsync(video);
-
-            return new UpdateVideoResponse { Updated = res > 0 };
-        }
+        VideoId = videoId;
+        Title = title;
+        Description = description;
     }
+
+    /// <summary>
+    /// The id of the video to update.
+    /// </summary>
+    public int VideoId { get; init; }
+    /// <summary>
+    /// The new title of the video. (null to leave unchanged)
+    /// </summary>
+    public string? Title { get; init; }
+    /// <summary>
+    /// The new description of the video. (null to leave unchanged)
+    /// </summary>
+    public string? Description { get; init; }    
 }
