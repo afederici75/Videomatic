@@ -18,9 +18,9 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
         builder.Property(x => x.VideoUrl)
                .HasMaxLength(DbConstants.FieldLengths.Url); 
         builder.Property(x => x.Title)
-               .HasMaxLength(DbConstants.FieldLengths.Title);
+               .HasMaxLength(DbConstants.FieldLengths.YTVideoTitle);
         builder.Property(x => x.Description)
-               .HasMaxLength(DbConstants.FieldLengths.Description);
+               .HasMaxLength(DbConstants.FieldLengths.YTVideoDescription);
 
 
         // Relationships

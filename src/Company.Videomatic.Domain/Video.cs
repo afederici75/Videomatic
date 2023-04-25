@@ -14,6 +14,10 @@ public class Video
     public string? Title { get; set; }
     public string? Description { get; set; }
 
+
+    [JsonIgnore]
+    public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
+
     [JsonIgnore]
     public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();     
 
@@ -80,6 +84,9 @@ public class Video
     {
         // For entity framework
     }
+
+    [JsonProperty(PropertyName = nameof(Artifacts))]
+    private List<Artifact> _artifacts = new List<Artifact>();
 
     [JsonProperty(PropertyName = nameof(Transcripts))]
     private List<Transcript> _transcripts = new List<Transcript>();
