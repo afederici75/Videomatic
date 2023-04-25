@@ -19,13 +19,7 @@ public class Video
 
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly(); 
-
-    [JsonProperty(PropertyName = nameof(Transcripts))]
-    private List<Transcript> _transcripts = new List<Transcript>();
-
-    [JsonProperty(PropertyName = nameof(Thumbnails))]
-    private List<Thumbnail> _thumbnails = new List<Thumbnail>();
-
+    
     public Video(string providerId, string videoUrl, string? title = null, string? description = null)
     {
         if (string.IsNullOrWhiteSpace(providerId))
@@ -42,14 +36,6 @@ public class Video
         VideoUrl = videoUrl;
         Title = title;
         Description = description;
-    }
-
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Newtonsoft.Json.JsonConstructor]
-    private Video()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    {
-        // For entity framework
     }
 
     public override string ToString()
@@ -85,4 +71,19 @@ public class Video
 
         return this;
     }
+
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    [Newtonsoft.Json.JsonConstructor]
+    private Video()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    {
+        // For entity framework
+    }
+
+    [JsonProperty(PropertyName = nameof(Transcripts))]
+    private List<Transcript> _transcripts = new List<Transcript>();
+
+    [JsonProperty(PropertyName = nameof(Thumbnails))]
+    private List<Thumbnail> _thumbnails = new List<Thumbnail>();
 }
