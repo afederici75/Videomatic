@@ -7,13 +7,13 @@ public partial class ImportVideoCommand
     /// <summary>
     /// The handler for ImportVideoCommand.
     /// </summary>
-    public class ImportVideoLinkHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
+    public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
     {
         readonly IVideoImporter _importer;
         readonly IVideoStorage _storage;
         readonly IVideoAnalyzer _analyzer;
 
-        public ImportVideoLinkHandler(
+        public ImportVideoCommandHandler(
             IVideoImporter importer,
             IVideoStorage storage,
             IVideoAnalyzer analyzer)
@@ -39,7 +39,7 @@ public partial class ImportVideoCommand
             // Creates the video 
             var videoId = await _storage.UpdateVideoAsync(video);
 
-            return new ImportVideoResponse(videoId);
+            return new ImportVideoResponse(video);
         }
 
     }

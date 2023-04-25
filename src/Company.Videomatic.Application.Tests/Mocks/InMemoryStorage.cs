@@ -3,7 +3,7 @@
 /// <summary>
 /// This class implements the IVideoStorage interface and stores the videos in memory.
 /// </summary>
-internal class InMemoryVideoStorage : IVideoStorage
+internal class MockVideoStorage : IVideoStorage
 {
     private readonly Dictionary<int, Video> _videos = new();
     public Task<int> UpdateVideoAsync(Video video)
@@ -44,5 +44,19 @@ internal class InMemoryVideoStorage : IVideoStorage
             return Task.FromResult<Video?>(video);
         }
         return Task.FromResult<Video?>(null);
+    }
+
+    public Task<Video[]> GetVideosAsync(Func<IQueryable<Video>, IQueryable<Video>>? filter = null, Func<IQueryable<Video>, IQueryable<Video>>? sort = null, Func<IQueryable<Video>, IQueryable<Video>>? paging = null, CancellationToken cancellationToken = default)
+    {
+        IQueryable<Video> vq = _videos.Values.AsQueryable();
+
+        if (filter is not null)
+            vq = filter(vq);    
+        if (sort is not null)   
+              vq = sort(vq);
+        if (paging is not null)
+            vq = paging(vq);
+        
+        return Task.FromResult(vq.ToArray());        
     }
 }

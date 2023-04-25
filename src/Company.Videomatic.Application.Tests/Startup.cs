@@ -18,7 +18,8 @@ public class Startup
 
         // Mocks
         services.AddScoped<IVideoImporter, MockVideoImporter>();
-        services.AddScoped<IVideoStorage, InMemoryVideoStorage>();
+        services.AddScoped<IVideoStorage, MockVideoStorage>();
+        services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 
     public static IConfiguration LoadConfiguration()

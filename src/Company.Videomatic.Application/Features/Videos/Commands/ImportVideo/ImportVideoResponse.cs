@@ -4,4 +4,4 @@
 /// The response returned by ImportVideoCommand.
 /// </summary>
 /// <param name="VideoId"></param>
-public record ImportVideoResponse(int VideoId);
+public record ImportVideoResponse(Video Video);
