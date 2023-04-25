@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Application.Tests.Mocks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +18,7 @@ public class Startup
 
         // Mocks
         services.AddScoped<IVideoImporter, MockVideoImporter>();
-        //services.AddScoped<IVideoStorage, InMemoryVideoStorage>();
+        services.AddScoped<IVideoStorage, InMemoryVideoStorage>();
     }
 
     public static IConfiguration LoadConfiguration()
@@ -28,3 +29,5 @@ public class Startup
                         .Build();
     }
 }
+
+// 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Company.Videomatic.Application.Tests;
+namespace Company.Videomatic.Application.Tests.Mocks;
 
 internal class MockVideoImporter : IVideoImporter
 {
@@ -19,19 +19,19 @@ internal class MockVideoImporter : IVideoImporter
             description: "Just 3 sencences and a link to Rick Astley's official music video for “Never Gonna Give You Up”");
 
         var transcript = new Transcript("US");
-        video.AddTranscripts(transcript);        
+        video.AddTranscripts(transcript);
 
         transcript.AddLines(
             new TranscriptLine(
-                startsAt: TimeSpan.FromSeconds(0),      
+                startsAt: TimeSpan.FromSeconds(0),
                 duration: TimeSpan.FromSeconds(2),
                 text: "First sentence..."),
-            
+
             new TranscriptLine(
                 startsAt: TimeSpan.FromSeconds(2),
                 duration: TimeSpan.FromSeconds(3),
                 text: "Second sentence..."),
-            
+
             new TranscriptLine(
                 startsAt: TimeSpan.FromSeconds(7),
                 duration: TimeSpan.FromSeconds(1),

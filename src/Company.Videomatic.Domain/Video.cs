@@ -3,11 +3,11 @@ using System.Net.Http.Headers;
 
 namespace Company.Videomatic.Domain;
 
-public class Video 
+public class Video
 {
-    public static Video WithId(int id) => new Video { Id = id };   
+    public static Video WithId(int id) => new Video { Id = id };
 
-    public int Id { get; init; }
+    public int Id { get; private set; }
     public string ProviderId { get; init; }
     public string VideoUrl { get; init; }
 
@@ -19,11 +19,11 @@ public class Video
     public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
 
     [JsonIgnore]
-    public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();     
+    public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();
 
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
-    
+
     public Video(string providerId, string videoUrl, string? title = null, string? description = null)
     {
         if (string.IsNullOrWhiteSpace(providerId))
@@ -48,15 +48,15 @@ public class Video
     }
 
     public Video AddThumbnails(params Thumbnail[] thumbnails)
-    {        
+    {
         _thumbnails.AddRange(thumbnails);
-        
+
         return this;
     }
 
     public Video AddTranscripts(params Transcript[] transcripts)
     {
-       
+
         _transcripts.AddRange(transcripts);
 
         return this;
@@ -71,7 +71,7 @@ public class Video
     }
 
     public Video ClearTranscripts()
-    { 
+    {
         _transcripts.Clear();
 
         return this;
@@ -84,6 +84,18 @@ public class Video
         return this;
     }
 
+    public Video ClearArtifacts()
+    {
+        _artifacts.Clear();
+        return this;
+    }
+
+    // TODO: revisit this. I don't like it.
+    public Video SetId(int id)
+    {
+        Id = id;
+        return this;
+    }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [Newtonsoft.Json.JsonConstructor]
