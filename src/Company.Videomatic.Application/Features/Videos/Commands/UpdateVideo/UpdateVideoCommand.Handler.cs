@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+﻿using Company.Videomatic.Domain.Specifications;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
 public partial class UpdateVideoCommand
 {
@@ -7,10 +9,10 @@ public partial class UpdateVideoCommand
     /// </summary>
     public class UpdateVideoCommandHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
     {
-        private readonly IVideoStorage _storage;
+        private readonly IVideoRepository _storage;
         private readonly IPublisher _publisher;
 
-        public UpdateVideoCommandHandler(IVideoStorage videoStorage, IPublisher publisher)
+        public UpdateVideoCommandHandler(IVideoRepository videoStorage, IPublisher publisher)
         {
             _storage = videoStorage ?? throw new ArgumentNullException(nameof(videoStorage));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
@@ -19,7 +21,8 @@ public partial class UpdateVideoCommand
         public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
         {
             // Looks up the video by id.
-            var video = await _storage.GetVideoByIdAsync(request.VideoId);
+            var spec = new GetVideoByIdSpec(request.VideoId);
+            var video = await _storage.GetVideoByIdAsync(spec);
             if (video is null)
                 return new UpdateVideoResponse { Updated = false };
             

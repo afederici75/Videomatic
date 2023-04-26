@@ -8,10 +8,10 @@ public partial class DeleteVideoCommand
     /// </summary>
     public class DeleteVideoLinkHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
     {
-        readonly IVideoStorage _repository;
+        readonly IVideoRepository _repository;
         readonly IPublisher _publisher;
 
-        public DeleteVideoLinkHandler(IVideoStorage repository, IPublisher publisher)
+        public DeleteVideoLinkHandler(IVideoRepository repository, IPublisher publisher)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

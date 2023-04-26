@@ -29,7 +29,7 @@ public class IntegrationTests : IClassFixture<VideomaticDbContextFixture>
     public async Task ImportVideoAndPersistToDb(
         string url, 
         [FromServices] IVideoImporter importer,
-        [FromServices] IVideoStorage storage)
+        [FromServices] IVideoRepository storage)
     {        
         // Imports 
         Video video = await importer.ImportAsync(new Uri(url));        

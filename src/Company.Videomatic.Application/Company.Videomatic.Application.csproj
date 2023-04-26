@@ -31,6 +31,7 @@
     <Folder Include="Features\Settings\Queries\" />
     <Folder Include="Features\Settings\Commands\" />
     <Folder Include="Features\Settings\Commands\UpdateSettings\" />
+    <Folder Include="Features\Videos\Queries\Specifications\" />
   </ItemGroup>
 
   <ItemGroup>

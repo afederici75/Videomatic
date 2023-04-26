@@ -1,12 +1,13 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 using Company.Videomatic.Domain.Model;
+using Company.Videomatic.Domain.Specifications;
 
 namespace Company.Videomatic.Application.Tests.Mocks;
 
 /// <summary>
 /// This class implements the IVideoStorage interface and stores the videos in memory.
 /// </summary>
-internal class MockVideoStorage : IVideoStorage
+internal class MockVideoStorage : IVideoRepository
 {
     private readonly Dictionary<int, Video> _videos = new();
     public Task<int> UpdateVideoAsync(Video video)
@@ -28,5 +29,17 @@ internal class MockVideoStorage : IVideoStorage
     {        
         var rec = _videos.GetValueOrDefault(id);
         return Task.FromResult(rec);
-    }    
+    }
+
+    public Task<Video> GetVideoByIdAsync(GetVideoByIdSpec spec)
+    {
+        Video video = spec.Evaluate(_videos.Values).First();
+        return Task.FromResult(video);
+    }
+
+    public Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpec spec)
+    {
+        var res = spec.Evaluate(_videos.Values);
+        return Task.FromResult(res);
+    }
 }

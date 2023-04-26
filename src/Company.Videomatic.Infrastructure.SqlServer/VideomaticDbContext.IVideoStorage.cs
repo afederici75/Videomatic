@@ -1,11 +1,13 @@
-﻿using Company.Videomatic.Application;
+﻿using Ardalis.Specification.EntityFrameworkCore;
+using Company.Videomatic.Application;
 using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 using Company.Videomatic.Domain.Model;
+using Company.Videomatic.Domain.Specifications;
 using Microsoft.Extensions.Options;
 
 namespace Company.Videomatic.Infrastructure.SqlServer;
 
-public partial class VideomaticDbContext : IVideoStorage
+public partial class VideomaticDbContext : IVideoRepository
 {
     public async Task<bool> DeleteVideoAsync(int id)
     {
@@ -39,11 +41,18 @@ public partial class VideomaticDbContext : IVideoStorage
         return video.Id;
     }
 
-    public async Task<Video?> GetVideoByIdAsync(int id)
+    public async Task<Video> GetVideoByIdAsync(GetVideoByIdSpec spec)
     {
-        var query = Videos;
-        
-        var result = await query.FirstOrDefaultAsync(v => v.Id == id);
-        return result;
-    }   
+        Video res = await Videos.WithSpecification(spec)
+            .FirstAsync();
+        return res;
+    }
+
+    public async Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpec spec)
+    {
+        var res = await Videos.WithSpecification(spec)
+            .ToListAsync();
+
+        return res;
+    }
 }

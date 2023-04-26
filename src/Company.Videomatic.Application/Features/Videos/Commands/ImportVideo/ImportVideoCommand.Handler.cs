@@ -11,12 +11,12 @@ public partial class ImportVideoCommand
     public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
     {
         readonly IVideoImporter _importer;
-        readonly IVideoStorage _storage;
+        readonly IVideoRepository _storage;
         readonly IVideoAnalyzer _analyzer;
 
         public ImportVideoCommandHandler(
             IVideoImporter importer,
-            IVideoStorage storage,
+            IVideoRepository storage,
             IVideoAnalyzer analyzer)
         {
             _importer = importer ?? throw new ArgumentNullException(nameof(importer));
