@@ -38,14 +38,14 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
             topP: 0.5);
         
         var myOutput = await _kernel.RunAsync(
-            video.Transcripts.First().ToString(), // TODO: should account for all transcripts
+            video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty, // TODO: should account for all transcripts
             func);
 
         return new Artifact(title: "Summary", text: myOutput.ToString());
     }
 
     public async Task<Artifact> ReviewVideoAsync(Video video)
-    {   
+    {
         var func = _kernel.CreateSemanticFunction("""
 Write an extensive review of the following transcript of a YouTube video. Divide the review into three sections
 and title each section as follows:  
@@ -62,7 +62,7 @@ and title each section as follows:
             topP: 0.5);
 
         var myOutput = await _kernel.RunAsync(
-            video.Transcripts.First().ToString(),// TODO: should account for all transcripts
+            video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty,// TODO: should account for all transcripts
             func);
 
         return new Artifact(title: "Review", myOutput.ToString());

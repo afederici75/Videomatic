@@ -147,8 +147,8 @@ namespace YoutubeTranscriptApi
             {
                 translationLanguages.Add(new Dictionary<string, string>
                 {
-                    { "language", translation_language.GetProperty("languageName").GetProperty("simpleText").GetString() },
-                    { "language_code", translation_language.GetProperty("languageCode").GetString() }
+                    { "language", translation_language.GetProperty("languageName").GetProperty("simpleText").GetString()! },
+                    { "language_code", translation_language.GetProperty("languageCode").GetString()! }
                 });
             }
 
@@ -160,7 +160,7 @@ namespace YoutubeTranscriptApi
                 string kind = string.Empty;
                 if (caption.TryGetProperty("kind", out var kindJson))
                 {
-                    kind = kindJson.GetString();
+                    kind = kindJson.GetString()!;
                 }
 
                 bool isTranslatable = false;
@@ -172,19 +172,19 @@ namespace YoutubeTranscriptApi
                 var transcript = new Transcript(
                     httpClient,
                     videoId,
-                    caption.GetProperty("baseUrl").GetString(),
-                    caption.GetProperty("name").GetProperty("simpleText").GetString(),
-                    caption.GetProperty("languageCode").GetString(),
+                    caption.GetProperty("baseUrl").GetString()!,
+                    caption.GetProperty("name").GetProperty("simpleText").GetString()!,
+                    caption.GetProperty("languageCode").GetString()!,
                     kind == "asr",
                     isTranslatable ? translationLanguages : new List<Dictionary<string, string>>());
 
                 if (kind == "asr")
                 {
-                    generatedTranscripts.Add(caption.GetProperty("languageCode").GetString(), transcript);
+                    generatedTranscripts.Add(caption.GetProperty("languageCode").GetString()!, transcript);
                 }
                 else
                 {
-                    manuallyCreatedTranscripts.Add(caption.GetProperty("languageCode").GetString(), transcript);
+                    manuallyCreatedTranscripts.Add(caption.GetProperty("languageCode").GetString()!, transcript);
                 }
             }
 
@@ -383,13 +383,13 @@ namespace YoutubeTranscriptApi
 
         public IEnumerable<TranscriptItem> Parse(string plain_data)
         {
-            foreach (var xmlElement in XDocument.Parse(plain_data).Root.Elements("text"))
+            foreach (var xmlElement in XDocument.Parse(plain_data).Root!.Elements("text"))
             {
                 var text = xmlElement.Value;
                 if (string.IsNullOrEmpty(text)) continue;
 
                 text = HTML_TAG_REGEX.Replace(System.Web.HttpUtility.HtmlDecode(text), "");
-                _ = float.TryParse(xmlElement.Attribute(XName.Get("start")).Value, out var start);
+                _ = float.TryParse(xmlElement.Attribute(XName.Get("start"))?.Value, out var start);
                 _ = float.TryParse(xmlElement.Attribute(XName.Get("dur"))?.Value ?? "0.0", out var duration);
 
                 yield return new TranscriptItem()

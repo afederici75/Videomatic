@@ -60,7 +60,7 @@ namespace YoutubeTranscriptApi
         /// <param name="proxies">a dictionary mapping of http and https proxies to be used for the network requests</param>
         /// <param name="cookies">a string of the path to a text file containing youtube authorization cookies</param>
         /// <returns>the list of available transcripts</returns>
-        public TranscriptList ListTranscripts(string video_id, Dictionary<string, string> proxies = null, string cookies = null)
+        public TranscriptList ListTranscripts(string video_id, Dictionary<string, string>? proxies = null, string? cookies = null)
         {
             if (cookies != null)
             {
@@ -84,7 +84,7 @@ namespace YoutubeTranscriptApi
         /// <param name="cookies">a string of the path to a text file containing youtube authorization cookies</param>
         /// <returns>a tuple containing a dictionary mapping video ids onto their corresponding transcripts, and a list of
         /// video ids, which could not be retrieved</returns>
-        public (Dictionary<string, IEnumerable<TranscriptItem>>, IReadOnlyList<string>) GetTranscripts(IReadOnlyList<string> video_ids, IReadOnlyList<string> languages = null, bool continue_after_error = false, Dictionary<string, string> proxies = null, string cookies = null)
+        public (Dictionary<string, IEnumerable<TranscriptItem>>, IReadOnlyList<string>) GetTranscripts(IReadOnlyList<string> video_ids, IReadOnlyList<string>? languages = null, bool continue_after_error = false, Dictionary<string, string>? proxies = null, string? cookies = null)
         {
             //     :param proxies: a dictionary mapping of http and https proxies to be used for the network requests
             //     :type proxies: { 'http': str, 'https': str} -http://docs.python-requests.org/en/master/user/advanced/#proxies
@@ -123,7 +123,7 @@ namespace YoutubeTranscriptApi
         /// <param name="proxies">a dictionary mapping of http and https proxies to be used for the network requests</param>
         /// <param name="cookies"> a string of the path to a text file containing youtube authorization cookies</param>
         /// <returns></returns>
-        public IEnumerable<TranscriptItem> GetTranscript(string video_id, IReadOnlyList<string> languages = null, Dictionary<string, string> proxies = null, string cookies = null)
+        public IEnumerable<TranscriptItem> GetTranscript(string video_id, IReadOnlyList<string>? languages = null, Dictionary<string, string>? proxies = null, string? cookies = null)
         {
             if (languages == null)
             {

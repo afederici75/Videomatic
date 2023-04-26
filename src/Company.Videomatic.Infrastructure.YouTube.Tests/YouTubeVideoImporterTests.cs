@@ -1,10 +1,17 @@
 ﻿using Newtonsoft.Json;
+using Xunit.Abstractions;
 
 namespace Company.Videomatic.Infrastructure.YouTube.Tests;
 
 
 public class YouTubeVideoImporterTests
 {
+    private readonly ITestOutputHelper Output;
+
+    public YouTubeVideoImporterTests(ITestOutputHelper output)
+    {
+        Output = output ?? throw new ArgumentNullException(nameof(output));
+    }
     
     [Theory]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
@@ -17,16 +24,19 @@ public class YouTubeVideoImporterTests
         var info = YouTubeVideos.Tips.VideosTips[videoId];
 
         var video = await importer.ImportAsync(uri);
-        
+
+        video.Id.Should().Be(0);
         video.ProviderId.Should().Be(YouTubeVideoImporter.ProviderId);
         video.ProviderVideoId.Should().Be(videoId);
         video.Title.Should().Be(info.Title);
+
         video.Transcripts.Should().HaveCount(info.TransctriptCount); 
         video.Thumbnails.Should().HaveCount(info.ThumbnailsCount);
         video.Artifacts.Should().HaveCount(0); // Important. Artifacts are generated after the import.
     }
 
     [Theory(Skip = "This method regenerates the data for Domain.Tests\\TestData.")]
+    //[Theory]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
     [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]
     [InlineData(null, YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism)]
@@ -50,6 +60,9 @@ public class YouTubeVideoImporterTests
         if (!Directory.Exists(outputPath))
             Directory.CreateDirectory(outputPath);
 
-        await File.WriteAllTextAsync($"{outputPath}\\{videoId}.json", json);
+        var fileName = $"{outputPath}\\{videoId}.json";
+        await File.WriteAllTextAsync(fileName, json); ;
+
+        Output.WriteLine($"Written {fileName}:\n{json}");
     }
 }

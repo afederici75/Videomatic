@@ -1,8 +1,8 @@
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
-public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
+public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture>
 {
-    public SqlServerTests(VideomaticDbContextFixture fixture)
+    public VideomaticDbContextTests(VideomaticDbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Fixture.SkipDeletingDatabase();
@@ -20,12 +20,17 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
 
     [Theory]
     [InlineData(null)]
-    public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
+    public async Task CanStoreVideoWithAllCollections([FromServices] VideomaticDbContext db)
     {
         var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));
+
+        video.Artifacts.Should().NotBeEmpty();
+        video.Thumbnails.Should().NotBeEmpty();
+        video.Transcripts.Should().NotBeEmpty();
+
         db.Add(video);
         db.SaveChanges();
 
@@ -36,6 +41,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
             .Include(x => x.Transcripts)
             .ThenInclude(x => x.Lines)
             .Include(x => x.Thumbnails)
+            .Include(x => x.Artifacts)
             .FirstAsync(v => v.Id == video.Id);
 
         record.Should().NotBeNull();
@@ -44,8 +50,9 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
         record!.Description.Should().Be(video.Description);
 
         record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
-        record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);        
+        record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+        record!.Artifacts.Should().BeEquivalentTo(video.Artifacts);
 
         await db.DeleteVideoAsync(video.Id);
-    }
+    }    
 }

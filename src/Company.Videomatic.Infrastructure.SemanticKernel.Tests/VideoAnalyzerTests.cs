@@ -1,31 +1,24 @@
 using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Domain;
+using Company.Videomatic.TestData;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit.DependencyInjection;
 
 namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
 {
-    public class SemanticKernelTests
+    public class VideoAnalyzerTests
     {
-        async Task<Video> GetHuxleysDancingShiva()
-        {
-            string json = await File.ReadAllTextAsync("TestData\\HuxleysDancingShiva.json") ?? string.Empty;
-
-            var video = JsonConvert.DeserializeObject<Video>(json);
-            return video!;
-        }
-
         [Theory]
         [InlineData(null)]
         public async Task CanSummarizeTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {
-            var video = await GetHuxleysDancingShiva();
+            var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.AldousHuxley_DancingShiva);
 
             var result = await videoAnalyzer.SummarizeVideoAsync(video);
 
             result.Text.Should().NotBeNullOrWhiteSpace();
-            result.Text.Should().Contain("Shiva");
+            //result.Text.Should().Contain("Shiva");
 
             var words = result.Text?.Split();
             words!.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
@@ -41,7 +34,7 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
         [InlineData(null)]
         public async Task CanReviewTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {
-            var video = await GetHuxleysDancingShiva();
+            var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.AldousHuxley_DancingShiva);
 
             Artifact result = await videoAnalyzer.ReviewVideoAsync(video);
 

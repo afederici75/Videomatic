@@ -39,9 +39,13 @@ namespace YoutubeTranscriptApi
         /// <param name="videoId"></param>
         /// <param name="cause"></param>
         /// <param name="exception"></param>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public CouldNotRetrieveTranscript(string videoId, string cause, Exception exception)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
             : base(buildErrorMessage(videoId, cause), exception)
-        { }
+        { 
+        
+        }
 
         private static string buildErrorMessage(string videoId, string cause)
         {
