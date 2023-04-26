@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Company.Videomatic.Domain;
+namespace Company.Videomatic.Domain.Model;
 
 public class Transcript
 {
@@ -24,13 +24,13 @@ public class Transcript
     }
 
     public Transcript(string? language = null)
-    {        
+    {
         Language = language;
-       //_lines = lines?.ToList() ?? new List<TranscriptLine>();
+        //_lines = lines?.ToList() ?? new List<TranscriptLine>();
     }
 
     public Transcript AddLines(params TranscriptLine[] lines)
-    {       
+    {
         _lines.AddRange(lines);
 
         return this;

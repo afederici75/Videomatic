@@ -1,3 +1,5 @@
+using Company.Videomatic.Domain.Model;
+
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
 public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture>

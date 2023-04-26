@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain;
+﻿using Company.Videomatic.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

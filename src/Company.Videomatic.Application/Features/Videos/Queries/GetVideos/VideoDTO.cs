@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 public record VideoDTO(
     int Id, 

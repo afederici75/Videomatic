@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Company.Videomatic.Domain;
+namespace Company.Videomatic.Domain.Model;
 
 public class Folder
 {
@@ -35,7 +35,7 @@ public class Folder
     }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    [Newtonsoft.Json.JsonConstructor]
+    [JsonConstructor]
     private Folder()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
@@ -43,5 +43,5 @@ public class Folder
     }
 
 
-    
+
 }

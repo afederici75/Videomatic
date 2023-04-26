@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+using Company.Videomatic.Domain.Model;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 

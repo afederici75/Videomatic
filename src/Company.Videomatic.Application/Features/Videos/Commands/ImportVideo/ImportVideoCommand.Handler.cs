@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Company.Videomatic.Domain.Model;
 
 namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 

@@ -1,5 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Infrastructure.SqlServer.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

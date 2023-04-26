@@ -1,5 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Infrastructure.SemanticKernel.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.TestData;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Infrastructure.TestData;
 
 public class TestDataVideoImporter : IVideoImporter
 {

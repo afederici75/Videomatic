@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Application.Abstractions;
 
 public interface IVideoAnalyzer
 {

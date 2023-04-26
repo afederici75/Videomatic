@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Application.Abstractions;
 
 // write a mock implementation of IVideoAnalyzer
 public class MockVideoAnalyzer : IVideoAnalyzer

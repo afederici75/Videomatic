@@ -1,3 +1,4 @@
+using Company.Videomatic.Domain.Model;
 using FluentAssertions;
 using Newtonsoft.Json;
 

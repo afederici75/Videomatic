@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain;
+﻿namespace Company.Videomatic.Domain.Model;
 
 public enum ThumbnailResolution
 {
@@ -7,5 +7,5 @@ public enum ThumbnailResolution
     High,
     Standard,
     MaxRes
-}   
+}
 

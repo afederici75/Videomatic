@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Company.Videomatic.Domain;
+namespace Company.Videomatic.Domain.Model;
 
 public class Artifact
 {

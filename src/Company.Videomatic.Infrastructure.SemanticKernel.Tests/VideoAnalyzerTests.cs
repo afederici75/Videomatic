@@ -1,3 +1,5 @@
+using Company.Videomatic.Domain.Model;
+
 namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
 {
     public class VideoAnalyzerTests

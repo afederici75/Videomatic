@@ -20,6 +20,7 @@ public static class DependencyInjectionExtensions
 
         // Services
         services.AddScoped<IVideoStorage, VideomaticDbContext>();
+        services.AddScoped(typeof(VideomaticRepository<>)); // Ardalis.Specification 
 
         return services;
     }   

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Company.Videomatic.Domain.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Company.Videomatic.Infrastructure.TestData;

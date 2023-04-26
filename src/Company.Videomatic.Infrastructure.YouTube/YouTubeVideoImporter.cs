@@ -1,5 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Infrastructure.YouTube.Options;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -57,14 +57,14 @@ public class YouTubeVideoImporter : IVideoImporter
         return video;
     }
 
-    private Domain.Transcript ImportTranscript(Video video)
+    private Domain.Model.Transcript ImportTranscript(Video video)
     {
         // Retrieve the captions for the video
         using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
         {
             var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderVideoId);
             
-            var transcript = new Domain.Transcript(language: "US");
+            var transcript = new Domain.Model.Transcript(language: "US");
             
             var lines = transcriptItems
                 .Select(ti => new TranscriptLine(

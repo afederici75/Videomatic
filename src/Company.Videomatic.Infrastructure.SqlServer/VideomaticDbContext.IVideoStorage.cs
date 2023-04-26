@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Application;
 using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+using Company.Videomatic.Domain.Model;
 using Microsoft.Extensions.Options;
 
 namespace Company.Videomatic.Infrastructure.SqlServer;
