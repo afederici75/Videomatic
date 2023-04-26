@@ -6,11 +6,13 @@ namespace Company.Videomatic.Domain.Tests;
 public class VideoDataGeneratorTests
 {
     [Fact]
-    public async Task DataGeneratorReturnsRickAstleyVideoWithoutDetails()
+    public async Task CreatesRickAstleyVideoWithoutDetails()
     {
-        var video = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
+        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
+
         video.Transcripts.Count().Should().Be(0);
         video.Thumbnails.Count().Should().Be(0);
+        video.Artifacts.Count().Should().Be(0);
 
         video.ProviderId.Should().Be("YOUTUBE");
         video.VideoUrl.Should().Contain("youtube.com");
@@ -22,44 +24,48 @@ public class VideoDataGeneratorTests
     }
 
     [Fact]
-    public async Task MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
+    public async Task CreatesRickAstleyVideoWithThumbsAndTranscript()
     {
-        var video = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
+        var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
+
+        var video = await VideoDataGenerator.CreateVideoFromFile(videoId,
             nameof(Video.Thumbnails),
-            nameof(Video.Transcripts),
+            nameof(Video.Transcripts));
+
+        video.Thumbnails.Count().Should().Be(YouTubeVideos.Tips.VideosTips[videoId].ThumbnailsCount);
+        video.Transcripts.Count().Should().Be(YouTubeVideos.Tips.VideosTips[videoId].TransctriptCount);
+        video.Artifacts.Count().Should().Be(0);        
+    }
+
+    [Fact]
+    public async Task CreatesRickAstleyVideoWithJustArtifacts()
+    {
+        var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
+
+        var video = await VideoDataGenerator.CreateVideoFromFile(videoId,
             nameof(Video.Artifacts));
-        video.Thumbnails.Count().Should().Be(5);
-        video.Transcripts.Count().Should().Be(1);
-        video.Artifacts.Count().Should().Be(2);        
+
+        video.Thumbnails.Count().Should().Be(0);
+        video.Transcripts.Count().Should().Be(0);
+        video.Artifacts.Count().Should().Be(2);
     }
 
     [Fact]
     public async Task SerializesProperlyWithJSONConver()
     {
-        var video = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
+        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Transcripts),
+            nameof(Video.Thumbnails),
             nameof(Video.Artifacts));
 
-        var settings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
+        var settings = JsonHelper.GetJsonSettings();
         var json = JsonConvert.SerializeObject(video, settings);
-
-        json.Should().Contain("Rick Astley - Never Gonna Give You Up"); 
         
-        var newVideo = JsonConvert.DeserializeObject<Video>(json, settings); 
+        //
+        var deserializedVideo = JsonConvert.DeserializeObject<Video>(json, settings); 
 
-        newVideo.Should().NotBeNull();
-        
-        newVideo!.ProviderId.Should().Be(video.ProviderId);
-        newVideo!.VideoUrl.Should().Be(video.VideoUrl);
-        newVideo!.Title.Should().Be(video.Title);   
-        newVideo!.Description.Should().Be(video.Description);
-
-        var newJson = JsonConvert.SerializeObject(newVideo, settings);
+        //
+        var newJson = JsonConvert.SerializeObject(deserializedVideo, settings);
         newJson.Should().Be(json);
     }
 }

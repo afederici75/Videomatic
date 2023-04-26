@@ -5,6 +5,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
     public SqlServerTests(VideomaticDbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
+        Fixture.SkipDeletingDatabase();
     }
 
     public VideomaticDbContextFixture Fixture { get; }
@@ -21,7 +22,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
     [InlineData(null)]
     public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
     {
-        var video = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
+        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));

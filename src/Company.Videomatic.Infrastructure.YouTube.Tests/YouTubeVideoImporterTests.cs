@@ -41,14 +41,8 @@ public class YouTubeVideoImporterTests
 
         var video = await importer.ImportAsync(uri);
 
-        var settings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
-
         // Serializes        
+        var settings = JsonHelper.GetJsonSettings();
         var json = JsonConvert.SerializeObject(video, settings);
 
         // The files will be saved under \bin\Debug\net7.0\TestData.

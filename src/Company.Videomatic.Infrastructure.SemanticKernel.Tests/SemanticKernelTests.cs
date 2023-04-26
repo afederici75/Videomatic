@@ -28,7 +28,7 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
             result.Text.Should().Contain("Shiva");
 
             var words = result.Text?.Split();
-            words.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
+            words!.Length.Should().BeGreaterThan(20); // I get 60 with the result below.
             
             // Example result:
             // This article discusses the importance of symbols in Hinduism, specifically the symbol

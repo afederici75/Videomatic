@@ -45,7 +45,7 @@ public class ApplicationTests
     {
         // USE IN MEMORY EF connection. This mock repo is insane.
 
-        var video1 = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
+        var video1 = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
         video1.Id.Should().Be(0);
 
         var res = await storage.UpdateVideoAsync(video1);

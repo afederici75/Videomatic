@@ -9,10 +9,18 @@ public class VideomaticDbContextFixture : IDisposable
         DbContext.Database.EnsureCreated();
     }
 
+    bool _skipDeletingDatabase = false;
+    [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
+    public void SkipDeletingDatabase()
+    { 
+        _skipDeletingDatabase = true;
+    }
+
     public VideomaticDbContext DbContext { get; }
 
     public void Dispose()
     {
-        //DbContext.Database.EnsureDeleted();
+        if (!_skipDeletingDatabase)
+            DbContext.Database.EnsureDeleted();
     }
 }

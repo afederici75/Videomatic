@@ -7,17 +7,10 @@ public static class VideoDataGenerator
 {
     public const string FolderName = "TestData";
 
-    public static async Task<Video> LoadVideoFromFileAsync(string videoId, params string[] includes)
+    public static async Task<Video> CreateVideoFromFile(string videoId, params string[] includes)
     {
-        var settings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
-
         var json = await File.ReadAllTextAsync($"TestData\\{videoId}.json");
-        JObject jobj = (JObject)JsonConvert.DeserializeObject(json, settings)!;
+        JObject jobj = (JObject)JsonConvert.DeserializeObject(json, JsonHelper.GetJsonSettings())!;
 
         var arrayProps = jobj.Properties()
             .Where(x => x.Value.Type == JTokenType.Array)
@@ -40,8 +33,5 @@ public static class VideoDataGenerator
         }
         
         return video!;
-    }
-    
-    //public static Task<Video> CreateRickAstleyVideo(params string[] includes)
-    //    => LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp, includes);
+    }   
 }
