@@ -8,7 +8,7 @@ public class DomainTests
     [Fact]
     public async Task MockDataGeneratorCreatesRickAstleyVideoWithoutDetails()
     {
-        var video = await MockDataGenerator.CreateRickAstleyVideo();
+        var video = await VideoDataGenerator.CreateRickAstleyVideo();
         video.Transcripts.Count().Should().Be(0);
         video.Thumbnails.Count().Should().Be(0);
 
@@ -24,7 +24,7 @@ public class DomainTests
     [Fact]
     public async Task CanUpdateVideosProperties()
     {
-        var video = await MockDataGenerator.CreateRickAstleyVideo();
+        var video = await VideoDataGenerator.CreateRickAstleyVideo();
         // Test that the video title and description are updated
         
         const string Updated = "(Updated)";
@@ -38,7 +38,7 @@ public class DomainTests
     [Fact]
     public async Task MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
     {
-        var newVideo = await MockDataGenerator.CreateRickAstleyVideo(
+        var newVideo = await VideoDataGenerator.CreateRickAstleyVideo(
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));
@@ -50,7 +50,7 @@ public class DomainTests
     [Fact]
     public async Task SerializesProperlyWithJSONConver()
     {
-        var video = await MockDataGenerator.CreateRickAstleyVideo(nameof(Video.Thumbnails),
+        var video = await VideoDataGenerator.CreateRickAstleyVideo(nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));
 

@@ -52,7 +52,7 @@ public class ApplicationTests
 
         // USE IN MEMORY EF connection. This mock repo is insane.
 
-        var video1 = await MockDataGenerator.CreateRickAstleyVideo();
+        var video1 = await VideoDataGenerator.CreateRickAstleyVideo();
         var res = await storage.UpdateVideoAsync(video1);
         res.Should().BeGreaterThan(0);
         

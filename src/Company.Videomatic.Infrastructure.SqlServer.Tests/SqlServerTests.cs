@@ -28,7 +28,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
     [InlineData(null)]
     public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
     {
-        var video = await MockDataGenerator.CreateRickAstleyVideo(
+        var video = await VideoDataGenerator.CreateRickAstleyVideo(
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));
