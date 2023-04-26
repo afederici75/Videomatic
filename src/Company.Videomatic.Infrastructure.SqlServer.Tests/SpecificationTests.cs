@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
+[Collection("Sequence")]
 public class SpecificationTests : IClassFixture<VideomaticDbContextFixture>, IAsyncLifetime
 {
     readonly VideomaticDbContextFixture _fixture;
@@ -18,7 +19,7 @@ public class SpecificationTests : IClassFixture<VideomaticDbContextFixture>, IAs
 
     public async Task InitializeAsync()
     {
-        _videoIds = await CommitAllYouTubeVideos(_fixture.DbContext);
+        _videoIds = await _fixture.CommitAllYouTubeVideos();        
     }
 
     public Task DisposeAsync() => Task.CompletedTask;
@@ -48,7 +49,6 @@ public class SpecificationTests : IClassFixture<VideomaticDbContextFixture>, IAs
                 skip: 0,
                 take: 3))
             .ToListAsync();
-
         page1.Should().HaveCount(3);
 
         var page2 = await db.Videos
@@ -57,6 +57,7 @@ public class SpecificationTests : IClassFixture<VideomaticDbContextFixture>, IAs
                 take: 1))
             .ToListAsync();
         page2.Should().HaveCount(1);
+        page1.Max(x => x.Id).Should().BeLessThan(page2.Max(y => y.Id));
     }
 
     [Theory]
@@ -78,7 +79,8 @@ public class SpecificationTests : IClassFixture<VideomaticDbContextFixture>, IAs
         var res = await db.Videos
             .WithSpecification(new GetVideosSpecification(
                 titlePrefix: "aldous",
-                descriptionPrefix: "aldous"
+                descriptionPrefix: "aldous",
+                providerIdPrefix: "YOUtuBE"
                 ))
             .ToListAsync();
 

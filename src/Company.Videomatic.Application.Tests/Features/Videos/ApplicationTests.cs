@@ -8,7 +8,7 @@ public class ApplicationTests
 {    
     [Theory]
     [InlineData(null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
-    public async Task ImportVideoUsingISender(
+    public virtual async Task ImportVideoUsingISender(
         [FromServices] ISender sender,
         string videoId)
     {
@@ -25,7 +25,7 @@ public class ApplicationTests
 
     [Theory]
     [InlineData(null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
-    public async Task ImportVideoUsingISender2(
+    public virtual async Task ImportVideoUsingISender2(
             [FromServices] ISender sender,
             [FromServices] IVideoRepository repository,
             string videoId)
@@ -42,7 +42,7 @@ public class ApplicationTests
 
     [Theory]
     [InlineData(null, null)]
-    public async Task ImportVideoUsingISender3(
+    public virtual async Task ImportVideoUsingISender3(
             [FromServices] ISender sender,
             [FromServices] IVideoRepository repository)
     {

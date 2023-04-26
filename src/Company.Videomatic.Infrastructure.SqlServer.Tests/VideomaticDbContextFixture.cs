@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
 public class VideomaticDbContextFixture : IDisposable
 {
@@ -22,5 +24,28 @@ public class VideomaticDbContextFixture : IDisposable
     {
         if (!_skipDeletingDatabase)
             DbContext.Database.EnsureDeleted();
+    }
+
+    int[] _videoIds; 
+    public async Task<int[]> CommitAllYouTubeVideos()
+    {
+        if (_videoIds != null)
+            return _videoIds;        
+        
+        // Loads all videos from the TestData folder
+        string[] videoIds = YouTubeVideos.GetVideoIds();        
+        Task<Video>[] tasks = videoIds
+            .Select(v => VideoDataGenerator.CreateVideoFromFileAsync(v, includeAll: true))
+            .ToArray();
+
+        Video[] videos = await Task.WhenAll(tasks);
+        
+        // Commits all videos to the database
+        DbContext.AddRange(videos);
+        await DbContext.SaveChangesAsync();
+        
+        // Returns the updated video ids
+        _videoIds = videos.Select(v => v.Id).ToArray();
+        return _videoIds;
     }
 }

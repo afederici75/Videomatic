@@ -7,6 +7,7 @@ using Xunit.DependencyInjection;
 
 namespace Company.Videomatic.Integration.Tests;
 
+[Collection("Sequence")]
 public class IntegrationTests : IClassFixture<VideomaticDbContextFixture>
 {
     public IntegrationTests(VideomaticDbContextFixture fixture)

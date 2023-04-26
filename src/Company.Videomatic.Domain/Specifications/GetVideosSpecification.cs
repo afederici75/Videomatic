@@ -1,4 +1,4 @@
-﻿ namespace Company.Videomatic.Domain.Specifications;
+﻿namespace Company.Videomatic.Domain.Specifications;
 
 public class GetVideosSpecification : Specification<Video>
 {
@@ -29,14 +29,16 @@ public class GetVideosSpecification : Specification<Video>
             Query.Where(x => (x.ProviderId != null) && (x.ProviderId.StartsWith(providerIdPrefix)));
         }
 
+        Query.OrderBy(v => v.Id);
+
         if (skip.HasValue)
         {
             Query.Skip(skip.Value);
         }
+
         if (take.HasValue)
         {
             Query.Take(take.Value);
         }        
     }
 }
-

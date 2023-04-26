@@ -2,6 +2,7 @@ using Company.Videomatic.Domain.Model;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
+[Collection("Sequence")]
 public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture>
 {
     public VideomaticDbContextTests(VideomaticDbContextFixture fixture)
