@@ -46,7 +46,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.TestData\Company.Videomatic.TestData.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.TestData\Company.Videomatic.Infrastructure.TestData.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.TestData\Company.Videomatic.Infrastructure.TestData.csproj" />
   </ItemGroup>
 
 </Project>

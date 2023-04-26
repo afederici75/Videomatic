@@ -32,8 +32,9 @@ public class VideoDataGeneratorTests
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts));
 
-        video.Thumbnails.Count().Should().Be(YouTubeVideos.Tips.VideosTips[videoId].ThumbnailsCount);
-        video.Transcripts.Count().Should().Be(YouTubeVideos.Tips.VideosTips[videoId].TransctriptCount);
+        var info = YouTubeVideos.GetInfoByVideoId(videoId);
+        video.Thumbnails.Count().Should().Be(info.ThumbnailsCount);
+        video.Transcripts.Count().Should().Be(info.TransctriptCount);
         video.Artifacts.Count().Should().Be(0);        
     }
 

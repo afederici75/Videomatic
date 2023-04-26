@@ -2,6 +2,18 @@
 
 
   <ItemGroup>
+    <Compile Remove="Model\_old\FilterItem.cs" />
+    <Compile Remove="Model\_old\FilterOperator.cs" />
+    <Compile Remove="Model\_old\FilterSettings.cs" />
+    <Compile Remove="Model\_old\FilterType.cs" />
+    <Compile Remove="Model\_old\IQuerySettings.cs" />
+    <Compile Remove="Model\_old\OrderDirection.cs" />
+    <Compile Remove="Model\_old\OrderOption.cs" />
+    <Compile Remove="Model\_old\PaginationSettings.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
@@ -15,9 +27,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extensions\" />
     <Folder Include="Features\Settings\Queries\" />
     <Folder Include="Features\Settings\Commands\" />
     <Folder Include="Features\Settings\Commands\UpdateSettings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Model\_old\FilterItem.cs" />
+    <None Include="Model\_old\FilterOperator.cs" />
+    <None Include="Model\_old\FilterSettings.cs" />
+    <None Include="Model\_old\FilterType.cs" />
+    <None Include="Model\_old\IQuerySettings.cs" />
+    <None Include="Model\_old\OrderDirection.cs" />
+    <None Include="Model\_old\OrderOption.cs" />
+    <None Include="Model\_old\PaginationSettings.cs" />
   </ItemGroup>
 
 </Project>

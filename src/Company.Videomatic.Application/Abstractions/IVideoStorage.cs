@@ -8,13 +8,5 @@ public interface IVideoStorage
 {
     Task<int> UpdateVideoAsync(Video video);
     Task<bool> DeleteVideoAsync(int id);
-    Task<Video?> GetVideoByIdAsync(int id);
-
-    Task<Video[]> GetVideosAsync(IQuerySettings settings);
-
-    //Task<Video[]> GetVideosAsync(
-    //    Func<IQueryable<Video>, IQueryable<Video>>? filter = default,
-    //    Func<IQueryable<Video>, IQueryable<Video>>? sort = default,
-    //    Func<IQueryable<Video>, IQueryable<Video>>? paging = default,     
-    //    CancellationToken cancellationToken = default);
+    Task<Video?> GetVideoByIdAsync(int id);    
 }

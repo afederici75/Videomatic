@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Company.Videomatic.TestData;
+namespace Company.Videomatic.Infrastructure.TestData;
 
 public static class JsonHelper
 {

@@ -38,7 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.TestData\Company.Videomatic.TestData.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.TestData\Company.Videomatic.Infrastructure.TestData.csproj" />
   </ItemGroup>
 
 </Project>

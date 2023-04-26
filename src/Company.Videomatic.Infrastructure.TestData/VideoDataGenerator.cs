@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Company.Videomatic.TestData;
+namespace Company.Videomatic.Infrastructure.TestData;
 
 public static class VideoDataGenerator
 {

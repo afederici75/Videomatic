@@ -27,16 +27,5 @@ internal class MockVideoStorage : IVideoStorage
     {        
         var rec = _videos.GetValueOrDefault(id);
         return Task.FromResult(rec);
-    }
-
-    public Task<Video[]> GetVideosAsync(IQuerySettings settings)
-    {
-        Video[] results = _videos
-            .Values
-            .AsQueryable()
-            .ApplySettings(settings)
-            .ToArray();
-
-        return Task.FromResult<Video[]>(results);
     }    
 }

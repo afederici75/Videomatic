@@ -1,10 +1,3 @@
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain;
-using Company.Videomatic.TestData;
-using FluentAssertions;
-using Newtonsoft.Json;
-using Xunit.DependencyInjection;
-
 namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
 {
     public class VideoAnalyzerTests

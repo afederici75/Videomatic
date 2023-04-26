@@ -1,4 +1,5 @@
 global using Xunit;
 
-global using Company.Videomatic.TestData;
 global using FluentAssertions;
+
+global using Company.Videomatic.Infrastructure.TestData;

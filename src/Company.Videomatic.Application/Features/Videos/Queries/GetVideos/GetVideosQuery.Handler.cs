@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Model.Query;
-
-namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 public partial class GetVideosQuery 
 {
@@ -17,19 +15,7 @@ public partial class GetVideosQuery
 
         public async Task<IEnumerable<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken)
         {
-            Video[] videos = await _videoStorage.GetVideosAsync(request);
-
-            var results = videos.Select((v) => new VideoDTO(
-                                Id: v.Id,
-                                ProviderId: v.ProviderId,
-                                VideoUrl: v.VideoUrl,
-                                Title: v.Title,
-                                Description: v.Description,
-                                Artifacts: v.Artifacts,
-                                Thumbnails: v.Thumbnails,
-                                Transcripts: v.Transcripts));
-
-            return results;
+            throw new NotImplementedException();
         }
     }
 }

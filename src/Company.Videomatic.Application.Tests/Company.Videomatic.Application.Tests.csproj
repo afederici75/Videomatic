@@ -35,6 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 
 </Project>

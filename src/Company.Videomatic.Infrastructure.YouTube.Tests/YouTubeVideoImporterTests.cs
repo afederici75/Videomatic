@@ -21,7 +21,7 @@ public class YouTubeVideoImporterTests
     public async Task ImportsAndVerifiesVideoFromYoutube([FromServices] IVideoImporter importer, string videoId)
     {
         var uri = YouTubeVideos.GetUri(videoId);
-        var info = YouTubeVideos.Tips.VideosTips[videoId];
+        var info = YouTubeVideos.GetInfoByVideoId(videoId);
 
         var video = await importer.ImportAsync(uri);
 
@@ -47,7 +47,7 @@ public class YouTubeVideoImporterTests
         // On Windows, the files will be saved under \bin\Debug\net7.0\TestData.
         // Once the files are generated, they can be copied to the Domain.Tests\TestData folder.
         var uri = YouTubeVideos.GetUri(videoId);
-        var info = YouTubeVideos.Tips.VideosTips[videoId];
+        var info = YouTubeVideos.GetInfoByVideoId(videoId);
 
         var video = await importer.ImportAsync(uri);
 

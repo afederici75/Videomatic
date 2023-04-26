@@ -41,28 +41,8 @@ public partial class VideomaticDbContext : IVideoStorage
     public async Task<Video?> GetVideoByIdAsync(int id)
     {
         var query = Videos;
-        //if (options.IncludeTranscripts)
-        //    query.Include(query => query.Transcripts);
-        //
-        //if (options.IncludeArtifacts)
-        //    query.Include(query => query.Artifacts);
-        //
-        //if (options.IncludeThumbnails)
-        //    query.Include(query => query.Thumbnails);
-
+        
         var result = await query.FirstOrDefaultAsync(v => v.Id == id);
         return result;
-    }
-
-    public async Task<Video[]> GetVideosAsync(IQuerySettings settings)
-    {
-        Video[] results = await Videos
-            .AsNoTracking()
-            .ApplySettings(settings)
-            .ToArrayAsync();
-
-        return results;
-    }
-
-
+    }   
 }
