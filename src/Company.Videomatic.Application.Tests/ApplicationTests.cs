@@ -1,6 +1,7 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 using Company.Videomatic.Application.Model.Query;
+using Company.Videomatic.Domain.Tests;
 using MediatR;
 
 namespace Company.Videomatic.Application.Tests;
@@ -44,30 +45,36 @@ public class ApplicationTests
     }
 
     [Theory]
-    [InlineData(null, null)]
-    public async Task BuildQuery(
-        [FromServices] IVideoStorage storage,
-            [FromServices] ISender sender)
+    [InlineData(null)]
+    public async Task QueryVideos(
+        [FromServices] IVideoStorage storage)
     {
-        GetVideosQuery qry = new GetVideosQuery(
-            
-            filter: new FilterSettings(
+
+        // USE IN MEMORY EF connection. This mock repo is insane.
+
+        var video1 = MockDataGenerator.CreateRickAstleyVideo();
+        var res = await storage.UpdateVideoAsync(video1);
+        res.Should().BeGreaterThan(0);
+        
+        //
+        IQuerySettings settings = new QuerySettings(
+            Filter: new FilterSettings(
                 new [] { 
-                    new FilterItem("Title", "Test", FilterOperator.Equals) 
+                    new FilterItem("Id", "1", FilterOperator.Equals) 
                 }),
 
-            pagination: new PaginationSettings(1, 10),
+            Pagination: new PaginationSettings(1, 0),
 
-            order: new[]
+            Order: new[]
             {
                 new OrderOption("Title", OrderDirection.Asc),
                 new OrderOption("Id", OrderDirection.Desc)
             });
 
-        //IQueryable<Video> videos = storage
-        //    .GetVideos()
-        //    .ApplySettings(qry);
+        //
+        Video[] videos = await storage
+            .GetVideosAsync(settings);
 
-       // GetVideosResponse response = await sender.Send(qry);
+        videos.Length.Should().Be(1);
     }
 }

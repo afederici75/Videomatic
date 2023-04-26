@@ -21,14 +21,15 @@ public partial class VideomaticDbContext : IVideoStorage
 
         if (video.Id == 0)
         {
-            await Videos.AddAsync(video);
+            Videos.Add(video);
         }
         else
         {
             Videos.Update(video);
         }
 
-        return await SaveChangesAsync();
+        var res = await SaveChangesAsync();
+        return video.Id;
     }
 
     public async Task<Video?> GetVideoByIdAsync(int id)
