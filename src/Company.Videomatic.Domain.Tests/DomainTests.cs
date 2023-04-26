@@ -6,22 +6,25 @@ namespace Company.Videomatic.Domain.Tests;
 public class DomainTests
 {
     [Fact]
-    public void MockDataGeneratorCreatesRickAstleyVideoWithoutDetails()
+    public async Task MockDataGeneratorCreatesRickAstleyVideoWithoutDetails()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.None);
+        var video = await MockDataGenerator.CreateRickAstleyVideo();
         video.Transcripts.Count().Should().Be(0);
         video.Thumbnails.Count().Should().Be(0);
 
         video.ProviderId.Should().Be("YOUTUBE");
         video.VideoUrl.Should().Contain("youtube.com");
         video.Title.Should().Contain("Rick");
-        video.Description.Should().Contain("2009");
+        video.Description.Should().Contain("#RickAstley");
+        video.Description.Should().Contain("#NeverGonnaGiveYouUp");
+        video.Description.Should().Contain("#WheneverYouNeedSomebody");
+        video.Description.Should().Contain("#OfficialMusicVideo");
     }
 
     [Fact]
-    public void CanUpdateVideosProperties()
+    public async Task CanUpdateVideosProperties()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.None);
+        var video = await MockDataGenerator.CreateRickAstleyVideo();
         // Test that the video title and description are updated
         
         const string Updated = "(Updated)";
@@ -33,19 +36,24 @@ public class DomainTests
     }
 
     [Fact]
-    public void MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
+    public async Task MockDataGeneratorCreatesRickAstleyVideoWithRightDetails()
     {
-        var newVideo = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.All);
-        newVideo.Thumbnails.Count().Should().Be(2);
+        var newVideo = await MockDataGenerator.CreateRickAstleyVideo(
+            nameof(Video.Thumbnails),
+            nameof(Video.Transcripts),
+            nameof(Video.Artifacts));
+        newVideo.Thumbnails.Count().Should().Be(5);
         newVideo.Transcripts.Count().Should().Be(1);
         newVideo.Artifacts.Count().Should().Be(2);        
     }
 
     [Fact]
-    public void SerializesNicely()
+    public async Task SerializesProperlyWithJSONConver()
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.All);
-        
+        var video = await MockDataGenerator.CreateRickAstleyVideo(nameof(Video.Thumbnails),
+            nameof(Video.Transcripts),
+            nameof(Video.Artifacts));
+
         var settings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,

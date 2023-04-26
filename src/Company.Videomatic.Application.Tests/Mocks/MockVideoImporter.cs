@@ -14,6 +14,7 @@ internal class MockVideoImporter : IVideoImporter
     {
         var video = new Video(
             providerId: "dQw4w9WgXcQ",
+            providerVideoId: "YOUTUBE",
             videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
             title: "Just three sentences",
             description: "Just 3 sencences and a link to Rick Astley's official music video for “Never Gonna Give You Up”");

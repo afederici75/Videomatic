@@ -9,6 +9,7 @@ public class Video
 
     public int Id { get; private set; }
     public string ProviderId { get; init; }
+    public string ProviderVideoId { get; init; }
     public string VideoUrl { get; init; }
 
     public string? Title { get; set; }
@@ -24,11 +25,16 @@ public class Video
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
 
-    public Video(string providerId, string videoUrl, string? title = null, string? description = null)
+    public Video(string providerId, string providerVideoId, string videoUrl, string? title = null, string? description = null)
     {
         if (string.IsNullOrWhiteSpace(providerId))
         {
             throw new ArgumentException($"'{nameof(providerId)}' cannot be null or whitespace.", nameof(providerId));
+        }
+
+        if (string.IsNullOrWhiteSpace(providerVideoId))
+        {
+            throw new ArgumentException($"'{nameof(providerVideoId)}' cannot be null or whitespace.", nameof(providerVideoId));
         }
 
         if (string.IsNullOrWhiteSpace(videoUrl))
@@ -37,6 +43,7 @@ public class Video
         }
 
         ProviderId = providerId;
+        ProviderVideoId = providerVideoId;
         VideoUrl = videoUrl;
         Title = title;
         Description = description;
@@ -44,7 +51,7 @@ public class Video
 
     public override string ToString()
     {
-        return $"[{ProviderId}, Thumbnails: {_thumbnails.Count}, Transcripts: {_transcripts.Count}] {Title}";
+        return $"[{ProviderVideoId}@{ProviderId}, Thumbnails: {_thumbnails.Count}, Transcripts: {_transcripts.Count}] {Title}";
     }
 
     public Video AddThumbnails(params Thumbnail[] thumbnails)

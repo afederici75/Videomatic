@@ -1,83 +1,71 @@
 ﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Company.Videomatic.Domain.Tests;
 
-public static class MockDataGenerator
+public static class YouTubeVideos
 {
-    [Flags]
-    public enum VideoIncludes
+    public const string RickAstley_NeverGonnaGiveYouUpLink = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    public const string AldousHuxley_DancingShivaLink = "https://www.youtube.com/watch?v=n1kmKpjk_8E";
+    public const string SwamiTadatmananda_WhySoManyGodsInHinduism = "https://www.youtube.com/watch?v=BBd3aHnVnuE";
+    public const string HyonGakSunim_WhatIsZenLink = "https://www.youtube.com/watch?v=BFfb2P5wxC0";
+
+    public const string RickAstley_NeverGonnaGiveYouUpId = "dQw4w9WgXcQ";
+    public const string AldousHuxley_DancingShivaId = "n1kmKpjk_8E";
+    public const string SwamiTadatmananda_WhySoManyGodsInHinduismId = "BBd3aHnVnuE";
+    public const string HyonGakSunim_WhatIsZenId = "BFfb2P5wxC0";
+
+    public record VideoInfo(string Id, string Title, int TransctriptCount, int ThumbnailsCount);
+
+    public static IReadOnlyDictionary<string, VideoInfo> Videos = new Dictionary<string, VideoInfo>
     {
-        None = 0,
-        Thumbnails = 1, 
-        Transcript = 2,
-        Artifacts = 4,
-        All = Thumbnails | Transcript | Artifacts   
-    }
+        { RickAstley_NeverGonnaGiveYouUpLink, new VideoInfo("dQw4w9WgXcQ", "Rick Astley - Never Gonna Give You Up (Official Music Video)", 1, 5) },
+        { AldousHuxley_DancingShivaLink, new VideoInfo("n1kmKpjk_8E", "Aldous Huxley - The Dancing Shiva", 1, 5) },
+        { SwamiTadatmananda_WhySoManyGodsInHinduism, new VideoInfo("BBd3aHnVnuE", "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?", 1, 5) },
+        { HyonGakSunim_WhatIsZenLink, new VideoInfo("BFfb2P5wxC0", "What is ZEN ? - Hyon Gak Sunim", 1, 5) }
+    };
+}
 
-    /// <summary>
-    /// This is a factory method that creates a new Video object with values of from 
-    /// the musical video 'Never Gonna Give You Up'.
-    /// It also allows you to optionally include 2 thumbnails and 1 transcript with 4 lines.
-    /// </summary>
-    public static Video CreateRickAstleyVideo(VideoIncludes includes = VideoIncludes.None)
+public static class MockDataGenerator
+{    
+    static async Task<Video> LoadFromFile(string videoId, params string[] includes)
     {
-        var newVideo = new Video(
-                   providerId: "YOUTUBE",
-                   videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                   title: "Rick Astley - Never Gonna Give You Up (Official Music Video)",
-                   description: "1,383,924,409 views  Oct 25, 2009  #NeverGonnaGiveYouUp #RickAstley #WheneverYouNeedSomebody [Cut for brevity]");
-
-        if (includes.HasFlag(VideoIncludes.Thumbnails))
+        var settings = new JsonSerializerSettings
         {
-            newVideo.AddThumbnails(
-                new Thumbnail(
-                    url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-                    resolution: ThumbnailResolution.High,
-                    height: 360,
-                    width: 480),
+            Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore,
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        };
 
-                new Thumbnail(
-                     url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-                     resolution: ThumbnailResolution.High,
-                     height: 360,
-                     width: 480));            
-        }
+        var json = await File.ReadAllTextAsync($"TestData\\{videoId}.json");
+        JObject jobj = (JObject)JsonConvert.DeserializeObject(json, settings)!;
 
-        if (includes.HasFlag(VideoIncludes.Transcript))
+        var arrayProps = jobj.Properties()
+            .Where(x => x.Value.Type == JTokenType.Array)
+            .ToList();
+
+        arrayProps.ForEach(p =>
         {
-            var transcript = new Transcript("US");
-            newVideo.AddTranscripts(transcript);
-
-            transcript.AddLines(
-                new TranscriptLine(
-                    text: "[Music]", 
-                    duration: TimeSpan.FromSeconds(0), 
-                    startsAt: TimeSpan.FromSeconds(22)),
+            if (!includes.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
+                p.Remove();
+        });
                 
-                new TranscriptLine(
-                    text: "you know the rules", 
-                    duration: TimeSpan.FromSeconds(6), 
-                    startsAt: TimeSpan.FromSeconds(22)),
+        Video video = jobj.ToObject<Video>()!;
 
-                new TranscriptLine(
-                    text: "[Music]", 
-                    duration: TimeSpan.FromSeconds(12), 
-                    startsAt: TimeSpan.FromSeconds(28)),
-
-                new TranscriptLine(
-                    text: "gotta make you understand", 
-                    duration: TimeSpan.FromSeconds(4), 
-                    startsAt: TimeSpan.FromSeconds(40))
-                );
-        }
-
-        if (includes.HasFlag(VideoIncludes.Artifacts))
+        if (includes.Contains(nameof(Video.Artifacts), StringComparer.OrdinalIgnoreCase))
         {
-            newVideo.AddArtifacts(
-                new Artifact("Review", "The actual review would be here"),
-                new Artifact("Summary", "The actual summary would be here")
-                );
+            video.AddArtifacts(
+                new Artifact("SUMMARY", "Not a summary. Just test data..."),
+                new Artifact("REVIEW", "Not a review. Just test data...")
+            );
         }
 
-        return newVideo;
+        //var video = JsonConvert.DeserializeObject<Video>(json, settings);
+
+        return video!;
     }
+    
+    public static Task<Video> CreateRickAstleyVideo(params string[] includes)
+        => LoadFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUpId, includes);
 }

@@ -11,14 +11,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestData\BBd3aHnVnuE.json" />
+    <None Remove="TestData\BFfb2P5wxC0.json" />
+    <None Remove="TestData\dQw4w9WgXcQ.json" />
+    <None Remove="TestData\n1kmKpjk_8E.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\BBd3aHnVnuE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\BFfb2P5wxC0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\dQw4w9WgXcQ.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\n1kmKpjk_8E.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="Xunit.DependencyInjection" Version="8.6.1" />
+    <PackageReference Include="Xunit.DependencyInjection" Version="8.7.1" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

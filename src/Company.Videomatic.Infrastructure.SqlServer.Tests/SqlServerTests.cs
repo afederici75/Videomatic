@@ -1,3 +1,4 @@
+using Company.Videomatic.Domain;
 using Company.Videomatic.Domain.Tests;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,10 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
     [InlineData(null)]
     public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
     {
-        var video = MockDataGenerator.CreateRickAstleyVideo(MockDataGenerator.VideoIncludes.All);
+        var video = await MockDataGenerator.CreateRickAstleyVideo(
+            nameof(Video.Thumbnails),
+            nameof(Video.Transcripts),
+            nameof(Video.Artifacts));
         db.Add(video);
         db.SaveChanges();
 

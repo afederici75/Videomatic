@@ -11,6 +11,8 @@ namespace Company.Videomatic.Infrastructure.YouTube;
 
 public class YouTubeVideoImporter : IVideoImporter
 {
+    public const string ProviderId = "YOUTUBE";
+
     private readonly YouTubeOptions _options;
 
     public YouTubeVideoImporter(IOptions<YouTubeOptions> options)
@@ -42,7 +44,8 @@ public class YouTubeVideoImporter : IVideoImporter
 
         // Create and return the Video object
         var video = new Video(
-            providerId: videoId,
+            providerId: ProviderId,
+            providerVideoId: videoId,   
             videoUrl: location.ToString(),
             title: videoItem.Snippet.Title,
             description: videoItem.Snippet.Description);
@@ -59,7 +62,7 @@ public class YouTubeVideoImporter : IVideoImporter
         // Retrieve the captions for the video
         using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
         {
-            var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderId);
+            var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderVideoId);
             
             var transcript = new Domain.Transcript(language: "US");
             
