@@ -20,6 +20,7 @@ internal class MockVideoStorage : IVideoRepository
         return Task.FromResult(video.Id);
     }
 
+
     public Task<bool> DeleteVideoAsync(int id)
     {
         return Task.FromResult(_videos.Remove(id));
@@ -31,13 +32,13 @@ internal class MockVideoStorage : IVideoRepository
         return Task.FromResult(rec);
     }
 
-    public Task<Video> GetVideoByIdAsync(GetVideoByIdSpec spec)
+    public Task<Video> GetVideoByIdAsync(GetVideoSpecification spec)
     {
         Video video = spec.Evaluate(_videos.Values).First();
         return Task.FromResult(video);
     }
 
-    public Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpec spec)
+    public Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpecification spec)
     {
         var res = spec.Evaluate(_videos.Values);
         return Task.FromResult(res);

@@ -11,8 +11,9 @@ public partial class VideomaticDbContext : IVideoRepository
 {
     public async Task<bool> DeleteVideoAsync(int id)
     {
-        var res = Videos.Remove(Video.WithId(id));
-        return await SaveChangesAsync() > 1;
+        var res1 = Videos.Remove(Video.WithId(id));
+        var res2 = await SaveChangesAsync();
+        return res2 >= 1;
     }
     
     /// <summary>
@@ -41,14 +42,14 @@ public partial class VideomaticDbContext : IVideoRepository
         return video.Id;
     }
 
-    public async Task<Video> GetVideoByIdAsync(GetVideoByIdSpec spec)
+    public async Task<Video> GetVideoByIdAsync(GetVideoSpecification spec)
     {
         Video res = await Videos.WithSpecification(spec)
             .FirstAsync();
         return res;
     }
 
-    public async Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpec spec)
+    public async Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpecification spec)
     {
         var res = await Videos.WithSpecification(spec)
             .ToListAsync();

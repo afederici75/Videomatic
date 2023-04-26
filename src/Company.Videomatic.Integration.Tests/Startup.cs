@@ -16,6 +16,7 @@ public class Startup
 
         services.AddApplication(cfg);
         services.AddYouTubeDrivers(cfg);
+        services.AddSemanticKernelDriver(cfg);
         services.AddSqlServerDriver(cfg);        
     }
 

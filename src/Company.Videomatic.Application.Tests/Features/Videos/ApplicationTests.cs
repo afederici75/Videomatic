@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 public class ApplicationTests
-{
+{    
     [Theory]
     [InlineData(null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
     public async Task ImportVideoUsingISender(
@@ -57,7 +57,7 @@ public class ApplicationTests
             lastId = response.Video.Id;            
         }
 
-        var spec = new GetVideosSpec();
+        var spec = new GetVideosSpecification();
         IEnumerable<Video> videos = await repository.GetVideosAsync(spec);
 
         videos.Should().NotBeNullOrEmpty();

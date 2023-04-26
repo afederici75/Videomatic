@@ -9,7 +9,7 @@ public class VideoDataGeneratorTests
     [Fact]
     public async Task CreatesRickAstleyVideoWithoutDetails()
     {
-        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
 
         video.Transcripts.Count().Should().Be(0);
         video.Thumbnails.Count().Should().Be(0);
@@ -29,7 +29,7 @@ public class VideoDataGeneratorTests
     {
         var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
 
-        var video = await VideoDataGenerator.CreateVideoFromFile(videoId,
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(videoId,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts));
 
@@ -44,7 +44,7 @@ public class VideoDataGeneratorTests
     {
         var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
 
-        var video = await VideoDataGenerator.CreateVideoFromFile(videoId,
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(videoId,
             nameof(Video.Artifacts));
 
         video.Thumbnails.Count().Should().Be(0);
@@ -55,7 +55,7 @@ public class VideoDataGeneratorTests
     [Fact]
     public async Task SerializesProperlyWithJSONConver()
     {
-        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Transcripts),
             nameof(Video.Thumbnails),
             nameof(Video.Artifacts));

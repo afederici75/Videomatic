@@ -21,7 +21,7 @@ public partial class UpdateVideoCommand
         public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
         {
             // Looks up the video by id.
-            var spec = new GetVideoByIdSpec(request.VideoId);
+            var spec = new GetVideoSpecification(request.VideoId);
             var video = await _storage.GetVideoByIdAsync(spec);
             if (video is null)
                 return new UpdateVideoResponse { Updated = false };

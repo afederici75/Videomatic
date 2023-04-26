@@ -8,7 +8,20 @@ public static class VideoDataGenerator
 {
     public const string FolderName = "TestData";
 
-    public static async Task<Video> CreateVideoFromFile(string videoId, params string[] includes)
+
+    public static Task<Video> CreateVideoFromFileAsync(string videoId, bool includeAll)
+    { 
+        var includes = includeAll ? new[] 
+        { 
+            nameof(Video.Artifacts),
+            nameof(Video.Thumbnails),
+            nameof(Video.Transcripts),
+        } : new string[] { };
+
+        return CreateVideoFromFileAsync(videoId, includes);
+    }
+
+    public static async Task<Video> CreateVideoFromFileAsync(string videoId, params string[] includes)
     {
         var json = await File.ReadAllTextAsync($"TestData\\{videoId}.json");
         JObject jobj = (JObject)JsonConvert.DeserializeObject(json, JsonHelper.GetJsonSettings())!;

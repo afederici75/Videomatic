@@ -12,7 +12,7 @@ public class IntegrationTests : IClassFixture<VideomaticDbContextFixture>
     public IntegrationTests(VideomaticDbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Fixture.SkipDeletingDatabase();
+        //Fixture.SkipDeletingDatabase();
     }
 
     public VideomaticDbContextFixture Fixture { get; }

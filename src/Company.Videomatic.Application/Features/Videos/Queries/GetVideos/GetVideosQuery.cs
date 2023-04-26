@@ -5,10 +5,10 @@ namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 public partial class GetVideosQuery : IRequest<IEnumerable<VideoDTO>>
 {
-    public GetVideosQuery(GetVideosSpec specification)
+    public GetVideosQuery(GetVideosSpecification specification)
     {
         Specification = specification;
     }
 
-    public GetVideosSpec Specification { get; }
+    public GetVideosSpecification Specification { get; }
 }

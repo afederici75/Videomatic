@@ -8,7 +8,9 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
         [InlineData(null)]
         public async Task CanSummarizeTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {
-            var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.AldousHuxley_DancingShiva);
+            var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.AldousHuxley_DancingShiva,
+                nameof(Video.Transcripts) 
+                );
 
             var result = await videoAnalyzer.SummarizeVideoAsync(video);
 
@@ -29,7 +31,9 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
         [InlineData(null)]
         public async Task CanReviewTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {
-            var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.AldousHuxley_DancingShiva);
+            var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.AldousHuxley_DancingShiva,
+                nameof(Video.Transcripts)
+                );
 
             Artifact result = await videoAnalyzer.ReviewVideoAsync(video);
 

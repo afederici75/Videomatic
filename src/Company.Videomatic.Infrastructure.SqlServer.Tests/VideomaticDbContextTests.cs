@@ -22,9 +22,10 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
 
     [Theory]
     [InlineData(null)]
-    public async Task CanStoreVideoWithAllCollections([FromServices] VideomaticDbContext db)
+    public async Task CanStoreVideoWithAllCollectionsAndDeleteIt(
+        [FromServices] VideomaticDbContext db)
     {
-        var video = await VideoDataGenerator.CreateVideoFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));
@@ -55,6 +56,7 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
         record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
         record!.Artifacts.Should().BeEquivalentTo(video.Artifacts);
 
-        await db.DeleteVideoAsync(video.Id);
+        var res = await db.DeleteVideoAsync(video.Id);
+        res.Should().BeTrue();
     }    
 }

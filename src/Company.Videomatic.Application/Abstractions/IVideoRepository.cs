@@ -11,6 +11,6 @@ public interface IVideoRepository
 {
     Task<int> UpdateVideoAsync(Video video);
     Task<bool> DeleteVideoAsync(int id);
-    Task<Video> GetVideoByIdAsync(GetVideoByIdSpec spec);
-    Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpec spec);
+    Task<Video> GetVideoByIdAsync(GetVideoSpecification spec);
+    Task<IEnumerable<Video>> GetVideosAsync(GetVideosSpecification spec);
 }
