@@ -12,6 +12,12 @@ public partial class VideomaticDbContext : IVideoStorage
         return await SaveChangesAsync() > 1;
     }
     
+    /// <summary>
+    /// Smart updates the video. If the video has an id, it will be updated. Otherwise it will be added.
+    /// </summary>
+    /// <param name="video">The video to smart update.</param>
+    /// <returns>The id of the video that was updated or inserted.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public async Task<int> UpdateVideoAsync(Video video)
     {
         if (video is null)

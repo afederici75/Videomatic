@@ -1,14 +1,13 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Company.Videomatic.Domain.Tests;
+namespace Company.Videomatic.TestData;
 
 public static class VideoDataGenerator
 {
     public const string FolderName = "TestData";
 
-    static async Task<Video> LoadFromFile(string videoId, params string[] includes)
+    public static async Task<Video> LoadVideoFromFileAsync(string videoId, params string[] includes)
     {
         var settings = new JsonSerializerSettings
         {
@@ -39,12 +38,10 @@ public static class VideoDataGenerator
                 new Artifact("REVIEW", "Not a review. Just test data...")
             );
         }
-
-        //var video = JsonConvert.DeserializeObject<Video>(json, settings);
-
+        
         return video!;
     }
     
-    public static Task<Video> CreateRickAstleyVideo(params string[] includes)
-        => LoadFromFile(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp, includes);
+    //public static Task<Video> CreateRickAstleyVideo(params string[] includes)
+    //    => LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp, includes);
 }

@@ -1,10 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
-using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
-using Company.Videomatic.Application.Model.Query;
-using Company.Videomatic.Domain.Tests;
-using MediatR;
-
-namespace Company.Videomatic.Application.Tests;
+﻿namespace Company.Videomatic.Application.Tests;
 
 public class ApplicationTests
 {
@@ -49,12 +43,14 @@ public class ApplicationTests
     public async Task QueryVideos(
         [FromServices] IVideoStorage storage)
     {
-
         // USE IN MEMORY EF connection. This mock repo is insane.
 
-        var video1 = await VideoDataGenerator.CreateRickAstleyVideo();
+        var video1 = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
+        video1.Id.Should().Be(0);
+
         var res = await storage.UpdateVideoAsync(video1);
         res.Should().BeGreaterThan(0);
+        video1.Id.Should().Be(res);
         
         //
         IQuerySettings settings = new QuerySettings(
@@ -62,19 +58,19 @@ public class ApplicationTests
                 new [] { 
                     new FilterItem("Id", "1", FilterOperator.Equals) 
                 }),
-
+        
             Pagination: new PaginationSettings(1, 0),
-
+        
             Order: new[]
             {
                 new OrderOption("Title", OrderDirection.Asc),
                 new OrderOption("Id", OrderDirection.Desc)
             });
-
+        
         //
         Video[] videos = await storage
             .GetVideosAsync(settings);
-
+        
         videos.Length.Should().Be(1);
     }
 }

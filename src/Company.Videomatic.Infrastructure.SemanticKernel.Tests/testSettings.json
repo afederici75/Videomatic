@@ -4,6 +4,5 @@
     "Organization": null,
     "Model": "text-davinci-002",
     "EmbeddingModel": "text-embedding-ada-002"
-
   }  
 }

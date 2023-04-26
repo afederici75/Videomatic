@@ -1,10 +1,3 @@
-using Company.Videomatic.Domain;
-using Company.Videomatic.Domain.Tests;
-using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
-using Xunit.DependencyInjection;
-
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
 public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
@@ -28,7 +21,7 @@ public class SqlServerTests : IClassFixture<VideomaticDbContextFixture>
     [InlineData(null)]
     public async Task CanStoreVideoWithThumbnailsAndTranscripts([FromServices] VideomaticDbContext db)
     {
-        var video = await VideoDataGenerator.CreateRickAstleyVideo(
+        var video = await VideoDataGenerator.LoadVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
             nameof(Video.Artifacts));

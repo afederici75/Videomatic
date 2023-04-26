@@ -1,43 +1,20 @@
-﻿using Company.Videomatic.Domain.Tests;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Company.Videomatic.Infrastructure.YouTube.Tests;
 
+
 public class YouTubeVideoImporterTests
 {
-    record VideoInfo(string Title, int TransctriptCount, int ThumbnailsCount, int ArtifactsCount);
-
-    static class Tips
-    {
-        public static IReadOnlyDictionary<string, VideoInfo> VideosTips = new Dictionary<string, VideoInfo>
-        {
-            { 
-                YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,
-                new VideoInfo("Rick Astley - Never Gonna Give You Up (Official Music Video)", 1, 5, 2) },
-
-            {   
-                YouTubeVideos.AldousHuxley_DancingShiva,
-                new VideoInfo("Aldous Huxley - The Dancing Shiva", 1, 5, 2) },
-
-            { 
-                YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism,
-                new VideoInfo("If Reality is NON-DUAL, Why are there so many GODS in Hinduism?", 1, 5, 2) },
-
-            { 
-                YouTubeVideos.HyonGakSunim_WhatIsZen,
-                new VideoInfo("What is ZEN ? - Hyon Gak Sunim", 1, 5, 2) }
-        };
-    }
-
+    
     [Theory]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
     [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]
     [InlineData(null, YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism)]
     [InlineData(null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
-    public async Task ImportsVideoFromYoutube([FromServices] IVideoImporter importer, string videoId)
+    public async Task ImportsAndVerifiesVideoFromYoutube([FromServices] IVideoImporter importer, string videoId)
     {
         var uri = YouTubeVideos.GetUri(videoId);
-        var info = Tips.VideosTips[videoId];
+        var info = YouTubeVideos.Tips.VideosTips[videoId];
 
         var video = await importer.ImportAsync(uri);
         
@@ -49,7 +26,7 @@ public class YouTubeVideoImporterTests
         video.Artifacts.Should().HaveCount(0); // Important. Artifacts are generated after the import.
     }
 
-    [Theory()]//Skip = "This method regenerates the data for Domain.Tests\\TestData.")]
+    [Theory(Skip = "This method regenerates the data for Domain.Tests\\TestData.")]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
     [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]
     [InlineData(null, YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism)]
@@ -60,7 +37,7 @@ public class YouTubeVideoImporterTests
         // On Windows, the files will be saved under \bin\Debug\net7.0\TestData.
         // Once the files are generated, they can be copied to the Domain.Tests\TestData folder.
         var uri = YouTubeVideos.GetUri(videoId);
-        var info = Tips.VideosTips[videoId];
+        var info = YouTubeVideos.Tips.VideosTips[videoId];
 
         var video = await importer.ImportAsync(uri);
 
