@@ -26,7 +26,7 @@ public class VideomaticDbContextFixture : IDisposable
             DbContext.Database.EnsureDeleted();
     }
 
-    int[] _videoIds; 
+    int[]? _videoIds = null;
     public async Task<int[]> CommitAllYouTubeVideos()
     {
         if (_videoIds != null)
