@@ -1,4 +1,6 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
+using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+using Company.Videomatic.Application.Model.Query;
 using MediatR;
 
 namespace Company.Videomatic.Application.Tests;
@@ -41,4 +43,31 @@ public class ApplicationTests
         //deleteResult.Should().BeTrue();
     }
 
+    [Theory]
+    [InlineData(null, null)]
+    public async Task BuildQuery(
+        [FromServices] IVideoStorage storage,
+            [FromServices] ISender sender)
+    {
+        GetVideosQuery qry = new GetVideosQuery(
+            
+            filter: new FilterSettings(
+                new [] { 
+                    new FilterItem("Title", "Test", FilterOperator.Equals) 
+                }),
+
+            pagination: new PaginationSettings(1, 10),
+
+            order: new[]
+            {
+                new OrderOption("Title", OrderDirection.Asc),
+                new OrderOption("Id", OrderDirection.Desc)
+            });
+
+        //IQueryable<Video> videos = storage
+        //    .GetVideos()
+        //    .ApplySettings(qry);
+
+       // GetVideosResponse response = await sender.Send(qry);
+    }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
-public record GetVideosDTO(
+public record VideoDTO(
     int Id, 
     string ProviderId, 
     string VideoUrl, 
