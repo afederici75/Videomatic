@@ -1,9 +1,4 @@
-﻿
-using Ardalis.GuardClauses;
-using Newtonsoft.Json;
-using System.Net.Http.Headers;
-
-namespace Company.Videomatic.Domain.Model;
+﻿namespace Company.Videomatic.Domain.Model;
 
 public class Video : EntityBase, IAggregateRoot
 {    
@@ -13,7 +8,6 @@ public class Video : EntityBase, IAggregateRoot
 
     public string? Title { get; set; }
     public string? Description { get; set; }
-
 
     [JsonIgnore]
     public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
@@ -62,7 +56,6 @@ public class Video : EntityBase, IAggregateRoot
 
     public Video AddTranscripts(params Transcript[] transcripts)
     {
-
         _transcripts.AddRange(transcripts);
 
         return this;
@@ -70,7 +63,6 @@ public class Video : EntityBase, IAggregateRoot
 
     public Video AddArtifacts(params Artifact[] artifacts)
     {
-
         _artifacts.AddRange(artifacts);
 
         return this;

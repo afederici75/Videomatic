@@ -1,12 +1,10 @@
-﻿using Ardalis.Specification;
-
-namespace Company.SharedKernel;
+﻿namespace Company.SharedKernel;
 
 public class InMemoryRepository<T> : IRepository<T>
     where T : class, IEntity
 {
     readonly Dictionary<int, T> _items = new();
-    int _sequence;
+    int _sequence = 0;
 
     public Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {

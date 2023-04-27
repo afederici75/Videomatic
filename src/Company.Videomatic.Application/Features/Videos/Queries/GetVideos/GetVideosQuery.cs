@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using Company.Videomatic.Domain.Model;
-using Company.Videomatic.Domain.Specifications;
+using Company.Videomatic.Domain.Queries;
 
 namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
@@ -20,7 +20,7 @@ public abstract class QueryHandler<TSpecification, TEntity> : IQueryHandler<TSpe
     }
 }
 
-public class GetVideosQueryHandler : QueryHandler<GetVideosSpecification, Video>
+public class GetVideosQueryHandler : QueryHandler<Domain.Queries.GetVideosQuery, Video>
 {
 }
 
@@ -48,10 +48,10 @@ public class GetVideosQueryHandler : QueryHandler<GetVideosSpecification, Video>
 
 public partial class GetVideosQuery : IRequest<IEnumerable<VideoDTO>>
 {
-    public GetVideosQuery(GetVideosSpecification specification)
+    public GetVideosQuery(Domain.Queries.GetVideosQuery specification)
     {
         Specification = specification;
     }
 
-    public GetVideosSpecification Specification { get; }
+    public Domain.Queries.GetVideosQuery Specification { get; }
 }

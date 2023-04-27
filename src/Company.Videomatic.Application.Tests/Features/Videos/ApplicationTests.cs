@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿using Company.SharedKernel.Queries;
+
+namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 [Collection("Sequence")]
 public class ApplicationTests
@@ -22,7 +24,9 @@ public class ApplicationTests
         response.Video.Transcripts.Should().NotBeEmpty();
         response.Video.Artifacts.Should().HaveCount(2);
 
-        Video? video2 = await repository.FirstOrDefaultAsync(new GetVideoSpecification(response.Video.Id));
+        Video? video2 = await repository.FirstOrDefaultAsync(
+            new GetEntityQuery<Video>(response.Video.Id));
+
         video2.Should().NotBeNull();    
         response.Video.Should().BeEquivalentTo(video2);
         
@@ -46,7 +50,7 @@ public class ApplicationTests
         }
 
         // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
+        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosQuery(newIds.ToArray()));
         videos.Should().HaveCount(newIds.Count);
 
         await repository.DeleteRangeAsync(videos);        
@@ -71,7 +75,7 @@ public class ApplicationTests
         }
 
         // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));        
+        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosQuery(newIds.ToArray()));        
         videos.Should().HaveCount(newIds.Count);
 
         // Deletes

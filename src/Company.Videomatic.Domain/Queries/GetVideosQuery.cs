@@ -1,22 +1,23 @@
-﻿
+﻿namespace Company.Videomatic.Domain.Queries;
 
-namespace Company.Videomatic.Domain.Specifications;
-
-public class GetVideosSpecification : Specification<Video>,
-    IRequest<Video>,    
-    ISpecification<Video>
+public class GetVideosQuery : GetEntitiesQuery<Video>,
+    IRequest<Video>
 {
-    public GetVideosSpecification(params int[] ids)
+    public GetVideosQuery(params int[] ids)
     { 
         Query.Where(x => ids.Contains(x.Id));
     }
 
-    public GetVideosSpecification(
+    public GetVideosQuery(
+        int take = 10,
+        
         string? titlePrefix = default, 
         string? descriptionPrefix = default,
         string? providerIdPrefix = default,
+        
         int? skip = 0,
-        int? take = 10)
+        string[]? includes = null)
+        : base(take: take, skip: skip, includes: includes)
     {
         if (!string.IsNullOrWhiteSpace(titlePrefix))
         {
@@ -31,18 +32,6 @@ public class GetVideosSpecification : Specification<Video>,
         if (!string.IsNullOrWhiteSpace(providerIdPrefix))
         {
             Query.Where(x => (x.ProviderId != null) && (x.ProviderId.StartsWith(providerIdPrefix)));
-        }
-
-        Query.OrderBy(v => v.Id);
-
-        if (skip.HasValue)
-        {
-            Query.Skip(skip.Value);
-        }
-
-        if (take.HasValue)
-        {
-            Query.Take(take.Value);
         }        
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+﻿using Company.SharedKernel.Queries;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
 public partial class UpdateVideoCommand
 {
@@ -19,8 +21,8 @@ public partial class UpdateVideoCommand
         public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
         {
             // Looks up the video by id.
-            var spec = new GetVideoSpecification(request.VideoId);
-            var video = await _storage.FirstOrDefaultAsync(spec, cancellationToken);
+            var query = new GetEntityQuery<Video>(request.VideoId);
+            var video = await _storage.FirstOrDefaultAsync(query, cancellationToken);
             if (video is null)
                 return new UpdateVideoResponse(null, false);
             
