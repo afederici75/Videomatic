@@ -1,6 +1,8 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
 /// <summary>
 /// This event is published when a video is deleted.
 /// </summary>
-public record VideoDeletedEvent(int VideoId) : INotification;
+public record VideoDeletedEvent(Video Video) : INotification;

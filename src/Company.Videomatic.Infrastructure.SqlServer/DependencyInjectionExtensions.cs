@@ -1,6 +1,5 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Infrastructure.SqlServer;
-using Microsoft.EntityFrameworkCore;
+﻿using Company.Videomatic.Infrastructure.SqlServer;
+
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -19,8 +18,7 @@ public static class DependencyInjectionExtensions
         });
 
         // Services
-        services.AddScoped<IVideoRepository, VideomaticDbContext>();
-        services.AddScoped(typeof(VideomaticRepository<>)); // Ardalis.Specification 
+        services.AddScoped(typeof(IRepository<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
 
         return services;
     }   

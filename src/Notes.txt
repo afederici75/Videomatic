@@ -1,3 +1,11 @@
+4/27
+-
+-Adding IRepository stuff
+-Key articles so far:
+    - https://deviq.com/design-patterns
+	- https://deviq.com/design-patterns/specification-pattern
+	- http://specification.ardalis.com/
+
 4/26
 -Most of the day on Specifications. Great results!
 

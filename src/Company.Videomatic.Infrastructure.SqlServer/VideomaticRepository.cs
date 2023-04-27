@@ -1,18 +1,11 @@
-﻿using Ardalis.Specification.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Company.Videomatic.Infrastructure.SqlServer;
 
-namespace Company.Videomatic.Infrastructure.SqlServer;
-
-public class VideomaticRepository<T> : RepositoryBase<T>
-    where T : class
+public class VideomaticRepository<T> : RepositoryBase<T>, IRepository<T>
+    where T : class, IAggregateRoot, IEntity
 {
-    private readonly DbContext _dbContext;
+    private readonly VideomaticDbContext _dbContext;
 
-    public VideomaticRepository(DbContext dbContext) 
+    public VideomaticRepository(VideomaticDbContext dbContext) 
         : base(dbContext)
     {
         _dbContext = dbContext;

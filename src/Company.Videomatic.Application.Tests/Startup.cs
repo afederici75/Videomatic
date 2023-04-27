@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Application.Tests.Mocks;
+﻿using Company.SharedKernel;
+using Company.SharedKernel.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +18,7 @@ public class Startup
 
         // Mocks
         services.AddScoped<IVideoImporter, TestDataVideoImporter>(); // <-- This is the important one
-        services.AddScoped<IVideoRepository, MockVideoStorage>();
+        services.AddScoped<IRepository<Video>, InMemoryRepository<Video>>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 

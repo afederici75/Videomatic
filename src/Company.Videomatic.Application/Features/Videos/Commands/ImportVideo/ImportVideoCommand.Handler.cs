@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Company.Videomatic.Domain.Model;
-
+﻿
 namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 
 public partial class ImportVideoCommand
@@ -11,12 +9,12 @@ public partial class ImportVideoCommand
     public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
     {
         readonly IVideoImporter _importer;
-        readonly IVideoRepository _storage;
+        readonly IRepository<Video> _storage;
         readonly IVideoAnalyzer _analyzer;
 
         public ImportVideoCommandHandler(
             IVideoImporter importer,
-            IVideoRepository storage,
+            IRepository<Video> storage,
             IVideoAnalyzer analyzer)
         {
             _importer = importer ?? throw new ArgumentNullException(nameof(importer));
@@ -38,7 +36,7 @@ public partial class ImportVideoCommand
             video.AddArtifacts(artifacts);
 
             // Creates the video 
-            var videoId = await _storage.UpdateVideoAsync(video);
+            var videoId = await _storage.AddAsync(video);
 
             return new ImportVideoResponse(video);
         }

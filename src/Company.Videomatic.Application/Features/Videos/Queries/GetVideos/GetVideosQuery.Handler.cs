@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Model;
-
-namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 public partial class GetVideosQuery 
 {
@@ -8,16 +6,16 @@ public partial class GetVideosQuery
     {
         private const int DefaultTake = 10;
     
-        private readonly IVideoRepository _videoStorage;
+        private readonly IRepository<Video> _videoStorage;
     
-        public GetVideosQueryHandler(IVideoRepository videoStorage)
+        public GetVideosQueryHandler(IRepository<Video> videoStorage)
         {
             _videoStorage = videoStorage ?? throw new ArgumentNullException(nameof(videoStorage));
         }
 
         public async Task<IEnumerable<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken)
         {
-            IEnumerable<Video> videos = await _videoStorage.GetVideosAsync(request.Specification);
+            IEnumerable<Video> videos = await _videoStorage.ListAsync(request.Specification, cancellationToken);
             
             var dtos = videos.Select(v => new VideoDTO(
                 Id: v.Id,

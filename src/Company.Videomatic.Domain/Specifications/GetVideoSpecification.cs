@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Company.Videomatic.Domain.Specifications;
+﻿namespace Company.Videomatic.Domain.Specifications;
 
 public class GetVideoSpecification : Specification<Video>, 
     IRequest<Video>,

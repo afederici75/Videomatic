@@ -49,4 +49,8 @@ public static class YouTubeVideos
 
     public static VideoHint GetInfoByUrl(string url)
         => _videoHints.First(v => v.VideoUrl.Equals(url, StringComparison.OrdinalIgnoreCase));
+
+    public static int HintsCount => _videoHints.Count;
+
+    public static IEnumerable<VideoHint> GetHints() => _videoHints.ToArray();
 }

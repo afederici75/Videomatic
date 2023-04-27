@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿
+using Ardalis.GuardClauses;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Video
+public class Video : IAggregateRoot, IEntity
 {
-    public static Video WithId(int id) => new Video { Id = id };
+    //public static Video WithId(int id) => new Video { Id = id };
 
     public int Id { get; private set; }
     public string ProviderId { get; init; }
@@ -24,6 +26,8 @@ public class Video
 
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
+
+    int IEntity.Id => this.Id;
 
     public Video(string providerId, string providerVideoId, string videoUrl, string? title = null, string? description = null)
     {
@@ -96,13 +100,13 @@ public class Video
         _artifacts.Clear();
         return this;
     }
-
-    // TODO: revisit this. I don't like it.
-    public Video SetId(int id)
+    
+    void IEntity.SetId(int id)
     {
+        Guard.Against.NegativeOrZero(id);
         Id = id;
-        return this;
     }
+
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]

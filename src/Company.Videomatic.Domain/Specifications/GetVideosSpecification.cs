@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿
 
 namespace Company.Videomatic.Domain.Specifications;
 

@@ -14,7 +14,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     public GetVideosSpecificationTests(VideomaticDbContextFixture fixture)
     {
         _fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        _fixture.SkipDeletingDatabase();
+        //_fixture.SkipDeletingDatabase();
     }    
    
     IQueryable<Video>  Videos => _fixture.DbContext.Videos;

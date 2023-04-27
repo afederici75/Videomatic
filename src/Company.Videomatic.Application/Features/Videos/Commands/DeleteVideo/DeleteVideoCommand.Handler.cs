@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
 public partial class DeleteVideoCommand
 {
@@ -8,10 +10,10 @@ public partial class DeleteVideoCommand
     /// </summary>
     public class DeleteVideoLinkHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
     {
-        readonly IVideoRepository _repository;
+        readonly IRepository<Video> _repository;
         readonly IPublisher _publisher;
 
-        public DeleteVideoLinkHandler(IVideoRepository repository, IPublisher publisher)
+        public DeleteVideoLinkHandler(IRepository<Video> repository, IPublisher publisher)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
@@ -19,14 +21,15 @@ public partial class DeleteVideoCommand
 
         public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
         {
-            var wasDeleted = await _repository.DeleteVideoAsync(request.VideoId);
+            var target = await _repository.GetByIdAsync(request.VideoId, cancellationToken);
+            if (target == null)
+                return new DeleteVideoResponse(null, false);
 
-            if (wasDeleted)
-            {
-                await _publisher.Publish(new VideoDeletedEvent(request.VideoId));
-            }
+            await _repository.DeleteAsync(target, cancellationToken);
 
-            return new DeleteVideoResponse(request.VideoId, wasDeleted);
+            await _publisher.Publish(new VideoDeletedEvent(target));
+            
+            return new DeleteVideoResponse(target, true);
         }
     }
 }

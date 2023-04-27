@@ -1,6 +1,3 @@
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Model;
-
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
 [Collection("Sequence")]
@@ -9,17 +6,17 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
     public VideomaticDbContextTests(VideomaticDbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Fixture.SkipDeletingDatabase();
+        //Fixture.SkipDeletingDatabase();
     }
 
     public VideomaticDbContextFixture Fixture { get; }
 
     [Theory]
     [InlineData(null)]
-    public async Task CanCreateDbContext([FromServices] VideomaticDbContext db)
+    public async Task CreatesSeededDbContext([FromServices] VideomaticDbContext db)
     {
         var cnt = await db.Videos.CountAsync();
-        cnt.Should().Be(0); 
+        cnt.Should().Be(YouTubeVideos.HintsCount);   // Should be seeded
     }
 
     [Theory]
@@ -47,7 +44,7 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
             .ThenInclude(x => x.Lines)
             .Include(x => x.Thumbnails)
             .Include(x => x.Artifacts)
-            .FirstAsync(v => v.Id == video.Id);
+            .SingleAsync(v => v.Id == video.Id);
 
         record.Should().NotBeNull();
         record!.Id.Should().Be(video.Id);
@@ -58,8 +55,9 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
         record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
         record!.Artifacts.Should().BeEquivalentTo(video.Artifacts);
 
-        var res = await db.DeleteVideoAsync(video.Id);
-        res.Should().BeTrue();
+        db.Remove(video);
+        var res = await db.SaveChangesAsync();
+        res.Should().BeGreaterThan(0);
     }
 
     [Theory]
@@ -70,7 +68,7 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
     public async Task ImportVideoAndPersistToDb(
        string url,
        [FromServices] IVideoImporter importer,
-       [FromServices] IVideoRepository storage)
+       [FromServices] IRepository<Video> storage)
     {
         // Imports 
         Video video = await importer.ImportAsync(new Uri(url));
@@ -80,7 +78,8 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
         video.Thumbnails.Should().HaveCountGreaterThan(0);
 
         // Persists
-        await storage.UpdateVideoAsync(video);
+        await storage.UpdateAsync(video); // Will add a new record
+        await storage.SaveChangesAsync();
 
         // Now reads
         video.Id.Should().BeGreaterThan(0);
@@ -102,5 +101,9 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
 
         record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
         record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+
+        db.Remove(video);
+        var res = await db.SaveChangesAsync();
+        res.Should().BeGreaterThan(0);
     }
 }

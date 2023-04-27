@@ -1,6 +1,5 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+﻿using Company.Videomatic.Domain.Model;
 
-public class UpdateVideoResponse
-{
-    public bool Updated { get; set; }
-}
+namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+
+public record UpdateVideoResponse(Video? Video, bool Updated);
