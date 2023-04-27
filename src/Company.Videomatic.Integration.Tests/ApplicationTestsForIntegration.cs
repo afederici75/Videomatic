@@ -3,6 +3,7 @@ using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Tests.Features.Videos;
 using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Infrastructure.SqlServer.Tests;
+using Company.Videomatic.Infrastructure.TestData;
 using MediatR;
 using Xunit.DependencyInjection;
 
@@ -19,21 +20,26 @@ public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<Vi
 
     public VideomaticDbContextFixture Fixture { get; }
 
-    public override Task DeleteVideoCommandWorksForAllVides([FromServices] ISender sender, [FromServices] IRepository<Video> repository)
+    [Theory()]
+    [InlineData(null, null)]
+    public override Task DeleteVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepository<Video> repository)
     {
-        return base.DeleteVideoCommandWorksForAllVides(sender, repository);
+        return base.DeleteVideoCommandWorksForAllVideos(sender, repository);
     }
 
-    // It is possible to exclude inherited tests from the test run
-    //[Theory(Skip = "test skip")]
-    //[InlineData(null, null, null)]
+    [Theory()]
+    [InlineData(null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
+
     public override Task ImportVideoCommandWorks([FromServices] ISender sender, [FromServices] IRepository<Video> repository, string videoId)
     {
         return base.ImportVideoCommandWorks(sender, repository, videoId);
     }
 
-    public override Task ImportVideoCommandWorksForAllVides([FromServices] ISender sender, [FromServices] IRepository<Video> repository)
+    [Theory()]
+    [InlineData(null, null)]
+
+    public override Task ImportVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepository<Video> repository)
     {
-        return base.ImportVideoCommandWorksForAllVides(sender, repository);
+        return base.ImportVideoCommandWorksForAllVideos(sender, repository);
     }
 }

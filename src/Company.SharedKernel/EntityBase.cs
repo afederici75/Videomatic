@@ -2,9 +2,10 @@
 
 // Inspired by https://github.com/dotnet-architecture/eShopOnWeb/blob/9db2feb930c8cd1ce379bbebf76521a4ba0dddfb/src/ApplicationCore/Entities/BaseEntity.cs#L5
 
-// This can easily be modified to be BaseEntity<T> and public T Id to support different key types.
-// Using non-generic integer types for simplicity and to ease caching logic
-public abstract class BaseEntity : IEntity
+/// <summary>
+/// The base class for all entities.
+/// </summary>
+public abstract class EntityBase : IEntity
 {
     public virtual int Id { get; protected set; }
 

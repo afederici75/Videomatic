@@ -32,7 +32,7 @@ public class ApplicationTests
 
     [Theory]
     [InlineData(null, null)]
-    public virtual async Task ImportVideoCommandWorksForAllVides(
+    public virtual async Task ImportVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
             [FromServices] IRepository<Video> repository)
     {
@@ -54,7 +54,7 @@ public class ApplicationTests
 
     [Theory]
     [InlineData(null, null)]
-    public virtual async Task DeleteVideoCommandWorksForAllVides(
+    public virtual async Task DeleteVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
             [FromServices] IRepository<Video> repository)
     {        

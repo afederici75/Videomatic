@@ -5,11 +5,8 @@ using System.Net.Http.Headers;
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Video : IAggregateRoot, IEntity
-{
-    //public static Video WithId(int id) => new Video { Id = id };
-
-    public int Id { get; private set; }
+public class Video : EntityBase, IAggregateRoot
+{    
     public string ProviderId { get; init; }
     public string ProviderVideoId { get; init; }
     public string VideoUrl { get; init; }
@@ -26,8 +23,6 @@ public class Video : IAggregateRoot, IEntity
 
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
-
-    int IEntity.Id => this.Id;
 
     public Video(string providerId, string providerVideoId, string videoUrl, string? title = null, string? description = null)
     {
@@ -100,13 +95,6 @@ public class Video : IAggregateRoot, IEntity
         _artifacts.Clear();
         return this;
     }
-    
-    void IEntity.SetId(int id)
-    {
-        Guard.Against.NegativeOrZero(id);
-        Id = id;
-    }
-
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]
