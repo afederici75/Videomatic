@@ -1,6 +1,10 @@
-﻿namespace Company.Videomatic.Domain.Specifications;
+﻿using MediatR;
 
-public class GetVideosSpecification : Specification<Video>
+namespace Company.Videomatic.Domain.Specifications;
+
+public class GetVideosSpecification : Specification<Video>,
+    IRequest<Video>,    
+    ISpecification<Video>
 {
     public GetVideosSpecification(params int[] ids)
     { 

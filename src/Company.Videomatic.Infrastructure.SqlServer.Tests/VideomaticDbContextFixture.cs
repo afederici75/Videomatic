@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
-public class VideomaticDbContextFixture : IDisposable
+public class VideomaticDbContextFixture : IDisposable, IAsyncLifetime
 {
     public VideomaticDbContextFixture(VideomaticDbContext context)
     {
@@ -18,6 +18,23 @@ public class VideomaticDbContextFixture : IDisposable
         _skipDeletingDatabase = true;
     }
 
+    bool _skipTestData = false;
+    public void SkipTestData()
+    { 
+        _skipTestData = true;
+    }
+
+
+    public async Task InitializeAsync()
+    {
+        if (_skipTestData)
+            return;
+
+        await CommitAllYouTubeVideos();
+    }
+
+    public Task DisposeAsync() => Task.CompletedTask;
+
     public VideomaticDbContext DbContext { get; }
 
     public void Dispose()
@@ -27,7 +44,7 @@ public class VideomaticDbContextFixture : IDisposable
     }
 
     int[]? _videoIds = null;
-    public async Task<int[]> CommitAllYouTubeVideos()
+    async Task<int[]> CommitAllYouTubeVideos()
     {
         if (_videoIds != null)
             return _videoIds;        
@@ -48,4 +65,5 @@ public class VideomaticDbContextFixture : IDisposable
         _videoIds = videos.Select(v => v.Id).ToArray();
         return _videoIds;
     }
+
 }

@@ -1,3 +1,6 @@
+4/26
+-Most of the day on Specifications. Great results!
+
 4/25
 -Renamed Drivers to Infrastructure. It's a better name and more DDD-ish.	
 

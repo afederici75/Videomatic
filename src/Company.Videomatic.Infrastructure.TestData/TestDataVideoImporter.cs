@@ -8,7 +8,7 @@ public class TestDataVideoImporter : IVideoImporter
     {
         var info = YouTubeVideos.GetInfoByUri(uri);
 
-        var video = await VideoDataGenerator.CreateVideoFromFileAsync(info.VideoId,
+        var video = await VideoDataGenerator.CreateVideoFromFileAsync(info.ProviderVideoId,
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts));
 

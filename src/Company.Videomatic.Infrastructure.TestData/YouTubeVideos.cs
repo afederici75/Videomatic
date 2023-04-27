@@ -7,7 +7,7 @@ public static class YouTubeVideos
     public const string SwamiTadatmananda_WhySoManyGodsInHinduism = "BBd3aHnVnuE";
     public const string HyonGakSunim_WhatIsZen = "BFfb2P5wxC0";
 
-    public record VideoHint(string VideoId, string VideoUrl, string Title, int TransctriptCount, int ThumbnailsCount);
+    public record VideoHint(string ProviderVideoId, string VideoUrl, string Title, int TransctriptCount, int ThumbnailsCount);
     
     readonly static List<VideoHint> _videoHints;
     static YouTubeVideos()
@@ -37,12 +37,12 @@ public static class YouTubeVideos
             };
     }
 
-    public static string[] GetVideoIds() => _videoHints.Select(v => v.VideoId).ToArray();
+    public static string[] GetVideoIds() => _videoHints.Select(v => v.ProviderVideoId).ToArray();
     public static string GetUrl(string videoId) => GetUri(videoId).ToString();
     public static Uri GetUri(string videoId) => new Uri($"https://www.youtube.com/watch?v={videoId}");
 
     public static VideoHint GetInfoByVideoId(string videoId)
-        => _videoHints.First(v => v.VideoId.Equals(videoId, StringComparison.OrdinalIgnoreCase));
+        => _videoHints.First(v => v.ProviderVideoId.Equals(videoId, StringComparison.OrdinalIgnoreCase));
 
     public static VideoHint GetInfoByUri(Uri uri)
         => GetInfoByUrl(uri.ToString());

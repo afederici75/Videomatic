@@ -1,6 +1,10 @@
-﻿namespace Company.Videomatic.Domain.Specifications;
+﻿using MediatR;
 
-public class GetVideoSpecification : Specification<Video>, ISingleResultSpecification<Video>
+namespace Company.Videomatic.Domain.Specifications;
+
+public class GetVideoSpecification : Specification<Video>, 
+    IRequest<Video>,
+    ISingleResultSpecification<Video>
 {
     public GetVideoSpecification(int id)
     {
@@ -16,9 +20,9 @@ public class GetVideoSpecification : Specification<Video>, ISingleResultSpecific
          );
     }
 
-    public GetVideoSpecification(string videoProviderId)
+    public GetVideoSpecification(string providerVideoId)
     {
-        Query.Where(x => x.ProviderVideoId == videoProviderId);
+        Query.Where(x => x.ProviderVideoId == providerVideoId);
     }
 }
 
