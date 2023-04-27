@@ -1,3 +1,4 @@
+using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Domain.Model;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
@@ -59,5 +60,47 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
 
         var res = await db.DeleteVideoAsync(video.Id);
         res.Should().BeTrue();
-    }    
+    }
+
+    [Theory]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.RickAstley_NeverGonnaGiveYouUp}", null, null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.AldousHuxley_DancingShiva}", null, null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism}", null, null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.HyonGakSunim_WhatIsZen}", null, null)]
+    public async Task ImportVideoAndPersistToDb(
+       string url,
+       [FromServices] IVideoImporter importer,
+       [FromServices] IVideoRepository storage)
+    {
+        // Imports 
+        Video video = await importer.ImportAsync(new Uri(url));
+
+        video.Transcripts.Should().HaveCountGreaterThan(0);
+        video.Transcripts.First().Lines.Should().HaveCountGreaterThan(0);
+        video.Thumbnails.Should().HaveCountGreaterThan(0);
+
+        // Persists
+        await storage.UpdateVideoAsync(video);
+
+        // Now reads
+        video.Id.Should().BeGreaterThan(0);
+
+        var db = Fixture.DbContext;
+        db.ChangeTracker.Clear();
+
+        var record = await db.Videos
+            .AsNoTracking()
+            .Include(x => x.Transcripts)
+            .ThenInclude(x => x.Lines)
+            .Include(x => x.Thumbnails)
+            .FirstAsync(v => v.Id == video.Id);
+
+        record.Should().NotBeNull();
+        record!.Id.Should().Be(video.Id);
+        record!.Title.Should().Be(video.Title);
+        record!.Description.Should().Be(video.Description);
+
+        record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
+        record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+    }
 }

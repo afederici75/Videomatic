@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Company.Videomatic.Application.Abstractions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,8 @@ public class Startup
     {
         var cfg = LoadConfiguration();
 
-        services.AddSqlServerDriver(cfg);   
+        services.AddSqlServerDriver(cfg);
+        services.AddScoped<IVideoImporter, TestDataVideoImporter>();
     }
 
     public static IConfiguration LoadConfiguration()

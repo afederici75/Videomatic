@@ -7,9 +7,9 @@ using Xunit.DependencyInjection;
 namespace Company.Videomatic.Integration.Tests;
 
 [Collection("Sequence")]
-public class IntegrationApplicationTests : ApplicationTests, IClassFixture<VideomaticDbContextFixture>
+public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<VideomaticDbContextFixture>
 {
-    public IntegrationApplicationTests(VideomaticDbContextFixture videomaticDbContextFixture)
+    public ApplicationTestsForIntegration(VideomaticDbContextFixture videomaticDbContextFixture)
     {
         Fixture = videomaticDbContextFixture ?? throw new ArgumentNullException(nameof(videomaticDbContextFixture));
         Fixture.SkipDeletingDatabase();
