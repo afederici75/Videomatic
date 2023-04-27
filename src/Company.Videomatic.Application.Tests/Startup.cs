@@ -17,8 +17,8 @@ public class Startup
         services.AddApplication(cfg);
 
         // Mocks
-        services.AddScoped<IVideoImporter, TestDataVideoImporter>(); // <-- This is the important one
         services.AddScoped<IRepository<Video>, InMemoryRepository<Video>>();
+        services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 
