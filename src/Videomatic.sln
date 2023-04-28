@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.TestData", "Company.Videomatic.Infrastructure.TestData\Company.Videomatic.Infrastructure.TestData.csproj", "{9641C3EA-7E8B-47B6-951B-4579A6C3EEF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SharedKernel", "Company.SharedKernel\Company.SharedKernel.csproj", "{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.SharedKernel", "Company.SharedKernel\Company.SharedKernel.csproj", "{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

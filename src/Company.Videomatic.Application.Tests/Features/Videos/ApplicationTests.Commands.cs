@@ -1,6 +1,4 @@
-﻿using Company.SharedKernel.Specifications;
-
-namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 public partial class ApplicationTests
 {    
@@ -8,8 +6,8 @@ public partial class ApplicationTests
     [InlineData(null, null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
     public virtual async Task ImportVideoCommandWorks(
             [FromServices] ISender sender,
-            [FromServices] IRepository<Video> repository,
-            [FromServices] IRepository<Video> repository2,
+            [FromServices] IRepositoryBase<Video> repository,
+            [FromServices] IRepositoryBase<Video> repository2,
             string videoId)
     {
         // Imports a video
@@ -43,7 +41,7 @@ public partial class ApplicationTests
     [InlineData(null, null)]
     public virtual async Task ImportVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
-            [FromServices] IRepository<Video> repository)
+            [FromServices] IRepositoryBase<Video> repository)
     {
         var newIds = new HashSet<int>();        
         foreach (var videoId in YouTubeVideos.GetVideoIds())
@@ -65,7 +63,7 @@ public partial class ApplicationTests
     [InlineData(null, null)]
     public virtual async Task DeleteVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
-            [FromServices] IRepository<Video> repository)
+            [FromServices] IRepositoryBase<Video> repository)
     {        
         // Imports 4 videos
         var videoIds = YouTubeVideos.GetVideoIds();

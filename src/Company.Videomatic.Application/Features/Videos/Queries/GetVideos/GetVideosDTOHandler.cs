@@ -5,9 +5,9 @@ namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 public class GetVideosDTOHandler : IRequestHandler<GetVideosDTOQuery, QueryResponse<VideoDTO>>
 {
-    readonly IRepository<Video> _repository;
+    readonly IReadRepositoryBase<Video> _repository;
 
-    public GetVideosDTOHandler(IRepository<Video> repository)
+    public GetVideosDTOHandler(IReadRepositoryBase<Video> repository)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }

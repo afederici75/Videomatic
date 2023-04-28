@@ -16,3 +16,5 @@ global using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo
 global using Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 global using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
+global using Ardalis.Specification;
+global using Company.SharedKernel.Specifications;

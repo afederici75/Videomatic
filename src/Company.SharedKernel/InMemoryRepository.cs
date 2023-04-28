@@ -1,6 +1,6 @@
 ﻿namespace Company.SharedKernel;
 
-public class InMemoryRepository<T> : IRepository<T>
+public class InMemoryRepository<T> : IRepositoryBase<T>, IReadRepositoryBase<T>
     where T : class, IEntity
 {
     readonly Dictionary<int, T> _items = new();

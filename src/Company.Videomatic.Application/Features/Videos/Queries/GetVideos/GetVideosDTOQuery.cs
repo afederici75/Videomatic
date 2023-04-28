@@ -8,5 +8,5 @@ public record GetVideosDTOQuery(
     string? ProviderVideoIdPrefix = default,
     string? VideoUrlPrefix = default,
     int? Skip = 0, 
-    string[]? Includes = null, 
+    string[]? Includes = default, 
     string[]? OrderBy = default) : IRequest<QueryResponse<VideoDTO>>;

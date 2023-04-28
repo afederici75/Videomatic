@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Application.Behaviors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,12 +12,15 @@ public static class DependencyInjectionExtensions
         // IOptions
 
         // Services
+        services.AddValidatorsFromAssembly(typeof(IVideoAnalyzer).Assembly);
+
         services.AddMediatR(cfg => {
             cfg.RegisterServicesFromAssembly(typeof(IVideoAnalyzer).Assembly);
             //cfg.AddBehavior<IPipelineBehavior<Ping, Pong>, PingPongBehavior>();
             //cfg.AddOpenBehavior(typeof(GenericBehavior<,>));
-        });
-
+        })            
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
+            .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));        
 
         return services;
     }       

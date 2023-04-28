@@ -1,6 +1,4 @@
-﻿using Company.SharedKernel.Specifications;
-
-namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
 public partial class UpdateVideoCommand
 {
@@ -9,10 +7,10 @@ public partial class UpdateVideoCommand
     /// </summary>
     public class UpdateVideoCommandHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
     {
-        private readonly IRepository<Video> _storage;
+        private readonly IRepositoryBase<Video> _storage;
         private readonly IPublisher _publisher;
 
-        public UpdateVideoCommandHandler(IRepository<Video> videoStorage, IPublisher publisher)
+        public UpdateVideoCommandHandler(IRepositoryBase<Video> videoStorage, IPublisher publisher)
         {
             _storage = videoStorage ?? throw new ArgumentNullException(nameof(videoStorage));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

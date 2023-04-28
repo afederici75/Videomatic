@@ -17,8 +17,9 @@ public class Startup
         services.AddApplication(cfg);
 
         // Mocks
-        services.AddScoped<IRepository<Video>, InMemoryRepository<Video>>();
-        
+        services.AddScoped(typeof(IRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
+        services.AddScoped(typeof(IReadRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
+
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }

@@ -1,5 +1,6 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 
+global using Ardalis.Specification;
 global using Ardalis.Specification.EntityFrameworkCore;
 
 global using Company.SharedKernel;

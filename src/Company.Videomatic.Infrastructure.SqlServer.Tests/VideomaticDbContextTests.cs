@@ -68,7 +68,7 @@ public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture
     public async Task ImportVideoAndPersistToDb(
        string url,
        [FromServices] IVideoImporter importer,
-       [FromServices] IRepository<Video> storage)
+       [FromServices] IRepositoryBase<Video> storage)
     {
         // Imports 
         Video video = await importer.ImportAsync(new Uri(url));

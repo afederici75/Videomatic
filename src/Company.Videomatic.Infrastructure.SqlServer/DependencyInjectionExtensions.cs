@@ -27,7 +27,8 @@ public static class DependencyInjectionExtensions
         //});
 
        // Services
-       services.AddScoped(typeof(IRepository<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
+       services.AddScoped(typeof(IRepositoryBase<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
+       services.AddScoped(typeof(IReadRepositoryBase<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
 
         return services;
     }   
