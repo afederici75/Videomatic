@@ -1,8 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿namespace Ardalis.Specification;
 
-namespace Ardalis.Specification;
-
-public static class SpecificationBuilderExtensions
+public static class ArdalisSpecificationBuilderExtensions
 {
     /// <summary>
     /// Sets AsNoTracking, OrderBy(x => x.Id), and inclusions.

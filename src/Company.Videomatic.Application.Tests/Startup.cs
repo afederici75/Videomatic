@@ -18,6 +18,7 @@ public class Startup
 
         // Mocks
         services.AddScoped<IRepository<Video>, InMemoryRepository<Video>>();
+        
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }

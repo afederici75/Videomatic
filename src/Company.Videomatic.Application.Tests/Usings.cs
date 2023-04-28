@@ -14,4 +14,5 @@ global using Company.Videomatic.Infrastructure.TestData;
 
 global using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 global using Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
+global using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 

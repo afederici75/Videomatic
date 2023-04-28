@@ -1,10 +1,4 @@
-﻿using Company.SharedKernel.Specifications;
-using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
-using Newtonsoft.Json;
-using Xunit.Abstractions;
-
-namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 public partial class ApplicationTests
 {    
@@ -43,7 +37,7 @@ public partial class ApplicationTests
 
     [Theory]
     [InlineData(null)]
-    public virtual async Task QueryOnlySome(
+    public virtual async Task QueryOnly2BVideosFromHttp(
             [FromServices] ISender sender)
     {
         var cmd = new GetVideosDTOQuery(
