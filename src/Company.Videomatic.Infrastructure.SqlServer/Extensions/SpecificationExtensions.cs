@@ -9,7 +9,7 @@ public static class SpecificationExtensions
         where T : class
         => query.WithSpecification(specification)
                 .ToListAsync(cancellationToken);
-
+    
     public static Task<T> SingleAsync<T>(this IQueryable<T> query, ISpecification<T> specification, CancellationToken cancellationToken = default)
         where T : class
         => query.WithSpecification(specification)

@@ -19,15 +19,16 @@ public partial class ImportVideoCommand
         {
             _importer = importer ?? throw new ArgumentNullException(nameof(importer));
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _analyzer = analyzer;
+            _analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer));
         }
 
         public async Task<ImportVideoResponse> Handle(ImportVideoCommand request, CancellationToken cancellationToken)
         {
-            // Imports the video   
+            // Imports the video from the provider url
             Video video = await _importer.ImportAsync(new Uri(request.VideoUrl));
 
             // Generates artifacts for the video
+            // TODO: these should be queued and processed asynchronously
             Task<Artifact> summaryTask = _analyzer.SummarizeVideoAsync(video);
             Task<Artifact> reviewTask = _analyzer.ReviewVideoAsync(video);
             

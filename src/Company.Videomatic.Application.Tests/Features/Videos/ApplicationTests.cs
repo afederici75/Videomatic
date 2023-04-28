@@ -1,4 +1,4 @@
-﻿using Company.SharedKernel.Queries;
+﻿using Company.SharedKernel.Specifications;
 
 namespace Company.Videomatic.Application.Tests.Features.Videos;
 
@@ -25,7 +25,7 @@ public class ApplicationTests
         response.ArtifactsCount.Should().BeGreaterThan(0);
 
         Video? video2 = await repository.FirstOrDefaultAsync(
-            new GetEntityQuery<Video>(response.VideoId, new[] 
+            new GetOneSpecification<Video>(response.VideoId, new[] 
             { 
                 nameof(Video.Artifacts),
                 nameof(Video.Thumbnails),

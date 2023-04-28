@@ -1,4 +1,4 @@
-﻿using Company.SharedKernel.Queries;
+﻿using Company.SharedKernel.Specifications;
 
 namespace Company.Videomatic.Application.Features.Videos.Commands.UpdateVideo;
 
@@ -21,12 +21,14 @@ public partial class UpdateVideoCommand
         public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
         {
             // Looks up the video by id.
-            var query = new GetEntityQuery<Video>(request.VideoId);
+            GetOneSpecification<Video> query = new (request.VideoId);            
+            
             var video = await _storage.FirstOrDefaultAsync(query, cancellationToken);
             if (video is null)
-                return new UpdateVideoResponse(null, false);
+                return new (Video: null, Updated: false);
             
             // Updates the video.
+            // TODO: should use a mapper.
             video.Title = request.Title;
             video.Description = request.Description;
             
@@ -35,7 +37,7 @@ public partial class UpdateVideoCommand
             //  Publishes the event and returns the response.
             await _publisher.Publish(new VideoUpdatedEvent(video.Id));
             
-            return new UpdateVideoResponse(video, true);
+            return new (Video: video, Updated: true);
         }
     }
 }

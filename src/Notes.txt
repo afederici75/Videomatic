@@ -1,8 +1,16 @@
+4/28
+
+
+
 4/27
 -Lots of problems with DbContext's ChangeTracker
 	-Tests like ApplicationTests.ImportVideoCommandWorks() was blowing up because the 
 	ChangeTracker was tracking the Video object
 	-Resolved by clearing the ChangeTracker in the SaveChangesAsync
+	    -https://itsnotbugitsfeature.com/tag/entityframework/
+		-https://www.entityframeworktutorial.net/efcore/update-data-in-entity-framework-core.aspx
+		-https://www.learnentityframeworkcore.com/dbcontext/modifying-data
+		-https://pmichaels.net/entity-framework-error-cannot-be-tracked/entity-framework-cannot-be-tracked/
 
 -Adding IRepository stuff
 -Key articles so far:

@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
-using Company.SharedKernel.Queries;
+using Company.SharedKernel.Specifications;
 using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Domain.Queries;
 using System.Reflection;
@@ -24,18 +24,49 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideosSpecificationPaged()
     {        
-        var page1 = await Videos.ToListAsync(new GetVideosQuery(skip: 0, take: 3));        
+        var page1 = await Videos.ToListAsync(new GetVideosQuery(skip: 0, take: 3));
         var page2 = await Videos.ToListAsync(new GetVideosQuery(skip: 3, take: 1));
 
         page1.Should().HaveCount(3);
         page2.Should().HaveCount(1);
+
+        page1.Max(x => x.Id).Should().BeLessThan(page2.Max(y => y.Id));
+
+        var allPages = page1.Concat(page2).ToList();
+        allPages.ForEach(x => x.Thumbnails.Should().BeEmpty());
+        allPages.ForEach(x => x.Artifacts.Should().BeEmpty());
+        allPages.ForEach(x => x.Transcripts.Should().BeEmpty());        
+    }
+
+    [Fact]
+    public async Task GetVideosPagedWithJustThumbnails()
+    {
+        string[] includes = new [] { 
+            nameof(Video.Thumbnails)
+        };        
+
+        var page1 = await Videos.ToListAsync(new GetVideosQuery(skip: 0, take: 3, includes: includes));
+        var page2 = await Videos.ToListAsync(new GetVideosQuery(skip: 3, take: 1, includes: includes));
+
+        page1.Should().HaveCount(3);
+        page1.ForEach(x => x.Thumbnails.Should().HaveCountGreaterThan(0));
+        page1.ForEach(x => x.Artifacts.Should().BeEmpty());
+        page1.ForEach(x => x.Transcripts.Should().BeEmpty());
+
+        page2.Should().HaveCount(1);
+        page2.ForEach(x => x.Thumbnails.Should().HaveCountGreaterThan(0));
+        page1.ForEach(x => x.Artifacts.Should().BeEmpty());
+        page1.ForEach(x => x.Transcripts.Should().BeEmpty());
+
         page1.Max(x => x.Id).Should().BeLessThan(page2.Max(y => y.Id));
     }
 
     [Fact]
     public async Task GetVideosByIds()
     {
-        var res = await Videos.ToListAsync(new GetVideosQuery(ids: _videoIds));
+        var query = new GetVideosQuery(ids: _videoIds);
+
+        var res = await Videos.ToListAsync(query);
 
         res.Should().HaveCount(_videoIds.Length);        
     }
@@ -43,11 +74,13 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideosByTitleAndDescription()
     {
-        var res = await Videos.ToListAsync(new GetVideosQuery(
-                titlePrefix: "aldous",
-                descriptionPrefix: "aldous",
-                providerIdPrefix: "YOUtuBE"
-                ));
+        var query = new GetVideosQuery(
+            take: 10, 
+            titlePrefix: "aldous",
+            descriptionPrefix: "aldous",
+            providerIdPrefix: "YOUtuBE");
+
+        var res = await Videos.ToListAsync(query);
 
         res.Should().HaveCount(1);
     }
@@ -58,7 +91,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
         var query = new GetVideoQuery(providerVideoId: YouTubeVideos.AldousHuxley_DancingShiva);
 
         // Using WithSpecification() extension method
-        var res1 = await Videos.ToListAsync(query);
+        var res1 = await Videos.WithSpecification(query).ToListAsync();
         res1.Should().HaveCount(1);
         
         // Using SingleAsync() extension method

@@ -1,23 +1,25 @@
 ﻿namespace Company.Videomatic.Domain.Queries;
 
-public class GetVideosQuery : GetEntitiesQuery<Video>,
+public class GetVideosQuery : GetManySpecification<Video>,
     IRequest<Video>
 {
-    public GetVideosQuery(params int[] ids)
+    public GetVideosQuery(int[] ids, string[]? orderBy = default)
+        : base(ids, orderBy)
     { 
         Query.Where(x => ids.Contains(x.Id));
     }
 
     public GetVideosQuery(
-        int take = 10,
-        
+        int take = 10,        
         string? titlePrefix = default, 
         string? descriptionPrefix = default,
         string? providerIdPrefix = default,
         
         int? skip = 0,
-        string[]? includes = null)
-        : base(take: take, skip: skip, includes: includes)
+        string[]? includes = null, 
+        string[]? orderBy = default)
+
+        : base(take: take, skip: skip, includes: includes, orderBy: orderBy)
     {
         if (!string.IsNullOrWhiteSpace(titlePrefix))
         {
