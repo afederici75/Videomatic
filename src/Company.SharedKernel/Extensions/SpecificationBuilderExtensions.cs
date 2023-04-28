@@ -10,7 +10,7 @@ public static class SpecificationBuilderExtensions
     public static ISpecificationBuilder<TEntity> DefaultQuery<TEntity>(this ISpecificationBuilder<TEntity> @this, 
         string[]? includes = default,
         string[]? orderBy = default)
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         @this.AsNoTracking()
              .Include(includes)
@@ -28,7 +28,7 @@ public static class SpecificationBuilderExtensions
         int? skip = null, 
         string[]? includes = default,
         string[]? orderBy = default)
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         @this.DefaultQuery(includes, orderBy)
              .Skip(skip ?? 0)
@@ -42,7 +42,7 @@ public static class SpecificationBuilderExtensions
     /// </summary>
     public static ISpecificationBuilder<TEntity> Include<TEntity>(this ISpecificationBuilder<TEntity> @this,
         string[]? includes)
-        where TEntity : class, IEntity
+        where TEntity : class
     {
         if (includes is null)
             return @this;

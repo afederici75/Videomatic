@@ -40,7 +40,7 @@ public partial class ImportVideoCommand
             var updatedVideo = await _repository.AddAsync(video);            
 
             return new ImportVideoResponse(
-                updatedVideo.Id,
+                VideoId: updatedVideo.Id,
                 ThumbNailCount: updatedVideo.Thumbnails.Count(),
                 TranscriptCount: updatedVideo.Transcripts.Count(),
                 ArtifactsCount: updatedVideo.Artifacts.Count()
