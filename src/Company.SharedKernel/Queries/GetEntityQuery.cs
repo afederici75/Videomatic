@@ -4,7 +4,10 @@ public class GetEntityQuery<TEntity> : QueryBase<TEntity>,
     ISingleResultSpecification<TEntity>
     where TEntity : class, IEntity
 {
-    protected GetEntityQuery(string[]? includes = null)
+    protected GetEntityQuery(int take = 10,
+        int? skip = null,
+        string[]? includes = null)
+        : base(take, skip, includes)
     {
         if (includes != null)
         {
@@ -15,7 +18,7 @@ public class GetEntityQuery<TEntity> : QueryBase<TEntity>,
         }
     }
     public GetEntityQuery(int id, string[]? includes = null)
-        : this(includes)
+        : base(includes: includes)
     {
         Query.Where(e => e.Id == id);        
     }

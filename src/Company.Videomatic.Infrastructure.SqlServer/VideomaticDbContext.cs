@@ -7,7 +7,7 @@ public partial class VideomaticDbContext : DbContext
 {
     public VideomaticDbContext(DbContextOptions<VideomaticDbContext> options) 
         : base(options)
-    {
+    {        
     }
     
     public DbSet<Video> Videos { get; set; } = null!;

@@ -1,4 +1,7 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using Company.SharedKernel.Abstractions;
+using Company.SharedKernel;
+using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Infrastructure.TestData;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +20,10 @@ public class Startup
         services.AddApplication(cfg);
         services.AddYouTubeDrivers(cfg);
         services.AddSemanticKernelDriver(cfg);
-        services.AddSqlServerDriver(cfg);        
+        services.AddSqlServerDriver(cfg);
+
+        services.AddScoped<IVideoImporter, MockVideoImporter>();
+        services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 
     public static IConfiguration LoadConfiguration()

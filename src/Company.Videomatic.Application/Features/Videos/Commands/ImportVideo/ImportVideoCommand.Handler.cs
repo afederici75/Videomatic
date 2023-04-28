@@ -9,16 +9,16 @@ public partial class ImportVideoCommand
     public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
     {
         readonly IVideoImporter _importer;
-        readonly IRepository<Video> _storage;
+        readonly IRepository<Video> _repository;
         readonly IVideoAnalyzer _analyzer;
 
         public ImportVideoCommandHandler(
             IVideoImporter importer,
-            IRepository<Video> storage,
+            IRepository<Video> repository,
             IVideoAnalyzer analyzer)
         {
             _importer = importer ?? throw new ArgumentNullException(nameof(importer));
-            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _analyzer = analyzer;
         }
 
@@ -36,9 +36,14 @@ public partial class ImportVideoCommand
             video.AddArtifacts(artifacts);
 
             // Creates the video 
-            var videoId = await _storage.AddAsync(video);
+            var updatedVideo = await _repository.AddAsync(video);            
 
-            return new ImportVideoResponse(video);
+            return new ImportVideoResponse(
+                updatedVideo.Id,
+                ThumbNailCount: updatedVideo.Thumbnails.Count(),
+                TranscriptCount: updatedVideo.Transcripts.Count(),
+                ArtifactsCount: updatedVideo.Artifacts.Count()
+                );
         }
 
     }

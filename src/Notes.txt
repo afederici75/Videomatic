@@ -1,5 +1,9 @@
 4/27
--
+-Lots of problems with DbContext's ChangeTracker
+	-Tests like ApplicationTests.ImportVideoCommandWorks() was blowing up because the 
+	ChangeTracker was tracking the Video object
+	-Resolved by clearing the ChangeTracker in the SaveChangesAsync
+
 -Adding IRepository stuff
 -Key articles so far:
     - https://deviq.com/design-patterns

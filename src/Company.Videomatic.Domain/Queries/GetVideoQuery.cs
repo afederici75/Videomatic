@@ -3,7 +3,7 @@
 public class GetVideoQuery : GetEntityQuery<Video>,
     IRequest<Video>
 {
-    public GetVideoQuery(int id) : base(id)
+    public GetVideoQuery(int id, string[]? includes = null) : base(id, includes)
     {
     }
 

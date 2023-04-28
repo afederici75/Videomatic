@@ -28,11 +28,11 @@ public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<Vi
     }
 
     [Theory()]
-    [InlineData(null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
+    [InlineData(null, null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
 
-    public override Task ImportVideoCommandWorks([FromServices] ISender sender, [FromServices] IRepository<Video> repository, string videoId)
+    public override Task ImportVideoCommandWorks([FromServices] ISender sender, [FromServices] IRepository<Video> repository, [FromServices] IRepository<Video> repository2, string videoId)
     {
-        return base.ImportVideoCommandWorks(sender, repository, videoId);
+        return base.ImportVideoCommandWorks(sender, repository, repository2, videoId);
     }
 
     [Theory()]
