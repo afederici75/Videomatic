@@ -12,7 +12,10 @@ public static class JsonHelper
             NullValueHandling = NullValueHandling.Ignore,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
+    }    
+
+    public static string Serialize<T>(T obj)
+    {
+        return JsonConvert.SerializeObject(obj, GetJsonSettings());
     }
-
-
 }

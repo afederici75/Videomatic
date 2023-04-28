@@ -24,7 +24,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
 
             modelBuilder.HasSequence("IdSequence");
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Artifact", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Artifact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("Artifact");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Folder", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("Folders");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Thumbnail", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Thumbnail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,7 +112,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("Thumbnails");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Transcript", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +132,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("Transcripts");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.TranscriptLine", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.TranscriptLine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,7 +161,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("TranscriptLine");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Video", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,6 +179,11 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("ProviderVideoId")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("Title")
                         .HasMaxLength(100)
@@ -202,71 +207,71 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Artifact", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Artifact", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Video", null)
+                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Artifacts")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Folder", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Folder", "Parent")
+                    b.HasOne("Company.Videomatic.Domain.Model.Folder", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Thumbnail", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Thumbnail", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Video", null)
+                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Thumbnails")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Transcript", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Video", null)
+                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Transcripts")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.TranscriptLine", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.TranscriptLine", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Transcript", null)
+                    b.HasOne("Company.Videomatic.Domain.Model.Transcript", null)
                         .WithMany("Lines")
                         .HasForeignKey("TranscriptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Video", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Folder", null)
+                    b.HasOne("Company.Videomatic.Domain.Model.Folder", null)
                         .WithMany("Videos")
                         .HasForeignKey("FolderId");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Folder", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
                 {
                     b.Navigation("Children");
 
                     b.Navigation("Videos");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Transcript", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
                 {
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Video", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
                 {
                     b.Navigation("Artifacts");
 

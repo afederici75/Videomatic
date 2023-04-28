@@ -5,6 +5,7 @@ using Company.Videomatic.Domain.Model;
 using Company.Videomatic.Infrastructure.SqlServer.Tests;
 using Company.Videomatic.Infrastructure.TestData;
 using MediatR;
+using Xunit.Abstractions;
 using Xunit.DependencyInjection;
 
 namespace Company.Videomatic.Integration.Tests;
@@ -12,10 +13,11 @@ namespace Company.Videomatic.Integration.Tests;
 [Collection("Sequence")]
 public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<VideomaticDbContextFixture>
 {
-    public ApplicationTestsForIntegration(VideomaticDbContextFixture videomaticDbContextFixture)
+    public ApplicationTestsForIntegration(ITestOutputHelper output, VideomaticDbContextFixture videomaticDbContextFixture)
+        : base(output)
     {
         Fixture = videomaticDbContextFixture ?? throw new ArgumentNullException(nameof(videomaticDbContextFixture));
-        //Fixture.SkipDeletingDatabase();
+        Fixture.SkipDeletingDatabase();
     }
 
     public VideomaticDbContextFixture Fixture { get; }

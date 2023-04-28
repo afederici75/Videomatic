@@ -1,9 +1,12 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
-
-public partial class GetVideosDTOQuery : QueryBase<GetVideosDTOSpecification, VideoDTO>
-{
-    public GetVideosDTOQuery(GetVideosDTOSpecification specification) : base(specification)
-    {
-    }
-}
+public record GetVideosDTOQuery(
+    int Take = 10, 
+    string? TitlePrefix = default, 
+    string? DescriptionPrefix = default, 
+    string? ProviderIdPrefix = default,
+    string? ProviderVideoIdPrefix = default,
+    string? VideoUrlPrefix = default,
+    int? Skip = 0, 
+    string[]? Includes = null, 
+    string[]? OrderBy = default) : IRequest<QueryResponse<VideoDTO>>;

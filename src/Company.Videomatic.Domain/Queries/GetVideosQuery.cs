@@ -11,10 +11,13 @@ public class GetVideosQuery : GetManySpecification<Video>,
 
     public GetVideosQuery(
         int take = 10,        
+        
         string? titlePrefix = default, 
         string? descriptionPrefix = default,
         string? providerIdPrefix = default,
-        
+        string? providerVideoIdPrefix = default,
+        string? videoUrlPrefix = default,
+
         int? skip = 0,
         string[]? includes = null, 
         string[]? orderBy = default)
@@ -34,6 +37,16 @@ public class GetVideosQuery : GetManySpecification<Video>,
         if (!string.IsNullOrWhiteSpace(providerIdPrefix))
         {
             Query.Where(x => (x.ProviderId != null) && (x.ProviderId.StartsWith(providerIdPrefix)));
-        }        
+        }
+
+        if (!string.IsNullOrWhiteSpace(providerVideoIdPrefix))
+        {
+            Query.Where(x => (x.ProviderVideoId != null) && (x.ProviderVideoId.StartsWith(providerVideoIdPrefix)));            
+        }
+
+        if (!string.IsNullOrWhiteSpace(videoUrlPrefix))
+        {
+            Query.Where(x => (x.VideoUrl != null) && (x.VideoUrl.StartsWith(videoUrlPrefix)));
+        }
     }
 }

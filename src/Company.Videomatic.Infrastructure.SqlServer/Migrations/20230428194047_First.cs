@@ -38,6 +38,7 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
                     ProviderId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    ProviderVideoId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     VideoUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
@@ -51,6 +52,26 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         column: x => x.FolderId,
                         principalTable: "Folders",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Artifact",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VideoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artifact", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Artifact_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,6 +135,16 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Artifact_Title",
+                table: "Artifact",
+                column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Artifact_VideoId",
+                table: "Artifact",
+                column: "VideoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Folders_ParentId",
@@ -184,6 +215,9 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Artifact");
+
             migrationBuilder.DropTable(
                 name: "Thumbnails");
 

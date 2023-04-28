@@ -14,7 +14,9 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
                .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
 
         builder.Property(x => x.ProviderId)
-               .HasMaxLength(DbConstants.FieldLengths.ProviderId);  
+               .HasMaxLength(DbConstants.FieldLengths.ProviderId);
+        builder.Property(x => x.ProviderVideoId)
+               .HasMaxLength(DbConstants.FieldLengths.YTVideoId);
         builder.Property(x => x.VideoUrl)
                .HasMaxLength(DbConstants.FieldLengths.Url); 
         builder.Property(x => x.Title)
