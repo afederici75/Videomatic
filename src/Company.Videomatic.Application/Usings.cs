@@ -12,5 +12,5 @@ global using Company.Videomatic.Application.Features.Videos.ImportVideo;
 global using Company.Videomatic.Application.Features.Videos.GetVideos;
 global using Company.Videomatic.Application.Features.Videos.UpdateVideo;
 global using Company.Videomatic.Domain.Model;
-global using Company.Videomatic.Domain.Specifications;
+global using Company.Videomatic.Application.Specifications;
 global using Company.Videomatic.Application.Abstractions;

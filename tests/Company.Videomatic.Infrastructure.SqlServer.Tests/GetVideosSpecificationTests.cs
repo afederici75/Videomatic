@@ -1,9 +1,4 @@
-﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
-using Company.SharedKernel.Specifications;
-using Company.Videomatic.Domain.Model;
-using Company.Videomatic.Domain.Specifications;
-using System.Reflection;
+﻿using Ardalis.Specification.EntityFrameworkCore;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 

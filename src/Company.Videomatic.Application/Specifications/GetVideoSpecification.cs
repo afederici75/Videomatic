@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Specifications;
+﻿namespace Company.Videomatic.Application.Specifications;
 
 public class GetVideoSpecification : GetOneSpecification<Video>,
     IRequest<Video>
