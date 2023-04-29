@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UserSecretsId>49d7974e-b349-459e-a89d-b96d06d8670a</UserSecretsId>
+    <UserSecretsId>6110d401-3f6e-4578-8921-1217bdf54b6e</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="testSettings.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="testSettings.json">
@@ -16,14 +16,13 @@
     </Content>
   </ItemGroup>
 
-
   <ItemGroup>
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.2945" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="Xunit.DependencyInjection" Version="8.7.1" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
@@ -38,9 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.TestData\Company.Videomatic.Infrastructure.TestData.csproj" />
   </ItemGroup>
 
 </Project>
