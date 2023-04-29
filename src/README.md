@@ -4,4 +4,5 @@ Videomatic is a video cataloging application that uses Clean Architecture and Do
 
 ## SharedKernel
 
+
 [I'm a relative reference to a repository file](../Company.SharedKernel/README.md)
