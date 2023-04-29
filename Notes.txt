@@ -4,6 +4,10 @@
 	-This is already showing me that the APi generation is not as good as I thought: the result
 	types are not being generated correctly. I'm getting a lot of voide methods for Queryes.
 		-Fixed using ProducesResponseType and AsParameters (<-- glorious!!)
+-Weird docker issue after restart. Sql 2022 gives me 'A connection was successfully established 
+with the server, but then an error occurred during the pre-login handshake. (provider: TCP Provider, 
+error: 0 - An existing connection was forcibly closed by the remote host.)'
+	-I had to install 2019.
 
 4/28
 -Great day with a lot of things. I think I'm getting close to a MVP.

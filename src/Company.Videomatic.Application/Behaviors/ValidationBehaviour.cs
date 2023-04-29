@@ -1,5 +1,8 @@
-﻿namespace Company.Videomatic.Application.Behaviors;
+﻿using System.Diagnostics;
 
+namespace Company.Videomatic.Application.Behaviors;
+
+[DebuggerStepThrough]
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;

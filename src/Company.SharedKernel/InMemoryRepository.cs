@@ -1,10 +1,13 @@
-﻿namespace Company.SharedKernel;
+﻿using System.Collections.Concurrent;
+
+namespace Company.SharedKernel;
 
 public class InMemoryRepository<T> : IRepositoryBase<T>, IReadRepositoryBase<T>
     where T : class, IEntity
 {
-    readonly Dictionary<int, T> _items = new();
+    readonly static ConcurrentDictionary<int, T> _items = new();
     int _sequence = 0;
+
 
     public Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
     {
@@ -12,7 +15,7 @@ public class InMemoryRepository<T> : IRepositoryBase<T>, IReadRepositoryBase<T>
         Guard.Against.OutOfRange(entity.Id, nameof(entity), 0, 0);
         
         entity.SetId(Interlocked.Increment(ref _sequence));
-        _items.Add(entity.Id, entity);
+        _items.TryAdd(entity.Id, entity);
 
         return Task.FromResult(entity);
     }
@@ -57,7 +60,7 @@ public class InMemoryRepository<T> : IRepositoryBase<T>, IReadRepositoryBase<T>
         Guard.Against.Null(entity, nameof(entity));
         Guard.Against.NegativeOrZero(entity.Id);
 
-        _items.Remove(entity.Id);
+        _items.TryRemove(entity.Id, out var deleted);
         return Task.CompletedTask;
     }
 

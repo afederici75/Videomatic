@@ -3,7 +3,7 @@
 namespace Company.Videomatic.Application.Tests;
 
 [Collection("Sequence")]
-public partial class VideosTests
+public partial class VideosTests : IClassFixture<VideomaticRepositoryFixture>
 {
     public VideosTests(VideomaticRepositoryFixture fixture, ITestOutputHelper output)
     {
