@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Features;
-using Company.Videomatic.Application.Features.Videos.Queries;
-
-namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 public partial class ApplicationTests
 {    

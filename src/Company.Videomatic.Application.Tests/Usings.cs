@@ -11,10 +11,12 @@ global using Company.Videomatic.Application.Abstractions;
 global using Company.Videomatic.Domain.Model;
 global using Company.Videomatic.Domain.Queries;
 global using Company.Videomatic.Infrastructure.TestData;
+global using Company.Videomatic.Application.Features;
+global using Company.Videomatic.Application.Features.Queries;
+global using Company.Videomatic.Application.Features.Videos.Queries;
 
 global using Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 global using Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
-global using Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
 
 global using Ardalis.Specification;
 global using Company.SharedKernel.Specifications;

@@ -1,7 +1,4 @@
-﻿
-using Company.SharedKernel;
-
-namespace Company.Videomatic.Application.Features.Videos.Queries;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public class GetVideosDTOQueryHandler : IRequestHandler<GetVideosDTOQuery, QueryResponse<VideoDTO>>
 {

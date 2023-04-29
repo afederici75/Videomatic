@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features;
+﻿namespace Company.Videomatic.Application.Features.Queries;
 
 public record QueryResponse<TDTO>(IEnumerable<TDTO> Items)
     where TDTO : class
