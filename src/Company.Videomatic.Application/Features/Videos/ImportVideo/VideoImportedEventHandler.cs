@@ -8,10 +8,10 @@ public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent
     readonly IRepositoryBase<Video> _repository;
 
     public VideoImportedEventHandler(
-        IVideoAnalyzer importer,
+        IVideoAnalyzer analyzer,
         IRepositoryBase<Video> repository)
     {
-        _analyzer = importer ?? throw new ArgumentNullException(nameof(importer));
+        _analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     public async Task Handle(VideoImportedEvent request, CancellationToken cancellationToken)
@@ -21,8 +21,8 @@ public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent
 
         // Generates artifacts for the video
         // TODO: Use Polly to retry
-        Task<Artifact> summaryTask = _analyzer.SummarizeVideoAsync(newVideo);
-        Task<Artifact> reviewTask = _analyzer.ReviewVideoAsync(newVideo);
+        var summaryTask = _analyzer.SummarizeVideoAsync(newVideo);
+        var reviewTask = _analyzer.ReviewVideoAsync(newVideo);
 
         Artifact[] artifacts = await Task.WhenAll(summaryTask, reviewTask);
 
