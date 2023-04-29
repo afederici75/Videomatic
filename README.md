@@ -31,7 +31,7 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 ### Tests	
 1. [Domain Tests](src/Company.Videomatic.Domain.Tests/README.md)
 2. [Application Tests](src/Company.Videomatic.Application.Tests/README.md)
-1. [Semantic Kernel Tests](src/Company.Videomatic.Domain.Tests/README.md)
+1. [Semantic Kernel Tests](src/Company.Videomatic.Infrastructure.SemanticKernel.Tests/README.md)
 2. [SQL Server Tests](src/Company.Videomatic.Infrastructure.SqlServer.Tests/README.md)
 1. [YouTube Tests](src/Company.Videomatic.Infrastructure.YouTube.Tests/README.md)
 1. [Integration Tests](src/Company.Videomatic.Integration.Tests/README.md)
