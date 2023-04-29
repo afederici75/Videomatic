@@ -4,13 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
+public class TranscriptConfiguration : EntityConfigurationBase<Transcript>
 {
-    public void Configure(EntityTypeBuilder<Transcript> builder)
+    public override void Configure(EntityTypeBuilder<Transcript> builder)
     {
+        base.Configure(builder);
         // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
         
         // Relationships
         builder.HasMany(x => x.Lines)

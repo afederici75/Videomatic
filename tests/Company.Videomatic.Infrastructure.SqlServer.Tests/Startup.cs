@@ -12,7 +12,7 @@ public class Startup
     {
         var cfg = LoadConfiguration();
 
-        services.AddSqlServerDriver(cfg);
+        services.AddSqlServerInfrastructure(cfg);
         services.AddScoped<IVideoImporter, MockVideoImporter>();
     }
 

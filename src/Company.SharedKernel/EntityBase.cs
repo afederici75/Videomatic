@@ -7,7 +7,7 @@
 /// </summary>
 public abstract class EntityBase : IEntity
 {
-    public virtual int Id { get; protected set; }
+    public virtual int Id { get; private set; }
 
     public void SetId(int id)
     {

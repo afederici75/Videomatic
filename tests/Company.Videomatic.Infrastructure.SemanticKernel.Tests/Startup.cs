@@ -14,7 +14,7 @@ public class Startup
         // IOptions
 
         // Services
-        services.AddSemanticKernelDriver(cfg);
+        services.AddSemanticKernelInfrastructure(cfg);
     }
 
     public static IConfiguration LoadConfiguration()

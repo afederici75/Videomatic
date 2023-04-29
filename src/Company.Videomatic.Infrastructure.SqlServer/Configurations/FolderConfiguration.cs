@@ -5,14 +5,13 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class FolderConfiguration : IEntityTypeConfiguration<Folder>
+public class FolderConfiguration : EntityConfigurationBase<Folder>
 {
-    public void Configure(EntityTypeBuilder<Folder> builder)
+    public override void Configure(EntityTypeBuilder<Folder> builder)
     {
-        // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
+        base.Configure(builder);
 
+        // Fields
         builder.Property(x => x.Name)
                .HasMaxLength(DbConstants.FieldLengths.FolderName);
 

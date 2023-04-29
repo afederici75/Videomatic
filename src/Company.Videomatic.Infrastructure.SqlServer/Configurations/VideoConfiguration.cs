@@ -1,18 +1,18 @@
 ﻿using Company.Videomatic.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class VideoConfiguration : IEntityTypeConfiguration<Video>
+public class VideoConfiguration : EntityConfigurationBase<Video>
 {
-    public void Configure(EntityTypeBuilder<Video> builder)
+    public override void Configure(EntityTypeBuilder<Video> builder)
     {
-        // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
+        base.Configure(builder);    
 
+        // Fields        
         builder.Property(x => x.ProviderId)
                .HasMaxLength(DbConstants.FieldLengths.ProviderId);
         builder.Property(x => x.ProviderVideoId)

@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class ArtifactConfiguration : IEntityTypeConfiguration<Artifact>
+public class ArtifactConfiguration : EntityConfigurationBase<Artifact>
 {
-    public void Configure(EntityTypeBuilder<Artifact> builder)
+    public override void Configure(EntityTypeBuilder<Artifact> builder)
     {
+        base.Configure(builder);
         // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
-
+        
         builder.Property(x => x.Title)
                .HasMaxLength(DbConstants.FieldLengths.ArtifactTitle);
 

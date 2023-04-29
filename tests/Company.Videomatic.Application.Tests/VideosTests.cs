@@ -3,14 +3,14 @@
 namespace Company.Videomatic.Application.Tests;
 
 [Collection("Sequence")]
-public partial class VideosTests : IClassFixture<VideomaticRepositoryFixture>
+public partial class VideosTests : IClassFixture<VideomaticDbContextFixture>
 {
-    public VideosTests(VideomaticRepositoryFixture fixture, ITestOutputHelper output)
+    public VideosTests(VideomaticDbContextFixture fixture, ITestOutputHelper output)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Output = output ?? throw new ArgumentNullException(nameof(output));
     }
 
-    protected VideomaticRepositoryFixture Fixture { get; }
+    protected VideomaticDbContextFixture Fixture { get; }
     protected ITestOutputHelper Output { get; }
 }

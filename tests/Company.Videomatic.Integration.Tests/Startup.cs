@@ -18,9 +18,9 @@ public class Startup
         services.AddLogging(x => x.AddConsole());
 
         services.AddApplication(cfg);
-        services.AddYouTubeDrivers(cfg);
-        services.AddSemanticKernelDriver(cfg);
-        services.AddSqlServerDriver(cfg);
+        services.AddYouTubeInfrastructure(cfg);
+        services.AddSemanticKernelInfrastructure(cfg);
+        services.AddSqlServerInfrastructure(cfg);
 
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();

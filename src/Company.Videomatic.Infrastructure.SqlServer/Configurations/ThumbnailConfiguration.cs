@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class ThumbnailConfiguration : IEntityTypeConfiguration<Thumbnail>
+public class ThumbnailConfiguration : EntityConfigurationBase<Thumbnail>
 {
-    public void Configure(EntityTypeBuilder<Thumbnail> builder)
+    public override void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
-        // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
+        base.Configure(builder);
 
+        // Fields        
         builder.Property(x => x.Url)
                .HasMaxLength(DbConstants.FieldLengths.Url);               
 

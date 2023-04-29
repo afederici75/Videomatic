@@ -1,7 +1,7 @@
 ﻿namespace Company.Videomatic.Integration.Tests;
 
 [Collection("Sequence")]
-public class IntegrationVideosTests : VideosTests, IClassFixture<VideomaticDbContextFixture>
+public class IntegrationVideosTests : VideosTests//, IClassFixture<VideomaticDbContextFixture>
 {
     public IntegrationVideosTests(VideomaticDbContextFixture videomaticDbContextFixture, ITestOutputHelper output)
         : base(videomaticDbContextFixture, output)

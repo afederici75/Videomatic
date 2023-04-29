@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication(builder.Configuration);
-builder.Services.AddYouTubeDrivers(builder.Configuration);
-builder.Services.AddSqlServerDriver(builder.Configuration);
-builder.Services.AddSemanticKernelDriver(builder.Configuration);
+builder.Services.AddYouTubeInfrastructure(builder.Configuration);
+builder.Services.AddSqlServerInfrastructure(builder.Configuration);
+builder.Services.AddSemanticKernelInfrastructure(builder.Configuration);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

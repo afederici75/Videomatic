@@ -4,14 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptLineConfiguration : IEntityTypeConfiguration<TranscriptLine>
+public class TranscriptLineConfiguration : EntityConfigurationBase<TranscriptLine>
 {
-    public void Configure(EntityTypeBuilder<TranscriptLine> builder)
+    public override void Configure(EntityTypeBuilder<TranscriptLine> builder)
     {
-        // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
-        
+        base.Configure(builder);
         //Indices
         //builder.HasIndex(x => x.Id).IsUnique();
         builder.HasIndex(x => x.Text);
