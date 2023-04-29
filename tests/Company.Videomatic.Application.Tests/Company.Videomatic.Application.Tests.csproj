@@ -7,9 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="VideosTests.Commands.cs" />
+    <Compile Remove="VideosTests.cs" />
+    <Compile Remove="VideosTests.Queries.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="testSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="VideosTests.Commands.cs" />
+    <None Include="VideosTests.cs" />
+    <None Include="VideosTests.Queries.cs" />
   </ItemGroup>
 
 

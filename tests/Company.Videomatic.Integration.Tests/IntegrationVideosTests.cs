@@ -11,9 +11,9 @@ public class IntegrationVideosTests : VideosTests, IClassFixture<VideomaticDbCon
 
     [Theory()]
     [InlineData(null, null)]
-    public override Task X_DeleteVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepositoryBase<Video> repository)
+    public override Task DeleteVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepositoryBase<Video> repository)
     {
-        return base.X_DeleteVideoCommandWorksForAllVideos(sender, repository);
+        return base.DeleteVideoCommandWorksForAllVideos(sender, repository);
     }
 
     [Theory()]
