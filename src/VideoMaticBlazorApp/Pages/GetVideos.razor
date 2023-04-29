@@ -1,0 +1,49 @@
+﻿@page "/getvideos"
+@using Videomatic.Client;
+@inject HttpClient HttpClient;
+
+<PageTitle>Get Videos</PageTitle>
+
+<h1>Get Videos</h1>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@foreach (var v in videoDTOs)
+{
+    <p>@v.Title</p>
+    <p>@v.Description</p>
+    <a href="@v.VideoUrl" target="_blank">Watch Video</a>
+}
+
+
+@code {
+    IEnumerable<VideoDTO> videoDTOs= new List<VideoDTO>();
+
+    int? take = 10;
+    string titlePrefix = string.Empty;
+    string descriptionPrefix = string.Empty;
+    string providerIdPrefix = string.Empty;
+    string providerVideoIdPrefix = string.Empty;
+    string videoUrlPrefix = string.Empty;
+    int? skip = 0;
+    List<string> includes = new List<string>();
+    List<string> orderBy = new List<string>();
+
+    private async Task IncrementCount()
+    {
+        var client = new VideomaticClient("https://localhost:7108", HttpClient);
+                
+        var response = await client.GetVideosDTOQueryAsync(
+            take, 
+            titlePrefix, 
+            descriptionPrefix, 
+            providerIdPrefix, 
+            providerVideoIdPrefix, 
+            videoUrlPrefix, 
+            skip, 
+            includes, 
+            orderBy);
+
+        videoDTOs = response.Items;
+    }
+}

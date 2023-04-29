@@ -1,5 +1,11 @@
-4/28
+4/29
+-Added WebAPI to the project. Technically we have a REST endpoint!
+-Trying to code a Blazor app that uses only the Swagger stuff.
+	-This is already showing me that the APi generation is not as good as I thought: the result
+	types are not being generated correctly. I'm getting a lot of voide methods for Queryes.
 
+4/28
+-Great day with a lot of things. I think I'm getting close to a MVP.
 
 
 4/27
