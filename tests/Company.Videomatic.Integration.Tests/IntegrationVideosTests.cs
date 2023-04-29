@@ -1,22 +1,19 @@
 ﻿namespace Company.Videomatic.Integration.Tests;
 
 [Collection("Sequence")]
-public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<VideomaticDbContextFixture>
+public class IntegrationVideosTests : VideosTests, IClassFixture<VideomaticDbContextFixture>
 {
-    public ApplicationTestsForIntegration(ITestOutputHelper output, VideomaticDbContextFixture videomaticDbContextFixture)
-        : base(output)
+    public IntegrationVideosTests(VideomaticDbContextFixture videomaticDbContextFixture, ITestOutputHelper output)
+        : base(videomaticDbContextFixture, output)
     {
-        Fixture = videomaticDbContextFixture ?? throw new ArgumentNullException(nameof(videomaticDbContextFixture));
-        Fixture.SkipDeletingDatabase();
+        Fixture.SkipDeletingDatabase = true;
     }
-
-    public VideomaticDbContextFixture Fixture { get; }
 
     [Theory()]
     [InlineData(null, null)]
-    public override Task DeleteVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepositoryBase<Video> repository)
+    public override Task X_DeleteVideoCommandWorksForAllVideos([FromServices] ISender sender, [FromServices] IRepositoryBase<Video> repository)
     {
-        return base.DeleteVideoCommandWorksForAllVideos(sender, repository);
+        return base.X_DeleteVideoCommandWorksForAllVideos(sender, repository);
     }
 
     [Theory()]

@@ -38,8 +38,4 @@
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Settings\" />
-  </ItemGroup>
-
 </Project>
