@@ -1,0 +1,1 @@
+# Company.Videomatic.Domain.Tests

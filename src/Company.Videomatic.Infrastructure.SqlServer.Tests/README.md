@@ -1,0 +1,1 @@
+# Company.Videomatic.Infrastructure.SqlServer.Tests
