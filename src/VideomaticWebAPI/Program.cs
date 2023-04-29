@@ -1,3 +1,4 @@
+using Company.Videomatic.Application.Features.Videos.GetTranscript;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,48 +24,45 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
 app.MapGet("/videos/" + nameof(GetVideosDTOQuery), 
-    async (int? Take,
-           string? TitlePrefix,
-           string? DescriptionPrefix,
-           string? ProviderIdPrefix,
-           string? ProviderVideoIdPrefix,
-           string? VideoUrlPrefix,
-           int? Skip,
-           string[]? Includes,
-           string[]? OrderBy,
+    async ([AsParameters] GetVideosDTOQuery query,
            ISender sender) => 
     {
-        var qry = new GetVideosDTOQuery(Take, TitlePrefix, DescriptionPrefix, ProviderIdPrefix, ProviderVideoIdPrefix, VideoUrlPrefix, Skip, Includes, OrderBy);
-        var resp = await sender.Send(qry);
+        var resp = await sender.Send(query);
+        return Results.Ok(resp);
+    });
+
+app.MapGet("/videos/" + nameof(GetTranscriptDTOQuery),
+    async ([AsParameters] GetTranscriptDTOQuery query,
+           ISender sender) =>
+    {
+        var resp = await sender.Send(query);
         return Results.Ok(resp);
     });
 
 
+app.MapPost("videos/" + nameof(ImportVideoCommand),
+    async (ImportVideoCommand command,
+           ISender sender) =>
+    {
+        var resp = await sender.Send(command);
+        return Results.Ok(resp);
+    });
+
+app.MapPut("videos/" + nameof(UpdateVideoCommand),
+    async (UpdateVideoCommand command,
+           ISender sender) =>
+    {
+        var resp = await sender.Send(command);
+        return Results.Ok(resp);
+    });
+
+app.MapDelete("videos/" + nameof(DeleteVideoCommand),
+    async ([AsParameters] ImportVideoCommand command,
+           ISender sender) =>
+    {
+        var resp = await sender.Send(command);
+        return Results.Ok(resp);
+    });
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
