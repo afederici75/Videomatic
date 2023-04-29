@@ -17,11 +17,8 @@ public partial class ApplicationTests
         // Verifies
         response.Should().NotBeNull();
         response.VideoId.Should().BeGreaterThan(0);
-        response.ThumbNailCount.Should().BeGreaterThan(0);
-        response.ArtifactsCount.Should().BeGreaterThan(0);
-        response.ArtifactsCount.Should().BeGreaterThan(0);
-
-        Video? video2 = await repository.FirstOrDefaultAsync(
+        
+        Video? dbVideo = await repository.FirstOrDefaultAsync(
             new GetOneSpecification<Video>(response.VideoId, new[] 
             { 
                 nameof(Video.Artifacts),
@@ -30,11 +27,13 @@ public partial class ApplicationTests
                 nameof(Video.Transcripts)+'.'+nameof(Transcript.Lines),
             }));
 
-        video2.Should().NotBeNull();    
-        response.VideoId.Should().Be(response.VideoId);
-        
+        dbVideo!.Should().NotBeNull();            
+        dbVideo!.Thumbnails.Count().Should().BeGreaterThan(0);
+        dbVideo!.Transcripts.Count().Should().BeGreaterThan(0);
+        dbVideo!.Artifacts.Count().Should().BeGreaterThan(0);
+
         // Cleans up
-        await repository2.DeleteAsync(video2!);
+        await repository2.DeleteAsync(dbVideo!);
     }
 
     [Theory]

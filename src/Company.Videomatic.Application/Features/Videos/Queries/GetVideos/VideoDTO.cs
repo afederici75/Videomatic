@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Model;
-
-namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record VideoDTO(
     int Id, 
@@ -11,3 +9,5 @@ public record VideoDTO(
     IEnumerable<Artifact>? Artifacts, 
     IEnumerable<Thumbnail>? Thumbnails, 
     IEnumerable<Transcript>? Transcripts);
+
+// TODO: Should have a DTO for each entity

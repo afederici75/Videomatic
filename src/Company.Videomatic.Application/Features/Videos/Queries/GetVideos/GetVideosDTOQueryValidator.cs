@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public class GetVideosDTOQueryValidator : AbstractValidator<GetVideosDTOQuery>
 {

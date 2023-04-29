@@ -1,10 +1,13 @@
-﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿using Company.Videomatic.Application.Features;
+using Company.Videomatic.Application.Features.Videos.Queries;
+
+namespace Company.Videomatic.Application.Tests.Features.Videos;
 
 public partial class ApplicationTests
 {    
     [Theory]
     [InlineData(null)]
-    public virtual async Task QueryAllVideoDTOs(
+    public virtual async Task GetVideosDTOQuery_AllVideoDTOs(
             [FromServices] ISender sender)
     {
         var cmd = new GetVideosDTOQuery();
@@ -37,7 +40,7 @@ public partial class ApplicationTests
 
     [Theory]
     [InlineData(null)]
-    public virtual async Task QueryOnly2BVideosFromHttp(
+    public virtual async Task GetVideosDTOQuery_Only2BVideosFromHttp(
             [FromServices] ISender sender)
     {
         var cmd = new GetVideosDTOQuery(
@@ -50,5 +53,23 @@ public partial class ApplicationTests
 
         // Should be all videos
         response.Items.Should().HaveCount(2); // 2 videos: BBd3aHnVnuE and BFfb2P5wxC0        
+    }
+
+    [Theory]
+    [InlineData(null)]
+    public virtual async Task GetTranscriptDTOQuery_Aldous(
+            [FromServices] ISender sender)
+    {
+        var getVideosQry = new GetVideosDTOQuery(Take: 1, Includes: new[] { nameof(Video.Transcripts) } );
+        QueryResponse<VideoDTO> firstVideo = await sender.Send(getVideosQry);
+
+        var getTranscriptQry = new GetTranscriptDTOQuery(
+            TranscriptId: firstVideo.Items!.First()!.Transcripts!.First().Id
+            );
+
+        var transcript = await sender.Send(getTranscriptQry);
+        transcript.LineCount.Should().BeGreaterThan(0);
+
+        Output.WriteLine(JsonHelper.Serialize(transcript));
     }
 }

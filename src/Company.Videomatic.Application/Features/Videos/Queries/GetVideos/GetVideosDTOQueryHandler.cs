@@ -1,13 +1,13 @@
 ﻿
 using Company.SharedKernel;
 
-namespace Company.Videomatic.Application.Features.Videos.Queries.GetVideos;
+namespace Company.Videomatic.Application.Features.Videos.Queries;
 
-public class GetVideosDTOHandler : IRequestHandler<GetVideosDTOQuery, QueryResponse<VideoDTO>>
+public class GetVideosDTOQueryHandler : IRequestHandler<GetVideosDTOQuery, QueryResponse<VideoDTO>>
 {
     readonly IReadRepositoryBase<Video> _repository;
 
-    public GetVideosDTOHandler(IReadRepositoryBase<Video> repository)
+    public GetVideosDTOQueryHandler(IReadRepositoryBase<Video> repository)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }

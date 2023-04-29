@@ -1,7 +1,7 @@
 ﻿namespace Company.Videomatic.Infrastructure.SqlServer;
 
 public class VideomaticRepository<T> : RepositoryBase<T>, IRepositoryBase<T>, IReadRepositoryBase<T>
-    where T : class, IAggregateRoot, IEntity
+    where T : class
 {
     private readonly VideomaticDbContext _dbContext;
 

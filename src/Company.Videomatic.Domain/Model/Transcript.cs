@@ -2,10 +2,8 @@
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Transcript
+public class Transcript : EntityBase
 {
-    public int Id { get; init; }
-
     public string? Language { get; set; }
 
     [JsonIgnore]

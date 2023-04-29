@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Features\Settings\Queries\" />
     <Folder Include="Features\Settings\Commands\" />
-    <Folder Include="Features\Videos\Queries\GetTranscript\" />
   </ItemGroup>
 
 </Project>

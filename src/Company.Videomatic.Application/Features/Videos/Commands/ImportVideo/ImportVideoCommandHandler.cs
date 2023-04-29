@@ -1,5 +1,6 @@
 ﻿
 using Ardalis.Specification;
+using Company.Videomatic.Application.Features.Videos.Commands.DeleteVideo;
 
 namespace Company.Videomatic.Application.Features.Videos.Commands.ImportVideo;
 
@@ -10,41 +11,41 @@ public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, Imp
 {
     readonly IVideoImporter _importer;
     readonly IRepositoryBase<Video> _repository;
-    readonly IVideoAnalyzer _analyzer;
+    readonly IPublisher _publisher;
 
     public ImportVideoCommandHandler(
         IVideoImporter importer,
         IRepositoryBase<Video> repository,
-        IVideoAnalyzer analyzer)
+        IPublisher publisher)        
     {
         _importer = importer ?? throw new ArgumentNullException(nameof(importer));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer));
+        _publisher = publisher;
     }
 
     public async Task<ImportVideoResponse> Handle(ImportVideoCommand request, CancellationToken cancellationToken)
     {
         // Imports the video from the provider url
-        Video video = await _importer.ImportAsync(new Uri(request.VideoUrl));
+        Video newVideo = await _importer.ImportAsync(new Uri(request.VideoUrl));
 
         // Generates artifacts for the video
         // TODO: these should be queued and processed asynchronously
-        Task<Artifact> summaryTask = _analyzer.SummarizeVideoAsync(video);
-        Task<Artifact> reviewTask = _analyzer.ReviewVideoAsync(video);
+        //Task<Artifact> summaryTask = _analyzer.SummarizeVideoAsync(newVideo);
+        //Task<Artifact> reviewTask = _analyzer.ReviewVideoAsync(newVideo);
 
-        Artifact[] artifacts = await Task.WhenAll(summaryTask, reviewTask);
+        //Artifact[] artifacts = await Task.WhenAll(summaryTask, reviewTask);
 
-        video.AddArtifacts(artifacts);
+        //newVideo.AddArtifacts(artifacts);
 
         // Creates the video 
-        var updatedVideo = await _repository.AddAsync(video);
+        var savedVideo = await _repository.AddAsync(newVideo);
+        
+        await _publisher.Publish(new VideoImportedEvent(
+            VideoId: savedVideo.Id,
+            ThumbNailCount: savedVideo.Thumbnails.Count(),
+            TranscriptCount: savedVideo.Transcripts.Count(),
+            ArtifactsCount: savedVideo.Artifacts.Count()));
 
-        return new ImportVideoResponse(
-            VideoId: updatedVideo.Id,
-            ThumbNailCount: updatedVideo.Thumbnails.Count(),
-            TranscriptCount: updatedVideo.Transcripts.Count(),
-            ArtifactsCount: updatedVideo.Artifacts.Count()
-            );
+        return new ImportVideoResponse(VideoId: savedVideo.Id);
     }
-
 }
