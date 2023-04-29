@@ -16,10 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Settings\Queries\" />
-    <Folder Include="Features\Settings\Commands\" />
-  </ItemGroup>
-
 </Project>

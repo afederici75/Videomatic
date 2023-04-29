@@ -12,7 +12,7 @@ public class GetVideosDTOQueryHandler : IRequestHandler<GetVideosDTOQuery, Query
     public async Task<QueryResponse<VideoDTO>> Handle(GetVideosDTOQuery request, CancellationToken cancellationToken)
     {
         var query = new GetVideosSpecification(
-            take: request.Take,
+            take: request.Take ?? 10,
             titlePrefix: request.TitlePrefix,
             descriptionPrefix: request.DescriptionPrefix,
             providerIdPrefix: request.ProviderIdPrefix,

@@ -4,15 +4,24 @@ namespace Ardalis.Specification;
 
 public static class ArdalisOrderByExtensions
 {
-    public static OrderedSpecificationBuilder<T> OrderBy<T>(
+    public static void OrderBy<T>(
         this ISpecificationBuilder<T> specificationBuilder,
-        string[]? orderByFields)
+        string[]? orderByFields) 
+        where T : class
     {
-        var join = string.Join(",", orderByFields ?? new[] { nameof(IEntity.Id) }); 
-        return OrderBy(specificationBuilder, join);
+        if ((orderByFields == null) || (orderByFields.Length == 0))
+        {
+            if (!typeof(IEntity).IsAssignableFrom(typeof(T)))
+                return;
+            
+            orderByFields = new[] { nameof(IEntity.Id) };            
+        }
+
+        var join = string.Join(",", orderByFields); 
+        OrderBy(specificationBuilder, join);
     }
     
-    public static OrderedSpecificationBuilder<T> OrderBy<T>(
+    static OrderedSpecificationBuilder<T> OrderBy<T>(
         this ISpecificationBuilder<T> specificationBuilder,
         string orderByFields)
     {
@@ -38,7 +47,7 @@ public static class ArdalisOrderByExtensions
         return orderedSpecificationBuilder;
     }
 
-    private static IDictionary<string, OrderTypeEnum> ParseOrderBy(string orderByFields)
+    static IDictionary<string, OrderTypeEnum> ParseOrderBy(string orderByFields)
     {
         var result = new Dictionary<string, OrderTypeEnum>();
         var fields = orderByFields.Split(',');

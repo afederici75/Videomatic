@@ -8,10 +8,11 @@ builder.Configuration.AddUserSecrets<WebApplication>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddApplication(builder.Configuration);
-builder.Services.AddYouTubeDrivers(builder.Configuration);
-builder.Services.AddSqlServerDriver(builder.Configuration);
-builder.Services.AddSemanticKernelDriver(builder.Configuration);
+builder.Services.AddHttpClient();
+//builder.Services.AddApplication(builder.Configuration);
+//builder.Services.AddYouTubeDrivers(builder.Configuration);
+//builder.Services.AddSqlServerDriver(builder.Configuration);
+//builder.Services.AddSemanticKernelDriver(builder.Configuration);
 
 var app = builder.Build();
 
@@ -26,6 +27,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+// Register the Swagger generator and the Swagger UI middlewares
+//app.UseOpenApi();
+//app.UseSwaggerUi3();
 
 app.UseRouting();
 

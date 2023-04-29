@@ -1,7 +1,7 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.GetVideos;
 
 public record GetVideosDTOQuery(
-    int Take = 10,
+    int? Take = 10,
     string? TitlePrefix = default,
     string? DescriptionPrefix = default,
     string? ProviderIdPrefix = default,
