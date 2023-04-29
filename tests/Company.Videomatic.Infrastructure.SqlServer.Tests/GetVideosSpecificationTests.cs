@@ -2,7 +2,7 @@
 using Ardalis.Specification.EntityFrameworkCore;
 using Company.SharedKernel.Specifications;
 using Company.Videomatic.Domain.Model;
-using Company.Videomatic.Domain.Queries;
+using Company.Videomatic.Domain.Specifications;
 using System.Reflection;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
@@ -24,8 +24,8 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideosSpecificationPaged()
     {        
-        var page1 = await Videos.ToListAsync(new GetVideosQuery(skip: 0, take: 3));
-        var page2 = await Videos.ToListAsync(new GetVideosQuery(skip: 3, take: 1));
+        var page1 = await Videos.ToListAsync(new GetVideosSpecification(skip: 0, take: 3));
+        var page2 = await Videos.ToListAsync(new GetVideosSpecification(skip: 3, take: 1));
 
         page1.Should().HaveCount(3);
         page2.Should().HaveCount(1);
@@ -45,8 +45,8 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
             nameof(Video.Thumbnails)
         };        
 
-        var page1 = await Videos.ToListAsync(new GetVideosQuery(skip: 0, take: 3, includes: includes));
-        var page2 = await Videos.ToListAsync(new GetVideosQuery(skip: 3, take: 1, includes: includes));
+        var page1 = await Videos.ToListAsync(new GetVideosSpecification(skip: 0, take: 3, includes: includes));
+        var page2 = await Videos.ToListAsync(new GetVideosSpecification(skip: 3, take: 1, includes: includes));
 
         page1.Should().HaveCount(3);
         page1.ForEach(x => x.Thumbnails.Should().HaveCountGreaterThan(0));
@@ -64,7 +64,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideosByIds()
     {
-        var query = new GetVideosQuery(ids: _videoIds);
+        var query = new GetVideosSpecification(ids: _videoIds);
 
         var res = await Videos.ToListAsync(query);
 
@@ -74,7 +74,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideosByTitleAndDescription()
     {
-        var query = new GetVideosQuery(
+        var query = new GetVideosSpecification(
             take: 10, 
             titlePrefix: "aldous",
             descriptionPrefix: "aldous",
@@ -88,7 +88,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     [Fact]
     public async Task GetVideoByProviderVideoId()
     {
-        var query = new GetVideoQuery(providerVideoId: YouTubeVideos.AldousHuxley_DancingShiva);
+        var query = new GetVideoSpecification(providerVideoId: YouTubeVideos.AldousHuxley_DancingShiva);
 
         // Using WithSpecification() extension method
         var res1 = await Videos.WithSpecification(query).ToListAsync();
@@ -104,7 +104,7 @@ public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixt
     {
         var info = YouTubeVideos.GetInfoByVideoId(videoId: YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism);
 
-        var res = await Videos.SingleAsync(new GetVideoQuery(            
+        var res = await Videos.SingleAsync(new GetVideoSpecification(            
             providerVideoId: info.ProviderVideoId,
             videoUrl: info.VideoUrl));
     }

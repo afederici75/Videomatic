@@ -52,7 +52,7 @@ public partial class ApplicationTests
         }
 
         // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosQuery(newIds.ToArray()));
+        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
         videos.Should().HaveCount(newIds.Count);
 
         await repository.DeleteRangeAsync(videos);        
@@ -77,7 +77,7 @@ public partial class ApplicationTests
         }
 
         // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosQuery(newIds.ToArray()));        
+        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));        
         videos.Should().HaveCount(newIds.Count);
 
         // Deletes
