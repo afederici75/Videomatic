@@ -1,4 +1,6 @@
 ﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Infrastructure.Data.Sqlite;
+using Company.Videomatic.Infrastructure.Data.SqlServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,8 +15,9 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddVideomaticData(cfg);
-        //services.AddVideomaticDataForSqlServer(cfg);
-        services.AddVideomaticDataForSqlite(cfg);
+        services.AddVideomaticSqliteDbContext(cfg);
+        services.AddVideomaticSqlServerDbContext(cfg);
+        
         services.AddScoped<IVideoImporter, MockVideoImporter>();        
     }
 

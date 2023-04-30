@@ -21,6 +21,9 @@ public class Startup
         services.AddVideomaticData(cfg);
         services.AddVideomaticDataForSqlite(cfg);
 
+        //services.AddVideomaticSqliteDbContext(cfg);
+        //services.AddVideomaticSqlServerDbContext(cfg);
+
         // Overrides
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();

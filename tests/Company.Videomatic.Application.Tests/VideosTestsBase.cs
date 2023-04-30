@@ -1,10 +1,13 @@
-﻿using Xunit.Abstractions;
+﻿using Company.Videomatic.Infrastructure.Data;
+using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
 
-public partial class VideosTests : RepositoryTestsBase<Video>
+public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbContext, Video>
+    where TDbContext : VideomaticDbContext
 {
-    public VideosTests(RepositoryFixture<Video> fixture) : base(fixture)
+    public VideosTestsBase(RepositoryFixture<TDbContext, Video> fixture) 
+        : base(fixture)
     {
     }
 
@@ -183,10 +186,9 @@ public partial class VideosTests : RepositoryTestsBase<Video>
     }
 
     [Theory]
-    [InlineData(null, null)]
+    [InlineData(null)]
     public virtual async Task DeleteVideoCommandWorksForAllVideos(
-            [FromServices] ISender sender,
-            [FromServices] IRepositoryBase<Video> repository)
+            [FromServices] ISender sender)
     {
         // Imports 4 videos
         var videoIds = YouTubeVideos.GetVideoIds();
@@ -201,7 +203,7 @@ public partial class VideosTests : RepositoryTestsBase<Video>
         }
 
         // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
+        IEnumerable<Video> videos = await Fixture.Repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
         videos.Should().HaveCount(newIds.Count);
 
         // Deletes

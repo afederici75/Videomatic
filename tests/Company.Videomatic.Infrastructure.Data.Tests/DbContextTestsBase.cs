@@ -12,3 +12,5 @@ public abstract class DbContextTestsBase<TDBContext>
 
     public DbContextFixture<TDBContext> Fixture { get; }
 }
+
+

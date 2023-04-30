@@ -13,7 +13,7 @@ public class DbContextFixture<TDBContext> : IAsyncLifetime
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
-        DbContext.Database.EnsureCreated();
+        DbContext.Database.Migrate();// EnsureCreated();
     }
 
     readonly ITestOutputHelperAccessor _outputAccessor;

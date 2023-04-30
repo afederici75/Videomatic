@@ -30,4 +30,28 @@ public static class DependencyInjectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddVideomaticSqlServerDbContext(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddDbContext<SqlServerVideomaticDbContext>(builder =>
+        {
+            var connectionName = $"{VideomaticConstants.Videomatic}.SqlServer";
+            var connString = configuration.GetConnectionString(connectionName);
+            if (string.IsNullOrWhiteSpace(connString))
+            {
+                throw new Exception($"Required connection string '{connectionName}' missing.");
+            }
+
+            builder.EnableSensitiveDataLogging()
+                   //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                   .UseSqlServer(connString, (opts) =>
+                   {
+                       opts.MigrationsAssembly(VideomaticConstants.MigrationAssemblyNamePrefix + SqlServerVideomaticDbContext.ProviderName);
+                   });
+        });
+
+        return services;
+    }
 }
