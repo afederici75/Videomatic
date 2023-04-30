@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptLineConfiguration : EntityConfigurationBase<TranscriptLine>
+public class TranscriptLineConfiguration : IEntityTypeConfiguration<TranscriptLine>
 {
-    public override void Configure(EntityTypeBuilder<TranscriptLine> builder)
+    public void Configure(EntityTypeBuilder<TranscriptLine> builder)
     {
         base.Configure(builder);
         //Indices

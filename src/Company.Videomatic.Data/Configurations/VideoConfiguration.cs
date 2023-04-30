@@ -1,15 +1,12 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Cryptography.X509Certificates;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
-
-public class VideoConfiguration : IEntityTypeConfiguration<Video>
+public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 {
     public void Configure(EntityTypeBuilder<Video> builder)
     {
+        // Common
+        builder.ConfigureIEntity();
+
         // Fields        
         builder.Property(x => x.ProviderId)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.ProviderId);
@@ -21,6 +18,7 @@ public class VideoConfiguration : IEntityTypeConfiguration<Video>
                .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoTitle);
         builder.Property(x => x.Description)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoDescription);
+
 
         // Relationships
         builder.HasMany(x => x.Thumbnails)

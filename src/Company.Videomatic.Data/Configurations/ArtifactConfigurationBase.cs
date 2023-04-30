@@ -1,11 +1,15 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Company.Videomatic.Infrastructure.Data.Extensions;
 
-public class ArtifactConfiguration : IEntityTypeConfiguration<Artifact>
+namespace Company.Videomatic.Infrastructure.Data.Configurations;
+
+public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {
     public void Configure(EntityTypeBuilder<Artifact> builder)
     {
-        // Fields
-        
+        // Common
+        builder.ConfigureIEntity();
+
+        // Fields        
         builder.Property(x => x.Title)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.ArtifactTitle);
 

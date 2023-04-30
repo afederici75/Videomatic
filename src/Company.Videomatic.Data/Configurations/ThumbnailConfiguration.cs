@@ -1,13 +1,12 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
-
-public class ThumbnailConfiguration : IEntityTypeConfiguration<Thumbnail>
+public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thumbnail>
 {
     public void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
+        // Common
+        builder.ConfigureIEntity();
+
         // Fields        
         builder.Property(x => x.Url)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.Url);               

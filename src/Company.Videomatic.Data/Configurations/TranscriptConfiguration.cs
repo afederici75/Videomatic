@@ -1,15 +1,14 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
-
-public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
+public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {
     public void Configure(EntityTypeBuilder<Transcript> builder)
     {
+        // Common
+        builder.ConfigureIEntity();
+
         // Fields
-        
+
         // Relationships
         builder.HasMany(x => x.Lines)
                .WithOne()

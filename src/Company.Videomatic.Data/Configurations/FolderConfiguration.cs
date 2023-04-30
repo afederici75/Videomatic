@@ -1,14 +1,12 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Security.Cryptography.X509Certificates;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
-
-public class FolderConfiguration : IEntityTypeConfiguration<Folder>
+public abstract class FolderConfigurationBase : IEntityTypeConfiguration<Folder>
 {
     public void Configure(EntityTypeBuilder<Folder> builder)
     {
+        // Common
+        builder.ConfigureIEntity();
+
         // Fields
         builder.Property(x => x.Name)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.FolderName);
