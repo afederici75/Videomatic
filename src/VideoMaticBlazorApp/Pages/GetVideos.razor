@@ -6,7 +6,29 @@
 
 <h1>Get Videos</h1>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+@if (_params == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@_params" OnSubmit="@Query">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputText @bind-Value="_params.TitlePrefix" placeholder="Title Prefix" />
+        <InputText @bind-Value="_params.DescriptionPrefix" placeholder="Description Prefix" />
+        <InputText @bind-Value="_params.ProviderIdPrefix" placeholder="Provider Id Prefix" />
+        <InputText @bind-Value="_params.ProviderVideoIdPrefix" placeholder="Provider Video Id Prefix" />
+        <InputText @bind-Value="_params.VideoUrlPrefix" placeholder="Video Url Prefix" />
+        <InputNumber @bind-Value="_params.Take" placeholder="Take" />
+        <InputNumber @bind-Value="_params.Skip" placeholder="Skip" />
+        @*<InputText @bind-Value="@includes" placeholder="Includes" />
+        <InputText @bind-Value="@orderBy" placeholder="Order By" />*@
+
+        <button type="submit">Submit</button>
+    </EditForm>
+}
 
 @foreach (var v in videoDTOs)
 {
@@ -15,34 +37,36 @@
     <a href="@v.VideoUrl" target="_blank">Watch Video</a>
 }
 
-
 @code {
-    IEnumerable<VideoDTO> videoDTOs= new List<VideoDTO>();
+    GetVideosDTOQueryAsyncParams _params = new ();
+    IEnumerable<VideoDTO> videoDTOs = new List<VideoDTO>();
 
-    int? take = 10;
-    string titlePrefix = string.Empty;
-    string descriptionPrefix = string.Empty;
-    string providerIdPrefix = string.Empty;
-    string providerVideoIdPrefix = string.Empty;
-    string videoUrlPrefix = string.Empty;
-    int? skip = 0;
-    List<string> includes = new List<string>();
-    List<string> orderBy = new List<string>();
+    class GetVideosDTOQueryAsyncParams
+    {
+        public int? Take { get; set; } = 10;
+        public int? Skip { get; set; } = 0;
+        public string TitlePrefix { get; set; } = string.Empty;
+        public string DescriptionPrefix { get; set; } = string.Empty;
+        public string ProviderIdPrefix { get; set; } = string.Empty;
+        public string ProviderVideoIdPrefix { get; set; } = string.Empty;
+        public string VideoUrlPrefix { get; set; } = string.Empty;
 
-    private async Task IncrementCount()
+    }    
+
+    private async Task Query()
     {
         var client = new VideomaticClient("https://localhost:7108", HttpClient);
                 
         var response = await client.GetVideosDTOQueryAsync(
-            take, 
-            titlePrefix, 
-            descriptionPrefix, 
-            providerIdPrefix, 
-            providerVideoIdPrefix, 
-            videoUrlPrefix, 
-            skip, 
-            includes, 
-            orderBy);
+            _params.Take, 
+            _params.TitlePrefix, 
+            _params.DescriptionPrefix, 
+            _params.ProviderIdPrefix, 
+            _params.ProviderVideoIdPrefix, 
+            _params.VideoUrlPrefix, 
+            _params.Skip, 
+            null, 
+            null);
 
         videoDTOs = response.Items;
     }

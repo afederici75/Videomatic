@@ -2,9 +2,8 @@
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Folder
+public class Folder : EntityBase
 {
-    public int Id { get; init; }
     public string Name { get; set; }
 
     public Folder? Parent { get; set; }

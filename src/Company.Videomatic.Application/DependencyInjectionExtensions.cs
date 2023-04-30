@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {    
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
 

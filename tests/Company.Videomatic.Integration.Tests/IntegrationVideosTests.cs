@@ -1,16 +1,15 @@
-﻿namespace Company.Videomatic.Integration.Tests;
+﻿using Company.Videomatic.Application.Tests.Videos;
+
+namespace Company.Videomatic.Integration.Tests;
 
 [Collection("Sequence")]
-public class ApplicationTestsForIntegration : ApplicationTests, IClassFixture<VideomaticDbContextFixture>
+public class IntegrationVideosTests : VideosTests//, IClassFixture<VideomaticDbContextFixture>
 {
-    public ApplicationTestsForIntegration(ITestOutputHelper output, VideomaticDbContextFixture videomaticDbContextFixture)
-        : base(output)
+    public IntegrationVideosTests(VideomaticDbContextFixture videomaticDbContextFixture, ITestOutputHelper output)
+        : base(videomaticDbContextFixture, output)
     {
-        Fixture = videomaticDbContextFixture ?? throw new ArgumentNullException(nameof(videomaticDbContextFixture));
-        Fixture.SkipDeletingDatabase();
+        Fixture.SkipDeletingDatabase = true;
     }
-
-    public VideomaticDbContextFixture Fixture { get; }
 
     [Theory()]
     [InlineData(null, null)]

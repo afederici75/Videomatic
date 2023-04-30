@@ -8,15 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Videomatic.db" />
+    <None Remove="Videomatic.db-shm" />
+    <None Remove="Videomatic.db-wal" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Company.SharedKernel\Company.SharedKernel.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 

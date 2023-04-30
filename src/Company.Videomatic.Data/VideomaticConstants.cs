@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Company.Videomatic.Infrastructure.Data;
 
-namespace Company.Videomatic.Infrastructure.SqlServer;
-
-public static class DbConstants
+public static class VideomaticConstants
 {
+    public const string MigrationAssemblyNamePrefix = "Company.Videomatic.Infrastructure.Data.";
+    public const string Videomatic = "Videomatic";
+
     public const string SequenceName = "IdSequence";
 
-    public static class FieldLengths
+    public static class DbFieldLengths
     {     
         public const int Url = 1024;
         public const int ProviderId = 20;

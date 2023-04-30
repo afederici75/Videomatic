@@ -2,9 +2,8 @@
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Thumbnail
-{
-    public int Id { get; init; }
+public class Thumbnail : EntityBase
+{    
     public string Url { get; init; }
 
     public ThumbnailResolution? Resolution { get; set; }

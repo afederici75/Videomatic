@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer;
+﻿namespace Company.Videomatic.Infrastructure.Data;
 
 public class VideomaticRepository<T> : RepositoryBase<T>, IRepositoryBase<T>, IReadRepositoryBase<T>
     where T : class

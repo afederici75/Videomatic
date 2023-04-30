@@ -2,9 +2,8 @@
 
 namespace Company.Videomatic.Domain.Model;
 
-public class TranscriptLine
+public class TranscriptLine : EntityBase
 {
-    public int Id { get; init; }
     public string Text { get; init; }
     public TimeSpan? Duration { get; init; }
     public TimeSpan? StartsAt { get; init; }

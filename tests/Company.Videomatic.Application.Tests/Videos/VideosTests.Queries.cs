@@ -1,6 +1,6 @@
-﻿namespace Company.Videomatic.Application.Tests.Features.Videos;
+﻿namespace Company.Videomatic.Application.Tests.Videos;
 
-public partial class ApplicationTests
+public partial class VideosTests
 {    
     [Theory]
     [InlineData(null)]

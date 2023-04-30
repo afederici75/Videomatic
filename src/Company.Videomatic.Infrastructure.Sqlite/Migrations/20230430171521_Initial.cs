@@ -3,24 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
+namespace Company.Videomatic.Infrastructure.Data.Sqlite.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "IdSequence");
-
             migrationBuilder.CreateTable(
                 name: "Folders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    ParentId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -36,13 +34,14 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    ProviderId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    ProviderVideoId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    VideoUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    FolderId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProviderId = table.Column<string>(type: "TEXT", nullable: false),
+                    ProviderVideoId = table.Column<string>(type: "TEXT", nullable: false),
+                    VideoUrl = table.Column<string>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    FolderId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,10 +57,11 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Artifact",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
+                    VideoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,20 +70,20 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         name: "FK_Artifact_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Thumbnails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Resolution = table.Column<int>(type: "int", nullable: true),
-                    Height = table.Column<int>(type: "int", nullable: true),
-                    Width = table.Column<int>(type: "int", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    Resolution = table.Column<int>(type: "INTEGER", nullable: true),
+                    Height = table.Column<int>(type: "INTEGER", nullable: true),
+                    Width = table.Column<int>(type: "INTEGER", nullable: true),
+                    VideoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,17 +92,17 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         name: "FK_Thumbnails_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Transcripts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Language = table.Column<string>(type: "TEXT", nullable: true),
+                    VideoId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,19 +111,19 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         name: "FK_Transcripts_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "TranscriptLine",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
-                    Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: true),
-                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: true),
-                    TranscriptId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Text = table.Column<string>(type: "TEXT", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "TEXT", nullable: true),
+                    StartsAt = table.Column<TimeSpan>(type: "TEXT", nullable: true),
+                    TranscriptId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,14 +132,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                         name: "FK_TranscriptLine_Transcripts_TranscriptId",
                         column: x => x.TranscriptId,
                         principalTable: "Transcripts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artifact_Title",
-                table: "Artifact",
-                column: "Title");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artifact_VideoId",
@@ -152,34 +146,9 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_Height",
-                table: "Thumbnails",
-                column: "Height");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_Resolution",
-                table: "Thumbnails",
-                column: "Resolution");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_Url",
-                table: "Thumbnails",
-                column: "Url");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Thumbnails_VideoId",
                 table: "Thumbnails",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_Width",
-                table: "Thumbnails",
-                column: "Width");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLine_Text",
-                table: "TranscriptLine",
-                column: "Text");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TranscriptLine_TranscriptId",
@@ -195,21 +164,6 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "IX_Videos_FolderId",
                 table: "Videos",
                 column: "FolderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_ProviderId",
-                table: "Videos",
-                column: "ProviderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_Title",
-                table: "Videos",
-                column: "Title");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_VideoUrl",
-                table: "Videos",
-                column: "VideoUrl");
         }
 
         /// <inheritdoc />
@@ -232,9 +186,6 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Folders");
-
-            migrationBuilder.DropSequence(
-                name: "IdSequence");
         }
     }
 }

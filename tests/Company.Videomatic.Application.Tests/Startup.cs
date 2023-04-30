@@ -1,5 +1,6 @@
 ﻿using Company.SharedKernel;
 using Company.SharedKernel.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,12 +15,13 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddApplication(cfg);
+        services.AddVideomaticApplication(cfg);
 
         // Mocks
-        services.AddScoped(typeof(IRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
-        services.AddScoped(typeof(IReadRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
+        services.AddVideomaticData(cfg);
+        services.AddVideomaticDataForSqlite(cfg);
 
+        // Overrides
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
