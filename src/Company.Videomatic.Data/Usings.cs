@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 global using Ardalis.Specification;
 global using Ardalis.Specification.EntityFrameworkCore;

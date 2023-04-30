@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public class EntityConfigurationBase<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity

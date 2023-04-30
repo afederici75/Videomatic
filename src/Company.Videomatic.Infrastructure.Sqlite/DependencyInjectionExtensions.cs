@@ -24,7 +24,8 @@ public static class DependencyInjectionExtensions
                 logger.LogWarning("Configuration '{ConnectionName}' is missing. Using default configuration.", connectionName);
 
                 // https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/connection-strings
-                connString = $"Data Source={VideomaticConstants.Videomatic};Mode=Memory;Cache=Shared";
+                // https://github.com/dotnet/efcore/issues/9842 // Why I cannot use in memory in Videomatic
+                connString = $"Data Source={VideomaticConstants.Videomatic}.db;Cache=Shared";
             }
 
             builder.EnableSensitiveDataLogging()
