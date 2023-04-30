@@ -1,10 +1,8 @@
-﻿using Company.Videomatic.Infrastructure.Data.Extensions;
-
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {
-    public void Configure(EntityTypeBuilder<Artifact> builder)
+    public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {
         // Common
         builder.ConfigureIEntity();

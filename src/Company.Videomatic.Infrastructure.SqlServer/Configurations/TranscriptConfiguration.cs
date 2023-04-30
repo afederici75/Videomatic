@@ -1,21 +1,14 @@
 ﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
+public class TranscriptConfiguration : TranscriptConfigurationBase
 {
-    public void Configure(EntityTypeBuilder<Transcript> builder)
+    public override void Configure(EntityTypeBuilder<Transcript> builder)
     {
-        // Fields
-        
-        // Relationships
-        builder.HasMany(x => x.Lines)
-               .WithOne()
-               .IsRequired(true);
+        base.Configure(builder);
 
-        // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
+        builder.OverrideIEntityForSqlServer();
     }
 }   

@@ -2,7 +2,7 @@
 
 public abstract class TranscriptLineConfigurationBase : IEntityTypeConfiguration<TranscriptLine>
 {
-    public void Configure(EntityTypeBuilder<TranscriptLine> builder)
+    public virtual void Configure(EntityTypeBuilder<TranscriptLine> builder)
     {
         // Common
         builder.ConfigureIEntity();

@@ -1,21 +1,14 @@
 ﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class ThumbnailConfiguration : IEntityTypeConfiguration<Thumbnail>
+public class ThumbnailConfiguration : ThumbnailConfigurationBase
 {
-    public void Configure(EntityTypeBuilder<Thumbnail> builder)
+    public override void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
-        // Fields        
-        builder.Property(x => x.Url)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.Url);               
+        base.Configure(builder);
 
-        // Indices
-        builder.HasIndex(x => x.Resolution);
-        builder.HasIndex(x => x.Url);
-        builder.HasIndex(x => x.Height);
-        builder.HasIndex(x => x.Width);
+        builder.OverrideIEntityForSqlServer();
     }
 }

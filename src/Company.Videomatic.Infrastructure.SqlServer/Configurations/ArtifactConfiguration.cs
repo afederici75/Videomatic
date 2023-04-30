@@ -1,18 +1,14 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Company.Videomatic.Domain.Model;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class ArtifactConfiguration : IEntityTypeConfiguration<Artifact>
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
+
+public class ArtifactConfiguration : ArtifactConfigurationBase 
 {
-    public void Configure(EntityTypeBuilder<Artifact> builder)
+    public override void Configure(EntityTypeBuilder<Artifact> builder)
     {
-        // Fields
-        
-        builder.Property(x => x.Title)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.ArtifactTitle);
+        base.Configure(builder);
 
-        builder.Property(x => x.Text);
-               //.has HasMaxLength(DbConstants.FieldLengths.ArtifactTitle);
-
-        // Indices
-        builder.HasIndex(x => x.Title);        
+        builder.OverrideIEntityForSqlServer();
     }
 }

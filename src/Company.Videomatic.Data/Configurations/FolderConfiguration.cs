@@ -2,7 +2,7 @@
 
 public abstract class FolderConfigurationBase : IEntityTypeConfiguration<Folder>
 {
-    public void Configure(EntityTypeBuilder<Folder> builder)
+    public virtual void Configure(EntityTypeBuilder<Folder> builder)
     {
         // Common
         builder.ConfigureIEntity();

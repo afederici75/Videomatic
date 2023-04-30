@@ -11,7 +11,7 @@ builder.Services.AddVideomaticSemanticKernel(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 var provider = builder.Configuration.GetValue<string>("Provider");
-provider = "Sqlite";
+//provider = "Sqlite";
 switch (provider)
 {
     case Company.Videomatic.Infrastructure.Data.SqlServer.SqlServerVideomaticDbContext.ProviderName:

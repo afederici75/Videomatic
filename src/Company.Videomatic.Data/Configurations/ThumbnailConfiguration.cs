@@ -2,7 +2,7 @@
 
 public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thumbnail>
 {
-    public void Configure(EntityTypeBuilder<Thumbnail> builder)
+    public virtual void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
         // Common
         builder.ConfigureIEntity();

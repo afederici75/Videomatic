@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Sqlite.Configurations;
 
 public class VideoConfiguration : VideoConfigurationBase
 {

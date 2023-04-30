@@ -2,7 +2,7 @@
 
 public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 {
-    public void Configure(EntityTypeBuilder<Video> builder)
+    public virtual void Configure(EntityTypeBuilder<Video> builder)
     {
         // Common
         builder.ConfigureIEntity();

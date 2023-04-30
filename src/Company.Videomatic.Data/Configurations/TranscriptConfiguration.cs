@@ -2,7 +2,7 @@
 
 public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {
-    public void Configure(EntityTypeBuilder<Transcript> builder)
+    public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
         // Common
         builder.ConfigureIEntity();
