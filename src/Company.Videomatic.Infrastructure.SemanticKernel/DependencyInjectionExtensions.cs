@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddSemanticKernelInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddVideomaticSemanticKernel(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
         services.Configure<SemanticKernelOptions>(configuration.GetSection("SemanticKernel"));

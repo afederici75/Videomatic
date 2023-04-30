@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
 public class EntityConfigurationBase<TEntity> : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity

@@ -14,15 +14,15 @@ public class VideoConfiguration : EntityConfigurationBase<Video>
 
         // Fields        
         builder.Property(x => x.ProviderId)
-               .HasMaxLength(DbConstants.FieldLengths.ProviderId);
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.ProviderId);
         builder.Property(x => x.ProviderVideoId)
-               .HasMaxLength(DbConstants.FieldLengths.YTVideoId);
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoId);
         builder.Property(x => x.VideoUrl)
-               .HasMaxLength(DbConstants.FieldLengths.Url); 
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.Url); 
         builder.Property(x => x.Title)
-               .HasMaxLength(DbConstants.FieldLengths.YTVideoTitle);
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoTitle);
         builder.Property(x => x.Description)
-               .HasMaxLength(DbConstants.FieldLengths.YTVideoDescription);
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoDescription);
 
 
         // Relationships

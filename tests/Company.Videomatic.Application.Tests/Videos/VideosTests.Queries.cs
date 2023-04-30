@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Tests;
+﻿namespace Company.Videomatic.Application.Tests.Videos;
 
 public partial class VideosTests
 {    

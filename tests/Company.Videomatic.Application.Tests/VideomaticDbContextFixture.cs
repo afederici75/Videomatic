@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.SqlServer;
+﻿using Company.Videomatic.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -14,11 +14,6 @@ public class VideomaticDbContextFixture : IAsyncLifetime
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         DbContext.Database.EnsureDeleted();
         DbContext.Database.EnsureCreated();
-
-        new VideomaticDbContext(
-            new DbContextOptionsBuilder<VideomaticDbContext>().UseSqlite("Filename=:memory:").Options
-        ).GetService<IRelationalDatabaseCreator>().CreateTables();
-
     }
 
     protected bool SkipInsertTestData { get; set; }

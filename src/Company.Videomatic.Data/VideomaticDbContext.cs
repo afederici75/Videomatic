@@ -1,12 +1,10 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Company.Videomatic.Infrastructure.SqlServer;
+namespace Company.Videomatic.Infrastructure.Data;
 
-public partial class VideomaticDbContext : DbContext
-{
-    public VideomaticDbContext(DbContextOptions<VideomaticDbContext> options) 
+public abstract class VideomaticDbContext : DbContext
+{    
+    public VideomaticDbContext(DbContextOptions options) 
         : base(options)
     {        
     }

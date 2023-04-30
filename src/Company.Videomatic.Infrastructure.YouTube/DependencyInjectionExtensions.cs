@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddYouTubeInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddVidematicYouTubeInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
         var section = configuration.GetRequiredSection("YouTube");

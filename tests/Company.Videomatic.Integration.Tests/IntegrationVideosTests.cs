@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Integration.Tests;
+﻿using Company.Videomatic.Application.Tests.Videos;
+
+namespace Company.Videomatic.Integration.Tests;
 
 [Collection("Sequence")]
 public class IntegrationVideosTests : VideosTests//, IClassFixture<VideomaticDbContextFixture>

@@ -1,6 +1,6 @@
 ﻿using Xunit.Abstractions;
 
-namespace Company.Videomatic.Application.Tests;
+namespace Company.Videomatic.Application.Tests.Videos;
 
 [Collection("Sequence")]
 public partial class VideosTests : IClassFixture<VideomaticDbContextFixture>

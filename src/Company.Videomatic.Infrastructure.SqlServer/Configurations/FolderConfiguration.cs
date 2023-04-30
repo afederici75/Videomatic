@@ -13,7 +13,7 @@ public class FolderConfiguration : EntityConfigurationBase<Folder>
 
         // Fields
         builder.Property(x => x.Name)
-               .HasMaxLength(DbConstants.FieldLengths.FolderName);
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.FolderName);
 
         // Relationships
         builder.HasOne<Folder>(x => x.Parent);

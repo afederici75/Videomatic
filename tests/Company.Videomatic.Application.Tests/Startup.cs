@@ -15,20 +15,12 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddApplication(cfg);
+        services.AddVideomaticApplication(cfg);
 
         // Mocks
-        //services.AddScoped(typeof(IRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
-        //services.AddScoped(typeof(IReadRepositoryBase<>), typeof(InMemoryRepository<>)); // Ardalis.Specification 
+        services.AddVideomaticDataForSqlite(cfg);
 
-        services.AddInMemoryInfrastructure((opts, cfg) =>
-        {
-            var o = opts.EnableSensitiveDataLogging()
-                .UseSqlite("Filename=:memory:")
-                .Options;
-
-        }, cfg);
-
+        // Overrides
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }

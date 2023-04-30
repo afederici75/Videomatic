@@ -14,7 +14,7 @@ public class Startup
         // IOptions
 
         // Services
-        services.AddSemanticKernelInfrastructure(cfg);
+        services.AddVideomaticSemanticKernel(cfg);
     }
 
     public static IConfiguration LoadConfiguration()

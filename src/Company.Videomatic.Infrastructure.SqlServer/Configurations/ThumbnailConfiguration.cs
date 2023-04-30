@@ -12,7 +12,7 @@ public class ThumbnailConfiguration : EntityConfigurationBase<Thumbnail>
 
         // Fields        
         builder.Property(x => x.Url)
-               .HasMaxLength(DbConstants.FieldLengths.Url);               
+               .HasMaxLength(VideomaticConstants.DbFieldLengths.Url);               
 
         // Indices
         builder.HasIndex(x => x.Resolution);

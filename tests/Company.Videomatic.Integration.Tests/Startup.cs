@@ -17,10 +17,10 @@ public class Startup
 
         services.AddLogging(x => x.AddConsole());
 
-        services.AddApplication(cfg);
-        services.AddYouTubeInfrastructure(cfg);
-        services.AddSemanticKernelInfrastructure(cfg);
-        services.AddSqlServerInfrastructure(cfg);
+        services.AddVideomaticApplication(cfg);
+        services.AddVidematicYouTubeInfrastructure(cfg);
+        services.AddVideomaticSemanticKernel(cfg);
+        services.AddVideomaticDataForSqlServer(cfg);
 
         services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();

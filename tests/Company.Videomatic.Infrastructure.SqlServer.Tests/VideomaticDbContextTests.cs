@@ -1,3 +1,5 @@
+using Company.Videomatic.Infrastructure.Data;
+
 namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
 
 [Collection("Sequence")]

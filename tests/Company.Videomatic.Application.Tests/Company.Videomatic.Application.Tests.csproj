@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>    
+    <IsTestProject>true</IsTestProject>
+    <UserSecretsId>31af4ffd-6d11-4dfc-8d6e-a5bb9b63f4f6</UserSecretsId>    
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
