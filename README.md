@@ -10,6 +10,10 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 
 ## Installation
 
+
+```
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --hostname mssql1 -d mcr.microsoft.com/mssql/server:2019-latest
+```
 ## Modules
 
 ### Shared Kernel

@@ -1,35 +1,33 @@
-﻿using Company.Videomatic.Infrastructure.SqlServer;
-
+﻿using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Company.Videomatic.Infrastructure.SqlServer;
 using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddSqlServerDriver(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddVideomaticDataForSqlServer(
+        this IServiceCollection services, 
+        IConfiguration configuration)
     {
-        services.AddDbContext<VideomaticDbContext>(builder =>
+        services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(builder =>
         {
-            var connStr = configuration.GetConnectionString("Videomatic");
+            var connectionName = $"{VideomaticConstants.Videomatic}.SqlServer";
+            var connString = configuration.GetConnectionString(connectionName);
+            if (string.IsNullOrWhiteSpace(connString))
+            {
+                throw new Exception($"Required connection string '{connectionName}' missing.");                
+            }   
         
             builder.EnableSensitiveDataLogging()
-                   .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                   .UseSqlServer(connStr);
+                   //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                   .UseSqlServer(connString, (opts) =>
+                   {
+                       opts.MigrationsAssembly(VideomaticConstants.MigrationAssemblyNamePrefix + SqlServerVideomaticDbContext.ProviderName);
+                   });
         });
 
-        //services.AddDbContextFactory<VideomaticDbContext>(options =>
-        //{
-        //    var connStr = configuration.GetConnectionString("Videomatic");
-        //    
-        //    options.EnableSensitiveDataLogging()
-        //           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-        //           .UseSqlServer(connStr);
-        //});
-
-       // Services
-       services.AddScoped(typeof(IRepositoryBase<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
-       services.AddScoped(typeof(IReadRepositoryBase<>), typeof(VideomaticRepository<>)); // Ardalis.Specification 
-
         return services;
-    }   
+    }
 }

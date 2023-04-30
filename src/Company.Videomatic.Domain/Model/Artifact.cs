@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Company.Videomatic.Domain.Model;
 
-public class Artifact
-{
-    public int Id { get; init; }
+public class Artifact : EntityBase
+{    
     public string Title { get; set; }
     public string? Text { get; set; }
     public int Size => Text?.Length ?? 0;

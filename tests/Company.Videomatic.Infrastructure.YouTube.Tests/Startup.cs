@@ -12,7 +12,7 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddYouTubeDrivers(cfg);
+        services.AddVidematicYouTubeInfrastructure(cfg);
     }
 
     public static IConfiguration LoadConfiguration()

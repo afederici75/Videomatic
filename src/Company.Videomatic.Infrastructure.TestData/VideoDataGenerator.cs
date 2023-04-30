@@ -8,6 +8,16 @@ public static class VideoDataGenerator
 {
     public const string FolderName = "TestData";
 
+    public async static Task<Video[]> CreateAllVideos(bool includeAll)
+    {
+        var tasks = YouTubeVideos
+            .GetHints()
+            .Select(x => CreateVideoFromFileAsync(x.ProviderVideoId, includeAll))
+            .ToArray();
+
+        var videos = await Task.WhenAll(tasks);
+        return videos;
+    }
 
     public static Task<Video> CreateVideoFromFileAsync(string videoId, bool includeAll)
     { 

@@ -1,24 +1,14 @@
 ﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class ArtifactConfiguration : IEntityTypeConfiguration<Artifact>
+public class ArtifactConfiguration : ArtifactConfigurationBase 
 {
-    public void Configure(EntityTypeBuilder<Artifact> builder)
+    public override void Configure(EntityTypeBuilder<Artifact> builder)
     {
-        // Fields
-        builder.Property(x => x.Id)
-               .HasDefaultValueSql($"NEXT VALUE FOR {DbConstants.SequenceName}");
+        base.Configure(builder);
 
-        builder.Property(x => x.Title)
-               .HasMaxLength(DbConstants.FieldLengths.ArtifactTitle);
-
-        builder.Property(x => x.Text);
-               //.has HasMaxLength(DbConstants.FieldLengths.ArtifactTitle);
-
-        // Indices
-        builder.HasIndex(x => x.Title);        
+        builder.OverrideIEntityForSqlServer();
     }
 }
