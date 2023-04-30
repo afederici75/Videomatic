@@ -13,7 +13,7 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddVideomaticData(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);
+        //services.AddVideomaticDataForSqlServer(cfg);
         services.AddVideomaticDataForSqlite(cfg);
         services.AddScoped<IVideoImporter, MockVideoImporter>();        
     }

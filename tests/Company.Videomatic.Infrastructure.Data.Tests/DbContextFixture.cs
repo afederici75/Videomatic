@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 namespace Company.Videomatic.Application.Tests;
 
 public class DbContextFixture<TDBContext> : IAsyncLifetime
-    where TDBContext : VideomaticDbContext
+    where TDBContext : DbContext
 {
     public DbContextFixture(TDBContext dbContext, ITestOutputHelperAccessor outputAccessor)
         : base()
