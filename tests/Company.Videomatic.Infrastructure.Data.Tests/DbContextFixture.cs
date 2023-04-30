@@ -1,14 +1,11 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Company.Videomatic.Application.Tests;
 
-public class VideomaticDbContextFixture : IAsyncLifetime
+public class DbContextFixture<TDBContext> : IAsyncLifetime
+    where TDBContext : VideomaticDbContext
 {
-    public VideomaticDbContextFixture(VideomaticDbContext dbContext)
+    public DbContextFixture(TDBContext dbContext)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -20,7 +17,7 @@ public class VideomaticDbContextFixture : IAsyncLifetime
     [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
     public bool SkipDeletingDatabase { get; set; }
 
-    public VideomaticDbContext DbContext { get; }
+    public TDBContext DbContext { get; }
 
     public virtual Task DisposeAsync()
     {

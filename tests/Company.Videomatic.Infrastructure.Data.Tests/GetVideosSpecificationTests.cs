@@ -1,20 +1,41 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using Company.Videomatic.Infrastructure.Data.Sqlite;
+using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Microsoft.EntityFrameworkCore.Design;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
+namespace Company.Videomatic.Infrastructure.Data.Tests;
+
+public class SqlServerGetVideosSpecificationTests : DbContextTests<SqlServerVideomaticDbContext>,
+    IClassFixture<DbContextFixture<SqlServerVideomaticDbContext>>
+{
+    public SqlServerGetVideosSpecificationTests(DbContextFixture<SqlServerVideomaticDbContext> fixture)
+        : base(fixture)
+    {
+
+    }
+}
+
+public class SqlSiteGetVideosSpecificationTests : DbContextTests<SqliteVideomaticDbContext>,
+    IClassFixture<DbContextFixture<SqliteVideomaticDbContext>>
+{
+    public SqlSiteGetVideosSpecificationTests(DbContextFixture<SqliteVideomaticDbContext> fixture)
+        : base(fixture)
+    {
+
+    }
+}
 
 [Collection("Sequence")]
-public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixture>
+public abstract class GetVideosSpecificationTests<TDbContext> : DbContextTestsBase<TDbContext>
+    where TDbContext : VideomaticDbContext
 {
-    readonly VideomaticDbContextFixture _fixture;
     int[] _videoIds = new int[0] { };
 
-    public GetVideosSpecificationTests(VideomaticDbContextFixture fixture)
+    protected GetVideosSpecificationTests(DbContextFixture<TDbContext> fixture) : base(fixture)
     {
-        _fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        //_fixture.SkipDeletingDatabase();
-    }    
-   
-    IQueryable<Video>  Videos => _fixture.DbContext.Videos;
+    }
+
+    IQueryable<Video>  Videos => Fixture.DbContext.Videos;
 
     [Fact]
     public async Task GetVideosSpecificationPaged()

@@ -1,22 +1,23 @@
-using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Application.Tests;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
+namespace Company.Videomatic.Infrastructure.Data.Tests;
 
-[Collection("Sequence")]
-public class VideomaticDbContextTests : IClassFixture<VideomaticDbContextFixture>
+public class DbContextTests<TDBContext> : DbContextTestsBase<TDBContext>
+    where TDBContext : VideomaticDbContext
 {
-    public VideomaticDbContextTests(VideomaticDbContextFixture fixture)
+    protected DbContextTests(DbContextFixture<TDBContext> fixture)
+        : base(fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         //Fixture.SkipDeletingDatabase();
     }
 
-    public VideomaticDbContextFixture Fixture { get; }
+    public DbContextFixture<TDBContext> Fixture { get; }
 
     [Theory]
     [InlineData(null)]
     public async Task CreatesSeededDbContext([FromServices] VideomaticDbContext db)
-    {
+    {        
         var cnt = await db.Videos.CountAsync();
         cnt.Should().Be(YouTubeVideos.HintsCount);   // Should be seeded
     }
