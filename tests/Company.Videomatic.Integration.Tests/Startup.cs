@@ -20,6 +20,7 @@ public class Startup
         services.AddVideomaticApplication(cfg);
         services.AddVidematicYouTubeInfrastructure(cfg);
         services.AddVideomaticSemanticKernel(cfg);
+        services.AddVideomaticData(cfg);
         services.AddVideomaticDataForSqlServer(cfg);
 
         services.AddScoped<IVideoImporter, MockVideoImporter>();

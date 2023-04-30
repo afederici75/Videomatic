@@ -12,6 +12,7 @@ public class Startup
     {
         var cfg = LoadConfiguration();
 
+        services.AddVideomaticData(cfg);
         services.AddVideomaticDataForSqlServer(cfg);
         services.AddScoped<IVideoImporter, MockVideoImporter>();
     }
