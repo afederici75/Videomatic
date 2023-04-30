@@ -6,7 +6,7 @@ public class SqliteVideomaticDbContext : VideomaticDbContext
 {
     public const string ProviderName = "Sqlite";
 
-    public SqliteVideomaticDbContext(DbContextOptions options) 
+    public SqliteVideomaticDbContext(DbContextOptions<SqliteVideomaticDbContext> options) 
         : base(options)
     {
     }

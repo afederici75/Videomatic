@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
+namespace Company.Videomatic.Infrastructure.Data.Tests;
 
 public class Startup
 {
@@ -14,7 +14,8 @@ public class Startup
 
         services.AddVideomaticData(cfg);
         services.AddVideomaticDataForSqlServer(cfg);
-        services.AddScoped<IVideoImporter, MockVideoImporter>();
+        services.AddVideomaticDataForSqlite(cfg);
+        services.AddScoped<IVideoImporter, MockVideoImporter>();        
     }
 
     public static IConfiguration LoadConfiguration()

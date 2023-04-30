@@ -2,13 +2,10 @@
 
 namespace Company.Videomatic.Application.Tests;
 
-public partial class VideosTests : IClassFixture<RepositoryFixture<Video>>
+public partial class VideosTests : RepositoryTestsBase<Video>
 {
-    public ITestOutputHelper Output { get; }
-
-    public VideosTests(ITestOutputHelper testOutputHelper)
+    public VideosTests(RepositoryFixture<Video> fixture) : base(fixture)
     {
-        Output = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
     }
 
     #region Queries 
@@ -20,7 +17,7 @@ public partial class VideosTests : IClassFixture<RepositoryFixture<Video>>
     {
         var cmd = new GetVideosDTOQuery();
         var response = await sender.Send(cmd);
-        Output.WriteLine(JsonHelper.Serialize(response));
+        Fixture.Output.WriteLine(JsonHelper.Serialize(response));
 
         // Should be all videos
         response.Items.Should().HaveCount(YouTubeVideos.HintsCount);
@@ -57,7 +54,7 @@ public partial class VideosTests : IClassFixture<RepositoryFixture<Video>>
             );
         
         var response = await sender.Send(cmd);
-        Output.WriteLine(JsonHelper.Serialize(response));
+        Fixture.Output.WriteLine(JsonHelper.Serialize(response));
 
         // Should be all videos
         response.Items.Should().HaveCount(2); // 2 videos: BBd3aHnVnuE and BFfb2P5wxC0        
@@ -78,7 +75,51 @@ public partial class VideosTests : IClassFixture<RepositoryFixture<Video>>
         var transcript = await sender.Send(getTranscriptQry);
         transcript.LineCount.Should().BeGreaterThan(0);
 
-        Output.WriteLine(JsonHelper.Serialize(transcript));
+        Fixture.Output.WriteLine(JsonHelper.Serialize(transcript));
+    }
+
+    [Theory]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.RickAstley_NeverGonnaGiveYouUp}", null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.AldousHuxley_DancingShiva}", null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism}", null)]
+    [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.HyonGakSunim_WhatIsZen}", null)]
+    public async Task ImportVideoAndPersistToRepository(
+       string url,
+       [FromServices] IVideoImporter importer)
+    {
+        // Imports 
+        Video video = await importer.ImportAsync(new Uri(url));
+
+        video.Transcripts.Should().HaveCountGreaterThan(0);
+        video.Transcripts.First().Lines.Should().HaveCountGreaterThan(0);
+        video.Thumbnails.Should().HaveCountGreaterThan(0);
+
+        // Persists
+        await Fixture.Repository.UpdateAsync(video); // Will add a new record
+        await Fixture.Repository.SaveChangesAsync();
+
+        // Now reads
+        video.Id.Should().BeGreaterThan(0);
+
+        // TODO: fix this
+        // var record = await Fixture.Repository.ListAsync()
+        //     //.AsNoTracking()
+        //     .Include(x => x.Transcripts)
+        //     .ThenInclude(x => x.Lines)
+        //     .Include(x => x.Thumbnails)
+        //     .FirstAsync(v => v.Id == video.Id);
+        // 
+        // record.Should().NotBeNull();
+        // record!.Id.Should().Be(video.Id);
+        // record!.Title.Should().Be(video.Title);
+        // record!.Description.Should().Be(video.Description);
+        // 
+        // record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
+        // record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+        // 
+        // db.Remove(video);
+        // var res = await db.SaveChangesAsync();
+        // res.Should().BeGreaterThan(0);
     }
 
     #endregion

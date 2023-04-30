@@ -1,17 +1,24 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
+using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
 
 public class DbContextFixture<TDBContext> : IAsyncLifetime
     where TDBContext : VideomaticDbContext
 {
-    public DbContextFixture(TDBContext dbContext)
+    public DbContextFixture(TDBContext dbContext, ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
+
         DbContext.Database.EnsureDeleted();
         DbContext.Database.EnsureCreated();
     }
+
+    readonly ITestOutputHelperAccessor _outputAccessor;
+    public ITestOutputHelper Output => _outputAccessor.Output ?? throw new Exception("XXX");
+
 
     protected bool SkipInsertTestData { get; set; }
     [Obsolete("This is a hack to check the database data if tests don't run successfully.")]

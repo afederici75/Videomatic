@@ -2,10 +2,10 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Tests;
 
-public class SqlSiteDbContextTests : DbContextTests<SqliteVideomaticDbContext>, 
+public class SqlLiteDbContextTests : DbContextTests<SqliteVideomaticDbContext>, 
     IClassFixture<DbContextFixture<SqliteVideomaticDbContext>>
 {
-    public SqlSiteDbContextTests(DbContextFixture<SqliteVideomaticDbContext> fixture)
+    public SqlLiteDbContextTests(DbContextFixture<SqliteVideomaticDbContext> fixture)
         : base(fixture)
     {
 
