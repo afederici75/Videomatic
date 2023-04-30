@@ -23,7 +23,10 @@ public class Startup
 
         services.AddInMemoryInfrastructure((opts, cfg) =>
         {
-            opts.UseSqlite("Filename=:memory:");
+            var o = opts.EnableSensitiveDataLogging()
+                .UseSqlite("Filename=:memory:")
+                .Options;
+
         }, cfg);
 
         services.AddScoped<IVideoImporter, MockVideoImporter>();

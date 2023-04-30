@@ -1,4 +1,8 @@
 ﻿using Company.Videomatic.Infrastructure.SqlServer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Company.Videomatic.Application.Tests;
 
@@ -8,9 +12,13 @@ public class VideomaticDbContextFixture : IAsyncLifetime
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        
         DbContext.Database.EnsureDeleted();
         DbContext.Database.EnsureCreated();
+
+        new VideomaticDbContext(
+            new DbContextOptionsBuilder<VideomaticDbContext>().UseSqlite("Filename=:memory:").Options
+        ).GetService<IRelationalDatabaseCreator>().CreateTables();
+
     }
 
     protected bool SkipInsertTestData { get; set; }
@@ -36,6 +44,7 @@ public class VideomaticDbContextFixture : IAsyncLifetime
 
         // Loads all videos from the TestData folder
         var allVideos = await VideoDataGenerator.CreateAllVideos(true);
-        await DbContext.AddRangeAsync(allVideos);
+        DbContext.AddRange(allVideos);
+        await DbContext.SaveChangesAsync();
     }
 }

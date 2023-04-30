@@ -11,14 +11,12 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateSequence(
-                name: "IdSequence");
-
             migrationBuilder.CreateTable(
                 name: "Folders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -36,7 +34,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ProviderId = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     ProviderVideoId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     VideoUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
@@ -58,7 +57,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Artifact",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VideoId = table.Column<int>(type: "int", nullable: false)
@@ -78,7 +78,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Thumbnails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Resolution = table.Column<int>(type: "int", nullable: true),
                     Height = table.Column<int>(type: "int", nullable: true),
@@ -100,7 +101,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "Transcripts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VideoId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -119,7 +121,8 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
                 name: "TranscriptLine",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR IdSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: true),
                     StartsAt = table.Column<TimeSpan>(type: "time", nullable: true),
@@ -232,9 +235,6 @@ namespace Company.Videomatic.Infrastructure.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Folders");
-
-            migrationBuilder.DropSequence(
-                name: "IdSequence");
         }
     }
 }
