@@ -1,7 +1,6 @@
-﻿using Company.Videomatic.Infrastructure.Data;
-using Xunit.Abstractions;
+﻿using Xunit.Abstractions;
 
-namespace Company.Videomatic.Application.Tests;
+namespace Company.Videomatic.Infrastructure.Data.Tests.Base;
 
 public class DbContextFixture<TDBContext> : IAsyncLifetime
     where TDBContext : DbContext
@@ -13,7 +12,7 @@ public class DbContextFixture<TDBContext> : IAsyncLifetime
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
-        DbContext.Database.Migrate();// EnsureCreated();
+        DbContext.Database.EnsureCreated();
     }
 
     readonly ITestOutputHelperAccessor _outputAccessor;

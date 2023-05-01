@@ -1,37 +1,16 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
-using Company.Videomatic.Infrastructure.Data.Sqlite;
-using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Company.Videomatic.Infrastructure.Data.Tests.Base;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests;
 
-public class SqlServerGetVideosSpecificationTests : DbContextTests<SqlServerVideomaticDbContext>,
-    IClassFixture<DbContextFixture<SqlServerVideomaticDbContext>>
-{
-    public SqlServerGetVideosSpecificationTests(DbContextFixture<SqlServerVideomaticDbContext> fixture)
-        : base(fixture)
-    {
-
-    }
-}
-
-public class SqlSiteGetVideosSpecificationTests : DbContextTests<SqliteVideomaticDbContext>,
-    IClassFixture<DbContextFixture<SqliteVideomaticDbContext>>
-{
-    public SqlSiteGetVideosSpecificationTests(DbContextFixture<SqliteVideomaticDbContext> fixture)
-        : base(fixture)
-    {
-
-    }
-}
-
 [Collection("Sequence")]
-public abstract class GetVideosSpecificationTests<TDbContext> : DbContextTestsBase<TDbContext>
+public abstract class GetVideosSpecificationTestsBase<TDbContext> : DbContextTestsBase<TDbContext>
     where TDbContext : VideomaticDbContext
 {
     int[] _videoIds = new int[0] { };
 
-    protected GetVideosSpecificationTests(DbContextFixture<TDbContext> fixture) : base(fixture)
+    protected GetVideosSpecificationTestsBase(DbContextFixture<TDbContext> fixture) : base(fixture)
     {
     }
 

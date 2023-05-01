@@ -13,7 +13,7 @@ public class YouTubeVideoImporterTests
         Output = output ?? throw new ArgumentNullException(nameof(output));
     }
     
-    [Theory]
+    [Theory(DisplayName = nameof(ImportsAndVerifiesVideoFromYoutube))]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
     [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]
     [InlineData(null, YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism)]
@@ -35,7 +35,9 @@ public class YouTubeVideoImporterTests
         video.Artifacts.Should().HaveCount(0); // Important. Artifacts are generated after the import.
     }
 
-    [Theory(Skip = "This method regenerates the data for Domain.Tests\\TestData.")]
+    [Theory(
+        DisplayName = nameof(RegeneratesTestDataUnderBinDebug),
+        Skip = "This method regenerates the data for Domain.Tests\\TestData.")]
     //[Theory]
     [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
     [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]

@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>

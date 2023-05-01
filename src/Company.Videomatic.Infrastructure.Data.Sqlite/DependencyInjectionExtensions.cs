@@ -27,6 +27,7 @@ public static class DependencyInjectionExtensions
                 // https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/connection-strings
                 // https://github.com/dotnet/efcore/issues/9842 // Why I cannot use in memory in Videomatic
                 connString = $"Data Source={VideomaticConstants.Videomatic}.db;Cache=Shared";
+                connString = "Data Source=Sharable;Mode=Memory;Cache=Shared";
             }
 
             builder.EnableSensitiveDataLogging()

@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
@@ -9,11 +10,12 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
     public VideosTestsBase(RepositoryFixture<TDbContext, Video> fixture) 
         : base(fixture)
     {
+        Fixture.SkipDeletingDatabase = false;
     }
 
     #region Queries 
 
-    [Theory]
+    [Theory(DisplayName = nameof(GetVideosDTOQuery_AllVideoDTOs))]
     [InlineData(null)]
     public virtual async Task GetVideosDTOQuery_AllVideoDTOs(
             [FromServices] ISender sender)
@@ -46,7 +48,7 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
         }
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(GetVideosDTOQuery_Only2BVideosFromHttp))]
     [InlineData(null)]
     public virtual async Task GetVideosDTOQuery_Only2BVideosFromHttp(
             [FromServices] ISender sender)
@@ -63,7 +65,7 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
         response.Items.Should().HaveCount(2); // 2 videos: BBd3aHnVnuE and BFfb2P5wxC0        
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(GetTranscriptDTOQuery_Aldous))]
     [InlineData(null)]
     public virtual async Task GetTranscriptDTOQuery_Aldous(
             [FromServices] ISender sender)
@@ -81,7 +83,7 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
         Fixture.Output.WriteLine(JsonHelper.Serialize(transcript));
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(ImportVideoAndPersistToRepository))]
     [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.RickAstley_NeverGonnaGiveYouUp}", null)]
     [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.AldousHuxley_DancingShiva}", null)]
     [InlineData($"https://www.youtube.com/watch?v={YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism}", null)]
@@ -99,37 +101,33 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
 
         // Persists
         await Fixture.Repository.UpdateAsync(video); // Will add a new record
-        await Fixture.Repository.SaveChangesAsync();
+        await Fixture.Repository.SaveChangesAsync();        
 
         // Now reads
         video.Id.Should().BeGreaterThan(0);
 
-        // TODO: fix this
-        // var record = await Fixture.Repository.ListAsync()
-        //     //.AsNoTracking()
-        //     .Include(x => x.Transcripts)
-        //     .ThenInclude(x => x.Lines)
-        //     .Include(x => x.Thumbnails)
-        //     .FirstAsync(v => v.Id == video.Id);
-        // 
-        // record.Should().NotBeNull();
-        // record!.Id.Should().Be(video.Id);
-        // record!.Title.Should().Be(video.Title);
-        // record!.Description.Should().Be(video.Description);
-        // 
-        // record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
-        // record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
-        // 
-        // db.Remove(video);
-        // var res = await db.SaveChangesAsync();
-        // res.Should().BeGreaterThan(0);
+        //var record = await Fixture.DbContext.Videos.FirstAsync(v => v.Id == video.Id);
+
+        var record = await Fixture.Repository.GetByIdAsync(video.Id);
+
+        record.Should().NotBeNull();
+        record!.Id.Should().Be(video.Id);
+        record!.Title.Should().Be(video.Title);
+        record!.Description.Should().Be(video.Description);
+
+        //record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
+        //record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+        Fixture.DbContext.Entry(video).State = EntityState.Unchanged;
+        Fixture.DbContext.Remove(video);
+        var res = await Fixture.DbContext.SaveChangesAsync();
+        res.Should().BeGreaterThan(0);
     }
 
     #endregion
 
     #region Commands
 
-    [Theory]
+    [Theory(DisplayName = nameof(ImportVideoCommandWorks))]
     [InlineData(null, null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
     public virtual async Task ImportVideoCommandWorks(
             [FromServices] ISender sender,
@@ -163,7 +161,7 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
         await repository2.DeleteAsync(dbVideo!);
     }
 
-    [Theory]
+    [Theory(DisplayName = "ImportVideoCommandWorksForAllVideos")]
     [InlineData(null, null)]
     public virtual async Task ImportVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
@@ -185,7 +183,7 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
         await repository.DeleteRangeAsync(videos);
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(DeleteVideoCommandWorksForAllVideos))]
     [InlineData(null)]
     public virtual async Task DeleteVideoCommandWorksForAllVideos(
             [FromServices] ISender sender)
