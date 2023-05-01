@@ -1,7 +1,7 @@
 using Company.Videomatic.Application.Features;
 using Company.Videomatic.Application.Features.Videos.GetTranscript;
 using Company.Videomatic.Infrastructure.Data;
-using Company.Videomatic.Infrastructure.TestData;
+using Company.Videomatic.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

@@ -9,7 +9,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     public VideosTestsBase(RepositoryFixture<Video> fixture) 
         : base(fixture)
     {
-        Fixture.SkipDeletingDatabase = false;
+        //Fixture.SkipDeletingDatabase = false;
     }
 
     #region Queries 
