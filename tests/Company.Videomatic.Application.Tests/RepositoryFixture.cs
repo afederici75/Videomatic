@@ -1,26 +1,33 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
 
-public class VideomaticDbContextFixture : IAsyncLifetime
+public class RepositoryFixture<TDbContext, T> : IAsyncLifetime
+    where T : class
+    where TDbContext : VideomaticDbContext
 {
-    public VideomaticDbContextFixture(VideomaticDbContext dbContext)
-        : base()
+    public RepositoryFixture(TDbContext dbContext, IRepositoryBase<T> repository, ITestOutputHelperAccessor outputAccessor)
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
+
         DbContext.Database.EnsureDeleted();
         DbContext.Database.EnsureCreated();
     }
 
+    public TDbContext DbContext { get; }
+    public IRepositoryBase<T> Repository { get; }
+
+    readonly ITestOutputHelperAccessor _outputAccessor;
+
+    public ITestOutputHelper Output => _outputAccessor.Output ?? throw new Exception("XXX");
+
     protected bool SkipInsertTestData { get; set; }
     [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
     public bool SkipDeletingDatabase { get; set; }
-
-    public VideomaticDbContext DbContext { get; }
 
     public virtual Task DisposeAsync()
     {
@@ -43,3 +50,4 @@ public class VideomaticDbContextFixture : IAsyncLifetime
         await DbContext.SaveChangesAsync();
     }
 }
+

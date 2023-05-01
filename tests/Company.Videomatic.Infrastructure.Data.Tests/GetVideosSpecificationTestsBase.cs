@@ -1,20 +1,20 @@
 ﻿using Ardalis.Specification.EntityFrameworkCore;
+using Company.Videomatic.Infrastructure.Data.Tests.Base;
+using Microsoft.EntityFrameworkCore.Design;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Tests;
+namespace Company.Videomatic.Infrastructure.Data.Tests;
 
 [Collection("Sequence")]
-public class GetVideosSpecificationTests : IClassFixture<VideomaticDbContextFixture>
+public abstract class GetVideosSpecificationTestsBase<TDbContext> : DbContextTestsBase<TDbContext>
+    where TDbContext : VideomaticDbContext
 {
-    readonly VideomaticDbContextFixture _fixture;
     int[] _videoIds = new int[0] { };
 
-    public GetVideosSpecificationTests(VideomaticDbContextFixture fixture)
+    protected GetVideosSpecificationTestsBase(DbContextFixture<TDbContext> fixture) : base(fixture)
     {
-        _fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        //_fixture.SkipDeletingDatabase();
-    }    
-   
-    IQueryable<Video>  Videos => _fixture.DbContext.Videos;
+    }
+
+    IQueryable<Video>  Videos => Fixture.DbContext.Videos;
 
     [Fact]
     public async Task GetVideosSpecificationPaged()

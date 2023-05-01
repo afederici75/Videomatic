@@ -4,7 +4,7 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
 {
     public class VideoAnalyzerTests
     {
-        [Theory]
+        [Theory(DisplayName = nameof(CanSummarizeTranscript))]
         [InlineData(null)]
         public async Task CanSummarizeTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {
@@ -27,7 +27,7 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests
             // that the symbol of the cross does not take into account the importance of contemplation.*/
         }
 
-        [Theory]
+        [Theory(DisplayName = nameof(CanReviewTranscript))]
         [InlineData(null)]
         public async Task CanReviewTranscript([FromServices] IVideoAnalyzer videoAnalyzer)
         {

@@ -26,9 +26,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.SharedKernel\Company.SharedKernel.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 

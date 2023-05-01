@@ -6,7 +6,7 @@ namespace Company.Videomatic.Domain.Tests;
 
 public class VideoDataGeneratorTests
 {
-    [Fact]
+    [Fact(DisplayName = nameof(CreatesRickAstleyVideoWithoutDetails))]
     public async Task CreatesRickAstleyVideoWithoutDetails()
     {
         var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
@@ -24,7 +24,7 @@ public class VideoDataGeneratorTests
         video.Description.Should().Contain("#OfficialMusicVideo");
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(CreatesRickAstleyVideoWithThumbsAndTranscript))]
     public async Task CreatesRickAstleyVideoWithThumbsAndTranscript()
     {
         var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
@@ -39,7 +39,7 @@ public class VideoDataGeneratorTests
         video.Artifacts.Count().Should().Be(0);        
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(CreatesRickAstleyVideoWithJustArtifacts))]
     public async Task CreatesRickAstleyVideoWithJustArtifacts()
     {
         var videoId = YouTubeVideos.RickAstley_NeverGonnaGiveYouUp;
@@ -52,7 +52,7 @@ public class VideoDataGeneratorTests
         video.Artifacts.Count().Should().Be(2);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(SerializesProperlyWithJSONConver))]
     public async Task SerializesProperlyWithJSONConver()
     {
         var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp,

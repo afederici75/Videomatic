@@ -6,7 +6,8 @@ public abstract class VideomaticDbContext : DbContext
 {    
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
-    {        
+    {
+        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
     
     public DbSet<Video> Videos { get; set; } = null!;
@@ -17,7 +18,7 @@ public abstract class VideomaticDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);        
-
+        
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 }
