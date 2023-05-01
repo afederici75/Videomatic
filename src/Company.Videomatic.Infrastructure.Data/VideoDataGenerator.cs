@@ -37,7 +37,7 @@ public static class VideoDataGenerator
             nameof(Video.Artifacts),
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
-        } : new string[] { };
+        } : Array.Empty<string>();
 
         return CreateVideoFromFileAsync(videoId, includes);
     }
