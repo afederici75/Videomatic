@@ -27,7 +27,7 @@ docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name m
 1. [Semantic Kernel](src/Company.Videomatic.Infrastructure.SemanticKernel/README.md)
 2. [SQL Server](src/Company.Videomatic.Infrastructure.SqlServer/README.md)
 3. [YouTube](src/Company.Videomatic.Infrastructure.YouTube/README.md)
-4. [TestData](src/Company.Videomatic.Infrastructure.TestData/README.md)
+4. [Data](src/Company.Videomatic.Infrastructure.Data/README.md)
 
 ### Presentation
 1. [Blazor](src/VideoMaticBlazorApp/README.md)	

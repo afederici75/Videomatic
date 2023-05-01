@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs", "_Docs", "{F1C1BF6B
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data", "src\Company.Videomatic.Data\Company.Videomatic.Infrastructure.Data.csproj", "{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data", "src\Company.Videomatic.Infrastructure.Data\Company.Videomatic.Infrastructure.Data.csproj", "{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Sqlite", "src\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj", "{59FCA606-65BE-4EF4-9847-37C9E5A1C067}"
 EndProject

@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
+public abstract class ArtifactConfiguration : IEntityTypeConfiguration<Artifact>
 {
     public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {

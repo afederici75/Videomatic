@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class ArtifactConfiguration : ArtifactConfigurationBase 
+public class ArtifactConfiguration : Data.Configurations.ArtifactConfiguration 
 {
     public override void Configure(EntityTypeBuilder<Artifact> builder)
     {

@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public abstract class VideomaticDbContext : DbContext
+public class VideomaticDbContext : DbContext
 {    
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
