@@ -3,9 +3,9 @@ using Company.Videomatic.Infrastructure.Data.SqlServer;
 
 namespace Company.Videomatic.Application.Tests;
 
-public class SqlserverVideoTests : VideosTestsBase<SqlServerVideomaticDbContext>
+public class SqliteVideoTests : VideosTestsBase<SqliteVideomaticDbContext>
 {
-    public SqlserverVideoTests(RepositoryFixture<SqlServerVideomaticDbContext, Video> fixture) 
+    public SqliteVideoTests(RepositoryFixture<SqliteVideomaticDbContext, Video> fixture) 
         : base(fixture)
     {
     }
