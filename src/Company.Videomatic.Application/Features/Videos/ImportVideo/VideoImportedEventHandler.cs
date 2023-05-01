@@ -16,7 +16,9 @@ public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent
     }
     public async Task Handle(VideoImportedEvent request, CancellationToken cancellationToken)
     {
-        var newVideo = await _repository.GetByIdAsync(request.VideoId, cancellationToken);
+        var qry = new GetOneSpecification<Video>(request.VideoId, new[] { nameof(Video.Transcripts), nameof(Video.Transcripts) +'.' + nameof(Transcript.Lines) });
+
+        var newVideo = await _repository.FirstOrDefaultAsync(qry, cancellationToken);
         Guard.Against.Null(newVideo, nameof(newVideo), $"Video with id {request.VideoId} not found.");
 
         // Generates artifacts for the video

@@ -35,10 +35,11 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
             maxTokens: 2000,
             temperature: 0.2,
             topP: 0.5);
-        
-        var myOutput = await _kernel.RunAsync(
-            video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty, // TODO: should account for all transcripts
-            func);
+
+        var transcript = video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty;// TODO: should account for all transcripts
+        var tranLength = transcript?.Length ?? 0;
+
+        var myOutput = await _kernel.RunAsync(transcript, func);
 
         return new Artifact(title: "Summary", text: myOutput.ToString());
     }
