@@ -39,7 +39,7 @@ public static class YouTubeVideos
 
     public static string[] GetVideoIds() => _videoHints.Select(v => v.ProviderVideoId).ToArray();
     public static string GetUrl(string videoId) => GetUri(videoId).ToString();
-    public static Uri GetUri(string videoId) => new Uri($"https://www.youtube.com/watch?v={videoId}");
+    public static Uri GetUri(string videoId) => new ($"https://www.youtube.com/watch?v={videoId}");
 
     public static VideoHint GetInfoByVideoId(string videoId)
         => _videoHints.First(v => v.ProviderVideoId.Equals(videoId, StringComparison.OrdinalIgnoreCase));
