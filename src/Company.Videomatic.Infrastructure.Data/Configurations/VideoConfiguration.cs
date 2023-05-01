@@ -23,15 +23,24 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         // Relationships
         builder.HasMany(x => x.Thumbnails)
                .WithOne()
-               .IsRequired(true);
+               //.IsRequired(true)
+               //.HasForeignKey()
+               //.HasPrincipalKey()
+               .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
-               .IsRequired(true);
+               //.IsRequired(true)
+               //.HasForeignKey()
+               //.HasPrincipalKey()
+               .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()
-               .IsRequired(true);
+               //.IsRequired(true)
+               //.HasForeignKey()
+               //.HasPrincipalKey()
+               .OnDelete(DeleteBehavior.Cascade);
 
         // Indices
         builder.HasIndex(x => x.ProviderId);

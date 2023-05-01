@@ -61,7 +61,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    VideoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Resolution = table.Column<int>(type: "int", nullable: true),
                     Height = table.Column<int>(type: "int", nullable: true),
                     Width = table.Column<int>(type: "int", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    VideoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,7 +102,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
+                    VideoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

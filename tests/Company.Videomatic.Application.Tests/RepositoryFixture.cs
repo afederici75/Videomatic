@@ -4,11 +4,10 @@ using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
 
-public class RepositoryFixture<TDbContext, T> : IAsyncLifetime
-    where T : class
-    where TDbContext : VideomaticDbContext
+public class RepositoryFixture<T> : IAsyncLifetime
+    where T : class    
 {
-    public RepositoryFixture(TDbContext dbContext, IRepositoryBase<T> repository, ITestOutputHelperAccessor outputAccessor)
+    public RepositoryFixture(VideomaticDbContext dbContext, IRepositoryBase<T> repository, ITestOutputHelperAccessor outputAccessor)
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -18,7 +17,7 @@ public class RepositoryFixture<TDbContext, T> : IAsyncLifetime
         DbContext.Database.EnsureCreated();
     }
 
-    public TDbContext DbContext { get; }
+    public VideomaticDbContext DbContext { get; }
     public IRepositoryBase<T> Repository { get; }
 
     readonly ITestOutputHelperAccessor _outputAccessor;

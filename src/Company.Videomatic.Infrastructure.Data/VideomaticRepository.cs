@@ -14,7 +14,8 @@ public class VideomaticRepository<T> : RepositoryBase<T>, IRepositoryBase<T>, IR
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var res = await base.SaveChangesAsync(cancellationToken);
+        var res2 = res;
         _dbContext.ChangeTracker.Clear(); // IMPORTANT!
-        return res;
+        return res2;
     }    
 }

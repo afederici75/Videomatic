@@ -12,7 +12,8 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
         // Relationships
         builder.HasMany(x => x.Lines)
                .WithOne()
-               .IsRequired(true);
+               .IsRequired(true)
+               .OnDelete(DeleteBehavior.Cascade);
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

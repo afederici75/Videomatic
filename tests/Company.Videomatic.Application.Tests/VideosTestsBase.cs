@@ -4,10 +4,9 @@ using Xunit.Abstractions;
 
 namespace Company.Videomatic.Application.Tests;
 
-public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbContext, Video>
-    where TDbContext : VideomaticDbContext
+public abstract class VideosTestsBase : RepositoryTestsBase<Video>    
 {
-    public VideosTestsBase(RepositoryFixture<TDbContext, Video> fixture) 
+    public VideosTestsBase(RepositoryFixture<Video> fixture) 
         : base(fixture)
     {
         Fixture.SkipDeletingDatabase = false;
@@ -117,10 +116,13 @@ public abstract class VideosTestsBase<TDbContext> : RepositoryTestsBase<TDbConte
 
         //record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
         //record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
-        Fixture.DbContext.Entry(video).State = EntityState.Unchanged;
-        Fixture.DbContext.Remove(video);
-        var res = await Fixture.DbContext.SaveChangesAsync();
-        res.Should().BeGreaterThan(0);
+        //Fixture.DbContext.Entry(video).State = EntityState.Deleted;
+        //Fixture.DbContext.Remove(video);
+        await Fixture.Repository.DeleteAsync(record);
+
+        record = await Fixture.Repository.GetByIdAsync(video.Id);
+        record.Should().BeNull();
+
     }
 
     #endregion

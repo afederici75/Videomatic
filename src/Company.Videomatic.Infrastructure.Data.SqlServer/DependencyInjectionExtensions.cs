@@ -27,10 +27,10 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddVideomaticDataForSqlServer(
         this IServiceCollection services, 
         IConfiguration configuration)
-        => services.AddDbContext<VideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
+        => services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
 
     public static IServiceCollection AddVideomaticSqlServerDbContextForTests(
         this IServiceCollection services,
         IConfiguration configuration)
-        => services.AddDbContext<VideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
+        => services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
 }

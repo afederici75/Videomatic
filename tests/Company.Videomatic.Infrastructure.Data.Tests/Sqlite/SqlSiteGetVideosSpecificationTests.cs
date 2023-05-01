@@ -3,10 +3,10 @@ using Company.Videomatic.Infrastructure.Data.Tests.Base;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.Sqlite;
 
-public class SqlSiteGetVideosSpecificationTests : DbContextTestsBase<SqliteVideomaticDbContext>,
-    IClassFixture<DbContextFixture<SqliteVideomaticDbContext>>
+public class SqlSiteGetVideosSpecificationTests : DbContextTestsBase,
+    IClassFixture<DbContextFixture>
 {
-    public SqlSiteGetVideosSpecificationTests(DbContextFixture<SqliteVideomaticDbContext> fixture)
+    public SqlSiteGetVideosSpecificationTests(DbContextFixture fixture)
         : base(fixture)
     {
 

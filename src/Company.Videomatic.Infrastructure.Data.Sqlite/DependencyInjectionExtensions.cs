@@ -34,11 +34,11 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddVideomaticDataForSqlite(
         this IServiceCollection services, 
         IConfiguration configuration)
-        => services.AddDbContext<VideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
+        => services.AddDbContext<VideomaticDbContext, SqliteVideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
    
     public static IServiceCollection AddVideomaticSqliteDbContextForTests(
         this IServiceCollection services,
         IConfiguration configuration)
-        => services.AddDbContext<VideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
+        => services.AddDbContext<VideomaticDbContext, SqliteVideomaticDbContext>((sp, builder) => Configure(sp, builder, configuration));
 
 }

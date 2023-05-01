@@ -4,16 +4,15 @@ using Microsoft.EntityFrameworkCore;
 namespace Company.Videomatic.Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]
-public abstract class DbContextTestsBase<TDBContext> : IClassFixture<DbContextFixture<TDBContext>>
-    where TDBContext : VideomaticDbContext
+public abstract class DbContextTestsBase : IClassFixture<DbContextFixture>
 {
-    protected DbContextTestsBase(DbContextFixture<TDBContext> fixture)
+    protected DbContextTestsBase(DbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         //Fixture.SkipDeletingDatabase();
     }
 
-    public DbContextFixture<TDBContext> Fixture { get; }
+    public DbContextFixture Fixture { get; }
 
     [Fact(DisplayName =  nameof(CreatesSeededDbContext))]
     public async Task CreatesSeededDbContext()

@@ -2,9 +2,9 @@
 
 namespace Company.Videomatic.Application.Tests.Sqlite;
 
-public class SqliteVideoTests : VideosTestsBase<SqliteVideomaticDbContext>
+public class SqliteVideoTests : VideosTestsBase
 {
-    public SqliteVideoTests(RepositoryFixture<SqliteVideomaticDbContext, Video> fixture)
+    public SqliteVideoTests(RepositoryFixture<Video> fixture)
         : base(fixture)
     {
     }

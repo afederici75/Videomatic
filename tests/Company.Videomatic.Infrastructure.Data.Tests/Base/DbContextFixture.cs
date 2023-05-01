@@ -2,10 +2,9 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.Base;
 
-public class DbContextFixture<TDBContext> : IAsyncLifetime
-    where TDBContext : DbContext
+public class DbContextFixture : IAsyncLifetime    
 {
-    public DbContextFixture(TDBContext dbContext, ITestOutputHelperAccessor outputAccessor)
+    public DbContextFixture(VideomaticDbContext dbContext, ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -23,7 +22,7 @@ public class DbContextFixture<TDBContext> : IAsyncLifetime
     [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
     public bool SkipDeletingDatabase { get; set; }
 
-    public TDBContext DbContext { get; }
+    public VideomaticDbContext DbContext { get; }
 
     public virtual Task DisposeAsync()
     {

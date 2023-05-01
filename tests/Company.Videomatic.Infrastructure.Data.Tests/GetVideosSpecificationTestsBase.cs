@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Design;
 namespace Company.Videomatic.Infrastructure.Data.Tests;
 
 [Collection("Sequence")]
-public abstract class GetVideosSpecificationTestsBase<TDbContext> : DbContextTestsBase<TDbContext>
+public abstract class GetVideosSpecificationTestsBase<TDbContext> : DbContextTestsBase
     where TDbContext : VideomaticDbContext
 {
     int[] _videoIds = new int[0] { };
 
-    protected GetVideosSpecificationTestsBase(DbContextFixture<TDbContext> fixture) : base(fixture)
+    protected GetVideosSpecificationTestsBase(DbContextFixture fixture) : base(fixture)
     {
     }
 

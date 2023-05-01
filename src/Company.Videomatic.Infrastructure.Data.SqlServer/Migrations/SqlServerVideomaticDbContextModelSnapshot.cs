@@ -39,7 +39,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("VideoId")
+                    b.Property<int?>("VideoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -97,7 +97,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<int>("VideoId")
+                    b.Property<int?>("VideoId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Width")
@@ -131,7 +131,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VideoId")
+                    b.Property<int?>("VideoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -226,15 +226,15 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Artifacts")
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
                 {
                     b.HasOne("Company.Videomatic.Domain.Model.Folder", "Parent")
                         .WithMany("Children")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Parent");
                 });
@@ -244,8 +244,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Thumbnails")
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
@@ -253,8 +252,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.HasOne("Company.Videomatic.Domain.Model.Video", null)
                         .WithMany("Transcripts")
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Model.TranscriptLine", b =>

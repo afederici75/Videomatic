@@ -3,10 +3,10 @@ using Company.Videomatic.Infrastructure.Data.Tests.Base;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
-public class SqlServerDbContextTests : DbContextTestsBase<SqlServerVideomaticDbContext>,
-    IClassFixture<DbContextFixture<SqlServerVideomaticDbContext>>
+public class SqlServerDbContextTests : DbContextTestsBase,
+    IClassFixture<DbContextFixture>
 {
-    public SqlServerDbContextTests(DbContextFixture<SqlServerVideomaticDbContext> fixture)
+    public SqlServerDbContextTests(DbContextFixture fixture)
         : base(fixture)
     {
 

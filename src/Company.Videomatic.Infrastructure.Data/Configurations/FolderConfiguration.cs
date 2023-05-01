@@ -15,7 +15,8 @@ public abstract class FolderConfigurationBase : IEntityTypeConfiguration<Folder>
         builder.HasOne<Folder>(x => x.Parent);
 
         builder.HasMany<Folder>(x => x.Children)
-               .WithOne(x => x.Parent);
+               .WithOne(x => x.Parent)
+               .OnDelete(DeleteBehavior.NoAction); 
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();
