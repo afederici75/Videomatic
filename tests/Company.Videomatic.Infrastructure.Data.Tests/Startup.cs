@@ -15,8 +15,8 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddVideomaticData(cfg);
-        services.AddVideomaticSqliteDbContext(cfg);
-        services.AddVideomaticSqlServerDbContext(cfg);
+        services.AddVideomaticSqliteDbContextForTests(cfg);
+        services.AddVideomaticSqlServerDbContextForTests(cfg);
         
         services.AddScoped<IVideoImporter, MockVideoImporter>();        
     }

@@ -10,7 +10,7 @@ namespace Company.Videomatic.Application.Tests;
 
 public class Startup
 {
-    public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
+    public static void ConfigureServices(IServiceCollection services)
     {
         var cfg = LoadConfiguration();
 
@@ -18,8 +18,7 @@ public class Startup
         services.AddVideomaticApplication(cfg);
 
         // Mocks
-        services.AddVideomaticData(cfg);
-        //services.AddVideomaticDataForSqlServer(cfg);
+        services.AddVideomaticData(cfg);        
         services.AddVideomaticDataForSqlite(cfg);
 
         // Overrides
