@@ -1,6 +1,7 @@
 using Company.Videomatic.Application.Features;
 using Company.Videomatic.Application.Features.Videos.GetTranscript;
 using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Infrastructure.TestData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,15 @@ if (app.Environment.IsDevelopment())
     {
         var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
         db.Database.Migrate();
+        if (VideoDataGenerator.HasData() && !db.Videos.Any())
+        {
+            var logger = app.Services.GetRequiredService<ILogger<VideomaticDbContext>>();
+            logger.LogWarning("Inserting test data...");
+            // Adds test data if the db is new
+            Video[] allVideos = VideoDataGenerator.CreateAllVideos(true).Result;
+            db.Videos.AddRange(allVideos);
+            db.SaveChanges();
+        }
     }
 
     app.UseSwagger();

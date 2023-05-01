@@ -8,6 +8,17 @@ public static class VideoDataGenerator
 {
     public const string FolderName = "TestData";
 
+    public static bool HasData()
+    {
+        var dirExists = Directory.Exists(FolderName);
+        if (!dirExists)
+            return false;
+
+        var files = Directory.GetFiles(FolderName, "*.json", SearchOption.TopDirectoryOnly);
+        
+        return files.Any();
+    }
+
     public async static Task<Video[]> CreateAllVideos(bool includeAll)
     {
         var tasks = YouTubeVideos
@@ -33,7 +44,7 @@ public static class VideoDataGenerator
 
     public static async Task<Video> CreateVideoFromFileAsync(string videoId, params string[] includes)
     {
-        var json = await File.ReadAllTextAsync($"TestData\\{videoId}.json");
+        var json = await File.ReadAllTextAsync($"{FolderName}\\{videoId}.json");
         JObject jobj = (JObject)JsonConvert.DeserializeObject(json, JsonHelper.GetJsonSettings())!;
 
         var arrayProps = jobj.Properties()

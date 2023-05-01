@@ -1,0 +1,198 @@
+{
+  "Artifacts": [],
+  "Transcripts": [
+    {
+      "Lines": [
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:26.3589992",
+          "StartsAt": "00:00:00"
+        },
+        {
+          "Id": 0,
+          "Text": "you know the rules",
+          "Duration": "00:00:03.7190001",
+          "StartsAt": "00:00:22.6399993"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:16.3099994",
+          "StartsAt": "00:00:28.3299999"
+        },
+        {
+          "Id": 0,
+          "Text": "gotta make you understand",
+          "Duration": "00:00:04.2410001",
+          "StartsAt": "00:00:40.3989982"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:11.7500000",
+          "StartsAt": "00:00:44.9199981"
+        },
+        {
+          "Id": 0,
+          "Text": "goodbye",
+          "Duration": "00:00:06.0789999",
+          "StartsAt": "00:00:54.6399993"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:06.1300001",
+          "StartsAt": "00:00:56.6699981"
+        },
+        {
+          "Id": 0,
+          "Text": "we've known each other",
+          "Duration": "00:00:04.1599998",
+          "StartsAt": "00:01:00.7190017"
+        },
+        {
+          "Id": 0,
+          "Text": "for so long",
+          "Duration": "00:00:02.9000000",
+          "StartsAt": "00:01:02.7999992"
+        },
+        {
+          "Id": 0,
+          "Text": "your heart's been",
+          "Duration": "00:00:06.4010000",
+          "StartsAt": "00:01:04.8789978"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:03.0599999",
+          "StartsAt": "00:01:05.6999969"
+        },
+        {
+          "Id": 0,
+          "Text": "going aching",
+          "Duration": "00:00:00",
+          "StartsAt": "00:01:11.2799987"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:03.1500000",
+          "StartsAt": "00:01:30.5299987"
+        },
+        {
+          "Id": 0,
+          "Text": "never gonna say goodbye",
+          "Duration": "00:00:14.8009996",
+          "StartsAt": "00:01:35.7590026"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:13.9600000",
+          "StartsAt": "00:01:39"
+        },
+        {
+          "Id": 0,
+          "Text": "never gonna make you",
+          "Duration": "00:00:04.2800002",
+          "StartsAt": "00:01:50.5599975"
+        },
+        {
+          "Id": 0,
+          "Text": "gonna say cry",
+          "Duration": "00:00:01.8799999",
+          "StartsAt": "00:01:52.9599990"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:32.2200012",
+          "StartsAt": "00:01:55.8600006"
+        },
+        {
+          "Id": 0,
+          "Text": "i",
+          "Duration": "00:00:06.0399999",
+          "StartsAt": "00:02:33.4400024"
+        },
+        {
+          "Id": 0,
+          "Text": "just want to tell you how i'm feeling",
+          "Duration": "00:00:04.8400001",
+          "StartsAt": "00:02:34.6399993"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:19.1800003",
+          "StartsAt": "00:02:40.0099945"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:16.8700008",
+          "StartsAt": "00:03:03.4700012"
+        },
+        {
+          "Id": 0,
+          "Text": "never gonna is you down",
+          "Duration": "00:00:13.0690002",
+          "StartsAt": "00:03:17.1199951"
+        },
+        {
+          "Id": 0,
+          "Text": "[Music]",
+          "Duration": "00:00:09.8489999",
+          "StartsAt": "00:03:20.3399963"
+        }
+      ],
+      "Id": 0,
+      "Language": "US"
+    }
+  ],
+  "Thumbnails": [
+    {
+      "Id": 0,
+      "Url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg",
+      "Resolution": 0,
+      "Height": 90,
+      "Width": 120
+    },
+    {
+      "Id": 0,
+      "Url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+      "Resolution": 2,
+      "Height": 360,
+      "Width": 480
+    },
+    {
+      "Id": 0,
+      "Url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg",
+      "Resolution": 1,
+      "Height": 180,
+      "Width": 320
+    },
+    {
+      "Id": 0,
+      "Url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/sddefault.jpg",
+      "Resolution": 3,
+      "Height": 480,
+      "Width": 640
+    },
+    {
+      "Id": 0,
+      "Url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+      "Resolution": 4,
+      "Height": 720,
+      "Width": 1280
+    }
+  ],
+  "Id": 0,
+  "ProviderId": "YOUTUBE",
+  "ProviderVideoId": "dQw4w9WgXcQ",
+  "VideoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "Title": "Rick Astley - Never Gonna Give You Up (Official Music Video)",
+  "Description": "The official video for “Never Gonna Give You Up” by Rick Astley\n\n‘Hold Me In Your Arms’ – deluxe blue vinyl,  2CD and digital deluxe out 12th May 2023 Pre-order here – https://rick-astley.lnk.to/HMIYA2023ID\n\n“Never Gonna Give You Up” was a global smash on its release in July 1987, topping the charts in 25 countries including Rick’s native UK and the US Billboard Hot 100.  It also won the Brit Award for Best single in 1988. Stock Aitken and Waterman wrote and produced the track which was the lead-off single and lead track from Rick’s debut LP “Whenever You Need Somebody”.  The album was itself a UK number one and would go on to sell over 15 million copies worldwide.\n\nThe legendary video was directed by Simon West – who later went on to make Hollywood blockbusters such as Con Air, Lara Croft – Tomb Raider and The Expendables 2.  The video passed the 1bn YouTube views milestone on 28 July 2021.\n\nSubscribe to the official Rick Astley YouTube channel: https://RickAstley.lnk.to/YTSubID\n\nFollow Rick Astley:\nFacebook: https://RickAstley.lnk.to/FBFollowID \nTwitter: https://RickAstley.lnk.to/TwitterID \nInstagram: https://RickAstley.lnk.to/InstagramID \nWebsite: https://RickAstley.lnk.to/storeID \nTikTok: https://RickAstley.lnk.to/TikTokID\n\nListen to Rick Astley:\nSpotify: https://RickAstley.lnk.to/SpotifyID \nApple Music: https://RickAstley.lnk.to/AppleMusicID \nAmazon Music: https://RickAstley.lnk.to/AmazonMusicID \nDeezer: https://RickAstley.lnk.to/DeezerID \n\nLyrics:\nWe’re no strangers to love\nYou know the rules and so do I\nA full commitment’s what I’m thinking of\nYou wouldn’t get this from any other guy\n\nI just wanna tell you how I’m feeling\nGotta make you understand\n\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\n\nWe’ve known each other for so long\nYour heart’s been aching but you’re too shy to say it\nInside we both know what’s been going on\nWe know the game and we’re gonna play it\n\nAnd if you ask me how I’m feeling\nDon’t tell me you’re too blind to see\n\nNever gonna give you up\nNever gonna let you down\nNever gonna run around and desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie and hurt you\n\n#RickAstley #NeverGonnaGiveYouUp #WheneverYouNeedSomebody #OfficialMusicVideo"
+}
