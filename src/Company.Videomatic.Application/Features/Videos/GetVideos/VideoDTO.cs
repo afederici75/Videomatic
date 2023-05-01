@@ -3,6 +3,7 @@
 public record VideoDTO(
     int Id,
     string ProviderId,
+    string ProviderVideoId,
     string VideoUrl,
     string? Title,
     string? Description,

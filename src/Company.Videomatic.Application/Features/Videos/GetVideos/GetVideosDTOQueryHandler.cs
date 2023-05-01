@@ -26,14 +26,15 @@ public class GetVideosDTOQueryHandler : IRequestHandler<GetVideosDTOQuery, Query
 
         // TODO: Use AutoMapper
         var videosDTO = videos.Select(v => new VideoDTO(
-            v.Id,
-            v.Title ?? "NA",
-            v.Description ?? "NA",
-            v.ProviderId,
-            v.Description,
-            v.Artifacts,
-            v.Thumbnails,
-            v.Transcripts))
+            Id: v.Id,
+            ProviderId: v.ProviderId,
+            ProviderVideoId: v.ProviderVideoId,
+            VideoUrl: v.VideoUrl,
+            Title:v.Title ?? "NA",
+            Description: v.Description ?? "NA",            
+            Artifacts: v.Artifacts,
+            Thumbnails: v.Thumbnails,
+            Transcripts: v.Transcripts))
             .ToArray();
 
         return new QueryResponse<VideoDTO>(videosDTO);

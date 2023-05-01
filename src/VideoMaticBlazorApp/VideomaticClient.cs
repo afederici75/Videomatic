@@ -727,6 +727,9 @@ namespace Videomatic.Client
         [Newtonsoft.Json.JsonProperty("providerId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string ProviderId { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("providerVideoId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProviderVideoId { get; set; }
+
         [Newtonsoft.Json.JsonProperty("videoUrl", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string VideoUrl { get; set; }
 
