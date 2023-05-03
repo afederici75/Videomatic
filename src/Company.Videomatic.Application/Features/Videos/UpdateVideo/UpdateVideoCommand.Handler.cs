@@ -33,7 +33,7 @@ public partial class UpdateVideoCommand
             await _storage.UpdateRangeAsync(new[] { video }, cancellationToken);
 
             //  Publishes the event and returns the response.
-            await _publisher.Publish(new VideoUpdatedEvent(video.Id));
+            await _publisher.Publish(new VideoUpdatedEvent(video.Id), cancellationToken);
             
             return new (Video: video, Updated: true);
         }

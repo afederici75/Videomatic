@@ -1,7 +1,7 @@
 ﻿namespace Company.SharedKernel.Abstractions;
 
 public interface IReadOnlyRepository<T> 
-    where T : class
+    where T : class, IEntity
 {
     Task<T?> GetByIdAsync(int id, 
         IEnumerable<string>? includes = default,

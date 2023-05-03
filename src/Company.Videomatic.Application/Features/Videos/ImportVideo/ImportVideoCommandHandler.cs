@@ -34,7 +34,8 @@ public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, Imp
             VideoId: savedVideo.Id,
             ThumbNailCount: savedVideo.Thumbnails.Count(),
             TranscriptCount: savedVideo.Transcripts.Count(),
-            ArtifactsCount: savedVideo.Artifacts.Count()));
+            ArtifactsCount: savedVideo.Artifacts.Count()),
+            cancellationToken: cancellationToken);
 
         return new ImportVideoResponse(VideoId: savedVideo.Id);
     }

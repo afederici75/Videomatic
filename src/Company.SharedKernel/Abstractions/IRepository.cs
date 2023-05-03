@@ -1,7 +1,7 @@
 ﻿namespace Company.SharedKernel.Abstractions;
 
 public interface IRepository<T> : IReadOnlyRepository<T>
-    where T : class
+    where T : class, IEntity
 {
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
