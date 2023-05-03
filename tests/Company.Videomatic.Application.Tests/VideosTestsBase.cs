@@ -99,7 +99,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         video.Thumbnails.Should().HaveCountGreaterThan(0);
 
         // Persists
-        await Fixture.Repository.UpdateAsync(video); // Will add a new record
+        await Fixture.Repository.UpdateRangeAsync(new[] { video }); // Will add a new record
         await Fixture.Repository.SaveChangesAsync();        
 
         // Now reads
@@ -118,7 +118,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         //record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
         //Fixture.DbContext.Entry(video).State = EntityState.Deleted;
         //Fixture.DbContext.Remove(video);
-        await Fixture.Repository.DeleteAsync(record);
+        await Fixture.Repository.DeleteRangeAsync(new[] { record });
 
         record = await Fixture.Repository.GetByIdAsync(video.Id);
         record.Should().BeNull();
@@ -133,8 +133,8 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     [InlineData(null, null, null, YouTubeVideos.HyonGakSunim_WhatIsZen)]
     public virtual async Task ImportVideoCommandWorks(
             [FromServices] ISender sender,
-            [FromServices] IRepositoryBase<Video> repository,
-            [FromServices] IRepositoryBase<Video> repository2,
+            [FromServices] IRepository<Video> repository,
+            [FromServices] IRepository<Video> repository2,
             string videoId)
     {
         // Imports a video
@@ -145,14 +145,15 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         response.Should().NotBeNull();
         response.VideoId.Should().BeGreaterThan(0);
 
-        Video? dbVideo = await repository.FirstOrDefaultAsync(
-            new GetOneSpecification<Video>(response.VideoId, new[]
+        Video? dbVideo = await repository.GetByIdAsync(
+            id: response.VideoId, 
+            includes: new[]
             {
                 nameof(Video.Artifacts),
                 nameof(Video.Thumbnails),
                 nameof(Video.Transcripts),
                 nameof(Video.Transcripts)+'.'+nameof(Transcript.Lines),
-            }));
+            });
 
         dbVideo!.Should().NotBeNull();
         dbVideo!.Thumbnails.Count().Should().BeGreaterThan(0);
@@ -160,14 +161,14 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         dbVideo!.Artifacts.Count().Should().BeGreaterThan(0);
 
         // Cleans up
-        await repository2.DeleteAsync(dbVideo!);
+        await repository2.DeleteRangeAsync(new[] { dbVideo! });
     }
 
     [Theory(DisplayName = "ImportVideoCommandWorksForAllVideos")]
     [InlineData(null, null)]
     public virtual async Task ImportVideoCommandWorksForAllVideos(
             [FromServices] ISender sender,
-            [FromServices] IRepositoryBase<Video> repository)
+            [FromServices] IRepository<Video> repository)
     {
         var newIds = new HashSet<int>();
         foreach (var videoId in YouTubeVideos.GetVideoIds())

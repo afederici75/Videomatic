@@ -2,9 +2,9 @@
 
 public class GetVideosDTOQueryHandler : IRequestHandler<GetVideosDTOQuery, QueryResponse<VideoDTO>>
 {
-    readonly IReadRepositoryBase<Video> _repository;
+    readonly IReadOnlyRepository<Video> _repository;
 
-    public GetVideosDTOQueryHandler(IReadRepositoryBase<Video> repository)
+    public GetVideosDTOQueryHandler(IReadOnlyRepository<Video> repository)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }

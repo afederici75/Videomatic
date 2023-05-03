@@ -7,7 +7,7 @@ namespace Company.Videomatic.Application.Tests;
 public class RepositoryFixture<T> : IAsyncLifetime
     where T : class    
 {
-    public RepositoryFixture(VideomaticDbContext dbContext, IRepositoryBase<T> repository, ITestOutputHelperAccessor outputAccessor)
+    public RepositoryFixture(VideomaticDbContext dbContext, IRepository<T> repository, ITestOutputHelperAccessor outputAccessor)
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -18,7 +18,7 @@ public class RepositoryFixture<T> : IAsyncLifetime
     }
 
     public VideomaticDbContext DbContext { get; }
-    public IRepositoryBase<T> Repository { get; }
+    public IRepository<T> Repository { get; }
 
     readonly ITestOutputHelperAccessor _outputAccessor;
 

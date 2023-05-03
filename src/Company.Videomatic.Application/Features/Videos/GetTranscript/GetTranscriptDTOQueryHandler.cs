@@ -4,17 +4,19 @@ namespace Company.Videomatic.Application.Features.Videos.GetTranscript;
 
 public class GetTranscriptDTOQueryHandler : IRequestHandler<GetTranscriptDTOQuery, TranscriptDTO>
 {
-    readonly IReadRepositoryBase<Transcript> _repository;
+    readonly IReadOnlyRepository<Transcript> _repository;
 
-    public GetTranscriptDTOQueryHandler(IReadRepositoryBase<Transcript> repository)
+    public GetTranscriptDTOQueryHandler(IReadOnlyRepository<Transcript> repository)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
     public async Task<TranscriptDTO> Handle(GetTranscriptDTOQuery request, CancellationToken cancellationToken)
-    {
-        var query = new GetOneSpecification<Transcript>(request.TranscriptId, new[] { nameof(Transcript.Lines) });
-        var transcript = await _repository.FirstOrDefaultAsync(query, cancellationToken);
+    {        
+        var transcript = await _repository.GetByIdAsync(
+            request.TranscriptId, 
+            new[] { nameof(Transcript.Lines) }, 
+            cancellationToken);
 
         Guard.Against.Null(transcript, nameof(transcript));
 

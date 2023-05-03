@@ -1,12 +1,11 @@
 ﻿namespace Company.SharedKernel.Abstractions;
 
-public interface IReadOnlyRepository<T> where T : class
+public interface IReadOnlyRepository<T> 
+    where T : class
 {
-    Task<T?> GetByIdAsync<TId>(TId id, 
+    Task<T?> GetByIdAsync(int id, 
         IEnumerable<string>? includes = default,
-        IEnumerable<string>? order = default,
-        CancellationToken cancellationToken = default)
-        where TId : notnull;
+        CancellationToken cancellationToken = default);
 
     Task<List<T>> ListAsync(
         ISpecification<T> specification,
