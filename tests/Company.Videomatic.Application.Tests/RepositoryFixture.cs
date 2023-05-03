@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 namespace Company.Videomatic.Application.Tests;
 
 public class RepositoryFixture<T> : IAsyncLifetime
-    where T : class    
+    where T : class, IEntity
 {
     public RepositoryFixture(VideomaticDbContext dbContext, IRepository<T> repository, ITestOutputHelperAccessor outputAccessor)
     {

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Company.Videomatic.Infrastructure.YouTube": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:49272;http://localhost:49273"
+    }
+  }
+}

@@ -4,7 +4,7 @@ using Xunit.Abstractions;
 namespace Company.Videomatic.Application.Tests;
 
 public abstract class RepositoryTestsBase<TEntity> : IClassFixture<RepositoryFixture<TEntity>>
-    where TEntity : class    
+    where TEntity : class, IEntity, IAggregateRoot  
 {
     public RepositoryTestsBase(RepositoryFixture<TEntity> fixture)
     {
