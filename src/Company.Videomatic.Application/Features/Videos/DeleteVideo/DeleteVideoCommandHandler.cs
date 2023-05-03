@@ -26,7 +26,7 @@ public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, Del
 
         await _repository.DeleteAsync(target, cancellationToken);
 
-        await _publisher.Publish(new VideoDeletedEvent(target));
+        await _publisher.Publish(new VideoDeletedEvent(target), cancellationToken);
 
         return new DeleteVideoResponse(target, true);
     }

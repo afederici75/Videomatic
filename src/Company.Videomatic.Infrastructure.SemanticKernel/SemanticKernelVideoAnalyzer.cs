@@ -24,7 +24,8 @@ public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
         _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
     }
 
-    string GetMaxText(string? input)
+    // TODO: find a better way
+    static string GetMaxTextTEMP(string? input)
     {
         if (string.IsNullOrEmpty(input))
             return string.Empty;
@@ -51,7 +52,7 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
             temperature: 0.2,
             topP: 0.5);
 
-        var transcript = GetMaxText(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts                       
+        var transcript = GetMaxTextTEMP(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts                       
         var myOutput = await _kernel.RunAsync(transcript, func);
 
         return new Artifact(title: "Summary", text: myOutput.ToString());
@@ -74,7 +75,7 @@ and title each section as follows:
             temperature: 0.2,
             topP: 0.5);
 
-        var transcript = GetMaxText(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts       
+        var transcript = GetMaxTextTEMP(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts       
         var myOutput = await _kernel.RunAsync(transcript, func);
 
         return new Artifact(title: "Review", myOutput.ToString());

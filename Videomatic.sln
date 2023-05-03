@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Sqlite", "src\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj", "{59FCA606-65BE-4EF4-9847-37C9E5A1C067}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{D9E32E3B-28BD-4ED7-A377-AB1E03B55564}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Infrastructure.Data.Notion", "Company.Videomatic.Connectors.Notion\Company.Videomatic.Infrastructure.Data.Notion.csproj", "{7DA864D0-E54F-4417-84EE-4BF85CD61F00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +123,10 @@ Global
 		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA864D0-E54F-4417-84EE-4BF85CD61F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA864D0-E54F-4417-84EE-4BF85CD61F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA864D0-E54F-4417-84EE-4BF85CD61F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA864D0-E54F-4417-84EE-4BF85CD61F00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,6 +148,7 @@ Global
 		{1753EB30-9EAA-4FC2-A9F2-5CC729079D69} = {C354FC42-1916-406F-B2AC-7604C423A028}
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{59FCA606-65BE-4EF4-9847-37C9E5A1C067} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{7DA864D0-E54F-4417-84EE-4BF85CD61F00} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}
