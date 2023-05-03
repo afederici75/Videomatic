@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Company.Videomatic.Infrastructure.Data.Sqlite": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:49278;http://localhost:49279"
+    }
+  }
+}

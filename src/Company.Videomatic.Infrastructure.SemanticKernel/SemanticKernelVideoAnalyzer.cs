@@ -8,6 +8,8 @@ namespace Company.Videomatic.Infrastructure.SemanticKernel;
 
 public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
 {
+    private const int MaxtTextLength = 8000;
+
     private readonly ILogger<SemanticKernelVideoAnalyzer> _logger;
     private readonly SemanticKernelOptions _options;
     private readonly IKernel _kernel;
@@ -20,6 +22,20 @@ public class SemanticKernelVideoAnalyzer : IVideoAnalyzer
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _options = options.Value;
         _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
+    }
+
+    // TODO: find a better way
+    static string GetMaxTextTEMP(string? input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        if (input.Length > MaxtTextLength)
+        {
+            return input.Substring(0, MaxtTextLength);
+        }
+
+        return input;
     }
 
     public async Task<Artifact> SummarizeVideoAsync(Video video)
@@ -35,10 +51,9 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
             maxTokens: 2000,
             temperature: 0.2,
             topP: 0.5);
-        
-        var myOutput = await _kernel.RunAsync(
-            video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty, // TODO: should account for all transcripts
-            func);
+
+        var transcript = GetMaxTextTEMP(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts                       
+        var myOutput = await _kernel.RunAsync(transcript, func);
 
         return new Artifact(title: "Summary", text: myOutput.ToString());
     }
@@ -60,9 +75,8 @@ and title each section as follows:
             temperature: 0.2,
             topP: 0.5);
 
-        var myOutput = await _kernel.RunAsync(
-            video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty,// TODO: should account for all transcripts
-            func);
+        var transcript = GetMaxTextTEMP(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts       
+        var myOutput = await _kernel.RunAsync(transcript, func);
 
         return new Artifact(title: "Review", myOutput.ToString());
     }

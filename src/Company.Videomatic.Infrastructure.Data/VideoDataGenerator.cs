@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Company.Videomatic.Infrastructure.TestData;
+namespace Company.Videomatic.Infrastructure.Data;
 
 public static class VideoDataGenerator
 {
@@ -37,7 +37,7 @@ public static class VideoDataGenerator
             nameof(Video.Artifacts),
             nameof(Video.Thumbnails),
             nameof(Video.Transcripts),
-        } : new string[] { };
+        } : Array.Empty<string>();
 
         return CreateVideoFromFileAsync(videoId, includes);
     }

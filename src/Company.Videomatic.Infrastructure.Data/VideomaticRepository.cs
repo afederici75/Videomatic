@@ -1,7 +1,9 @@
-﻿namespace Company.Videomatic.Infrastructure.Data;
+﻿using Company.SharedKernel.Specifications;
 
-public class VideomaticRepository<T> : RepositoryBase<T>, IRepositoryBase<T>, IReadRepositoryBase<T>
-    where T : class
+namespace Company.Videomatic.Infrastructure.Data;
+
+public class VideomaticRepository<T> : RepositoryBase<T>, IRepository<T>, IReadOnlyRepository<T>
+    where T : class, IEntity
 {
     private readonly VideomaticDbContext _dbContext;
 
@@ -11,11 +13,17 @@ public class VideomaticRepository<T> : RepositoryBase<T>, IRepositoryBase<T>, IR
         _dbContext = dbContext;             
     }
 
+    public async Task<T?> GetByIdAsync(int id, IEnumerable<string>? includes = null, CancellationToken cancellationToken = default)
+    {        
+        var qry = new GetOneSpecification<T>(id, includes?.ToArray());
+        var res = await  base.FirstOrDefaultAsync(qry, cancellationToken);            
+        return res;
+    }
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var res = await base.SaveChangesAsync(cancellationToken);
-        var res2 = res;
         _dbContext.ChangeTracker.Clear(); // IMPORTANT!
-        return res2;
+        return res;
     }    
 }

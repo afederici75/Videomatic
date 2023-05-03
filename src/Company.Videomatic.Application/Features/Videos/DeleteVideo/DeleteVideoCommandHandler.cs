@@ -9,10 +9,10 @@ namespace Company.Videomatic.Application.Features.Videos.DeleteVideo;
 /// </summary>
 public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
 {
-    readonly IRepositoryBase<Video> _repository;
+    readonly IRepository<Video> _repository;
     readonly IPublisher _publisher;
 
-    public DeleteVideoCommandHandler(IRepositoryBase<Video> repository, IPublisher publisher)
+    public DeleteVideoCommandHandler(IRepository<Video> repository, IPublisher publisher)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
@@ -20,13 +20,13 @@ public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, Del
 
     public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
     {
-        var target = await _repository.GetByIdAsync(request.VideoId, cancellationToken);
+        var target = await _repository.GetByIdAsync(request.VideoId, null, cancellationToken);
         if (target == null)
             return new DeleteVideoResponse(null, false);
 
-        await _repository.DeleteAsync(target, cancellationToken);
+        await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
 
-        await _publisher.Publish(new VideoDeletedEvent(target));
+        await _publisher.Publish(new VideoDeletedEvent(target), cancellationToken);
 
         return new DeleteVideoResponse(target, true);
     }

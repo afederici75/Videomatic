@@ -4,42 +4,83 @@
 
 <PageTitle>Get Videos</PageTitle>
 
-<h1>Get Videos</h1>
+<EditForm Model="@_cmd" OnSubmit="@Import">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
-@if (_params == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <EditForm Model="@_params" OnSubmit="@Query">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <div class="form-group">
+        <label for="name">URL: </label>
+        <InputText @bind-Value="@_cmd.VideoUrl" placeholder="URL" style="width: 400px" />
+    </div>
 
-        <InputText @bind-Value="_params.TitlePrefix" placeholder="Title Prefix" />
-        <InputText @bind-Value="_params.DescriptionPrefix" placeholder="Description Prefix" />
-        <InputText @bind-Value="_params.ProviderIdPrefix" placeholder="Provider Id Prefix" />
-        <InputText @bind-Value="_params.ProviderVideoIdPrefix" placeholder="Provider Video Id Prefix" />
-        <InputText @bind-Value="_params.VideoUrlPrefix" placeholder="Video Url Prefix" />
+    <button type="submit">Submit</button>
+</EditForm>
+
+<p>@_statusMessage</p>
+
+<EditForm Model="@_params" OnSubmit="@Query">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+     <div class="form-group">
+        <label for="name">Title: </label>
+        <InputText @bind-Value="_params.TitlePrefix" placeholder="Title" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Description: </label>
+        <InputText @bind-Value="_params.DescriptionPrefix" placeholder="Description" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Provider Id: </label>
+        <InputText @bind-Value="_params.ProviderIdPrefix" placeholder="Provider Id" />
+    </div>
+    
+    <div class="form-group">
+        <label for="name">Video Id: </label>
+        <InputText @bind-Value="_params.ProviderVideoIdPrefix" placeholder="Url" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Take: </label>
         <InputNumber @bind-Value="_params.Take" placeholder="Take" />
+        <label for="name">Skip: </label>
         <InputNumber @bind-Value="_params.Skip" placeholder="Skip" />
-        @*<InputText @bind-Value="@includes" placeholder="Includes" />
-        <InputText @bind-Value="@orderBy" placeholder="Order By" />*@
+    </div>
+    
+    <button type="submit">Submit</button>
+</EditForm>
 
-        <button type="submit">Submit</button>
-    </EditForm>
-}
+@{
+    int i = 0;
+    var style = "";
+    @foreach (var v in videoDTOs)
+    {
+        style = "background-color:lightgreen";
+        
+        <p style="@style" ><b>@v.Title</b></p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/@v.ProviderVideoId" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="@v.VideoUrl" target="_blank">Watch Video</a>
+        <p><i>@v.Description?.Substring(0, Math.Min(v.Description.Length, 200))...</i></p>        
 
-@foreach (var v in videoDTOs)
-{
-    <p>@v.Title</p>
-    <p>@v.Description</p>
-    <a href="@v.VideoUrl" target="_blank">Watch Video</a>
+        @foreach (var a in v.Artifacts)
+        {
+            style = "background-color:lightbrown";
+            <p style ="@style"><b>@a.Title</b></p>
+
+            style = "background-color:lightred";
+            <p style="@style"><b>@a.Text</b></p>
+            
+        }
+    }
 }
 
 @code {
     GetVideosDTOQueryAsyncParams _params = new ();
     IEnumerable<VideoDTO> videoDTOs = new List<VideoDTO>();
+    ImportVideoCommand _cmd = new();
+    string _statusMessage = "Type a URL to import a video";
 
     class GetVideosDTOQueryAsyncParams
     {
@@ -56,7 +97,7 @@ else
     private async Task Query()
     {
         var client = new VideomaticClient("https://localhost:7108", HttpClient);
-                
+
         var response = await client.GetVideosDTOQueryAsync(
             _params.Take, 
             _params.TitlePrefix, 
@@ -65,9 +106,31 @@ else
             _params.ProviderVideoIdPrefix, 
             _params.VideoUrlPrefix, 
             _params.Skip, 
-            null, 
-            null);
+            includes: new [] { "Artifacts" }, 
+            orderBy: new[] { "Id DESC"});
 
         videoDTOs = response.Items;
+    }
+
+    class ImportVideoCommandParams
+    {
+        public string VideoUrl { get; set; } = "https://www.youtube.com/watch?v=xoVJKj8lcNQ";
+    }
+
+    async Task Import()
+    {
+        try
+        {
+            var client = new VideomaticClient("https://localhost:7108", HttpClient);
+            await client.ImportVideoCommandAsync(_cmd);
+
+            _statusMessage = $"Video imported at {DateTime.Now}!";            
+            await Query();
+            _cmd.VideoUrl = string.Empty;
+        }
+        catch (Exception err)
+        {
+            _statusMessage = $"ERROR: {err}";
+        }
     }
 }

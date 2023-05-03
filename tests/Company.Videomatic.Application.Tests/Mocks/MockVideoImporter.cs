@@ -1,6 +1,6 @@
 ﻿using Company.Videomatic.Domain.Model;
 
-namespace Company.Videomatic.Infrastructure.TestData;
+namespace Company.Videomatic.Infrastructure.Data;
 
 public class MockVideoImporter : IVideoImporter
 {

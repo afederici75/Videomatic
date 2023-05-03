@@ -1,7 +1,7 @@
 ﻿using Company.SharedKernel.Abstractions;
 using Company.SharedKernel;
 using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Infrastructure.TestData;
+using Company.Videomatic.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,7 +11,7 @@ namespace Company.Videomatic.Integration.Tests;
 
 public class Startup
 {
-    public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
+    public static void ConfigureServices(IServiceCollection services)
     {
         var cfg = LoadConfiguration();
 

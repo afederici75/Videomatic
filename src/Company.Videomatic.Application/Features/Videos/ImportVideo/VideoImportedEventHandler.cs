@@ -5,18 +5,21 @@ namespace Company.Videomatic.Application.Features.Videos.ImportVideo;
 public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent>
 {
     readonly IVideoAnalyzer _analyzer;
-    readonly IRepositoryBase<Video> _repository;
+    readonly IRepository<Video> _repository;
 
     public VideoImportedEventHandler(
         IVideoAnalyzer analyzer,
-        IRepositoryBase<Video> repository)
+        IRepository<Video> repository)
     {
         _analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     public async Task Handle(VideoImportedEvent request, CancellationToken cancellationToken)
-    {
-        var newVideo = await _repository.GetByIdAsync(request.VideoId, cancellationToken);
+    {        
+        var newVideo = await _repository.GetByIdAsync(
+            request.VideoId, 
+            includes: new[] { nameof(Video.Transcripts), nameof(Video.Transcripts) + '.' + nameof(Transcript.Lines) }, 
+            cancellationToken);
         Guard.Against.Null(newVideo, nameof(newVideo), $"Video with id {request.VideoId} not found.");
 
         // Generates artifacts for the video
@@ -29,6 +32,6 @@ public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent
         newVideo.AddArtifacts(artifacts);
 
         // Saves
-        await _repository.UpdateAsync(newVideo, cancellationToken);
+        await _repository.UpdateRangeAsync(new[] { newVideo }, cancellationToken);
     }
 }

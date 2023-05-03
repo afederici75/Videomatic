@@ -1,7 +1,4 @@
-﻿using Ardalis.Specification;
-using Ardalis.Specification.EntityFrameworkCore;
-
-namespace Ardalis.Specification;
+﻿namespace Ardalis.Specification;
 
 public static class SpecificationExtensions
 {

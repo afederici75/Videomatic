@@ -6,7 +6,7 @@ global using FluentAssertions;
 global using Microsoft.EntityFrameworkCore;
 global using Ardalis.Specification;
 
-global using Company.Videomatic.Infrastructure.TestData;
+global using Company.Videomatic.Infrastructure.Data;
 global using Company.SharedKernel;
 global using Company.SharedKernel.Abstractions;
 global using Company.Videomatic.Application.Abstractions;

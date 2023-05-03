@@ -8,10 +8,10 @@ public class GetManySpecification<TEntity> : Specification<TEntity>
         : base()
         => Query.DefaultPagedQuery(take, skip, includes, orderBy);
 
-    public GetManySpecification(int[] ids, string[]? includes = default, string[]? orderBy = default)
+    public GetManySpecification(int[] ids, string[]? includes = default, string[]? orderBy = default, int take = 10, int? skip = null)
         : base()
     {
-        Query.DefaultQuery(includes, orderBy);
+        Query.DefaultPagedQuery(take, skip, includes, orderBy);
         
         // TODO: possible smell here
         if (typeof(IEntity).IsAssignableFrom(typeof(TEntity)))
