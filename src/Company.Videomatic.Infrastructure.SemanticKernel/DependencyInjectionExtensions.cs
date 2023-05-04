@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Memory;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -26,22 +27,22 @@ public static class DependencyInjectionExtensions
                     var options = sp.GetRequiredService<IOptions<SemanticKernelOptions>>().Value;
 
                     // IMPORTANT: if the model is not "gpt-3.5-turbo" we get errors in the HTTP calls later.
-                    //cfg.AddOpenAIChatCompletionService("chat", options.ChatModel, options.ApiKey);
+                    cfg.AddOpenAIChatCompletionService("chat", options.Model, options.ApiKey);
 
                     cfg.AddOpenAITextCompletionService(
                         serviceId: "textCompletion",
                         apiKey: options.ApiKey,
                         modelId: options.Model,
-                        orgId: options.Organization ?? string.Empty,
-                        overwrite: true);
+                        orgId: options.Organization ?? string.Empty);
                 })
                 // TODO: several other WithXXX to look into...
-                //.WithMemoryStorage(new VolatileMemoryStore())
+                .WithMemoryStorage(new VolatileMemoryStore())
                 .Build();
 
             return kernel;
         });
 
+        services.AddTransient<IMemoryStore, VolatileMemoryStore>();
         services.AddScoped<IVideoAnalyzer, SemanticKernelVideoAnalyzer>();
 
         return services;

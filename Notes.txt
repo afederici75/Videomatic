@@ -1,3 +1,10 @@
+5/3
+-Starting to reproduce the following:
+	-https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai
+-Everything uses IRepository and IReadOnlyRepository.
+-Found several articles on chunking 
+	-I will try to follow this one: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai
+
 4/29
 -Added WebAPI to the project. Technically we have a REST endpoint!
 -Trying to code a Blazor app that uses only the Swagger stuff.
