@@ -1,3 +1,13 @@
+5/14
+
+
+5/13
+-Watched Google IO donference
+	-Tailwind notebook
+	-UI like VideoM
+	-Metadata in AI artifacts
+	-Eliminate/gauge toxicity in AI models and general text
+
 5/3
 -Starting to reproduce the following:
 	-https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai

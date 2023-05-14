@@ -3,7 +3,7 @@ using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.Memory;
 using Newtonsoft.Json;
 
-namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests;
+namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.WinterOlympics;
 
 public class CsvEmbeddingRecord
 {
@@ -21,8 +21,8 @@ public class CsvEmbeddingRecord
     {
         var key = "PK_" + _key++.ToString();
 
-        float[]? floatValues = JsonConvert.DeserializeObject<float[]>(this.ValuesArray);
-        Embedding<float> e = (floatValues != null) ? new Embedding<float>(floatValues) : new();
+        float[]? floatValues = JsonConvert.DeserializeObject<float[]>(ValuesArray);
+        Embedding<float> e = floatValues != null ? new Embedding<float>(floatValues) : new();
 
         MemoryRecordMetadata meta = new(
             isReference: true,

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -9,11 +9,6 @@
     <IsTestProject>true</IsTestProject>
     <UserSecretsId>7088ed3b-c274-405e-ba19-cafdb35dd046</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="TestData\HuxleysDancingShiva.json" />
-    <None Remove="testSettings.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="TestData\HuxleysDancingShiva.json">
@@ -27,11 +22,13 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="0.13.277.1-preview" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.3.23174.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0-preview.3.23174.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0-preview.3.23174.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0-preview-20230223-05" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI" Version="0.13.277.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Skills.Document" Version="0.13.277.1-preview" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="Xunit.DependencyInjection" Version="8.7.1" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.0.1" />
@@ -48,12 +45,6 @@
   <ItemGroup>
     <ProjectReference Include="..\\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="TestData\winter_olympics_2022.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

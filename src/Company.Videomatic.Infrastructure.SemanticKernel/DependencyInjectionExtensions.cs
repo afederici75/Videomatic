@@ -36,7 +36,7 @@ public static class DependencyInjectionExtensions
                         orgId: options.Organization ?? string.Empty);
                 })
                 // TODO: several other WithXXX to look into...
-                .WithMemoryStorage(new VolatileMemoryStore())
+                //.WithMemoryStorage(new VolatileMemoryStore())
                 .Build();
 
             return kernel;
