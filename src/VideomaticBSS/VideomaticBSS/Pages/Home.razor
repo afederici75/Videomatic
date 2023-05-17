@@ -1,0 +1,49 @@
+﻿@page "/"
+
+<h3>Welcome to Videomatic!</h3>
+
+<p>
+    Imagine Videomatic as your personal knowledge notebook, where you learn and grow from the videos you love.
+</p>
+
+<p>
+    Whether you're a student, researcher, or just love learning new things, Videomatic is here to provide you
+    with AI-driven wisdom.
+</p>
+<p>
+<img class="rounded mx-auto d-block" src="images/videomatic.png" style="max-width: 400px; align-self: center" />
+</p>
+<Alert Color="Color.Secondary" Visible>
+    <p>
+        <b>Import content of videos from YouTube, or even your own files, and watch the magic happen! </b>
+    </p>
+    <Paragraph>
+        We fetch video details like description, transcript, and thumbnails using the
+        YouTube API and then store them in your personal database.
+        <p>
+            <i>If your video does not have a transcript we will generate the transcript for you using OpenAI's Whisper.</i>
+        </p>
+    </Paragraph>
+</Alert>
+
+<p>
+    With the power of AI, Videomatic generates smart summaries and transcript analyses for each video.
+</p>
+<p>
+    Say goodbye to information overload and hello to bite-sized insights!
+</p>
+
+
+
+@*
+<Alert Color="Color.Info" Visible>
+    <Paragraph>
+        This is a Blazorise Starting Template allowing you to quickly get started building your project!
+
+    <UnorderedList>
+            <UnorderedListItem>Blazorise @($"v{VersionProvider.MilestoneVersion}")</UnorderedListItem>
+            <UnorderedListItem>The <Anchor To="https://blazorise.com/docs/usage/bootstrap5">Blazorise Bootstrap5</Anchor> Provider</UnorderedListItem>
+            <UnorderedListItem>The Blazorise FontAwesome Icon Provider</UnorderedListItem>
+    </UnorderedList>
+</Alert>
+*@

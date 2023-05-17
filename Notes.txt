@@ -1,5 +1,5 @@
 5/14
-
+-When i buuild the Blazor SS app, I should use all messages from the API directly
 
 5/13
 -Watched Google IO donference
