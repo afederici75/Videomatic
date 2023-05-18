@@ -1,39 +1,61 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">VideomaticBlazor</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿<Bar Breakpoint="Breakpoint.Desktop"
+     NavigationBreakpoint="Breakpoint.Tablet"
+     Background="Background.Dark"
+     ThemeContrast="ThemeContrast.Dark"
+     Mode="BarMode.VerticalInline"
+     CollapseMode="BarCollapseMode.Small">
 
-<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
+    <BarToggler Mode="BarTogglerMode.Normal" />
+
+    <BarMenu id="barMenu">
+        <!-- BAR START -->
+        <BarStart>
+            <BarItem>
+                <BarLink To="/">
+                    <BarIcon IconName="IconName.Home" />
+                    Home
+                </BarLink>
+            </BarItem>
+
+            <BarItem id="barItem1">
+                <BarDropdown id="barDropdown1" Class="XXX" >
+                    <BarDropdownToggle id="barDropToggle1" >
+                        <BarIcon IconName="IconName.Video" />
+                        My Videos
+                    </BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>All</BarDropdownItem>
+                        <BarDropdownItem>Most Recent</BarDropdownItem>
+                        <BarDropdownDivider />
+                        <BarDropdownItem To=@nameof(MyVideos) TextColor="TextColor.Light">Philosophy</BarDropdownItem>
+                        <BarDropdownDivider />
+                        <BarDropdownItem TextColor="TextColor.Light">Artificial Intelligence</BarDropdownItem>
+                        <BarDropdownItem TextColor="TextColor.Light">Burning Man</BarDropdownItem>
+                        <BarDropdownItem TextColor="TextColor.Light">Gardening</BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+        </BarStart>
+
+        <!-- BAR END -->
+        <BarEnd>
+            <BarItem>
+                <BarLink To=@nameof(Settings)>
+                    <BarIcon IconName="IconName.Gavel" />
+                    Settings
+                </BarLink>
+            </BarItem>
+
+            <BarItem>
+                <BarLink To=@nameof(Settings)>
+                    <BarIcon />
+                    Settings <i class="bi bi-box-arrow-right"></i>
+                </BarLink>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
 
 @code {
-    private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
