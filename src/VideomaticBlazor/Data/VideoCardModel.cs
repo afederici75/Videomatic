@@ -2,17 +2,22 @@
 
 public class VideoCardModel
 {
-    public int Id { get; set; }
+    /// <summary>
+    /// The unique id of the video.
+    /// </summary>
+    public int Id { get; init; }
     
     /// <summary>
     /// The name of the video.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
+
+    public string? Source { get; set; }
 
     /// <summary>
     /// The length of the video.
     /// </summary>
-    public TimeSpan Duraction { get; set; }
+    public TimeSpan Duration { get; set; }
 
     /// <summary>
     /// The description of the video.
@@ -22,7 +27,7 @@ public class VideoCardModel
     /// <summary>
     /// The URL of the thumbnail to display.
     /// </summary>
-    public string? ThumnbnailUrl { get; set; }
+    public string? Thumnbnail { get; set; }
 
     /// <summary>
     /// The date the video was published.

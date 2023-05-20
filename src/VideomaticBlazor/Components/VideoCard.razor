@@ -1,14 +1,32 @@
 ﻿<Card>
-    <CardImage Source="/img/gallery/2.jpg" Alt="Placeholder image" />
-    <CardBody>
-        <CardTitle Size="3">
-            Card title
+    @*<CardImage  Source="@Model.Thumnbnail" Alt="Placeholder image" />*@
+    <CardBody>    
+        <CardTitle Size="5" >            
+        @Model.Name
         </CardTitle>
+        <CardSubtitle Size="6">
+        @Model.Description
+    </CardSubtitle>
+    
         <CardText>
-            This is some text within a card body. Jelly lemon drops tiramisu chocolate cake cotton candy soufflé oat cake sweet roll. Sugar plum marzipan dragée topping cheesecake chocolate bar. Danish muffin icing donut.
+            @*<img style="max-width: 200; height: auto" src="@Model.Thumnbnail" alt="Placeholder" /> *@
+            @Model.Description
         </CardText>
-        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop">
-            Read more <Icon Name="IconName.ArrowRight" />
-        </Button>
+                
     </CardBody>
 </Card>
+
+@code {
+    [Parameter]
+    public VideoCardModel Model { get; set; } = new VideoCardModel
+    {
+        Id = 01,
+        Description = "The description of the video",
+        Name = "An incredible video about cars!",
+        Duration = new TimeSpan(3,2,12),
+        ImportedOn = new DateTime(2022,2,1),
+        PublishedOn = new DateTime(2012,7,23),
+            Thumnbnail = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcqwiRGbPLhCsMXtWflh5aSwQiENHVc_Ka-GS83hJfv9td5YVZuY2rlGlK4wyC7rVgCBa6WkPPvpY&usqp=CAU&ec=48665701"
+        };
+}
+    

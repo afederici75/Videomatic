@@ -1,3 +1,13 @@
+5/20
+-Made a lot of progress with the diagrams. I have enough to start trying Blazor code
+without wasting time figuring out the UI.
+-Object Model changes:
+	-Add Collections (video collection?) and remove folders?
+		-A video can be in multiple collections, so it works a little bit like tags.
+-I should make these changes and make sure I have the right test data instead of
+wasting time making mocks in the client
+-Semantic search is what I should think about vs the old 'sql-like filter' approach.
+
 5/14
 -When i buuild the Blazor SS app, I should use all messages from the API directly
 

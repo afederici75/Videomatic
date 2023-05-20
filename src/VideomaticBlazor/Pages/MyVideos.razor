@@ -1,30 +1,22 @@
 ﻿@page "/MyVideos"
 
-
 <Row>
-    <Column ColumnSize="ColumnSize.Is5" style="background-color: blue">
-            @foreach (var i in Enumerable.Range(1, 100))
+    <Column ColumnSize="ColumnSize.Is5" 
+            Style="top: 0; left: 0; background-color:blue;">
+            @foreach (var i in Enumerable.Range(1, 1))
             {
                 <VideoCard></VideoCard>
             }
 
     </Column>
 
-    <Column ColumnSize="ColumnSize.Is7" Position="Position.Fixed"    
-            Style="top: 0; right: 0; background-color:pink; width: 50%">
+    <Column ColumnSize="ColumnSize.Is6" 
+            Position="Position.Fixed"    
+            Style="top: 0; right: 0; background-color:pink;">
            <Artifacts />
     </Column>
 </Row>
 
-
-@*<Alert style="height:40%; background-color:lightskyblue"  Color="Color.Primary" Visible>
-
-        <div style="position:fixed; bottom:0; left:0; width:100%; background-color:pink">
-                This is my footer
-            </div>
-        </Alert>*@
-
-
 @code {
-
+    
 }
