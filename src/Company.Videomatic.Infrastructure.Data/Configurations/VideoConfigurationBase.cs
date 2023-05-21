@@ -42,6 +42,12 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                //.HasPrincipalKey()
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(x => x.Tags)
+               .WithMany(x => x.Videos);
+
+        builder.HasMany(x => x.Collections)
+               .WithMany(x => x.Videos);
+
         // Indices
         builder.HasIndex(x => x.ProviderId);
         builder.HasIndex(x => x.VideoUrl);

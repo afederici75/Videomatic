@@ -10,6 +10,12 @@ public class Video : EntityBase, IAggregateRoot
     public string? Description { get; set; }
 
     [JsonIgnore]
+    public IEnumerable<Tag> Tags => _tags.AsReadOnly();
+
+    [JsonIgnore]
+    public IEnumerable<Collection> Collections => _collections.AsReadOnly();
+
+    [JsonIgnore]
     public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
 
     [JsonIgnore]
@@ -88,6 +94,8 @@ public class Video : EntityBase, IAggregateRoot
         return this;
     }
 
+    #region Private
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]
     private Video()
@@ -95,6 +103,12 @@ public class Video : EntityBase, IAggregateRoot
     {
         // For entity framework
     }
+
+    [JsonProperty(PropertyName = nameof(Collections))]
+    private List<Collection> _collections = new List<Collection>();
+
+    [JsonProperty(PropertyName = nameof(Tags))]
+    private List<Tag> _tags = new List<Tag>();
 
     [JsonProperty(PropertyName = nameof(Artifacts))]
     private List<Artifact> _artifacts = new List<Artifact>();
@@ -104,4 +118,6 @@ public class Video : EntityBase, IAggregateRoot
 
     [JsonProperty(PropertyName = nameof(Thumbnails))]
     private List<Thumbnail> _thumbnails = new List<Thumbnail>();
+
+    #endregion
 }

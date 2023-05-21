@@ -3,7 +3,6 @@ using Xunit.Abstractions;
 
 namespace Company.Videomatic.Infrastructure.YouTube.Tests;
 
-
 public class YouTubeVideoImporterTests
 {
     private readonly ITestOutputHelper Output;

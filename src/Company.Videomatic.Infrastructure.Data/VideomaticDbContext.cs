@@ -18,7 +18,8 @@ public class VideomaticDbContext : DbContext
     
     public DbSet<Video> Videos { get; set; } = null!;
     public DbSet<Thumbnail> Thumbnails { get; set; } = null!;
-    public DbSet<Folder> Folders { get; set; } = null!;
+    public DbSet<Tag> Tags { get; set; } = null!;
+    public DbSet<Collection> Collections { get; set; } = null!;
     public DbSet<Transcript> Transcripts { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

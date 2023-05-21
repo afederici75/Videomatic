@@ -1,4 +1,11 @@
 {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning",
+      "System.Net.Http.HttpClient": "Debug"
+    }
+  },
+
   "YouTube": {
     "ApiKey": null,
     "ChannelName": null

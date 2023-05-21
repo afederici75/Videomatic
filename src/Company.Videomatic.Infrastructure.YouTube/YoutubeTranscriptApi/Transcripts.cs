@@ -184,7 +184,11 @@ namespace YoutubeTranscriptApi
                 }
                 else
                 {
-                    manuallyCreatedTranscripts.Add(caption.GetProperty("languageCode").GetString()!, transcript);
+                    var langCode = caption.GetProperty("languageCode").GetString()!;
+                    if (manuallyCreatedTranscripts.ContainsKey(langCode))
+                        langCode = langCode + '2';
+
+                    manuallyCreatedTranscripts.Add(langCode, transcript);
                 }
             }
 

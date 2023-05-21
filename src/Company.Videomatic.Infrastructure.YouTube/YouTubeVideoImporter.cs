@@ -58,23 +58,33 @@ public class YouTubeVideoImporter : IVideoImporter
 
     private Domain.Model.Transcript ImportTranscript(Video video)
     {
-        // Retrieve the captions for the video
-        using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
+        try
         {
-            var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderVideoId);
-            
-            var transcript = new Domain.Model.Transcript(language: "US");
-            
-            var lines = transcriptItems
-                .Select(ti => new TranscriptLine(
-                    text: ti.Text,
-                    startsAt: TimeSpan.FromSeconds(ti.Start),
-                    duration: TimeSpan.FromSeconds(ti.Duration)))
-                .ToArray();
+            // Retrieve the captions for the video
+            using (var youTubeTranscriptApi = new YouTubeTranscriptApi())
+            {
+                var transcriptItems = youTubeTranscriptApi.GetTranscript(video.ProviderVideoId);
 
-            transcript.AddLines(lines);
+                var transcript = new Domain.Model.Transcript(language: "US"); // TODO: fix this
 
-            return transcript;
+                var lines = transcriptItems
+                    .Select(ti => new TranscriptLine(
+                        text: ti.Text,
+                        startsAt: TimeSpan.FromSeconds(ti.Start),
+                        duration: TimeSpan.FromSeconds(ti.Duration)))
+                    .ToArray();
+
+                transcript.AddLines(lines);
+
+                return transcript;
+            }
+        }
+        catch (Exception ex)
+        {
+            var t = new Domain.Model.Transcript("ERR");
+            t.AddLines(new TranscriptLine(ex.Message));
+
+            return t;
         }
     }   
 

@@ -15,21 +15,26 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "MainId");
 
             migrationBuilder.CreateTable(
-                name: "Folders",
+                name: "Collections",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Folders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Folders_Folders_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Folders",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_Collections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,17 +46,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     ProviderVideoId = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     VideoUrl = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
-                    FolderId = table.Column<int>(type: "int", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Videos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Videos_Folders_FolderId",
-                        column: x => x.FolderId,
-                        principalTable: "Folders",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -69,6 +68,54 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     table.ForeignKey(
                         name: "FK_Artifact_Videos_VideoId",
                         column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollectionVideo",
+                columns: table => new
+                {
+                    CollectionsId = table.Column<int>(type: "int", nullable: false),
+                    VideosId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionVideo", x => new { x.CollectionsId, x.VideosId });
+                    table.ForeignKey(
+                        name: "FK_CollectionVideo_Collections_CollectionsId",
+                        column: x => x.CollectionsId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollectionVideo_Videos_VideosId",
+                        column: x => x.VideosId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TagVideo",
+                columns: table => new
+                {
+                    TagsId = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    VideosId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TagVideo", x => new { x.TagsId, x.VideosId });
+                    table.ForeignKey(
+                        name: "FK_TagVideo_Tags_TagsId",
+                        column: x => x.TagsId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TagVideo_Videos_VideosId",
+                        column: x => x.VideosId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -154,15 +201,26 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Folders_Id",
-                table: "Folders",
+                name: "IX_Collections_Id",
+                table: "Collections",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Folders_ParentId",
-                table: "Folders",
-                column: "ParentId");
+                name: "IX_CollectionVideo_VideosId",
+                table: "CollectionVideo",
+                column: "VideosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_Id",
+                table: "Tags",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TagVideo_VideosId",
+                table: "TagVideo",
+                column: "VideosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Thumbnails_Height",
@@ -212,11 +270,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Videos_FolderId",
-                table: "Videos",
-                column: "FolderId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Videos_Id",
                 table: "Videos",
                 column: "Id",
@@ -245,19 +298,28 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifact");
 
             migrationBuilder.DropTable(
+                name: "CollectionVideo");
+
+            migrationBuilder.DropTable(
+                name: "TagVideo");
+
+            migrationBuilder.DropTable(
                 name: "Thumbnails");
 
             migrationBuilder.DropTable(
                 name: "TranscriptLine");
 
             migrationBuilder.DropTable(
+                name: "Collections");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
                 name: "Transcripts");
 
             migrationBuilder.DropTable(
                 name: "Videos");
-
-            migrationBuilder.DropTable(
-                name: "Folders");
 
             migrationBuilder.DropSequence(
                 name: "MainId");
