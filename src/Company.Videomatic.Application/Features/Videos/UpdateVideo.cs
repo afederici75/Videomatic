@@ -1,16 +1,32 @@
-﻿using Company.Videomatic.Application.Features.Videos.UpdateVideo;
+﻿namespace Company.Videomatic.Application.Features.Videos;
 
-namespace Company.Videomatic.Application.Features.Videos.UpdateVideo;
+/// <summary>
+/// This command is used to update a video in the repository.
+/// </summary>
+public record UpdateVideoCommand(int VideoId, string? Title = default, string? Description = default) : IRequest<UpdateVideoResponse>;
+
+/// <summary>
+/// The response from the UpdateVideoCommand.
+/// </summary>
+/// <param name="Video"></param>
+/// <param name="Updated"></param>
+public record UpdateVideoResponse(Video? Video, bool Updated);
+
+/// <summary>
+/// This event is published when a video is updated.
+/// </summary>
+/// <param name="VideoId"></param>
+public record VideoUpdatedEvent(int VideoId);
 
 /// <summary>
 /// The handler for UpdateVideoCommand.
 /// </summary>
-public class UpdateVideoCommandHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
+public class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
 {
     private readonly IRepository<Video> _storage;
     private readonly IPublisher _publisher;
 
-    public UpdateVideoCommandHandler(IRepository<Video> videoStorage, IPublisher publisher)
+    public UpdateVideoHandler(IRepository<Video> videoStorage, IPublisher publisher)
     {
         _storage = videoStorage ?? throw new ArgumentNullException(nameof(videoStorage));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

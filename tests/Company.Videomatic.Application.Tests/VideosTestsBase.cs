@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Infrastructure.Data;
+﻿using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
 
@@ -19,7 +20,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     public virtual async Task GetVideosDTOQuery_AllVideoDTOs(
             [FromServices] ISender sender)
     {
-        var cmd = new GetVideosDTOQuery();
+        var cmd = new GetVideosQuery();
         var response = await sender.Send(cmd);
         Fixture.Output.WriteLine(JsonHelper.Serialize(response));
 
@@ -52,7 +53,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     public virtual async Task GetVideosDTOQuery_Only2BVideosFromHttp(
             [FromServices] ISender sender)
     {
-        var cmd = new GetVideosDTOQuery(
+        var cmd = new GetVideosQuery(
             ProviderVideoIdPrefix: "B",
             VideoUrlPrefix: "http"
             );
@@ -69,10 +70,10 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     public virtual async Task GetTranscriptDTOQuery_Aldous(
             [FromServices] ISender sender)
     {
-        var getVideosQry = new GetVideosDTOQuery(Take: 1, Includes: new[] { nameof(Video.Transcripts) } );
-        QueryResponse<VideoDTO> firstVideo = await sender.Send(getVideosQry);
+        var getVideosQry = new GetVideosQuery(Take: 1, Includes: new[] { nameof(Video.Transcripts) } );
+        QueryResponse<GetVideosResult> firstVideo = await sender.Send(getVideosQry);
 
-        var getTranscriptQry = new GetTranscriptDTOQuery(
+        var getTranscriptQry = new GetTranscriptQuery(
             TranscriptId: firstVideo.Items!.First()!.Transcripts!.First().Id
             );
 
@@ -139,7 +140,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     {
         // Imports a video
         string url = YouTubeVideos.GetUrl(videoId);
-        ImportVideoResponse response = await sender.Send(new ImportVideoCommand(-1, url));
+        ImportVideoResponse response = await sender.Send(new ImportVideo(-1, url));
 
         // Verifies
         response.Should().NotBeNull();
@@ -174,7 +175,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         foreach (var videoId in YouTubeVideos.GetVideoIds())
         {
             ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(-1, YouTubeVideos.GetUrl(videoId)));
+                new ImportVideo(-1, YouTubeVideos.GetUrl(videoId)));
 
             newIds.Add(response.VideoId).Should().BeTrue();
         }
@@ -197,7 +198,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         foreach (var videoId in videoIds)
         {
             ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(-1,YouTubeVideos.GetUrl(videoId)));
+                new ImportVideo(-1,YouTubeVideos.GetUrl(videoId)));
 
             response.VideoId.Should().BeGreaterThan(0);
             newIds.Add(response.VideoId);
@@ -210,7 +211,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         // Deletes
         foreach (var video in videos)
         {
-            DeleteVideoResponse response = await sender.Send(new DeleteVideoCommand(video.Id));
+            DeleteVideoResponse response = await sender.Send(new DeleteVideo(video.Id));
             response.Deleted.Should().BeTrue();
         }
     }

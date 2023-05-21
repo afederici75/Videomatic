@@ -1,6 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 
-namespace Company.Videomatic.Application.Features.Videos.ImportVideo;
+namespace Company.Videomatic.Application.EventHandlers;
 
 public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent>
 {
@@ -15,10 +15,10 @@ public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     public async Task Handle(VideoImportedEvent request, CancellationToken cancellationToken)
-    {        
+    {
         var newVideo = await _repository.GetByIdAsync(
-            request.VideoId, 
-            includes: new[] { nameof(Video.Transcripts), nameof(Video.Transcripts) + '.' + nameof(Transcript.Lines) }, 
+            request.VideoId,
+            includes: new[] { nameof(Video.Transcripts), nameof(Video.Transcripts) + '.' + nameof(Transcript.Lines) },
             cancellationToken);
         Guard.Against.Null(newVideo, nameof(newVideo), $"Video with id {request.VideoId} not found.");
 

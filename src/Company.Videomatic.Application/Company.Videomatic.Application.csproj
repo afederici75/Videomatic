@@ -16,9 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\Videos\AddCollectionsToVideo\" />
-    <Folder Include="Features\Videos\AddTagsToVideo\" />
-  </ItemGroup>
 </Project>
