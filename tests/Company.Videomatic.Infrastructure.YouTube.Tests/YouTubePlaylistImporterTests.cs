@@ -1,4 +1,5 @@
-﻿using Xunit.Abstractions;
+﻿using Newtonsoft.Json;
+using Xunit.Abstractions;
 
 namespace Company.Videomatic.Infrastructure.YouTube.Tests;
 
@@ -17,5 +18,19 @@ public class YouTubePlaylistImporterTests
     { 
         var coll = await importer.ImportAsync(new Uri(url));
         Assert.NotNull(coll);
+
+        // Serializes        
+        var settings = JsonHelper.GetJsonSettings();
+        var json = JsonConvert.SerializeObject(coll, settings);
+
+        // The files will be saved under \bin\Debug\net7.0\TestData.
+        var outputPath = VideoDataGenerator.FolderName;
+        if (!Directory.Exists(outputPath))
+            Directory.CreateDirectory(outputPath);
+
+        var fileName = $"{outputPath}\\Collection.json";
+        await File.WriteAllTextAsync(fileName, json); ;
+
+        Output.WriteLine($"Written {fileName}:\n{json}");
     }
 }

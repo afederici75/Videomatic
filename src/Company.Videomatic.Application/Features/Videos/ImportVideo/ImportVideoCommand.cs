@@ -5,8 +5,10 @@
 /// </summary>
 public partial class ImportVideoCommand : IRequest<ImportVideoResponse>
 {
-    public ImportVideoCommand(string videoUrl)
+    public ImportVideoCommand(int collectionId, string videoUrl)
     {
+        CollectionId = collectionId; 
+
         if (string.IsNullOrEmpty(videoUrl))
         {
             throw new ArgumentException($"'{nameof(videoUrl)}' cannot be null or empty.", nameof(videoUrl));
@@ -15,5 +17,6 @@ public partial class ImportVideoCommand : IRequest<ImportVideoResponse>
         VideoUrl = videoUrl;
     }
 
+    public int CollectionId { get; init; }
     public string VideoUrl { get; init; }
 }

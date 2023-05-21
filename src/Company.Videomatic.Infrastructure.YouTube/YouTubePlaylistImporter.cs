@@ -38,7 +38,8 @@ public class YouTubePlaylistImporter : IPlaylistImporter
 
         Playlist actual = playlistResponse.Items.First();
         var actualPlaylist = playlistResponse.Items.First().Snippet;
-        var result = new Collection(
+        
+        var newCollection = new Collection(
             actualPlaylist.Title,
             $"https://www.youtube.com/playlist?list={location.ToString()}");
 
@@ -62,12 +63,12 @@ public class YouTubePlaylistImporter : IPlaylistImporter
             var requests = playlistResp.Items.Select(v => ImportVideoAsync(v));            
             Domain.Model.Video[] videos = await Task.WhenAll(requests);
             
-            result.AddVideos(videos);
+            newCollection.AddVideos(videos);
 
         } while (!string.IsNullOrEmpty(nextPageToken));
         
 
-        return result;
+        return newCollection;
     }
 
     private async Task<Domain.Model.Video> ImportVideoAsync(PlaylistItem? v)

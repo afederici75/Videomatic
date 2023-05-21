@@ -139,7 +139,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     {
         // Imports a video
         string url = YouTubeVideos.GetUrl(videoId);
-        ImportVideoResponse response = await sender.Send(new ImportVideoCommand(url));
+        ImportVideoResponse response = await sender.Send(new ImportVideoCommand(-1, url));
 
         // Verifies
         response.Should().NotBeNull();
@@ -174,7 +174,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         foreach (var videoId in YouTubeVideos.GetVideoIds())
         {
             ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(YouTubeVideos.GetUrl(videoId)));
+                new ImportVideoCommand(-1, YouTubeVideos.GetUrl(videoId)));
 
             newIds.Add(response.VideoId).Should().BeTrue();
         }
@@ -197,7 +197,7 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         foreach (var videoId in videoIds)
         {
             ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(YouTubeVideos.GetUrl(videoId)));
+                new ImportVideoCommand(-1,YouTubeVideos.GetUrl(videoId)));
 
             response.VideoId.Should().BeGreaterThan(0);
             newIds.Add(response.VideoId);

@@ -12,6 +12,7 @@ public class Tag
 
     public required string Id { get; init; }
 
+    [JsonIgnore]
     public IEnumerable<Video> Videos => _videos.AsReadOnly();
 
     [JsonProperty(PropertyName = nameof(Videos))]
