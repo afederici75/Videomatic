@@ -1,3 +1,6 @@
+5/22
+-Should look into DDD and CA and see how aggregates and stuff truly work.
+
 5/20
 -Made a lot of progress with the diagrams. I have enough to start trying Blazor code
 without wasting time figuring out the UI.

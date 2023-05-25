@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Company.Videomatic.Application.Features.Videos;
 
 namespace Company.Videomatic.Application.EventHandlers;
 

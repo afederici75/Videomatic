@@ -1,27 +1,48 @@
-﻿namespace Company.Videomatic.Application.Features.Collections;
+﻿using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Application.Features.Videos;
 
-public record DeleteCollectionCommand(int CollectionId) : IRequest<DeleteCollectionResponse>;
+namespace Company.Videomatic.Application.Features.Collections;
 
-public record DeleteCollectionResponse(Video? Video, bool Deleted);
+/// <summary>
+/// Deletes an existing collection.
+/// </summary>
+/// <param name="id"></param>
+public record DeleteCollectionCommand(int Id) : IRequest<DeleteCollectionResponse>;
 
+/// <summary>
+/// This response is returned by DeleteCollectionCommand.
+/// </summary>
+/// <param name="Item"></param>
+/// <param name="Deleted"></param>
+public record DeleteCollectionResponse(Collection? Item, bool Deleted);
+
+/// <summary>
+/// This event is published when a video is deleted.
+/// </summary>
+public record CollectionDeletedEvent(Collection Item) : INotification;
+
+/// <summary>
+/// Handles the DeleteCollectionCommand.
+/// </summary>
 public class DeleteCollectionHandler : IRequestHandler<DeleteCollectionCommand, DeleteCollectionResponse>
 {
-    private readonly IRepository<Collection> _collectionRepository;
+    private readonly IRepository<Collection> _repository;
     private readonly IPublisher _publisher;
     public DeleteCollectionHandler(IRepository<Collection> collectionRepository, IPublisher publisher)
     {
-        _collectionRepository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
+        _repository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
     }
     public async Task<DeleteCollectionResponse> Handle(DeleteCollectionCommand request, CancellationToken cancellationToken)
     {
-        //var collection = await _collectionRepository.GetByIdAsync(request.CollectionId, null, cancellationToken);
-        //if (collection is null)
-        //    return new(Video: null, Deleted: false);
-        //await _collectionRepository.DeleteAsync(collection, cancellationToken);
-        //await _publisher.Publish(new CollectionDeletedEvent(collection.Id), cancellationToken);
-        //return new(Video: null, Deleted: true);
+        var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
+        if (target == null)
+            return new DeleteCollectionResponse(null, false);
 
-        throw new NotImplementedException();
+        await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
+
+        await _publisher.Publish(new CollectionDeletedEvent(target!), cancellationToken);
+
+        return new DeleteCollectionResponse(target, true);               
     }
 }

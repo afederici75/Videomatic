@@ -1,10 +1,12 @@
-﻿namespace Company.Videomatic.Domain.Model;
+﻿using JetBrains.Annotations;
+
+namespace Company.Videomatic.Domain.Model;
 
 public class Collection : EntityBase
 { 
-    public string Name { get; init; }
-    public string Url { get; init; }
-    public string Description { get; init; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+    public string? Description { get; set; }
 
     [JsonIgnore]
     public IEnumerable<Video> Videos => _videos.AsReadOnly();
@@ -12,10 +14,11 @@ public class Collection : EntityBase
     [JsonIgnore]
     public IEnumerable<Tag> Tags => _tags.AsReadOnly();
 
-    public Collection(string name, string url, IEnumerable<Video>? videos = null)
+    public Collection(string name, string url, string? description = default, IEnumerable<Video>? videos = default)
     {
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Url = url ?? throw new ArgumentNullException(nameof(url));
+        Description = description;
         _videos = videos?.ToList() ?? _videos;
     }
 
@@ -29,6 +32,20 @@ public class Collection : EntityBase
     public Collection ClearVideos()
     {
         _videos.Clear();
+
+        return this;
+    }
+
+    public Collection AddTags(params Tag[] tags)
+    {
+        _tags.AddRange(tags);
+
+        return this;
+    }
+
+    public Collection ClearTags()
+    {
+        _tags.Clear();
 
         return this;
     }

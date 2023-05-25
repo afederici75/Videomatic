@@ -72,8 +72,8 @@ app.MapGet("/videos/" + nameof(GetTranscriptQuery),
     });
 
 
-app.MapPost("videos/" + nameof(ImportVideo),
-    async (ImportVideo command,
+app.MapPost("videos/" + nameof(ImportVideoCommand),
+    async (ImportVideoCommand command,
            ISender sender) =>
     {
         var resp = await sender.Send(command);
@@ -88,8 +88,8 @@ app.MapPut("videos/" + nameof(UpdateVideoCommand),
         return Results.Ok(resp);
     });
 
-app.MapDelete("videos/" + nameof(DeleteVideo),
-    async ([AsParameters] ImportVideo command,
+app.MapDelete("videos/" + nameof(DeleteVideoCommand),
+    async ([AsParameters] ImportVideoCommand command,
            ISender sender) =>
     {
         var resp = await sender.Send(command);
