@@ -16,6 +16,9 @@ public static class DependencyInjectionExtensions
         // Services
         services.AddScoped<IVideoImporter, YouTubeVideoImporter>();
         services.AddScoped<IPlaylistImporter, YouTubePlaylistImporter>();
+
+        services.AddScoped<IPlaylistsHelper, YouTubePlaylistsHelper>();
+
         return services;
     }   
 }

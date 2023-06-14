@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="YouTubeRefData\" />
+  </ItemGroup>
+
 </Project>

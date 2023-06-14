@@ -21,54 +21,55 @@ public class YouTubePlaylistImporter : IPlaylistImporter
 
     public async Task<Collection> ImportAsync(Uri location)
     {
-        // Extract the video ID from the YouTube URL (e.g. 'dQw4w9WgXcQ' from https://www.youtube.com/watch?v=dQw4w9WgXcQ)
-        var playlistId = ExtractPlaylistId(location);
+        //// Extract the video ID from the YouTube URL (e.g. 'dQw4w9WgXcQ' from https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+        //var playlistId = ExtractPlaylistId(location);
 
-        var youtubeService = new YouTubeService(new BaseClientService.Initializer
-        {
-            ApiKey = _options.ApiKey,
-            ApplicationName = _options.ApplicationName
-        });
+        //var youtubeService = new YouTubeService(new BaseClientService.Initializer
+        //{
+        //    ApiKey = _options.ApiKey,
+        //    ApplicationName = _options.ApplicationName
+        //});
 
-        // https://developers.google.com/youtube/v3/docs/playlists/list
-        var playlistRequest = youtubeService.Playlists.List("snippet,contentDetails");
-        playlistRequest.Id = playlistId;
+        //// https://developers.google.com/youtube/v3/docs/playlists/list
+        //var playlistRequest = youtubeService.Playlists.List("snippet,contentDetails");
+        //playlistRequest.Id = playlistId;
         
-        var playlistResponse = await playlistRequest.ExecuteAsync();
+        //var playlistResponse = await playlistRequest.ExecuteAsync();
 
-        Playlist actual = playlistResponse.Items.First();
-        var actualPlaylist = playlistResponse.Items.First().Snippet;
+        //Playlist actual = playlistResponse.Items.First();
+        //var actualPlaylist = playlistResponse.Items.First().Snippet;
         
-        var newCollection = new Collection(
-            actualPlaylist.Title,
-            $"https://www.youtube.com/playlist?list={location.ToString()}");
+        //var newCollection = new Collection(
+        //    actualPlaylist.Title,
+        //    $"https://www.youtube.com/playlist?list={location.ToString()}");
 
 
-        // https://developers.google.com/youtube/v3/docs/playlistItems
-        string nextPageToken = string.Empty;
-        do
-        {
-            var playlistItemsRequest = youtubeService.PlaylistItems.List("snippet,contentDetails,id,status");
-            playlistItemsRequest.PlaylistId = playlistId;
-            playlistItemsRequest.MaxResults = 50;
-            playlistItemsRequest.PageToken = nextPageToken;
+        //// https://developers.google.com/youtube/v3/docs/playlistItems
+        //string nextPageToken = string.Empty;
+        //do
+        //{
+        //    var playlistItemsRequest = youtubeService.PlaylistItems.List("snippet,contentDetails,id,status");
+        //    playlistItemsRequest.PlaylistId = playlistId;
+        //    playlistItemsRequest.MaxResults = 50;
+        //    playlistItemsRequest.PageToken = nextPageToken;
 
-            var playlistResp = await playlistItemsRequest.ExecuteAsync();
+        //    var playlistResp = await playlistItemsRequest.ExecuteAsync();
 
-            nextPageToken = playlistResp.NextPageToken; // Ready for next
+        //    nextPageToken = playlistResp.NextPageToken; // Ready for next
 
-            var publishedVideos = playlistResp.Items
-                .Where(v => v.ContentDetails.VideoPublishedAt is not null); // The video has been removed or similar.
+        //    var publishedVideos = playlistResp.Items
+        //        .Where(v => v.ContentDetails.VideoPublishedAt is not null); // The video has been removed or similar.
 
-            var requests = playlistResp.Items.Select(v => ImportVideoAsync(v));            
-            Domain.Model.Video[] videos = await Task.WhenAll(requests);
+        //    var requests = playlistResp.Items.Select(v => ImportVideoAsync(v));            
+        //    Domain.Model.Video[] videos = await Task.WhenAll(requests);
             
-            newCollection.AddVideos(videos);
+        //    newCollection.AddVideos(videos);
 
-        } while (!string.IsNullOrEmpty(nextPageToken));
+        //} while (!string.IsNullOrEmpty(nextPageToken));
         
 
-        return newCollection;
+        //return newCollection;
+        throw new NotImplementedException();    
     }
 
     private async Task<Domain.Model.Video> ImportVideoAsync(PlaylistItem? v)
