@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticBSS", "src\Videom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticBlazor", "src\VideomaticBlazor\VideomaticBlazor.csproj", "{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.Videomatic.Infrastructure.AzSpeech", "Company.Videomatic.Infrastructure.AzSpeech\Company.Videomatic.Infrastructure.AzSpeech.csproj", "{998A9ABE-8184-4CEA-B594-86D8CA22AE7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech", "src\Company.Videomatic.Infrastructure.AzureSpeech\Company.Videomatic.Infrastructure.AzureSpeech.csproj", "{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech.Tests", "tests\Company.Videomatic.Infrastructure.AzureSpeech.Tests\Company.Videomatic.Infrastructure.AzureSpeech.Tests.csproj", "{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,10 +129,14 @@ Global
 		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{998A9ABE-8184-4CEA-B594-86D8CA22AE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{998A9ABE-8184-4CEA-B594-86D8CA22AE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{998A9ABE-8184-4CEA-B594-86D8CA22AE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{998A9ABE-8184-4CEA-B594-86D8CA22AE7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -153,7 +159,8 @@ Global
 		{59FCA606-65BE-4EF4-9847-37C9E5A1C067} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{B241750C-596A-483F-9EBB-3416FBE714D0} = {C354FC42-1916-406F-B2AC-7604C423A028}
 		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD} = {C354FC42-1916-406F-B2AC-7604C423A028}
-		{998A9ABE-8184-4CEA-B594-86D8CA22AE7E} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}
