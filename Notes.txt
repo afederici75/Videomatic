@@ -1,3 +1,11 @@
+6/13
+-FINALLY PUBLISHED APP on AZURE!
+	-Should move to github actions
+-Managed to transcribe a good chunk of our MC#1
+	-It's slow... Does it need to listen to everything at the same speed we talk?!?!?
+-Added some WAV samples from https://voiceage.com/Audio-Samples-AMR-WB.html
+-Had a hickup in the speech tests: I forgot to mark the Theory arguments wqith FromServices
+
 5/22
 -Should look into DDD and CA and see how aggregates and stuff truly work.
 
