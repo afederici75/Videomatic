@@ -14,10 +14,14 @@ public static class DependencyInjectionExtensions
         services.Configure<YouTubeOptions>(section);
 
         // Services
-        services.AddScoped<IVideoImporter, YouTubeVideoImporter>();
-        services.AddScoped<IPlaylistImporter, YouTubePlaylistImporter>();
-
+        //services.AddScoped<IVideoImporter, YouTubeVideoImporter>();
+        //services.AddScoped<IPlaylistImporter, YouTubePlaylistImporter>();
+        
         services.AddScoped<IPlaylistsHelper, YouTubePlaylistsHelper>();
+        services.AddHttpClient<YouTubePlaylistsHelper>(client =>
+        {
+            client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
+        });
 
         return services;
     }   
