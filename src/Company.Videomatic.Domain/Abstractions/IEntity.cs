@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Domain.Abstractions;
 
-public interface IEntity
+public interface IEntity<TKEY>    
 {
-    int Id { get; }
+    TKEY Id { get; }
 
-    void SetId(int id);
+    void SetId(TKEY id);
 }

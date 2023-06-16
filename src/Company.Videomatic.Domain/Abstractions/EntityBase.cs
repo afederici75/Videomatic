@@ -5,14 +5,12 @@
 /// <summary>
 /// The base class for all entities.
 /// </summary>
-public abstract class EntityBase : IEntity
+public abstract class EntityBase<TKEY> : IEntity<TKEY>
 {
-    public virtual int Id { get; private set; }
+    public virtual TKEY Id { get; private set; }
 
-    public void SetId(int id)
+    public void SetId(TKEY id)
     {
-        Guard.Against.Negative(id, nameof(id));
-
         Id = id;
     }
 }

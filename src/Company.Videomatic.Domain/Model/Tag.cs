@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Tag
+public class Tag : EntityBase<string>
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]
@@ -9,8 +9,6 @@ public class Tag
     {
         // For entity framework
     }
-
-    public required string Id { get; init; }
 
     [JsonIgnore]
     public IEnumerable<Video> Videos => _videos.AsReadOnly();

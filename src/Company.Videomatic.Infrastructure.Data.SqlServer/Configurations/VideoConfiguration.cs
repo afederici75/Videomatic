@@ -9,6 +9,6 @@ public class VideoConfiguration : VideoConfigurationBase
     {
         base.Configure(builder);
 
-        builder.OverrideIEntityForSqlServer();
+        //builder.OverrideIEntityForSqlServer();
     }
 }

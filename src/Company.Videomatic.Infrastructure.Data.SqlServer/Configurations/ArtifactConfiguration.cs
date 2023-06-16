@@ -9,6 +9,6 @@ public class ArtifactConfiguration : Data.Configurations.ArtifactConfigurationBa
     {
         base.Configure(builder);
 
-        builder.OverrideIEntityForSqlServer();
+        //builder.OverrideIEntityForSqlServer();
     }
 }

@@ -9,6 +9,6 @@ public class TranscriptConfiguration : TranscriptConfigurationBase
     {
         base.Configure(builder);
 
-        builder.OverrideIEntityForSqlServer();
+        //builder.OverrideIEntityForSqlServer();
     }
 }   

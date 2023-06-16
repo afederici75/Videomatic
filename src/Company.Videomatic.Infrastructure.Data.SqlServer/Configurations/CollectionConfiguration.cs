@@ -9,6 +9,6 @@ public class CollectionConfiguration : Data.Configurations.CollectionConfigurati
     {
         base.Configure(builder);
         
-        builder.OverrideIEntityForSqlServer();
+        //builder.OverrideIEntityForSqlServer();
     }
 }

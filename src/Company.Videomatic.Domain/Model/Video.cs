@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Video : EntityBase, IAggregateRoot
+public class Video : EntityBase<int>, IAggregateRoot
 {    
     public string ProviderId { get; init; }
     public string ProviderVideoId { get; init; }

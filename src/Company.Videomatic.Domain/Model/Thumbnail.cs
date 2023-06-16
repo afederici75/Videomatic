@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Thumbnail : EntityBase
+public class Thumbnail : EntityBase<int>
 {    
     public string Url { get; init; }
 

@@ -9,6 +9,6 @@ public class ThumbnailConfiguration : ThumbnailConfigurationBase
     {
         base.Configure(builder);
 
-        builder.OverrideIEntityForSqlServer();
+        //builder.OverrideIEntityForSqlServer();
     }
 }

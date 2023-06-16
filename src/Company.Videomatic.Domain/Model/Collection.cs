@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Collection : EntityBase, IAggregateRoot
+public class Collection : EntityBase<int>, IAggregateRoot
 { 
     public string Name { get; set; }
     public string Url { get; set; }

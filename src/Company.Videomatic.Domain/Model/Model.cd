@@ -110,10 +110,6 @@
       <Path>
         <Point X="16.25" Y="12.392" />
         <Point X="16.25" Y="12.642" />
-        <Point X="16.917" Y="12.642" Type="JumpStart" />
-        <Point X="17.083" Y="12.642" Type="JumpEnd" />
-        <Point X="21.417" Y="12.642" Type="JumpStart" />
-        <Point X="21.583" Y="12.642" Type="JumpEnd" />
         <Point X="21.812" Y="12.642" />
         <Point X="21.812" Y="14" />
       </Path>
@@ -134,7 +130,7 @@
     </ShowAsCollectionAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Company.Videomatic.Domain.Abstractions.EntityBase">
+  <Class Name="Company.Videomatic.Domain.Abstractions.EntityBase&lt;TKEY&gt;">
     <Position X="14.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

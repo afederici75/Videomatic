@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Artifact : EntityBase
+public class Artifact : EntityBase<int>
 {    
     public string Title { get; set; }
     public string? Text { get; set; }

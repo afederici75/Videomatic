@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Transcript : EntityBase
+public class Transcript : EntityBase<int>
 {
     public string? Language { get; set; }
 
