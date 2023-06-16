@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 
-namespace YoutubeTranscriptApi;
+namespace Company.Videomatic.Infrastructure.YouTube.API;
 
 // https://github.com/jdepoix/youtube-transcript-api/blob/master/youtube_transcript_api/_api.py
 

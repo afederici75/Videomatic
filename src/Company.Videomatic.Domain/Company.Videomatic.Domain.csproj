@@ -1,8 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <Compile Remove="Diagrams\**" />
+    <Compile Remove="Specifications\**" />
     <EmbeddedResource Remove="Diagrams\**" />
+    <EmbeddedResource Remove="Specifications\**" />
     <None Remove="Diagrams\**" />
+    <None Remove="Specifications\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
@@ -11,8 +14,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Company.SharedKernel\Company.SharedKernel.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Specifications\" />
   </ItemGroup>
 </Project>

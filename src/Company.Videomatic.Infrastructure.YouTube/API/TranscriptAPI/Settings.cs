@@ -1,4 +1,4 @@
-﻿namespace YoutubeTranscriptApi;
+﻿namespace Company.Videomatic.Infrastructure.YouTube.API;
 
 //https://github.com/jdepoix/youtube-transcript-api/blob/master/youtube_transcript_api/_settings.py
 internal static class Settings

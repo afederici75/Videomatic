@@ -1,12 +1,16 @@
-﻿namespace Company.Videomatic.Infrastructure.YouTube.Model;
+﻿namespace Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 
-public class GetPlaylistsResponse
+// API: https://developers.google.com/youtube/v3/docs/playlistItems/list
+// TODO: fix the warnings and possibly use directly the Google API nuget
+
+internal class GetPlaylistItemsResponse
 {
     public string kind { get; set; }
     public string etag { get; set; }
     public string nextPageToken { get; set; }
-    public Pageinfo pageInfo { get; set; }
     public Item[] items { get; set; }
+    public Pageinfo pageInfo { get; set; }
+
 
     public class Pageinfo
     {
@@ -21,6 +25,7 @@ public class GetPlaylistsResponse
         public string id { get; set; }
         public Snippet snippet { get; set; }
         public Contentdetails contentDetails { get; set; }
+        public Status status { get; set; }
     }
 
     public class Snippet
@@ -31,7 +36,11 @@ public class GetPlaylistsResponse
         public string description { get; set; }
         public Thumbnails thumbnails { get; set; }
         public string channelTitle { get; set; }
-        public Localized localized { get; set; }
+        public string playlistId { get; set; }
+        public int position { get; set; }
+        public Resourceid resourceId { get; set; }
+        public string videoOwnerChannelTitle { get; set; }
+        public string videoOwnerChannelId { get; set; }
     }
 
     public class Thumbnails
@@ -78,14 +87,20 @@ public class GetPlaylistsResponse
         public int height { get; set; }
     }
 
-    public class Localized
+    public class Resourceid
     {
-        public string title { get; set; }
-        public string description { get; set; }
+        public string kind { get; set; }
+        public string videoId { get; set; }
     }
 
     public class Contentdetails
     {
-        public int itemCount { get; set; }
+        public string videoId { get; set; }
+        public DateTime videoPublishedAt { get; set; }
+    }
+
+    public class Status
+    {
+        public string privacyStatus { get; set; }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace YoutubeTranscriptApi;
+﻿namespace Company.Videomatic.Infrastructure.YouTube.API;
 
 //https://github.com/jdepoix/youtube-transcript-api/blob/master/youtube_transcript_api/_errors.py
 
@@ -14,13 +11,13 @@ internal class CouldNotRetrieveTranscript : Exception
 
     private const string ERROR_MESSAGE = "\nCould not retrieve a transcript for the video {0}!";
     private const string CAUSE_MESSAGE_INTRO = " This is most likely caused by:\n\n{0}";
-    private const string GITHUB_REFERRAL = (
+    private const string GITHUB_REFERRAL =
     "\n\nIf you are sure that the described cause is not responsible for this error " +
     "and that a transcript should be retrievable, please create an issue at " +
     "https://github.com/jdepoix/youtube-transcript-api/issues. " +
     "Please add which version of youtube_transcript_api you are using " +
     "and provide the information needed to replicate the error. " +
-    "Also make sure that there are no open issues which already describe your problem!");
+    "Also make sure that there are no open issues which already describe your problem!";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CouldNotRetrieveTranscript"/> class.

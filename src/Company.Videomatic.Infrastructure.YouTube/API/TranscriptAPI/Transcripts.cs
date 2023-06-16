@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Net;
-using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace YoutubeTranscriptApi;
+namespace Company.Videomatic.Infrastructure.YouTube.API;
 
 //https://github.com/jdepoix/youtube-transcript-api/blob/c5bf0132ffa2906cc1bf6d480a70ef799dedc209/youtube_transcript_api/_transcripts.py
 
@@ -277,7 +273,7 @@ public class TranscriptList : IEnumerable<Transcript>
             "(GENERATED)\n" +
             $"{getLanguageDescription(_generatedTranscripts.Values.Select(transcript => transcript.ToString()))}\n\n" +
             "(TRANSLATION LANGUAGES)\n" +
-            $"{getLanguageDescription(_translationLanguages.Select(translationLanguage => $"{ translationLanguage["language_code"]} (\"{translationLanguage["language"]}\")"))}";
+            $"{getLanguageDescription(_translationLanguages.Select(translationLanguage => $"{translationLanguage["language_code"]} (\"{translationLanguage["language"]}\")"))}";
     }
 
     private static string getLanguageDescription(IEnumerable<string> transcriptStrings)

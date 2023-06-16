@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Comment CommentText="Artifacts could be:&#xD;&#xA;-Description (download)&#xD;&#xA;-Summary (AI)&#xD;&#xA;-Analysis (AI)">
+    <Position X="0.5" Y="10.896" Height="1.52" Width="2.917" />
+  </Comment>
+  <Class Name="Company.Videomatic.Domain.Model.Artifact">
+    <Position X="3.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Model\Artifact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.Collection">
+    <Position X="5.75" Y="0.5" Width="2.5" />
+    <Members>
+      <Field Name="_tags" Hidden="true" />
+      <Field Name="_videos" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Videos" Type="Company.Videomatic.Domain.Model.Video" FixedFromPoint="true">
+      <Path>
+        <Point X="7.562" Y="3.588" />
+        <Point X="7.562" Y="5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAAQACAAAAAQAAACgAEAASAAAAAAAAAg=</HashCode>
+      <FileName>Model\Collection.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Tags" />
+      <Property Name="Videos" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.Tag">
+    <Position X="13.5" Y="3.75" Width="2.5" />
+    <Members>
+      <Field Name="_videos" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Model\Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.Thumbnail">
+    <Position X="6.5" Y="10.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAEAAAAAEAAAAAgAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Model\Thumbnail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.Transcript">
+    <Position X="12" Y="10.75" Width="3" />
+    <Members>
+      <Field Name="_lines" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAEAAABAAAAAAAAEAACQAAAAAAAAAA=</HashCode>
+      <FileName>Model\Transcript.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Lines" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.TranscriptLine">
+    <Position X="13.75" Y="15" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAACAAAEAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Model\TranscriptLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Model.Video" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="5" Width="3.25" />
+    <Members>
+      <Field Name="_artifacts" Hidden="true" />
+      <Field Name="_collections" Hidden="true" />
+      <Field Name="_tags" Hidden="true" />
+      <Field Name="_thumbnails" Hidden="true" />
+      <Field Name="_transcripts" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Artifacts" Type="Company.Videomatic.Domain.Model.Artifact" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="9.142" />
+        <Point X="5.75" Y="9.815" />
+        <Point X="4.5" Y="9.815" />
+        <Point X="4.5" Y="10.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.291" Y="0.465" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Thumbnails" Type="Company.Videomatic.Domain.Model.Thumbnail" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.312" Y="9.142" />
+        <Point X="6.312" Y="9.767" />
+        <Point X="7.875" Y="9.767" />
+        <Point X="7.875" Y="10.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.422" Y="0.48" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Transcripts" Type="Company.Videomatic.Domain.Model.Transcript" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8" Y="9.142" />
+        <Point X="8" Y="9.517" />
+        <Point X="13.562" Y="9.517" />
+        <Point X="13.562" Y="10.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.399" Y="0.469" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Collections" Type="Company.Videomatic.Domain.Model.Collection" FixedToPoint="true">
+      <Path>
+        <Point X="6.438" Y="5" />
+        <Point X="6.438" Y="3.588" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ARAAAAAAAgCgAEAEBAEIAIAAAACggkAMAAAQAIQAAAA=</HashCode>
+      <FileName>Model\Video.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Artifacts" />
+      <Property Name="Thumbnails" />
+      <Property Name="Transcripts" />
+      <Property Name="Collections" />
+      <Property Name="Tags" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Enum Name="Company.Videomatic.Domain.Model.ThumbnailResolution">
+    <Position X="9.5" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAgAAIAAAAIAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Model\ThumbnailResolution.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

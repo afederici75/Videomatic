@@ -1,17 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.YouTube.Model;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Transactions;
-using YoutubeTranscriptApi;
-using static System.Net.WebRequestMethods;
-
-namespace Company.Videomatic.Infrastructure.YouTube;
+﻿namespace Company.Videomatic.Infrastructure.YouTube;
 
 public record Playlist(string Id, string Title, string Description);
 
@@ -19,14 +6,7 @@ public record Video(string Id,string Title, string Description);
 
 public record TranscriptionItem(string Text, float Start, float duration);
 
-public interface IPlaylistsHelper
-{
-    IAsyncEnumerable<Playlist> GetPlaylists(string channelId);
-    IAsyncEnumerable<Video> GetVideosOfPlaylist(string playlistId);
-    IAsyncEnumerable<TranscriptionItem> GetTranscriptionOfVideo(string videoId);
-}
-
-public class YouTubePlaylistsHelper : IPlaylistsHelper
+public class YouTubePlaylistsHelper : IYouTubeHelper
 {
     public YouTubePlaylistsHelper(IOptions<YouTubeOptions> options, HttpClient client)
     {
@@ -38,14 +18,14 @@ public class YouTubePlaylistsHelper : IPlaylistsHelper
     readonly YouTubeOptions _options;
     readonly HttpClient _client;
 
-    public async IAsyncEnumerable<Playlist> GetPlaylists(string channelId)
+    public async IAsyncEnumerable<Playlist> GetPlaylistsByChannel(string channelId)
     {
         var parameters = new Dictionary<string, string>
         {
             ["key"] = _options.ApiKey,
             ["channelId"] = channelId,
             ["part"] = "snippet,contentDetails",
-            //["fields"] = "pageInfo, items/snippet(title, description)",
+            ["fields"] = "pageInfo, items/snippet(title, description)",
             ["maxResults"] = "50"
         };
 
@@ -73,7 +53,7 @@ public class YouTubePlaylistsHelper : IPlaylistsHelper
             ["key"] = _options.ApiKey,
             ["playlistId"] = playlistId,
             ["part"] = "snippet,contentDetails,id,status",
-            //["fields"] = "pageInfo, items/snippet(title, description)",
+            ["fields"] = "pageInfo, items/snippet(title, description)",
             ["maxResults"] = "50"
         };
 
