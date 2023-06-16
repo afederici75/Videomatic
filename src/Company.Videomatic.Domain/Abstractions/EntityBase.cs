@@ -1,4 +1,4 @@
-﻿namespace Company.SharedKernel;
+﻿namespace Company.Videomatic.Domain.Abstractions;
 
 // Inspired by https://github.com/dotnet-architecture/eShopOnWeb/blob/9db2feb930c8cd1ce379bbebf76521a4ba0dddfb/src/ApplicationCore/Entities/BaseEntity.cs#L5
 

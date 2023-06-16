@@ -46,13 +46,14 @@ public class AddVideosToCollectionHandler : IRequestHandler<AddVideosToCollectio
 
     public async Task<AddVideosToCollectionResponse> Handle(AddVideosToCollectionCommand request, CancellationToken cancellationToken)
     {
-        var collection = await _repository.GetByIdAsync(request.CollectionId, new[] { nameof(Collection.Videos) }, cancellationToken);
-        if (collection == null)
-            throw new NotFoundException(request.CollectionId.ToString(), nameof(Collection));
-
-        var commands = request.VideoUrls.Select(url => _publisher.Publish(new ImportVideoCommand(request.CollectionId, url)));
-        await Task.WhenAll(commands);
-
-        return new AddVideosToCollectionResponse(request.CollectionId, commands.Count());
+        throw new NotImplementedException();
+        //var collection = await _repository.GetByIdAsync(request.CollectionId, new[] { nameof(Collection.Videos) }, cancellationToken);
+        //if (collection == null)
+        //    throw new NotFoundException(request.CollectionId.ToString(), nameof(Collection));
+        //
+        //var commands = request.VideoUrls.Select(url => _publisher.Publish(new ImportVideoCommand(request.CollectionId, url)));
+        //await Task.WhenAll(commands);
+        //
+        //return new AddVideosToCollectionResponse(request.CollectionId, commands.Count());
     }
 }

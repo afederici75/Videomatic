@@ -100,29 +100,30 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
         video.Thumbnails.Should().HaveCountGreaterThan(0);
 
         // Persists
-        await Fixture.Repository.UpdateRangeAsync(new[] { video }); // Will add a new record
-        await Fixture.Repository.SaveChangesAsync();        
+        throw new NotImplementedException();
+        //await Fixture.Repository.UpdateRangeAsync(new[] { video }); // Will add a new record
+        //await Fixture.Repository.SaveChangesAsync();        
 
-        // Now reads
-        video.Id.Should().BeGreaterThan(0);
+        //// Now reads
+        //video.Id.Should().BeGreaterThan(0);
 
-        //var record = await Fixture.DbContext.Videos.FirstAsync(v => v.Id == video.Id);
+        ////var record = await Fixture.DbContext.Videos.FirstAsync(v => v.Id == video.Id);
 
-        var record = await Fixture.Repository.GetByIdAsync(video.Id);
+        //var record = await Fixture.Repository.GetByIdAsync(video.Id);
 
-        record.Should().NotBeNull();
-        record!.Id.Should().Be(video.Id);
-        record!.Title.Should().Be(video.Title);
-        record!.Description.Should().Be(video.Description);
+        //record.Should().NotBeNull();
+        //record!.Id.Should().Be(video.Id);
+        //record!.Title.Should().Be(video.Title);
+        //record!.Description.Should().Be(video.Description);
 
-        //record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
-        //record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
-        //Fixture.DbContext.Entry(video).State = EntityState.Deleted;
-        //Fixture.DbContext.Remove(video);
-        await Fixture.Repository.DeleteRangeAsync(new[] { record });
+        ////record!.Thumbnails.Should().BeEquivalentTo(video.Thumbnails);
+        ////record!.Transcripts.Should().BeEquivalentTo(video.Transcripts);
+        ////Fixture.DbContext.Entry(video).State = EntityState.Deleted;
+        ////Fixture.DbContext.Remove(video);
+        //await Fixture.Repository.DeleteRangeAsync(new[] { record });
 
-        record = await Fixture.Repository.GetByIdAsync(video.Id);
-        record.Should().BeNull();
+        //record = await Fixture.Repository.GetByIdAsync(video.Id);
+        //record.Should().BeNull();
 
     }
 
@@ -138,31 +139,32 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
             [FromServices] IRepository<Video> repository2,
             string videoId)
     {
-        // Imports a video
-        string url = YouTubeVideos.GetUrl(videoId);
-        ImportVideoResponse response = await sender.Send(new ImportVideoCommand(-1, url));
+        //// Imports a video
+        //string url = YouTubeVideos.GetUrl(videoId);
+        //ImportVideoResponse response = await sender.Send(new ImportVideoCommand(-1, url));
 
-        // Verifies
-        response.Should().NotBeNull();
-        response.VideoId.Should().BeGreaterThan(0);
+        //// Verifies
+        //response.Should().NotBeNull();
+        //response.VideoId.Should().BeGreaterThan(0);
 
-        Video? dbVideo = await repository.GetByIdAsync(
-            id: response.VideoId, 
-            includes: new[]
-            {
-                nameof(Video.Artifacts),
-                nameof(Video.Thumbnails),
-                nameof(Video.Transcripts),
-                nameof(Video.Transcripts)+'.'+nameof(Transcript.Lines),
-            });
+        //Video? dbVideo = await repository.GetByIdAsync(
+        //    id: response.VideoId, 
+        //    includes: new[]
+        //    {
+        //        nameof(Video.Artifacts),
+        //        nameof(Video.Thumbnails),
+        //        nameof(Video.Transcripts),
+        //        nameof(Video.Transcripts)+'.'+nameof(Transcript.Lines),
+        //    });
 
-        dbVideo!.Should().NotBeNull();
-        dbVideo!.Thumbnails.Count().Should().BeGreaterThan(0);
-        dbVideo!.Transcripts.Count().Should().BeGreaterThan(0);
-        dbVideo!.Artifacts.Count().Should().BeGreaterThan(0);
+        //dbVideo!.Should().NotBeNull();
+        //dbVideo!.Thumbnails.Count().Should().BeGreaterThan(0);
+        //dbVideo!.Transcripts.Count().Should().BeGreaterThan(0);
+        //dbVideo!.Artifacts.Count().Should().BeGreaterThan(0);
 
-        // Cleans up
-        await repository2.DeleteRangeAsync(new[] { dbVideo! });
+        //// Cleans up
+        //await repository2.DeleteRangeAsync(new[] { dbVideo! });
+        throw new NotImplementedException();
     }
 
     [Theory(DisplayName = "ImportVideoCommandWorksForAllVideos")]
@@ -171,20 +173,21 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
             [FromServices] ISender sender,
             [FromServices] IRepository<Video> repository)
     {
-        var newIds = new HashSet<int>();
-        foreach (var videoId in YouTubeVideos.GetVideoIds())
-        {
-            ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(-1, YouTubeVideos.GetUrl(videoId)));
+        throw new NotImplementedException();
+        //var newIds = new HashSet<int>();
+        //foreach (var videoId in YouTubeVideos.GetVideoIds())
+        //{
+        //    ImportVideoResponse response = await sender.Send(
+        //        new ImportVideoCommand(-1, YouTubeVideos.GetUrl(videoId)));
 
-            newIds.Add(response.VideoId).Should().BeTrue();
-        }
+        //    newIds.Add(response.VideoId).Should().BeTrue();
+        //}
 
-        // Queries 
-        IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
-        videos.Should().HaveCount(newIds.Count);
+        //// Queries 
+        //IEnumerable<Video> videos = await repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
+        //videos.Should().HaveCount(newIds.Count);
 
-        await repository.DeleteRangeAsync(videos);
+        //await repository.DeleteRangeAsync(videos);
     }
 
     [Theory(DisplayName = nameof(DeleteVideoCommandWorksForAllVideos))]
@@ -192,28 +195,29 @@ public abstract class VideosTestsBase : RepositoryTestsBase<Video>
     public virtual async Task DeleteVideoCommandWorksForAllVideos(
             [FromServices] ISender sender)
     {
-        // Imports 4 videos
-        var videoIds = YouTubeVideos.GetVideoIds();
-        var newIds = new HashSet<int>();
-        foreach (var videoId in videoIds)
-        {
-            ImportVideoResponse response = await sender.Send(
-                new ImportVideoCommand(-1,YouTubeVideos.GetUrl(videoId)));
+        throw new NotImplementedException();
+        //// Imports 4 videos
+        //var videoIds = YouTubeVideos.GetVideoIds();
+        //var newIds = new HashSet<int>();
+        //foreach (var videoId in videoIds)
+        //{
+        //    ImportVideoResponse response = await sender.Send(
+        //        new ImportVideoCommand(-1,YouTubeVideos.GetUrl(videoId)));
 
-            response.VideoId.Should().BeGreaterThan(0);
-            newIds.Add(response.VideoId);
-        }
+        //    response.VideoId.Should().BeGreaterThan(0);
+        //    newIds.Add(response.VideoId);
+        //}
 
-        // Queries 
-        IEnumerable<Video> videos = await Fixture.Repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
-        videos.Should().HaveCount(newIds.Count);
+        //// Queries 
+        //IEnumerable<Video> videos = await Fixture.Repository.ListAsync(new GetVideosSpecification(newIds.ToArray()));
+        //videos.Should().HaveCount(newIds.Count);
 
-        // Deletes
-        foreach (var video in videos)
-        {
-            DeleteVideoResponse response = await sender.Send(new DeleteVideoCommand(video.Id));
-            response.Deleted.Should().BeTrue();
-        }
+        //// Deletes
+        //foreach (var video in videos)
+        //{
+        //    DeleteVideoResponse response = await sender.Send(new DeleteVideoCommand(video.Id));
+        //    response.Deleted.Should().BeTrue();
+        //}
     }
     #endregion
 }

@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Company.Videomatic.Domain.Model;
+﻿namespace Company.Videomatic.Domain.Model;
 
 public class Thumbnail : EntityBase
 {    

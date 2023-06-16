@@ -5,7 +5,8 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
     public virtual void Configure(EntityTypeBuilder<Video> builder)
     {
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         // Fields        
         builder.Property(x => x.ProviderId)

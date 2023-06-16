@@ -44,14 +44,16 @@ public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, Del
 
     public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
     {
-        var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
-        if (target == null)
-            return new DeleteVideoResponse(null, false);
+        throw new NotImplementedException();
 
-        await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
-
-        await _publisher.Publish(new VideoDeletedEvent(target), cancellationToken);
-
-        return new DeleteVideoResponse(target, true);
+        //var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
+        //if (target == null)
+        //    return new DeleteVideoResponse(null, false);
+        //
+        //await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
+        //
+        //await _publisher.Publish(new VideoDeletedEvent(target), cancellationToken);
+        //
+        //return new DeleteVideoResponse(target, true);
     }
 }

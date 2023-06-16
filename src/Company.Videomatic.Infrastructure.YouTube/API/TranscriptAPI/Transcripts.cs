@@ -34,7 +34,7 @@ internal sealed class TranscriptListFetcher
 
     internal static JsonElement extractCaptionsJson(string html, string videoId)
     {
-        var splitted_html = html.Split("\"captions\":");
+        string[] splitted_html = html.Split("\"captions\":");
 
         if (splitted_html.Length <= 1)
         {
@@ -51,7 +51,7 @@ internal sealed class TranscriptListFetcher
             throw new TranscriptsDisabled(videoId);
         }
 
-        var captions_json = JsonSerializer.Deserialize<JsonElement>(
+        var captions_json = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(
             splitted_html[1].Split(",\"videoDetails")[0].Replace("\n", "")
             ).GetProperty("playerCaptionsTracklistRenderer");
 

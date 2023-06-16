@@ -1,4 +1,4 @@
-﻿namespace Company.SharedKernel.Abstractions;
+﻿namespace Company.Videomatic.Domain.Abstractions;
 
 public interface IEntity
 {

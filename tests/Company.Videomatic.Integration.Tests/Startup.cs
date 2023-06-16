@@ -1,6 +1,4 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.SharedKernel;
-using Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

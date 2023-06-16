@@ -5,7 +5,8 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         // Fields
 

@@ -5,7 +5,8 @@ public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thum
     public virtual void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         // Fields        
         builder.Property(x => x.Url)

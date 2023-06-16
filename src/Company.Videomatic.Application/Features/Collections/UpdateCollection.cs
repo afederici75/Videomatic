@@ -23,21 +23,23 @@ public class UpdateCollectionHandler : IRequestHandler<UpdateCollectionCommand, 
     }
     public async Task<UpdateCollectionResponse> Handle(UpdateCollectionCommand request, CancellationToken cancellationToken)
     {
-        // Looks up the video by id.
-        Collection? collection = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
-        if (collection is null)
-            return new(request.Id, false);
+        //// Looks up the video by id.
+        //Collection? collection = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
+        //if (collection is null)
+        //    return new(request.Id, false);
+        //
+        //// Updates the video.
+        //// TODO: should use a mapper.
+        //collection.Name = request.Name;
+        //collection.Description = request.Description;
+        //
+        //await _repository.UpdateRangeAsync(new[] { collection }, cancellationToken);
+        //
+        ////  Publishes the event and returns the response.
+        //await _publisher.Publish(new VideoUpdatedEvent(collection.Id), cancellationToken);
+        //
+        //return new(collection.Id, Updated: true);
 
-        // Updates the video.
-        // TODO: should use a mapper.
-        collection.Name = request.Name;
-        collection.Description = request.Description;
-
-        await _repository.UpdateRangeAsync(new[] { collection }, cancellationToken);
-
-        //  Publishes the event and returns the response.
-        await _publisher.Publish(new VideoUpdatedEvent(collection.Id), cancellationToken);
-
-        return new(collection.Id, Updated: true);
+        throw new NotImplementedException();
     }
 }

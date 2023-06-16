@@ -1,6 +1,5 @@
 ﻿//using Microsoft.SemanticKernel.tex
 
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.SemanticKernel.SemanticFunctions.Partitioning;
 
 namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.Chunking;

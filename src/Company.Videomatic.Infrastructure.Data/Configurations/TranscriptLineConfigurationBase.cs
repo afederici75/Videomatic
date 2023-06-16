@@ -3,9 +3,10 @@
 public abstract class TranscriptLineConfigurationBase : IEntityTypeConfiguration<TranscriptLine>
 {
     public virtual void Configure(EntityTypeBuilder<TranscriptLine> builder)
-    {
+    {        
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         //Indices        
         builder.HasIndex(x => x.Text);

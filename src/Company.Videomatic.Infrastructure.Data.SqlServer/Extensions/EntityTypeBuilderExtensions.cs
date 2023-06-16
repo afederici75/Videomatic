@@ -1,6 +1,4 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Infrastructure.Data.SqlServer;
-
+﻿
 namespace Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 internal static class EntityTypeBuilderExtensions

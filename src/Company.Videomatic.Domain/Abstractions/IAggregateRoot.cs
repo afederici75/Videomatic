@@ -1,4 +1,4 @@
-﻿namespace Company.SharedKernel.Abstractions;
+﻿namespace Company.Videomatic.Domain.Abstractions;
 
 /// <summary>
 /// A marker interface for aggregate roots.

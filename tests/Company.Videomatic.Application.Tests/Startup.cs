@@ -1,9 +1,5 @@
-﻿using Company.SharedKernel;
-using Company.SharedKernel.Abstractions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Videomatic.Application.Tests;

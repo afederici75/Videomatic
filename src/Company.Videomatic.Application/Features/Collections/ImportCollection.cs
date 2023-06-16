@@ -18,12 +18,13 @@ public class ImportCollectionHandler : IRequestHandler<ImportCollectionCommand, 
     }
     public async Task<ImportCollectionResponse> Handle(ImportCollectionCommand request, CancellationToken cancellationToken)
     {
-        Collection newCollection = await _importer.ImportAsync(new Uri(request.CollectionUrl));
+        throw new NotImplementedException();
+        //Collection newCollection = await _importer.ImportAsync(new Uri(request.CollectionUrl));
+        //
+        //await _collectionRepository.AddRangeAsync(new[] { newCollection }, cancellationToken);
+        //
+        //var response = new ImportCollectionResponse(true);
 
-        await _collectionRepository.AddRangeAsync(new[] { newCollection }, cancellationToken);
-
-        var response = new ImportCollectionResponse(true);
-
-        return response;
+        //return response;
     }
 }

@@ -5,7 +5,8 @@ public abstract class CollectionConfigurationBase : IEntityTypeConfiguration<Col
     public virtual void Configure(EntityTypeBuilder<Collection> builder)
     {
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         // Fields
         builder.Property(x => x.Name)

@@ -1,8 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿namespace Company.Videomatic.Domain.Model;
 
-namespace Company.Videomatic.Domain.Model;
-
-public class Collection : EntityBase
+public class Collection : EntityBase, IAggregateRoot
 { 
     public string Name { get; set; }
     public string Url { get; set; }

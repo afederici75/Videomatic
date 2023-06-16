@@ -34,21 +34,22 @@ public class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdateVide
 
     public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
     {
+        throw new NotImplementedException();
         // Looks up the video by id.
-        var video = await _storage.GetByIdAsync(request.VideoId, null, cancellationToken);
-        if (video is null)
-            return new(Video: null, Updated: false);
-
-        // Updates the video.
-        // TODO: should use a mapper.
-        video.Title = request.Title;
-        video.Description = request.Description;
-
-        await _storage.UpdateRangeAsync(new[] { video }, cancellationToken);
-
-        //  Publishes the event and returns the response.
-        await _publisher.Publish(new VideoUpdatedEvent(video.Id), cancellationToken);
-
-        return new(Video: video, Updated: true);
+        //var video = await _storage.GetByIdAsync(request.VideoId, null, cancellationToken);
+        //if (video is null)
+        //    return new(Video: null, Updated: false);
+        //
+        //// Updates the video.
+        //// TODO: should use a mapper.
+        //video.Title = request.Title;
+        //video.Description = request.Description;
+        //
+        //await _storage.UpdateRangeAsync(new[] { video }, cancellationToken);
+        //
+        ////  Publishes the event and returns the response.
+        //await _publisher.Publish(new VideoUpdatedEvent(video.Id), cancellationToken);
+        //
+        //return new(Video: video, Updated: true);
     }
 }

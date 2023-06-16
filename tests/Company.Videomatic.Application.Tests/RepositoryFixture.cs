@@ -1,11 +1,7 @@
-﻿using Company.Videomatic.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Xunit.Abstractions;
-
-namespace Company.Videomatic.Application.Tests;
+﻿namespace Company.Videomatic.Application.Tests;
 
 public class RepositoryFixture<T> : IAsyncLifetime
-    where T : class, IEntity
+    where T : class, IAggregateRoot
 {
     public RepositoryFixture(VideomaticDbContext dbContext, IRepository<T> repository, ITestOutputHelperAccessor outputAccessor)
     {

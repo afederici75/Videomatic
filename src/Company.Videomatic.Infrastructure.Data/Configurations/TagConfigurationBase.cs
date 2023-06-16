@@ -4,9 +4,6 @@ public abstract class TagConfigurationBase : IEntityTypeConfiguration<Tag>
 {
     public virtual void Configure(EntityTypeBuilder<Tag> builder)
     {
-        // Common
-        //builder.ConfigureIEntity();
-
         // Fields
         builder.Property(x => x.Id)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.TagId);

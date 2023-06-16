@@ -68,41 +68,42 @@ public class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 /// </summary>
 public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, QueryResponse<GetVideosResult>>
 {
-    readonly IReadOnlyRepository<Video> _repository;
+    //readonly IReadOnlyRepository<Video> _repository;
 
-    public GetVideosQueryHandler(IReadOnlyRepository<Video> repository)
+    public GetVideosQueryHandler()//IReadOnlyRepository<Video> repository)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        //_repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
     public async Task<QueryResponse<GetVideosResult>> Handle(GetVideosQuery request, CancellationToken cancellationToken)
     {
-        var query = new GetVideosSpecification(
-            take: request.Take ?? 10,
-            titlePrefix: request.TitlePrefix,
-            descriptionPrefix: request.DescriptionPrefix,
-            providerIdPrefix: request.ProviderIdPrefix,
-            videoUrlPrefix: request.VideoUrlPrefix,
-            providerVideoIdPrefix: request.ProviderVideoIdPrefix,
-            skip: request.Skip,
-            includes: request.Includes,
-            orderBy: request.OrderBy);
-
-        var videos = await _repository.ListAsync(query, cancellationToken);
-
-        // TODO: Use AutoMapper
-        var videosDTO = videos.Select(v => new GetVideosResult(
-            Id: v.Id,
-            ProviderId: v.ProviderId,
-            ProviderVideoId: v.ProviderVideoId,
-            VideoUrl: v.VideoUrl,
-            Title: v.Title ?? "NA",
-            Description: v.Description ?? "NA",
-            Artifacts: v.Artifacts,
-            Thumbnails: v.Thumbnails,
-            Transcripts: v.Transcripts))
-            .ToArray();
-
-        return new QueryResponse<GetVideosResult>(videosDTO);
+        throw new NotImplementedException();
+        //var query = new GetVideosSpecification(
+        //    take: request.Take ?? 10,
+        //    titlePrefix: request.TitlePrefix,
+        //    descriptionPrefix: request.DescriptionPrefix,
+        //    providerIdPrefix: request.ProviderIdPrefix,
+        //    videoUrlPrefix: request.VideoUrlPrefix,
+        //    providerVideoIdPrefix: request.ProviderVideoIdPrefix,
+        //    skip: request.Skip,
+        //    includes: request.Includes,
+        //    orderBy: request.OrderBy);
+        //
+        //var videos = await _repository.ListAsync(query, cancellationToken);
+        //
+        //// TODO: Use AutoMapper
+        //var videosDTO = videos.Select(v => new GetVideosResult(
+        //    Id: v.Id,
+        //    ProviderId: v.ProviderId,
+        //    ProviderVideoId: v.ProviderVideoId,
+        //    VideoUrl: v.VideoUrl,
+        //    Title: v.Title ?? "NA",
+        //    Description: v.Description ?? "NA",
+        //    Artifacts: v.Artifacts,
+        //    Thumbnails: v.Thumbnails,
+        //    Transcripts: v.Transcripts))
+        //    .ToArray();
+        //
+        //return new QueryResponse<GetVideosResult>(videosDTO);
     }
 }

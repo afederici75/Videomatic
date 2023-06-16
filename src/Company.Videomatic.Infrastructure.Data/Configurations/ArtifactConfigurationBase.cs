@@ -5,7 +5,8 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
     public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {
         // Common
-        builder.ConfigureIEntity();
+        builder.HasIndex(x => x.Id)
+               .IsUnique();
 
         // Fields        
         builder.Property(x => x.Title)

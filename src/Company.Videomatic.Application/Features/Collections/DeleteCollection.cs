@@ -1,7 +1,4 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
-
-namespace Company.Videomatic.Application.Features.Collections;
+﻿namespace Company.Videomatic.Application.Features.Collections;
 
 /// <summary>
 /// Deletes an existing collection.
@@ -35,14 +32,15 @@ public class DeleteCollectionHandler : IRequestHandler<DeleteCollectionCommand, 
     }
     public async Task<DeleteCollectionResponse> Handle(DeleteCollectionCommand request, CancellationToken cancellationToken)
     {
-        var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
-        if (target == null)
-            return new DeleteCollectionResponse(null, false);
-
-        await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
-
-        await _publisher.Publish(new CollectionDeletedEvent(target!), cancellationToken);
-
-        return new DeleteCollectionResponse(target, true);               
+        throw new NotImplementedException();
+        //var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
+        //if (target == null)
+        //    return new DeleteCollectionResponse(null, false);
+        //
+        //await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
+        //
+        //await _publisher.Publish(new CollectionDeletedEvent(target!), cancellationToken);
+        //
+        //return new DeleteCollectionResponse(target, true);               
     }
 }
