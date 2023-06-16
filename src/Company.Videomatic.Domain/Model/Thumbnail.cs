@@ -1,12 +1,30 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Thumbnail : EntityBase<int>
+public class Thumbnail : EntityBase
 {    
-    public string Url { get; init; }
+    public string Location { get; private set; }
+    public ThumbnailResolution Resolution { get; private set; }
+    public int Height { get; private set; }
+    public int Width { get; private set; }
 
-    public ThumbnailResolution? Resolution { get; set; }
-    public int? Height { get; set; }
-    public int? Width { get; set; }
+    public Thumbnail(string location, ThumbnailResolution resolution, int height, int width)
+    {
+        Location = Guard.Against.NullOrWhiteSpace(location, nameof(location));
+        Resolution = resolution;
+        Height = Guard.Against.NegativeOrZero(height, nameof(height));
+        Width = Guard.Against.NegativeOrZero(width, nameof(width));
+    }
+
+    #region Methods
+
+    public override string ToString()
+    {
+        return $"[{Resolution}, {Width}x{Height}] {Location}";
+    }    
+
+    #endregion
+
+    #region Private
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     [JsonConstructor]
@@ -16,17 +34,5 @@ public class Thumbnail : EntityBase<int>
         // For entity framework
     }
 
-
-    public Thumbnail(string url, ThumbnailResolution? resolution = null, int? height = null, int? width = null)
-    {
-        Url = url ?? throw new ArgumentNullException(nameof(url));
-        Resolution = resolution;
-        Height = height;
-        Width = width;
-    }
-
-    public override string ToString()
-    {
-        return $"[{Resolution}, {Width}x{Height}] {Url}";
-    }
+    #endregion
 }

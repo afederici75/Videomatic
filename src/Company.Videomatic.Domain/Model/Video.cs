@@ -1,13 +1,10 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Video : EntityBase<int>, IAggregateRoot
+public class Video : EntityBase, IAggregateRoot
 {    
-    public string ProviderId { get; init; }
-    public string ProviderVideoId { get; init; }
-    public string VideoUrl { get; init; }
-
-    public string? Title { get; set; }
-    public string? Description { get; set; }
+    public string Location { get; private set; }
+    public string Title { get; private set; }
+    public string? Description { get; private set; }
 
     [JsonIgnore]
     public IEnumerable<Tag> Tags => _tags.AsReadOnly();
@@ -24,52 +21,51 @@ public class Video : EntityBase<int>, IAggregateRoot
     [JsonIgnore]
     public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
 
-    public Video(string providerId, string providerVideoId, string videoUrl, string? title = null, string? description = null)
+    public Video(string location, string title, string? description = null)
     {
-        if (string.IsNullOrWhiteSpace(providerId))
-        {
-            throw new ArgumentException($"'{nameof(providerId)}' cannot be null or whitespace.", nameof(providerId));
-        }
-
-        if (string.IsNullOrWhiteSpace(providerVideoId))
-        {
-            throw new ArgumentException($"'{nameof(providerVideoId)}' cannot be null or whitespace.", nameof(providerVideoId));
-        }
-
-        if (string.IsNullOrWhiteSpace(videoUrl))
-        {
-            throw new ArgumentException($"'{nameof(videoUrl)}' cannot be null or whitespace.", nameof(videoUrl));
-        }
-
-        ProviderId = providerId;
-        ProviderVideoId = providerVideoId;
-        VideoUrl = videoUrl;
-        Title = title;
+        Location = Guard.Against.NullOrWhiteSpace(location, nameof(location));
+        Title = Guard.Against.NullOrWhiteSpace(title, nameof(title));
         Description = description;
     }
 
+    #region Methods
+
     public override string ToString()
     {
-        return $"[{ProviderVideoId}@{ProviderId}, Thumbnails: {_thumbnails.Count}, Transcripts: {_transcripts.Count}] {Title}";
+        return $"[{Location}, Thumbnails: {_thumbnails.Count}, Transcripts: {_transcripts.Count}] {Title}";
     }
 
-    public Video AddThumbnails(params Thumbnail[] thumbnails)
+    public Video UpdateTitle(string newTitle)
     {
-        _thumbnails.AddRange(thumbnails);
+        Title = Guard.Against.NullOrWhiteSpace(newTitle, nameof(newTitle));
 
         return this;
     }
 
-    public Video AddTranscripts(params Transcript[] transcripts)
+    public Video UpdateDescription(string? newDescription)
     {
-        _transcripts.AddRange(transcripts);
+        Description = newDescription;
 
         return this;
     }
 
-    public Video AddArtifacts(params Artifact[] artifacts)
+    public Video AddThumbnail(Thumbnail thumbnail)
     {
-        _artifacts.AddRange(artifacts);
+        _thumbnails.Add(Guard.Against.Null(thumbnail, nameof(thumbnail)));
+
+        return this;
+    }
+
+    public Video AddTranscript(Transcript transcript)
+    {
+        _transcripts.Add(Guard.Against.Null(transcript, nameof(transcript)));
+
+        return this;
+    }
+
+    public Video AddArtifact(Artifact artifact)
+    {
+        _artifacts.Add(artifact);
 
         return this;
     }
@@ -94,6 +90,8 @@ public class Video : EntityBase<int>, IAggregateRoot
         return this;
     }
 
+    #endregion
+
     #region Private
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -105,19 +103,19 @@ public class Video : EntityBase<int>, IAggregateRoot
     }
 
     [JsonProperty(PropertyName = nameof(Collections))]
-    private List<Collection> _collections = new List<Collection>();
+    readonly internal List<Collection> _collections = new List<Collection>();
 
     [JsonProperty(PropertyName = nameof(Tags))]
-    private List<Tag> _tags = new List<Tag>();
+    readonly internal List<Tag> _tags = new List<Tag>();
 
     [JsonProperty(PropertyName = nameof(Artifacts))]
-    private List<Artifact> _artifacts = new List<Artifact>();
+    readonly internal List<Artifact> _artifacts = new List<Artifact>();
 
     [JsonProperty(PropertyName = nameof(Transcripts))]
-    private List<Transcript> _transcripts = new List<Transcript>();
+    readonly internal List<Transcript> _transcripts = new List<Transcript>();
 
     [JsonProperty(PropertyName = nameof(Thumbnails))]
-    private List<Thumbnail> _thumbnails = new List<Thumbnail>();
+    readonly internal List<Thumbnail> _thumbnails = new List<Thumbnail>();
 
     #endregion
 }

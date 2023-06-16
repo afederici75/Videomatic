@@ -9,12 +9,12 @@ public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thum
                .IsUnique();
 
         // Fields        
-        builder.Property(x => x.Url)
+        builder.Property(x => x.Location)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.Url);               
 
         // Indices
         builder.HasIndex(x => x.Resolution);
-        builder.HasIndex(x => x.Url);
+        builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Height);
         builder.HasIndex(x => x.Width);
     }

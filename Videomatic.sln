@@ -18,9 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube", "src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
-	ProjectSection(SolutionItems) = preProject
-		src\Company.Videomatic.Infrastructure.YouTube\YouTubeOptions.cs = src\Company.Videomatic.Infrastructure.YouTube\YouTubeOptions.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2-5F63-469D-A6D4-873ECAD4F908}"
 EndProject

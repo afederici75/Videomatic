@@ -1,33 +1,27 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class Transcript : EntityBase<int>
+public class Transcript : EntityBase
 {
-    public string? Language { get; set; }
+    public string Language { get; private set; }
 
     [JsonIgnore]
     public IEnumerable<TranscriptLine> Lines => _lines.AsReadOnly();
 
-    [JsonProperty(PropertyName = nameof(Lines))]
-    private List<TranscriptLine> _lines = new List<TranscriptLine>();
-
-
-#pragma warning disable CS8618 
-    [JsonConstructor]
-    private Transcript()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public Transcript(string language)
     {
-        // For entity framework
+        Language = Guard.Against.NullOrWhiteSpace(language, nameof(language));
     }
 
-    public Transcript(string? language = null)
+    #region Methods
+
+    public override string ToString()
     {
-        Language = language;
-        //_lines = lines?.ToList() ?? new List<TranscriptLine>();
+        return string.Join(Environment.NewLine, Lines.Select(l => l.Text));
     }
 
-    public Transcript AddLines(params TranscriptLine[] lines)
+    public Transcript AddLine(TranscriptLine newLine)
     {
-        _lines.AddRange(lines);
+        _lines.Add(Guard.Against.Null(newLine, nameof(newLine)));
 
         return this;
     }
@@ -35,11 +29,24 @@ public class Transcript : EntityBase<int>
     public Transcript ClearLines()
     {
         _lines.Clear();
+
         return this;
     }
 
-    public override string ToString()
+    #endregion
+
+    #region Private
+
+#pragma warning disable CS8618
+    [JsonConstructor]
+    private Transcript()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
-        return string.Join(Environment.NewLine, Lines.Select(l => l.Text));
+        // For entity framework
     }
+
+    [JsonProperty(PropertyName = nameof(Lines))]
+    private List<TranscriptLine> _lines = new List<TranscriptLine>();
+
+    #endregion
 }

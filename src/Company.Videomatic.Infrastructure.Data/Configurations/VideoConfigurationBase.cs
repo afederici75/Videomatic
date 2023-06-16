@@ -9,11 +9,11 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                .IsUnique();
 
         // Fields        
-        builder.Property(x => x.ProviderId)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.ProviderId);
-        builder.Property(x => x.ProviderVideoId)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoId);
-        builder.Property(x => x.VideoUrl)
+        //builder.Property(x => x.ProviderId)
+        //       .HasMaxLength(VideomaticConstants.DbFieldLengths.ProviderId);
+        //builder.Property(x => x.ProviderVideoId)
+        //       .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoId);
+        builder.Property(x => x.Location)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.Url); 
         builder.Property(x => x.Title)
                .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoTitle);
@@ -50,8 +50,8 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                .WithMany(x => x.Videos);
 
         // Indices
-        builder.HasIndex(x => x.ProviderId);
-        builder.HasIndex(x => x.VideoUrl);
+        //builder.HasIndex(x => x.ProviderId);
+        builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Title);
         //builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
     }

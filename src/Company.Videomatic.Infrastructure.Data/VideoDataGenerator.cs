@@ -61,10 +61,8 @@ public static class VideoDataGenerator
 
         if (includes.Contains(nameof(Video.Artifacts), StringComparer.OrdinalIgnoreCase))
         {
-            video.AddArtifacts(
-                new Artifact("SUMMARY", "Not a summary. Just test data..."),
-                new Artifact("REVIEW", "Not a review. Just test data...")
-            );
+            video.AddArtifact(new Artifact("SUMMARY", "Not a summary. Just test data..."))
+                 .AddArtifact(new Artifact("REVIEW", "Not a review. Just test data..."));
         }
         
         return video!;

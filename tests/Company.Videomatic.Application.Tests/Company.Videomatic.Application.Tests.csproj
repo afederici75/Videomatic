@@ -12,6 +12,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />

@@ -4,7 +4,7 @@
 /// 
 /// </summary>
 /// <param name="TranscriptId"></param>
-public record GetTranscriptQuery(int TranscriptId) : IRequest<GetTranscriptResult>;
+public record GetTranscriptQuery(long TranscriptId) : IRequest<GetTranscriptResult>;
 
 /// <summary>
 /// 
@@ -14,7 +14,7 @@ public record GetTranscriptQuery(int TranscriptId) : IRequest<GetTranscriptResul
 /// <param name="Language"></param>
 /// <param name="Lines"></param>
 /// <param name="LineCount"></param>
-public record GetTranscriptResult(int VideoId, int TranscriptId, string Language, string[] Lines, int LineCount);
+public record GetTranscriptResult(long VideoId, long TranscriptId, string Language, string[] Lines, int LineCount);
 
 /// <summary>
 /// 

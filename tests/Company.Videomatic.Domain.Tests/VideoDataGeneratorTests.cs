@@ -15,8 +15,8 @@ public class VideoDataGeneratorTests
         video.Thumbnails.Count().Should().Be(0);
         video.Artifacts.Count().Should().Be(0);
 
-        video.ProviderId.Should().Be("YOUTUBE");
-        video.VideoUrl.Should().Contain("youtube.com");
+        //video.ProviderId.Should().Be("YOUTUBE");
+        video.Location.Should().Contain("youtube.com");
         video.Title.Should().Contain("Rick");
         video.Description.Should().Contain("#RickAstley");
         video.Description.Should().Contain("#NeverGonnaGiveYouUp");
