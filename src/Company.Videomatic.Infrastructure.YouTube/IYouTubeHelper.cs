@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.YouTube;
+﻿using Company.Videomatic.Domain.Model;
+
+namespace Company.Videomatic.Infrastructure.YouTube;
 
 /// <summary>
 /// This niterface provides access to the YouTube APIs we are interested in.
@@ -24,5 +26,5 @@ public interface IYouTubeHelper
     /// </summary>
     /// <param name="videoId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<TranscriptionItem> GetTranscriptionOfVideo(string videoId);
+    IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
 }

@@ -10,9 +10,9 @@ public class Startup
     {
         var cfg = LoadConfiguration();
 
+        services.AddVideomaticApplication(cfg);
         services.AddVideomaticData(cfg);
-        //services.AddVideomaticSqliteDbContextForTests(cfg);
-        services.AddVideomaticSqlServerDbContextForTests(cfg);
+        services.AddVideomaticDataForSqlServer(cfg);
         
         services.AddScoped<IVideoImporter, MockVideoImporter>();        
     }

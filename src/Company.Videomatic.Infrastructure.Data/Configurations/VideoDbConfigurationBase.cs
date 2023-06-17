@@ -2,46 +2,40 @@
 
 public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoDb>
 {
+    public class FieldLengths
+    {
+        public const int Location = 1024;
+        public const int Title = 500;
+        public const int Description = PlaylistDbConfigurationBase.FieldLengths.Description;
+    }
+
     public virtual void Configure(EntityTypeBuilder<VideoDb> builder)
     {
         builder.ToTable("Videos");
 
-        // Common
-        builder.HasIndex(x => x.Id)
-               .IsUnique();
-
         // Fields        
-        //builder.Property(x => x.ProviderId)
-        //       .HasMaxLength(VideomaticConstants.DbFieldLengths.ProviderId);
-        //builder.Property(x => x.ProviderVideoId)
-        //       .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoId);
         builder.Property(x => x.Location)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.Url); 
+               .HasMaxLength(FieldLengths.Location); 
         builder.Property(x => x.Title)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoTitle);
+               .HasMaxLength(FieldLengths.Title);
         builder.Property(x => x.Description)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.YTVideoDescription);
+               .HasMaxLength(FieldLengths.Description);
 
 
         // Relationships
         builder.HasMany(x => x.Thumbnails)            
                .WithOne()
-               //.IsRequired(true)
                .HasForeignKey("VideoId")
                .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
-               //.IsRequired(true)
                .HasForeignKey("TranscriptId")
-               //.HasPrincipalKey()
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()
-               //.IsRequired(true)
                .HasForeignKey("VideoId")
-               //.HasPrincipalKey()
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Tags)
@@ -55,9 +49,8 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
         // TODO: Figure out how to change the name of the fields in the table VideoCollectionsAndVideos. I get VideoCollectionsId and VideosId instead of VideoCollectionId and VideoId
 
         // Indices
-        //builder.HasIndex(x => x.ProviderId);
         builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Title);
-        //builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
+        builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
     }
 }

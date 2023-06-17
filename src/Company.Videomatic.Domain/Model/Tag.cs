@@ -4,8 +4,11 @@ public class Tag : EntityBase
 {
     public string Name { get; private set; }
 
-    [JsonIgnore]
-    public IEnumerable<Video> Videos => _videos.AsReadOnly();
+    public IReadOnlyCollection<Video> Videos
+    {
+        get => _videos.ToImmutableList();
+        private set => _videos = value.ToList();
+    }
 
     public Tag(string name)
     {
@@ -40,9 +43,7 @@ public class Tag : EntityBase
         // For entity framework
     }
 
-
-    [JsonProperty(PropertyName = nameof(Videos))]
-    private List<Video> _videos = new List<Video>();
+    List<Video> _videos = new List<Video>();
 
     #endregion
 }

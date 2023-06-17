@@ -2,15 +2,18 @@
 
 public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<TranscriptDb>
 {
+    public static class FieldLengths
+    {
+        public const int Language = 2;
+    }
+
     public virtual void Configure(EntityTypeBuilder<TranscriptDb> builder)
     {
         builder.ToTable("Transcripts");        
         
-        // Common
-        builder.HasIndex(x => x.Id)
-               .IsUnique();
-
         // Fields
+        builder.Property(x => x.Language)
+               .HasMaxLength(FieldLengths.Language);
 
         // Relationships
         builder.HasMany(x => x.Lines)

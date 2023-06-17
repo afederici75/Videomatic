@@ -33,10 +33,10 @@ public class DeleteVideoCommandValidator : AbstractValidator<DeleteVideoCommand>
 /// </summary>
 public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
 {
-    readonly IRepository<Video> _repository;
+    readonly IVideoRepository _repository;
     readonly IPublisher _publisher;
 
-    public DeleteVideoCommandHandler(IRepository<Video> repository, IPublisher publisher)
+    public DeleteVideoCommandHandler(IVideoRepository repository, IPublisher publisher)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

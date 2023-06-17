@@ -6,10 +6,10 @@ public record AddTagsToVideoResponse(int videoId);
 
 public class AddTagsToVideoHandler : IRequestHandler<AddTagsToVideoCommand, AddTagsToVideoResponse>
 {
-    private readonly IRepository<Video> _videoRepository;
+    private readonly IVideoRepository _videoRepository;
     
     private readonly IPublisher _publisher;
-    public AddTagsToVideoHandler(IRepository<Video> videoRepository, IPublisher publisher)
+    public AddTagsToVideoHandler(IVideoRepository videoRepository, IPublisher publisher)
     {
         _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

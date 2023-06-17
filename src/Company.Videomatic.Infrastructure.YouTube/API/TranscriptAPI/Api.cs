@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Company.Videomatic.Infrastructure.YouTube.API;
+namespace Company.Videomatic.Infrastructure.YouTube.API.TranscriptAPI;
 
 // https://github.com/jdepoix/youtube-transcript-api/blob/master/youtube_transcript_api/_api.py
 

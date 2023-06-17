@@ -1,12 +1,17 @@
-﻿namespace Company.Videomatic.Domain.Model;
+﻿using System.Collections.Immutable;
+
+namespace Company.Videomatic.Domain.Model;
 
 public class Playlist : EntityBase, IAggregateRoot
 {
     public string Name { get; private set; }
     public string? Description { get; private set; }
 
-    [JsonIgnore]
-    public IEnumerable<Video> Videos => _videos.AsReadOnly();
+    public IReadOnlyCollection<Video> Videos 
+    {
+        get => _videos.ToImmutableList();
+        private set => _videos = value.ToList();
+    }
 
     public Playlist(string name, string? description = default)
         : base()
@@ -49,8 +54,7 @@ public class Playlist : EntityBase, IAggregateRoot
 
     #region Private
 
-    [JsonProperty(PropertyName = nameof(Videos))]
-    readonly internal List<Video> _videos = new List<Video>();
+    List<Video> _videos = new List<Video>();
 
     [JsonConstructor]
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

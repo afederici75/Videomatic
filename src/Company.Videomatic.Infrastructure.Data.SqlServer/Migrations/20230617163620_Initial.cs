@@ -12,15 +12,33 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence(
-                name: "MainId");
+                name: "ArtifactSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "PlaylistSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "TagSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "ThumbnailSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "TranscriptLineSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "TranscriptSequence");
+
+            migrationBuilder.CreateSequence(
+                name: "VideoSequence");
 
             migrationBuilder.CreateTable(
                 name: "Playlists",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,8 +49,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", maxLength: 20, nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TagSequence"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,10 +61,10 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true)
+                    Title = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,9 +75,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifacts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
                     Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     VideoId = table.Column<long>(type: "bigint", nullable: true)
                 },
@@ -126,7 +144,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Thumbnails",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ThumbnailSequence"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Resolution = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
@@ -148,8 +166,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Transcripts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
+                    Language = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
                     TranscriptId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -167,7 +185,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "TranscriptLines",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
                     StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
@@ -281,6 +299,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Videos_Description",
+                table: "Videos",
+                column: "Description");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Videos_Id",
                 table: "Videos",
                 column: "Id",
@@ -328,7 +351,25 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Videos");
 
             migrationBuilder.DropSequence(
-                name: "MainId");
+                name: "ArtifactSequence");
+
+            migrationBuilder.DropSequence(
+                name: "PlaylistSequence");
+
+            migrationBuilder.DropSequence(
+                name: "TagSequence");
+
+            migrationBuilder.DropSequence(
+                name: "ThumbnailSequence");
+
+            migrationBuilder.DropSequence(
+                name: "TranscriptLineSequence");
+
+            migrationBuilder.DropSequence(
+                name: "TranscriptSequence");
+
+            migrationBuilder.DropSequence(
+                name: "VideoSequence");
         }
     }
 }

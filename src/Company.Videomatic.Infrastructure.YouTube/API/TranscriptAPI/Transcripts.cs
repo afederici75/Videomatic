@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace Company.Videomatic.Infrastructure.YouTube.API;
+namespace Company.Videomatic.Infrastructure.YouTube.API.TranscriptAPI;
 
 //https://github.com/jdepoix/youtube-transcript-api/blob/c5bf0132ffa2906cc1bf6d480a70ef799dedc209/youtube_transcript_api/_transcripts.py
 

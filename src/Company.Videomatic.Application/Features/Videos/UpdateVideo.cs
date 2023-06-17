@@ -23,10 +23,10 @@ public record VideoUpdatedEvent(int VideoId);
 /// </summary>
 public class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
 {
-    private readonly IRepository<Video> _storage;
+    private readonly IVideoRepository _storage;
     private readonly IPublisher _publisher;
 
-    public UpdateVideoHandler(IRepository<Video> videoStorage, IPublisher publisher)
+    public UpdateVideoHandler(IVideoRepository videoStorage, IPublisher publisher)
     {
         _storage = videoStorage ?? throw new ArgumentNullException(nameof(videoStorage));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

@@ -1,11 +1,5 @@
 ﻿namespace Company.Videomatic.Infrastructure.YouTube;
 
-public record Playlist(string Id, string Title, string Description);
-
-public record Video(string Id,string Title, string Description);
-
-public record TranscriptionItem(string Text, float Start, float duration);
-
 public class YouTubePlaylistsHelper : IYouTubeHelper
 {
     public YouTubePlaylistsHelper(IOptions<YouTubeOptions> options, HttpClient client)
@@ -29,17 +23,17 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             ["maxResults"] = "50"
         };
 
-        GetPlaylistsResponse response;
+        API.JsonPasteSpecial.GetPlaylistsResponse response;
         do
         {
             var fullUrl = MakeUrlWithQuery("playlists", parameters);
 
             string json = await _client.GetStringAsync(fullUrl);
-            response = JsonConvert.DeserializeObject<GetPlaylistsResponse>(json)!;
+            response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.GetPlaylistsResponse>(json)!;
 
             foreach (var item in response.items)
             {
-                yield return new Playlist(item.id, item.snippet.title, item.snippet.description);
+                yield return new Playlist(name: item.snippet.title, description: item.snippet.description);
             }
             parameters["pageToken"] = response.nextPageToken;
         }
@@ -57,13 +51,13 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             ["maxResults"] = "50"
         };
 
-        GetPlaylistItemsResponse response;
+        API.JsonPasteSpecial.GetPlaylistItemsResponse response;
         do
         {
             var fullUrl = MakeUrlWithQuery("playlistItems", parameters);
 
             string json = await _client.GetStringAsync(fullUrl);
-            response = JsonConvert.DeserializeObject<GetPlaylistItemsResponse>(json)!;
+            response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.GetPlaylistItemsResponse>(json)!;
 
             foreach (var item in response.items)
             {
@@ -74,16 +68,21 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(response.nextPageToken));
     }    
 
-    public async IAsyncEnumerable<TranscriptionItem> GetTranscriptionOfVideo(string videoId)
+    public IAsyncEnumerable<Transcript> GetTranscriptionOfVideo(string videoId)
     {
-        using (var api = new YouTubeTranscriptApi())
-        {
-            var items = api.GetTranscript(videoId);
-            foreach (var item in items)
-            {
-                yield return new(item.Text, item.Start, item.Duration);
-            }
-        }
+        throw new Exception();
+        //using (var api = new API.TranscriptAPI.YouTubeTranscriptApi())
+        //{
+        //    (Dictionary<string, IEnumerable<API.TranscriptAPI.TranscriptItem>>, IReadOnlyList<string>) allTranscripts = api.GetTranscripts(new[] { videoId });
+        //    foreach (var t in allTranscripts)
+        //    {
+        //        var items = api.GetTranscript(videoId);
+        //        foreach (var item in items)
+        //        {
+        //            yield return new(item.Text, item.Start, item.Duration);
+        //        }
+        //    }            
+        //}
     }
 
     static string MakeUrlWithQuery(string endpoint,

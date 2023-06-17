@@ -1,6 +1,5 @@
 ﻿global using MediatR;
 
-global using Ardalis.Specification;
 
 global using FluentValidation;
 

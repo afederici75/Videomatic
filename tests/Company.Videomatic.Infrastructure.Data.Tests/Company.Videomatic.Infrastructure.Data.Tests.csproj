@@ -11,11 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Sqlite\SqlLiteDbContextTests.cs" />
-    <Compile Remove="Sqlite\SqlSiteGetVideosSpecificationTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="TestData\BBd3aHnVnuE.json" />
     <None Remove="TestData\BFfb2P5wxC0.json" />
     <None Remove="TestData\dQw4w9WgXcQ.json" />
@@ -41,11 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Sqlite\SqlLiteDbContextTests.cs" />
-    <None Include="Sqlite\SqlSiteGetVideosSpecificationTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
@@ -66,6 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj" />    
   </ItemGroup>

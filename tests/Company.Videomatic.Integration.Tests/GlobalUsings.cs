@@ -1,4 +1,3 @@
-global using Ardalis.Specification;
 global using Company.Videomatic.Application.Abstractions;
 global using Company.Videomatic.Domain.Model;
 global using MediatR;

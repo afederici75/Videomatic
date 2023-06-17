@@ -22,14 +22,26 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.HasSequence("MainId");
+            modelBuilder.HasSequence("ArtifactSequence");
+
+            modelBuilder.HasSequence("PlaylistSequence");
+
+            modelBuilder.HasSequence("TagSequence");
+
+            modelBuilder.HasSequence("ThumbnailSequence");
+
+            modelBuilder.HasSequence("TranscriptLineSequence");
+
+            modelBuilder.HasSequence("TranscriptSequence");
+
+            modelBuilder.HasSequence("VideoSequence");
 
             modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.ArtifactDb", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR ArtifactSequence");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -41,7 +53,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<long?>("VideoId")
                         .HasColumnType("bigint");
@@ -63,11 +76,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -86,13 +100,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(20)
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR TagSequence");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -107,7 +121,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR ThumbnailSequence");
 
                     b.Property<int>("Height")
                         .HasColumnType("int");
@@ -149,11 +163,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR TranscriptSequence");
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
 
                     b.Property<long?>("TranscriptId")
                         .HasColumnType("bigint");
@@ -173,7 +188,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR TranscriptLineSequence");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
@@ -205,11 +220,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasDefaultValueSql("NEXT VALUE FOR VideoSequence");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -218,10 +233,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Description");
 
                     b.HasIndex("Id")
                         .IsUnique();

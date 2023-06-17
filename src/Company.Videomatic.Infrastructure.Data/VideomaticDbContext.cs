@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace Company.Videomatic.Infrastructure.Data;
+﻿namespace Company.Videomatic.Infrastructure.Data;
 
 public class VideomaticDbContext : DbContext
 {
@@ -13,11 +11,11 @@ public class VideomaticDbContext : DbContext
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
     {
-        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
     
     public DbSet<VideoDb> Videos { get; set; } = null!;
-    public DbSet<PlaylistDb> Collections { get; set; } = null!;
+    public DbSet<PlaylistDb> Playlists { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

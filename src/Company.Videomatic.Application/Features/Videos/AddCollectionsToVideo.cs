@@ -6,10 +6,10 @@ public record AddCollectionsToVideoResponse(int addedToCount);
 
 public class AddCollectionsToVideoHandler : IRequestHandler<AddCollectionsToVideo, AddCollectionsToVideoResponse>
 {
-    private readonly IRepository<Video> _videoRepository;
-    private readonly IRepository<Playlist> _collectionRepository;
+    private readonly IVideoRepository _videoRepository;
+    private readonly IPlaylistRepository _collectionRepository;
     private readonly IPublisher _publisher;
-    public AddCollectionsToVideoHandler(IRepository<Video> videoRepository, IRepository<Playlist> collectionRepository, IPublisher publisher)
+    public AddCollectionsToVideoHandler(IVideoRepository videoRepository, IPlaylistRepository collectionRepository, IPublisher publisher)
     {
         _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         _collectionRepository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));

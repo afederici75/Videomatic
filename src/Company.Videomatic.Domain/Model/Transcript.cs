@@ -4,8 +4,12 @@ public class Transcript : EntityBase
 {
     public string Language { get; private set; }
 
-    [JsonIgnore]
-    public IEnumerable<TranscriptLine> Lines => _lines.AsReadOnly();
+    public IReadOnlyCollection<TranscriptLine> Lines
+    {
+        get => _lines.ToImmutableList();
+        private set => _lines = value.ToList();
+    }
+
 
     public Transcript(string language)
     {
@@ -45,8 +49,7 @@ public class Transcript : EntityBase
         // For entity framework
     }
 
-    [JsonProperty(PropertyName = nameof(Lines))]
-    private List<TranscriptLine> _lines = new List<TranscriptLine>();
+    List<TranscriptLine> _lines = new List<TranscriptLine>();
 
     #endregion
 }

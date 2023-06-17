@@ -37,12 +37,12 @@ public class ImportVideoCommandValidator : AbstractValidator<ImportVideoCommand>
 public class ImportVideoCommandHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
 {
     readonly IVideoImporter _importer;
-    readonly IRepository<Video> _repository;
+    readonly IVideoRepository _repository;
     readonly IPublisher _publisher;
 
     public ImportVideoCommandHandler(
         IVideoImporter importer,
-        IRepository<Video> repository,
+        IVideoRepository repository,
         IPublisher publisher)
     {
         _importer = importer ?? throw new ArgumentNullException(nameof(importer));

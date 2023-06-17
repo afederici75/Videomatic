@@ -3,11 +3,11 @@
 public class VideoImportedEventHandler : INotificationHandler<VideoImportedEvent>
 {
     readonly IVideoAnalyzer _analyzer;
-    readonly IRepository<Video> _repository;
+    readonly IVideoRepository _repository;
 
     public VideoImportedEventHandler(
         IVideoAnalyzer analyzer,
-        IRepository<Video> repository)
+        IVideoRepository repository)
     {
         _analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));

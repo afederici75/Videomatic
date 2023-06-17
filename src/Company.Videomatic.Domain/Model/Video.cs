@@ -6,20 +6,35 @@ public class Video : EntityBase, IAggregateRoot
     public string Title { get; private set; }
     public string? Description { get; private set; }
 
-    [JsonIgnore]
-    public IEnumerable<Tag> Tags => _tags.AsReadOnly();
+    public IReadOnlyCollection<Tag> Tags
+    {
+        get => _tags.ToImmutableList();
+        private set => _tags = value.ToList();
+    }
 
-    [JsonIgnore]
-    public IEnumerable<Playlist> Collections => _collections.AsReadOnly();
+    public IReadOnlyCollection<Playlist> Playlists
+    {
+        get => _playlists.ToImmutableList();
+        private set => _playlists = value.ToList();
+    }
+    
+    public IReadOnlyCollection<Artifact> Artifacts
+    {
+        get => _artifacts.ToImmutableList();
+        private set => _artifacts = value.ToList();
+    }
 
-    [JsonIgnore]
-    public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
+    public IReadOnlyCollection<Thumbnail> Thumbnails
+    {
+        get => _thumbnails.ToImmutableList();
+        private set => _thumbnails = value.ToList();
+    }
 
-    [JsonIgnore]
-    public IEnumerable<Thumbnail> Thumbnails => _thumbnails.AsReadOnly();
-
-    [JsonIgnore]
-    public IEnumerable<Transcript> Transcripts => _transcripts.AsReadOnly();
+    public IReadOnlyCollection<Transcript> Transcripts
+    {
+        get => _transcripts.ToImmutableList();
+        private set => _transcripts = value.ToList();
+    }
 
     public Video(string location, string title, string? description = null)
     {
@@ -52,6 +67,13 @@ public class Video : EntityBase, IAggregateRoot
     public Video AddThumbnail(Thumbnail thumbnail)
     {
         _thumbnails.Add(Guard.Against.Null(thumbnail, nameof(thumbnail)));
+
+        return this;
+    }
+
+    public Video AddTag(Tag tag)
+    {
+        _tags.Add(Guard.Against.Null(tag, nameof(tag)));
 
         return this;
     }
@@ -102,20 +124,15 @@ public class Video : EntityBase, IAggregateRoot
         // For entity framework
     }
 
-    [JsonProperty(PropertyName = nameof(Collections))]
-    readonly internal List<Playlist> _collections = new List<Playlist>();
+    List<Playlist> _playlists = new List<Playlist>();
 
-    [JsonProperty(PropertyName = nameof(Tags))]
-    readonly internal List<Tag> _tags = new List<Tag>();
+    List<Tag> _tags = new List<Tag>();
 
-    [JsonProperty(PropertyName = nameof(Artifacts))]
-    readonly internal List<Artifact> _artifacts = new List<Artifact>();
+    List<Artifact> _artifacts = new List<Artifact>();
 
-    [JsonProperty(PropertyName = nameof(Transcripts))]
-    readonly internal List<Transcript> _transcripts = new List<Transcript>();
+    List<Transcript> _transcripts = new List<Transcript>();
 
-    [JsonProperty(PropertyName = nameof(Thumbnails))]
-    readonly internal List<Thumbnail> _thumbnails = new List<Thumbnail>();
+    List<Thumbnail> _thumbnails = new List<Thumbnail>();
 
     #endregion
 }

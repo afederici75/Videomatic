@@ -54,6 +54,8 @@ public static class DependencyInjectionExtensions
         services.AddTransient<IVideoImporter, MockVideoImporter>();  
         services.AddTransient<IVideoAnalyzer, MockVideoAnalzyer>();
         services.AddTransient<IPlaylistImporter, MockPlaylistImporter>();
+        
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }       

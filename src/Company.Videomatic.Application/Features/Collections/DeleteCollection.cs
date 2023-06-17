@@ -23,11 +23,11 @@ public record CollectionDeletedEvent(Playlist Item) : INotification;
 /// </summary>
 public class DeleteCollectionHandler : IRequestHandler<DeleteCollectionCommand, DeleteCollectionResponse>
 {
-    private readonly IRepository<Playlist> _repository;
+    private readonly IPlaylistRepository _repository;
     private readonly IPublisher _publisher;
-    public DeleteCollectionHandler(IRepository<Playlist> collectionRepository, IPublisher publisher)
+    public DeleteCollectionHandler(IPlaylistRepository playlistRepository, IPublisher publisher)
     {
-        _repository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
+        _repository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
     }
     public async Task<DeleteCollectionResponse> Handle(DeleteCollectionCommand request, CancellationToken cancellationToken)

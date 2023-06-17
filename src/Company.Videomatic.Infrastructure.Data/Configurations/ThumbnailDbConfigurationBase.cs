@@ -2,17 +2,18 @@
 
 public abstract class ThumbnailDbConfigurationBase : IEntityTypeConfiguration<ThumbnailDb>
 {
+    public static class FieldLengths
+    {
+        public const int Location = 1024;
+    }
+
     public virtual void Configure(EntityTypeBuilder<ThumbnailDb> builder)
     {
         builder.ToTable("Thumbnails");
 
-        // Common
-        builder.HasIndex(x => x.Id)
-               .IsUnique();
-
-        // Fields        
+        // Fields
         builder.Property(x => x.Location)
-               .HasMaxLength(VideomaticConstants.DbFieldLengths.Url);               
+               .HasMaxLength(FieldLengths.Location);
 
         // Indices
         builder.HasIndex(x => x.Resolution);

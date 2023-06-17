@@ -6,11 +6,11 @@ public class TranscriptLine : EntityBase
     public TimeSpan Duration { get; private set; }
     public TimeSpan StartsAt { get; private set; }
 
-    public TranscriptLine(string text, TimeSpan duration, TimeSpan startsAt)
+    public TranscriptLine(string text, TimeSpan startsAt, TimeSpan duration)
     {
         Text = Guard.Against.NullOrWhiteSpace(text, nameof(text));
         Duration = Guard.Against.NegativeOrZero(duration, nameof(duration));
-        StartsAt = Guard.Against.NegativeOrZero(startsAt, nameof(startsAt));
+        StartsAt = Guard.Against.Negative(startsAt, nameof(startsAt));
     }
     public override string ToString()
     {

@@ -1,13 +1,18 @@
-﻿using Xunit.Abstractions;
+﻿using Company.Videomatic.Domain.Abstractions;
 
-namespace Company.Videomatic.Infrastructure.Data.Tests.Base;
+namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
-public class DbContextFixture : IAsyncLifetime    
+public class SqlServerDbContextFixture : IAsyncLifetime
 {
-    public DbContextFixture(VideomaticDbContext dbContext, ITestOutputHelperAccessor outputAccessor)
+    public SqlServerDbContextFixture(
+        VideomaticDbContext dbContext, 
+        IPlaylistRepository playlistRepository,
+        ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
+
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
@@ -15,7 +20,7 @@ public class DbContextFixture : IAsyncLifetime
     }
 
     readonly ITestOutputHelperAccessor _outputAccessor;
-    public ITestOutputHelper Output => _outputAccessor.Output ?? throw new Exception("XXX");
+    public ITestOutputHelper Output => _outputAccessor.Output!;
 
 
     protected bool SkipInsertTestData { get; set; }
@@ -23,6 +28,7 @@ public class DbContextFixture : IAsyncLifetime
     public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }
+    public IPlaylistRepository PlaylistRepository { get; }
 
     public virtual Task DisposeAsync()
     {
@@ -39,7 +45,7 @@ public class DbContextFixture : IAsyncLifetime
         if (SkipInsertTestData)
             return;
 
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
 
 
         // Loads all videos from the TestData folder
