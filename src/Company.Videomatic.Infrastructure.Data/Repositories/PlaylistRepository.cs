@@ -13,39 +13,39 @@ public class PlaylistRepository : IPlaylistRepository
         _mapper = mapper;
     }
 
-    public async Task<Playlist> CreateAsync(Playlist playlist, CancellationToken cancellationToken)
+    public async Task<Playlist> CreateAsync(CreatePlaylistCommand playlist, CancellationToken cancellationToken)
     {
         PlaylistDb dbPlaylist = _mapper.Map<Playlist, PlaylistDb>(playlist);
 
         var entry = _dbContext.Add(dbPlaylist);
         var res = await _dbContext.SaveChangesAsync(cancellationToken);
 
-        _dbContext.ChangeTracker.Clear();
+        //_dbContext.ChangeTracker.Clear();
 
         return _mapper.Map<PlaylistDb, Playlist>(entry.Entity);
     }
 
     public async Task<Playlist> UpdateAsync(Playlist playlist, CancellationToken cancellationToken)
     {
-        var dataModel = _mapper.Map<Playlist, PlaylistDb>(playlist);
+        var newValue = _mapper.Map<Playlist, PlaylistDb>(playlist);
 
-
-        var attached = await _dbContext.Playlists
+        var attached = await _dbContext.Playlists.AsTracking()
             //.Include(x => x.Videos)
             .SingleAsync(x => x.Id == playlist.Id, cancellationToken);
 
-        _dbContext.Entry(attached).State = EntityState.Detached;
+        var entry = _dbContext.Entry(attached);
+        entry.State = EntityState.Detached;
         //foreach (var item in attached.Videos.ToList())
         //    _dbContext.Entry(item).State = EntityState.Detached;
 
-        var entry = _dbContext.Attach(dataModel);
+        var entry2 = _dbContext.Attach(newValue);
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<PlaylistDb, Playlist>(entry.Entity);
+        return _mapper.Map<PlaylistDb, Playlist>(entry2.Entity);
     }
 
-    public async Task<Playlist?> GetByIdAsync(GetPlaylistById args, CancellationToken cancellationToken)
+    public async Task<Playlist?> GetByIdAsync(PlaylistByIdQuery args, CancellationToken cancellationToken)
     {
         IQueryable<PlaylistDb> source = _dbContext.Playlists.AsNoTracking();
 

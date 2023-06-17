@@ -12,10 +12,10 @@ public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
     public SqlServerDbContextFixture Fixture { get; }
 
     [Fact]
-    public async Task CreatesEmptyPlaylist()
+    public async Task T01_CreatesEmptyPlaylist()
     {
         // Prepares
-        var newPlaylist = new Playlist("My playlist 1", $"A description for my playlist generated at {DateTime.Now}");        
+        var newPlaylist = new Playlist("My playlist 1", $"A description for my playlist {DateTime.Now}");        
 
         // Executes
         var updatedPlaylist = await Fixture.PlaylistRepository.CreateAsync(newPlaylist);
@@ -30,10 +30,10 @@ public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
     }
 
     [Fact]
-    public async Task CreatesPlaylistWithTwoVideos()
+    public async Task T02_CreatesPlaylistWithTwoVideos()
     {
         // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 2", description: $"A playlist with 2 videos generated at {DateTime.Now}");
+        var newPlaylist = new Playlist(name: "My playlist 2", description: $"A playlist with 2 videos {DateTime.Now}");
         var vid1 = new Video(location: "youtube.com/v?V1", title: "A title", description: "A description");        
         var vid2 = new Video(location: "youtube.com/v?V2", title: "A second title", description: "A second description");
 
@@ -54,10 +54,10 @@ public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
     readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
 
     [Fact]
-    public async Task CreatePlaylistWithACompleteVideo()
+    public async Task T03_CreatePlaylistWithACompleteVideo()
     {
         // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 3", description: $"A playlist with 2 complete videos generated at {DateTime.Now}");
+        var newPlaylist = new Playlist(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
         var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
         
         vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
@@ -111,10 +111,10 @@ public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
     }
 
     [Fact]
-    public async Task CreateNonEmptyPlaylistAndUpdatesIt()
+    public async Task T04_CreateNonEmptyPlaylistAndUpdatesIt()
     {
         // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos generated at {DateTime.Now}");
+        var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos {DateTime.Now}");
         var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
 
         vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
@@ -143,10 +143,12 @@ public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
         var updatedPlaylist = await Fixture.PlaylistRepository.CreateAsync(newPlaylist);
         var fromDb = await Fixture.PlaylistRepository.GetByIdAsync(new(updatedPlaylist.Id)) ?? throw new Exception("Playlist not found");
 
-        fromDb.UpdateDescription("I changed the description");
+        const string NewDescription = "I changed the description";
+        fromDb.UpdateDescription(NewDescription);
         var updatedPlaylist2 = await Fixture.PlaylistRepository.UpdateAsync(fromDb);
         var fromDb2 = await Fixture.PlaylistRepository.GetByIdAsync(new(updatedPlaylist.Id, AllPlaylistFields)) ?? throw new Exception("Playlist not found");
 
         // Asserts
+        fromDb2.Description.Should().Be(NewDescription);    
     }
 }
