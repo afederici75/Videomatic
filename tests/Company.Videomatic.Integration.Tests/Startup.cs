@@ -21,7 +21,7 @@ public class Startup
         services.AddVideomaticData(cfg);
         services.AddVideomaticDataForSqlServer(cfg);
 
-        services.AddScoped<IVideoImporter, MockVideoImporter>();
+        //services.AddScoped<IVideoImporter, MockVideoImporter>();
         services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 

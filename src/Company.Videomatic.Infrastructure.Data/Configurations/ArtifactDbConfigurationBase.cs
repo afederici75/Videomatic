@@ -3,7 +3,8 @@
 public abstract class ArtifactDbConfigurationBase : IEntityTypeConfiguration<ArtifactDb>
 {
     public virtual void Configure(EntityTypeBuilder<ArtifactDb> builder)
-    {
+    {        
+        //builder.ToTable("",.);
         // Common
         builder.HasIndex(x => x.Id)
                .IsUnique();

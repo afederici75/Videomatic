@@ -11,9 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Sqlite\SqlLiteDbContextTests.cs" />
+    <Compile Remove="Sqlite\SqlSiteGetVideosSpecificationTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="testSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Sqlite\SqlLiteDbContextTests.cs" />
+    <None Include="Sqlite\SqlSiteGetVideosSpecificationTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj" />    
   </ItemGroup>

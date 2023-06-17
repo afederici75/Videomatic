@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public class MockVideoImporter : IVideoImporter
+public class MockVideoImporter2 : IVideoImporter
 {
     public async Task<Video> ImportAsync(Uri uri)
     {

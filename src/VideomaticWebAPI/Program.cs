@@ -16,9 +16,9 @@ switch (provider)
     case Company.Videomatic.Infrastructure.Data.SqlServer.SqlServerVideomaticDbContext.ProviderName:
         builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
         break;
-    case Company.Videomatic.Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
-        builder.Services.AddVideomaticDataForSqlite(builder.Configuration);
-        break;
+    //case Company.Videomatic.Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
+    //    builder.Services.AddVideomaticDataForSqlite(builder.Configuration);
+    //    break;
     default:
         throw new ArgumentException($"Unsupported provider '{provider}'.");
 }
