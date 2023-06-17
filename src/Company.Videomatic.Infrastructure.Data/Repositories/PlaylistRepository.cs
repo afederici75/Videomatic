@@ -13,7 +13,7 @@ public class PlaylistRepository : IPlaylistRepository
         _mapper = mapper;
     }
 
-    public async Task<Playlist> CreateAsync(CreatePlaylistCommand playlist, CancellationToken cancellationToken)
+    public async Task<Playlist> CreateAsync(Playlist playlist, CancellationToken cancellationToken)
     {
         PlaylistDb dbPlaylist = _mapper.Map<Playlist, PlaylistDb>(playlist);
 
