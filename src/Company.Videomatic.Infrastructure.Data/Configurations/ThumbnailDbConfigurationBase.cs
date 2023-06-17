@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thumbnail>
+public abstract class ThumbnailDbConfigurationBase : IEntityTypeConfiguration<ThumbnailDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Thumbnail> builder)
+    public virtual void Configure(EntityTypeBuilder<ThumbnailDb> builder)
     {
         // Common
         builder.HasIndex(x => x.Id)

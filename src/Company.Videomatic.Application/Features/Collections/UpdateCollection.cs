@@ -14,9 +14,9 @@ public record CollectionUpdatedEvent(int VideoId);
 
 public class UpdateCollectionHandler : IRequestHandler<UpdateCollectionCommand, UpdateCollectionResponse>
 {
-    private readonly IRepository<Collection> _repository;
+    private readonly IRepository<VideoCollection> _repository;
     private readonly IPublisher _publisher;
-    public UpdateCollectionHandler(IRepository<Collection> collectionRepository, IPublisher publisher)
+    public UpdateCollectionHandler(IRepository<VideoCollection> collectionRepository, IPublisher publisher)
     {
         _repository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

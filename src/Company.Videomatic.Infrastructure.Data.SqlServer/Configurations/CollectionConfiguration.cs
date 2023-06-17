@@ -1,11 +1,8 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
-
-public class CollectionConfiguration : Data.Configurations.CollectionConfigurationBase
+public class CollectionConfiguration : CollectionDbConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<Collection> builder)
+    public override void Configure(EntityTypeBuilder<VideoCollectionDb> builder)
     {
         base.Configure(builder);
         

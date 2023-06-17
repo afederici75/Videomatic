@@ -1,11 +1,9 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
+﻿
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class ArtifactConfiguration : Data.Configurations.ArtifactConfigurationBase 
+public class ArtifactConfiguration : ArtifactDbConfigurationBase 
 {
-    public override void Configure(EntityTypeBuilder<Artifact> builder)
+    public override void Configure(EntityTypeBuilder<ArtifactDb> builder)
     {
         base.Configure(builder);
 

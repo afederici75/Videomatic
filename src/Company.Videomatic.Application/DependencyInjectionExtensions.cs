@@ -5,6 +5,35 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+public class MockVideoAnalzyer : IVideoAnalyzer
+{
+    Task<Artifact> IVideoAnalyzer.ReviewVideoAsync(Video video)
+    {
+        return Task.FromResult(new Artifact("", "", ""));
+    }
+
+    Task<Artifact> IVideoAnalyzer.SummarizeVideoAsync(Video video)
+    {
+        return Task.FromResult(new Artifact("", "", ""));
+    }
+}
+
+public class MockPlaylistImporter : IPlaylistImporter
+{
+    public Task<VideoCollection> ImportAsync(Uri location)
+    {
+        return Task.FromResult(new VideoCollection("A dummy video collection", "More dummy stuff..."));
+    }
+}   
+
+public class MockVideoImporter : IVideoImporter
+{
+    public Task<Video> ImportAsync(Uri location)
+    {
+        return Task.FromResult(new Video("http://somewhere.com/v1", "A dummy video", "More dummy stuff..."));
+    }
+}
+
 public static class DependencyInjectionExtensions
 {    
     public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
@@ -21,6 +50,10 @@ public static class DependencyInjectionExtensions
         })            
             .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
             .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));        
+
+        services.AddTransient<IVideoImporter, MockVideoImporter>();  
+        services.AddTransient<IVideoAnalyzer, MockVideoAnalzyer>();
+        services.AddTransient<IPlaylistImporter, MockPlaylistImporter>();
 
         return services;
     }       

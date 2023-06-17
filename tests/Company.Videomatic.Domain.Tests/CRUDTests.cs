@@ -5,7 +5,7 @@ public class CRUDTests
     [Fact]
     public void AddCollection()
     {
-        Collection collection = new (name: "", description: "A collection of videos about philosophy.");
+        VideoCollection collection = new (name: "", description: "A collection of videos about philosophy.");
         
         Video video1 = new("https://youtube?v=HINDU", "Hinduism explained", "A short introduction to Hinduism.");
         

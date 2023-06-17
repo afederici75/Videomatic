@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
+public abstract class ArtifactDbConfigurationBase : IEntityTypeConfiguration<ArtifactDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Artifact> builder)
+    public virtual void Configure(EntityTypeBuilder<ArtifactDb> builder)
     {
         // Common
         builder.HasIndex(x => x.Id)

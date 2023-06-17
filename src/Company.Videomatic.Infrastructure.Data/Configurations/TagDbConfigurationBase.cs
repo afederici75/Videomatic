@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TagConfigurationBase : IEntityTypeConfiguration<Tag>
+public abstract class TagConfigurationBase : IEntityTypeConfiguration<TagDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Tag> builder)
+    public virtual void Configure(EntityTypeBuilder<TagDb> builder)
     {
         // Fields
         builder.Property(x => x.Id)

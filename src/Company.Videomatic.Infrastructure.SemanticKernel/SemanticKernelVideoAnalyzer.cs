@@ -55,7 +55,7 @@ The summary it should be no longer than 3 sentences and it will be used in a TL;
         var transcript = GetMaxTextTEMP(video.Transcripts?.FirstOrDefault()?.ToString() ?? string.Empty);// TODO: should account for all transcripts                       
         var myOutput = await _kernel.RunAsync(transcript, func);
 
-        return new Artifact(title: "Summary", text: myOutput.ToString());
+        return new Artifact(title: "Summary", type: "AI", text: myOutput.ToString());
     }
 
     public async Task<Artifact> ReviewVideoAsync(Video video)

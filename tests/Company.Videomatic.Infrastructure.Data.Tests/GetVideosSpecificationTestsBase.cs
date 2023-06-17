@@ -13,7 +13,7 @@ public abstract class GetVideosSpecificationTestsBase<TDbContext> : DbContextTes
     {
     }
 
-    IQueryable<Video>  Videos => Fixture.DbContext.Videos;
+    //IQueryable<Video>  Videos => Fixture.DbContext.Videos;
 
     [Fact]
     public async Task GetVideosSpecificationPaged()

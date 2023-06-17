@@ -16,11 +16,8 @@ public class VideomaticDbContext : DbContext
         ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
     
-    public DbSet<Video> Videos { get; set; } = null!;
-    public DbSet<Thumbnail> Thumbnails { get; set; } = null!;
-    public DbSet<Tag> Tags { get; set; } = null!;
-    public DbSet<Collection> Collections { get; set; } = null!;
-    public DbSet<Transcript> Transcripts { get; set; } = null!;
+    public DbSet<VideoDb> Videos { get; set; } = null!;
+    public DbSet<VideoCollectionDb> Collections { get; set; } = null!;    
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

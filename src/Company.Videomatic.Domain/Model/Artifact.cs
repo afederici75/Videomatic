@@ -1,15 +1,15 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
 public class Artifact : EntityBase
-{    
+{
     public string Title { get; private set; }
     public string Type { get; private set; }
-    public string? Text { get; private set; }    
+    public string? Text { get; private set; }
 
     public Artifact(string title, string type, string? text = default)
     {
         Title = Guard.Against.NullOrWhiteSpace(title, nameof(title));
-        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type));  
+        Type = Guard.Against.NullOrWhiteSpace(type, nameof(type));
         Text = text;
     }
 
@@ -28,7 +28,7 @@ public class Artifact : EntityBase
 
         return this;
     }
-    
+
     #endregion
 
     #region Private

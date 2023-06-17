@@ -6,11 +6,11 @@ public record ImportCollectionResponse(bool found);
 
 public class ImportCollectionHandler : IRequestHandler<ImportCollectionCommand, ImportCollectionResponse>
 {
-    private readonly IRepository<Collection> _collectionRepository;
+    private readonly IRepository<VideoCollection> _collectionRepository;
     private readonly IPlaylistImporter _importer;
     private readonly IPublisher _publisher;
 
-    public ImportCollectionHandler(IRepository<Collection> collectionRepository, IPlaylistImporter importer, IPublisher publisher)
+    public ImportCollectionHandler(IRepository<VideoCollection> collectionRepository, IPlaylistImporter importer, IPublisher publisher)
     {
         _collectionRepository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
         _importer = importer ?? throw new ArgumentNullException(nameof(_importer));

@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class CollectionConfigurationBase : IEntityTypeConfiguration<Collection>
+public abstract class CollectionDbConfigurationBase : IEntityTypeConfiguration<VideoCollectionDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Collection> builder)
+    public virtual void Configure(EntityTypeBuilder<VideoCollectionDb> builder)
     {
         // Common
         builder.HasIndex(x => x.Id)

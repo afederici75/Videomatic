@@ -1,11 +1,8 @@
-﻿using Company.Videomatic.Domain.Model;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
-
-public class ThumbnailConfiguration : ThumbnailConfigurationBase
+public class ThumbnailConfiguration : ThumbnailDbConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<Thumbnail> builder)
+    public override void Configure(EntityTypeBuilder<ThumbnailDb> builder)
     {
         base.Configure(builder);
 
