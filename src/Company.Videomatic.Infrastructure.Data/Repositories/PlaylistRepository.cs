@@ -13,12 +13,14 @@ public class PlaylistRepository : IPlaylistRepository
         _mapper = mapper;
     }
 
-    public async Task<Playlist> AddAsync(Playlist playlist, CancellationToken cancellationToken)
+    public async Task<Playlist> CreateAsync(Playlist playlist, CancellationToken cancellationToken)
     {
         PlaylistDb dbPlaylist = _mapper.Map<Playlist, PlaylistDb>(playlist);
 
         var entry = _dbContext.Add(dbPlaylist);
         var res = await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _dbContext.ChangeTracker.Clear();
 
         return _mapper.Map<PlaylistDb, Playlist>(entry.Entity);
     }
@@ -26,13 +28,15 @@ public class PlaylistRepository : IPlaylistRepository
     public async Task<Playlist> UpdateAsync(Playlist playlist, CancellationToken cancellationToken)
     {
         var dataModel = _mapper.Map<Playlist, PlaylistDb>(playlist);
+
+
         var attached = await _dbContext.Playlists
-            .Include(x => x.Videos)
+            //.Include(x => x.Videos)
             .SingleAsync(x => x.Id == playlist.Id, cancellationToken);
 
         _dbContext.Entry(attached).State = EntityState.Detached;
-        foreach (var item in attached.Videos.ToList())
-            _dbContext.Entry(item).State = EntityState.Detached;
+        //foreach (var item in attached.Videos.ToList())
+        //    _dbContext.Entry(item).State = EntityState.Detached;
 
         var entry = _dbContext.Attach(dataModel);
 

@@ -10,8 +10,7 @@ public class VideomaticDbContext : DbContext
 
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
-    {
-        //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+    {        
     }
     
     public DbSet<VideoDb> Videos { get; set; } = null!;
