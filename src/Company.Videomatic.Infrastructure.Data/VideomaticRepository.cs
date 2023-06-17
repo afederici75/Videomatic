@@ -1,24 +1,26 @@
-﻿namespace Company.Videomatic.Infrastructure.Data;
+﻿using Company.Videomatic.Domain.Abstractions;
 
-//public abstract class RepositoryBase<TDBCONTEXT, TAGGREGATEROOT> : IRepository<TAGGREGATEROOT>//, IReadOnlyRepository<TAGGREGATEROOT>
-//    where TDBCONTEXT : DbContext
-//    where TAGGREGATEROOT : class, IAggregateRoot
-//{
-//    public RepositoryBase(TDBCONTEXT dbContext)
-//    {
-//        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-//    }
+namespace Company.Videomatic.Infrastructure.Data;
 
-//    protected TDBCONTEXT DbContext { get; }
+public abstract class RepositoryBase<TDBCONTEXT, TAGGREGATEROOT> : IRepository<TAGGREGATEROOT>//, IReadOnlyRepository<TAGGREGATEROOT>
+    where TDBCONTEXT : DbContext
+    where TAGGREGATEROOT : class, IAggregateRoot
+{
+    public RepositoryBase(TDBCONTEXT dbContext)
+    {
+        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+    }
 
-//    public abstract Task<IEnumerable<TAGGREGATEROOT>> AddRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-//    public abstract Task DeleteRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-//    public abstract Task<TAGGREGATEROOT?> GetByIdAsync(int id, IEnumerable<string>? includes = null, CancellationToken cancellationToken = default);
-//    public abstract Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-//    public abstract Task UpdateRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-//}
+    protected TDBCONTEXT DbContext { get; }
 
-public class VideomaticRepository<T> : /*RepositoryBase<VideomaticDbContext, T>,*/ IRepository<T>//, IReadOnlyRepository<T>
+    //public abstract Task<IEnumerable<TAGGREGATEROOT>> AddRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
+    //public abstract Task DeleteRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
+    //public abstract Task<TAGGREGATEROOT?> GetByIdAsync(int id, IEnumerable<string>? includes = null, CancellationToken cancellationToken = default);
+    //public abstract Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    //public abstract Task UpdateRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
+}
+
+public class VideomaticRepository<T> : RepositoryBase<VideomaticDbContext, T>
     where T : class, IAggregateRoot
 {
     private readonly VideomaticDbContext _dbContext;

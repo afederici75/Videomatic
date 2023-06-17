@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Model;
-
-namespace Company.Videomatic.Infrastructure.Data.Model;
+﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class ArtifactDb : EntityBaseDb
 {

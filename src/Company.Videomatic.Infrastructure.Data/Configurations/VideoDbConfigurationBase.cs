@@ -1,9 +1,11 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
+public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Video> builder)
+    public virtual void Configure(EntityTypeBuilder<VideoDb> builder)
     {
+        builder.ToTable("Videos");
+
         // Common
         builder.HasIndex(x => x.Id)
                .IsUnique();

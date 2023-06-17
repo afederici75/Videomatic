@@ -4,6 +4,8 @@ public abstract class ThumbnailDbConfigurationBase : IEntityTypeConfiguration<Th
 {
     public virtual void Configure(EntityTypeBuilder<ThumbnailDb> builder)
     {
+        builder.ToTable("Thumbnails");
+
         // Common
         builder.HasIndex(x => x.Id)
                .IsUnique();

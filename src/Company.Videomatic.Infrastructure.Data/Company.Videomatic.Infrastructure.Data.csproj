@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   
   <ItemGroup>
+    <Compile Remove="VideoDataGenerator.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <None Remove="TestData\BBd3aHnVnuE.json" />
     <None Remove="TestData\BFfb2P5wxC0.json" />
     <None Remove="TestData\dQw4w9WgXcQ.json" />
@@ -23,6 +27,10 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Include="VideoDataGenerator.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
@@ -32,11 +40,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
  
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
   </ItemGroup>
 
 </Project>

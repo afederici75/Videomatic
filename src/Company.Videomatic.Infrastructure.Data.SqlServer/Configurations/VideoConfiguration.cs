@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class VideoConfiguration : VideoConfigurationBase
+public class VideoConfiguration : VideoDbConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<Video> builder)
+    public override void Configure(EntityTypeBuilder<VideoDb> builder)
     {
         base.Configure(builder);
 

@@ -1,9 +1,11 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
+public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<TranscriptDb>
 {
-    public virtual void Configure(EntityTypeBuilder<Transcript> builder)
+    public virtual void Configure(EntityTypeBuilder<TranscriptDb> builder)
     {
+        builder.ToTable("Transcript");
+
         // Common
         builder.HasIndex(x => x.Id)
                .IsUnique();

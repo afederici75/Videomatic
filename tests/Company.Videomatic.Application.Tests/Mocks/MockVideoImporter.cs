@@ -6,12 +6,14 @@ public class MockVideoImporter2 : IVideoImporter
 {
     public async Task<Video> ImportAsync(Uri uri)
     {
-        var info = YouTubeVideos.GetInfoByUri(uri);
+        throw new NotImplementedException();
 
-        var video = await VideoDataGenerator.CreateVideoFromFileAsync(info.ProviderVideoId,
-            nameof(Video.Thumbnails),
-            nameof(Video.Transcripts));
+        //var info = YouTubeVideos.GetInfoByUri(uri);
+        //
+        //var video = await VideoDataGenerator.CreateVideoFromFileAsync(info.ProviderVideoId,
+        //    nameof(Video.Thumbnails),
+        //    nameof(Video.Transcripts));
 
-        return video;
+        //return video;
     }
 }

@@ -39,9 +39,12 @@ public class DbContextFixture : IAsyncLifetime
         if (SkipInsertTestData)
             return;
 
+        throw new NotImplementedException();
+
+
         // Loads all videos from the TestData folder
-        var allVideos = await VideoDataGenerator.CreateAllVideos(true);
-        DbContext.AddRange(allVideos);
-        await DbContext.SaveChangesAsync();
+        //var allVideos = await VideoDataGenerator.CreateAllVideos(true);
+        //DbContext.AddRange(allVideos);
+        //await DbContext.SaveChangesAsync();
     }
 }
