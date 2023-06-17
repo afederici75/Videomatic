@@ -33,11 +33,11 @@ public class AddVideosToCollectionCommandValidator : AbstractValidator<AddVideos
 /// </summary>
 public class AddVideosToCollectionHandler : IRequestHandler<AddVideosToCollectionCommand, AddVideosToCollectionResponse>
 {
-    private readonly IRepository<VideoCollection> _repository;
+    private readonly IRepository<Playlist> _repository;
     private readonly IVideoImporter _importer;
     private readonly IPublisher _publisher;
 
-    public AddVideosToCollectionHandler(IRepository<VideoCollection> collectionRepository, IVideoImporter importer, IPublisher publisher)
+    public AddVideosToCollectionHandler(IRepository<Playlist> collectionRepository, IVideoImporter importer, IPublisher publisher)
     {
         _repository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
         _importer = importer ?? throw new ArgumentNullException(nameof(importer));

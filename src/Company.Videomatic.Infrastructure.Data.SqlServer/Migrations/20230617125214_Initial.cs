@@ -15,11 +15,23 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "MainId");
 
             migrationBuilder.CreateTable(
+                name: "Playlists",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
+                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Playlists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", maxLength: 20, nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", maxLength: 20, nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -28,25 +40,10 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VideoCollections",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VideoCollections", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true)
@@ -60,19 +57,42 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifacts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoDbId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Artifacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Artifacts_Videos_VideoDbId",
-                        column: x => x.VideoDbId,
+                        name: "FK_Artifacts_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlatlistsAndVideos",
+                columns: table => new
+                {
+                    PlaylistsId = table.Column<long>(type: "bigint", nullable: false),
+                    VideosId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlatlistsAndVideos", x => new { x.PlaylistsId, x.VideosId });
+                    table.ForeignKey(
+                        name: "FK_PlatlistsAndVideos_Playlists_PlaylistsId",
+                        column: x => x.PlaylistsId,
+                        principalTable: "Playlists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlatlistsAndVideos_Videos_VideosId",
+                        column: x => x.VideosId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -106,20 +126,19 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Thumbnails",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Resolution = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false),
-                    VideoDbId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Thumbnails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Thumbnails_Videos_VideoDbId",
-                        column: x => x.VideoDbId,
+                        name: "FK_Thumbnails_Videos_VideoId",
+                        column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -129,41 +148,16 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Transcripts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VideoDbId = table.Column<long>(type: "bigint", nullable: true)
+                    TranscriptId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transcripts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transcripts_Videos_VideoDbId",
-                        column: x => x.VideoDbId,
-                        principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "VideoCollectionsAndVideos",
-                columns: table => new
-                {
-                    CollectionsId = table.Column<long>(type: "bigint", nullable: false),
-                    VideosId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VideoCollectionsAndVideos", x => new { x.CollectionsId, x.VideosId });
-                    table.ForeignKey(
-                        name: "FK_VideoCollectionsAndVideos_VideoCollections_CollectionsId",
-                        column: x => x.CollectionsId,
-                        principalTable: "VideoCollections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_VideoCollectionsAndVideos_Videos_VideosId",
-                        column: x => x.VideosId,
+                        name: "FK_Transcripts_Videos_TranscriptId",
+                        column: x => x.TranscriptId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -173,19 +167,18 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "TranscriptLines",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR MainId"),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
                     StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
-                    TranscriptDbId = table.Column<long>(type: "bigint", nullable: false)
+                    TranscriptId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TranscriptLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TranscriptLines_Transcripts_TranscriptDbId",
-                        column: x => x.TranscriptDbId,
+                        name: "FK_TranscriptLines_Transcripts_TranscriptId",
+                        column: x => x.TranscriptId,
                         principalTable: "Transcripts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -203,9 +196,20 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Title");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Artifacts_VideoDbId",
+                name: "IX_Artifacts_VideoId",
                 table: "Artifacts",
-                column: "VideoDbId");
+                column: "VideoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlatlistsAndVideos_VideosId",
+                table: "PlatlistsAndVideos",
+                column: "VideosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Playlists_Id",
+                table: "Playlists",
+                column: "Id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tags_Id",
@@ -240,9 +244,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Resolution");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_VideoDbId",
+                name: "IX_Thumbnails_VideoId",
                 table: "Thumbnails",
-                column: "VideoDbId");
+                column: "VideoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Thumbnails_Width",
@@ -261,9 +265,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Text");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_TranscriptDbId",
+                name: "IX_TranscriptLines_TranscriptId",
                 table: "TranscriptLines",
-                column: "TranscriptDbId");
+                column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_Id",
@@ -272,20 +276,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transcripts_VideoDbId",
+                name: "IX_Transcripts_TranscriptId",
                 table: "Transcripts",
-                column: "VideoDbId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VideoCollections_Id",
-                table: "VideoCollections",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VideoCollectionsAndVideos_VideosId",
-                table: "VideoCollectionsAndVideos",
-                column: "VideosId");
+                column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Id",
@@ -311,6 +304,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifacts");
 
             migrationBuilder.DropTable(
+                name: "PlatlistsAndVideos");
+
+            migrationBuilder.DropTable(
                 name: "TagsAndVideos");
 
             migrationBuilder.DropTable(
@@ -320,16 +316,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "TranscriptLines");
 
             migrationBuilder.DropTable(
-                name: "VideoCollectionsAndVideos");
+                name: "Playlists");
 
             migrationBuilder.DropTable(
                 name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Transcripts");
-
-            migrationBuilder.DropTable(
-                name: "VideoCollections");
 
             migrationBuilder.DropTable(
                 name: "Videos");

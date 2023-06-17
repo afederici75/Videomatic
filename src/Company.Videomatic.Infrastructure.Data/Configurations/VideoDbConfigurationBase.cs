@@ -27,31 +27,32 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
         builder.HasMany(x => x.Thumbnails)            
                .WithOne()
                //.IsRequired(true)
-               //.HasForeignKey()
-               //.HasPrincipalKey()
+               .HasForeignKey("VideoId")
                .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
                //.IsRequired(true)
-               //.HasForeignKey()
+               .HasForeignKey("TranscriptId")
                //.HasPrincipalKey()
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()
                //.IsRequired(true)
-               //.HasForeignKey()
+               .HasForeignKey("VideoId")
                //.HasPrincipalKey()
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Tags)
                .WithMany(x => x.Videos)
                .UsingEntity("TagsAndVideos");
+        // TODO: Figure out how to change the name of the fields in the table TagsAndVideos: I get TagsId and VideosId instead of TagId and VideoId
 
-        builder.HasMany(x => x.Collections)
+        builder.HasMany(x => x.Playlists)
                .WithMany(x => x.Videos)
-               .UsingEntity("VideoCollectionsAndVideos");
+               .UsingEntity("PlatlistsAndVideos");
+        // TODO: Figure out how to change the name of the fields in the table VideoCollectionsAndVideos. I get VideoCollectionsId and VideosId instead of VideoCollectionId and VideoId
 
         // Indices
         //builder.HasIndex(x => x.ProviderId);

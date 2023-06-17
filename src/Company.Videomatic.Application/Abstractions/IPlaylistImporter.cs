@@ -5,5 +5,5 @@
 /// </summary>
 public interface IPlaylistImporter
 {
-    public Task<VideoCollection> ImportAsync(Uri location);
+    public Task<Playlist> ImportAsync(Uri location);
 }

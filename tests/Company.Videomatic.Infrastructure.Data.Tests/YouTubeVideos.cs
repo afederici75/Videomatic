@@ -33,7 +33,6 @@ public static class YouTubeVideos
                         YouTubeVideos.HyonGakSunim_WhatIsZen,
                         GetUrl(YouTubeVideos.HyonGakSunim_WhatIsZen),
                         "What is ZEN ? - Hyon Gak Sunim", 1, 5)
-
             };
     }
 

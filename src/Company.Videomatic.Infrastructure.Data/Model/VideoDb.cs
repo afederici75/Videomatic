@@ -8,7 +8,7 @@ public class VideoDb : EntityBaseDb
 
     public List<TagDb> Tags { get; } = new();
 
-    public List<VideoCollectionDb> Collections { get; } = new();
+    public List<PlaylistDb> Playlists { get; } = new();
 
     public List<ArtifactDb> Artifacts { get; } = new();
 

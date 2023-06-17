@@ -11,21 +11,21 @@ public record DeleteCollectionCommand(int Id) : IRequest<DeleteCollectionRespons
 /// </summary>
 /// <param name="Item"></param>
 /// <param name="Deleted"></param>
-public record DeleteCollectionResponse(VideoCollection? Item, bool Deleted);
+public record DeleteCollectionResponse(Playlist? Item, bool Deleted);
 
 /// <summary>
 /// This event is published when a video is deleted.
 /// </summary>
-public record CollectionDeletedEvent(VideoCollection Item) : INotification;
+public record CollectionDeletedEvent(Playlist Item) : INotification;
 
 /// <summary>
 /// Handles the DeleteCollectionCommand.
 /// </summary>
 public class DeleteCollectionHandler : IRequestHandler<DeleteCollectionCommand, DeleteCollectionResponse>
 {
-    private readonly IRepository<VideoCollection> _repository;
+    private readonly IRepository<Playlist> _repository;
     private readonly IPublisher _publisher;
-    public DeleteCollectionHandler(IRepository<VideoCollection> collectionRepository, IPublisher publisher)
+    public DeleteCollectionHandler(IRepository<Playlist> collectionRepository, IPublisher publisher)
     {
         _repository = collectionRepository ?? throw new ArgumentNullException(nameof(collectionRepository));
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));

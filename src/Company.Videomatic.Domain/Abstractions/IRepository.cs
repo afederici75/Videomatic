@@ -3,4 +3,5 @@
 public interface IRepository<TAGGREGATE> 
     where TAGGREGATE : IAggregateRoot
 {
+
 }

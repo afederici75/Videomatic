@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class VideoConfiguration : VideoDbConfigurationBase
+public class TranscriptLineDbConfiguration : TranscriptLineDbConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<VideoDb> builder)
+    public override void Configure(EntityTypeBuilder<TranscriptLineDb> builder)
     {
         base.Configure(builder);
 
-        //builder.OverrideIEntityForSqlServer();
+        builder.AddSequenceForId();
     }
 }

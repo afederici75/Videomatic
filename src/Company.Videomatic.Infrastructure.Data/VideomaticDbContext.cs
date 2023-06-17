@@ -17,7 +17,7 @@ public class VideomaticDbContext : DbContext
     }
     
     public DbSet<VideoDb> Videos { get; set; } = null!;
-    public DbSet<VideoCollectionDb> Collections { get; set; } = null!;
+    public DbSet<PlaylistDb> Collections { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

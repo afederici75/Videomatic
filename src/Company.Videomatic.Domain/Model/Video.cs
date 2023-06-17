@@ -10,7 +10,7 @@ public class Video : EntityBase, IAggregateRoot
     public IEnumerable<Tag> Tags => _tags.AsReadOnly();
 
     [JsonIgnore]
-    public IEnumerable<VideoCollection> Collections => _collections.AsReadOnly();
+    public IEnumerable<Playlist> Collections => _collections.AsReadOnly();
 
     [JsonIgnore]
     public IEnumerable<Artifact> Artifacts => _artifacts.AsReadOnly();
@@ -103,7 +103,7 @@ public class Video : EntityBase, IAggregateRoot
     }
 
     [JsonProperty(PropertyName = nameof(Collections))]
-    readonly internal List<VideoCollection> _collections = new List<VideoCollection>();
+    readonly internal List<Playlist> _collections = new List<Playlist>();
 
     [JsonProperty(PropertyName = nameof(Tags))]
     readonly internal List<Tag> _tags = new List<Tag>();

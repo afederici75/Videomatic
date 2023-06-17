@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public class VideoCollectionDb : EntityBaseDb
+public class PlaylistDb : EntityBaseDb
 {
     public string Name { get; set; } = default!;
     public string Description { get; set; } = default!;

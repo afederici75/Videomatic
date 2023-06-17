@@ -14,7 +14,8 @@ public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<T
 
         // Relationships
         builder.HasMany(x => x.Lines)
-               .WithOne()              
+               .WithOne()            
+               .HasForeignKey("TranscriptId")
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 

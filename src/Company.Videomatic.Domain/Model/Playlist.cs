@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Model;
 
-public class VideoCollection : EntityBase, IAggregateRoot
+public class Playlist : EntityBase, IAggregateRoot
 {
     public string Name { get; private set; }
     public string? Description { get; private set; }
@@ -8,7 +8,7 @@ public class VideoCollection : EntityBase, IAggregateRoot
     [JsonIgnore]
     public IEnumerable<Video> Videos => _videos.AsReadOnly();
 
-    public VideoCollection(string name, string? description = default)
+    public Playlist(string name, string? description = default)
         : base()
     {
         Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
@@ -17,28 +17,28 @@ public class VideoCollection : EntityBase, IAggregateRoot
 
     #region Methods
 
-    public VideoCollection AddVideo(Video video)
+    public Playlist AddVideo(Video video)
     {
         _videos.Add(video ?? throw new ArgumentNullException(nameof(video)));
 
         return this;
     }
 
-    public VideoCollection ClearVideos()
+    public Playlist ClearVideos()
     {
         _videos.Clear();
 
         return this;
     }
 
-    public VideoCollection UpdateName(string newName)
+    public Playlist UpdateName(string newName)
     {
         Name = Guard.Against.NullOrWhiteSpace(newName, nameof(newName));
 
         return this;
     }
 
-    public VideoCollection UpdateDescription(string? newDescription)
+    public Playlist UpdateDescription(string? newDescription)
     {
         Description = newDescription;
 
@@ -54,7 +54,7 @@ public class VideoCollection : EntityBase, IAggregateRoot
 
     [JsonConstructor]
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private VideoCollection()
+    private Playlist()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         // For entity framework

@@ -1,10 +1,10 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class VideoCollectionDbConfigurationBase : IEntityTypeConfiguration<VideoCollectionDb>
+public abstract class PlaylistDbConfigurationBase : IEntityTypeConfiguration<PlaylistDb>
 {
-    public virtual void Configure(EntityTypeBuilder<VideoCollectionDb> builder)
+    public virtual void Configure(EntityTypeBuilder<PlaylistDb> builder)
     {
-        builder.ToTable("VideoCollections");
+        builder.ToTable("Playlists");
 
         // Common
         builder.HasIndex(x => x.Id)
@@ -16,7 +16,7 @@ public abstract class VideoCollectionDbConfigurationBase : IEntityTypeConfigurat
         
         // Relationships
         builder.HasMany(x => x.Videos)
-               .WithMany(x => x.Collections);
+               .WithMany(x => x.Playlists);
         
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

@@ -20,9 +20,9 @@ public class MockVideoAnalzyer : IVideoAnalyzer
 
 public class MockPlaylistImporter : IPlaylistImporter
 {
-    public Task<VideoCollection> ImportAsync(Uri location)
+    public Task<Playlist> ImportAsync(Uri location)
     {
-        return Task.FromResult(new VideoCollection("A dummy video collection", "More dummy stuff..."));
+        return Task.FromResult(new Playlist("A dummy video collection", "More dummy stuff..."));
     }
 }   
 
