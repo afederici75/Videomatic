@@ -24,7 +24,7 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
 
 
         // Relationships
-        builder.HasMany(x => x.Thumbnails)
+        builder.HasMany(x => x.Thumbnails)            
                .WithOne()
                //.IsRequired(true)
                //.HasForeignKey()
@@ -46,10 +46,12 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Tags)
-               .WithMany(x => x.Videos);
+               .WithMany(x => x.Videos)
+               .UsingEntity("TagsAndVideos");
 
         builder.HasMany(x => x.Collections)
-               .WithMany(x => x.Videos);
+               .WithMany(x => x.Videos)
+               .UsingEntity("VideoCollectionsAndVideos");
 
         // Indices
         //builder.HasIndex(x => x.ProviderId);

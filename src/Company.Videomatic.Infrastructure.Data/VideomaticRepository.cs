@@ -2,26 +2,8 @@
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public abstract class RepositoryBase<TDBCONTEXT, TAGGREGATEROOT> : IRepository<TAGGREGATEROOT>//, IReadOnlyRepository<TAGGREGATEROOT>
-    where TDBCONTEXT : DbContext
-    where TAGGREGATEROOT : class, IAggregateRoot
-{
-    public RepositoryBase(TDBCONTEXT dbContext)
-    {
-        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-    }
-
-    protected TDBCONTEXT DbContext { get; }
-
-    //public abstract Task<IEnumerable<TAGGREGATEROOT>> AddRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-    //public abstract Task DeleteRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-    //public abstract Task<TAGGREGATEROOT?> GetByIdAsync(int id, IEnumerable<string>? includes = null, CancellationToken cancellationToken = default);
-    //public abstract Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    //public abstract Task UpdateRangeAsync(IEnumerable<TAGGREGATEROOT> entities, CancellationToken cancellationToken = default);
-}
-
-public class VideomaticRepository<T> : RepositoryBase<VideomaticDbContext, T>
-    where T : class, IAggregateRoot
+public class VideomaticRepository<TAGGREGATEROOT> : IRepository<TAGGREGATEROOT>
+    where TAGGREGATEROOT : IAggregateRoot
 {
     private readonly VideomaticDbContext _dbContext;
 

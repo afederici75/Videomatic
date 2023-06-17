@@ -4,8 +4,8 @@ public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<T
 {
     public virtual void Configure(EntityTypeBuilder<TranscriptDb> builder)
     {
-        builder.ToTable("Transcript");
-
+        builder.ToTable("Transcripts");        
+        
         // Common
         builder.HasIndex(x => x.Id)
                .IsUnique();
@@ -14,7 +14,7 @@ public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<T
 
         // Relationships
         builder.HasMany(x => x.Lines)
-               .WithOne()
+               .WithOne()              
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 

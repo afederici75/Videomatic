@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptLineConfiguration : TranscriptDbConfigurationBase
+public class TranscriptLineConfiguration : TranscriptLineDbConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<TranscriptDb> builder)
+    public override void Configure(EntityTypeBuilder<TranscriptLineDb> builder)
     {
         base.Configure(builder);
 
