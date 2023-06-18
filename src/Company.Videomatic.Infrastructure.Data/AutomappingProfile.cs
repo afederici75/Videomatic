@@ -9,7 +9,7 @@ public class AutomappingProfile : Profile
     {
         CreateMap<CreatePlaylistCommand, PlaylistDb>();
         CreateMap<CreateVideoCommand, VideoDb>();
-        //CreateMap<PlaylistDb, CreatePlaylistResponse>();
+        CreateMap<PlaylistDb, PlaylistDTO>().DisableCtorValidation();
 
         //
         CreateMap<Artifact, ArtifactDb>();
@@ -29,5 +29,7 @@ public class AutomappingProfile : Profile
         CreateMap<TranscriptDb, Transcript>();
         CreateMap<TranscriptLineDb, TranscriptLine>();
         CreateMap<VideoDb, Video>();
+
+        
     }
 }

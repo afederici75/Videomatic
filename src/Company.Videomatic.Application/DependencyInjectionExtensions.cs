@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using AutoMapper;
+using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Behaviors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +20,12 @@ public static class DependencyInjectionExtensions
             cfg.RegisterServicesFromAssembly(typeof(LoggingBehaviour<,>).Assembly);            
         })            
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
-        .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));        
+        .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddAutoMapper((cfg) =>
+        {            
+        },
+        AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }       

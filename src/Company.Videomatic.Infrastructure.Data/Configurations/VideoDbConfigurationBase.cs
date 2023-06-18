@@ -28,16 +28,19 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
         builder.HasMany(x => x.Thumbnails)            
                .WithOne()
                .HasForeignKey("VideoId")
+               .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
                .HasForeignKey("VideoId")
+               .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()
                .HasForeignKey("VideoId")
+               .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Tags)

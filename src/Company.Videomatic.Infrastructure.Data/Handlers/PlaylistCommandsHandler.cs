@@ -1,13 +1,10 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Domain.Model;
-using Company.Videomatic.Infrastructure.Data.Model;
 using MediatR;
-using System.Reflection.Metadata;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers;
 
 public class PlaylistCommandsHandler :
-    IRequestHandler<CreatePlaylistCommand, Playlist>,
+    IRequestHandler<CreatePlaylistCommand, CreatePlaylistResponse>,
     IRequestHandler<DeletePlaylistCommand, DeletePlaylistResponse>,
     IRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>,
     IRequestHandler<AddVideosToPlaylistCommand, AddVideosToPlaylistResponse>
@@ -22,7 +19,7 @@ public class PlaylistCommandsHandler :
         _mapper = mapper;
     }
 
-    public async Task<Playlist> Handle(CreatePlaylistCommand request, CancellationToken cancellationToken = default)
+    public async Task<CreatePlaylistResponse> Handle(CreatePlaylistCommand request, CancellationToken cancellationToken = default)
     {
         PlaylistDb dbPlaylist = _mapper.Map<CreatePlaylistCommand, PlaylistDb>(request);
 
@@ -31,7 +28,7 @@ public class PlaylistCommandsHandler :
 
         //_dbContext.ChangeTracker.Clear();
 
-        return _mapper.Map<PlaylistDb, Playlist>(entry.Entity);
+        return new CreatePlaylistResponse(Id: entry.Entity.Id);
     }
 
     public async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)

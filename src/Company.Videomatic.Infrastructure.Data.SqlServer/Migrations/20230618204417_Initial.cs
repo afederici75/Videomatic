@@ -38,7 +38,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,7 +125,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Resolution = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false),
-                    VideoId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,7 +144,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
                     Language = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    VideoId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,17 +189,17 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     TranscriptId = table.Column<long>(type: "bigint", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
-                    TranscriptDbId = table.Column<long>(type: "bigint", nullable: true)
+                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TranscriptLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TranscriptLines_Transcripts_TranscriptDbId",
-                        column: x => x.TranscriptDbId,
+                        name: "FK_TranscriptLines_Transcripts_TranscriptId",
+                        column: x => x.TranscriptId,
                         principalTable: "Transcripts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -278,9 +278,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Text");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_TranscriptDbId",
+                name: "IX_TranscriptLines_TranscriptId",
                 table: "TranscriptLines",
-                column: "TranscriptDbId");
+                column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_Id",
