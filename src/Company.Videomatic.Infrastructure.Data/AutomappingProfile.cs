@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Application.Features.Videos;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -7,6 +8,7 @@ public class AutomappingProfile : Profile
     public AutomappingProfile()
     {
         CreateMap<CreatePlaylistCommand, PlaylistDb>();
+        CreateMap<CreateVideoCommand, VideoDb>();
         //CreateMap<PlaylistDb, CreatePlaylistResponse>();
 
         //

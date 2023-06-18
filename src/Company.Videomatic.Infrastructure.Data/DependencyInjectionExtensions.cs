@@ -9,7 +9,9 @@ public static class DependencyInjectionExtensions
         // Services
         services.AddScoped<PlaylistCommandsHandler>();
         services.AddScoped<PlaylistQueriesHandler>();
-        
+        services.AddScoped<VideoCommandsHandler>();
+        services.AddScoped<VideoQueriesHandler>();
+
         return services;
     }
 }

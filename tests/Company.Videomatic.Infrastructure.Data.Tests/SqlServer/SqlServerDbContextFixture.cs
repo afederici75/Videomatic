@@ -6,16 +6,19 @@ public class SqlServerDbContextFixture : IAsyncLifetime
 {
     public SqlServerDbContextFixture(
         VideomaticDbContext dbContext,
-        PlaylistCommandsHandler commands,
-        PlaylistQueriesHandler queries,
+        PlaylistCommandsHandler playlistCommands,
+        PlaylistQueriesHandler playListQueries,
+        VideoCommandsHandler videoCommands,
+        VideoQueriesHandler videoQueries,
         ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         
-        Commands = commands ?? throw new ArgumentNullException(nameof(commands));
-        Queries = queries ?? throw new ArgumentNullException(nameof(queries));
-
+        PlaylistCommands = playlistCommands ?? throw new ArgumentNullException(nameof(playlistCommands));
+        PlaylistsQueries = playListQueries ?? throw new ArgumentNullException(nameof(playListQueries));
+        VideoCommands = videoCommands ?? throw new ArgumentNullException(nameof(videoCommands));
+        VideoQueries = videoQueries ?? throw new ArgumentNullException(nameof(videoQueries));
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
@@ -31,8 +34,10 @@ public class SqlServerDbContextFixture : IAsyncLifetime
     public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }
-    public PlaylistCommandsHandler Commands { get; }
-    public PlaylistQueriesHandler Queries { get; }
+    public PlaylistCommandsHandler PlaylistCommands { get; }
+    public PlaylistQueriesHandler PlaylistsQueries { get; }
+    public VideoCommandsHandler VideoCommands { get; }
+    public VideoQueriesHandler VideoQueries { get; }
 
     public virtual Task DisposeAsync()
     {

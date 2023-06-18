@@ -1,6 +1,3 @@
-using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Infrastructure.Data.Handlers;
-
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]
@@ -17,40 +14,36 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     public SqlServerDbContextFixture Fixture { get; }
     
     [Fact]
-    public async Task T01_CreatesEmptyPlaylist()
+    public async Task T01_CreatePlaylist()
     {
         // Executes
-        Playlist newPlaylist = await Fixture.Commands.Handle(new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}"));
+        Playlist newPlaylist = await Fixture.PlaylistCommands.Handle(new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}"));
         
         // Asserts
         newPlaylist.Id.Should().BeGreaterThan(0);
 
         GetPlaylistByIdQuery qry = new (newPlaylist.Id);
-        var fromDb = await Fixture.Queries.Handle(qry);
+        var fromDb = await Fixture.PlaylistsQueries.Handle(qry);
 
-        fromDb.Should().BeEquivalentTo(newPlaylist);        
+        fromDb.Should().BeEquivalentTo(newPlaylist);
     }
 
     [Fact]
     public async Task T02_CreatesPlaylistWithTwoVideos()
     {
         // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 2", description: $"A playlist with 2 videos {DateTime.Now}");
-        var vid1 = new Video(location: "youtube.com/v?V1", title: "A title", description: "A description");        
-        var vid2 = new Video(location: "youtube.com/v?V2", title: "A second title", description: "A second description");
+        Playlist newPlaylist = await Fixture.PlaylistCommands.Handle(new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A playlist with 2 videos {DateTime.Now}"));                
 
-        newPlaylist.AddVideo(vid1)
-                   .AddVideo(vid2);
+        var vid1 = await Fixture.VideoCommands.Handle(new CreateVideoCommand(Location: "youtube.com/v?V1", Title: "A title", Description: "A description"));        
+        var vid2 = await Fixture.VideoCommands.Handle(new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description"));
 
-        // Executes
-        //var updatedPlaylist = await Commands.Handle(newPlaylist);
-        //
-        //// Asserts
-        //updatedPlaylist.Id.Should().BeGreaterThan(0);
-        //
-        //var fromDbPlaylist = await Fixture.CommandsHandler.GetByIdAsync(new (updatedPlaylist.Id));
-        //fromDbPlaylist.Should().NotBeNull();
-        //fromDbPlaylist!.Videos.Should().HaveCount(0); // We did not specify any includes        
+        AddVideosToPlaylistResponse response = await Fixture.PlaylistCommands.Handle(new AddVideosToPlaylistCommand(newPlaylist.Id, new[] { vid1.Id, vid2.Id }));
+
+        // Asserts
+        var fromDb = await Fixture.PlaylistsQueries.Handle(new GetPlaylistByIdQuery(newPlaylist.Id, new[] { nameof(Playlist.Videos) }));
+
+        fromDb.Should().NotBeNull();
+        fromDb!.Videos.Should().HaveCount(2); 
     }
 
     readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };

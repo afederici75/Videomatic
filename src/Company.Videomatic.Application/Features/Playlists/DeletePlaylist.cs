@@ -11,7 +11,15 @@ public record DeletePlaylistCommand(int Id) : IRequest<DeletePlaylistResponse>;
 /// </summary>
 /// <param name="Item"></param>
 /// <param name="Deleted"></param>
-public record DeletePlaylistResponse(bool Deleted);
+public record DeletePlaylistResponse(int Id, bool Deleted);
+
+public class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
+{
+    public DeletePlaylistCommandValidator()
+    {
+        RuleFor(x => x.Id).GreaterThan(0);
+    }
+}
 
 /// <summary>
 /// This event is published when a video is deleted.
