@@ -93,48 +93,24 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlatlistsAndVideos",
+                name: "PlaylistVideos",
                 columns: table => new
                 {
-                    PlaylistsId = table.Column<long>(type: "bigint", nullable: false),
-                    VideosId = table.Column<long>(type: "bigint", nullable: false)
+                    PlaylistId = table.Column<long>(type: "bigint", nullable: false),
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlatlistsAndVideos", x => new { x.PlaylistsId, x.VideosId });
+                    table.PrimaryKey("PK_PlaylistVideos", x => new { x.PlaylistId, x.VideoId });
                     table.ForeignKey(
-                        name: "FK_PlatlistsAndVideos_Playlists_PlaylistsId",
-                        column: x => x.PlaylistsId,
+                        name: "FK_PlaylistVideos_Playlists_PlaylistId",
+                        column: x => x.PlaylistId,
                         principalTable: "Playlists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlatlistsAndVideos_Videos_VideosId",
-                        column: x => x.VideosId,
-                        principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TagsAndVideos",
-                columns: table => new
-                {
-                    TagsId = table.Column<long>(type: "bigint", nullable: false),
-                    VideosId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TagsAndVideos", x => new { x.TagsId, x.VideosId });
-                    table.ForeignKey(
-                        name: "FK_TagsAndVideos_Tags_TagsId",
-                        column: x => x.TagsId,
-                        principalTable: "Tags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TagsAndVideos_Videos_VideosId",
-                        column: x => x.VideosId,
+                        name: "FK_PlaylistVideos_Videos_VideoId",
+                        column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -168,14 +144,38 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
                     Language = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    TranscriptId = table.Column<long>(type: "bigint", nullable: true)
+                    VideoId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transcripts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transcripts_Videos_TranscriptId",
-                        column: x => x.TranscriptId,
+                        name: "FK_Transcripts_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VideoTags",
+                columns: table => new
+                {
+                    VideoId = table.Column<long>(type: "bigint", nullable: false),
+                    TagId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VideoTags", x => new { x.TagId, x.VideoId });
+                    table.ForeignKey(
+                        name: "FK_VideoTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_VideoTags_Videos_VideoId",
+                        column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -186,20 +186,20 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
+                    TranscriptId = table.Column<long>(type: "bigint", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
                     StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
-                    TranscriptId = table.Column<long>(type: "bigint", nullable: false)
+                    TranscriptDbId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TranscriptLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TranscriptLines_Transcripts_TranscriptId",
-                        column: x => x.TranscriptId,
+                        name: "FK_TranscriptLines_Transcripts_TranscriptDbId",
+                        column: x => x.TranscriptDbId,
                         principalTable: "Transcripts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -219,26 +219,21 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlatlistsAndVideos_VideosId",
-                table: "PlatlistsAndVideos",
-                column: "VideosId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Playlists_Id",
                 table: "Playlists",
                 column: "Id",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_PlaylistVideos_VideoId",
+                table: "PlaylistVideos",
+                column: "VideoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tags_Id",
                 table: "Tags",
                 column: "Id",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TagsAndVideos_VideosId",
-                table: "TagsAndVideos",
-                column: "VideosId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Thumbnails_Height",
@@ -283,9 +278,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Text");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_TranscriptId",
+                name: "IX_TranscriptLines_TranscriptDbId",
                 table: "TranscriptLines",
-                column: "TranscriptId");
+                column: "TranscriptDbId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_Id",
@@ -294,9 +289,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transcripts_TranscriptId",
+                name: "IX_Transcripts_VideoId",
                 table: "Transcripts",
-                column: "TranscriptId");
+                column: "VideoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Description",
@@ -318,6 +313,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Videos_Title",
                 table: "Videos",
                 column: "Title");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VideoTags_VideoId",
+                table: "VideoTags",
+                column: "VideoId");
         }
 
         /// <inheritdoc />
@@ -327,10 +327,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifacts");
 
             migrationBuilder.DropTable(
-                name: "PlatlistsAndVideos");
-
-            migrationBuilder.DropTable(
-                name: "TagsAndVideos");
+                name: "PlaylistVideos");
 
             migrationBuilder.DropTable(
                 name: "Thumbnails");
@@ -339,13 +336,16 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "TranscriptLines");
 
             migrationBuilder.DropTable(
+                name: "VideoTags");
+
+            migrationBuilder.DropTable(
                 name: "Playlists");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "Transcripts");
 
             migrationBuilder.DropTable(
-                name: "Transcripts");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Videos");

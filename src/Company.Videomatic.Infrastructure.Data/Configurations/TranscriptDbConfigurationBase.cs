@@ -16,11 +16,11 @@ public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<T
                .HasMaxLength(FieldLengths.Language);
 
         // Relationships
-        builder.HasMany(x => x.Lines)
-               .WithOne()            
-               .HasForeignKey("TranscriptId")
-               .IsRequired(true)
-               .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(x => x.Lines)
+        //       .WithOne()               
+        //       .HasForeignKey(x => x.TranscriptId)
+        //       .IsRequired(true)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

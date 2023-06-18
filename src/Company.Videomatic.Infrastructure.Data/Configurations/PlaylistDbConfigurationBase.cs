@@ -21,8 +21,12 @@ public abstract class PlaylistDbConfigurationBase : IEntityTypeConfiguration<Pla
 
         // Relationships
         builder.HasMany(x => x.Videos)
-               .WithMany(x => x.Playlists);
-        
+               .WithMany(x => x.Playlists)
+               .UsingEntity<PlaylistDbVideoDb>(
+                l => l.HasOne<VideoDb>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
+                r => r.HasOne<PlaylistDb>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
+               );
+
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();
     }

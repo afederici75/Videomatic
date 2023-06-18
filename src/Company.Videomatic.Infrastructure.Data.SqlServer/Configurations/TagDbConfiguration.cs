@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class TagDbConfiguration : TagConfigurationBase
+public class TagDbConfiguration : TagDbConfigurationBase
 {
     public override void Configure(EntityTypeBuilder<TagDb> builder)
     {
@@ -8,4 +8,4 @@ public class TagDbConfiguration : TagConfigurationBase
 
         builder.AddSequenceForId();
     }
-}   
+}

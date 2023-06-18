@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿using Company.Videomatic.Infrastructure.Data.Model;
+
+namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoDb>
 {
@@ -30,7 +32,7 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
-               .HasForeignKey("TranscriptId")
+               .HasForeignKey("VideoId")
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
@@ -40,14 +42,11 @@ public abstract class VideoDbConfigurationBase : IEntityTypeConfiguration<VideoD
 
         builder.HasMany(x => x.Tags)
                .WithMany(x => x.Videos)
-               .UsingEntity("TagsAndVideos");
-        // TODO: Figure out how to change the name of the fields in the table TagsAndVideos: I get TagsId and VideosId instead of TagId and VideoId
-
-        builder.HasMany(x => x.Playlists)
-               .WithMany(x => x.Videos)
-               .UsingEntity("PlatlistsAndVideos");
-        // TODO: Figure out how to change the name of the fields in the table VideoCollectionsAndVideos. I get VideoCollectionsId and VideosId instead of VideoCollectionId and VideoId
-
+               .UsingEntity<VideoDbTagDb>(
+                l => l.HasOne<TagDb>(x => x.Tag).WithMany(x => x.VideoTags).HasForeignKey(x => x.TagId),
+                r => r.HasOne<VideoDb>(x => x.Video).WithMany(x=> x.VideoTags).HasForeignKey(x => x.VideoId)
+            );
+                
         // Indices
         builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Title);

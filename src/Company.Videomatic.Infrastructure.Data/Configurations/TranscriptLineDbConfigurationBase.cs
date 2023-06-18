@@ -7,7 +7,7 @@ public abstract class TranscriptLineDbConfigurationBase : IEntityTypeConfigurati
         builder.ToTable("TranscriptLines");
         
         // Common
-        //builder.HasIndex(x => x.Id)
+        //builder.HasOne(x => x.TranscriptId)
         //       .IsUnique();
 
         //Indices        

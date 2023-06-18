@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TagConfigurationBase : IEntityTypeConfiguration<TagDb>
+public abstract class TagDbConfigurationBase : IEntityTypeConfiguration<TagDb>
 {
     public static class FieldLengths
     {
@@ -23,3 +23,4 @@ public abstract class TagConfigurationBase : IEntityTypeConfiguration<TagDb>
         builder.HasIndex(x => x.Id).IsUnique();
     }
 }
+

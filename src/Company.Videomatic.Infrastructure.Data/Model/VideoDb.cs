@@ -7,8 +7,11 @@ public class VideoDb : EntityBaseDb
     public string? Description { get; set; }
 
     public List<TagDb> Tags { get; } = new();
+    public List<VideoDbTagDb> VideoTags { get; } = new();
+
 
     public List<PlaylistDb> Playlists { get; } = new();
+    public List<PlaylistDbVideoDb> PlaylistVideos { get; } = new();
 
     public List<ArtifactDb> Artifacts { get; } = new();
 
@@ -16,4 +19,3 @@ public class VideoDb : EntityBaseDb
 
     public List<TranscriptDb> Transcripts { get; } = new ();
 }
-
