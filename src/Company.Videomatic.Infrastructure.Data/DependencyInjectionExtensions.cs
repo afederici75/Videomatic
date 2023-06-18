@@ -1,12 +1,14 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using Company.Videomatic.Infrastructure.Data.Handlers;
+
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddVideomaticData(this IServiceCollection services, IConfiguration configuration)
     {
         // Services
-        services.AddScoped(typeof(IPlaylistRepository), typeof(PlaylistRepository));
-        services.AddScoped(typeof(IVideoRepository), typeof(VideoRepository));
+        services.AddScoped<PlaylistCommandsHandler>();
+        services.AddScoped<PlaylistQueriesHandler>();
         
         return services;
     }

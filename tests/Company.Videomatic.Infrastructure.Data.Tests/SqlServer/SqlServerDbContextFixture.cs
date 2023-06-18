@@ -1,18 +1,17 @@
-﻿using Company.Videomatic.Domain.Abstractions;
+﻿using Company.Videomatic.Infrastructure.Data.Handlers;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 public class SqlServerDbContextFixture : IAsyncLifetime
 {
     public SqlServerDbContextFixture(
-        VideomaticDbContext dbContext, 
-        IPlaylistRepository playlistRepository,
+        VideomaticDbContext dbContext,
+        PlaylistCommandsHandler commandsHandler,
         ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
-
+        
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
@@ -28,7 +27,6 @@ public class SqlServerDbContextFixture : IAsyncLifetime
     public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }
-    public IPlaylistRepository PlaylistRepository { get; }
 
     public virtual Task DisposeAsync()
     {

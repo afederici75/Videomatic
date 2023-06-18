@@ -19,8 +19,8 @@ public class Startup
         services.AddVideomaticDataForSqlServer(cfg);
 
         // Overrides
-        services.AddScoped<IVideoImporter, MockVideoImporter>();
-        services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
+        //services.AddScoped<IVideoImporter, MockVideoImporter>();
+        //services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 
     public static IConfiguration LoadConfiguration()

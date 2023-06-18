@@ -1,7 +1,5 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Infrastructure.YouTube;
+﻿using Company.Videomatic.Infrastructure.YouTube;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

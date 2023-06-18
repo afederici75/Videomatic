@@ -1,5 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Infrastructure.SemanticKernel;
+﻿using Company.Videomatic.Infrastructure.SemanticKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -43,7 +42,6 @@ public static class DependencyInjectionExtensions
         });
 
         services.AddTransient<IMemoryStore, VolatileMemoryStore>();
-        services.AddScoped<IVideoAnalyzer, SemanticKernelVideoAnalyzer>();
 
         return services;
     }   

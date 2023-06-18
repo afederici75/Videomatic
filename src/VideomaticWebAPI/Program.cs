@@ -63,13 +63,13 @@ app.UseHttpsRedirection();
 //    }).res;
 app.MapGet("/videos/" + nameof(GetVideosDTOQuery), GetVideosDTOQuery);
 
-app.MapGet("/videos/" + nameof(GetTranscriptQuery),
-    async ([AsParameters] GetTranscriptQuery query,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(query);
-        return Results.Ok(resp);
-    });
+//app.MapGet("/videos/" + nameof(GetTranscriptQuery),
+//    async ([AsParameters] GetTranscriptQuery query,
+//           ISender sender) =>
+//    {
+//        var resp = await sender.Send(query);
+//        return Results.Ok(resp);
+//    });
 
 
 app.MapPost("videos/" + nameof(ImportVideoCommand),

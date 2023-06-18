@@ -26,34 +26,3 @@ public class DeleteVideoCommandValidator : AbstractValidator<DeleteVideoCommand>
         RuleFor(x => x.Id).GreaterThan(0);
     }
 }
-
-/// <summary>
-/// The handler for DeleteVideoCommand.    
-/// Triggers <see cref="VideoDeletedEvent"/>.
-/// </summary>
-public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
-{
-    readonly IVideoRepository _repository;
-    readonly IPublisher _publisher;
-
-    public DeleteVideoCommandHandler(IVideoRepository repository, IPublisher publisher)
-    {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
-    }
-
-    public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-
-        //var target = await _repository.GetByIdAsync(request.Id, null, cancellationToken);
-        //if (target == null)
-        //    return new DeleteVideoResponse(null, false);
-        //
-        //await _repository.DeleteRangeAsync(new[] { target }, cancellationToken);
-        //
-        //await _publisher.Publish(new VideoDeletedEvent(target), cancellationToken);
-        //
-        //return new DeleteVideoResponse(target, true);
-    }
-}

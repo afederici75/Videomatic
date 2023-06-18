@@ -1,8 +1,5 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Infrastructure.Data;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Videomatic.Integration.Tests;
@@ -22,7 +19,7 @@ public class Startup
         services.AddVideomaticDataForSqlServer(cfg);
 
         //services.AddScoped<IVideoImporter, MockVideoImporter>();
-        services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
+        //services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
 
     public static IConfiguration LoadConfiguration()

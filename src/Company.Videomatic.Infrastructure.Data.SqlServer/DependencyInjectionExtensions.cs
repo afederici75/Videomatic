@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data.Repositories;
-using Company.Videomatic.Infrastructure.Data.SqlServer;
-using Company.Videomatic.Infrastructure.SqlServer;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

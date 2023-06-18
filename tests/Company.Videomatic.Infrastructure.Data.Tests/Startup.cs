@@ -12,9 +12,7 @@ public class Startup
 
         services.AddVideomaticApplication(cfg);
         services.AddVideomaticData(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);
-        
-        services.AddScoped<IVideoImporter, MockVideoImporter>();        
+        services.AddVideomaticDataForSqlServer(cfg);        
     }
 
     public static IConfiguration LoadConfiguration()
