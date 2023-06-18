@@ -6,12 +6,16 @@ public class SqlServerDbContextFixture : IAsyncLifetime
 {
     public SqlServerDbContextFixture(
         VideomaticDbContext dbContext,
-        PlaylistCommandsHandler commandsHandler,
+        PlaylistCommandsHandler commands,
+        PlaylistQueriesHandler queries,
         ITestOutputHelperAccessor outputAccessor)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         
+        Commands = commands ?? throw new ArgumentNullException(nameof(commands));
+        Queries = queries ?? throw new ArgumentNullException(nameof(queries));
+
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
 
         DbContext.Database.EnsureDeleted();
@@ -27,6 +31,8 @@ public class SqlServerDbContextFixture : IAsyncLifetime
     public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }
+    public PlaylistCommandsHandler Commands { get; }
+    public PlaylistQueriesHandler Queries { get; }
 
     public virtual Task DisposeAsync()
     {

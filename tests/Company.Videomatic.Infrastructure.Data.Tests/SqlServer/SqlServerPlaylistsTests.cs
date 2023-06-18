@@ -4,35 +4,29 @@ using Company.Videomatic.Infrastructure.Data.Handlers;
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]
-public class SqlServerDbContextTests : IClassFixture<SqlServerDbContextFixture>
+public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
 {
-    public SqlServerDbContextTests(
-        SqlServerDbContextFixture fixture, 
-        PlaylistCommandsHandler commands, 
-        PlaylistQueriesHandler queries)
+    public SqlServerPlaylistsTests(
+        SqlServerDbContextFixture fixture)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Commands = commands ?? throw new ArgumentNullException(nameof(commands));
-        Queries = queries ?? throw new ArgumentNullException(nameof(queries));
-
+        
         Fixture.SkipDeletingDatabase = true;
     }
 
     public SqlServerDbContextFixture Fixture { get; }
-    public PlaylistCommandsHandler Commands { get; }
-    public PlaylistQueriesHandler Queries { get; }
-
+    
     [Fact]
     public async Task T01_CreatesEmptyPlaylist()
     {
         // Executes
-        Playlist newPlaylist = await Commands.Handle(new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}"));
+        Playlist newPlaylist = await Fixture.Commands.Handle(new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}"));
         
         // Asserts
         newPlaylist.Id.Should().BeGreaterThan(0);
 
         GetPlaylistByIdQuery qry = new (newPlaylist.Id);
-        var fromDb = await Queries.Handle(qry);
+        var fromDb = await Fixture.Queries.Handle(qry);
 
         fromDb.Should().BeEquivalentTo(newPlaylist);        
     }
