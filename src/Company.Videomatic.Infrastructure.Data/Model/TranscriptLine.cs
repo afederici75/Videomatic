@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public class TranscriptLineDb : EntityBaseDb
+public class TranscriptLine : EntityBase
 {
     public long TranscriptId { get; set; }
     public string Text { get; set; } = default!;

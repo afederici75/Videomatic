@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class TranscriptLineDbConfiguration : TranscriptLineDbConfigurationBase
+public class TranscriptLineDbConfiguration : TranscriptLineConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<TranscriptLineDb> builder)
+    public override void Configure(EntityTypeBuilder<TranscriptLine> builder)
     {
         base.Configure(builder);
 

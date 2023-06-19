@@ -33,10 +33,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         if (!typeof(IEntity).IsAssignableFrom(type))
             return false;
 
-        if (!type.Name.EndsWith("Db"))
-            return false;
-
-        sequenceName = type.Name.Substring(0, type.Name.Length - 2) + "Sequence";
+        sequenceName = type.Name + "Sequence";
         return true;
     }
 }

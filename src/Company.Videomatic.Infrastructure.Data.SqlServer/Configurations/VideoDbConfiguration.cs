@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class VideoDbConfiguration : VideoDbConfigurationBase
+public class VideoDbConfiguration : VideoConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<VideoDb> builder)
+    public override void Configure(EntityTypeBuilder<Video> builder)
     {
         base.Configure(builder);
 

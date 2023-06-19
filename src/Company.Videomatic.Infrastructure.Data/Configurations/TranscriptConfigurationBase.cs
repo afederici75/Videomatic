@@ -1,13 +1,13 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TranscriptDbConfigurationBase : IEntityTypeConfiguration<TranscriptDb>
+public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {
     public static class FieldLengths
     {
         public const int Language = 2;
     }
 
-    public virtual void Configure(EntityTypeBuilder<TranscriptDb> builder)
+    public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
         builder.ToTable("Transcripts");        
         

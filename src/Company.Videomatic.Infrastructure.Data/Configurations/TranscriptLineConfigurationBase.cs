@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TranscriptLineDbConfigurationBase : IEntityTypeConfiguration<TranscriptLineDb>
+public abstract class TranscriptLineConfigurationBase : IEntityTypeConfiguration<TranscriptLine>
 {
-    public virtual void Configure(EntityTypeBuilder<TranscriptLineDb> builder)
+    public virtual void Configure(EntityTypeBuilder<TranscriptLine> builder)
     {
         builder.ToTable("TranscriptLines");
         

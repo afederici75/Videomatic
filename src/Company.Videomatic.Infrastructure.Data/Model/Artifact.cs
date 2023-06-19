@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public class ArtifactDb : EntityBaseDb
+public class Artifact : EntityBase
 {
     public string Title { get; set; } = default!;
     public string Type { get; set; } = default!;

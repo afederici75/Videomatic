@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class VideoDbTabDbConfiguration : VideoDbTagDbConfigurationBase
+public class VideoDbTabDbConfiguration : VideoTagConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<VideoDbTagDb> builder)
+    public override void Configure(EntityTypeBuilder<VideoTag> builder)
     {
         base.Configure(builder);
     }

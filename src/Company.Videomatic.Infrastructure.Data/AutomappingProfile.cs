@@ -9,12 +9,12 @@ public class AutomappingProfile : Profile
 {
     public AutomappingProfile()
     {
-        CreateMap<CreatePlaylistCommand, PlaylistDb>();
-        CreateMap<UpdatePlaylistCommand, PlaylistDb>();
+        CreateMap<CreatePlaylistCommand, Playlist>();
+        CreateMap<UpdatePlaylistCommand, Playlist>();
         
-        CreateMap<CreateVideoCommand, VideoDb>();
-        CreateMap<PlaylistDb, PlaylistDTO>();
-        CreateMap<VideoDb, VideoDTO>();
+        CreateMap<CreateVideoCommand, Video>();
+        CreateMap<Playlist, PlaylistDTO>();
+        CreateMap<Video, VideoDTO>();
 
         //
         //CreateMap<Artifact, ArtifactDb>();

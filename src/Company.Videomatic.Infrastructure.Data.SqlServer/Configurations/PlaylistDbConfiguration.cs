@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class PlaylistDbConfiguration : PlaylistDbConfigurationBase
+public class PlaylistDbConfiguration : PlaylistConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<PlaylistDb> builder)
+    public override void Configure(EntityTypeBuilder<Playlist> builder)
     {
         base.Configure(builder);
 

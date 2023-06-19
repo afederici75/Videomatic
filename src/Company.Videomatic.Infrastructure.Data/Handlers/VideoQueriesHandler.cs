@@ -19,11 +19,11 @@ public class VideoQueriesHandler :
 
     public async Task<GetVideosByIdResponse> Handle(GetVideosByIdQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<VideoDb> source = _dbContext.Videos.AsNoTracking();
+        IQueryable<Video> source = _dbContext.Videos.AsNoTracking();
         source = source.Where(source => request.Ids.Contains(source.Id));
 
         var videos = await source
-            .Select(p => _mapper.Map<VideoDb, VideoDTO>(p))
+            .Select(p => _mapper.Map<Video, VideoDTO>(p))
             .ToListAsync();
 
         return new GetVideosByIdResponse(Items: videos);

@@ -1,13 +1,13 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class TagDbConfigurationBase : IEntityTypeConfiguration<TagDb>
+public abstract class TagConfigurationBase : IEntityTypeConfiguration<Tag>
 {
     public static class FieldLengths
     {
         public const int Name = 100;
     }
 
-    public virtual void Configure(EntityTypeBuilder<TagDb> builder)
+    public virtual void Configure(EntityTypeBuilder<Tag> builder)
     {
         builder.ToTable("Tags");
 

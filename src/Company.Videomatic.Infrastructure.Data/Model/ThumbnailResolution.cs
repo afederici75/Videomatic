@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public enum ThumbnailResolutionDb
+public enum ThumbnailResolution
 {
     Default,
     Medium,

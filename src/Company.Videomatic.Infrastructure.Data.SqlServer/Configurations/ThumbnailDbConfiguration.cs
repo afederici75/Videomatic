@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
-public class ThumbnailDbConfiguration : ThumbnailDbConfigurationBase
+public class ThumbnailDbConfiguration : ThumbnailConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<ThumbnailDb> builder)
+    public override void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
         base.Configure(builder);
 

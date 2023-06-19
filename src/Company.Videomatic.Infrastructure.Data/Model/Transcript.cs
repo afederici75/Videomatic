@@ -1,9 +1,9 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public class TranscriptDb : EntityBaseDb
+public class Transcript : EntityBase
 {
     public string Language { get; set; } = default!;
 
-    public List<TranscriptLineDb> Lines { get; } = new();
+    public List<TranscriptLine> Lines { get; } = new();
 }
 

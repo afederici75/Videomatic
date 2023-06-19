@@ -22,7 +22,7 @@ public class PlaylistCommandsHandler :
 
     public async Task<CreatePlaylistResponse> Handle(CreatePlaylistCommand request, CancellationToken cancellationToken = default)
     {
-        PlaylistDb dbPlaylist = _mapper.Map<CreatePlaylistCommand, PlaylistDb>(request);
+        Playlist dbPlaylist = _mapper.Map<CreatePlaylistCommand, Playlist>(request);
 
         var entry = _dbContext.Add(dbPlaylist);
         var res = await _dbContext.SaveChangesAsync(cancellationToken);
@@ -34,7 +34,7 @@ public class PlaylistCommandsHandler :
 
     public async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
     {
-        var newValue = _mapper.Map<UpdatePlaylistCommand, PlaylistDb>(request);
+        var newValue = _mapper.Map<UpdatePlaylistCommand, Playlist>(request);
 
         var playlistDb = await _dbContext.Playlists
             .AsTracking()        
@@ -68,7 +68,7 @@ public class PlaylistCommandsHandler :
 
         foreach (var newId in notLinked)
         {
-            var newRef = new PlaylistDbVideoDb()
+            var newRef = new PlaylistVideo()
             { 
                 PlaylistId = request.PlaylistId,    
                 VideoId = newId

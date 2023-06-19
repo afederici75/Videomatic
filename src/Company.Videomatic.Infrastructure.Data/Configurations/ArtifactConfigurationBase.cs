@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class ArtifactDbConfigurationBase : IEntityTypeConfiguration<ArtifactDb>
+public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {
     public static class FieldLengths
     { 
@@ -8,7 +8,7 @@ public abstract class ArtifactDbConfigurationBase : IEntityTypeConfiguration<Art
         public const int Type = 128;    
     }
 
-    public virtual void Configure(EntityTypeBuilder<ArtifactDb> builder)
+    public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {        
         builder.ToTable("Artifacts");
         

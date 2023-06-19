@@ -22,7 +22,7 @@ public class VideoCommandsHandler :
 
     public async Task<CreateVideoResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
     {
-        VideoDb dbVideo = _mapper.Map<CreateVideoCommand, VideoDb>(request);
+        Video dbVideo = _mapper.Map<CreateVideoCommand, Video>(request);
 
         var entry = _dbContext.Add(dbVideo);
         var res = await _dbContext.SaveChangesAsync(cancellationToken);
@@ -34,7 +34,7 @@ public class VideoCommandsHandler :
 
     public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken)
     {
-        var newValue = _mapper.Map<UpdateVideoCommand, VideoDb>(request);
+        var newValue = _mapper.Map<UpdateVideoCommand, Video>(request);
 
         var playlistDb = await _dbContext.Videos
             .AsTracking()

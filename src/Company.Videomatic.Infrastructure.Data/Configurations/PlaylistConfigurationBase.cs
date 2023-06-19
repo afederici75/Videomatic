@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class PlaylistDbConfigurationBase : IEntityTypeConfiguration<PlaylistDb>
+public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
     public static class FieldLengths
     {
@@ -8,7 +8,7 @@ public abstract class PlaylistDbConfigurationBase : IEntityTypeConfiguration<Pla
         public const int Description = 2048;
     }
 
-    public virtual void Configure(EntityTypeBuilder<PlaylistDb> builder)
+    public virtual void Configure(EntityTypeBuilder<Playlist> builder)
     {
         builder.ToTable("Playlists");
 
@@ -22,9 +22,9 @@ public abstract class PlaylistDbConfigurationBase : IEntityTypeConfiguration<Pla
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithMany(x => x.Playlists)
-               .UsingEntity<PlaylistDbVideoDb>(
-                l => l.HasOne<VideoDb>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
-                r => r.HasOne<PlaylistDb>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
+               .UsingEntity<PlaylistVideo>(
+                l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
+                r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
                );
 
         // Indices

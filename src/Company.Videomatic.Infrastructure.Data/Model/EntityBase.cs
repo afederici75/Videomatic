@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public abstract class EntityBaseDb : IEntity
+public abstract class EntityBase : IEntity
 {
     public long Id { get; set; }
 }

@@ -1,10 +1,10 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
-public class PlaylistDbVideoDb
+public class PlaylistVideo
 {
     public long PlaylistId { get; set; }
     public long VideoId { get; set; } = default!;
 
-    public VideoDb Video { get; set; } = default!;
-    public PlaylistDb Playlist { get; set; } = default!;
+    public Video Video { get; set; } = default!;
+    public Playlist Playlist { get; set; } = default!;
 }

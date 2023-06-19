@@ -20,13 +20,13 @@ public class PlaylistQueriesHandler :
 
     public async Task<GetPlaylistsResponse> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<PlaylistDb> source = _dbContext.Playlists.AsNoTracking();
+        IQueryable<Playlist> source = _dbContext.Playlists.AsNoTracking();
 
         //request.OrderBy
         //request.Filter        
 
         var playlists = await source
-            .Select(p => _mapper.Map<PlaylistDb, PlaylistDTO>(p))
+            .Select(p => _mapper.Map<Playlist, PlaylistDTO>(p))
             .Skip(request.Skip ?? 0)
             .Take(request.Take ?? 50)
             .ToListAsync();
@@ -37,11 +37,11 @@ public class PlaylistQueriesHandler :
 
     public async Task<GetPlaylistByIdResponse> Handle(GetPlaylistByIdQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<PlaylistDb> source = _dbContext.Playlists.AsNoTracking();
+        IQueryable<Playlist> source = _dbContext.Playlists.AsNoTracking();
         source = source.Where(source => request.Ids.Contains(source.Id));
 
         var playlists = await source
-            .Select(p => _mapper.Map<PlaylistDb, PlaylistDTO>(p))
+            .Select(p => _mapper.Map<Playlist, PlaylistDTO>(p))
             .ToListAsync(); 
         
         return new GetPlaylistByIdResponse(Items: playlists);

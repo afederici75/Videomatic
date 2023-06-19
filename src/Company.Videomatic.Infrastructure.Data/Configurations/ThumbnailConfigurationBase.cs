@@ -1,13 +1,13 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class ThumbnailDbConfigurationBase : IEntityTypeConfiguration<ThumbnailDb>
+public abstract class ThumbnailConfigurationBase : IEntityTypeConfiguration<Thumbnail>
 {
     public static class FieldLengths
     {
         public const int Location = 1024;
     }
 
-    public virtual void Configure(EntityTypeBuilder<ThumbnailDb> builder)
+    public virtual void Configure(EntityTypeBuilder<Thumbnail> builder)
     {
         builder.ToTable("Thumbnails");
 

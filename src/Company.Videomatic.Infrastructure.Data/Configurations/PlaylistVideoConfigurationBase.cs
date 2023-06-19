@@ -1,10 +1,10 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class VideoDbTagDbConfigurationBase : IEntityTypeConfiguration<VideoDbTagDb>
+public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<PlaylistVideo>
 {
-    public virtual void Configure(EntityTypeBuilder<VideoDbTagDb> builder)
+    public virtual void Configure(EntityTypeBuilder<PlaylistVideo> builder)
     {
-        builder.ToTable("VideoTags");
+        builder.ToTable("PlaylistVideos");
 
         // Fields
         //builder.Property(x => x.Name)

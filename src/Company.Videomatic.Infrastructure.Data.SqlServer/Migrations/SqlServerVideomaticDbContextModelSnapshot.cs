@@ -36,7 +36,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             modelBuilder.HasSequence("VideoSequence");
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.ArtifactDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Artifact", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Artifacts", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Playlist", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -95,7 +95,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Playlists", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistDbVideoDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistVideo", b =>
                 {
                     b.Property<long>("PlaylistId")
                         .HasColumnType("bigint");
@@ -110,7 +110,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("PlaylistVideos", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TagDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Tag", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,7 +130,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Tags", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.ThumbnailDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Thumbnail", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -172,7 +172,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Thumbnails", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Transcript", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -197,7 +197,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Transcripts", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptLineDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptLine", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,7 +229,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("TranscriptLines", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Video", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -264,7 +264,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Videos", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoDbTagDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoTag", b =>
                 {
                     b.Property<long>("TagId")
                         .HasColumnType("bigint");
@@ -279,24 +279,24 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("VideoTags", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.ArtifactDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Artifact", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.VideoDb", null)
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Video", null)
                         .WithMany("Artifacts")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistDbVideoDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistVideo", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.PlaylistDb", "Playlist")
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Playlist", "Playlist")
                         .WithMany("PlaylistVideos")
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.VideoDb", "Video")
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Video", "Video")
                         .WithMany("PlaylistVideos")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -307,42 +307,42 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.ThumbnailDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Thumbnail", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.VideoDb", null)
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Video", null)
                         .WithMany("Thumbnails")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Transcript", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.VideoDb", null)
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Video", null)
                         .WithMany("Transcripts")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptLineDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptLine", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.TranscriptDb", null)
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Transcript", null)
                         .WithMany("Lines")
                         .HasForeignKey("TranscriptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoDbTagDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoTag", b =>
                 {
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.TagDb", "Tag")
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Tag", "Tag")
                         .WithMany("VideoTags")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.VideoDb", "Video")
+                    b.HasOne("Company.Videomatic.Infrastructure.Data.Model.Video", "Video")
                         .WithMany("VideoTags")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -353,22 +353,22 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Video");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.PlaylistDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Playlist", b =>
                 {
                     b.Navigation("PlaylistVideos");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TagDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Tag", b =>
                 {
                     b.Navigation("VideoTags");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.TranscriptDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Transcript", b =>
                 {
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.VideoDb", b =>
+            modelBuilder.Entity("Company.Videomatic.Infrastructure.Data.Model.Video", b =>
                 {
                     b.Navigation("Artifacts");
 
