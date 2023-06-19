@@ -1,5 +1,6 @@
-﻿using Company.Videomatic.Application.Features.Playlists;
+﻿using Company.Videomatic.Application.Features.Playlists.Commands;
 using MediatR;
+using System.Security.Cryptography;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers;
 
@@ -58,27 +59,25 @@ public class PlaylistCommandsHandler :
 
     public async Task<AddVideosToPlaylistResponse> Handle(AddVideosToPlaylistCommand request, CancellationToken cancellationToken = default)
     {
-        var dbPlaylist = await _dbContext.Playlists
-            .AsTracking()
-            .Include(x => x.Videos)
-            .SingleAsync(x => x.Id == request.PlaylistId, cancellationToken);
+        var dupVideoIdsQuery = _dbContext.PlaylistVideos
+            .Where(x => x.PlaylistId==request.PlaylistId && request.VideoIds.Contains(x.VideoId))
+            .Select(x => x.VideoId);
 
-        Playlist playlist = _mapper.Map<PlaylistDb, Playlist>(dbPlaylist);
-        long[] currentVideoIds = playlist.Videos.Select(x => x.Id).ToArray();
-        long[] newVideosIds = request.VideoIds.Except(currentVideoIds).ToArray();
-                
-        //playlist.AddVideo()
+        var notLinked = request.VideoIds.Except(dupVideoIdsQuery)
+            .ToArray();
 
-        var newVideos = await _dbContext.Videos
-            .AsTracking()
-            .Where(vid => newVideosIds.Contains(vid.Id))
-            .ToListAsync(cancellationToken);
-
-        foreach (var vid in newVideos)
-            dbPlaylist.Videos.Add(vid); 
+        foreach (var newId in notLinked)
+        {
+            var newRef = new PlaylistDbVideoDb()
+            { 
+                PlaylistId = request.PlaylistId,    
+                VideoId = newId
+            };
+            _dbContext.Add(newRef);
+        }
 
         var cnt = await _dbContext.SaveChangesAsync(cancellationToken);
 
-        throw new NotImplementedException();
+        return new AddVideosToPlaylistResponse(request.PlaylistId, notLinked);
     }
 }

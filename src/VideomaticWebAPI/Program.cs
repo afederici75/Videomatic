@@ -1,4 +1,6 @@
 using Company.Videomatic.Application.Features;
+using Company.Videomatic.Application.Features.Videos.Commands;
+using Company.Videomatic.Application.Features.Videos.Queries;
 using Company.Videomatic.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +63,7 @@ app.UseHttpsRedirection();
 //        var resp = await sender.Send(query);
 //        return Results.Ok(resp);
 //    }).res;
-app.MapGet("/videos/" + nameof(GetVideosDTOQuery), GetVideosDTOQuery);
+//app.MapGet("/videos/" + nameof(GetVideosDTOQuery), GetVideosDTOQuery);
 
 //app.MapGet("/videos/" + nameof(GetTranscriptQuery),
 //    async ([AsParameters] GetTranscriptQuery query,
@@ -99,12 +101,12 @@ app.MapDelete("videos/" + nameof(DeleteVideoCommand),
 app.Run();
 
 
-[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<GetVideosResult>))]
-static async Task<IResult> GetVideosDTOQuery(
-    [AsParameters] GetVideosQuery query,
-    ISender sender)
-{
-    QueryResponse<GetVideosResult> resp = await sender.Send(query);
-    
-    return TypedResults.Ok(resp);
-}
+//[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<GetVideosResult>))]
+//static async Task<IResult> GetVideosDTOQuery(
+//    [AsParameters] GetVideosByIdQuery query,
+//    ISender sender)
+//{
+//    QueryResponse<GetVideosResult> resp = await sender.Send(query);
+//    
+//    return TypedResults.Ok(resp);
+//}

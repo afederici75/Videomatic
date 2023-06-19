@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 /// <summary>
 /// Deletes an existing collection.

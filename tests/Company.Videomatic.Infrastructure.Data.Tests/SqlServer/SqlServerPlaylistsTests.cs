@@ -1,3 +1,8 @@
+using Company.Videomatic.Application.Features.Playlists.Commands;
+using Company.Videomatic.Application.Features.Playlists.Queries;
+using Company.Videomatic.Application.Features.Videos.Commands;
+using Company.Videomatic.Application.Features.Videos.Queries;
+
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]
@@ -20,35 +25,46 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         CreatePlaylistCommand createCmd = new (Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");
         CreatePlaylistResponse createResponse = await Fixture.PlaylistCommands.Handle(createCmd);
 
-        // Asserts
+        // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
         GetPlaylistByIdQuery qry = new(createResponse.Id);
         GetPlaylistByIdResponse getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
         
-        getByIdResponse.Should().NotBeNull();
-        getByIdResponse.Item.Should().NotBeNull();
-        getByIdResponse!.Item!.Id.Should().Be(createResponse.Id);   
-        getByIdResponse!.Item!.Name.Should().Be(createCmd.Name);
-        getByIdResponse!.Item!.Description.Should().Be(createCmd.Description);
+        var playlist = getByIdResponse.Items.Single();
+
+        playlist.Id.Should().Be(createResponse.Id);   
+        playlist.Name.Should().Be(createCmd.Name);
+        playlist.Description.Should().Be(createCmd.Description);
     }
 
     [Fact]
     public async Task T02_CreatesPlaylistWithTwoVideos()
     {
-        // Prepares
-        //Playlist newPlaylist = await Fixture.PlaylistCommands.Handle(new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A playlist with 2 videos {DateTime.Now}"));                
-        //
-        //var vid1 = await Fixture.VideoCommands.Handle(new CreateVideoCommand(Location: "youtube.com/v?V1", Title: "A title", Description: "A description"));        
-        //var vid2 = await Fixture.VideoCommands.Handle(new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description"));
-        //
-        //AddVideosToPlaylistResponse response = await Fixture.PlaylistCommands.Handle(new AddVideosToPlaylistCommand(newPlaylist.Id, new[] { vid1.Id, vid2.Id }));
-        //
-        //// Asserts
-        //var fromDb = await Fixture.PlaylistsQueries.Handle(new GetPlaylistByIdQuery(newPlaylist.Id, new[] { nameof(Playlist.Videos) }));
-        //
-        //fromDb.Should().NotBeNull();
-        //fromDb!.Videos.Should().HaveCount(2); 
+        // Executes
+        CreatePlaylistCommand createPlaylistCmd = new(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
+        CreatePlaylistResponse createPlaylistResponse = await Fixture.PlaylistCommands.Handle(createPlaylistCmd);
+
+        CreateVideoCommand createVid1Cmd = new(Location: "youtube.com/v?V1", Title: "A title", Description: "A description");
+        CreateVideoResponse createVid1Response = await Fixture.VideoCommands.Handle(createVid1Cmd);
+
+        CreateVideoCommand createVid2Cmd = new(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
+        CreateVideoResponse createVid2Response = await Fixture.VideoCommands.Handle(createVid2Cmd);
+
+        AddVideosToPlaylistCommand addVidsCmd = new(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
+        AddVideosToPlaylistResponse addVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should add 2 videos
+        AddVideosToPlaylistResponse emptyAddVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should not add anything as they are both dups
+
+        // Checks
+        createPlaylistResponse.Id.Should().BeGreaterThan(0);
+        createVid1Response.Id.Should().BeGreaterThan(0);
+        createVid2Response.Id.Should().BeGreaterThan(0);
+
+        GetVideosByIdResponse videosResponse = await Fixture.VideoQueries.Handle(new GetVideosByIdQuery(new[] { createVid1Response.Id, createVid2Response.Id }));
+        videosResponse.Items.Should().HaveCount(2);
+
+        emptyAddVidsResponse.PlaylistId.Should().Be(createPlaylistResponse.Id);
+        emptyAddVidsResponse.VideoIds.Should().BeEmpty();   
     }
 
     readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };

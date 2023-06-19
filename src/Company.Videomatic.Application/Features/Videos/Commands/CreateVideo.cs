@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record CreateVideoCommand(string Location, string Title, string? Description) : IRequest<CreateVideoResponse>;
 

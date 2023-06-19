@@ -1,5 +1,7 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Application.Features.Playlists.Commands;
 using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Application.Features.Videos.Commands;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +12,7 @@ public class AutomappingProfile : Profile
         CreateMap<CreatePlaylistCommand, PlaylistDb>();
         CreateMap<CreateVideoCommand, VideoDb>();
         CreateMap<PlaylistDb, PlaylistDTO>().DisableCtorValidation();
+        CreateMap<VideoDb, VideoDTO>().DisableCtorValidation();
 
         //
         CreateMap<Artifact, ArtifactDb>();

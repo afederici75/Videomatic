@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 public record CreatePlaylistCommand(string Name, string? Description) : IRequest<CreatePlaylistResponse>;
 
@@ -8,6 +8,6 @@ public class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCo
 {
     public CreatePlaylistCommandValidator()
     {
-        RuleFor(x => x.Name).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty();        
     }
 }

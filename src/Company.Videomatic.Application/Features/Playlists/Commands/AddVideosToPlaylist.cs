@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Company.Videomatic.Application.Features.Playlists;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 public record AddVideosToPlaylistCommand(long PlaylistId, long[] VideoIds) : IRequest<AddVideosToPlaylistResponse>;
 

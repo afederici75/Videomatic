@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Application.Features.Playlists.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,21 +22,13 @@ public class PlaylistQueriesHandler :
     {
         IQueryable<PlaylistDb> source = _dbContext.Playlists.AsNoTracking();
 
-        if (request.Includes != null)
-        {
-            foreach (var include in request.Includes)
-            {
-                source = source.Include(include);
-            }
-        }
-
-        if (request.Ids?.Length > 0)
-        {
-            source = source.Where(p => request.Ids.Contains(p.Id));
-        }
+        //request.OrderBy
+        //request.Filter        
 
         var playlists = await source
             .Select(p => _mapper.Map<PlaylistDb, PlaylistDTO>(p))
+            .Skip(request.Skip ?? 0)
+            .Take(request.Take ?? 50)
             .ToListAsync();
         
         var response = new GetPlaylistsResponse(playlists);
@@ -44,9 +37,13 @@ public class PlaylistQueriesHandler :
 
     public async Task<GetPlaylistByIdResponse> Handle(GetPlaylistByIdQuery request, CancellationToken cancellationToken = default)
     {
-        var qry = new GetPlaylistsQuery(new long[] { request.Id }, request.Includes, Take: 1, Skip: null);
-        var resp = await Handle(qry, cancellationToken);
+        IQueryable<PlaylistDb> source = _dbContext.Playlists.AsNoTracking();
+        source = source.Where(source => request.Ids.Contains(source.Id));
 
-        return new GetPlaylistByIdResponse(resp.playlists.SingleOrDefault());        
+        var playlists = await source
+            .Select(p => _mapper.Map<PlaylistDb, PlaylistDTO>(p))
+            .ToListAsync(); 
+        
+        return new GetPlaylistByIdResponse(Items: playlists);
     }    
 }

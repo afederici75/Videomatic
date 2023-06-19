@@ -1,5 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Application.Features.Videos.Commands;
 using MediatR;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers;

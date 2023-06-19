@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 /// <summary>
 /// This command is used to import video data located at a given url.

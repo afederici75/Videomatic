@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record AddTagsToVideoCommand(int VideoId, string[] Tags) : IRequest<AddTagsToVideoResponse>;
 
