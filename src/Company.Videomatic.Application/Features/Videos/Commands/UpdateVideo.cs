@@ -3,14 +3,17 @@
 /// <summary>
 /// This command is used to update a video in the repository.
 /// </summary>
-public record UpdateVideoCommand(int VideoId, string? Title = default, string? Description = default) : IRequest<UpdateVideoResponse>;
+public record UpdateVideoCommand(
+    int Id, 
+    string Title, 
+    string? Description = default) : IRequest<UpdateVideoResponse>;
 
 /// <summary>
 /// The response from the UpdateVideoCommand.
 /// </summary>
 /// <param name="Video"></param>
 /// <param name="Updated"></param>
-public record UpdateVideoResponse(Video? Video, bool Updated);
+public record UpdateVideoResponse(long Id, bool Updated);
 
 /// <summary>
 /// This event is published when a video is updated.

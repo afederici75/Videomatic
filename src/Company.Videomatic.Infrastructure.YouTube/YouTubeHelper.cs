@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.YouTube;
+﻿using Newtonsoft.Json;
+
+namespace Company.Videomatic.Infrastructure.YouTube;
 
 public class YouTubePlaylistsHelper : IYouTubeHelper
 {
@@ -12,7 +14,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
     readonly YouTubeOptions _options;
     readonly HttpClient _client;
 
-    public async IAsyncEnumerable<Playlist> GetPlaylistsByChannel(string channelId)
+    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsByChannel(string channelId)
     {
         var parameters = new Dictionary<string, string>
         {
@@ -33,14 +35,14 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
             foreach (var item in response.items)
             {
-                yield return new Playlist(name: item.snippet.title, description: item.snippet.description);
+                yield return new PlaylistDTO(Name: item.snippet.title, Description: item.snippet.description, VideoCount: -1); // TODO: fix video count
             }
             parameters["pageToken"] = response.nextPageToken;
         }
         while (!string.IsNullOrEmpty(response.nextPageToken));
     }
 
-    public async IAsyncEnumerable<Video> GetVideosOfPlaylist(string playlistId)
+    public async IAsyncEnumerable<VideoDTO> GetVideosOfPlaylist(string playlistId)
     {
         var parameters = new Dictionary<string, string>
         {
@@ -61,29 +63,29 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
             foreach (var item in response.items)
             {
-                yield return new Video(item.id, item.snippet.title, item.snippet.description);
+                yield return new VideoDTO(Id: 0, Location: item.id, Title: item.snippet.title, Description: item.snippet.description);
             }
             parameters["pageToken"] = response.nextPageToken;
         }
         while (!string.IsNullOrEmpty(response.nextPageToken));
     }    
 
-    public IAsyncEnumerable<Transcript> GetTranscriptionOfVideo(string videoId)
-    {
-        throw new Exception();
-        //using (var api = new API.TranscriptAPI.YouTubeTranscriptApi())
-        //{
-        //    (Dictionary<string, IEnumerable<API.TranscriptAPI.TranscriptItem>>, IReadOnlyList<string>) allTranscripts = api.GetTranscripts(new[] { videoId });
-        //    foreach (var t in allTranscripts)
-        //    {
-        //        var items = api.GetTranscript(videoId);
-        //        foreach (var item in items)
-        //        {
-        //            yield return new(item.Text, item.Start, item.Duration);
-        //        }
-        //    }            
-        //}
-    }
+    //public IAsyncEnumerable<Transcript> GetTranscriptionOfVideo(string videoId)
+    //{
+    //    throw new Exception();
+    //    //using (var api = new API.TranscriptAPI.YouTubeTranscriptApi())
+    //    //{
+    //    //    (Dictionary<string, IEnumerable<API.TranscriptAPI.TranscriptItem>>, IReadOnlyList<string>) allTranscripts = api.GetTranscripts(new[] { videoId });
+    //    //    foreach (var t in allTranscripts)
+    //    //    {
+    //    //        var items = api.GetTranscript(videoId);
+    //    //        foreach (var item in items)
+    //    //        {
+    //    //            yield return new(item.Text, item.Start, item.Duration);
+    //    //        }
+    //    //    }            
+    //    //}
+    //}
 
     static string MakeUrlWithQuery(string endpoint,
             IEnumerable<KeyValuePair<string, string>> parameters)

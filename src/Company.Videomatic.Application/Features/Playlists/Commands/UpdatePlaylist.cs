@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistCommand(int Id, string Name, string? Description) : IRequest<UpdatePlaylistResponse>;
+public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatePlaylistResponse>;
 
-public record UpdatePlaylistResponse(int Id, bool Updated);
+public record UpdatePlaylistResponse(long Id, bool Updated);
 
 /// <summary>
 /// This event is published when a video is updated.

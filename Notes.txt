@@ -1,3 +1,8 @@
+6/19
+	-Worked all weekend and I think I finally resolved my problems with CA and DDD.
+		-I have virtually no use for aggregates right now
+		-The Domain assembly seems to only add complexity: vertical slice architecture is much easier			
+
 6/13
 -FINALLY PUBLISHED APP on AZURE!
 	-Should move to github actions

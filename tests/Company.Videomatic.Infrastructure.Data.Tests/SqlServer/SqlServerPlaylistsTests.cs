@@ -21,18 +21,17 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     [Fact]
     public async Task T01_CreatePlaylist()
     {
-        // Executes
-        CreatePlaylistCommand createCmd = new (Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");
+        // Creates the playlist
+        var createCmd = new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");
         CreatePlaylistResponse createResponse = await Fixture.PlaylistCommands.Handle(createCmd);
 
         // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
-        GetPlaylistByIdQuery qry = new(createResponse.Id);
+        var qry = new GetPlaylistByIdQuery(createResponse.Id);
         GetPlaylistByIdResponse getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
         
         var playlist = getByIdResponse.Items.Single();
-
         playlist.Id.Should().Be(createResponse.Id);   
         playlist.Name.Should().Be(createCmd.Name);
         playlist.Description.Should().Be(createCmd.Description);
@@ -42,18 +41,18 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     public async Task T02_CreatesPlaylistWithTwoVideos()
     {
         // Executes
-        CreatePlaylistCommand createPlaylistCmd = new(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
+        var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
         CreatePlaylistResponse createPlaylistResponse = await Fixture.PlaylistCommands.Handle(createPlaylistCmd);
 
-        CreateVideoCommand createVid1Cmd = new(Location: "youtube.com/v?V1", Title: "A title", Description: "A description");
+        var createVid1Cmd = new CreateVideoCommand(Location: "youtube.com/v?V1", Title: "A title", Description: "A description");
         CreateVideoResponse createVid1Response = await Fixture.VideoCommands.Handle(createVid1Cmd);
 
-        CreateVideoCommand createVid2Cmd = new(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
+        var createVid2Cmd = new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
         CreateVideoResponse createVid2Response = await Fixture.VideoCommands.Handle(createVid2Cmd);
 
-        AddVideosToPlaylistCommand addVidsCmd = new(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
-        AddVideosToPlaylistResponse addVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should add 2 videos
-        AddVideosToPlaylistResponse emptyAddVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should not add anything as they are both dups
+        var addVidsCmd = new LinkVideosAndPlaylistsCommand(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
+        LinkVideosAndPlaylistsResponse addVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should add 2 videos
+        LinkVideosAndPlaylistsResponse emptyAddVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should not add anything as they are both dups
 
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
@@ -67,10 +66,43 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         emptyAddVidsResponse.VideoIds.Should().BeEmpty();   
     }
 
+
+    [Fact]
+    public async Task T03_CreatePlaylistThenUpdateThenDeleteIt()
+    {
+        // Creates the playlist
+        var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
+        CreatePlaylistResponse createPlaylistResponse = await Fixture.PlaylistCommands.Handle(createPlaylistCmd);        
+
+        // Updates the playlist
+        var updatePlaylistCmd = new UpdatePlaylistCommand(Id: createPlaylistResponse.Id, Name: "Replaced", Description: $"Changed");
+        UpdatePlaylistResponse updatePlaylistResponse = await Fixture.PlaylistCommands.Handle(updatePlaylistCmd);
+        
+        // Verifies
+        updatePlaylistResponse.Updated.Should().BeTrue();
+
+        var qry = new GetPlaylistByIdQuery(createPlaylistResponse.Id);
+        GetPlaylistByIdResponse getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
+        
+        var record = getByIdResponse.Items.Single();
+        record.Id.Should().Be(createPlaylistResponse.Id);   
+        record.Name.Should().Be(updatePlaylistCmd.Name);
+        record.Description.Should().Be(updatePlaylistCmd.Description);
+
+        // Deletes
+        var deleteCmd = new DeletePlaylistCommand(createPlaylistResponse.Id);
+        DeletePlaylistResponse deleteResponse = await Fixture.PlaylistCommands.Handle(deleteCmd);
+        deleteResponse.Deleted.Should().BeTrue();
+        deleteResponse.Id.Should().Be(createPlaylistResponse.Id);
+
+        getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
+        getByIdResponse.Items.Should().BeEmpty();
+    }
+
     readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
 
     [Fact]
-    public async Task T03_CreatePlaylistWithACompleteVideo()
+    public async Task T04_CreatePlaylistWithACompleteVideo()
     {
         // Prepares
         var newPlaylist = new Playlist(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
@@ -127,7 +159,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     }
 
     [Fact]
-    public async Task T04_CreateNonEmptyPlaylistAndUpdatesIt()
+    public async Task T05_CreateNonEmptyPlaylistAndUpdatesIt()
     {
         // Prepares
         var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos {DateTime.Now}");

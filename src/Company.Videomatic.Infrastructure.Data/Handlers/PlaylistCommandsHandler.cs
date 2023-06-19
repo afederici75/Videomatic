@@ -8,7 +8,7 @@ public class PlaylistCommandsHandler :
     IRequestHandler<CreatePlaylistCommand, CreatePlaylistResponse>,
     IRequestHandler<DeletePlaylistCommand, DeletePlaylistResponse>,
     IRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>,
-    IRequestHandler<AddVideosToPlaylistCommand, AddVideosToPlaylistResponse>
+    IRequestHandler<LinkVideosAndPlaylistsCommand, LinkVideosAndPlaylistsResponse>
 
 {
     private readonly VideomaticDbContext _dbContext;
@@ -36,28 +36,28 @@ public class PlaylistCommandsHandler :
     {
         var newValue = _mapper.Map<UpdatePlaylistCommand, PlaylistDb>(request);
 
-        var attached = await _dbContext.Playlists
+        var playlistDb = await _dbContext.Playlists
             .AsTracking()        
             .SingleAsync(x => x.Id == request.Id, cancellationToken);
 
-        var entry = _dbContext.Entry(attached);
-        entry.State = EntityState.Detached;
-        //foreach (var item in attached.Videos.ToList())
-        //    _dbContext.Entry(item).State = EntityState.Detached;
-
-        var entry2 = _dbContext.Attach(newValue);
+        _mapper.Map(request, playlistDb);
 
         var cnt = await _dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdatePlaylistResponse(request.Id, cnt > 0);
     }
 
-    public Task<DeletePlaylistResponse> Handle(DeletePlaylistCommand request, CancellationToken cancellationToken = default)
+    public async Task<DeletePlaylistResponse> Handle(DeletePlaylistCommand request, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        int cnt = await _dbContext
+            .Playlists
+            .Where(x => x.Id==request.Id).
+            ExecuteDeleteAsync(cancellationToken);
+
+        return new DeletePlaylistResponse(request.Id, cnt > 0);
     }
 
-    public async Task<AddVideosToPlaylistResponse> Handle(AddVideosToPlaylistCommand request, CancellationToken cancellationToken = default)
+    public async Task<LinkVideosAndPlaylistsResponse> Handle(LinkVideosAndPlaylistsCommand request, CancellationToken cancellationToken = default)
     {
         var dupVideoIdsQuery = _dbContext.PlaylistVideos
             .Where(x => x.PlaylistId==request.PlaylistId && request.VideoIds.Contains(x.VideoId))
@@ -78,6 +78,6 @@ public class PlaylistCommandsHandler :
 
         var cnt = await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return new AddVideosToPlaylistResponse(request.PlaylistId, notLinked);
+        return new LinkVideosAndPlaylistsResponse(request.PlaylistId, notLinked);
     }
 }

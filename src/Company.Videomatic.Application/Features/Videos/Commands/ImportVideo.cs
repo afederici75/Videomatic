@@ -3,13 +3,13 @@
 /// <summary>
 /// This command is used to import video data located at a given url.
 /// </summary>
-public partial record ImportVideoCommand(int CollectionId, string VideoUrl) : IRequest<ImportVideoResponse>;
+public partial record ImportVideoCommand(string Location, long? PlaylistId) : IRequest<ImportVideoResponse>;
 
 /// <summary>
 /// The response returned by ImportVideoCommand.
 /// </summary>
 /// <param name="VideoId"></param>
-public record ImportVideoResponse(int VideoId);
+public record ImportVideoResponse(bool Queued, long VideoId, long? PlaylistId = null);
 
 /// <summary>
 /// This event is published when a video is imported.
@@ -18,7 +18,7 @@ public record ImportVideoResponse(int VideoId);
 /// <param name="ThumbNailCount"></param>
 /// <param name="TranscriptCount"></param>
 /// <param name="ArtifactsCount"></param>
-public record VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
+//public record VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
 
 /// <summary>
 /// The validator for ImportVideoCommand.
@@ -27,6 +27,6 @@ public class ImportVideoCommandValidator : AbstractValidator<ImportVideoCommand>
 {
     public ImportVideoCommandValidator()
     {
-        RuleFor(v => v.VideoUrl).NotEmpty().WithMessage("VideoUrl is required.");
+        RuleFor(v => v.Location).NotEmpty();
     }
 }

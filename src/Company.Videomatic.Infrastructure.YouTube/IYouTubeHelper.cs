@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Model;
-
-namespace Company.Videomatic.Infrastructure.YouTube;
+﻿namespace Company.Videomatic.Infrastructure.YouTube;
 
 /// <summary>
 /// This niterface provides access to the YouTube APIs we are interested in.
@@ -12,19 +10,19 @@ public interface IYouTubeHelper
     /// </summary>
     /// <param name="channelId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<Playlist> GetPlaylistsByChannel(string channelId);
+    IAsyncEnumerable<PlaylistDTO> GetPlaylistsByChannel(string channelId);
 
     /// <summary>
     /// Returns all the videos in a given YouTube playlist.
     /// </summary>
     /// <param name="playlistId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<Video> GetVideosOfPlaylist(string playlistId);
+    IAsyncEnumerable<VideoDTO> GetVideosOfPlaylist(string playlistId);
 
     /// <summary>
     /// Gets the full transcription of a YouTube video.
     /// </summary>
     /// <param name="videoId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
+    //IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
 }

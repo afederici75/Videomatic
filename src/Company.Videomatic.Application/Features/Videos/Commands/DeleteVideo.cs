@@ -4,17 +4,17 @@
 /// This command is used to delete a video from the repository.
 /// </summary>
 /// <param name="Id"> The id of the video to delete. </param>
-public record DeleteVideoCommand(int Id) : IRequest<DeleteVideoResponse>;
+public record DeleteVideoCommand(long Id) : IRequest<DeleteVideoResponse>;
 
 /// <summary>
 /// This response is returned by DeleteVideoCommand.
 /// </summary>
-public record DeleteVideoResponse(Video? Item, bool Deleted);
+public record DeleteVideoResponse(long Id, bool Deleted);
 
 /// <summary>
 /// This event is published when a video is deleted.
 /// </summary>
-public record VideoDeletedEvent(Video Item) : INotification;
+//public record VideoDeletedEvent(Video Item) : INotification;
 
 /// <summary>
 /// The validator for DeleteVideoCommand.
