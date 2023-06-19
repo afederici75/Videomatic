@@ -55,9 +55,9 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         var createVid2Cmd = new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
         CreateVideoResponse createVid2Response = await Sender.Send(createVid2Cmd);
     
-        var addVidsCmd = new LinkVideosAndPlaylistsCommand(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
-        LinkVideosAndPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideosAndPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        var addVidsCmd = new LinkVideosToPlaylistCommand(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
+        LinkVideosToPlaylistResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideosToPlaylistResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
     
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);

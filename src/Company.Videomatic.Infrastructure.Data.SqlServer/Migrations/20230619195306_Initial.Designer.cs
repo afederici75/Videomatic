@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230619143832_Initial")]
+    [Migration("20230619195306_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -82,8 +82,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -220,8 +219,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR VideoSequence");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -234,8 +232,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Description");
 
                     b.HasIndex("Id")
                         .IsUnique();

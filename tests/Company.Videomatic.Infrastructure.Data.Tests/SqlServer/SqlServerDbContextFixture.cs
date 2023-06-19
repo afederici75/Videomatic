@@ -2,6 +2,7 @@
 using Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 using Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 using Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+using Company.Videomatic.Infrastructure.Data.Seeder;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
@@ -9,18 +10,21 @@ public class SqlServerDbContextFixture : IAsyncLifetime
 {
     public SqlServerDbContextFixture(
         VideomaticDbContext dbContext,
-        ITestOutputHelperAccessor outputAccessor)
+        ITestOutputHelperAccessor outputAccessor,
+        IDataSeeder seeder)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
                
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
-
+        Seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
         DbContext.Database.EnsureDeleted();
         DbContext.Database.EnsureCreated();
     }
 
     readonly ITestOutputHelperAccessor _outputAccessor;
+    readonly IDataSeeder Seeder;
+
     public ITestOutputHelper Output => _outputAccessor.Output!;
 
 
@@ -45,7 +49,7 @@ public class SqlServerDbContextFixture : IAsyncLifetime
         if (SkipInsertTestData)
             return;
 
-        //throw new NotImplementedException();
+        await Seeder.CreateData();
 
 
         // Loads all videos from the TestData folder

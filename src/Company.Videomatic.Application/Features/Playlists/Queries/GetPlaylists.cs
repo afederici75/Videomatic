@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 public record GetPlaylistsQuery(
     string? Filter = null,

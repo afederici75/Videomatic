@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists;
+﻿namespace Company.Videomatic.Application.Features.Model;
 
 public record PlaylistDTO(
     long Id = 0,

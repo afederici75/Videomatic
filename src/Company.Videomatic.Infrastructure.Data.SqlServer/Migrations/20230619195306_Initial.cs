@@ -38,7 +38,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -269,11 +269,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Transcripts_VideoId",
                 table: "Transcripts",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_Description",
-                table: "Videos",
-                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Id",

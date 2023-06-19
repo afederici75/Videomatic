@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Behaviors;
+using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,9 +26,11 @@ public static class DependencyInjectionExtensions
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
         services.AddAutoMapper((cfg) =>
-        {            
+        {
         },
         AppDomain.CurrentDomain.GetAssemblies());
+
+        services.AddTransient<IDataSeeder, DataSeeder>();
 
         return services;
     }       

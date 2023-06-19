@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Model;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class Thumbnail : EntityBase
 {

@@ -1,12 +1,12 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
-public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosAndPlaylistsCommand, LinkVideosAndPlaylistsResponse>
+public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosToPlaylistCommand, LinkVideosToPlaylistResponse>
 {
     public LinkVideosAndPlaylistsHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 
-    public override async Task<LinkVideosAndPlaylistsResponse> Handle(LinkVideosAndPlaylistsCommand request, CancellationToken cancellationToken = default)
+    public override async Task<LinkVideosToPlaylistResponse> Handle(LinkVideosToPlaylistCommand request, CancellationToken cancellationToken = default)
     {
         var dupVideoIdsQuery = DbContext.PlaylistVideos
           .Where(x => x.PlaylistId == request.PlaylistId && request.VideoIds.Contains(x.VideoId))
@@ -27,6 +27,6 @@ public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosAndPla
 
         var cnt = await DbContext.SaveChangesAsync(cancellationToken);
 
-        return new LinkVideosAndPlaylistsResponse(request.PlaylistId, notLinked);
+        return new LinkVideosToPlaylistResponse(request.PlaylistId, notLinked);
     }
 }

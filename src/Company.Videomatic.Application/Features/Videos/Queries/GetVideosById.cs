@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosByIdQuery(long[] Ids) : IRequest<GetVideosByIdResponse>
 {

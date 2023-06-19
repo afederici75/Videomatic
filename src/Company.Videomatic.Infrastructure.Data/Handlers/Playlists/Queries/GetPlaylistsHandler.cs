@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, GetPlaylistsResponse>
 {
@@ -11,8 +13,7 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
         IQueryable<Playlist> source = DbContext.Playlists.AsNoTracking();
 
         //request.OrderBy
-        //request.Filter        
-
+        //request.Filter
         var playlists = await source
             .Select(p => Mapper.Map<Playlist, PlaylistDTO>(p))
             .Skip(request.Skip ?? 0)

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
 public class GetPlaylistByIdHandler : BaseRequestHandler<GetPlaylistByIdQuery, GetPlaylistByIdResponse>
 {

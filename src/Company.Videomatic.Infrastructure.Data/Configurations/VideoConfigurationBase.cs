@@ -8,7 +8,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
     {
         public const int Location = 1024;
         public const int Title = 500;
-        public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
+        //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
     }
 
     public virtual void Configure(EntityTypeBuilder<Video> builder)
@@ -20,8 +20,8 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                .HasMaxLength(FieldLengths.Location); 
         builder.Property(x => x.Title)
                .HasMaxLength(FieldLengths.Title);
-        builder.Property(x => x.Description)
-               .HasMaxLength(FieldLengths.Description);
+        builder.Property(x => x.Description);
+               //.HasMaxLength(FieldLengths.Description);
 
 
         // Relationships
@@ -52,6 +52,6 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         // Indices
         builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Title);
-        builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
+        //builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
     }
 }

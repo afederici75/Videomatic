@@ -12,6 +12,6 @@ public class AddTagsToVideoHandler : BaseRequestHandler<AddTagsToVideoCommand, A
                 .Where(x => x.VideoId == request.VideoId)
                 .ToListAsync(cancellationToken);
 
-        throw new NotImplementedException();
+        return new AddTagsToVideoResponse(-1, new Dictionary<string, long>());
     }
 }

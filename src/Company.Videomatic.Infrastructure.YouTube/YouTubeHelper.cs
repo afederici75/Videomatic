@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Company.Videomatic.Application.Features.Model;
+using Newtonsoft.Json;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 

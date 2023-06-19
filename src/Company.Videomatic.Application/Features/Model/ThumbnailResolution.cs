@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Model;
+﻿namespace Company.Videomatic.Application.Features.Model;
 
 public enum ThumbnailResolution
 {
@@ -8,4 +8,3 @@ public enum ThumbnailResolution
     Standard,
     MaxRes
 }
-
