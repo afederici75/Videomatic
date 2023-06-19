@@ -1,0 +1,35 @@
+﻿@page "/Playlist/{PlaylistId:long}"
+@inject ISender Sender;
+
+<Row>
+    <Column ColumnSize="ColumnSize.Is5" 
+            Style="top: 0; left: 0; background-color:blue;">
+            @foreach (var video in Videos)
+            {
+                <VideoCard Model=video />
+            }
+
+    </Column>
+
+    <Column ColumnSize="ColumnSize.Is6" 
+            Position="Position.Fixed"    
+            Style="top: 0; right: 0; background-color:pink;">
+           
+            <Artifacts />
+    </Column>
+</Row>
+
+@code {
+    VideoDTO[] Videos = Array.Empty<VideoDTO>();    
+    
+    [Parameter]
+    public long PlaylistId { get; set; } = 0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        GetVideosByPlaylistResponse resp = await Sender.Send(new GetVideosByPlaylistQuery(PlaylistId));
+        Videos = resp.Items.ToArray();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

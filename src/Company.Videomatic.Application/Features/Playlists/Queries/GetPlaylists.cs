@@ -8,7 +8,7 @@ public record GetPlaylistsQuery(
     int? Take = default,
     int? Skip = default) : IRequest<GetPlaylistsResponse>;
 
-public record GetPlaylistsResponse(IEnumerable<PlaylistDTO> playlists);
+public record GetPlaylistsResponse(IEnumerable<PlaylistDTO> Items);
 
 public class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {

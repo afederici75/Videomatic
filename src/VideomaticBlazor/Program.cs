@@ -9,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddVideomaticApplication(builder.Configuration);
+builder.Services.AddVideomaticData(builder.Configuration);
+builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
+
 #region Blazorise
 
 builder.Services

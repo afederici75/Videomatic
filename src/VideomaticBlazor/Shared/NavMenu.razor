@@ -1,4 +1,6 @@
-﻿<Bar Breakpoint="Breakpoint.Desktop"
+﻿@inject ISender Sender;
+
+<Bar Breakpoint="Breakpoint.Desktop"
      NavigationBreakpoint="Breakpoint.Tablet"
      Background="Background.Dark"
      ThemeContrast="ThemeContrast.Dark"
@@ -27,11 +29,13 @@
                         <BarDropdownItem>All</BarDropdownItem>
                         <BarDropdownItem>Most Recent</BarDropdownItem>
                         <BarDropdownDivider />
-                        <BarDropdownItem To=@nameof(MyVideos) TextColor="TextColor.Light">Philosophy</BarDropdownItem>
-                        <BarDropdownDivider />
-                        <BarDropdownItem TextColor="TextColor.Light">Artificial Intelligence</BarDropdownItem>
-                        <BarDropdownItem TextColor="TextColor.Light">Burning Man</BarDropdownItem>
-                        <BarDropdownItem TextColor="TextColor.Light">Gardening</BarDropdownItem>
+
+                        @foreach (PlaylistDTO playlist in Playlists)
+                        {
+                            <BarDropdownItem To=@GetPlaylistLink(playlist) TextColor="TextColor.Light">@playlist.Name (@playlist.VideoCount)</BarDropdownItem>
+                        }
+
+                        <BarDropdownDivider />                        
                     </BarDropdownMenu>
                 </BarDropdown>
             </BarItem>
@@ -57,5 +61,20 @@
 </Bar>
 
 @code {
+    PlaylistDTO[] Playlists = Array.Empty<PlaylistDTO>();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        GetPlaylistsResponse resp = await Sender.Send(new GetPlaylistsQuery(Filter: null, OrderBy: null, Take: 2, Skip: 0));
+        Playlists = resp.Items.ToArray();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    string GetPlaylistLink(PlaylistDTO playlist)
+    {
+        return $"{nameof(Playlist)}/{playlist.Id}";
+    }
+
+    
 }
