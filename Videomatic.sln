@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{71D366F8-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application", "src\Company.Videomatic.Application\Company.Videomatic.Application.csproj", "{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain", "src\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{39957660-CF9D-407D-8317-9B713A394B3F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel", "src\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
@@ -28,8 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integration.Tests", "tests\Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Tests", "tests\Company.Videomatic.Infrastructure.Data.Tests\Company.Videomatic.Infrastructure.Data.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain.Tests", "tests\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel.Tests", "tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
 EndProject
@@ -59,10 +55,6 @@ Global
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,10 +83,6 @@ Global
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -125,7 +113,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
-		{39957660-CF9D-407D-8317-9B713A394B3F} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
@@ -133,7 +120,6 @@ Global
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{1753EB30-9EAA-4FC2-A9F2-5CC729079D69} = {C354FC42-1916-406F-B2AC-7604C423A028}
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
