@@ -99,36 +99,36 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         getByIdResponse.Items.Should().BeEmpty();
     }
 
-    readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
+    //readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
 
     [Fact]
     public async Task T04_CreatePlaylistWithACompleteVideo()
     {
-        // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
-        var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
-        
-        vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
-            .AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200));
-
-        vid1.AddTag(new Tag("Tag1"))
-            .AddTag(new Tag("Tag2"));
-
-        vid1.AddArtifact(new Artifact(title: "A complete summary", type: "AI", text: "Bla bla"))
-            .AddArtifact(new Artifact(title: "A complete analysis", type: "AI", text: "More bla bla"));
-        
-        var trans1 = new Transcript("EN");
-        trans1.AddLine(new TranscriptLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1)));
-        trans1.AddLine(new TranscriptLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
-
-        var trans2 = new Transcript("IT");
-        trans1.AddLine(new TranscriptLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1)));
-        trans1.AddLine(new TranscriptLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
-
-        vid1.AddTranscript(trans1)
-            .AddTranscript(trans2);
-        
-        newPlaylist.AddVideo(vid1);
+       //// Prepares
+       //var newPlaylist = new Playlist(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
+       //var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
+       //
+       //vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
+       //    .AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200));
+       //
+       //vid1.AddTag(new Tag("Tag1"))
+       //    .AddTag(new Tag("Tag2"));
+       //
+       //vid1.AddArtifact(new Artifact(title: "A complete summary", type: "AI", text: "Bla bla"))
+       //    .AddArtifact(new Artifact(title: "A complete analysis", type: "AI", text: "More bla bla"));
+       //
+       //var trans1 = new Transcript("EN");
+       //trans1.AddLine(new TranscriptLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1)));
+       //trans1.AddLine(new TranscriptLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
+       //
+       //var trans2 = new Transcript("IT");
+       //trans1.AddLine(new TranscriptLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1)));
+       //trans1.AddLine(new TranscriptLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
+       //
+       //vid1.AddTranscript(trans1)
+       //    .AddTranscript(trans2);
+       //
+       //newPlaylist.AddVideo(vid1);
 
         // Executes
         //var updatedPlaylist = await Fixture.CommandsHandler.CreateAsync(newPlaylist);
@@ -162,30 +162,30 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     public async Task T05_CreateNonEmptyPlaylistAndUpdatesIt()
     {
         // Prepares
-        var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos {DateTime.Now}");
-        var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
-
-        vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
-            .AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200));
-
-        vid1.AddTag(new Tag("Tag1"))
-            .AddTag(new Tag("Tag2"));
-
-        vid1.AddArtifact(new Artifact(title: "A complete summary", type: "AI", text: "Bla bla"))
-            .AddArtifact(new Artifact(title: "A complete analysis", type: "AI", text: "More bla bla"));
-
-        var trans1 = new Transcript("EN");
-        trans1.AddLine(new TranscriptLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1)));
-        trans1.AddLine(new TranscriptLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
-
-        var trans2 = new Transcript("IT");
-        trans1.AddLine(new TranscriptLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1)));
-        trans1.AddLine(new TranscriptLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
-
-        vid1.AddTranscript(trans1)
-            .AddTranscript(trans2);
-
-        newPlaylist.AddVideo(vid1);
+        //var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos {DateTime.Now}");
+        //var vid1 = new Video(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
+        //
+        //vid1.AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100))
+        //    .AddThumbnail(new Thumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200));
+        //
+        //vid1.AddTag(new Tag("Tag1"))
+        //    .AddTag(new Tag("Tag2"));
+        //
+        //vid1.AddArtifact(new Artifact(title: "A complete summary", type: "AI", text: "Bla bla"))
+        //    .AddArtifact(new Artifact(title: "A complete analysis", type: "AI", text: "More bla bla"));
+        //
+        //var trans1 = new Transcript("EN");
+        //trans1.AddLine(new TranscriptLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1)));
+        //trans1.AddLine(new TranscriptLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
+        //
+        //var trans2 = new Transcript("IT");
+        //trans1.AddLine(new TranscriptLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1)));
+        //trans1.AddLine(new TranscriptLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2)));
+        //
+        //vid1.AddTranscript(trans1)
+        //    .AddTranscript(trans2);
+        //
+        //newPlaylist.AddVideo(vid1);
 
         //// Executes
         //var updatedPlaylist = await Fixture.CommandsHandler.CreateAsync(newPlaylist);

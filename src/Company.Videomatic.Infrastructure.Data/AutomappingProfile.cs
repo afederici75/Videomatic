@@ -11,6 +11,7 @@ public class AutomappingProfile : Profile
     {
         CreateMap<CreatePlaylistCommand, PlaylistDb>();
         CreateMap<UpdatePlaylistCommand, PlaylistDb>();
+        
         CreateMap<CreateVideoCommand, VideoDb>();
         CreateMap<PlaylistDb, PlaylistDTO>();
         CreateMap<VideoDb, VideoDTO>();
