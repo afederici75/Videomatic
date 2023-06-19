@@ -18,7 +18,6 @@ public class VideomaticDbContext : DbContext
     public DbSet<Artifact> Artifacts { get; set; } = null!;
     public DbSet<Playlist> Playlists { get; set; } = null!;
     public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
-    public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<Thumbnail> Thumbnails { get; set; } = null!;
     public DbSet<TranscriptLine> TranscriptLines { get; set; } = null!;
     public DbSet<Transcript> Transcripts { get; set; } = null!;

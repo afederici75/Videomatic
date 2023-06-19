@@ -27,29 +27,28 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         // Relationships
         builder.HasMany(x => x.Thumbnails)            
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(x => x.VideoId)
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(x => x.VideoId)
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(x => x.VideoId)
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(x => x.Tags)
-               .WithMany(x => x.Videos)
-               .UsingEntity<VideoTag>(
-                l => l.HasOne<Tag>(x => x.Tag).WithMany(x => x.VideoTags).HasForeignKey(x => x.TagId),
-                r => r.HasOne<Video>(x => x.Video).WithMany(x=> x.VideoTags).HasForeignKey(x => x.VideoId)
-            );
-                
+        builder.HasMany(x => x.VideoTags)
+               .WithOne()
+               .HasForeignKey(x => x.VideoId)
+               .IsRequired(true)
+               .OnDelete(DeleteBehavior.Cascade);
+
         // Indices
         builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Title);

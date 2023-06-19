@@ -1,7 +1,7 @@
 ﻿
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
-public class ArtifactDbConfiguration : ArtifactConfigurationBase 
+public class ArtifactConfiguration : ArtifactConfigurationBase 
 {
     public override void Configure(EntityTypeBuilder<Artifact> builder)
     {

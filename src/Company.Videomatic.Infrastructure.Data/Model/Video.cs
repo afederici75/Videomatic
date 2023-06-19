@@ -6,9 +6,7 @@ public class Video : EntityBase
     public string Title { get; set; } = default!;
     public string? Description { get; set; }
 
-    public List<Tag> Tags { get; } = new();
     public List<VideoTag> VideoTags { get; } = new();
-
 
     public List<Playlist> Playlists { get; } = new();
     public List<PlaylistVideo> PlaylistVideos { get; } = new();

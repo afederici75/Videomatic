@@ -2,13 +2,18 @@
 
 public abstract class VideoTagConfigurationBase : IEntityTypeConfiguration<VideoTag>
 {
+    public class FieldLengths
+    {
+        public const int Name = 100;        
+    }
+
     public virtual void Configure(EntityTypeBuilder<VideoTag> builder)
     {
         builder.ToTable("VideoTags");
 
         // Fields
-        //builder.Property(x => x.Name)
-        //       .HasMaxLength(FieldLengths.Name);
+        builder.Property(x => x.Name)
+               .HasMaxLength(FieldLengths.Name);
         //
         //// Relationships
         //builder.HasMany(x => x.Videos)
