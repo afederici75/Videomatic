@@ -14,6 +14,10 @@ public class AutomappingProfile : Profile
         CreateMap<UpdateVideoCommand, Video>();
 
         CreateMap<Playlist, PlaylistDTO>();
-        CreateMap<Video, VideoDTO>();        
+        CreateMap<Video, VideoDTO>();
+
+        CreateMap<ThumbnailPayload, Thumbnail>();
+        CreateMap<TranscriptPayload, Transcript>();
+        CreateMap<TranscriptLinePayload, TranscriptLine>();
     }
 }

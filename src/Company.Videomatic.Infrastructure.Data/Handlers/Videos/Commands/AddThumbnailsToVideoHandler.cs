@@ -10,10 +10,33 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
 
     public override async Task<AddThumbnailsToVideoResponse> Handle(AddThumnbailsToVideoCommand request, CancellationToken cancellationToken = default)
     {
-        var currentUserVideoThumbnail = await DbContext.PlaylistVideos
-                .Where(x => x.VideoId == request.VideoId)
-                .ToListAsync(cancellationToken);
+        var currentVideoThumbnails = await DbContext.Thumbnails
+               .Where(x => x.VideoId == request.VideoId)
+               .ToListAsync(cancellationToken);
 
-        return new AddThumbnailsToVideoResponse(-1, new Dictionary<ThumbnailResolution, long>());
+        var processed = new Dictionary<ThumbnailResolution, long>();
+        foreach (var thumb in request.Thumbnails)
+        { 
+            var item = currentVideoThumbnails.FirstOrDefault(x => x.Resolution == thumb.Resolution);
+            if (item == null)
+            {
+                item = Mapper.Map<ThumbnailPayload, Thumbnail>(thumb);
+                item.VideoId = request.VideoId;
+
+                DbContext.Add(item);                
+            }
+            else
+            { 
+                Mapper.Map<ThumbnailPayload, Thumbnail>(thumb, item);
+                DbContext.Update(item);                
+            }
+
+            processed.Add(item.Resolution, item.Id);
+        }
+
+        
+        await DbContext.SaveChangesAsync(cancellationToken);
+
+        return new AddThumbnailsToVideoResponse(request.VideoId, processed);
     }
 }

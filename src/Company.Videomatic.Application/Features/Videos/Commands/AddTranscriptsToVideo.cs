@@ -2,7 +2,7 @@
 
 public record AddTranscriptsToVideoCommand(
     long VideoId,
-    TranscriptPayload[] transcripts) : IRequest<AddTranscriptsToVideoResponse>;
+    TranscriptPayload[] Transcripts) : IRequest<AddTranscriptsToVideoResponse>;
 
 public record class TranscriptPayload(
    string Language,

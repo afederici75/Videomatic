@@ -4,7 +4,7 @@ namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record AddThumnbailsToVideoCommand(
     long VideoId,
-    IEnumerable<ThumbnailPayload> thumbnails) : IRequest<AddThumbnailsToVideoResponse>;
+    IEnumerable<ThumbnailPayload> Thumbnails) : IRequest<AddThumbnailsToVideoResponse>;
 
 public record ThumbnailPayload(
     string Location,
