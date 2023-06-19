@@ -17,7 +17,9 @@ public static class DependencyInjectionExtensions
 
         services.AddMediatR(cfg => 
         {
-            cfg.RegisterServicesFromAssembly(typeof(LoggingBehaviour<,>).Assembly);            
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                        .Where(a => a.FullName?.Contains(".Videomatic.") ?? false);
+            cfg.RegisterServicesFromAssemblies(assemblies.ToArray());// typeof(LoggingBehaviour<,>).Assembly);            
         })            
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));

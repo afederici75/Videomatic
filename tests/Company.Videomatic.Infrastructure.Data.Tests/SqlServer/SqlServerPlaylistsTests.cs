@@ -2,6 +2,8 @@ using Company.Videomatic.Application.Features.Playlists.Commands;
 using Company.Videomatic.Application.Features.Playlists.Queries;
 using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
+using MediatR;
 
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
@@ -9,27 +11,30 @@ namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
 {
     public SqlServerPlaylistsTests(
-        SqlServerDbContextFixture fixture)
+        SqlServerDbContextFixture fixture,
+        ISender sender)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        
+        Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+
         Fixture.SkipDeletingDatabase = true;
     }
 
     public SqlServerDbContextFixture Fixture { get; }
-    
+    public ISender Sender { get; }
+
     [Fact]
     public async Task T01_CreatePlaylist()
     {
         // Creates the playlist
-        var createCmd = new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");
-        CreatePlaylistResponse createResponse = await Fixture.PlaylistCommands.Handle(createCmd);
+        var createCmd = new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");                
+        CreatePlaylistResponse createResponse = await Sender.Send(createCmd);
 
         // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
         var qry = new GetPlaylistByIdQuery(createResponse.Id);
-        GetPlaylistByIdResponse getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
+        GetPlaylistByIdResponse getByIdResponse = await Sender.Send(qry);
         
         var playlist = getByIdResponse.Items.Single();
         playlist.Id.Should().Be(createResponse.Id);   
@@ -42,60 +47,60 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     {
         // Executes
         var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
-        CreatePlaylistResponse createPlaylistResponse = await Fixture.PlaylistCommands.Handle(createPlaylistCmd);
-
+        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
+    
         var createVid1Cmd = new CreateVideoCommand(Location: "youtube.com/v?V1", Title: "A title", Description: "A description");
-        CreateVideoResponse createVid1Response = await Fixture.VideoCommands.Handle(createVid1Cmd);
-
+        CreateVideoResponse createVid1Response = await Sender.Send(createVid1Cmd);
+    
         var createVid2Cmd = new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
-        CreateVideoResponse createVid2Response = await Fixture.VideoCommands.Handle(createVid2Cmd);
-
+        CreateVideoResponse createVid2Response = await Sender.Send(createVid2Cmd);
+    
         var addVidsCmd = new LinkVideosAndPlaylistsCommand(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
-        LinkVideosAndPlaylistsResponse addVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should add 2 videos
-        LinkVideosAndPlaylistsResponse emptyAddVidsResponse = await Fixture.PlaylistCommands.Handle(addVidsCmd); // Should not add anything as they are both dups
-
+        LinkVideosAndPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideosAndPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+    
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
         createVid1Response.Id.Should().BeGreaterThan(0);
         createVid2Response.Id.Should().BeGreaterThan(0);
-
-        GetVideosByIdResponse videosResponse = await Fixture.VideoQueries.Handle(new GetVideosByIdQuery(new[] { createVid1Response.Id, createVid2Response.Id }));
+    
+        GetVideosByIdResponse videosResponse = await Sender.Send(new GetVideosByIdQuery(new[] { createVid1Response.Id, createVid2Response.Id }));
         videosResponse.Items.Should().HaveCount(2);
-
+    
         emptyAddVidsResponse.PlaylistId.Should().Be(createPlaylistResponse.Id);
         emptyAddVidsResponse.VideoIds.Should().BeEmpty();   
     }
-
-
+    
+    
     [Fact]
     public async Task T03_CreatePlaylistThenUpdateThenDeleteIt()
     {
         // Creates the playlist
         var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
-        CreatePlaylistResponse createPlaylistResponse = await Fixture.PlaylistCommands.Handle(createPlaylistCmd);        
-
+        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);        
+    
         // Updates the playlist
         var updatePlaylistCmd = new UpdatePlaylistCommand(Id: createPlaylistResponse.Id, Name: "Replaced", Description: $"Changed");
-        UpdatePlaylistResponse updatePlaylistResponse = await Fixture.PlaylistCommands.Handle(updatePlaylistCmd);
+        UpdatePlaylistResponse updatePlaylistResponse = await Sender.Send(updatePlaylistCmd);
         
         // Verifies
         updatePlaylistResponse.Updated.Should().BeTrue();
-
+    
         var qry = new GetPlaylistByIdQuery(createPlaylistResponse.Id);
-        GetPlaylistByIdResponse getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
+        GetPlaylistByIdResponse getByIdResponse = await Sender.Send(qry);
         
         var record = getByIdResponse.Items.Single();
         record.Id.Should().Be(createPlaylistResponse.Id);   
         record.Name.Should().Be(updatePlaylistCmd.Name);
         record.Description.Should().Be(updatePlaylistCmd.Description);
-
+    
         // Deletes
         var deleteCmd = new DeletePlaylistCommand(createPlaylistResponse.Id);
-        DeletePlaylistResponse deleteResponse = await Fixture.PlaylistCommands.Handle(deleteCmd);
+        DeletePlaylistResponse deleteResponse = await Sender.Send(deleteCmd);
         deleteResponse.Deleted.Should().BeTrue();
         deleteResponse.Id.Should().Be(createPlaylistResponse.Id);
-
-        getByIdResponse = await Fixture.PlaylistsQueries.Handle(qry);
+    
+        getByIdResponse = await Sender.Send(qry);
         getByIdResponse.Items.Should().BeEmpty();
     }
 
