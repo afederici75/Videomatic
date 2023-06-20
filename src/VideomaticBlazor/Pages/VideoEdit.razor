@@ -1,0 +1,19 @@
+﻿@page "/VideoEdit/{VideoId:long}"
+@inject ISender Sender;
+
+<VideoCard Video=@Video />
+
+@code {
+    [Parameter]
+    public VideoDTO Video { get; set; } = new(1, "Nowhere", "No Title", "No Description");
+
+    [Parameter]
+    public long VideoId { get; set; } = 0;
+
+    protected override Task OnParametersSetAsync()
+    {
+        var query = new GetVideosByIdQuery(Id: VideoId);
+
+        return base.OnParametersSetAsync();
+    }
+}

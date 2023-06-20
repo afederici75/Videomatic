@@ -25,6 +25,16 @@ builder.Services
 
 #endregion
 
+//builder.Services.AddCors(options =>
+//    {
+//        options.AddPolicy("NewPolicy", builder =>
+//         builder.WithOrigins()
+//                      .AllowAnyMethod()
+//                      .AllowAnyHeader()
+//                      .AllowCredentials());
+//    });
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,5 +53,7 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+//app.UseCors("NewPolicy");
 
 app.Run();

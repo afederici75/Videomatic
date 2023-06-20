@@ -1,28 +1,35 @@
-﻿<Card>
-    @*<CardImage  Source="@Model.Thumnbnail" Alt="Placeholder image" />*@
-    <CardBody>    
-        <CardTitle Size="5" >            
-        @Model.Title
-        </CardTitle>
-        <CardSubtitle Size="6">
-        @Model.Description
-    </CardSubtitle>
-    
-        <CardText>
-            @*<img style="max-width: 200; height: auto" src="@Model.Thumnbnail" alt="Placeholder" /> *@
-            @Model.Description
-        </CardText>
-                
-    </CardBody>
-</Card>
+﻿@inject NavigationManager Navigation
+
+<Div>
+    <Card>
+        <CardBody>            
+            <CardImage Source=@Video.Thumbnail?.Location Alt="@Video.Title"></CardImage>
+            <CardTitle><b>@Video.Title</b></CardTitle>
+
+            <CardText>
+                <div>
+                    <Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
+                    <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
+                    <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
+                    <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
+                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>
+                </div>
+
+                <div><i>@Video.Description?</i></div>
+            </CardText>
+                    
+            <Button Color="Color.Primary" @onclick=OnOpenClicked>Open</Button>
+        </CardBody>
+    </Card>
+</Div>
 
 @code {
     [Parameter]
-    public VideoDTO Model { get; set; } = new(1, "Nowhere", "No Title", "No Description");
+    public VideoDTO Video { get; set; } = new(1, "Nowhere", "No Title", "No Description");
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    void OnOpenClicked()
     {
-        return base.OnAfterRenderAsync(firstRender);
+        Navigation.NavigateTo($"/{nameof(VideoEdit)}/{Video.Id}");        
     }
 }
     

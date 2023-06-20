@@ -14,11 +14,35 @@ public class GetVideosByPlaylistHandler : BaseRequestHandler<GetVideosByPlaylist
                     join playlistVideo in DbContext.PlaylistVideos.AsNoTracking()
                     on video.Id equals playlistVideo.VideoId
                     where playlistVideo.PlaylistId == request.PlaylistId
-                    select video;
+                    select new 
+                    {
+                        Id = video.Id, 
+                        Title = video.Title, 
+                        Description = video.Description, 
+                        Location = video.Location,
+                        PlaylistCount = (int?)(request.IncludeCounts ? video.Playlists.Count : null),
+                        ArtifactCount = (int?)(request.IncludeCounts ? video.Artifacts.Count : null),
+                        ThumbnailCount = (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
+                        TranscriptCount = (int?)(request.IncludeCounts ? video.Transcripts.Count : null),
+                        TagCount = (int?)(request.IncludeCounts ? video.VideoTags.Count : null),
+                        Thumbnail = (request.IncludeThumbnail != null) ? video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
+                    };
 
         var videos = await query
-            .Select(p => Mapper.Map<Video, VideoDTO>(p))
+            .Select(v => new VideoDTO(
+                v.Id,
+                v.Location,
+                v.Title,
+                v.Description,
+                v.PlaylistCount,
+                v.ArtifactCount,
+                v.ThumbnailCount,
+                v.TranscriptCount,
+                v.TagCount,
+                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
+                ))
             .ToListAsync();
+
         return new GetVideosByPlaylistResponse(Items: videos);        
     }
 }

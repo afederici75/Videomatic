@@ -1,69 +1,31 @@
 ﻿@page "/Playlist/{PlaylistId:long}"
 @inject ISender Sender;
 
-@*@foreach (var item in EventType)
-{
-    @item
-    <hr />
-}
-*@
 <CardDeck>
 @foreach (var video in Videos)
 {
-    <VideoCard Model=video />
+    <VideoCard Video=video />
 }   
 </CardDeck>
 
 @code {
+    // ShouldRender: https://learn.microsoft.com/en-us/aspnet/core/blazor/call-web-api?view=aspnetcore-7.0&pivots=server
+
     VideoDTO[] Videos = Array.Empty<VideoDTO>();    
 
     [Parameter]
     public long PlaylistId { get; set; } = 0;
     List<string> EventType = new List<string>();
 
-    private bool shouldRender;
-
-    protected override bool ShouldRender()
-    {
-        EventType.Add(" 5 Should render called");
-        return shouldRender;
-    }
-
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        EventType.Add(" 7 OnAfterRender Async Started");
-        
-        return;        
-    }
-
-    protected override void OnInitialized()
-    {
-        EventType.Add(" 1 OnInit");
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        EventType.Add("2 OnInit Async");
-        
-
-    }
-    protected override void OnParametersSet()
-    {
-        EventType.Add("3 On Parameter set ");
-    }
     protected override async Task OnParametersSetAsync()
     {
-        EventType.Add(" 4 OnParametersSet Async Started");        
+        var query = new GetVideosByPlaylistQuery(
+            PlaylistId: PlaylistId, 
+            IncludeCounts: true, 
+            IncludeThumbnail: ThumbnailResolution.Default);
 
-        GetVideosByPlaylistResponse resp = await Sender.Send(new GetVideosByPlaylistQuery(PlaylistId));
-        Videos = resp.Items.ToArray();
+        GetVideosByPlaylistResponse resp = await Sender.Send(query);
 
-        shouldRender = true;
-    }
-    
-    protected override void OnAfterRender(bool firstRender)
-    {
-        EventType.Add(" 6 OnAfterRenderStarted");
-    }
-
+        Videos = resp.Items.ToArray();        
+    }    
 }
