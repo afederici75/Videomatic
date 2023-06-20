@@ -10,10 +10,16 @@
     [Parameter]
     public long VideoId { get; set; } = 0;
 
-    protected override Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        var query = new GetVideosByIdQuery(Id: VideoId);
+        var query = new GetVideosQuery(
+            Ids: new[] { VideoId },
+            IncludeCounts: true,
+            IncludeThumbnail: ThumbnailResolution.Default
+        );
 
-        return base.OnParametersSetAsync();
+        var result = await Sender.Send(query);
+
+        Video = result.Page.Items.Single();
     }
 }

@@ -64,7 +64,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         createVid1Response.Id.Should().BeGreaterThan(0);
         createVid2Response.Id.Should().BeGreaterThan(0);
     
-        GetVideosByIdResponse videosResponse = await Sender.Send(new GetVideosByIdQuery(new[] { createVid1Response.Id, createVid2Response.Id }));
+        GetVideosResponse videosResponse = await Sender.Send(new GetVideosQuery(Ids: new[] { createVid1Response.Id, createVid2Response.Id }));
         videosResponse.Items.Should().HaveCount(2);
     
         emptyAddVidsResponse.PlaylistId.Should().Be(createPlaylistResponse.Id);

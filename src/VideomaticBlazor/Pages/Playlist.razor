@@ -4,7 +4,7 @@
 <CardDeck>
 @foreach (var video in Videos)
 {
-    <VideoCard Video=video />
+    <VideoCard Video=video  GridMode=true/>
 }   
 </CardDeck>
 
@@ -19,13 +19,13 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var query = new GetVideosByPlaylistQuery(
+        var query = new GetVideosQuery(
             PlaylistId: PlaylistId, 
             IncludeCounts: true, 
             IncludeThumbnail: ThumbnailResolution.Default);
 
-        GetVideosByPlaylistResponse resp = await Sender.Send(query);
+        GetVideosResponse resp = await Sender.Send(query);
 
-        Videos = resp.Items.ToArray();        
+        Videos = resp.Page.Items.ToArray();
     }    
 }

@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager Navigation
 
 <Div>
-    <Card>
+    <Card style="@MaxWidthStyle">
         <CardBody>            
             <CardImage Source=@Video.Thumbnail?.Location Alt="@Video.Title"></CardImage>
             <CardTitle><b>@Video.Title</b></CardTitle>
@@ -18,7 +18,10 @@
                 <div><i>@Video.Description?</i></div>
             </CardText>
                     
-            <Button Color="Color.Primary" @onclick=OnOpenClicked>Open</Button>
+            @if (GridMode)
+            {
+                <Button Color="Color.Primary" @onclick=OnOpenClicked>Open</Button>
+            }            
         </CardBody>
     </Card>
 </Div>
@@ -26,6 +29,11 @@
 @code {
     [Parameter]
     public VideoDTO Video { get; set; } = new(1, "Nowhere", "No Title", "No Description");
+
+    [Parameter]
+    public bool GridMode { get; set; } = false;
+
+    public string MaxWidthStyle => GridMode ? "max-width: 400px" : "max-width: 600px";
 
     void OnOpenClicked()
     {
