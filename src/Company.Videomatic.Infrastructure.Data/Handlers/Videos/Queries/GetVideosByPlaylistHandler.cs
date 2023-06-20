@@ -11,17 +11,14 @@ public class GetVideosByPlaylistHandler : BaseRequestHandler<GetVideosByPlaylist
     public override async Task<GetVideosByPlaylistResponse> Handle(GetVideosByPlaylistQuery request, CancellationToken cancellationToken = default)
     {
         var query = from video in DbContext.Videos.AsNoTracking()
-                     join playlistVideo in DbContext.PlaylistVideos.AsNoTracking()
-                     on video.Id equals playlistVideo.VideoId
-                     where playlistVideo.PlaylistId == request.PlaylistId
-                     select video;
-
-
+                    join playlistVideo in DbContext.PlaylistVideos.AsNoTracking()
+                    on video.Id equals playlistVideo.VideoId
+                    where playlistVideo.PlaylistId == request.PlaylistId
+                    select video;
 
         var videos = await query
             .Select(p => Mapper.Map<Video, VideoDTO>(p))
             .ToListAsync();
-
-        return new GetVideosByPlaylistResponse(Items: videos);
+        return new GetVideosByPlaylistResponse(Items: videos);        
     }
 }

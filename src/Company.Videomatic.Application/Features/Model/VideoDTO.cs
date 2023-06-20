@@ -4,4 +4,5 @@ public record VideoDTO(
     long Id = 0,
     string Location = "",
     string Title = "",
-    string? Description = default);
+    string? Description = default,
+    int PlaylistCount = 0);

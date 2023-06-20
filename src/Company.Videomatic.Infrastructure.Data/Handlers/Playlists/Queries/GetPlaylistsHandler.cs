@@ -10,12 +10,13 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
 
     public override async Task<GetPlaylistsResponse> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<Playlist> source = DbContext.Playlists.AsNoTracking();
+        var query = from pl in DbContext.Playlists.AsNoTracking()
+                    select new PlaylistDTO(pl.Id, pl.Name, pl.Description, pl.PlaylistVideos.Count());
 
         //request.OrderBy
         //request.Filter
-        var playlists = await source
-            .Select(p => Mapper.Map<Playlist, PlaylistDTO>(p))
+
+        var playlists = await query
             .Skip(request.Skip ?? 0)
             .Take(request.Take ?? 50)
             .ToListAsync();
