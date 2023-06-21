@@ -1,56 +1,27 @@
 ﻿using Company.Videomatic.Application.Features.Model;
-using System.Linq;
-using System.Linq.Expressions;
+using Company.Videomatic.Application.Query;
+using System.Linq.Dynamic.Core;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
 public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResponse>
-{
+    {
+
+    static GetVideosHandler()
+    {
+        
+    }
+
     public GetVideosHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
-    {
-        SortOptions = new ();
-        SortOptions.Add(nameof(Video.Description), v => v.Description!);
-        SortOptions.Add(nameof(Video.Title), v => v.Title);
+    {        
 
     }
-
-    Dictionary<string, Expression<Func<Video, object>>> SortOptions;
-
-    IQueryable<T> ApplyFilter<T>(IQueryOptions filter, IQueryable<T> queriable)
-        where T : IEntity
-    {
-        if (filter.Ids is not null)
-        {
-            queriable = queriable.Where(e => filter.Ids.Contains(e.Id));
-        }        
-
-        return queriable;
-    }
-
+      
     public override async Task<GetVideosResponse> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<PlaylistVideo> playlistVideosQuery = DbContext.PlaylistVideos;
+        IQueryable<PlaylistVideo> query = DbContext.PlaylistVideos;                
         
-        if (request.Ids is not null)
-        {
-            playlistVideosQuery = playlistVideosQuery.Where(e => request.Ids.Contains(e.VideoId));
-        }
-
-        if (request.SearchText is not null)
-        {
-            playlistVideosQuery = playlistVideosQuery.Where(pv =>             
-                pv.Video.Title.Contains(request.SearchText)
-                ||
-                ((pv.Video.Description != null) && (pv.Video.Description!.Contains(request.SearchText)))
-            );
-        }
-
-        if (request.PlaylistId is not null)
-        {
-            playlistVideosQuery = playlistVideosQuery.Where(pv=> pv.PlaylistId==request.PlaylistId);
-        }
-
-        var projection = from pv in playlistVideosQuery
+        var projection = from pv in query
             select new 
             {
                 Id = pv.Video.Id, 
@@ -64,6 +35,10 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResp
                 TagCount = (int?)(request.IncludeCounts ? pv.Video.VideoTags.Count : null),
                 Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
             };
+
+        projection = projection.ApplyOrderBy(request.OrderBy);
+
+
 
         IQueryable<VideoDTO> dtosQuery = projection
             .Select(v => new VideoDTO(
@@ -79,8 +54,10 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResp
                 Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
                 ));
 
-        IPagedList<VideoDTO> items = await PagedList<VideoDTO>.CreateAsync(dtosQuery, request.Page ?? 1, request.PageSize ?? 10);
+        throw new Exception();
 
-        return new GetVideosResponse(Page: items);
+        //IPagedResults<VideoDTO> items = await PagedList<VideoDTO>.CreateAsync(dtosQuery, request.Page ?? 1, request.PageSize ?? 10);
+
+        //return new GetVideosResponse(Page: items);
     }
 }

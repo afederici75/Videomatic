@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Model;
+﻿using Company.Videomatic.Application.Abstractions;
+
+namespace Company.Videomatic.Application.Features.Model;
 
 public record VideoDTO(
     long Id = 0,
@@ -12,4 +14,4 @@ public record VideoDTO(
     int? TranscriptCount = 0,
     int? TagCount = 0,
 
-    ThumbnailDTO? Thumbnail = default);
+    ThumbnailDTO? Thumbnail = default) : IEntity;
