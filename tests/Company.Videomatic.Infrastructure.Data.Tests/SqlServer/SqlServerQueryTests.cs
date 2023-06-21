@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Company.Videomatic.Application.Features.Model;
 using Company.Videomatic.Application.Query;
-using Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 using Company.Videomatic.Infrastructure.Data.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +46,7 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
         #region Order and Filter
         var orderBy = new OrderBy(
             new (nameof(VideoDTO.TranscriptCount), OrderDirection.Desc),
-            new (nameof(VideoDTO.Id), OrderDirection.Desc)
+            new OrderByItem<VideoDTO>(v => v.Id, OrderDirection.Desc)
             );
 
         var filter = new Filter(
@@ -57,7 +56,7 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
             new (nameof(VideoDTO.ThumbnailCount), FilterType.GreaterThan, "0"),
             new (nameof(VideoDTO.Title), FilterType.Contains, "Huxley"),
             new (nameof(VideoDTO.Title), FilterType.Equals, "Aldous Huxley - The Dancing Shiva"),
-            new (nameof(VideoDTO.TagCount), FilterType.Equals, "2"),
+            new FilterItem<VideoDTO>(v => v.TagCount, FilterType.Equals, "2"),
             new ("Thumbnail.Id", FilterType.Equals, "1")
             );
         #endregion  
@@ -65,25 +64,9 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
         var results = await proj
             .ApplyOrderBy(orderBy)
             .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-            .ToListAsync();
-
-        var dtos = results
-            .Select(v => new VideoDTO(
-                v.Id,
-                v.Location,
-                v.Title,
-                v.Description,
-                v.PlaylistCount,
-                v.ArtifactCount,
-                v.ThumbnailCount,
-                v.TranscriptCount,
-                v.TagCount,
-                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
-                ))
-            .ToList();
+            .ToPageAsync(new Paging(1,10));
         
-        results.Should().NotBeEmpty();
-        dtos.Should().NotBeEmpty();        
+        results.Items.Should().NotBeEmpty();        
     }
 
     [Fact]
@@ -101,16 +84,14 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
                    };
 
         // Creates the filter
-        var filter = new Filter(
-            SearchText: "HUX",
-            Ids: new long[] { 1, 2, 3, 444, 555, 666 });
+        var filter = new Filter(SearchText: "HUX", Ids: new long[] { 1, 2, 3, 444, 555, 666 });
 
         // Queries the database
         var results = await proj
             .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
             .ToListAsync();
 
-        // Transforms the results into DTOs
+        // Transforms the results into DTOs manually
         var dtos = results
             .Select(v => new VideoDTO(
                 Id: v.Id,
@@ -150,7 +131,7 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
         // Queries the database
         var results = await proj
             .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-            .ToPageAsync(paging, v => new VideoDTO(
+            .ToPageAsync(1, 10, v => new VideoDTO(
                 Id: v.Id,
                 Location: v.Location,
                 Title: v.Title,

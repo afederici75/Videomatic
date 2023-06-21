@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Application.Features.Model;
 using Company.Videomatic.Application.Query;
+using Company.Videomatic.Infrastructure.Data.Extensions;
 using System.Linq.Dynamic.Core;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;

@@ -1,33 +1,65 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Query;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.VisualStudio.TextTemplating;
-using System.Linq;
+﻿using Company.Videomatic.Application.Query;
 using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+namespace System.Linq;
 
 public static class IQueryableExtensions
 {
     public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
-        this IQueryable<TPROJECTION> source, 
-        Paging options, 
+        this IQueryable<TPROJECTION> source,
+        Paging paging,
+        Func<TPROJECTION, TDTO> func,
+        CancellationToken cancellationToken = default)
+        => await source.ToPageAsync(paging.Page, paging.PageSize, func, cancellationToken);    
+
+    public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
+        this IQueryable<TPROJECTION> source,
+        int page,
+        int pageSize,
         Func<TPROJECTION, TDTO> func,
         CancellationToken cancellationToken = default)
     {
         var totalCount = await source.CountAsync(cancellationToken);
+
         var items = await source
-            .Skip((options.Page - 1) * options.PageSize)
-            .Take(options.PageSize)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        return new PageResult<TDTO>(items.Select(func), options.Page, options.PageSize, totalCount);
-
-        //return new PageResult<TPROJECTION>(items, options.Page, options.PageSize, totalCount);
+        return new PageResult<TDTO>(
+            items.Select(func),
+            page,
+            pageSize,
+            totalCount);
     }
 
-    public static IQueryable<T> ApplyOrderBy<T>(this IQueryable<T> source, OrderBy options)        
+    public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
+        this IQueryable<TDTO> source,
+        Paging options,
+        CancellationToken cancellationToken = default)
+        => await source.ToPageAsync(options.Page, options.PageSize, cancellationToken);
+
+    public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
+        this IQueryable<TDTO> source,
+        int page,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        var totalCount = await source.CountAsync(cancellationToken);
+
+        var items = await source
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PageResult<TDTO>(
+            items,
+            page,
+            pageSize,
+            totalCount);
+    }
+
+    public static IQueryable<T> ApplyOrderBy<T>(this IQueryable<T> source, OrderBy options)
     {
         OrderByItem[] list = options.Items;
         if (list.Length == 0)
@@ -36,7 +68,7 @@ public static class IQueryableExtensions
                 throw new Exception($"OrderBy cannot be inferred on type {typeof(T)}.");
 
             list = new[] { new OrderByItem(nameof(IEntity.Id)) };
-        }                
+        }
 
         // See 'Ordering Results' at https://dynamic-linq.net/basic-simple-query
         var textClauses = list.Select(
@@ -46,7 +78,7 @@ public static class IQueryableExtensions
 
         return source.OrderBy(fullOrderBy);
     }
-   
+
     static string CreateClause(FilterItem filter, int index)
     {
         switch (filter.Type)
@@ -56,7 +88,7 @@ public static class IQueryableExtensions
             case FilterType.Contains:
                 return $"({filter.Property}.Contains(@{index}))";
             case FilterType.StartsWith:
-                return $"({filter.Property}.StartsWith(@{index}))";                
+                return $"({filter.Property}.StartsWith(@{index}))";
             case FilterType.EndsWith:
                 return $"({filter.Property}.EndsWith(@{index}))";
             case FilterType.GreaterThan:
@@ -68,19 +100,19 @@ public static class IQueryableExtensions
             case FilterType.LessThanOrEqual:
                 return $"({filter.Property} <= @{index})";
             case FilterType.NotEqual:
-                return $"({filter.Property} <> @{index})";                
+                return $"({filter.Property} <> @{index})";
         }
 
         throw new NotSupportedException();
     }
 
     public static IQueryable<T> ApplyFilters<T>(
-        this IQueryable<T> source, 
+        this IQueryable<T> source,
         Filter options,
         string[] searchTextProperties)
     {
         if (options.Ids is not null)
-        {            
+        {
             source = source.Where("Id in @0", options.Ids);
         }
 
@@ -99,12 +131,12 @@ public static class IQueryableExtensions
             var items = options.Items.Select(x => new
             {
                 Clause = CreateClause(x, idx++),
-                Value = x.Value
+                x.Value
             });
 
             var finalText = $"({string.Join(" && ", items.Select(x => x.Clause))})";
             var values = items.Select(x => x.Value).ToArray();
-            
+
             source = source.Where(finalText, values);
         }
 

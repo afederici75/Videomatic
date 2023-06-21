@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers;
+﻿namespace Company.Videomatic.Application.Query;
 
 public record PageResult<T>(IEnumerable<T> Items, int Page, int PageSize, long TotalCount)
 {    

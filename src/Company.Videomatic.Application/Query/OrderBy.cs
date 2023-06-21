@@ -16,4 +16,11 @@ public record OrderByItem(
     string Property,
     OrderDirection Direction = OrderDirection.Asc)
 {    
+
+}
+
+public record OrderByItem<TDTO>(
+    Expression<Func<TDTO, object?>> expr,
+    OrderDirection Direction = OrderDirection.Asc) : OrderByItem(expr.Body.ToString(), Direction)
+{
 }
