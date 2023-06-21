@@ -12,15 +12,14 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        throw new Exception();
-        //var query = new GetVideosQuery(
-        //    Ids: new[] { VideoId },
-        //    IncludeCounts: true,
-        //    IncludeThumbnail: ThumbnailResolution.Default
-        //);
-        //
-        //var result = await Sender.Send(query);
-        //
-        //Video = result.Page.Items.Single();
+        var query = new GetVideosQuery(
+            Filter: new GetVideosFilter(Ids: new[] { VideoId }),
+            IncludeCounts: true,
+            IncludeThumbnail: ThumbnailResolution.Default
+        );
+        
+        var result = await Sender.Send(query);
+        
+        Video = result.Items.Single();
     }
 }

@@ -1,20 +1,19 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Query;
-using Company.Videomatic.Infrastructure.Data.Handlers;
+﻿using Company.Videomatic.Application.Query;
 
 namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosQuery(
-    Filter Filter = null,
-    OrderBy OrderBy = null,
-    Paging Paging = null,
+    GetVideosFilter? Filter = null,
+    OrderBy? OrderBy = null,
+    Paging? Paging = null,
     bool IncludeCounts = false,
-    ThumbnailResolution? IncludeThumbnail = null) : IRequest<GetVideosResponse>
-{ 
-    //public GetVideosQuery() : this(new Filter(), new OrderBy(), new Paging(), false, null) { }
-}
+    ThumbnailResolution? IncludeThumbnail = null) : IRequest<PageResult<VideoDTO>>;
 
-public record GetVideosResponse(PageResult<VideoDTO> Page);
+public record GetVideosFilter(
+    long? PlaylistId  = null,
+    string? SearchText = null,
+    long[]? Ids = null,
+    params FilterItem[] Items) : Filter(SearchText, Ids, Items);
 
 public class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 {

@@ -1,4 +1,5 @@
-﻿@inject ISender Sender;
+﻿@using Company.Videomatic.Application.Query;
+@inject ISender Sender;
 
 <Bar Breakpoint="Breakpoint.Desktop"
      NavigationBreakpoint="Breakpoint.Tablet"
@@ -65,7 +66,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        GetPlaylistsResponse resp = await Sender.Send(new GetPlaylistsQuery(Filter: null, OrderBy: null, Take: 2, Skip: 0));
+        var resp = await Sender.Send(new GetPlaylistsQuery(Filter: null, OrderBy: null, Paging: new Paging(1, 2)));
         Playlists = resp.Items.ToArray();
 
         await base.OnAfterRenderAsync(firstRender);

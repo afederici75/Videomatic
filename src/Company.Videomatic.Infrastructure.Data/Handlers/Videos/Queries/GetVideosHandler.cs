@@ -1,27 +1,28 @@
 ﻿using Company.Videomatic.Application.Features.Model;
 using Company.Videomatic.Application.Query;
-using Company.Videomatic.Infrastructure.Data.Extensions;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Linq.Dynamic.Core;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
-public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResponse>
-    {
-
-    static GetVideosHandler()
-    {
-        
-    }
-
+public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<VideoDTO>>
+{
     public GetVideosHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {        
 
     }
       
-    public override async Task<GetVideosResponse> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
+    public override async Task<PageResult<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<PlaylistVideo> query = DbContext.PlaylistVideos;                
-        
+        IQueryable<PlaylistVideo> query = DbContext.PlaylistVideos;
+
+        // Applies the custom filter options
+        if (request.Filter?.PlaylistId is not null)
+        {
+            query = query.Where(pv => pv.PlaylistId == request.Filter.PlaylistId);
+        }
+
+        // Creates the projection
         var projection = from pv in query
             select new 
             {
@@ -37,12 +38,12 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResp
                 Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
             };
 
-        projection = projection.ApplyOrderBy(request.OrderBy);
-
-
-
-        IQueryable<VideoDTO> dtosQuery = projection
-            .Select(v => new VideoDTO(
+        // Fetches the data
+        return await projection
+            .ApplyFilters(request.Filter, new [] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
+            .ApplyOrderBy(request.OrderBy)
+            .ToPageAsync(request.Paging, 
+                v => new VideoDTO(
                 v.Id,
                 v.Location,
                 v.Title,
@@ -53,12 +54,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, GetVideosResp
                 v.TranscriptCount,
                 v.TagCount,
                 Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
-                ));
-
-        throw new Exception();
-
-        //IPagedResults<VideoDTO> items = await PagedList<VideoDTO>.CreateAsync(dtosQuery, request.Page ?? 1, request.PageSize ?? 10);
-
-        //return new GetVideosResponse(Page: items);
+                ), 
+                cancellationToken);        
     }
 }

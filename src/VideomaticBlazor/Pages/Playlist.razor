@@ -19,14 +19,13 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        throw new Exception();
-        //var query = new GetVideosQuery(
-        //    PlaylistId: PlaylistId, 
-        //    IncludeCounts: true, 
-        //    IncludeThumbnail: ThumbnailResolution.Default);
-        //
-        //GetVideosResponse resp = await Sender.Send(query);
-        //
-        //Videos = resp.Page.Items.ToArray();
+        var query = new GetVideosQuery(
+            Filter: new GetVideosFilter(PlaylistId),
+            IncludeCounts: true, 
+            IncludeThumbnail: ThumbnailResolution.Default);
+
+        var results = await Sender.Send(query);
+
+        Videos = results.Items.ToArray();
     }    
 }

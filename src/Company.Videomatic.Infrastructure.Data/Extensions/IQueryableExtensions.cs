@@ -1,16 +1,20 @@
 ﻿using Company.Videomatic.Application.Query;
 using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 
 namespace System.Linq;
 
 public static class IQueryableExtensions
 {
+    const int DefaultPage = 1;
+    const int DefaultPageSize = 10;
+
     public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
         this IQueryable<TPROJECTION> source,
-        Paging paging,
+        Paging? paging,
         Func<TPROJECTION, TDTO> func,
         CancellationToken cancellationToken = default)
-        => await source.ToPageAsync(paging.Page, paging.PageSize, func, cancellationToken);    
+        => await source.ToPageAsync(paging?.Page ?? DefaultPage, paging?.PageSize ?? DefaultPageSize, func, cancellationToken);    
 
     public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
         this IQueryable<TPROJECTION> source,
@@ -26,8 +30,10 @@ public static class IQueryableExtensions
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
+        var xxx = items.Select(func).ToList();
+
         return new PageResult<TDTO>(
-            items.Select(func),
+            xxx,
             page,
             pageSize,
             totalCount);
@@ -35,9 +41,9 @@ public static class IQueryableExtensions
 
     public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
         this IQueryable<TDTO> source,
-        Paging options,
+        Paging? options,
         CancellationToken cancellationToken = default)
-        => await source.ToPageAsync(options.Page, options.PageSize, cancellationToken);
+        => await source.ToPageAsync(options?.Page ?? DefaultPage, options?.PageSize ?? DefaultPageSize, cancellationToken);
 
     public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
         this IQueryable<TDTO> source,
@@ -59,8 +65,13 @@ public static class IQueryableExtensions
             totalCount);
     }
 
-    public static IQueryable<T> ApplyOrderBy<T>(this IQueryable<T> source, OrderBy options)
+    public static IQueryable<T> ApplyOrderBy<T>(this IQueryable<T> source, OrderBy? options)
     {
+        if (options == null)
+        {
+            return source;
+        }
+
         OrderByItem[] list = options.Items;
         if (list.Length == 0)
         {
@@ -108,15 +119,20 @@ public static class IQueryableExtensions
 
     public static IQueryable<T> ApplyFilters<T>(
         this IQueryable<T> source,
-        Filter options,
+        Filter? options,
         string[] searchTextProperties)
     {
+        if (options is null)
+        {
+            return source;
+        }
+
         if (options.Ids is not null)
         {
             source = source.Where("Id in @0", options.Ids);
         }
 
-        if (options.SearchText != null)
+        if (!string.IsNullOrWhiteSpace(options.SearchText))
         {
             // Hux -> Title.Contains('HUX') || Description.Contains('HUX')
             var x1 = searchTextProperties.Select(propName => $"{propName}.Contains(@0)");
