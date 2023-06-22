@@ -21,8 +21,8 @@ public class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 {
     public GetVideosQueryValidator()
     {
-        RuleFor(x => x.Filter).SetValidator(new FilterValidator<GetVideosFilter>())
-                              .When(x => x is not null);
+        //RuleFor(x => x.Filter).SetValidator(new FilterValidator<GetVideosFilter>())
+        //                      .When(x => x is not null);
 
         RuleFor(x => x.OrderBy).SetValidator(new OrderByValidator())
                                .When(x => x is not null);

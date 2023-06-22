@@ -1,22 +1,30 @@
-﻿using System.Linq.Expressions;
+﻿namespace Company.Videomatic.Application.Query;
 
-namespace Company.Videomatic.Application.Query;
-
+/// <summary>
+/// A property filter that filters the results of a query by a property name, a filter type and a value.
+/// </summary>
+/// <param name="Property">The name of the property.</param>
+/// <param name="Type">The type of filter.</param>
+/// <param name="Value">A text value.</param>
 public record FilterItem(
     string Property,
     FilterType Type = FilterType.Equals,
     string? Value = null);
 
-//public record FilterItem<TDTO>(
-//    Expression<Func<TDTO, object?>> expr,
-//    FilterType Type = FilterType.Equals,
-//    string? Value = null) : FilterItem(typeof(TDTO).Name, Type, Value);
+#region Validator
 
 public class FilterItemValidator : AbstractValidator<FilterItem>
 {
+    // TODO: dubious location for this class
+    public static class Lengths
+    {
+        public const int MaxPropertyLength = 128;        
+    }
     public FilterItemValidator()
     {
-        RuleFor(x => x.Property).NotEmpty();
+        RuleFor(x => x.Property).Length(1, Lengths.MaxPropertyLength);
         RuleFor(x => x.Type).IsInEnum();
     }
 }
+
+#endregion
