@@ -1,5 +1,14 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.Videomatic.Application.Features.DataAccess;
 
-public record CreateVideoCommand(string Location, string Title, string? Description) : IRequest<CreateVideoResponse>;
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
-public record CreateVideoResponse(long Id);
+public record CreateVideoCommand(string Location, string Title, string? Description) : IRequest<CreatedResponse>;
+
+public class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
+{
+    public CreateVideoCommandValidator()
+    {
+        RuleFor(x => x.Location).NotEmpty();
+        RuleFor(x => x.Title).NotEmpty();
+    }
+}

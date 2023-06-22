@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Application.Query;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.Linq.Dynamic.Core;
+﻿using System.Linq.Dynamic.Core;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
@@ -17,9 +14,9 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         IQueryable<PlaylistVideo> query = DbContext.PlaylistVideos;
 
         // Applies the custom filter options
-        if (request.Filter?.PlaylistId is not null)
+        if (request.Filter?.PlaylistIds is not null)
         {
-            query = query.Where(pv => pv.PlaylistId == request.Filter.PlaylistId);
+            query = query.Where(pv => request.Filter.PlaylistIds.Contains(pv.PlaylistId));
         }
 
         // Creates the projection

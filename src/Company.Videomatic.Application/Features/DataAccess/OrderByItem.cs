@@ -1,7 +1,7 @@
 ﻿using AutoMapper.Execution;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Application.Query;
+namespace Company.Videomatic.Application.Features.DataAccess;
 
 public enum OrderDirection
 {

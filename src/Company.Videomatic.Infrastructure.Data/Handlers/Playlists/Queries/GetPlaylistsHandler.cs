@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
 {

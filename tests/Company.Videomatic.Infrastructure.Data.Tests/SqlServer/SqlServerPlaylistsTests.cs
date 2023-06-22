@@ -1,3 +1,5 @@
+using Company.Videomatic.Application.Features.DataAccess;
+using Company.Videomatic.Application.Features.Model;
 using Company.Videomatic.Application.Features.Playlists.Commands;
 using Company.Videomatic.Application.Features.Playlists.Queries;
 using Company.Videomatic.Application.Features.Videos.Commands;
@@ -28,13 +30,13 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     {
         // Creates the playlist
         var createCmd = new CreatePlaylistCommand(Name: "My playlist 1", Description: $"A description for my playlist {DateTime.Now}");                
-        CreatePlaylistResponse createResponse = await Sender.Send(createCmd);
+        CreatedResponse createResponse = await Sender.Send(createCmd);
 
         // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
-        var qry = new GetPlaylistByIdQuery(createResponse.Id);
-        GetPlaylistByIdResponse getByIdResponse = await Sender.Send(qry);
+        var qry = new GetPlaylistsQuery(createResponse.Id);
+        PageResult<PlaylistDTO> getByIdResponse = await Sender.Send(qry);
         
         var playlist = getByIdResponse.Items.Single();
         playlist.Id.Should().Be(createResponse.Id);   
@@ -47,17 +49,17 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     {
         // Executes
         var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
-        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
-    
+        CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
+
         var createVid1Cmd = new CreateVideoCommand(Location: "youtube.com/v?V1", Title: "A title", Description: "A description");
-        CreateVideoResponse createVid1Response = await Sender.Send(createVid1Cmd);
-    
+        CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
+
         var createVid2Cmd = new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
-        CreateVideoResponse createVid2Response = await Sender.Send(createVid2Cmd);
-    
-        var addVidsCmd = new LinkVideosToPlaylistCommand(PlaylistId: createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
-        LinkVideosToPlaylistResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideosToPlaylistResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
+
+        var addVidsCmd = new LinkVideosToPlaylistsCommand(new[] { createPlaylistResponse.Id }, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
+        LinkVideosToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideosToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
     
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
@@ -78,31 +80,31 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     {
         // Creates the playlist
         var createPlaylistCmd = new CreatePlaylistCommand(Name: "My playlist 2", Description: $"A description for my playlist {DateTime.Now}");
-        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);        
+        CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);        
     
         // Updates the playlist
         var updatePlaylistCmd = new UpdatePlaylistCommand(Id: createPlaylistResponse.Id, Name: "Replaced", Description: $"Changed");
-        UpdatePlaylistResponse updatePlaylistResponse = await Sender.Send(updatePlaylistCmd);
+        UpdatedResponse updatePlaylistResponse = await Sender.Send(updatePlaylistCmd);
         
         // Verifies
         updatePlaylistResponse.Updated.Should().BeTrue();
     
-        var qry = new GetPlaylistByIdQuery(createPlaylistResponse.Id);
-        GetPlaylistByIdResponse getByIdResponse = await Sender.Send(qry);
+        var qry = new GetPlaylistsQuery(createPlaylistResponse.Id);
+        PageResult<PlaylistDTO> getResponse = await Sender.Send(qry);
         
-        var record = getByIdResponse.Items.Single();
+        var record = getResponse.Items.Single();
         record.Id.Should().Be(createPlaylistResponse.Id);   
         record.Name.Should().Be(updatePlaylistCmd.Name);
         record.Description.Should().Be(updatePlaylistCmd.Description);
     
         // Deletes
         var deleteCmd = new DeletePlaylistCommand(createPlaylistResponse.Id);
-        DeletePlaylistResponse deleteResponse = await Sender.Send(deleteCmd);
+        DeletedResponse deleteResponse = await Sender.Send(deleteCmd);
         deleteResponse.Deleted.Should().BeTrue();
         deleteResponse.Id.Should().Be(createPlaylistResponse.Id);
     
-        getByIdResponse = await Sender.Send(qry);
-        getByIdResponse.Items.Should().BeEmpty();
+        getResponse = await Sender.Send(qry);
+        getResponse.Items.Should().BeEmpty();
     }
 
     //readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };

@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Query;
+﻿namespace Company.Videomatic.Application.Features.DataAccess;
 
 public enum FilterType
 {

@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Query;
+﻿using Company.Videomatic.Application.Features.DataAccess;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 

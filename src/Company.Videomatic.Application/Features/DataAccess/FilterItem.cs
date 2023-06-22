@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Query;
+﻿namespace Company.Videomatic.Application.Features.DataAccess;
 
 /// <summary>
 /// A property filter that filters the results of a query by a property name, a filter type and a value.
@@ -18,7 +18,7 @@ public class FilterItemValidator : AbstractValidator<FilterItem>
     // TODO: dubious location for this class
     public static class Lengths
     {
-        public const int MaxPropertyLength = 128;        
+        public const int MaxPropertyLength = 128;
     }
     public FilterItemValidator()
     {

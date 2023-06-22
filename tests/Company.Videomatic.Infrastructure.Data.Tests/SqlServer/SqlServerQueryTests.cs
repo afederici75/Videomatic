@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Application.Query;
-using Company.Videomatic.Infrastructure.Data.Model;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
+﻿namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]
 public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
@@ -45,9 +38,11 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
 
         #region Order and Filter
         var orderBy = new OrderBy(
-            new (nameof(VideoDTO.TranscriptCount), OrderDirection.Desc),
-            new (nameof(VideoDTO.Id), OrderDirection.Desc)
-            );
+            Items: new OrderByItem[]
+            {
+                new (nameof(VideoDTO.TranscriptCount), OrderDirection.Desc),
+                new (nameof(VideoDTO.Id), OrderDirection.Desc)
+            });
 
         var filter = new Filter(
             SearchText: null,

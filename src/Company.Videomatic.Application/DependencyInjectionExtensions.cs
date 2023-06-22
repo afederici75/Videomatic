@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Behaviors;
+using Company.Videomatic.Application.Features.DataAccess;
 using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.Extensions.Configuration;
 

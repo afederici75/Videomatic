@@ -1,12 +1,12 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
-public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
+public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, UpdatedResponse>
 {
     public UpdateVideoHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 
-    public override async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
+    public override async Task<UpdatedResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
     {
         var newValue = Mapper.Map<UpdateVideoCommand, Video>(request);
 
@@ -18,6 +18,6 @@ public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, 
 
         var cnt = await DbContext.SaveChangesAsync(cancellationToken);
 
-        return new UpdateVideoResponse(request.Id, cnt > 0);
+        return new UpdatedResponse(request.Id, cnt > 0);
     }
 }

@@ -1,11 +1,14 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
+﻿using Company.Videomatic.Application.Features.DataAccess;
 
-public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatePlaylistResponse>;
+namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistResponse(long Id, bool Updated);
+public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatedResponse>;
 
-/// <summary>
-/// This event is published when a video is updated.
-/// </summary>
-/// <param name="VideoId"></param>
-public record PlaylistUpdatedEvent(int Id);
+public class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
+{
+    public UpdatePlaylistCommandValidator()
+    {
+        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => x.Name).NotEmpty();
+    }
+}

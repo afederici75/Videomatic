@@ -1,16 +1,22 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
+﻿using Company.Videomatic.Application.Features.DataAccess;
+
+namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 public record GetPlaylistsQuery(
     Filter? Filter = null,
     OrderBy? OrderBy = null,
     Paging? Paging = null,
-    bool IncludeCounts = false) : IRequest<PageResult<PlaylistDTO>>;
+    bool IncludeCounts = false) : IRequest<PageResult<PlaylistDTO>>
+{
+    public GetPlaylistsQuery(params long[] Ids) : this(new Filter(Ids: Ids)) { }
+}
 
-public class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
+internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {
     public GetPlaylistsQueryValidator()
     {
-        //RuleFor(x => x.Page).InclusiveBetween(1, 50);
-        //RuleFor(x => x.Page).GreaterThanOrEqualTo(1);
+        RuleFor(x => x.Filter).SetValidator(new FilterValidator());
+        RuleFor(x => x.OrderBy).SetValidator(new OrderByValidator());
+        RuleFor(x => x.Paging).SetValidator(new PagingValidator());        
     }
 }

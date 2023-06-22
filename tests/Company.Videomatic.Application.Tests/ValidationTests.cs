@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using Company.Videomatic.Application.Features.DataAccess;
+using Company.Videomatic.Application.Features.Playlists.Queries;
+using FluentAssertions;
 using FluentValidation;
+using FluentValidation.TestHelper;
 using Xunit;
 using Xunit.DependencyInjection;
 
@@ -8,56 +11,87 @@ namespace Company.Videomatic.Application.Tests;
 /// <summary>
 /// Tests that verify FluentValidation is working as expected.
 /// Not all validators are tested here, just a few to verify the setup is working.
+/// See https://docs.fluentvalidation.net/en/latest/testing.html
 /// </summary>
 public class ValidationTests
-{
-    public ValidationTests(IServiceProvider serviceProvider)
-    {
-        ServiceProvider = serviceProvider;
-    }
-
-    IServiceProvider ServiceProvider { get; }
-
+{    
     [Fact]
-    public void ValidatesFilter()
+    public void AcceptFilter()
     {        
-        var v = new FilterValidator<Filter>();
+        var v = new FilterValidator();
 
-        // No filters specified (INVALID)
-        var filter = new Filter();
-        var res = v.Validate(filter);
-        res.Errors.Should().HaveCount(1); 
-        
-        // Individual properties (INVALID)
-        filter = new Filter(
-            SearchText: new string('x', FilterValidator<Filter>.Lengths.MaxSearchTextLength + 1), // Too long
-            Ids: Array.Empty<long>(), // Empty
-            Items: Array.Empty<FilterItem>()); // Empty
-        res = v.Validate(filter);
-        res.Errors.Should().HaveCount(3);
-
-        // Items.PropertyName
-        filter = new Filter(SearchText: null, Ids: null, Items: new[] { new FilterItem("") });
-        res = v.Validate(filter);
-        res.Errors.Should().HaveCount(1); // PropertyName should be 1-128 chars
-
-
-        // All specified (VALID)
-        filter = new Filter(SearchText: "12345", Ids: new long[] { 1, 2 }, Items: new[] { new FilterItem("x") });
-        res = v.Validate(filter);
-        res.Errors.Should().BeEmpty();
-
-        // One specified (VALID)
-        filter = new Filter(SearchText: "ABCDE", Ids: null, Items: null);
-        res = v.Validate(filter);
-        res.Errors.Should().BeEmpty();
+        var filter = new Filter(SearchText: "ABCDE", Ids: null, Items: null);
+        var res = v.TestValidate(filter);
+        res.ShouldNotHaveAnyValidationErrors();
 
         filter = new Filter(SearchText: null, Ids: new long[] { 1 }, Items: null);
-        res = v.Validate(filter);
-        res.Errors.Should().BeEmpty();
+        res = v.TestValidate(filter);
+        res.ShouldNotHaveAnyValidationErrors();
 
         filter = new Filter(SearchText: null, Ids: null, Items: new[] { new FilterItem("y") });
-        res = v.Validate(filter);
-        res.Errors.Should().BeEmpty();
+        res = v.TestValidate(filter);
+        res.ShouldNotHaveAnyValidationErrors();
+    }
+
+    [Fact]
+    public void RejectFilter()
+    {
+        var v = new FilterValidator();
+
+        // No filters specified 
+        var filter = new Filter();
+        var res = v.TestValidate(filter);
+        res.ShouldHaveValidationErrorFor(""); // The object itself: invalid state with no property set
+
+        // Individual properties (INVALID)
+        filter = new Filter(
+            SearchText: new string('x', FilterValidatorBase<Filter>.Lengths.MaxSearchTextLength + 1), // Too long
+            Ids: Array.Empty<long>(), // Empty
+            Items: Array.Empty<FilterItem>()); // Empty
+        res = v.TestValidate(filter);
+        res.Errors.Should().HaveCount(3);
+        res.ShouldHaveValidationErrorFor(x => x.SearchText);
+        res.ShouldHaveValidationErrorFor(x => x.Ids);
+        res.ShouldHaveValidationErrorFor(x => x.Items);
+
+        // Items.PropertyName invalid (ensures FilterItemValidator is used)
+        filter = new Filter(SearchText: null, Ids: null, Items: new[] { new FilterItem("") }); // Empty string
+        res = v.TestValidate(filter);
+        res.ShouldHaveValidationErrorFor("Items[0].Property"); // PropertyName should be 1-128 chars        
+    }
+
+    [Fact]
+    public void AcceptGetPlaylistsQuery()
+    {
+        var v = new GetPlaylistsQueryValidator();
+
+        // No filters specified (VALID)
+        var qry = new GetPlaylistsQuery(); 
+        var res = v.TestValidate(qry);
+        res.ShouldNotHaveAnyValidationErrors();       
+    }
+
+    [Fact]
+    public void RejectGetPlaylistsQuery()
+    {
+        var v = new GetPlaylistsQueryValidator();
+
+        // Individual properties (INVALID)
+        var qry = new GetPlaylistsQuery(OrderBy: new OrderBy(new OrderByItem[] { }));
+        var res = v.TestValidate(qry);
+        res.ShouldHaveValidationErrorFor(x => x.OrderBy!.Items); // Should not be empty
+        res.Errors.Count.Should().Be(1);    
+
+        // Individual properties (INVALID)
+        qry = new GetPlaylistsQuery(-1, -2);
+        res = v.TestValidate(qry);
+        res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Negative numbers
+        res.Errors.Count.Should().Be(2);
+
+        // Individual properties (INVALID)
+        qry = new GetPlaylistsQuery(Array.Empty<long>());
+        res = v.TestValidate(qry);
+        res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Empty
+        res.Errors.Count.Should().Be(1);
     }
 }

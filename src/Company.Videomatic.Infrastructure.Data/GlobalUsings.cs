@@ -9,4 +9,5 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
 global using Company.Videomatic.Infrastructure.Data.Model;
 global using MediatR;
-global using Company.Videomatic.Application.Query;
+global using Company.Videomatic.Application.Features.DataAccess;
+global using Company.Videomatic.Application.Features.Model;

@@ -1,9 +1,7 @@
-using Company.Videomatic.Application.Features;
 using Company.Videomatic.Application.Features.Videos.Commands;
-using Company.Videomatic.Application.Features.Videos.Queries;
 using Company.Videomatic.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +9,7 @@ builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticSemanticKernel(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
+
 var provider = builder.Configuration.GetValue<string>("Provider");
 //provider = "Sqlite";
 switch (provider)
@@ -56,47 +55,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.MapGet("/videos/" + nameof(GetVideosDTOQuery), 
-//    async ([AsParameters] GetVideosDTOQuery query,
-//           ISender sender) => 
-//    {
-//        var resp = await sender.Send(query);
-//        return Results.Ok(resp);
-//    }).res;
-//app.MapGet("/videos/" + nameof(GetVideosDTOQuery), GetVideosDTOQuery);
-
-//app.MapGet("/videos/" + nameof(GetTranscriptQuery),
-//    async ([AsParameters] GetTranscriptQuery query,
-//           ISender sender) =>
-//    {
-//        var resp = await sender.Send(query);
-//        return Results.Ok(resp);
-//    });
-
-
-app.MapPost("videos/" + nameof(ImportVideoCommand),
-    async (ImportVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
-
-app.MapPut("videos/" + nameof(UpdateVideoCommand),
-    async (UpdateVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
-
-app.MapDelete("videos/" + nameof(DeleteVideoCommand),
-    async ([AsParameters] ImportVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
 
 app.Run();
 

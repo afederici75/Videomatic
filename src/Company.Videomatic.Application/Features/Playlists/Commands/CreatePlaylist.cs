@@ -1,8 +1,8 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
+﻿using Company.Videomatic.Application.Features.DataAccess;
 
-public record CreatePlaylistCommand(string Name, string? Description) : IRequest<CreatePlaylistResponse>;
+namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record CreatePlaylistResponse(long Id);
+public record CreatePlaylistCommand(string Name, string? Description) : IRequest<CreatedResponse>;
 
 public class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {
