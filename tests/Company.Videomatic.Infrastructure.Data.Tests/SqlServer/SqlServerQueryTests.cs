@@ -46,19 +46,23 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
         #region Order and Filter
         var orderBy = new OrderBy(
             new (nameof(VideoDTO.TranscriptCount), OrderDirection.Desc),
-            new OrderByItem<VideoDTO>(v => v.Id, OrderDirection.Desc)
+            new (nameof(VideoDTO.Id), OrderDirection.Desc)
             );
 
         var filter = new Filter(
             SearchText: null,
             Ids: new long[] { 1, 2, 333, 444 },
-            new (nameof(VideoDTO.TranscriptCount), FilterType.GreaterThan, "0"),
-            new (nameof(VideoDTO.ThumbnailCount), FilterType.GreaterThan, "0"),
-            new (nameof(VideoDTO.Title), FilterType.Contains, "Huxley"),
-            new (nameof(VideoDTO.Title), FilterType.Equals, "Aldous Huxley - The Dancing Shiva"),
-            new FilterItem<VideoDTO>(v => v.TagCount, FilterType.Equals, "2"),
-            new ("Thumbnail.Id", FilterType.Equals, "1")
+            Items: new FilterItem[]
+            {
+                new (nameof(VideoDTO.TranscriptCount), FilterType.GreaterThan, "0"),
+                new (nameof(VideoDTO.ThumbnailCount), FilterType.GreaterThan, "0"),
+                new (nameof(VideoDTO.Title), FilterType.Contains, "Huxley"),
+                new (nameof(VideoDTO.Title), FilterType.Equals, "Aldous Huxley - The Dancing Shiva"),
+                new (nameof(VideoDTO.TagCount), FilterType.Equals, "2"),
+                new ("Thumbnail.Id", FilterType.Equals, "1")
+            }
             );
+        filter = new Filter();
         #endregion  
 
         var results = await proj

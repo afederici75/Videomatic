@@ -15,10 +15,19 @@ public record GetVideosFilter(
     long[]? Ids = null,
     params FilterItem[] Items) : Filter(SearchText, Ids, Items);
 
+
+
 public class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 {
     public GetVideosQueryValidator()
     {
-        //RuleFor(x => x.PlaylistId).GreaterThan(0);        
+        RuleFor(x => x.Filter).SetValidator(new FilterValidator<GetVideosFilter>())
+                              .When(x => x is not null);
+
+        RuleFor(x => x.OrderBy).SetValidator(new OrderByValidator())
+                               .When(x => x is not null);
+
+        RuleFor(x => x.Paging).SetValidator(new PagingValidator())
+                               .When(x => x is not null);
     }
 }

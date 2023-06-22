@@ -1,26 +1,13 @@
-﻿using System.Linq.Expressions;
-
-namespace Company.Videomatic.Application.Query;
+﻿namespace Company.Videomatic.Application.Query;
 
 public record OrderBy(params OrderByItem[] Items)
 {
 }
 
-public enum OrderDirection
+public class OrderByValidator : AbstractValidator<OrderBy?>
 {
-    Asc,
-    Desc
-}
-
-public record OrderByItem(
-    string Property,
-    OrderDirection Direction = OrderDirection.Asc)
-{    
-
-}
-
-public record OrderByItem<TDTO>(
-    Expression<Func<TDTO, object?>> expr,
-    OrderDirection Direction = OrderDirection.Asc) : OrderByItem(expr.Body.ToString(), Direction)
-{
+    public OrderByValidator()
+    {
+        RuleForEach(x => x.Items).SetValidator(new OrderByItemValidator());
+    }
 }

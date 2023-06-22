@@ -38,8 +38,8 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
             };
 
-        // Fetches the data
-        return await projection
+        // Fetches the page
+        var page = await projection
             .ApplyFilters(request.Filter, new [] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
             .ApplyOrderBy(request.OrderBy)
             .ToPageAsync(request.Paging, 
@@ -53,8 +53,9 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 v.ThumbnailCount,
                 v.TranscriptCount,
                 v.TagCount,
-                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
-                ), 
-                cancellationToken);        
+                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)), 
+                cancellationToken);
+
+        return page;
     }
 }
