@@ -30,6 +30,8 @@ public static class DependencyInjectionExtensions
         },
         AppDomain.CurrentDomain.GetAssemblies());
 
+        services.AddValidatorsFromAssembly(typeof(Filter).Assembly); // Validation is all in this Assembly!
+        
         services.AddTransient<IDataSeeder, DataSeeder>();
 
         return services;

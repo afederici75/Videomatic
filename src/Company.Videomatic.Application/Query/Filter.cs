@@ -1,24 +1,41 @@
-﻿using Company.Videomatic.Application.Features.Playlists.Queries;
-using System.Linq.Expressions;
+﻿using FluentValidation;
 
 namespace Company.Videomatic.Application.Query;
 
 public record Filter(
     string? SearchText = null,
     long[]? Ids = null,
-    FilterItem[]? Items = null)
-{ 
-    //public Filter(params FilterItem[] Items) : this(null, null, Items) { }
-}
+    FilterItem[]? Items = null);
 
 public class FilterValidator<TFILTER> : AbstractValidator<TFILTER?>
     where TFILTER : Filter
 {
+    public static class Lengths
+    {
+        public const int MaxSearchTextLength = 128;
+    }
+
     public FilterValidator()
     {
-        RuleFor(x => x!.SearchText).NotNull().When(x => (x!.Ids == null) && (x!.Items == null));
-        RuleFor(x => x!.Ids).NotNull().When(x => (x!.SearchText == null) && (x!.Items == null));
-        RuleFor(x => x!.Items).NotNull().When(x => (x!.Ids == null) && (x!.SearchText == null));
+        When(x => (x!.Ids == null) && (x!.Items == null) && (string.IsNullOrWhiteSpace(x.SearchText)),
+            () =>
+            {
+                const string ErrorMessage = "SearchText, Ids or Items must be specified";
+                RuleFor(x => x!.SearchText).NotEmpty().WithMessage(ErrorMessage);
+            })
+        .Otherwise(() => 
+        {
+            RuleFor(x => x!.SearchText).MaximumLength(128); // Works only if SearchText != null
+            
+            When(x => x!.Ids != null, () =>
+            {
+                RuleFor(x => x!.Ids).NotEmpty();
+            });
 
+            When(x => x!.Items != null, () =>
+            {
+                RuleFor(x => x!.Items).NotEmpty();
+            });            
+        });
     }
 }
