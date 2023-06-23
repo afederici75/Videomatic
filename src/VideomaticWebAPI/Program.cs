@@ -1,5 +1,6 @@
 using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using VideomaticWebAPI;
@@ -39,6 +40,11 @@ if (app.Environment.IsDevelopment())
     {
         var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
         db.Database.Migrate();
+
+        ISender sender = scope.ServiceProvider.GetRequiredService<ISender>();
+
+        var seeder = new DataSeeder(sender);
+        await seeder.CreateData();
         //if (VideoDataGenerator.HasData() && !db.Videos.Any())
         //{
         //    //var logger = app.Services.GetRequiredService<ILogger<VideomaticDbContext>>();

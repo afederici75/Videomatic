@@ -1,4 +1,5 @@
 ﻿using System.Linq.Dynamic.Core;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
@@ -11,22 +12,15 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
       
     public override async Task<PageResult<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
-        IQueryable<PlaylistVideo> query = DbContext.PlaylistVideos;
-
-        // Applies the custom filter options
-        if (request.Filter?.PlaylistIds is not null)
-        {
-            query = query.Where(pv => request.Filter.PlaylistIds.Contains(pv.PlaylistId));
-        }
-
         // Creates the projection
-        var projection = from pv in query
-            select new 
+        var query = from pv in DbContext.PlaylistVideos
+                         select new 
             {
                 Id = pv.Video.Id, 
                 Title = pv.Video.Title, 
                 Description = pv.Video.Description, 
                 Location = pv.Video.Location,
+                PlaylistId = pv.PlaylistId,
                 PlaylistCount = (int?)(request.IncludeCounts ? pv.Video.Playlists.Count : null),
                 ArtifactCount = (int?)(request.IncludeCounts ? pv.Video.Artifacts.Count : null),
                 ThumbnailCount = (int?)(request.IncludeCounts ? pv.Video.Thumbnails.Count : null),
@@ -35,12 +29,25 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
             };
 
+        // Applies the custom filter options
+        if (request.PlaylistIds?.Length > 0)
+        {
+            query = query.Where(pv => request.PlaylistIds.Contains(pv.PlaylistId));
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.Filter))
+        {
+            query = query.Where(request.Filter);
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.OrderBy))
+        {
+            query = query.OrderBy(request.OrderBy);
+        }
+
         // Fetches the page
-        var page = await projection
-            .ApplyFilters(request.Filter, new [] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-            .ApplyOrderBy(request.OrderBy)
-            .ToPageAsync(request.Paging, 
-                v => new VideoDTO(
+        var queriable = query
+            .Select(v => new VideoDTO(
                 v.Id,
                 v.Location,
                 v.Title,
@@ -50,8 +57,11 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 v.ThumbnailCount,
                 v.TranscriptCount,
                 v.TagCount,
-                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)), 
-                cancellationToken);
+                Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)));
+
+
+        var page = await queriable
+           .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
 
         return page;
     }

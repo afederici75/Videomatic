@@ -1,42 +1,17 @@
-﻿using Company.Videomatic.Application.Features.DataAccess;
-using Company.Videomatic.Application.Features.Playlists.Commands;
+﻿using Company.Videomatic.Application.Features.Playlists.Commands;
 using Company.Videomatic.Application.Features.Playlists.Queries;
 using Company.Videomatic.Application.Features.Videos.Commands;
+using Company.Videomatic.Application.Features.Videos.Queries;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Identity.Client;
 
 namespace VideomaticWebAPI;
 
 public static class WebApplicationExtensions
 {
-    public record PersonName(string FirstName, string LastName) 
-    {
-        //public static bool TryParse(string value, out PersonName personName)
-        //{
-        //    personName = new PersonName(value, value);
-        //    return true;
-        //}
-    }
-
-    public record TestParams(string? SearchText, string? OrderBy, int? page, int? pageSize)
-    {
-        //public static bool TryParse(string value, out TestParams pars)
-        //{
-        //    pars = new TestParams(new PersonName("a", "b"));
-        //    return true;
-        //}
-    }
-
-    public record TestParamsExtra(string? SearchText, string? OrderBy, int? page, int? pageSize, bool? IncludeCounts) 
-        : TestParams(SearchText, OrderBy, page, pageSize);
-
     public static WebApplication MapVideomaticEndpoints(this WebApplication app)
     {
-        app.MapGet("test", ([AsParameters] TestParamsExtra testParams) =>
-        {
-            return Results.Ok(testParams);
-        });
+        app.MediateGet<GetPlaylistsQuery>("test");
+        app.MediateGet<GetVideosQuery>("test");
 
         app.MediatePost<CreatePlaylistCommand>("Playlists");
         app.MediatePut<UpdatePlaylistCommand>("Playlists");
@@ -49,7 +24,7 @@ public static class WebApplicationExtensions
         app.MediatePost<AddTagsToVideoCommand>("Videos");
         app.MediatePost<AddThumnbailsToVideoCommand>("Videos");
         app.MediatePost<AddTranscriptsToVideoCommand>("Videos");
-        app.MediatePost<LinkVideosToPlaylistsCommand>("Videos");
+        app.MediatePost<LinkVideosToPlaylistCommand>("Videos");
         app.MediatePost<ImportVideoCommand>("Videos");
 
         return app;

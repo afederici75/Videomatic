@@ -9,42 +9,6 @@ public static class IQueryableExtensions
     const int DefaultPage = 1;
     const int DefaultPageSize = 10;
 
-    public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
-        this IQueryable<TPROJECTION> source,
-        Paging? paging,
-        Func<TPROJECTION, TDTO> func,
-        CancellationToken cancellationToken = default)
-        => await source.ToPageAsync(paging?.Page ?? DefaultPage, paging?.PageSize ?? DefaultPageSize, func, cancellationToken);    
-
-    public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
-        this IQueryable<TPROJECTION> source,
-        int page,
-        int pageSize,
-        Func<TPROJECTION, TDTO> func,
-        CancellationToken cancellationToken = default)
-    {
-        var totalCount = await source.CountAsync(cancellationToken);
-
-        var items = await source
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        var xxx = items.Select(func).ToList();
-
-        return new PageResult<TDTO>(
-            xxx,
-            page,
-            pageSize,
-            totalCount);
-    }
-
-    public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
-        this IQueryable<TDTO> source,
-        Paging? options,
-        CancellationToken cancellationToken = default)
-        => await source.ToPageAsync(options?.Page ?? DefaultPage, options?.PageSize ?? DefaultPageSize, cancellationToken);
-
     public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
         this IQueryable<TDTO> source,
         int page,
@@ -64,6 +28,63 @@ public static class IQueryableExtensions
             pageSize,
             totalCount);
     }
+
+    //public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
+    //    this IQueryable<TPROJECTION> source,
+    //    Paging? paging,
+    //    Func<TPROJECTION, TDTO> func,
+    //    CancellationToken cancellationToken = default)
+    //    => await source.ToPageAsync(paging?.Page ?? DefaultPage, paging?.PageSize ?? DefaultPageSize, func, cancellationToken);    
+
+    //public static async Task<PageResult<TDTO>> ToPageAsync<TPROJECTION, TDTO>(
+    //    this IQueryable<TPROJECTION> source,
+    //    int page,
+    //    int pageSize,
+    //    Func<TPROJECTION, TDTO> func,
+    //    CancellationToken cancellationToken = default)
+    //{
+    //    var totalCount = await source.CountAsync(cancellationToken);
+
+    //    var items = await source
+    //        .Skip((page - 1) * pageSize)
+    //        .Take(pageSize)
+    //        .ToListAsync(cancellationToken);
+
+    //    var results = items.Select(func).ToList();
+
+    //    return new PageResult<TDTO>(
+    //        results,
+    //        page,
+    //        pageSize,
+    //        totalCount);
+    //}
+
+    //public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
+    //    this IQueryable<TDTO> source,
+    //    int? page,
+    //    int? pageSize,       
+    //    CancellationToken cancellationToken = default)
+    //    => await source.ToPageAsync(page ?? DefaultPage, pageSize ?? DefaultPageSize, cancellationToken);
+
+    //public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
+    //    this IQueryable<TDTO> source,
+    //    int page,
+    //    int pageSize,
+    //    CancellationToken cancellationToken = default)
+    //{
+    //    var totalCount = await source.CountAsync(cancellationToken);
+
+    //    var items = await source
+    //        .Skip((page - 1) * pageSize)
+    //        .Take(pageSize)
+    //        .ToListAsync(cancellationToken);
+
+    //    return new PageResult<TDTO>(
+    //        items,
+    //        page,
+    //        pageSize,
+    //        totalCount);
+    //}
 
     public static IQueryable<T> ApplyOrderBy<T>(this IQueryable<T> source, OrderBy? options)
     {

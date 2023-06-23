@@ -75,23 +75,24 @@ public class ValidationTests
     public void RejectGetPlaylistsQuery()
     {
         var v = new GetPlaylistsQueryValidator();
+        throw new Exception();
 
         // Individual properties (INVALID)
-        var qry = new GetPlaylistsQuery(OrderBy: new OrderBy(new OrderByItem[] { }));
-        var res = v.TestValidate(qry);
-        res.ShouldHaveValidationErrorFor(x => x.OrderBy!.Items); // Should not be empty
-        res.Errors.Count.Should().Be(1);    
-
-        // Individual properties (INVALID)
-        qry = new GetPlaylistsQuery(true, -1, -2);
-        res = v.TestValidate(qry);
-        res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Negative numbers
-        res.Errors.Count.Should().Be(2);
-
-        // Individual properties (INVALID)
-        qry = new GetPlaylistsQuery(false, Array.Empty<long>());
-        res = v.TestValidate(qry);
-        res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Empty
-        res.Errors.Count.Should().Be(1);
+        //var qry = new GetPlaylistsQuery(OrderBy: new OrderBy(new OrderByItem[] { }));
+        //var res = v.TestValidate(qry);
+        //res.ShouldHaveValidationErrorFor(x => x.OrderBy!.Items); // Should not be empty
+        //res.Errors.Count.Should().Be(1);    
+        //
+        //// Individual properties (INVALID)
+        //qry = new GetPlaylistsQuery(true, -1, -2);
+        //res = v.TestValidate(qry);
+        //res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Negative numbers
+        //res.Errors.Count.Should().Be(2);
+        //
+        //// Individual properties (INVALID)
+        //qry = new GetPlaylistsQuery(false, Array.Empty<long>());
+        //res = v.TestValidate(qry);
+        //res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Empty
+        //res.Errors.Count.Should().Be(1);
     }
 }

@@ -60,12 +60,13 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
         filter = new Filter();
         #endregion  
 
-        var results = await proj
-            .ApplyOrderBy(orderBy)
-            .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-            .ToPageAsync(new Paging(1,10));
-        
-        results.Items.Should().NotBeEmpty();        
+        throw new NotImplementedException();
+        //var results = await proj
+        //    .ApplyOrderBy(orderBy)
+        //    .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
+        //    .ToPageAsync(new Paging(1,10));
+        //
+        //results.Items.Should().NotBeEmpty();        
     }
 
     [Fact]
@@ -127,18 +128,19 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
 
         var paging = new Paging(1, 10);
 
+        throw new Exception();
         // Queries the database
-        var results = await proj
-            .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-            .ToPageAsync(1, 10, v => new VideoDTO(
-                Id: v.Id,
-                Location: v.Location,
-                Title: v.Title,
-                Description: v.Description,
-                Thumbnail: Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
-                ));
-
-        // Verifies
-        results.Count.Should().Be(1);
+       //var results = await proj
+       //    .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
+       //    .ToPageAsync(1, 10, v => new VideoDTO(
+       //        Id: v.Id,
+       //        Location: v.Location,
+       //        Title: v.Title,
+       //        Description: v.Description,
+       //        Thumbnail: Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
+       //        ));
+       //
+       //// Verifies
+       //results.Count.Should().Be(1);
     }
 }

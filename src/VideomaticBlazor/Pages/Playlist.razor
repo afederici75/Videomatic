@@ -17,14 +17,15 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var filter = new VideosFilter(PlaylistId: PlaylistId);
-        var query = new GetVideosQuery(
-            Filter: filter,
-            IncludeCounts: true, 
-            IncludeThumbnail: ThumbnailResolution.Default);
-
-        var results = await Sender.Send(query);
-
-        Videos = results.Items.ToArray();
+        throw new Exception();
+        //var filter = new VideosFilter(PlaylistId: PlaylistId);
+        //var query = new GetVideosQuery(
+        //    Filter: filter,
+        //    IncludeCounts: true, 
+        //    IncludeThumbnail: ThumbnailResolution.Default);
+        //
+        //var results = await Sender.Send(query);
+        //
+        //Videos = results.Items.ToArray();
     }    
 }

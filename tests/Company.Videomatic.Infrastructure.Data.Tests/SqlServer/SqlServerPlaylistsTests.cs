@@ -35,13 +35,14 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
-        var qry = new GetPlaylistsQuery(false, createResponse.Id);
-        PageResult<PlaylistDTO> getByIdResponse = await Sender.Send(qry);
-        
-        var playlist = getByIdResponse.Items.Single();
-        playlist.Id.Should().Be(createResponse.Id);   
-        playlist.Name.Should().Be(createCmd.Name);
-        playlist.Description.Should().Be(createCmd.Description);
+        throw new NotImplementedException();
+        //var qry = new GetPlaylistsQuery(false, createResponse.Id);
+        //PageResult<PlaylistDTO> getByIdResponse = await Sender.Send(qry);
+        //
+        //var playlist = getByIdResponse.Items.Single();
+        //playlist.Id.Should().Be(createResponse.Id);   
+        //playlist.Name.Should().Be(createCmd.Name);
+        //playlist.Description.Should().Be(createCmd.Description);
     }
 
     [Fact]
@@ -57,9 +58,9 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         var createVid2Cmd = new CreateVideoCommand(Location: "youtube.com/v?V2", Title: "A second title", Description: "A second description");
         CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
 
-        var addVidsCmd = new LinkVideosToPlaylistsCommand(new[] { createPlaylistResponse.Id }, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
-        LinkVideosToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideosToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        var addVidsCmd = new LinkVideosToPlaylistCommand(createPlaylistResponse.Id, VideoIds: new[] {  createVid1Response.Id, createVid2Response.Id });
+        LinkVideosToPlaylistResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideosToPlaylistResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
     
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
@@ -88,23 +89,24 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         
         // Verifies
         updatePlaylistResponse.Updated.Should().BeTrue();
-    
-        var qry = new GetPlaylistsQuery(false, createPlaylistResponse.Id);
-        PageResult<PlaylistDTO> getResponse = await Sender.Send(qry);
-        
-        var record = getResponse.Items.Single();
-        record.Id.Should().Be(createPlaylistResponse.Id);   
-        record.Name.Should().Be(updatePlaylistCmd.Name);
-        record.Description.Should().Be(updatePlaylistCmd.Description);
-    
-        // Deletes
-        var deleteCmd = new DeletePlaylistCommand(createPlaylistResponse.Id);
-        DeletedResponse deleteResponse = await Sender.Send(deleteCmd);
-        deleteResponse.Deleted.Should().BeTrue();
-        deleteResponse.Id.Should().Be(createPlaylistResponse.Id);
-    
-        getResponse = await Sender.Send(qry);
-        getResponse.Items.Should().BeEmpty();
+
+        throw new Exception();
+       // var qry = new GetPlaylistsQuery(false, createPlaylistResponse.Id);
+       // PageResult<PlaylistDTO> getResponse = await Sender.Send(qry);
+       // 
+       // var record = getResponse.Items.Single();
+       // record.Id.Should().Be(createPlaylistResponse.Id);   
+       // record.Name.Should().Be(updatePlaylistCmd.Name);
+       // record.Description.Should().Be(updatePlaylistCmd.Description);
+       //
+       // // Deletes
+       // var deleteCmd = new DeletePlaylistCommand(createPlaylistResponse.Id);
+       // DeletedResponse deleteResponse = await Sender.Send(deleteCmd);
+       // deleteResponse.Deleted.Should().BeTrue();
+       // deleteResponse.Id.Should().Be(createPlaylistResponse.Id);
+       //
+       // getResponse = await Sender.Send(qry);
+       // getResponse.Items.Should().BeEmpty();
     }
 
     //readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
