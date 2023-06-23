@@ -35,7 +35,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         // Checks
         createResponse.Id.Should().BeGreaterThan(0);
 
-        var qry = new GetPlaylistsQuery(createResponse.Id);
+        var qry = new GetPlaylistsQuery(false, createResponse.Id);
         PageResult<PlaylistDTO> getByIdResponse = await Sender.Send(qry);
         
         var playlist = getByIdResponse.Items.Single();
@@ -89,7 +89,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
         // Verifies
         updatePlaylistResponse.Updated.Should().BeTrue();
     
-        var qry = new GetPlaylistsQuery(createPlaylistResponse.Id);
+        var qry = new GetPlaylistsQuery(false, createPlaylistResponse.Id);
         PageResult<PlaylistDTO> getResponse = await Sender.Send(qry);
         
         var record = getResponse.Items.Single();

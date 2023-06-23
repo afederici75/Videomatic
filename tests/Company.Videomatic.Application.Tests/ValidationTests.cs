@@ -83,13 +83,13 @@ public class ValidationTests
         res.Errors.Count.Should().Be(1);    
 
         // Individual properties (INVALID)
-        qry = new GetPlaylistsQuery(-1, -2);
+        qry = new GetPlaylistsQuery(true, -1, -2);
         res = v.TestValidate(qry);
         res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Negative numbers
         res.Errors.Count.Should().Be(2);
 
         // Individual properties (INVALID)
-        qry = new GetPlaylistsQuery(Array.Empty<long>());
+        qry = new GetPlaylistsQuery(false, Array.Empty<long>());
         res = v.TestValidate(qry);
         res.ShouldHaveValidationErrorFor(x => x.Filter!.Ids); // Empty
         res.Errors.Count.Should().Be(1);
