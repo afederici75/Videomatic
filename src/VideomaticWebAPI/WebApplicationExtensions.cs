@@ -19,21 +19,28 @@ public static class WebApplicationExtensions
         //}
     }
 
-    public record TestParams(PersonName personName)
+    public record TestParams(string? SearchText, string? OrderBy, int? page, int? pageSize)
     {
         //public static bool TryParse(string value, out TestParams pars)
         //{
         //    pars = new TestParams(new PersonName("a", "b"));
         //    return true;
         //}
-    }    
+    }
+
+    public record TestParamsExtra(string? SearchText, string? OrderBy, int? page, int? pageSize, bool? IncludeCounts) 
+        : TestParams(SearchText, OrderBy, page, pageSize);
 
     public static WebApplication MapVideomaticEndpoints(this WebApplication app)
     {
+        app.MapGet("test", ([AsParameters] TestParamsExtra testParams) =>
+        {
+            return Results.Ok(testParams);
+        });
+
         app.MediatePost<CreatePlaylistCommand>("Playlists");
         app.MediatePut<UpdatePlaylistCommand>("Playlists");
         app.MediateDelete<DeletePlaylistCommand>("Playlists");
-
 
         app.MediatePost<CreateVideoCommand>("Videos");
         app.MediatePut<UpdateVideoCommand>("Videos");
