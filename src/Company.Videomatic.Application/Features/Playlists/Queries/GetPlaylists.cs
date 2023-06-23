@@ -8,7 +8,7 @@ public record GetPlaylistsQuery(
     Paging? Paging = null,
     bool IncludeCounts = false) : IRequest<PageResult<PlaylistDTO>>
 {
-    public GetPlaylistsQuery(params long[] Ids) : this(new Filter(Ids: Ids)) { }
+    public GetPlaylistsQuery New(params long[] Ids) => new(new Filter(Ids: Ids));
 }
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>

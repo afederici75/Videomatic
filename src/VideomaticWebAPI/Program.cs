@@ -2,6 +2,7 @@ using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using VideomaticWebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,7 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapVideomaticEndpoints();
 
 app.Run();
 
