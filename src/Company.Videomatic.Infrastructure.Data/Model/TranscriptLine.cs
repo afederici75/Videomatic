@@ -2,7 +2,7 @@
 
 public class TranscriptLine : EntityBase
 {
-    public static TranscriptLine Create(long transcriptId, string text, TimeSpan duration, TimeSpan startsAt)
+    internal static TranscriptLine Create(long transcriptId, string text, TimeSpan duration, TimeSpan startsAt)
     {
         return new TranscriptLine
         {
