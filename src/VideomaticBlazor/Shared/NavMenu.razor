@@ -65,7 +65,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var resp = await Sender.Send(new GetPlaylistsQuery(Filter: null, OrderBy: null, Page: 1, PageSize: 2));
+        var resp = await Sender.Send(new GetPlaylistsQuery(IncludeCounts: true));
         Playlists = resp.Items.ToArray();
 
         await base.OnAfterRenderAsync(firstRender);

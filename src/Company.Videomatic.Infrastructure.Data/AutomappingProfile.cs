@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Infrastructure.Data.Model;
-
-namespace Microsoft.Extensions.DependencyInjection;
+﻿namespace Microsoft.Extensions.DependencyInjection;
 
 public class AutomappingProfile : Profile
 {

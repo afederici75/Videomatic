@@ -10,17 +10,15 @@ public static class WebApplicationExtensions
 {
     public static WebApplication MapVideomaticEndpoints(this WebApplication app)
     {
-        app.MediateGet<GetPlaylistsQuery>("test");
-        app.MediateGet<GetVideosQuery>("test");
-
+        app.MediateGet<GetPlaylistsQuery>("Playlists");        
         app.MediatePost<CreatePlaylistCommand>("Playlists");
         app.MediatePut<UpdatePlaylistCommand>("Playlists");
         app.MediateDelete<DeletePlaylistCommand>("Playlists");
 
+        app.MediateGet<GetVideosQuery>("Videos");
         app.MediatePost<CreateVideoCommand>("Videos");
         app.MediatePut<UpdateVideoCommand>("Videos");
         app.MediateDelete<DeleteVideoCommand>("Videos");
-
         app.MediatePost<AddTagsToVideoCommand>("Videos");
         app.MediatePost<AddThumnbailsToVideoCommand>("Videos");
         app.MediatePost<AddTranscriptsToVideoCommand>("Videos");

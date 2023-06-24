@@ -1,22 +1,43 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿using System.Linq.Dynamic.Core;
 
-public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+
+public sealed class GetPlaylists2Handler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
 {
-    public GetPlaylistsHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    public GetPlaylists2Handler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 
     public override async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken = default)
     {
-        throw new NotSupportedException();
-        //var dtos = from pl in DbContext.Playlists
-        //           select new PlaylistDTO(pl.Id, pl.Name, pl.Description, pl.PlaylistVideos.Count());
-        //
-        //var page = await dtos
-        //    .ApplyFilters(request.Filter, new[] { nameof(PlaylistDTO.Name), nameof(PlaylistDTO.Description) })
-        //    .ApplyOrderBy(request.OrderBy)
-        //    .ToPageAsync(request.Paging, cancellationToken);            
-        //
-        //return page;
+        var query = from pl in DbContext.Playlists
+                    select new
+                    {
+                        pl.Id,
+                        pl.Name,
+                        pl.Description,
+                        VideosCount = (long?)(request.IncludeCounts ? pl.PlaylistVideos.Count() : null)
+                    };
+
+        if (!string.IsNullOrWhiteSpace(request.Filter))
+        {
+            query = query.Where(request.Filter);
+        }
+        
+        if (!string.IsNullOrWhiteSpace(request.OrderBy))
+        {
+            query = query.OrderBy(request.OrderBy);
+        }
+
+        IQueryable<PlaylistDTO> queriable = query.Select(row => new PlaylistDTO(
+              row.Id,
+              row.Name,
+              row.Description,
+              row.VideosCount));
+
+        var page = await queriable
+            .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
+            
+        return page;
     }
 }

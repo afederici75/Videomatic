@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
+﻿using System.Linq.Dynamic.Core;
+
+namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]
 public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
@@ -36,37 +38,22 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
             Thumbnail = pv.Video.Thumbnails.FirstOrDefault((Thumbnail t) => t.Resolution == ThumbnailResolution.Default)
         };
 
-        #region Order and Filter
-        var orderBy = new OrderBy(
-            Items: new OrderByItem[]
-            {
-                new (nameof(VideoDTO.TranscriptCount), OrderDirection.Desc),
-                new (nameof(VideoDTO.Id), OrderDirection.Desc)
-            });
+        var orderBy = $"{nameof(VideoDTO.TranscriptCount)} DESC, {nameof(VideoDTO.Id)}";
 
-        var filter = new Filter(
-            SearchText: null,
-            Ids: new long[] { 1, 2, 333, 444 },
-            Items: new FilterItem[]
-            {
-                new (nameof(VideoDTO.TranscriptCount), FilterType.GreaterThan, "0"),
-                new (nameof(VideoDTO.ThumbnailCount), FilterType.GreaterThan, "0"),
-                new (nameof(VideoDTO.Title), FilterType.Contains, "Huxley"),
-                new (nameof(VideoDTO.Title), FilterType.Equals, "Aldous Huxley - The Dancing Shiva"),
-                new (nameof(VideoDTO.TagCount), FilterType.Equals, "2"),
-                new ("Thumbnail.Id", FilterType.Equals, "1")
-            }
-            );
-        filter = new Filter();
-        #endregion  
+        var filter = @$"
+{nameof(VideoDTO.TranscriptCount)} >= 0 &&
+{nameof(VideoDTO.ThumbnailCount)} >= 0 &&
+{nameof(VideoDTO.Title)}.Contains(""Huxley"") &&
+{nameof(VideoDTO.Title)} == ""Aldous Huxley - The Dancing Shiva"" &&
+{nameof(VideoDTO.TagCount)} >= 2 &&
+Thumbnail.Id == 1";            
+        
+        var results = await proj
+            .OrderBy(orderBy)
+            .Where(filter)
+            .ToPageAsync(1,10);
 
-        throw new NotImplementedException();
-        //var results = await proj
-        //    .ApplyOrderBy(orderBy)
-        //    .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-        //    .ToPageAsync(new Paging(1,10));
-        //
-        //results.Items.Should().NotBeEmpty();        
+        results.Items.Should().HaveCount(1);
     }
 
     [Fact]
@@ -84,11 +71,11 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
                    };
 
         // Creates the filter
-        var filter = new Filter(SearchText: "HUX", Ids: new long[] { 1, 2, 3, 444, 555, 666 });
-
+        var filter = @$"Description.Contains(""HUX"") || Title.Contains(""HUX"")";
+                        
         // Queries the database
         var results = await proj
-            .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
+            .Where(filter)
             .ToListAsync();
 
         // Transforms the results into DTOs manually
@@ -122,25 +109,14 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
                    };
 
         // Creates the filter
-        var filter = new Filter(
-            SearchText: "HUX",
-            Ids: new long[] { 1, 2, 3, 444, 555, 666 });
+        var filter = $@"(Description.Contains(""HUX"") || Title.Contains(""HUX"")) && Id in (1,2)";
 
-        var paging = new Paging(1, 10);
-
-        throw new Exception();
-        // Queries the database
-       //var results = await proj
-       //    .ApplyFilters(filter, new[] { nameof(VideoDTO.Title), nameof(VideoDTO.Description) })
-       //    .ToPageAsync(1, 10, v => new VideoDTO(
-       //        Id: v.Id,
-       //        Location: v.Location,
-       //        Title: v.Title,
-       //        Description: v.Description,
-       //        Thumbnail: Mapper.Map<Thumbnail, ThumbnailDTO>(v.Thumbnail)
-       //        ));
-       //
-       //// Verifies
-       //results.Count.Should().Be(1);
+       // Queries the database
+       var results = await proj
+            .Where(filter)
+            .ToPageAsync(1, 10);
+       
+       // Verifies
+       results.Count.Should().Be(1);
     }
 }

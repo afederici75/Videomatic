@@ -2,9 +2,9 @@
 
 public class Video : EntityBase
 {
-    public string Location { get; set; } = default!;
-    public string Title { get; set; } = default!;
-    public string? Description { get; set; }
+    public string Location { get; } = default!;
+    public string Title { get; } = default!;
+    public string? Description { get; }
 
     public List<VideoTag> VideoTags { get; } = new();
 
