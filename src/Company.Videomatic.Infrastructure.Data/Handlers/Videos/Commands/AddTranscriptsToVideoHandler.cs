@@ -18,20 +18,22 @@ public class AddTranscriptsToVideoHandler : BaseRequestHandler<AddTranscriptsToV
         var processed = new Dictionary<string, long>();
         foreach (var trans in request.Transcripts)
         {
-            var item = video.Transcripts.FirstOrDefault(x => x.Language == trans.Language); // TODO: case sensitivity
-            if (item == null)
+            var transcript = video.Transcripts.FirstOrDefault(x => x.Language == trans.Language); // TODO: case sensitivity
+            if (transcript == null)
             {
                 //item = Mapper.Map<TranscriptPayload, Transcript>(trans);
-                item = video.AddTranscript(trans.Language);  
-                //foreach (var x in request.)
-
+                transcript = video.AddTranscript(trans.Language);
+                foreach (var x in trans.Lines)
+                {
+                    transcript.AddLine(x.Text, x.Duration, x.StartsAt);
+                }
             }
             else
             {
-                Mapper.Map<TranscriptPayload, Transcript>(trans, item);
+                Mapper.Map<TranscriptPayload, Transcript>(trans, transcript);
             }
 
-            processed.Add(item.Language, item.Id);
+            processed.Add(transcript.Language, transcript.Id);
         }
 
 
