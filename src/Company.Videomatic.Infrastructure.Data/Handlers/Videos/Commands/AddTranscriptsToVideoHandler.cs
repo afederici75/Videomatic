@@ -21,12 +21,14 @@ public class AddTranscriptsToVideoHandler : BaseRequestHandler<AddTranscriptsToV
             var item = video.Transcripts.FirstOrDefault(x => x.Language == trans.Language); // TODO: case sensitivity
             if (item == null)
             {
-                item = Mapper.Map<TranscriptPayload, Transcript>(trans);
-                video.AddTranscript(item);  
+                //item = Mapper.Map<TranscriptPayload, Transcript>(trans);
+                item = video.AddTranscript(trans.Language);  
+                //foreach (var x in request.)
+
             }
             else
             {
-                Mapper.Map<TranscriptPayload, Transcript>(trans, item);                
+                Mapper.Map<TranscriptPayload, Transcript>(trans, item);
             }
 
             processed.Add(item.Language, item.Id);

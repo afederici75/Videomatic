@@ -4,14 +4,17 @@ namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class Playlist : EntityBase
 {
+    public static Playlist Create(string name, string? description)
+    {
+        return new Playlist {
+            Name = name,
+            Description = description
+        };
+    }
+
+
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; } = default!;
-
-    public Playlist(string name, string? description)
-    {
-        Name = name;
-        Description = description;
-    }
 
     public IReadOnlyCollection<Video> Videos
     {

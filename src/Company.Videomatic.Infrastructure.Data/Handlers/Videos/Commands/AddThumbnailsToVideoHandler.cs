@@ -22,8 +22,8 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
             var item = video.Thumbnails.FirstOrDefault(x => x.Resolution == thumb.Resolution);
             if (item == null)
             {
-                item = Mapper.Map<ThumbnailPayload, Thumbnail>(thumb);
-                video.AddThumbnail(item);                
+                //item = Mapper.Map<ThumbnailPayload, Thumbnail>(thumb);
+                item = video.AddThumbnail(thumb.Location, thumb.Resolution, thumb.Height, thumb.Width);                
             }
             else
             {

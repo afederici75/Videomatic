@@ -4,13 +4,16 @@ namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class Thumbnail : EntityBase
 {
-    public Thumbnail(long videoId, string location, ThumbnailResolution resolution, int height, int width)
+    internal static Thumbnail Create(long videoId, string location, ThumbnailResolution resolution, int height, int width)
     {
-        VideoId = videoId;
-        Location = location;
-        Resolution = resolution;
-        Height = height;
-        Width = width;
+        return new Thumbnail
+        {
+            VideoId = videoId,
+            Location = location,
+            Resolution = resolution,
+            Height = height,
+            Width = width,
+        };
     }
 
     public long VideoId { get; private set; }

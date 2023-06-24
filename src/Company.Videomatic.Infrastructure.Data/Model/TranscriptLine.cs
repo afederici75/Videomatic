@@ -2,12 +2,15 @@
 
 public class TranscriptLine : EntityBase
 {
-    public TranscriptLine(long transcriptId, string text, TimeSpan duration, TimeSpan startsAt)
+    public static TranscriptLine Create(long transcriptId, string text, TimeSpan duration, TimeSpan startsAt)
     {
-        TranscriptId = transcriptId;
-        Text = text;
-        Duration = duration;
-        StartsAt = startsAt;
+        return new TranscriptLine
+        {
+            TranscriptId = transcriptId,
+            Text = text,
+            Duration = duration,
+            StartsAt = startsAt
+        };
     }
 
     public long TranscriptId { get; private set; }

@@ -4,16 +4,19 @@ namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class Video : EntityBase
 {
-    public Video(string location, string title, string? description)
+    public static Video Create(string location, string title, string? description)
     {
-        Location = location;
-        Title = title;
-        Description = description;
+        return new Video
+        {
+            Location = location,
+            Title = title,
+            Description = description,
+        };
     }
 
-    public string Location { get; }
-    public string Title { get; }
-    public string? Description { get; }
+    public string Location { get; private set; }
+    public string Title { get; private set; }
+    public string? Description { get; private set; }
 
     public IReadOnlyCollection<VideoTag> VideoTags 
     { 
@@ -50,23 +53,25 @@ public class Video : EntityBase
         //private set => _transcripts = value.ToList();
     }
 
-    public Video AddTag(string name)
+    public VideoTag AddTag(string name)
     {
         var newTag = VideoTag.Create(Id, name);
         _videoTags.Add(newTag);
-        return this;
+        return newTag;
     }
 
-    public Video AddThumbnail(Thumbnail thumbnail)
+    public Thumbnail AddThumbnail(string location, ThumbnailResolution resolution, int height, int width)
     {
+        var thumbnail = Thumbnail.Create(Id, location, resolution, height, width);
         _thumbnails.Add(thumbnail);
-        return this;
+        return thumbnail;
     }   
 
-    public Video AddArtifact(Artifact artifact)
+    public Artifact AddArtifact(string title, string type, string? text = null)
     {
+        var artifact = Artifact.Create(Id, title, type, text);  
         _artifacts.Add(artifact);
-        return this;
+        return artifact;
     }   
 
     public Video AddPlaylistVideo(PlaylistVideo playlistVideo)
@@ -81,10 +86,11 @@ public class Video : EntityBase
         return this;
     }   
 
-    public Video AddTranscript(Transcript transcript)
+    public Transcript AddTranscript(string language)
     {
+        var transcript = Transcript.Create(Id, language);
         _transcripts.Add(transcript);
-        return this;
+        return transcript;
     }
 
     #region Private

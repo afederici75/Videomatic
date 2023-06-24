@@ -2,12 +2,15 @@
 
 public class Artifact : EntityBase
 {
-    public Artifact(long videoId, string title, string type, string? text = null)
+    internal static Artifact Create(long videoId, string title, string type, string? text = null)
     {
-        VideoId = videoId;
-        Title = title;
-        Type = type;
-        Text = text;
+        return new Artifact
+        {
+            VideoId = videoId,
+            Title = title,
+            Type = type,
+            Text = text,
+        };
     }
 
     public long VideoId { get; private set; }

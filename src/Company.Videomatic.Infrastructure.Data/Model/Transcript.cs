@@ -4,10 +4,13 @@ namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class Transcript : EntityBase
 {
-    public Transcript(long videoId, string language)
+    internal static Transcript Create(long videoId, string language)
     {
-        VideoId = videoId;
-        Language = language;
+        return new Transcript
+        {
+            VideoId = videoId,
+            Language = language
+        };
     }   
 
     public long VideoId { get; private set; }   
@@ -15,14 +18,16 @@ public class Transcript : EntityBase
 
     public IReadOnlyCollection<TranscriptLine> Lines 
     { 
-        get => _lines.ToList(); 
-        //private set => _lines = value.ToList(); 
+        get => _lines.ToList();
+        //private set => _lines = value.ToList();
     }
 
-    public Transcript AddLine(TranscriptLine line)
-    { 
+    public TranscriptLine AddLine(string text, TimeSpan duration, TimeSpan startsAt)
+    {         
+        var line = TranscriptLine.Create(Id, text, duration, startsAt);
         _lines.Add(line);   
-        return this;
+
+        return line;
     }
 
     #region Private
