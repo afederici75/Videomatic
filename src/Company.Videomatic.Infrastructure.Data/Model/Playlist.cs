@@ -15,19 +15,32 @@ public class Playlist : EntityBase
 
     public IReadOnlyCollection<Video> Videos
     {
-        get => _videos.ToImmutableList();
-        private set => _videos = value.ToList();
+        get => _videos.ToList();
+        //private set => _videos = value.ToList();
     }
     public IReadOnlyCollection<PlaylistVideo> PlaylistVideos
     {
-        get => _playlistVideos.ToImmutableList();
-        private set => _playlistVideos = value.ToList();
+        get => _playlistVideos.ToList();
+        //private set => _playlistVideos = value.ToList();
+    }
+
+    public Playlist AddVideo(Video video)
+    {
+        _videos.Add(video);
+        return this;
+    }
+
+    public Playlist AddPlaylistVideo(long videoId)
+    {
+        var newItem = PlaylistVideo.Create(Id, videoId);
+        _playlistVideos.Add(newItem);
+        return this;
     }
 
     #region Private
 
-    List<Video> _videos = new List<Video>();
-    List<PlaylistVideo> _playlistVideos = new List<PlaylistVideo>();
+    private List<Video> _videos = new List<Video>();
+    private List<PlaylistVideo> _playlistVideos = new List<PlaylistVideo>();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Playlist()

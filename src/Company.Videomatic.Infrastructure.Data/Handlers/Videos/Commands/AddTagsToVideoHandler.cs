@@ -11,19 +11,20 @@ public class AddTagsToVideoHandler : BaseRequestHandler<AddTagsToVideoCommand, A
 
     public override async Task<AddTagsToVideoResponse> Handle(AddTagsToVideoCommand request, CancellationToken cancellationToken = default)
     {
-        var currentUserVideoTags = DbContext.VideoTags
-                .Where(x => x.VideoId == request.VideoId)
-                .Select(x => x.Name);
+        var video = await DbContext.Videos
+                .Where(x => x.Id == request.VideoId)                
+                .Include(x => x.VideoTags)
+                .SingleAsync();                
 
-        var validTags = request.Tags.Except(currentUserVideoTags)
+        var validTags = request.Tags.Except(video.VideoTags.Select(t => t.Name))
             .ToList();
 
         foreach (var tag in validTags)
         {
-            DbContext.Add(new VideoTag(request.VideoId, tag));              
+            video.AddTag(tag);                        
         }
 
-        await DbContext.SaveChangesAsync(cancellationToken);
+        await DbContext.CommitChangesAsync(cancellationToken);
 
         return new AddTagsToVideoResponse(request.VideoId, validTags);
     }

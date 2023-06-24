@@ -46,8 +46,8 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
 {nameof(VideoDTO.Title)}.Contains(""Huxley"") &&
 {nameof(VideoDTO.Title)} == ""Aldous Huxley - The Dancing Shiva"" &&
 {nameof(VideoDTO.TagCount)} >= 2 &&
-Thumbnail.Id == 1";            
-        
+Thumbnail.Id == 1";
+
         var results = await proj
             .OrderBy(orderBy)
             .Where(filter)

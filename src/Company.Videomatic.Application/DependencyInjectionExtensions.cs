@@ -22,12 +22,12 @@ public static class DependencyInjectionExtensions
             includeInternalTypes: true // TODO: Seems useless? Maybe it will surface in the app?
             );
 
-        services.AddMediatR(cfg => 
+        services.AddMediatR(cfg =>
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                         .Where(a => a.FullName?.Contains(".Videomatic.") ?? false);
             cfg.RegisterServicesFromAssemblies(assemblies.ToArray());// typeof(LoggingBehaviour<,>).Assembly);            
-        })            
+        })
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
         .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 

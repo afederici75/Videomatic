@@ -16,7 +16,7 @@ public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, 
 
         Mapper.Map(request, playlistDb);
 
-        var cnt = await DbContext.SaveChangesAsync(cancellationToken);
+        var cnt = await DbContext.CommitChangesAsync(cancellationToken);
 
         return new UpdatedResponse(request.Id, cnt > 0);
     }

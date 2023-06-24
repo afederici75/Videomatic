@@ -11,7 +11,7 @@ public sealed class ImportVideoHandler : BaseRequestHandler<ImportVideoCommand, 
         Video dbVideo = Mapper.Map<ImportVideoCommand, Video>(request);
 
         var entry = DbContext.Add(dbVideo);
-        var res = await DbContext.SaveChangesAsync(cancellationToken);
+        var res = await DbContext.CommitChangesAsync(cancellationToken);
 
         //_dbContext.ChangeTracker.Clear();
 

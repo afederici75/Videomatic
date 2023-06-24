@@ -11,7 +11,7 @@ public sealed class CreatePlaylistHandler : BaseRequestHandler<CreatePlaylistCom
         Playlist dbPlaylist = Mapper.Map<CreatePlaylistCommand, Playlist>(request);
 
         var entry = DbContext.Add(dbPlaylist);
-        var res = await DbContext.SaveChangesAsync(cancellationToken);
+        var res = await DbContext.CommitChangesAsync(cancellationToken);
 
         //_dbContext.ChangeTracker.Clear();
 

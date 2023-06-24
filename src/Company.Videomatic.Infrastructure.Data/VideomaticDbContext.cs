@@ -37,4 +37,11 @@ public class VideomaticDbContext : DbContext
         
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
+
+    public async Task<int> CommitChangesAsync(CancellationToken cancellationToken)
+    {
+        var res = await SaveChangesAsync(cancellationToken);
+        ChangeTracker.Clear();
+        return res;
+    }
 }

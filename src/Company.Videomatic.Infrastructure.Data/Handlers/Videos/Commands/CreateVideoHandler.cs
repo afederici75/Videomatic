@@ -11,7 +11,7 @@ public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, 
         Video dbVideo = Mapper.Map<CreateVideoCommand, Video>(request);
 
         var entry = DbContext.Add(dbVideo);
-        var res = await DbContext.SaveChangesAsync(cancellationToken);
+        var res = await DbContext.CommitChangesAsync(cancellationToken);
 
         return new CreatedResponse(Id: entry.Entity.Id);
     }
