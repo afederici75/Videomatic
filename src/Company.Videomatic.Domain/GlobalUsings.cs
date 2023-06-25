@@ -1,7 +1,3 @@
-﻿//global using Ardalis.Specification;
-global using Ardalis.GuardClauses;
-
-global using Newtonsoft.Json;
-
-global using Company.Videomatic.Domain.Abstractions;
-global using System.Collections.Immutable;
+﻿global using Company.Videomatic.Domain.Abstractions;
+global using Company.Videomatic.Domain.Playlists;
+global using Company.Videomatic.Domain.Videos;
