@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2-5F63-469D-A6D4-873ECAD4F908}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube.Tests", "tests\Company.Videomatic.Infrastructure.YouTube.Tests\Company.Videomatic.Infrastructure.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.YouTube.Tests", "tests\Infrastructure.YouTube.Tests\Infrastructure.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application.Tests", "tests\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "tests\Application.Tests\Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integration.Tests", "tests\Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests", "tests\Integration.Tests\Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Tests", "tests\Company.Videomatic.Infrastructure.Data.Tests\Company.Videomatic.Infrastructure.Data.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data.Tests", "tests\Infrastructure.Data.Tests\Infrastructure.Data.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel.Tests", "tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.SemanticKernel.Tests", "tests\Infrastructure.SemanticKernel.Tests\Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticWebAPI", "src\VideomaticWebAPI\VideomaticWebAPI.csproj", "{1753EB30-9EAA-4FC2-A9F2-5CC729079D69}"
 EndProject
@@ -43,11 +43,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticBlazor", "src\Vid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech", "src\Company.Videomatic.Infrastructure.AzureSpeech\Company.Videomatic.Infrastructure.AzureSpeech.csproj", "{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech.Tests", "tests\Company.Videomatic.Infrastructure.AzureSpeech.Tests\Company.Videomatic.Infrastructure.AzureSpeech.Tests.csproj", "{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.AzureSpeech.Tests", "tests\Infrastructure.AzureSpeech.Tests\Infrastructure.AzureSpeech.Tests.csproj", "{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain", "src\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain.Tests", "tests\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

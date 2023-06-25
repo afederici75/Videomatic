@@ -2,7 +2,7 @@
 //using Company.Videomatic.Infrastructure.Data.Sqlite;
 //using Company.Videomatic.Infrastructure.Data.SqlServer;
 
-//namespace Company.Videomatic.Integration.Tests;
+//namespace Integration.Tests;
 
 //public class SqlServerDbContextTests : VideosTests<SqlServerVideomaticDbContext>,
 //    IClassFixture<VideomaticDbContextFixture<SqlServerVideomaticDbContext>>

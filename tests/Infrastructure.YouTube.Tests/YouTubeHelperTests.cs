@@ -1,7 +1,8 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Company.Videomatic.Infrastructure.YouTube;
+using System.Runtime.CompilerServices;
 using Xunit.Abstractions;
 
-namespace Company.Videomatic.Infrastructure.YouTube.Tests;
+namespace Infrastructure.YouTube.Tests;
 
 public class YouTubePlaylistsHelperTests
 {

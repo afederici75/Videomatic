@@ -1,25 +1,22 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Infrastructure.Data.Tests;
+namespace Domain.Tests;
 
 public class Startup
 {
     public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
     {
         var cfg = LoadConfiguration();
-
-        services.AddVideomaticApplication(cfg);
-        services.AddVideomaticData(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);        
     }
 
     public static IConfiguration LoadConfiguration()
     {
         return new ConfigurationBuilder()
-                        .AddJsonFile("testSettings.json", false)
-                        .AddUserSecrets(typeof(Startup).Assembly, false)
+                        //.AddJsonFile("testSettings.json", false)
+                        //.AddUserSecrets(typeof(Startup).Assembly)
                         .Build();
     }
 }

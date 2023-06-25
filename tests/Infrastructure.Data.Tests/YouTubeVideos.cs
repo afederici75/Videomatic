@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data;
+﻿namespace Infrastructure.Data.Tests;
 
 public static class YouTubeVideos
 {

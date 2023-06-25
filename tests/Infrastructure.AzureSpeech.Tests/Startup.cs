@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Infrastructure.AzureSpeech.Tests;
+namespace Infrastructure.AzureSpeech.Tests;
 
 public class Startup
 {

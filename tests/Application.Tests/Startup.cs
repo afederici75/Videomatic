@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Integration.Tests;
+namespace Application.Tests;
 
 public class Startup
 {
@@ -11,13 +11,15 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-
         services.AddVideomaticApplication(cfg);
-        services.AddVidematicYouTubeInfrastructure(cfg);
-        services.AddVideomaticSemanticKernel(cfg);
-        services.AddVideomaticData(cfg);
+
+        // Mocks
+
+        services.AddVideomaticData(cfg);        
+        //services.AddVideomaticDataForSqlite(cfg);
         services.AddVideomaticDataForSqlServer(cfg);
 
+        // Overrides
         //services.AddScoped<IVideoImporter, MockVideoImporter>();
         //services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
     }
@@ -30,3 +32,5 @@ public class Startup
                         .Build();
     }
 }
+
+// 

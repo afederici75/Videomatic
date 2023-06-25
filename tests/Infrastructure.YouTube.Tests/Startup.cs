@@ -1,27 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Application.Tests;
+namespace Infrastructure.YouTube.Tests;
 
 public class Startup
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
     {
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddVideomaticApplication(cfg);
-
-        // Mocks
-
-        services.AddVideomaticData(cfg);        
-        //services.AddVideomaticDataForSqlite(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);
-
-        // Overrides
-        //services.AddScoped<IVideoImporter, MockVideoImporter>();
-        //services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
+        services.AddVidematicYouTubeInfrastructure(cfg);
     }
 
     public static IConfiguration LoadConfiguration()
@@ -32,5 +23,3 @@ public class Startup
                         .Build();
     }
 }
-
-// 

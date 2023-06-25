@@ -1,7 +1,7 @@
 ﻿//using Newtonsoft.Json;
 //using Xunit.Abstractions;
 
-//namespace Company.Videomatic.Infrastructure.YouTube.Tests;
+//namespace Infrastructure.YouTube.Tests;
 
 //public class YouTubePlaylistImporterTests
 //{

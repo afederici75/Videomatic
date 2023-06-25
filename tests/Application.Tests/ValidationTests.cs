@@ -1,8 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Playlists.Queries;
-using FluentValidation.TestHelper;
-using Xunit;
-
-namespace Company.Videomatic.Application.Tests;
+﻿namespace Application.Tests;
 
 /// <summary>
 /// Tests that verify FluentValidation is working as expected.
@@ -62,18 +58,18 @@ public class ValidationTests
     [Fact]
     public void AcceptGetPlaylistsQuery()
     {
-        var v = new GetPlaylistsQueryValidator();
-
-        // No filters specified (VALID)
-        var qry = new GetPlaylistsQuery(); 
-        var res = v.TestValidate(qry);
-        res.ShouldNotHaveAnyValidationErrors();       
+        throw new Exception();
+        //var v = new GetPlaylistsQueryValidator();
+        //
+        //// No filters specified (VALID)
+        //var qry = new GetPlaylistsQuery(); 
+        //var res = v.TestValidate(qry);
+        //res.ShouldNotHaveAnyValidationErrors();       
     }
 
     [Fact]
     public void RejectGetPlaylistsQuery()
     {
-        var v = new GetPlaylistsQueryValidator();
         throw new Exception();
 
         // Individual properties (INVALID)

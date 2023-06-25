@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-namespace Company.Videomatic.Infrastructure.YouTube.Tests;
+namespace Infrastructure.Data.Tests;
 
 public class Startup
 {
@@ -11,15 +10,16 @@ public class Startup
     {
         var cfg = LoadConfiguration();
 
-        services.AddLogging(x => x.AddConsole());
-        services.AddVidematicYouTubeInfrastructure(cfg);
+        services.AddVideomaticApplication(cfg);
+        services.AddVideomaticData(cfg);
+        services.AddVideomaticDataForSqlServer(cfg);        
     }
 
     public static IConfiguration LoadConfiguration()
     {
         return new ConfigurationBuilder()
                         .AddJsonFile("testSettings.json", false)
-                        .AddUserSecrets(typeof(Startup).Assembly)
+                        .AddUserSecrets(typeof(Startup).Assembly, false)
                         .Build();
     }
 }
