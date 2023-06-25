@@ -1,5 +1,4 @@
-﻿
-namespace Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿namespace Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 internal static class EntityTypeBuilderExtensions
 {

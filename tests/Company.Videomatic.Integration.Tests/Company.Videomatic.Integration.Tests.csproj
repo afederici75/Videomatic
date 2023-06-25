@@ -34,4 +34,10 @@
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data.Tests\Company.Videomatic.Infrastructure.Data.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

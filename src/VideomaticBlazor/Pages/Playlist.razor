@@ -20,7 +20,7 @@
         var query = new GetVideosQuery(
             Filter: $"PlaylistId=={PlaylistId}",
             IncludeCounts: true, 
-            IncludeThumbnail: ThumbnailResolution.Default);
+            IncludeThumbnail: ThumbnailResolutionDTO.Default);
         
         var results = await Sender.Send(query);
         

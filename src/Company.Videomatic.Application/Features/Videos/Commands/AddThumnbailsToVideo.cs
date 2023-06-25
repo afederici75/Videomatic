@@ -8,11 +8,11 @@ public record AddThumnbailsToVideoCommand(
 
 public record ThumbnailPayload(
     string Location,
-    ThumbnailResolution Resolution,
+    ThumbnailResolutionDTO Resolution,
     int Height,
     int Width);
 
 public record AddThumbnailsToVideoResponse(
     long VideoId, 
-    IReadOnlyDictionary<ThumbnailResolution, long> Ids);
+    long[] Ids);
 

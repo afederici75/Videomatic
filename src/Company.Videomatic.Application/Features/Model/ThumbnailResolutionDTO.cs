@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Model;
 
-public enum ThumbnailResolution
+public enum ThumbnailResolutionDTO
 {
     Default,
     Medium,

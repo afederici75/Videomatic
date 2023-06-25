@@ -4,6 +4,6 @@ public record ThumbnailDTO(
     long Id = 0,
     long VideoId = 0,
     string Location = "",
-    ThumbnailResolution Resolution = ThumbnailResolution.Default,
+    ThumbnailResolutionDTO Resolution = ThumbnailResolutionDTO.Default,
     int Height = 0,
     int Width = 0);

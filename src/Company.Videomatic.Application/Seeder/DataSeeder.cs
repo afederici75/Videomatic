@@ -54,11 +54,11 @@ public class DataSeeder : IDataSeeder
             new AddThumnbailsToVideoCommand(video.Id, 
             new ThumbnailPayload[]
             {
-                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", ThumbnailResolution.Default, 90, 120),
-                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", ThumbnailResolution.Medium, 180, 320),
-                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/hqdefault.jpg", ThumbnailResolution.High, 360, 480),
-                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", ThumbnailResolution.Standard, 480, 640),
-                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", ThumbnailResolution.MaxRes, 720, 1280)
+                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", ThumbnailResolutionDTO.Default, 90, 120),
+                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", ThumbnailResolutionDTO.Medium, 180, 320),
+                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/hqdefault.jpg", ThumbnailResolutionDTO.High, 360, 480),
+                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", ThumbnailResolutionDTO.Standard, 480, 640),
+                new ("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", ThumbnailResolutionDTO.MaxRes, 720, 1280)
             }));
 
         // Transcripts
@@ -100,11 +100,11 @@ public class DataSeeder : IDataSeeder
             new AddThumnbailsToVideoCommand(video.Id,
             new ThumbnailPayload[]
             {
-                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", ThumbnailResolution.Default, 90, 120),
-                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", ThumbnailResolution.Medium, 180, 320),
-                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", ThumbnailResolution.High, 360, 480),
-                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", ThumbnailResolution.Standard, 480, 640),
-                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", ThumbnailResolution.MaxRes, 720, 1280)
+                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", ThumbnailResolutionDTO.Default, 90, 120),
+                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", ThumbnailResolutionDTO.Medium, 180, 320),
+                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", ThumbnailResolutionDTO.High, 360, 480),
+                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", ThumbnailResolutionDTO.Standard, 480, 640),
+                new ("https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", ThumbnailResolutionDTO.MaxRes, 720, 1280)
             }));
 
         // Transcripts

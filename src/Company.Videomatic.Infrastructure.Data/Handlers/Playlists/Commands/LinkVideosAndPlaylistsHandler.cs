@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data.Model;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
 public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosToPlaylistCommand, LinkVideosToPlaylistResponse>
 {

@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data.Model;
-
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 {

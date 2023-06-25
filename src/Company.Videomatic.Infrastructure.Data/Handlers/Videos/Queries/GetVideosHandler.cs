@@ -26,7 +26,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 ThumbnailCount = (int?)(request.IncludeCounts ? pv.Video.Thumbnails.Count : null),
                 TranscriptCount = (int?)(request.IncludeCounts ? pv.Video.Transcripts.Count : null),
                 TagCount = (int?)(request.IncludeCounts ? pv.Video.VideoTags.Count : null),
-                Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution==request.IncludeThumbnail) : null
+                Thumbnail = (request.IncludeThumbnail != null) ? pv.Video.Thumbnails.FirstOrDefault(t => t.Resolution== (Domain.Videos.ThumbnailResolution) request.IncludeThumbnail) : null
             };
 
         // Applies the custom filter options

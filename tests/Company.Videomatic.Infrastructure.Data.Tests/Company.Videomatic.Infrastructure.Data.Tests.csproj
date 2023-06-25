@@ -61,4 +61,10 @@
     <ProjectReference Include="..\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj" />    
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

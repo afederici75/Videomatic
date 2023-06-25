@@ -1,12 +1,3 @@
-using Company.Videomatic.Application.Features.DataAccess;
-using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Application.Features.Playlists.Commands;
-using Company.Videomatic.Application.Features.Playlists.Queries;
-using Company.Videomatic.Application.Features.Videos.Commands;
-using Company.Videomatic.Application.Features.Videos.Queries;
-using Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
-using MediatR;
-
 namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
 
 [Collection("DbContextTests")]

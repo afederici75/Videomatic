@@ -35,7 +35,7 @@ public class SqlServerQueryTests : IClassFixture<SqlServerDbContextFixture>
             ThumbnailCount = pv.Video.Thumbnails.Count,
             TranscriptCount = pv.Video.Transcripts.Count,
             TagCount = pv.Video.VideoTags.Count,
-            Thumbnail = pv.Video.Thumbnails.FirstOrDefault((Thumbnail t) => t.Resolution == ThumbnailResolution.Default)
+            Thumbnail = pv.Video.Thumbnails.FirstOrDefault((Thumbnail t) => (int)t.Resolution == (int)ThumbnailResolutionDTO.Default)
         };
 
         var orderBy = $"{nameof(VideoDTO.TranscriptCount)} DESC, {nameof(VideoDTO.Id)}";
@@ -67,7 +67,7 @@ Thumbnail.Id == 1";
                        v.Title,
                        v.Description,
                        v.Location,
-                       Thumbnail = v.Thumbnails.FirstOrDefault((Thumbnail t) => t.Resolution == ThumbnailResolution.Default)
+                       Thumbnail = v.Thumbnails.FirstOrDefault((Thumbnail t) => (int)t.Resolution == (int)ThumbnailResolutionDTO.Default)
                    };
 
         // Creates the filter
@@ -105,7 +105,7 @@ Thumbnail.Id == 1";
                        v.Title,
                        v.Description,
                        v.Location,
-                       Thumbnail = v.Thumbnails.FirstOrDefault((Thumbnail t) => t.Resolution == ThumbnailResolution.Default)
+                       Thumbnail = v.Thumbnails.FirstOrDefault((Thumbnail t) => (int)t.Resolution == (int)ThumbnailResolutionDTO.Default)
                    };
 
         // Creates the filter

@@ -2,54 +2,32 @@
 
 public class DomainTests
 {
-    [Fact]
-    public async Task CanUpdateVideosProperties()
-    {
-        throw new NotImplementedException();
-
-        //var video = await VideoDataGenerator.CreateVideoFromFileAsync(YouTubeVideos.RickAstley_NeverGonnaGiveYouUp);
-        //// Test that the video title and description are updated
-        //
-        //const string Updated = "(Updated)";
-        //
-        //video.UpdateTitle(Updated);
-        //video.UpdateDescription(Updated);
-        //video.Title.Should().EndWith(Updated);
-        //video.Description.Should().EndWith(Updated);
-    }
 
     [Fact]
-    public void CreateVideoSyntaxWorks()
+    public void T01_CreatePlaylistWithACompleteVideo()
     {
-        var video = new Video(
-            //providerId: "YOUTUBE",
-            //providerVideoId: "dQw4w9WgXcQ",
-            location: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            title: "The title",
-            description: "A description");
+        // Prepares
+        var newPlaylist = Playlist.Create(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
+        var vid1 = Video.Create(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
 
-        // Verfies the video is created with no thumbnails, transcripts or artifacts
-        video.Thumbnails.Should().HaveCount(0);
-        video.Transcripts.Should().HaveCount(0);
-        video.Artifacts.Should().HaveCount(0);
-        
-        // Verifies thumbnails work
-        video.AddThumbnail(new (location: "https://i.ytimg.com/vi/dQw4w9WgXcQ/default.jpg", resolution: ThumbnailResolution.High,  width: 120, height: 90))
-            .AddThumbnail(new (location: "https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg", resolution: ThumbnailResolution.Standard, width: 320, height: 180));
-        video.Thumbnails.Should().HaveCount(2);
+        var thumb1 = vid1.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
+        var thumb2 = vid1.AddThumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200);
 
-        // Verifies transcripts work
-        video.AddTranscript(
-            new Transcript("US").AddLine(new TranscriptLine(text: "First line", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(2)))
-                                .AddLine(new TranscriptLine(text: "Second line", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(3)))
-                                .AddLine(new TranscriptLine(text: "Third line", startsAt: TimeSpan.FromSeconds(5), duration: TimeSpan.FromSeconds(1))));
-        video.Transcripts.Should().HaveCount(1);
-        video.Transcripts.First().Lines.Should().HaveCount(3);
+        var tag1 = vid1.AddTag("Tag1");
+        var tag2 = vid1.AddTag("Tag2");
 
-        // Verifies artifacts work
-        video.AddArtifact(new Artifact(title: "Artifact 1", type:"AI", text: "The first text"))
-             .AddArtifact(new Artifact(title: "Artifact 2", type:"AI", text: "The second text"));
-        video.Artifacts.Should().HaveCount(2);
-        
+        var arti1 = vid1.AddArtifact(title: "A complete summary", type: "AI", text: "Bla bla");
+        var arti2 = vid1.AddArtifact(title: "A complete analysis", type: "AI", text: "More bla bla");
+
+        var trans1 = vid1.AddTranscript("EN");
+        var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
+        var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
+
+        var trans2 = vid1.AddTranscript("IT");
+        var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
+        var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
+
+
+        newPlaylist.AddVideo(vid1);
     }
 }

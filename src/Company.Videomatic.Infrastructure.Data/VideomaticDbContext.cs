@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data.Model;
-
-namespace Company.Videomatic.Infrastructure.Data;
+﻿namespace Company.Videomatic.Infrastructure.Data;
 
 public class VideomaticDbContext : DbContext
 {

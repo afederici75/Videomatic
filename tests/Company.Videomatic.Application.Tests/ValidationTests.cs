@@ -1,10 +1,6 @@
-﻿using Company.Videomatic.Application.Features.DataAccess;
-using Company.Videomatic.Application.Features.Playlists.Queries;
-using FluentAssertions;
-using FluentValidation;
+﻿using Company.Videomatic.Application.Features.Playlists.Queries;
 using FluentValidation.TestHelper;
 using Xunit;
-using Xunit.DependencyInjection;
 
 namespace Company.Videomatic.Application.Tests;
 

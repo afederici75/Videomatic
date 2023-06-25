@@ -16,14 +16,14 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
             .Include(x => x.Thumbnails)            
             .SingleAsync(cancellationToken);
 
-        var processed = new Dictionary<ThumbnailResolution, long>();
+        var processed = new Dictionary<Domain.Videos.ThumbnailResolution, long>();
         foreach (var thumb in request.Thumbnails)
         {
-            var item = video.Thumbnails.FirstOrDefault(x => x.Resolution == thumb.Resolution);
+            var item = video.Thumbnails.FirstOrDefault(x => (int)x.Resolution == (int)thumb.Resolution);
             if (item == null)
             {
                 //item = Mapper.Map<ThumbnailPayload, Thumbnail>(thumb);
-                item = video.AddThumbnail(thumb.Location, thumb.Resolution, thumb.Height, thumb.Width);                
+                item = video.AddThumbnail(thumb.Location, (Domain.Videos.ThumbnailResolution)thumb.Resolution, thumb.Height, thumb.Width);                
             }
             else
             {
@@ -35,8 +35,8 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
 
 
         await DbContext.CommitChangesAsync(cancellationToken);
-
-        return new AddThumbnailsToVideoResponse(request.VideoId, processed);
+        
+        return new AddThumbnailsToVideoResponse(request.VideoId, processed.Values.ToArray());
     }
 
     public async Task<AddThumbnailsToVideoResponse> Handle2(AddThumnbailsToVideoCommand request, CancellationToken cancellationToken = default)
@@ -48,7 +48,7 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
         var processed = new Dictionary<ThumbnailResolution, long>();
         foreach (var thumb in request.Thumbnails)
         { 
-            var item = currentVideoThumbnails.FirstOrDefault(x => x.Resolution == thumb.Resolution);
+            var item = currentVideoThumbnails.FirstOrDefault(x => (int)x.Resolution == (int)thumb.Resolution);
             if (item == null)
             {
                 item = Mapper.Map<ThumbnailPayload, Thumbnail>(thumb);
@@ -68,6 +68,6 @@ public class AddThumbnailsToVideoHandler : BaseRequestHandler<AddThumnbailsToVid
         
         await DbContext.CommitChangesAsync(cancellationToken);
 
-        return new AddThumbnailsToVideoResponse(request.VideoId, processed);
+        return new AddThumbnailsToVideoResponse(request.VideoId, processed.Values.ToArray());
     }
 }
