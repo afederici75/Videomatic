@@ -2,9 +2,9 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
-public sealed class GetPlaylists2Handler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
+public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
 {
-    public GetPlaylists2Handler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    public GetPlaylistsHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 

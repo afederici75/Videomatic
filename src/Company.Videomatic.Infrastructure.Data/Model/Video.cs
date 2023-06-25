@@ -14,8 +14,8 @@ public class Video : EntityBase
         };
     }
 
-    public string Location { get; private set; }
-    public string Title { get; private set; }
+    public string Location { get; private set; } = default!;
+    public string Title { get; private set; } = default!;
     public string? Description { get; private set; }
 
     public IReadOnlyCollection<VideoTag> VideoTags 
@@ -95,10 +95,8 @@ public class Video : EntityBase
 
     #region Private
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Video()
     { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     List<VideoTag> _videoTags = new List<VideoTag>();
     List<Playlist> _playLists = new List<Playlist>();

@@ -14,7 +14,7 @@ public class Transcript : EntityBase
     }   
 
     public long VideoId { get; private set; }   
-    public string Language { get; private set; }
+    public string Language { get; private set; } = default!;
 
     public IReadOnlyCollection<TranscriptLine> Lines 
     { 
@@ -32,10 +32,8 @@ public class Transcript : EntityBase
 
     #region Private
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Transcript()
     { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     private List<TranscriptLine> _lines { get; set; } = new();
 

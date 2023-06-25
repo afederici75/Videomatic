@@ -17,14 +17,15 @@ public class Thumbnail : EntityBase
     }
 
     public long VideoId { get; private set; }
-    public string Location { get; private set; }
+    public string Location { get; private set; } = default!;
     public ThumbnailResolution Resolution { get; private set; }
     public int Height { get; private set; }
     public int Width { get; private set; }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    #region Private 
+
     private Thumbnail()
     { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-}
 
+    #endregion
+}

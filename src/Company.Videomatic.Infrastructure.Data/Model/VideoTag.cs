@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Company.Videomatic.Infrastructure.Data.Model;
+﻿namespace Company.Videomatic.Infrastructure.Data.Model;
 
 public class VideoTag : EntityBase
 {
@@ -15,11 +13,9 @@ public class VideoTag : EntityBase
     }
 
     public long VideoId { get; private set; }
-    public string Name { get; private set; }
+    public string Name { get; private set; } = default!;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private VideoTag()
     { }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 }

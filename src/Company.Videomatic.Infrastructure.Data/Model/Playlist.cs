@@ -14,7 +14,7 @@ public class Playlist : EntityBase
 
 
     public string Name { get; private set; } = default!;
-    public string? Description { get; private set; } = default!;
+    public string? Description { get; private set; }
 
     public IReadOnlyCollection<Video> Videos
     {
@@ -45,9 +45,7 @@ public class Playlist : EntityBase
     private List<Video> _videos = new List<Video>();
     private List<PlaylistVideo> _playlistVideos = new List<PlaylistVideo>();
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private Playlist()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         // For entity framework
     }
