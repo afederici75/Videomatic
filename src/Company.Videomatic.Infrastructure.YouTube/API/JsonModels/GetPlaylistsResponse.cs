@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
+﻿#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+namespace Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 
 // API: https://developers.google.com/youtube/v3/docs/playlists/list
 // TODO: fix the warnings and possibly use directly the Google API nuget
@@ -92,3 +94,5 @@ internal class GetPlaylistsResponse
         public int itemCount { get; set; }
     }
 }
+
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
