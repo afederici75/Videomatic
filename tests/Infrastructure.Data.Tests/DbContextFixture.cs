@@ -1,21 +1,15 @@
-﻿using Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
-using Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
-using Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
-using Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
-using Company.Videomatic.Infrastructure.Data.Seeder;
+﻿namespace Infrastructure.Data.Tests;
 
-namespace Company.Videomatic.Infrastructure.Data.Tests.SqlServer;
-
-public class SqlServerDbContextFixture : IAsyncLifetime
+public class DbContextFixture : IAsyncLifetime
 {
-    public SqlServerDbContextFixture(
+    public DbContextFixture(
         VideomaticDbContext dbContext,
         ITestOutputHelperAccessor outputAccessor,
         IDataSeeder seeder)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-               
+
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
         Seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
         DbContext.Database.EnsureDeleted();

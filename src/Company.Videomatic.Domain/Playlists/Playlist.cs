@@ -23,18 +23,20 @@ public class Playlist : EntityBase
         get => _playlistVideos.ToList();
     }
 
-    public Playlist AddVideo(Videos.Video video)
+    public Video AddVideo(string location, string title, string? description)
     {
+        var video = Video.Create(location, title, description);
         _videos.Add(video);
-        return this;
+        return video;
     }
 
-    public Playlist AddPlaylistVideo(long videoId)
-    {
-        var newItem = PlaylistVideo.Create(Id, videoId);
-        _playlistVideos.Add(newItem);
-        return this;
-    }
+    // I removed this as it creates more problems than not.
+    //public Playlist AddPlaylistVideo(long videoId)
+    //{
+    //    var newItem = PlaylistVideo.Create(Id, videoId);
+    //    _playlistVideos.Add(newItem);
+    //    return this;
+    //}
 
     #region Private
 

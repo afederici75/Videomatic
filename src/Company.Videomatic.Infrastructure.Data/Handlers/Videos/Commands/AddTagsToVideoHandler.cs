@@ -14,7 +14,7 @@ public class AddTagsToVideoHandler : BaseRequestHandler<AddTagsToVideoCommand, A
         var video = await DbContext.Videos
                 .Where(x => x.Id == request.VideoId)                
                 .Include(x => x.VideoTags)
-                .SingleAsync();                
+                .SingleAsync();
 
         var validTags = request.Tags.Except(video.VideoTags.Select(t => t.Name))
             .ToList();

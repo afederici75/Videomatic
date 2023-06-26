@@ -14,3 +14,6 @@ global using Company.Videomatic.Application.Features.Videos.Commands;
 global using Company.Videomatic.Application.Features.Videos.Queries;
 global using Company.Videomatic.Domain.Playlists;
 global using Company.Videomatic.Domain.Videos;
+global using Company.Videomatic.Infrastructure.Data;
+global using Company.Videomatic.Infrastructure.Data.Seeder;
+

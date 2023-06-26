@@ -16,8 +16,22 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 {
     public GetVideosQueryValidator()
     {
-        //RuleFor(x => x.Filter).SetValidator(new VideosFilterValidator());
-        //RuleFor(x => x.OrderBy).SetValidator(new OrderByValidator());
-        //RuleFor(x => x.Paging).SetValidator(new PagingValidator());
+        When(x => x.PlaylistIds is not null, () =>
+        {
+            RuleFor(x => x.PlaylistIds).NotEmpty();
+        });
+
+        When(x => x.Filter is not null, () =>
+        {
+            RuleFor(x => x.Filter).NotEmpty();
+        });
+
+        When(x => x.OrderBy is not null, () =>
+        { 
+           RuleFor(x => x.OrderBy).NotEmpty();
+        });
+        
+        RuleFor(x => x.Page).GreaterThan(0);
+        RuleFor(x => x.PageSize).GreaterThan(0);
     }
 }
