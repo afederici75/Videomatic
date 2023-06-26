@@ -4,7 +4,7 @@ namespace Company.Videomatic.Domain.Playlists;
 
 public class PlaylistVideo
 {
-    internal static PlaylistVideo Create(long playlistId, long videoId)
+    public static PlaylistVideo Create(long playlistId, long videoId)
     {
         return new PlaylistVideo
         {

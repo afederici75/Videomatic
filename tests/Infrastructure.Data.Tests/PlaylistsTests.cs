@@ -76,5 +76,20 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
             .SingleAsync();
 
         video.Should().BeEquivalentTo(updateCommand);
-    }        
+    }
+
+    [Theory]
+    [InlineData($"{nameof(PlaylistDTO.Id)} < 0", 0)]
+    [InlineData($@"{nameof(PlaylistDTO.Name)}  == ""Eastern Philosophy""", 1)]
+    [InlineData($@"{nameof(PlaylistDTO.VideoCount)}  > 0", 1)]
+    public async Task GetPlaylists(string filter, int expectedResults)
+    {
+        var query = new GetPlaylistsQuery(filter);
+
+        PageResult<PlaylistDTO> response = await Sender.Send(query);
+
+        // Checks
+        response.Count.Should().Be(expectedResults);
+        response.TotalCount.Should().Be(expectedResults);
+    }
 }

@@ -16,7 +16,7 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
                         pl.Id,
                         pl.Name,
                         pl.Description,
-                        VideosCount = (long?)(request.IncludeCounts ? pl.PlaylistVideos.Count() : null)
+                        VideoCount = pl.PlaylistVideos.Count
                     };
 
         if (!string.IsNullOrWhiteSpace(request.Filter))
@@ -29,11 +29,13 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
             query = query.OrderBy(request.OrderBy);
         }
 
+        var test = await query.ToListAsync();
+
         IQueryable<PlaylistDTO> queriable = query.Select(row => new PlaylistDTO(
               row.Id,
               row.Name,
               row.Description,
-              row.VideosCount));
+              row.VideoCount));
 
         var page = await queriable
             .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
