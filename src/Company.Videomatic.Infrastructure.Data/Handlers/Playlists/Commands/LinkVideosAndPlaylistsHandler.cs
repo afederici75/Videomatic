@@ -52,7 +52,7 @@ public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosToPlay
         
         foreach (var newId in notLinked)
         {
-            playlist.AddPlaylistVideo(newId);            
+            playlist.AddPlaylistVideo(newId);
         }
         
         var cnt = await DbContext.CommitChangesAsync(cancellationToken);

@@ -4,7 +4,7 @@ namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record CreateVideoCommand(string Location, string Title, string? Description) : IRequest<CreatedResponse>;
 
-public class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
+internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {
     public CreateVideoCommandValidator()
     {

@@ -5,7 +5,7 @@ namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 public record DeletePlaylistCommand(long Id) : IRequest<DeletedResponse>;
 
-public class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
+internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {
     public DeletePlaylistCommandValidator()
     {

@@ -12,7 +12,7 @@ public record GetVideosQuery(
     ThumbnailResolutionDTO? IncludeThumbnail = null) : IRequest<PageResult<VideoDTO>>;
 
 
-public class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
+internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
 {
     public GetVideosQueryValidator()
     {

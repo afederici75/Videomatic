@@ -1,11 +1,14 @@
-﻿using Company.Videomatic.Application.Behaviors;
+﻿using System.Runtime.CompilerServices;
+
+using Company.Videomatic.Application.Behaviors;
 using Company.Videomatic.Application.Features.DataAccess;
 using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.Extensions.Configuration;
 
 // This is required so I can mark validators as 'internal' (i.e. instead of public) and still be able to access them from the test project.
 // See https://learn.microsoft.com/en-us/dotnet/standard/assembly/friend for more information.
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Company.Videomatic.Application.Tests")]
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Application.Tests")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

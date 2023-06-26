@@ -15,9 +15,9 @@ public class Startup
 
         // Mocks
 
-        services.AddVideomaticData(cfg);        
+        //services.AddVideomaticData(cfg);        
         //services.AddVideomaticDataForSqlite(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);
+        //services.AddVideomaticDataForSqlServer(cfg);
 
         // Overrides
         //services.AddScoped<IVideoImporter, MockVideoImporter>();

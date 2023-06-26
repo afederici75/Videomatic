@@ -10,7 +10,6 @@ public class Playlist : EntityBase
         };
     }
 
-
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
@@ -22,7 +21,6 @@ public class Playlist : EntityBase
     public IReadOnlyCollection<PlaylistVideo> PlaylistVideos
     {
         get => _playlistVideos.ToList();
-        //private set => _playlistVideos = value.ToList();
     }
 
     public Playlist AddVideo(Videos.Video video)

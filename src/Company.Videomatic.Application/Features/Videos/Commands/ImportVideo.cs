@@ -23,7 +23,7 @@ public record ImportVideoResponse(bool Queued, long VideoId, long? PlaylistId = 
 /// <summary>
 /// The validator for ImportVideoCommand.
 /// </summary>
-public class ImportVideoCommandValidator : AbstractValidator<ImportVideoCommand>
+internal class ImportVideoCommandValidator : AbstractValidator<ImportVideoCommand>
 {
     public ImportVideoCommandValidator()
     {

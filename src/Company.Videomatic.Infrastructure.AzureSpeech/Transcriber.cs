@@ -9,7 +9,7 @@ public interface ITranscriber
 {
     Task TranscribeAsync(string fileName, CancellationToken token = default);
 
-    Func<TranscriptionChunk, Task<bool>> OnTranscribed { get; set; }
+    Func<TranscriptionChunk, Task<bool>>? OnTranscribed { get; set; }
 }
 
 public record TranscriptionChunk(string Text, ulong Offset);
@@ -23,7 +23,7 @@ public class Transcriber : ITranscriber
         _options = options.Value ?? throw new ArgumentNullException(nameof(options));
     }
 
-    public Func<TranscriptionChunk, Task<bool>> OnTranscribed { get; set; }
+    public Func<TranscriptionChunk, Task<bool>>? OnTranscribed { get; set; }
 
     public async Task TranscribeAsync(string fileName, CancellationToken token)
     {
@@ -51,7 +51,7 @@ public class Transcriber : ITranscriber
                         recognizedText.Append(e.Result.Text);
                         //Console.WriteLine($"RECOGNIZED: Text={e.Result.Text}");                        
 
-                        var ok = await OnTranscribed.Invoke(new TranscriptionChunk(e.Result.Text, e.Offset));
+                        var ok = await OnTranscribed!.Invoke(new TranscriptionChunk(e.Result.Text, e.Offset));
                         if (!ok)
                         {
                             await recognizer.StopContinuousRecognitionAsync();

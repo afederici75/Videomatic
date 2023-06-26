@@ -1,10 +1,11 @@
 ﻿using Company.Videomatic.Application.Features.DataAccess;
+using FluentValidation.TestHelper;
 
 namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record CreatePlaylistCommand(string Name, string? Description) : IRequest<CreatedResponse>;
+public record CreatePlaylistCommand(string Name, string? Description = null) : IRequest<CreatedResponse>;
 
-public class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
+internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {
     public CreatePlaylistCommandValidator()
     {

@@ -4,7 +4,7 @@ public record LinkVideosToPlaylistCommand(long PlaylistId, long[] VideoIds) : IR
 
 public record LinkVideosToPlaylistResponse(long PlaylistId, long[] VideoIds);
 
-public class LinkVideosToPlaylistValidator : AbstractValidator<LinkVideosToPlaylistCommand>
+internal class LinkVideosToPlaylistValidator : AbstractValidator<LinkVideosToPlaylistCommand>
 {
     public LinkVideosToPlaylistValidator()
     {

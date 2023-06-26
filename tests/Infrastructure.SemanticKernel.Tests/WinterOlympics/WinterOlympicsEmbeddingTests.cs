@@ -26,14 +26,14 @@ public partial class WinterOlympicsEmbeddingTests : IClassFixture<WinterOlympics
 
 
     [Theory]
-    [InlineData("Which athletes won the gold medal in curling at the 2022 Winter Olympics?", true, null)]
-    [InlineData("who winned gold metals in kurling at the olimpics", true, null)] // misspelled question
-    [InlineData("How many records were set at the 2022 Winter Olympics?", true, null)] // counting question SOMEHOW I GET NO COUNT? Model issue?
-    [InlineData("Did Jamaica or Cuba have more athletes at the 2022 Winter Olympics?", true, null)] // comparison question
-    [InlineData("What is 2+2?", false, null)] // question outside of the scope
-    [InlineData("Which Olympic sport is the most entertaining?", false, null)] // subjective question
-    [InlineData("Who won the gold medal in curling at the 2018 Winter Olympics?", false, null)] // question outside of the scope  
-    public async Task LoadWinterOlympicsData(string question, bool shouldHaveAnswer, CancellationToken cancellation)
+    [InlineData("Which athletes won the gold medal in curling at the 2022 Winter Olympics?", true)]
+    [InlineData("who winned gold metals in kurling at the olimpics", true)] // misspelled question
+    [InlineData("How many records were set at the 2022 Winter Olympics?", true)] // counting question SOMEHOW I GET NO COUNT? Model issue?
+    [InlineData("Did Jamaica or Cuba have more athletes at the 2022 Winter Olympics?", true)] // comparison question
+    [InlineData("What is 2+2?", false)] // question outside of the scope
+    [InlineData("Which Olympic sport is the most entertaining?", false)] // subjective question
+    [InlineData("Who won the gold medal in curling at the 2018 Winter Olympics?", false)] // question outside of the scope  
+    public async Task LoadWinterOlympicsData(string question, bool shouldHaveAnswer)
     {
         // This tests replicates what is at https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai
         // Look at the fixture for initilization and more

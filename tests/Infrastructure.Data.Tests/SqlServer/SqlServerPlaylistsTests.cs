@@ -101,7 +101,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     //readonly string[] AllPlaylistFields = new[] { nameof(Playlist.Videos), "Videos.Thumbnails", "Videos.Tags", "Videos.Artifacts", "Videos.Transcripts", "Videos.Transcripts.Lines" };
 
     [Fact]
-    public async Task T04_CreatePlaylistWithACompleteVideo()
+    public void T04_CreatePlaylistWithACompleteVideo()
     {
        // Prepares
        var newPlaylist = Playlist.Create(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
@@ -156,7 +156,7 @@ public class SqlServerPlaylistsTests : IClassFixture<SqlServerDbContextFixture>
     }
 
     [Fact]
-    public async Task T05_CreateNonEmptyPlaylistAndUpdatesIt()
+    public void T05_CreateNonEmptyPlaylistAndUpdatesIt()
     {
         // Prepares
         //var newPlaylist = new Playlist(name: "My playlist 4", description: $"A playlist with 2 complete videos {DateTime.Now}");

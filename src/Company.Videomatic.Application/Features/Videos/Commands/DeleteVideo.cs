@@ -11,7 +11,7 @@ public record DeleteVideoCommand(long Id) : IRequest<DeletedResponse>;
 /// <summary>
 /// The validator for DeleteVideoCommand.
 /// </summary>
-public class DeleteVideoCommandValidator : AbstractValidator<DeleteVideoCommand>
+internal class DeleteVideoCommandValidator : AbstractValidator<DeleteVideoCommand>
 {
     public DeleteVideoCommandValidator()
     {

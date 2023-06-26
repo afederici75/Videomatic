@@ -1,13 +1,12 @@
 ﻿namespace Domain.Tests;
 
-public class DomainTests
+public class ModelTests
 {
 
     [Fact]
-    public void T01_CreatePlaylistWithACompleteVideo()
+    public void T01_CreatePlaylistWithCompleteVideo()
     {
-        // Prepares
-        var newPlaylist = Playlist.Create(name: "My playlist 3", description: $"A playlist with 2 complete videos {DateTime.Now}");
+        // Video
         var vid1 = Video.Create(location: "youtube.com/v?VCompleteA", title: "A complete title", description: "A complete description");
 
         var thumb1 = vid1.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
@@ -27,7 +26,9 @@ public class DomainTests
         var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
         var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
 
-
+        // Playlist
+        var newPlaylist = Playlist.Create(name: "My playlist 3", description: $"A playlist with 1 complete videos {DateTime.Now}");
         newPlaylist.AddVideo(vid1);
+        //newPlaylist.AddPlaylistVideo(vid1.Id);
     }
 }
