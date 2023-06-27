@@ -13,7 +13,8 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
     string? Description = default,
     long? VideoCount = 0);
 
-    public override async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken = default)
+    public override async Task<PageResult<PlaylistDTO>> Handle(
+        GetPlaylistsQuery request, CancellationToken cancellationToken = default)
     {
         var query = from pl in DbContext.Playlists
                     //select new PlaylistDTO(                    
