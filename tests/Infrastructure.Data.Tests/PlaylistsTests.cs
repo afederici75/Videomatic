@@ -81,7 +81,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Theory]
     [InlineData($"{nameof(PlaylistDTO.Id)} < 0", 0)]
     [InlineData($@"{nameof(PlaylistDTO.Name)}  == ""Eastern Philosophy""", 1)]
-    [InlineData($@"{nameof(PlaylistDTO.VideoCount)}  > 0", 1)]
+    [InlineData($@"{nameof(PlaylistDTO.VideoCount)} > 0", 1)]
     public async Task GetPlaylists(string filter, int expectedResults)
     {
         var query = new GetPlaylistsQuery(filter);

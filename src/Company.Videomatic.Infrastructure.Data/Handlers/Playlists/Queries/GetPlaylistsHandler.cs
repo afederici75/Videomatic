@@ -8,9 +8,19 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
     {
     }
 
+    record Temp(long Id = 0,
+    string Name = "",
+    string? Description = default,
+    long? VideoCount = 0);
+
     public override async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken = default)
     {
         var query = from pl in DbContext.Playlists
+                    //select new PlaylistDTO(                    
+                    //    pl.Id,
+                    //    pl.Name,
+                    //    pl.Description,
+                    //    pl.PlaylistVideos.Count);
                     select new
                     {
                         pl.Id,
@@ -29,8 +39,7 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
             query = query.OrderBy(request.OrderBy);
         }
 
-        var test = await query.ToListAsync();
-
+        
         IQueryable<PlaylistDTO> queriable = query.Select(row => new PlaylistDTO(
               row.Id,
               row.Name,
