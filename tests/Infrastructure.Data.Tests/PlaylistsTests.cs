@@ -79,12 +79,19 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData($"{nameof(PlaylistDTO.Id)} < 0", 0)]
-    [InlineData($@"{nameof(PlaylistDTO.Name)}  == ""Eastern Philosophy""", 1)]
-    [InlineData($@"{nameof(PlaylistDTO.VideoCount)} > 0", 1)]
-    public async Task GetPlaylists(string filter, int expectedResults)
+    [InlineData(null, null, 2)]
+    [InlineData(null, "Id DESC", 2)]
+    [InlineData(null, "Id ASC", 2)]
+    [InlineData("Philosophy", "Id DESC", 1)]
+    [InlineData("Philosophy", null, 1)]
+    //[InlineData($"{nameof(PlaylistDTO.Id)} < 0", 0)]
+    //[InlineData($@"{nameof(PlaylistDTO.Name)}  == ""Eastern Philosophy""", 1)]
+    //[InlineData($@"{nameof(PlaylistDTO.VideoCount)} > 0", 1)]
+    public async Task GetPlaylists(string searchText, string orderBy, int expectedResults)
     {
-        var query = new GetPlaylistsQuery(filter);
+        var query = new GetPlaylistsQuery(
+            SearchText: searchText,
+            OrderBy: orderBy);
 
         PageResult<PlaylistDTO> response = await Sender.Send(query);
 

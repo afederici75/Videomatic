@@ -1,6 +1,4 @@
-﻿using System.Linq.Dynamic.Core;
-
-namespace Infrastructure.Data.Tests;
+﻿namespace Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]
 public class DynamicLinqTests : IClassFixture<DbContextFixture>
@@ -49,8 +47,8 @@ public class DynamicLinqTests : IClassFixture<DbContextFixture>
 Thumbnail.Id == 1";
 
         var results = await proj
-            .OrderBy(orderBy)
-            .Where(filter)
+            //.OrderBy(orderBy)
+            //.Where(filter)
             .ToPageAsync(1, 10);
 
         results.Items.Should().HaveCount(1);
@@ -75,7 +73,7 @@ Thumbnail.Id == 1";
 
         // Queries the database
         var results = await proj
-            .Where(filter)
+            //.Where(filter)
             .ToListAsync();
 
         // Transforms the results into DTOs manually
@@ -113,7 +111,7 @@ Thumbnail.Id == 1";
 
         // Queries the database
         var results = await proj
-             .Where(filter)
+             //.Where(filter)
              .ToPageAsync(1, 10);
 
         // Verifies

@@ -1,7 +1,7 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 public record GetPlaylistsQuery(
-    string? Filter = null,
+    string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
     int? PageSize = null,
@@ -24,9 +24,9 @@ internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {
     public GetPlaylistsQueryValidator()
     {
-        When(x => x.Filter is not null, () =>
+        When(x => x.SearchText is not null, () =>
         {
-            RuleFor(x => x.Filter).NotEmpty();
+            RuleFor(x => x.SearchText).NotEmpty();
         });
 
         When(x => x.OrderBy is not null, () =>

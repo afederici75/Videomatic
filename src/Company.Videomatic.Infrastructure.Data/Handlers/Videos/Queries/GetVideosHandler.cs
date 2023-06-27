@@ -1,7 +1,4 @@
-﻿using System.Linq.Dynamic.Core;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
 public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<VideoDTO>>
 {
@@ -35,15 +32,16 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
             query = query.Where(pv => request.PlaylistIds.Contains(pv.PlaylistId));
         }
 
-        if (!string.IsNullOrWhiteSpace(request.Filter))
-        {
-            query = query.Where(request.Filter);
-        }
-
-        if (!string.IsNullOrWhiteSpace(request.OrderBy))
-        {
-            query = query.OrderBy(request.OrderBy);
-        }
+        throw new Exception();
+        //if (!string.IsNullOrWhiteSpace(request.Filter))
+        //{
+        //    query = query.Where(request.Filter);
+        //}
+        //
+        //if (!string.IsNullOrWhiteSpace(request.OrderBy))
+        //{
+        //    query = query.OrderBy(request.OrderBy);
+        //}
 
         // Fetches the page
         var queriable = query
