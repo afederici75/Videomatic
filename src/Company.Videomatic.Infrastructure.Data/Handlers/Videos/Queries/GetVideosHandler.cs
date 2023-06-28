@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Company.Videomatic.Domain.Videos;
+using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
@@ -30,27 +31,44 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
             // Search text fields must be specified directly
-            query = query.Where(x =>
-                x.Title.Contains(request.SearchText) ||
-                x.Description!.Contains(request.SearchText));
+            query = query.Where(v =>
+                v.Title.Contains(request.SearchText) ||
+                v.Description!.Contains(request.SearchText));
+        }
+
+        if (request.PlaylistIds != null)
+        {
+            var videosOfPlaylist = DbContext.PlaylistVideos
+                .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
+                .Select(pv => pv.VideoId);
+
+            query = query.Where(v => videosOfPlaylist.Contains(v.Id));
         }
 
         // Custom OrderBy which takes in account what we allow to sort by
         query = query.OrderBy(request.OrderBy, SupportedOrderBys);
 
-        // Mapping        
-        var dtoQuery = query.Select(video => new VideoDTO(
+        // Mapping                
+        ThumbnailResolution expectedRes = request.IncludeThumbnail?.ToThumbnailResolution() ?? ThumbnailResolution.Default;
+
+        var dtoQuery = from video in query
+                       join thumb in DbContext.Thumbnails 
+                       on video.Id equals thumb.VideoId
+                       into thumbGroup 
+                       from resThumb in thumbGroup.DefaultIfEmpty()
+                       where resThumb.Resolution == expectedRes
+                       select new VideoDTO(
                 video.Id,
                 video.Location,
                 video.Title,
-                video.Description,                
+                video.Description,
                 (int?)(request.IncludeCounts ? video.Playlists.Count : null),
                 (int?)(request.IncludeCounts ? video.Artifacts.Count : null),
                 (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
                 (int?)(request.IncludeCounts ? video.Transcripts.Count : null),
                 (int?)(request.IncludeCounts ? video.VideoTags.Count : null),
-                video.Thumbnails!.FirstOrDefault(t => t!.Resolution == ThumbnailResolution.Standard).Location ?? null
-            ));
+                resThumb.Location ?? "Unknown"
+            );
 
         var page = await dtoQuery
            .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);

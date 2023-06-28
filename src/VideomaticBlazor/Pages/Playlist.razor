@@ -18,7 +18,7 @@
     protected override async Task OnParametersSetAsync()
     {
         var query = new GetVideosQuery(
-            SearchText: $"PlaylistId=={PlaylistId}",
+            PlaylistIds: new[] { PlaylistId },
             IncludeCounts: true, 
             IncludeThumbnail: ThumbnailResolutionDTO.Default);
         

@@ -4,6 +4,7 @@ namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosQuery(
     long[]? PlaylistIds = null,
+    long[]? VideoIds = null,
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
@@ -19,6 +20,11 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
         When(x => x.PlaylistIds is not null, () =>
         {
             RuleFor(x => x.PlaylistIds).NotEmpty();
+        });
+
+        When(x => x.VideoIds is not null, () =>
+        {
+            RuleFor(x => x.VideoIds).NotEmpty();
         });
 
         When(x => x.SearchText is not null, () =>
