@@ -12,4 +12,4 @@ public record VideoDTO(
     int? TranscriptCount = 0,
     int? TagCount = 0,
 
-    ThumbnailDTO? Thumbnail = default);
+    string? Thumbnail = default);

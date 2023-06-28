@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.Linq.Expressions;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace System.Linq;
@@ -8,23 +9,42 @@ public static class IQueryableExtensions
     const int DefaultPage = 1;
     const int DefaultPageSize = 10;
 
-    public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string orderByText)
+    public static IQueryable<T> OrderBy<T>(
+        this IQueryable<T> source, 
+        string? orderByText,
+        IDictionary<string, Expression<Func<T, object?>>> sortExpressions)
     {
-        var items = orderByText.Split(
-            new char[] { ',' }, 
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var item in items)
+        if (string.IsNullOrWhiteSpace(orderByText)) 
         {
-            var parts = item.Split();
-            var desc = parts.Length > 1 ? parts[1].ToLower().Equals("desc") : false;
-            if (desc)
-                source = source.OrderByDescending(x => EF.Property<object>(x!, parts[0]));
-            else
-                source = source.OrderBy(x => EF.Property<object>(x!, parts[0]));
+            return source;
         }
 
-        return source;
+        IOrderedQueryable<T>? orderedQueryable = null;
+        var options = orderByText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        foreach (var sortOption in options)
+        {
+            var parts = sortOption.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var desc = parts.Length > 1 ? parts[1].ToLower().Equals("desc") : false;
+            if (!sortExpressions.TryGetValue(parts[0], out var sortExpr))
+                throw new Exception($"Cannot sort by '{sortOption}'.");
+
+            if (orderedQueryable == null)
+            {
+                if (desc)
+                    orderedQueryable = source.OrderByDescending(sortExpr);
+                else
+                    orderedQueryable = source.OrderBy(sortExpr);
+            }
+            else
+            {
+                if (desc)
+                    orderedQueryable = orderedQueryable.ThenByDescending(sortExpr);
+                else
+                    orderedQueryable = orderedQueryable.ThenBy(sortExpr);
+            }
+        }
+
+        return orderedQueryable ?? source;
     }
 
     public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(

@@ -81,12 +81,10 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Theory]
     [InlineData(null, null, 2)]
     [InlineData(null, "Id DESC", 2)]
-    [InlineData(null, "Id ASC", 2)]
-    [InlineData("Philosophy", "Id DESC", 1)]
-    [InlineData("Philosophy", null, 1)]
-    //[InlineData($"{nameof(PlaylistDTO.Id)} < 0", 0)]
-    //[InlineData($@"{nameof(PlaylistDTO.Name)}  == ""Eastern Philosophy""", 1)]
-    //[InlineData($@"{nameof(PlaylistDTO.VideoCount)} > 0", 1)]
+    [InlineData(null, "Id", 2)]
+    [InlineData("Philosophy", "Id   ASC", 1)]
+    [InlineData("Philosophy", "Name  DESC", 1)]
+    [InlineData("Philosophy", "VideoCount desc, Id asc", 1)]
     public async Task GetPlaylists(string searchText, string orderBy, int expectedResults)
     {
         var query = new GetPlaylistsQuery(
@@ -98,5 +96,8 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);
+
+        // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
+        // work but it would be nice to test it here.
     }
 }

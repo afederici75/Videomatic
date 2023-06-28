@@ -13,7 +13,7 @@
     protected override async Task OnParametersSetAsync()
     {
         var query = new GetVideosQuery(
-            Filter: $"Id=={VideoId}",
+            SearchText: $"Id=={VideoId}",
             IncludeCounts: true,
             IncludeThumbnail: ThumbnailResolutionDTO.Default
         );
