@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Tests;
+﻿using Azure;
+
+namespace Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]
 public class VideosTests : IClassFixture<DbContextFixture>
@@ -118,19 +120,33 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, null, null, null, null, true, null)]
-    [InlineData(new long[] { 1, 2 }, null, null, null, null, null, true, null)]
-    public async Task GetVideosQuery(
+    [InlineData(null, null, null, null, true, null, 2)]
+    [InlineData(new long[] { 1 }, null, null, null, true, null, 2)]
+    [InlineData(new long[] { 1, 2 }, null, null, null, true, null, 2)]
+    // TODO: missing paging tests and should add more anyway
+    public async Task GetVideos(
         long[]? playlistIds,
         long[]? videoIds,
         string? searchText,
         string? orderBy,
-        int? page,
-        int? pageSize,
         bool includeCounts,
-        ThumbnailResolutionDTO? IncludeThumbnail)
+        ThumbnailResolutionDTO? IncludeThumbnail,
+        int expectedResults)
     {
-        var query = new GetVideosQuery(playlistIds, videoIds, searchText, orderBy, page, pageSize, includeCounts, IncludeThumbnail);
-        var result = await Sender.Send(query);  
+        var query = new GetVideosQuery(
+            PlaylistIds: playlistIds, 
+            VideoIds: videoIds, 
+            SearchText: searchText, 
+            OrderBy: orderBy, 
+            Page: null, // Uses 1 by default
+            PageSize: null, // Uses 10 by default
+            IncludeCounts: includeCounts, 
+            IncludeThumbnail: IncludeThumbnail);
+
+        PageResult<VideoDTO> response = await Sender.Send(query);
+
+        // Checks
+        response.Count.Should().Be(expectedResults);
+        response.TotalCount.Should().Be(expectedResults);
     }
 }

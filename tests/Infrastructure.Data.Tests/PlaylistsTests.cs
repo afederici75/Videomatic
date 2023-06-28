@@ -79,17 +79,21 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, 2)]
-    [InlineData(null, "Id DESC", 2)]
-    [InlineData(null, "Id", 2)]
-    [InlineData("Philosophy", "Id   ASC", 1)]
-    [InlineData("Philosophy", "Name  DESC", 1)]
-    [InlineData("Philosophy", "VideoCount desc, Id asc", 1)]
-    public async Task GetPlaylists(string searchText, string orderBy, int expectedResults)
+    [InlineData(null, null, false, 2)]
+    [InlineData(null, "Id DESC", false, 2)]
+    [InlineData(null, "Id", false, 2)]
+    [InlineData("Philosophy", "Id   ASC", false, 1)]
+    [InlineData("Philosophy", "Name  DESC", false, 1)]
+    [InlineData("Philosophy", "VideoCount desc, Id asc", false, 1)]
+    // TODO: missing paging tests and should add more anyway
+    public async Task GetPlaylists(string? searchText, string? orderBy, bool includeCounts, int expectedResults)
     {
         var query = new GetPlaylistsQuery(
             SearchText: searchText,
-            OrderBy: orderBy);
+            OrderBy: orderBy,
+            Page: null, // Uses to 1 by default
+            PageSize: null, // Uses 10 by default
+            IncludeCounts: includeCounts);
 
         PageResult<PlaylistDTO> response = await Sender.Send(query);
 
@@ -99,5 +103,5 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
 
         // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
         // work but it would be nice to test it here.
-    }
+    }    
 }
