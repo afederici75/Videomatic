@@ -116,4 +116,21 @@ public class VideosTests : IClassFixture<DbContextFixture>
         createVid1Response.Id.Should().BeGreaterThan(0);
         createVid2Response.Id.Should().BeGreaterThan(0);
     }
+
+    [Theory]
+    [InlineData(null, null, null, null, null, null, true, null)]
+    [InlineData(new long[] { 1, 2 }, null, null, null, null, null, true, null)]
+    public async Task GetVideosQuery(
+        long[]? playlistIds,
+        long[]? videoIds,
+        string? searchText,
+        string? orderBy,
+        int? page,
+        int? pageSize,
+        bool includeCounts,
+        ThumbnailResolutionDTO? IncludeThumbnail)
+    {
+        var query = new GetVideosQuery(playlistIds, videoIds, searchText, orderBy, page, pageSize, includeCounts, IncludeThumbnail);
+        var result = await Sender.Send(query);  
+    }
 }
