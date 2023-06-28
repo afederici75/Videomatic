@@ -1,3 +1,8 @@
+6/28
+	-Did a ton of work to improve the architecture. 
+		-The Domain belongs. While it looked appealing to have that stuff in the Data assembly,
+		it really belongs in a different place if we follow DDD.
+		
 6/19
 	-Worked all weekend and I think I finally resolved my problems with CA and DDD.
 		-I have virtually no use for aggregates right now

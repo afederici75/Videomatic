@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-
-namespace Company.Videomatic.Infrastructure.YouTube;
+﻿namespace Company.Videomatic.Application.Abstractions;
 
 /// <summary>
 /// This niterface provides access to the YouTube APIs we are interested in.
