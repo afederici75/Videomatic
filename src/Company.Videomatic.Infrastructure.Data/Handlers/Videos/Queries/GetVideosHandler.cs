@@ -45,6 +45,11 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
             query = query.Where(v => videosOfPlaylist.Contains(v.Id));
         }
 
+        if (request.VideoIds != null)
+        {            
+            query = query.Where(v => request.VideoIds.Contains(v.Id));
+        }
+
         // Custom OrderBy which takes in account what we allow to sort by
         query = query.OrderBy(request.OrderBy, SupportedOrderBys);
 

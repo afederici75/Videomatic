@@ -123,6 +123,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [InlineData(null, null, null, null, true, null, 2)]
     [InlineData(new long[] { 1 }, null, null, null, true, null, 2)]
     [InlineData(new long[] { 1, 2 }, null, null, null, true, null, 2)]
+    [InlineData(null, new long[] { 2 }, null, null, true, null, 1)] // By VideoIds
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideos(
         long[]? playlistIds,
