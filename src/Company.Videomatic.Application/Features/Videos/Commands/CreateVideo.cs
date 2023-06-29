@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using static System.Net.WebRequestMethods;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record CreateVideoCommand(
     string Location,
@@ -31,6 +33,17 @@ public class CreateVideoCommandBuilder
             PlaylistId: None,
             VideoOwnerChannelTitle: None,
             VideoOwnerChannelId: None);
+    }
+
+    public CreateVideoCommand WithRandomValuesAndEmptyVideoDetails()
+    {
+        var val = new Random(123).Next(1, int.MaxValue);
+        
+        string location = $"https://www.youtube.com/watch?v=#VideoId{val}";
+        string name = $"Name{val}";
+        string? description = $"The description of video {val}";
+
+        return WithEmptyVideoDetails(location, name, description);
     }
 }
 
