@@ -29,7 +29,12 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
             (builder) => 
             {
-               builder.Property(x => x.Location).HasMaxLength(FieldLengths.Location);
+                // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
+                builder.WithOwner().HasForeignKey("VideoId");
+                builder.Property("Id");
+                builder.HasKey("Id");
+
+                builder.Property(x => x.Location).HasMaxLength(FieldLengths.Location);
             });
 
         var details = builder.OwnsOne(x => x.Details, (builder) => 
@@ -38,7 +43,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
             //builder.Property(x => x.VideoPublishedAt);
             builder.Property(x => x.ChannelId).HasMaxLength(TempSafeLength);
             builder.Property(x => x.PlaylistId).HasMaxLength(TempSafeLength);
-            //builder.Property(x => x.Position);
+            builder.Property(x => x.Provider).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelTitle).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelId).HasMaxLength(TempSafeLength);
 

@@ -19,16 +19,16 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task CreatePlaylist()
     {
-        var command = CreatePlaylistCommandBuilder.WithDummyValues();
+        var createCommand = CreatePlaylistCommandBuilder.WithDummyValues();
 
-        CreatedResponse response = await Sender.Send(command);
+        CreatedResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
 
         var playlist = Fixture.DbContext.Playlists.Single(x => x.Id == response.Id);
 
-        playlist.Should().BeEquivalentTo(command);
+        playlist.Should().BeEquivalentTo(createCommand); // Name and Description are like in command        
     }
 
     [Fact]
