@@ -35,13 +35,11 @@ public class CreateVideoCommandBuilder
             VideoOwnerChannelId: None);
     }
 
-    public CreateVideoCommand WithRandomValuesAndEmptyVideoDetails()
+    public CreateVideoCommand WithRandomValuesAndEmptyVideoDetails(string id)
     {
-        var val = new Random(123).Next(1, int.MaxValue);
-        
-        string location = $"https://www.youtube.com/watch?v=#VideoId{val}";
-        string name = $"Name{val}";
-        string? description = $"The description of video {val}";
+        string location = $"https://www.youtube.com/watch?v=#VideoId{id}";
+        string name = $"Name{id}";
+        string? description = $"The description of video {id}";
 
         return WithEmptyVideoDetails(location, name, description);
     }

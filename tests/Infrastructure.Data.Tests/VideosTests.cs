@@ -97,17 +97,11 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
 
-        var createVid1Cmd = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
-            location: "youtube.com/v?V1",
-            name: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
-            description: "A description");
+        var createVid1Cmd = new CreateVideoCommandBuilder().WithRandomValuesAndEmptyVideoDetails("V1");
 
         CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
-        var createVid2Cmd = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
-            location: "youtube.com/v?V2",
-            name: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
-            description: "A second description");
+        var createVid2Cmd = new CreateVideoCommandBuilder().WithRandomValuesAndEmptyVideoDetails("V2");
 
         CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
 
