@@ -44,7 +44,7 @@ public class DataSeeder : IDataSeeder
     {
         // Video
         var video = await Sender.Send(
-            new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            CreateVideoCommandBuilder.WithEmptyVideoDetails(
                 location: "https://www.youtube.com/watch?v=n1kmKpjk_8E", 
                 name: "Aldous Huxley - The Dancing Shiva", 
                 description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
@@ -124,7 +124,7 @@ public class DataSeeder : IDataSeeder
     {
         // Video
         var video = await Sender.Send(
-            new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            CreateVideoCommandBuilder.WithEmptyVideoDetails(
                 location: "https://www.youtube.com/watch?v=BBd3aHnVnuE",
                 name: "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?",
                 description: "Hindu scriptures offer different teachings to meet the individual needs of different " +

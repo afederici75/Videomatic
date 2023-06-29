@@ -17,8 +17,7 @@ public class VideoRequestsValidatorTests
     public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
     {
         ValidatorHelper.Validate<CreateVideoCommandValidator, CreateVideoCommand>(
-            new CreateVideoCommandBuilder()
-                    .WithEmptyVideoDetails(location, title, description), expectedErrors);
+            CreateVideoCommandBuilder.WithEmptyVideoDetails(location, title, description), expectedErrors);
     }
 
     [Theory]

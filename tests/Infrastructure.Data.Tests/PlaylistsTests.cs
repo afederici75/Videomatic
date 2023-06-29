@@ -19,7 +19,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task CreatePlaylist()
     {
-        var command = new CreatePlaylistCommandBuilder().WithDummyValues();
+        var command = CreatePlaylistCommandBuilder.WithDummyValues();
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -35,7 +35,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     public async Task DeletePlaylist()
     {
         CreatedResponse createdResponse = await Sender.Send(
-            new CreatePlaylistCommandBuilder().WithDummyValues(nameof(DeletePlaylist)));
+            CreatePlaylistCommandBuilder.WithDummyValues(nameof(DeletePlaylist)));
 
         // Executes
         DeletedResponse deletedResponse = await Sender.Send(new DeletePlaylistCommand(createdResponse.Id));
@@ -54,7 +54,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     public async Task UpdatePlaylist()
     {
         // Prepares
-        var command = new CreatePlaylistCommandBuilder().WithDummyValues(nameof(UpdatePlaylist));
+        var command = CreatePlaylistCommandBuilder.WithDummyValues(nameof(UpdatePlaylist));
 
         CreatedResponse response = await Sender.Send(command);
 
