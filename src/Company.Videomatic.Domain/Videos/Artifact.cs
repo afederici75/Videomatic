@@ -2,7 +2,7 @@
 
 public class Artifact : EntityBase
 {
-    internal static Artifact Create(long videoId, string title, string type, string? text = null)
+    internal static Artifact Create(VideoId videoId, string title, string type, string? text = null)
     {
         return new Artifact
         {
@@ -13,7 +13,7 @@ public class Artifact : EntityBase
         };
     }
 
-    public long VideoId { get; private set; }
+    public VideoId VideoId { get; private set; } = default!;
     public string Title { get; private set; } = default!;
     public string Type { get; private set; } = default!;
     public string? Text { get; private set; }

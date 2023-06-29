@@ -2,7 +2,7 @@
 
 public class VideoTag : EntityBase
 {
-    internal static VideoTag Create(long videoId, string name)
+    internal static VideoTag Create(VideoId videoId, string name)
     {
         return new VideoTag()
         {
@@ -12,7 +12,7 @@ public class VideoTag : EntityBase
 
     }
 
-    public long VideoId { get; private set; }
+    public VideoId VideoId { get; private set; } = default!;
     public string Name { get; private set; } = default!;
 
     private VideoTag()

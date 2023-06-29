@@ -25,6 +25,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         }
 
         modelBuilder.HasSequence<long>(TranscriptConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(VideoConfiguration.SequenceName); // TODO: fix this
     }
 
     public static bool TryGetSequenceOfType(Type type, out string sequenceName)

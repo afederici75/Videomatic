@@ -16,6 +16,10 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
                .HasConversion(x => x.Value, y => new TranscriptId(y))
                .IsRequired(true);
 
+        builder.Property(x => x.VideoId)
+               .HasConversion(x => x.Value, y => new VideoId(y))
+               .IsRequired(true);
+
         builder.Property(x => x.Language)
                .HasMaxLength(FieldLengths.Language);
 

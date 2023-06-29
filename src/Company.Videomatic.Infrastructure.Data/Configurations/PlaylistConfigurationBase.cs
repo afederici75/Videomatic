@@ -13,6 +13,7 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         builder.ToTable("Playlists");
 
         // Fields
+        
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Name);
 

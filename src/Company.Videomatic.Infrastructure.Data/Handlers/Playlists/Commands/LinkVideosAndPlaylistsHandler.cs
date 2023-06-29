@@ -19,7 +19,7 @@ public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosToPlay
             .Select(x => x.VideoId)
           .ToListAsync(cancellationToken);
 
-        var notLinked = request.VideoIds.Except(currentVideoIds);
+        var notLinked = request.VideoIds.Except(currentVideoIds.Select(x => x.Value));
         
         foreach (var newId in notLinked)
         {

@@ -267,12 +267,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transcripts_Id",
-                table: "Transcripts",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_VideoId",
                 table: "Transcripts",
                 column: "VideoId");
@@ -286,12 +280,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Videos_Details_VideoOwnerChannelId",
                 table: "Videos",
                 column: "Details_VideoOwnerChannelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_Id",
-                table: "Videos",
-                column: "Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Location",

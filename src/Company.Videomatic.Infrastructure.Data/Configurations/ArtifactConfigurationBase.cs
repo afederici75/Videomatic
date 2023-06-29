@@ -11,8 +11,11 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
     public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {        
         builder.ToTable("Artifacts");
-        
+
         // Fields        
+        builder.Property(x => x.VideoId)
+               .HasConversion(x => x.Value, y => new VideoId(y));
+        
         builder.Property(x => x.Title)
                .HasMaxLength(FieldLengths.Title);
 

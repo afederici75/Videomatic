@@ -13,9 +13,13 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
     {
         builder.ToTable("Videos");
 
-        // Fields        
+        // Fields
+        builder.Property(x => x.Id)
+               .HasConversion(x => x.Value, y => new VideoId(y));
+
         builder.Property(x => x.Location)
                .HasMaxLength(FieldLengths.Location); 
+
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
         builder.Property(x => x.Description);

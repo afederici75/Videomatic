@@ -78,7 +78,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
             .Where(x => x.Id == response.Id)
             .SingleAsync();
 
-        video.Should().BeEquivalentTo(updateCommand);
+        video.Id.Value.Should().Be(updateCommand.Id);
+        video.Name.Should().BeEquivalentTo(updateCommand.Name);
+        video.Description.Should().BeEquivalentTo(updateCommand.Description);        
     }
 
     [Fact]

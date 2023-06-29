@@ -2,32 +2,13 @@
 
 namespace Company.Videomatic.Domain.Videos;
 
-public record VideoDetails(
-    string Provider,
-    DateTime VideoPublishedAt,
-    string ChannelId,
-    string PlaylistId,
-    int Position,
-    string VideoOwnerChannelTitle,
-    string VideoOwnerChannelId
-    )
+public record VideoId(long Value = 0)
 {
-    private VideoDetails() :
-        this(Provider: "NONE",
-             VideoPublishedAt: DateTime.UtcNow,
-             ChannelId: "",
-             PlaylistId: "",
-             Position: 0,
-             VideoOwnerChannelTitle: "",
-             VideoOwnerChannelId: "") { }
+    public static implicit operator long(VideoId x) => x.Value;
+    public static implicit operator VideoId(long x) => new VideoId(x);
+}   
 
-    public static VideoDetails CreateEmpty()
-    {
-        return new VideoDetails();
-    }
-}
-
-public class Video : EntityBase
+public class Video //: EntityBase
 {
     public static Video Create(string location, string title, VideoDetails details, string? description)
     {
@@ -40,6 +21,7 @@ public class Video : EntityBase
         };
     }
 
+    public VideoId Id { get; private set; } = default!;
     public string Location { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
@@ -52,11 +34,6 @@ public class Video : EntityBase
     public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
     public IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
-
-    //public void SetDetails(VideoDetails details)
-    //{ 
-    //    this.Details = details;
-    //}
 
     public VideoTag AddTag(string name)
     {
@@ -78,18 +55,6 @@ public class Video : EntityBase
         _artifacts.Add(artifact);
         return artifact;
     }
-
-    //public Video AddPlaylistVideo(PlaylistVideo playlistVideo)
-    //{
-    //    _playlistVideos.Add(playlistVideo);
-    //    return this;
-    //}
-
-    //public Video AddPlaylist(Playlist playlist)
-    //{
-    //    _playLists.Add(playlist);
-    //    return this;
-    //}
 
     public Transcript AddTranscript(string language)
     {

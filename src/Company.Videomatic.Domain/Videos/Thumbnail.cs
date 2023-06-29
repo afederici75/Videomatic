@@ -2,7 +2,7 @@
 
 public class Thumbnail : EntityBase
 {
-    internal static Thumbnail Create(long videoId, string location, ThumbnailResolution resolution, int height, int width)
+    internal static Thumbnail Create(VideoId videoId, string location, ThumbnailResolution resolution, int height, int width)
     {
         return new Thumbnail
         {
@@ -14,7 +14,7 @@ public class Thumbnail : EntityBase
         };
     }
 
-    public long VideoId { get; private set; }
+    public VideoId VideoId { get; private set; } = default!;
     public string Location { get; private set; } = default!;
     public ThumbnailResolution Resolution { get; private set; }
     public int Height { get; private set; }

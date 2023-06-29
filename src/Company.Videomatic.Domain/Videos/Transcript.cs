@@ -3,12 +3,12 @@
 public record TranscriptId(long Value = 0)
 {
     public static implicit operator long(TranscriptId x) => x.Value;
-    public static implicit operator TranscriptId(long x) => new TranscriptId(x);
+    //public static implicit operator TranscriptId(long x) => new TranscriptId(x);
 }
 
 public class Transcript //: EntityBase
 {
-    internal static Transcript Create(long videoId, string language)
+    internal static Transcript Create(VideoId videoId, string language)
     {
         return new Transcript
         {
@@ -18,7 +18,7 @@ public class Transcript //: EntityBase
     }   
 
     public TranscriptId Id { get; private set; } = default!;
-    public long VideoId { get; private set; }   
+    public VideoId VideoId { get; private set; } = default!;
     public string Language { get; private set; } = default!;
 
     public IReadOnlyCollection<TranscriptLine> Lines 

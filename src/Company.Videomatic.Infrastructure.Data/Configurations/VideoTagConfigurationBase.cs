@@ -12,6 +12,10 @@ public abstract class VideoTagConfigurationBase : IEntityTypeConfiguration<Video
         builder.ToTable("VideoTags");
 
         // Fields
+        builder.Property(x => x.VideoId)
+               .HasConversion(x => x.Value, y => new VideoId(y))
+               .IsRequired(true);
+
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Name);
         //
