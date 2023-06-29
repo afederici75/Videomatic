@@ -1,4 +1,8 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using Company.Videomatic.Domain.Playlists;
+using Company.Videomatic.Domain.Videos;
+
+namespace Microsoft.Extensions.DependencyInjection;
 
 public class AutomappingProfile : Profile
 {
@@ -8,11 +12,12 @@ public class AutomappingProfile : Profile
         CreateMap<UpdatePlaylistCommand, Playlist>();
         
         CreateMap<CreateVideoCommand, Video>();
+        CreateMap<CreateVideoDetails, VideoDetails>();
+
         CreateMap<UpdateVideoCommand, Video>();
 
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
-
         CreateMap<Thumbnail, ThumbnailDTO>();
 
         CreateMap<ThumbnailPayload, Thumbnail>();

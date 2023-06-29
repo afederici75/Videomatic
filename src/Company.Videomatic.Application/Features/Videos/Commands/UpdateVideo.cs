@@ -5,7 +5,7 @@
 /// </summary>
 public record UpdateVideoCommand(
     long Id, 
-    string Title, 
+    string Name, 
     string? Description = default) : IRequest<UpdatedResponse>;
 
 
@@ -14,6 +14,6 @@ internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoComman
     public UpdateVideoCommandValidator()
     {
         RuleFor(x => x.Id).GreaterThan(0);
-        RuleFor(x => x.Title).NotEmpty();
+        RuleFor(x => x.Name).NotEmpty();
     }
 }

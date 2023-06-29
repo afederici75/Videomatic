@@ -16,11 +16,27 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         // Fields        
         builder.Property(x => x.Location)
                .HasMaxLength(FieldLengths.Location); 
-        builder.Property(x => x.Title)
+        builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
         builder.Property(x => x.Description);
-               //.HasMaxLength(FieldLengths.Description);
+        //.HasMaxLength(FieldLengths.Description);
+        var details = builder.OwnsOne(x => x.Details, (builder) => 
+        {
+            const int TempSafeLength = 100;
+            //builder.Property(x => x.VideoPublishedAt);
+            builder.Property(x => x.ChannelId).HasMaxLength(TempSafeLength);
+            builder.Property(x => x.PlaylistId).HasMaxLength(TempSafeLength);
+            //builder.Property(x => x.Position);
+            builder.Property(x => x.VideoOwnerChannelTitle).HasMaxLength(TempSafeLength);
+            builder.Property(x => x.VideoOwnerChannelId).HasMaxLength(TempSafeLength);
 
+            builder.HasIndex(x => x.VideoOwnerChannelId);
+            builder.HasIndex(x => x.ChannelId);
+            builder.Property(x => x.VideoPublishedAt);
+            builder.Property(x => x.PlaylistId);
+            builder.Property(x => x.Position);
+        });
+           
 
         // Relationships
         builder.HasMany(x => x.Thumbnails)            
@@ -49,7 +65,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         // Indices
         builder.HasIndex(x => x.Location);
-        builder.HasIndex(x => x.Title);
-        //builder.HasIndex(x => x.Description); // 5000 chars is too long for an index
+        builder.HasIndex(x => x.Name);
+        
     }
 }

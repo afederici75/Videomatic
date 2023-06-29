@@ -23,8 +23,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1", 
-            Title: nameof(CreateVideo), 
-            Description: "A description");
+            Name: nameof(CreateVideo),
+            Description: "A description",
+            Details: CreateVideoDetails.CreateDummy());
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -41,8 +42,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1", 
-            Title: nameof(DeleteVideo), 
-            Description: "A description");
+            Name: nameof(DeleteVideo),
+            Description: "A description",
+            Details: CreateVideoDetails.CreateDummy());
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -61,8 +63,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1",
-            Title: nameof(UpdateVideo),
-            Description: "A description");
+            Name: nameof(UpdateVideo),
+            Description: "A description",
+            Details: CreateVideoDetails.CreateDummy());
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -93,15 +96,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         var createVid1Cmd = new CreateVideoCommand(
             Location: "youtube.com/v?V1",
-            Title: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
-            Description: "A description");
+            Name: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
+            Description: "A description", 
+            Details: CreateVideoDetails.CreateDummy());
 
         CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = new CreateVideoCommand(
             Location: "youtube.com/v?V2",
-            Title: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
-            Description: "A second description");
+            Name: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
+            Description: "A second description",
+            Details: CreateVideoDetails.CreateDummy());
 
         CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
 

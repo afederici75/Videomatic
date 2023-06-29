@@ -13,7 +13,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
     Dictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new(StringComparer.OrdinalIgnoreCase)
     {
         { nameof(VideoDTO.Id), _ => _.Id },
-        { nameof(VideoDTO.Title), _ => _.Title },
+        { nameof(VideoDTO.Title), _ => _.Name },
         { nameof(VideoDTO.Description), _ => _.Description },
         { nameof(VideoDTO.ArtifactCount), _ => _.Artifacts.Count },
         { nameof(VideoDTO.TranscriptCount), _ => _.Artifacts.Count },
@@ -32,7 +32,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         {
             // Search text fields must be specified directly
             query = query.Where(v =>
-                v.Title.Contains(request.SearchText) ||
+                v.Name.Contains(request.SearchText) ||
                 v.Description!.Contains(request.SearchText));
         }
 
@@ -65,7 +65,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                        select new VideoDTO(
                 video.Id,
                 video.Location,
-                video.Title,
+                video.Name,
                 video.Description,
                 (int?)(request.IncludeCounts ? video.Playlists.Count : null),
                 (int?)(request.IncludeCounts ? video.Artifacts.Count : null),

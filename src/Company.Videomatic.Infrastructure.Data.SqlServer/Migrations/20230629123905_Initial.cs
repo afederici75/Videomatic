@@ -51,8 +51,15 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Details_Provider = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Details_VideoPublishedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Details_ChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Details_PlaylistId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Details_Position = table.Column<int>(type: "int", nullable: false),
+                    Details_VideoOwnerChannelTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Details_VideoOwnerChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,6 +278,16 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Videos_Details_ChannelId",
+                table: "Videos",
+                column: "Details_ChannelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_Details_VideoOwnerChannelId",
+                table: "Videos",
+                column: "Details_VideoOwnerChannelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Videos_Id",
                 table: "Videos",
                 column: "Id",
@@ -282,9 +299,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Location");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Videos_Title",
+                name: "IX_Videos_Name",
                 table: "Videos",
-                column: "Title");
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VideoTags_Id",

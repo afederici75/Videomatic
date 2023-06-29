@@ -1,54 +1,59 @@
-﻿namespace Company.Videomatic.Domain.Videos;
+﻿using JetBrains.Annotations;
+
+namespace Company.Videomatic.Domain.Videos;
+
+public record VideoDetails(
+    string Provider,
+    DateTime VideoPublishedAt,
+    string ChannelId,
+    string PlaylistId,
+    int Position,
+    string VideoOwnerChannelTitle,
+    string VideoOwnerChannelId
+    )
+{
+    public static VideoDetails CreateEmpty()
+    {
+        return new VideoDetails(
+                       Provider: "NONE",
+                       VideoPublishedAt: DateTime.UtcNow,
+                       ChannelId: "",
+                       PlaylistId: "",
+                       Position: 0,
+                       VideoOwnerChannelTitle: "",
+                       VideoOwnerChannelId: "");
+    }
+}
 
 public class Video : EntityBase
 {
-    public static Video Create(string location, string title, string? description)
+    public static Video Create(string location, string title, VideoDetails details, string? description)
     {
         return new Video
         {
             Location = location,
-            Title = title,
+            Name = title,
             Description = description,
+            Details = details ?? VideoDetails.CreateEmpty()
         };
     }
 
     public string Location { get; private set; } = default!;
-    public string Title { get; private set; } = default!;
+    public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public IReadOnlyCollection<VideoTag> VideoTags
-    {
-        get => _videoTags.ToList();
-        //private set => _videoTags = value.ToList();
-    }
+    public VideoDetails Details { get; private set; } = default!;
 
-    public IReadOnlyCollection<Playlists.Playlist> Playlists
-    {
-        get => _playLists.ToList();
-        //private set => _playLists = value.ToList();
-    }
-    public IReadOnlyCollection<PlaylistVideo> PlaylistVideos
-    {
-        get => _playlistVideos.ToList();
-        //private set => _playlistVideos = value.ToList();
-    }
+    public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
+    public IReadOnlyCollection<Playlist> Playlists => _playLists.ToList();    
+    public IReadOnlyCollection<PlaylistVideo> PlaylistVideos => _playlistVideos.ToList();
+    public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();
+    public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
+    public IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
 
-    public IReadOnlyCollection<Artifact> Artifacts
-    {
-        get => _artifacts.ToList();
-        //private set => _artifacts = value.ToList();
-    }
-
-    public IReadOnlyCollection<Thumbnail> Thumbnails
-    {
-        get => _thumbnails.ToList();
-        //private set => _thumbnails = value.ToList();
-    }
-
-    public IReadOnlyCollection<Transcript> Transcripts
-    {
-        get => _transcripts.ToList();
-        //private set => _transcripts = value.ToList();
+    public void SetDetails(VideoDetails details)
+    { 
+        this.Details = details;
     }
 
     public VideoTag AddTag(string name)
@@ -72,17 +77,17 @@ public class Video : EntityBase
         return artifact;
     }
 
-    public Video AddPlaylistVideo(PlaylistVideo playlistVideo)
-    {
-        _playlistVideos.Add(playlistVideo);
-        return this;
-    }
+    //public Video AddPlaylistVideo(PlaylistVideo playlistVideo)
+    //{
+    //    _playlistVideos.Add(playlistVideo);
+    //    return this;
+    //}
 
-    public Video AddPlaylist(Playlists.Playlist playlist)
-    {
-        _playLists.Add(playlist);
-        return this;
-    }
+    //public Video AddPlaylist(Playlist playlist)
+    //{
+    //    _playLists.Add(playlist);
+    //    return this;
+    //}
 
     public Transcript AddTranscript(string language)
     {

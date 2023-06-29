@@ -16,7 +16,8 @@ public class VideoRequestsValidatorTests
     [InlineData("http://somethingElse/2 ", "Video title", "Description", 0)]
     public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateVideoCommandValidator, CreateVideoCommand>(new(location, title, description), expectedErrors);
+        ValidatorHelper.Validate<CreateVideoCommandValidator, CreateVideoCommand>(
+            new(location, title, description, CreateVideoDetails.CreateDummy()), expectedErrors);
     }
 
     [Theory]

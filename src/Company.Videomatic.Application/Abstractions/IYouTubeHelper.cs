@@ -17,7 +17,7 @@ public interface IYouTubeHelper
     /// </summary>
     /// <param name="playlistId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<VideoDTO> GetVideosOfPlaylist(string playlistId);
+    IAsyncEnumerable<VideoDTO> GetAllVideosOfPlaylist(string playlistId);
 
     /// <summary>
     /// Gets the full transcription of a YouTube video.

@@ -8,9 +8,13 @@ public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, 
 
     public override async Task<CreatedResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
     {
-        Video dbVideo = Mapper.Map<CreateVideoCommand, Video>(request);
+        Video video = Mapper.Map<CreateVideoCommand, Video>(request);
 
-        var entry = DbContext.Add(dbVideo);
+        //var details = new VideoDetails(
+        //    Provider: "YOUTUBE",            
+        //    ); 
+
+        var entry = DbContext.Add(video);
         var res = await DbContext.CommitChangesAsync(cancellationToken);
 
         return new CreatedResponse(Id: entry.Entity.Id);

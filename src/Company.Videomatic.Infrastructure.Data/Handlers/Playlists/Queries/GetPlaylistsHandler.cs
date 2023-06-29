@@ -47,10 +47,5 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
             .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
 
         return page;
-    }
-
-    private Expression<Func<Playlist, object>> DoIt()
-    {
-        throw new NotImplementedException();
-    }
+    }   
 }

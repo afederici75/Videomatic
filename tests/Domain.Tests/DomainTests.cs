@@ -17,7 +17,9 @@ public class DomainTests
     [Fact]
     public void CreateVideoWithAllDetails()
     {
-        var video = Video.Create(location: "youtube.com/v?VCompleteA", title: nameof(CreateVideoWithAllDetails), description: "A complete description");
+        var video = Video.Create(location: "youtube.com/v?VCompleteA", title: nameof(CreateVideoWithAllDetails), 
+            details: new ("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
+            description: "A complete description");
 
         var thumb1 = video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
         var thumb2 = video.AddThumbnail(location: "youtubethumbs.com/T1_2", resolution: ThumbnailResolution.Medium, height: 200, width: 200);
@@ -40,8 +42,10 @@ public class DomainTests
     [Fact]
     public void CreatePlaylistWithVideo()
     {
-        var playlist = Playlist.Create(name: "My playlist 3", description: $"A playlist with 1 complete videos {DateTime.Now}");
-        var video = playlist.AddVideo("http://somewhere", "Title", "Video description");
+        var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
+        var video = playlist.AddVideo("http://somewhere", "Title",
+            details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
+            "Video description");
 
         var thumb1 = video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
 

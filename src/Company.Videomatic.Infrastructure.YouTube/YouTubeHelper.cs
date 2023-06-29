@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Model;
+using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 using Newtonsoft.Json;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
@@ -43,14 +44,14 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(response.nextPageToken));
     }
 
-    public async IAsyncEnumerable<VideoDTO> GetVideosOfPlaylist(string playlistId)
+    public async IAsyncEnumerable<VideoDTO> GetAllVideosOfPlaylist(string playlistId)
     {
         var parameters = new Dictionary<string, string>
         {
             ["key"] = _options.ApiKey,
             ["playlistId"] = playlistId,
             ["part"] = "snippet,contentDetails,id,status",
-            ["fields"] = "pageInfo, items/snippet(title, description)",
+            //["fields"] = "pageInfo, items/snippet(title, description, resourceId)",
             ["maxResults"] = "50"
         };
 
@@ -64,6 +65,9 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
             foreach (var item in response.items)
             {
+                if (item.status.privacyStatus != "public")
+                    continue;
+
                 yield return new VideoDTO(Id: 0, Location: item.id, Title: item.snippet.title, Description: item.snippet.description);
             }
             parameters["pageToken"] = response.nextPageToken;

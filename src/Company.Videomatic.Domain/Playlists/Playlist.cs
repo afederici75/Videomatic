@@ -23,9 +23,9 @@ public class Playlist : EntityBase
         get => _playlistVideos.ToList();
     }
 
-    public Video AddVideo(string location, string title, string? description)
+    public Video AddVideo(string location, string title, VideoDetails details, string? description)
     {
-        var video = Video.Create(location, title, description);
+        var video = Video.Create(location, title, details, description);
         _videos.Add(video);
         return video;
     }

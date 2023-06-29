@@ -4,7 +4,7 @@
 <CardDeck>
 @foreach (var video in Videos)
 {
-    <VideoCard Video=video  GridMode=true/>
+    <VideoCard Video=video GridMode=true/>
 }   
 </CardDeck>
 
@@ -22,7 +22,7 @@
             IncludeCounts: true, 
             IncludeThumbnail: ThumbnailResolutionDTO.Default);
         
-        var results = await Sender.Send(query);
+        PageResult<VideoDTO> results = await Sender.Send(query);
         
         Videos = results.Items.ToArray();
     }    

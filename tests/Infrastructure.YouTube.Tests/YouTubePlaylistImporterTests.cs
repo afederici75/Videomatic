@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.YouTube.Tests;
+﻿using Company.Videomatic.Application.Features.Model;
+
+namespace Infrastructure.YouTube.Tests;
 
 public class YouTubePlaylistImporterTests
 {
@@ -10,9 +12,14 @@ public class YouTubePlaylistImporterTests
     }
 
     [Theory]
-    [InlineData(null, "https://www.youtube.com/playlist?list=PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
+    [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
     public async Task ImportPlaylist([FromServices] IYouTubeHelper helper , string url)
     {
-       helper.GetVideosOfPlaylist(url);
+        List<VideoDTO> videos = new ();
+        await foreach (var video in helper.GetAllVideosOfPlaylist(url))
+        {
+            videos.Add(video);
+
+        }
     }
 }
