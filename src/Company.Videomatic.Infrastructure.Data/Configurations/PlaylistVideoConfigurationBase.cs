@@ -13,7 +13,10 @@ public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<
 
         // Fields
         builder.Property(x => x.VideoId)
-               .HasConversion(x => x.Value, y => new VideoId(y));
+               .HasConversion(x => x.Value, y => y);
+
+        builder.Property(x => x.PlaylistId)
+               .HasConversion(x => x.Value, y => y);
 
         // Relationships
         //builder.HasMany(x => x.Videos)

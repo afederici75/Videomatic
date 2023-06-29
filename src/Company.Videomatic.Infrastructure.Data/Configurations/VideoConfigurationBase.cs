@@ -15,7 +15,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         // Fields
         builder.Property(x => x.Id)
-               .HasConversion(x => x.Value, y => new VideoId(y));
+               .HasConversion(x => x.Value, y => y);
 
         builder.Property(x => x.Location)
                .HasMaxLength(FieldLengths.Location); 

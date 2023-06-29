@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
+using Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer;
 
@@ -26,6 +27,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
 
         modelBuilder.HasSequence<long>(TranscriptConfiguration.SequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(VideoConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(PlaylistConfiguration.SequenceName); // TODO: fix this
     }
 
     public static bool TryGetSequenceOfType(Type type, out string sequenceName)

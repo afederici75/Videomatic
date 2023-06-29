@@ -1,6 +1,13 @@
 ﻿namespace Company.Videomatic.Domain.Playlists;
 
-public class Playlist : EntityBase
+public record PlaylistId(long Value = 0)
+{
+    public static implicit operator long(PlaylistId x) => x.Value;
+    public static implicit operator PlaylistId(long x) => new PlaylistId(x);
+}
+
+
+public class Playlist //: EntityBase
 {
     public static Playlist Create(string name, string? description)
     {
@@ -10,6 +17,7 @@ public class Playlist : EntityBase
         };
     }
 
+    public PlaylistId Id { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
