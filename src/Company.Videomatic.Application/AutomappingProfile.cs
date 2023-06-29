@@ -10,9 +10,14 @@ public class AutomappingProfile : Profile
     {
         CreateMap<CreatePlaylistCommand, Playlist>();
         CreateMap<UpdatePlaylistCommand, Playlist>();
-        
-        CreateMap<CreateVideoCommand, Video>();
-        CreateMap<CreateVideoDetails, VideoDetails>();
+
+        CreateMap<CreateVideoCommand, Video>()
+            .ForPath(dest => dest.Details.PlaylistId, opt => opt.MapFrom(src => src.PlaylistId))
+            .ForPath(dest => dest.Details.ChannelId, opt => opt.MapFrom(src => src.ChannelId))
+            .ForPath(dest => dest.Details.VideoOwnerChannelId, opt => opt.MapFrom(src => src.VideoOwnerChannelId))
+            .ForPath(dest => dest.Details.VideoOwnerChannelTitle, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
+            .ForPath(dest => dest.Details.VideoPublishedAt, opt => opt.MapFrom(src => src.VideoPublishedAt))
+            .ForPath(dest => dest.Details.Provider, opt => opt.MapFrom(src => src.Provider));
 
         CreateMap<UpdateVideoCommand, Video>();
 

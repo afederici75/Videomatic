@@ -12,16 +12,18 @@ public record VideoDetails(
     string VideoOwnerChannelId
     )
 {
+    private VideoDetails() :
+        this(Provider: "NONE",
+             VideoPublishedAt: DateTime.UtcNow,
+             ChannelId: "",
+             PlaylistId: "",
+             Position: 0,
+             VideoOwnerChannelTitle: "",
+             VideoOwnerChannelId: "") { }
+
     public static VideoDetails CreateEmpty()
     {
-        return new VideoDetails(
-                       Provider: "NONE",
-                       VideoPublishedAt: DateTime.UtcNow,
-                       ChannelId: "",
-                       PlaylistId: "",
-                       Position: 0,
-                       VideoOwnerChannelTitle: "",
-                       VideoOwnerChannelId: "");
+        return new VideoDetails();
     }
 }
 
@@ -51,10 +53,10 @@ public class Video : EntityBase
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
     public IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
 
-    public void SetDetails(VideoDetails details)
-    { 
-        this.Details = details;
-    }
+    //public void SetDetails(VideoDetails details)
+    //{ 
+    //    this.Details = details;
+    //}
 
     public VideoTag AddTag(string name)
     {

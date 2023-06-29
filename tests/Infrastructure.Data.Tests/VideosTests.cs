@@ -1,6 +1,4 @@
-﻿using Azure;
-
-namespace Infrastructure.Data.Tests;
+﻿namespace Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]
 public class VideosTests : IClassFixture<DbContextFixture>
@@ -24,8 +22,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1", 
             Name: nameof(CreateVideo),
-            Description: "A description",
-            Details: CreateVideoDetails.CreateDummy());
+            Description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -34,7 +31,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
 
-        video.Should().BeEquivalentTo(command);
+        video.Name.Should().BeEquivalentTo(command.Name);
+        video.Description.Should().BeEquivalentTo(command.Description);
+        video.Location.Should().BeEquivalentTo(command.Location);
+        video.Details.ChannelId.Should().BeEquivalentTo(command.ChannelId); 
+        video.Details.PlaylistId.Should().BeEquivalentTo(command.PlaylistId);
+        video.Details.Provider.Should().BeEquivalentTo(command.Provider);
+        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(command.VideoOwnerChannelId);
+        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(command.VideoOwnerChannelTitle);
+        video.Details.VideoPublishedAt.Should().Be(command.VideoPublishedAt);        
     }
 
     [Fact]
@@ -43,8 +48,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1", 
             Name: nameof(DeleteVideo),
-            Description: "A description",
-            Details: CreateVideoDetails.CreateDummy());
+            Description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -64,8 +68,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var command = new CreateVideoCommand(
             Location: "youtube.com/v?V1",
             Name: nameof(UpdateVideo),
-            Description: "A description",
-            Details: CreateVideoDetails.CreateDummy());
+            Description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -97,16 +100,14 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var createVid1Cmd = new CreateVideoCommand(
             Location: "youtube.com/v?V1",
             Name: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
-            Description: "A description", 
-            Details: CreateVideoDetails.CreateDummy());
+            Description: "A description");
 
         CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = new CreateVideoCommand(
             Location: "youtube.com/v?V2",
             Name: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
-            Description: "A second description",
-            Details: CreateVideoDetails.CreateDummy());
+            Description: "A second description");
 
         CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
 
