@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.Videomatic.Domain.Videos;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record AddTranscriptsToVideoCommand(
     long VideoId,
@@ -15,4 +17,4 @@ public record class TranscriptLinePayload(
 
 public record AddTranscriptsToVideoResponse(
     long VideoId,
-    IReadOnlyDictionary<string, long> Ids);
+    IReadOnlyDictionary<string, TranscriptId> Ids);

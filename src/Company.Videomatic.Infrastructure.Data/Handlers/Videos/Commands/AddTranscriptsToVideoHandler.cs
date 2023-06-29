@@ -15,7 +15,7 @@ public class AddTranscriptsToVideoHandler : BaseRequestHandler<AddTranscriptsToV
               .Include(x => x.Transcripts)
               .SingleAsync(cancellationToken);
 
-        var processed = new Dictionary<string, long>();
+        var processed = new Dictionary<string, TranscriptId>();
         foreach (var trans in request.Transcripts)
         {
             var transcript = video.Transcripts.FirstOrDefault(x => x.Language == trans.Language); // TODO: case sensitivity

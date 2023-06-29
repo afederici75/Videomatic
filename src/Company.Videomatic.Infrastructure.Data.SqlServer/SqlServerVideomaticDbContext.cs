@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Reflection.Metadata.Ecma335;
+﻿using Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer;
 
@@ -24,7 +22,9 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
                 continue;
             
             modelBuilder.HasSequence<long>(sequenceName);            
-        }        
+        }
+
+        modelBuilder.HasSequence<long>(TranscriptConfiguration.SequenceName); // TODO: fix this
     }
 
     public static bool TryGetSequenceOfType(Type type, out string sequenceName)

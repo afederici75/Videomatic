@@ -1,6 +1,12 @@
 ﻿namespace Company.Videomatic.Domain.Videos;
 
-public class Transcript : EntityBase
+public record TranscriptId(long Value = 0)
+{
+    public static implicit operator long(TranscriptId x) => x.Value;
+    public static implicit operator TranscriptId(long x) => new TranscriptId(x);
+}
+
+public class Transcript //: EntityBase
 {
     internal static Transcript Create(long videoId, string language)
     {
@@ -11,6 +17,7 @@ public class Transcript : EntityBase
         };
     }   
 
+    public TranscriptId Id { get; private set; } = default!;
     public long VideoId { get; private set; }   
     public string Language { get; private set; } = default!;
 
