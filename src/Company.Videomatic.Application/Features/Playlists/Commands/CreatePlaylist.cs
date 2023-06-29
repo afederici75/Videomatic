@@ -3,7 +3,9 @@ using FluentValidation.TestHelper;
 
 namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record CreatePlaylistCommand(string Name, string? Description = null) : IRequest<CreatedResponse>;
+public record CreatePlaylistCommand(
+    string Name,
+    string? Description = null) : IRequest<CreatedResponse>;
 
 internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {

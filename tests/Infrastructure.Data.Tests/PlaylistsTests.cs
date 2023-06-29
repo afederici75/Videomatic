@@ -19,9 +19,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task CreatePlaylist()
     {
-        var command = new CreatePlaylistCommand(
-            Name: nameof(CreatePlaylist) , 
-            Description: $"A test playlist.");
+        var command = new CreatePlaylistCommandBuilder().WithDummyValues();
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -36,29 +34,27 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task DeletePlaylist()
     {
-        var command = new CreatePlaylistCommand(
-            Name: nameof(DeletePlaylist),
-            Description: "A description");
+        CreatedResponse createdResponse = await Sender.Send(
+            new CreatePlaylistCommandBuilder().WithDummyValues(nameof(DeletePlaylist)));
 
-        CreatedResponse response = await Sender.Send(command);
+        // Executes
+        DeletedResponse deletedResponse = await Sender.Send(new DeletePlaylistCommand(createdResponse.Id));
 
         // Checks
-        response.Id.Should().BeGreaterThan(0);
+        createdResponse.Id.Should().BeGreaterThan(0);
 
-        var cnt = await Fixture.DbContext.Playlists
-            .Where(x => x.Id == response.Id)
-            .ExecuteDeleteAsync();
+        var row = await Fixture.DbContext.Playlists
+            .Where(x => x.Id == createdResponse.Id)
+            .FirstOrDefaultAsync();
 
-        cnt.Should().Be(1);
+        row.Should().BeNull();
     }
 
     [Fact]
     public async Task UpdatePlaylist()
     {
         // Prepares
-        var command = new CreatePlaylistCommand(
-            Name: nameof(UpdatePlaylist),
-            Description: "A description");
+        var command = new CreatePlaylistCommandBuilder().WithDummyValues(nameof(UpdatePlaylist));
 
         CreatedResponse response = await Sender.Send(command);
 
