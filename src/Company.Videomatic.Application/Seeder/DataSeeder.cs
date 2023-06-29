@@ -87,8 +87,8 @@ public class DataSeeder : IDataSeeder
         
         // Thumbnails
         var thumbs = await Sender.Send(
-            new AddThumnbailsToVideoCommand(video.Id, 
-            new ThumbnailPayload[]
+            new AssignVideoThumnbailsCommand(video.Id, 
+            new ThumbnailInfo[]
             {
                 new ("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", ThumbnailResolutionDTO.Default, 90, 120),
                 new ("https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", ThumbnailResolutionDTO.Medium, 180, 320),
@@ -146,8 +146,8 @@ public class DataSeeder : IDataSeeder
 
         // Thumbnails
         var thumbs = await Sender.Send(
-            new AddThumnbailsToVideoCommand(video.Id,
-            new ThumbnailPayload[]
+            new AssignVideoThumnbailsCommand(video.Id,
+            new ThumbnailInfo[]
             {
                 new ("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", ThumbnailResolutionDTO.Default, 90, 120),
                 new ("https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", ThumbnailResolutionDTO.Medium, 180, 320),

@@ -1,12 +1,10 @@
-﻿using JetBrains.Annotations;
-
-namespace Company.Videomatic.Domain.Videos;
+﻿namespace Company.Videomatic.Domain.Videos;
 
 public record VideoId(long Value = 0)
 {
     public static implicit operator long(VideoId x) => x.Value;
     public static implicit operator VideoId(long x) => new VideoId(x);
-}   
+}
 
 public class Video //: EntityBase
 {
@@ -26,7 +24,7 @@ public class Video //: EntityBase
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public VideoDetails Details { get; private set; } = default!;
+    public VideoDetails Details { get; private set; } = default!;    
 
     public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
     public IReadOnlyCollection<Playlist> Playlists => _playLists.ToList();    
@@ -41,10 +39,10 @@ public class Video //: EntityBase
         _videoTags.Add(newTag);
         return newTag;
     }
-
+    
     public Thumbnail AddThumbnail(string location, ThumbnailResolution resolution, int height, int width)
     {
-        var thumbnail = Thumbnail.Create(Id, location, resolution, height, width);
+        var thumbnail = Thumbnail.Create(location, resolution, height, width);
         _thumbnails.Add(thumbnail);
         return thumbnail;
     }

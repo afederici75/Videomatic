@@ -20,7 +20,7 @@ public static class WebApplicationExtensions
         app.MediatePut<UpdateVideoCommand>("Videos");
         app.MediateDelete<DeleteVideoCommand>("Videos");
         app.MediatePost<AddTagsToVideoCommand>("Videos");
-        app.MediatePost<AddThumnbailsToVideoCommand>("Videos");
+        app.MediatePost<AssignVideoThumnbailsCommand>("Videos");
         app.MediatePost<AddTranscriptsToVideoCommand>("Videos");
         app.MediatePost<LinkVideosToPlaylistCommand>("Videos");
         app.MediatePost<ImportVideoCommand>("Videos");

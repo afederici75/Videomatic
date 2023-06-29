@@ -22,8 +22,16 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
-        builder.Property(x => x.Description);
+        
+        builder.Property(x => x.Description);                
         //.HasMaxLength(FieldLengths.Description);
+
+        var thumbnails = builder.OwnsMany(x => x.Thumbnails,
+            (builder) => 
+            {
+               builder.Property(x => x.Location).HasMaxLength(FieldLengths.Location);
+            });
+
         var details = builder.OwnsOne(x => x.Details, (builder) => 
         {
             const int TempSafeLength = 100;
@@ -43,11 +51,11 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
            
 
         // Relationships
-        builder.HasMany(x => x.Thumbnails)            
-               .WithOne()
-               .HasForeignKey(x => x.VideoId)
-               .IsRequired(true)
-               .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(x => x.Thumbnails)            
+        //       .WithOne()
+        //       .HasForeignKey(x => x.VideoId)
+        //       .IsRequired(true)
+        //       .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasMany(x => x.Transcripts)
                .WithOne()

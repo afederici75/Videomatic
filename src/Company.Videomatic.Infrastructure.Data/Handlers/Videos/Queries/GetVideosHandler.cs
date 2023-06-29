@@ -55,13 +55,9 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
 
         // Mapping                
         ThumbnailResolution expectedRes = request.IncludeThumbnail?.ToThumbnailResolution() ?? ThumbnailResolution.Default;
-
         var dtoQuery = from video in query
-                       join thumb in DbContext.Thumbnails 
-                       on video.Id equals thumb.VideoId
-                       into thumbGroup 
-                       from resThumb in thumbGroup.DefaultIfEmpty()
-                       where resThumb.Resolution == expectedRes
+                       from thumb in video.Thumbnails
+                       where thumb.Resolution == expectedRes
                        select new VideoDTO(
                 video.Id,
                 video.Location,
@@ -72,12 +68,12 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
                 (int?)(request.IncludeCounts ? video.Transcripts.Count : null),
                 (int?)(request.IncludeCounts ? video.VideoTags.Count : null),
-                resThumb.Location ?? "Unknown"
+                thumb.Location ?? ""
             );
-
+        
         var page = await dtoQuery
            .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
-
+        
         return page;
     }
 }

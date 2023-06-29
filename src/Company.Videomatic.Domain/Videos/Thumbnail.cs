@@ -1,12 +1,11 @@
 ﻿namespace Company.Videomatic.Domain.Videos;
 
-public class Thumbnail : EntityBase
+public class Thumbnail : ValueObject
 {
-    internal static Thumbnail Create(VideoId videoId, string location, ThumbnailResolution resolution, int height, int width)
+    internal static Thumbnail Create(string location, ThumbnailResolution resolution, int height, int width)
     {
         return new Thumbnail
         {
-            VideoId = videoId,
             Location = location,
             Resolution = resolution,
             Height = height,
@@ -14,7 +13,14 @@ public class Thumbnail : EntityBase
         };
     }
 
-    public VideoId VideoId { get; private set; } = default!;
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Location;
+        yield return Resolution;    
+        yield return Height;
+        yield return Width;
+    }
+
     public string Location { get; private set; } = default!;
     public ThumbnailResolution Resolution { get; private set; }
     public int Height { get; private set; }

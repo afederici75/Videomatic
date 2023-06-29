@@ -25,7 +25,7 @@ public class AutomappingProfile : Profile
         CreateMap<Video, VideoDTO>();
         CreateMap<Thumbnail, ThumbnailDTO>();
 
-        CreateMap<ThumbnailPayload, Thumbnail>();
+        CreateMap<ThumbnailInfo, Thumbnail>();
         CreateMap<TranscriptPayload, Transcript>();
         CreateMap<TranscriptLinePayload, TranscriptLine>();
     }
