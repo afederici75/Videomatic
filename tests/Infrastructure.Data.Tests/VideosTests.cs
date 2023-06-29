@@ -19,10 +19,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task CreateVideo()
     {
-        var command = new CreateVideoCommand(
-            Location: "youtube.com/v?V1", 
-            Name: nameof(CreateVideo),
-            Description: "A description");
+        var command = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            location: "youtube.com/v?V1", 
+            name: nameof(CreateVideo),
+            description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -45,10 +45,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task DeleteVideo()
     {
-        var command = new CreateVideoCommand(
-            Location: "youtube.com/v?V1", 
-            Name: nameof(DeleteVideo),
-            Description: "A description");
+        var command = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            location: "youtube.com/v?V1", 
+            name: nameof(DeleteVideo),
+            description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -65,10 +65,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task UpdateVideo()
     {
-        var command = new CreateVideoCommand(
-            Location: "youtube.com/v?V1",
-            Name: nameof(UpdateVideo),
-            Description: "A description");
+        var command = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            location: "youtube.com/v?V1",
+            name: nameof(UpdateVideo),
+            description: "A description");
 
         CreatedResponse response = await Sender.Send(command);
 
@@ -97,17 +97,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
 
-        var createVid1Cmd = new CreateVideoCommand(
-            Location: "youtube.com/v?V1",
-            Name: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
-            Description: "A description");
+        var createVid1Cmd = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            location: "youtube.com/v?V1",
+            name: nameof(LinksOnePlaylistWithTwoVideos) + "_1",
+            description: "A description");
 
         CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
-        var createVid2Cmd = new CreateVideoCommand(
-            Location: "youtube.com/v?V2",
-            Name: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
-            Description: "A second description");
+        var createVid2Cmd = new CreateVideoCommandBuilder().WithEmptyVideoDetails(
+            location: "youtube.com/v?V2",
+            name: nameof(LinksOnePlaylistWithTwoVideos) + "_2",
+            description: "A second description");
 
         CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
 
