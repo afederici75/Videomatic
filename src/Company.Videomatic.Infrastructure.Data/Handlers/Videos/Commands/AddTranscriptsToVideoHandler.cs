@@ -13,6 +13,8 @@ public class AddTranscriptsToVideoHandler : BaseRequestHandler<AddTranscriptsToV
         var video = await DbContext.Videos
               .Where(x => x.Id == request.VideoId)
               .Include(x => x.Transcripts)
+              .Include(x => x.Thumbnails)
+              //.Include(x => x.VideoTags)
               .SingleAsync(cancellationToken);
 
         var processed = new Dictionary<string, TranscriptId>();

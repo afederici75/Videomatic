@@ -18,6 +18,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "PlaylistSequence");
 
             migrationBuilder.CreateSequence(
+                name: "TagsSequence");
+
+            migrationBuilder.CreateSequence(
                 name: "ThumbnailSequence");
 
             migrationBuilder.CreateSequence(
@@ -28,9 +31,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             migrationBuilder.CreateSequence(
                 name: "VideoSequence");
-
-            migrationBuilder.CreateSequence(
-                name: "VideoTagSequence");
 
             migrationBuilder.CreateTable(
                 name: "Playlists",
@@ -156,9 +156,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "VideoTags",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoTagSequence"),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TagsSequence"),
+                    Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -260,9 +260,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoTags_Id",
+                name: "IX_VideoTags_Name_VideoId",
                 table: "VideoTags",
-                column: "Id",
+                columns: new[] { "Name", "VideoId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -305,6 +305,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "PlaylistSequence");
 
             migrationBuilder.DropSequence(
+                name: "TagsSequence");
+
+            migrationBuilder.DropSequence(
                 name: "ThumbnailSequence");
 
             migrationBuilder.DropSequence(
@@ -315,9 +318,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             migrationBuilder.DropSequence(
                 name: "VideoSequence");
-
-            migrationBuilder.DropSequence(
-                name: "VideoTagSequence");
         }
     }
 }

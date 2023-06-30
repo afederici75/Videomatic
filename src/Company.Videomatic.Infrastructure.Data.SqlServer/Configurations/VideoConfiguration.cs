@@ -3,6 +3,7 @@
 public class VideoConfiguration : VideoConfigurationBase
 {
     public const string ThumbnailSequenceName = "ThumbnailSequence";
+    public const string TagsSequenceName = "TagsSequence";
     public const string SequenceName = "VideoSequence";
 
     public override void Configure(EntityTypeBuilder<Video> builder)
@@ -18,7 +19,14 @@ public class VideoConfiguration : VideoConfigurationBase
             (builder) =>
             {
                 builder.Property("Id")
-                       .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode
+                       .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode                
+            });
+
+        var agss = builder.OwnsMany(x => x.VideoTags,
+            (builder) =>
+            {
+                builder.Property("Id")
+                       .HasDefaultValueSql($"NEXT VALUE FOR {TagsSequenceName}"); // TODO: unhardcode                
             });
     }
 }

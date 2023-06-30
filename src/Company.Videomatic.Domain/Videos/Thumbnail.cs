@@ -2,15 +2,12 @@
 
 public class Thumbnail : ValueObject
 {
-    internal static Thumbnail Create(string location, ThumbnailResolution resolution, int height, int width)
+    public Thumbnail(string location, ThumbnailResolution resolution, int height, int width)
     {
-        return new Thumbnail
-        {
-            Location = location,
-            Resolution = resolution,
-            Height = height,
-            Width = width,
-        };
+        Location = location;
+        Resolution = resolution;
+        Height = height;
+        Width = width;        
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

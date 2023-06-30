@@ -26,6 +26,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             modelBuilder.HasSequence("PlaylistSequence");
 
+            modelBuilder.HasSequence("TagsSequence");
+
             modelBuilder.HasSequence("ThumbnailSequence");
 
             modelBuilder.HasSequence("TranscriptLineSequence");
@@ -33,8 +35,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
             modelBuilder.HasSequence("TranscriptSequence");
 
             modelBuilder.HasSequence("VideoSequence");
-
-            modelBuilder.HasSequence("VideoTagSequence");
 
             modelBuilder.Entity("Company.Videomatic.Domain.Playlists.Playlist", b =>
                 {
@@ -189,31 +189,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Videos", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Videos.VideoTag", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasDefaultValueSql("NEXT VALUE FOR VideoTagSequence");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<long>("VideoId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("VideoTags", (string)null);
-                });
-
             modelBuilder.Entity("Company.Videomatic.Domain.Playlists.PlaylistVideo", b =>
                 {
                     b.HasOne("Company.Videomatic.Domain.Playlists.Playlist", "Playlist")
@@ -344,19 +319,40 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("VideoId");
                         });
 
+                    b.OwnsMany("Company.Videomatic.Domain.Videos.VideoTag", "VideoTags", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValueSql("NEXT VALUE FOR TagsSequence");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(35)
+                                .HasColumnType("nvarchar(35)");
+
+                            b1.Property<long>("VideoId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("VideoId");
+
+                            b1.HasIndex("Name", "VideoId")
+                                .IsUnique();
+
+                            b1.ToTable("VideoTags");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VideoId");
+                        });
+
                     b.Navigation("Details")
                         .IsRequired();
 
                     b.Navigation("Thumbnails");
-                });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Videos.VideoTag", b =>
-                {
-                    b.HasOne("Company.Videomatic.Domain.Videos.Video", null)
-                        .WithMany("VideoTags")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("VideoTags");
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Playlists.Playlist", b =>
@@ -376,8 +372,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("PlaylistVideos");
 
                     b.Navigation("Transcripts");
-
-                    b.Navigation("VideoTags");
                 });
 #pragma warning restore 612, 618
         }

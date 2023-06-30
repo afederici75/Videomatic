@@ -19,34 +19,36 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task CreateVideo()
     {
-        var command = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails();
+        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        CreatedResponse response = await Sender.Send(command);
+        CreatedResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
 
+        // Just a small test to see if LINQ creates a simpler query than
+        // the one with all owned properties just down below.
+        //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
+
         var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
 
-        video.Name.Should().BeEquivalentTo(command.Name);
-        video.Description.Should().BeEquivalentTo(command.Description);
-        video.Location.Should().BeEquivalentTo(command.Location);
-        video.Details.ChannelId.Should().BeEquivalentTo(command.ChannelId); 
-        video.Details.PlaylistId.Should().BeEquivalentTo(command.PlaylistId);
-        video.Details.Provider.Should().BeEquivalentTo(command.Provider);
-        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(command.VideoOwnerChannelId);
-        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(command.VideoOwnerChannelTitle);
-        video.Details.VideoPublishedAt.Should().Be(command.VideoPublishedAt);        
+        video.Name.Should().BeEquivalentTo(createCommand.Name);
+        video.Description.Should().BeEquivalentTo(createCommand.Description);
+        video.Location.Should().BeEquivalentTo(createCommand.Location);
+        video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
+        video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
+        video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
+        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
+        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
+        video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
     }
 
     [Fact]
     public async Task DeleteVideo()
     {
-        var command = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails();
+        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        CreatedResponse response = await Sender.Send(command);
+        CreatedResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
@@ -60,22 +62,20 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     [Fact]
     public async Task UpdateVideo()
-    {
-        var command = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails();
-
-        CreatedResponse response = await Sender.Send(command);
+    {        
+        CreatedResponse createResponse = await Sender.Send(
+            CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
         var updateCommand = new UpdateVideoCommand(
-            response.Id,
+            createResponse.Id,
             "New Title",
             "New Description");
 
-        UpdatedResponse updatedResponse = await Sender.Send(updateCommand);
+        UpdatedResponse response = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Videos
-            .Where(x => x.Id == response.Id)
+            .Where(x => x.Id == createResponse.Id)
             .SingleAsync();
 
         video.Id.Value.Should().Be(updateCommand.Id);

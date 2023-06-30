@@ -1,20 +1,22 @@
 ﻿namespace Company.Videomatic.Domain.Videos;
 
-public class VideoTag : EntityBase
+public class VideoTag : ValueObject//:EntityBase
 {
-    internal static VideoTag Create(VideoId videoId, string name)
-    {
-        return new VideoTag()
-        {
-            VideoId = videoId,
-            Name = name
-        };
+    public static implicit operator string(VideoTag x) => x.Name;
+    public static implicit operator VideoTag(string x) => new VideoTag(x);
 
+    public VideoTag(string name)
+    {
+        Name = name;
     }
 
-    public VideoId VideoId { get; private set; } = default!;
     public string Name { get; private set; } = default!;
 
     private VideoTag()
     { }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Name;
+    }
 }
