@@ -1,8 +1,10 @@
 6/30
-	-A lot of other good changes
+-A lot of other good changes
 		-Introduced ValueObject
 		-Made Ids a ValueObject
 		-Simplified navigations for EF
+
+-TIP: do not use strongly typed IDs in the web api. They don't look good (complexity in JSON)
 
 
 6/28

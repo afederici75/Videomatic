@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Features.DataAccess;
-
-namespace Company.Videomatic.Application.Features.Playlists.Commands;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatedResponse>;
 

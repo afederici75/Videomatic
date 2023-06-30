@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Domain.Videos;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
@@ -38,11 +39,17 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
 
         if (request.PlaylistIds != null)
         {
-            var videosOfPlaylist = DbContext.PlaylistVideos
-                .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
-                .Select(pv => pv.VideoId);
+            //var videosOfPlaylists = 
+            //    from pl in DbContext.Playlists
+            //    from v in pl.PlaylistVideos
+            //    where request.PlaylistIds.Contains(pl.PlaylistId))
+            //    .Select(pv => pv.VideoId);
+            var usedVideoIds = from pl in DbContext.Playlists
+                    where request.PlaylistIds.Contains(pl.Id)
+                    from v in pl.PlaylistVideos
+                    select v.VideoId.Value;
 
-            query = query.Where(v => videosOfPlaylist.Contains(v.Id));
+            query = query.Where(v => usedVideoIds.Contains(v.Id));
         }
 
         if (request.VideoIds != null)

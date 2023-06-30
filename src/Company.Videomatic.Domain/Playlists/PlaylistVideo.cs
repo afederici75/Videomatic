@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Videos;
-
-namespace Company.Videomatic.Domain.Playlists;
+﻿namespace Company.Videomatic.Domain.Playlists;
 
 public class PlaylistVideo
 {
@@ -16,8 +14,8 @@ public class PlaylistVideo
     public PlaylistId PlaylistId { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
 
-    public Videos.Video Video { get; private set; } = default!;
-    public Playlist Playlist { get; private set; } = default!;
+    private Video Video { get; set; } = default!;
+    private Playlist Playlist { get; set; } = default!;
 
     #region Private
 

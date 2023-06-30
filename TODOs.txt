@@ -1,1 +1,11 @@
+-It's possible that PlaylistVideo has issues:
+	-Should it expose all those props? Maybe pick one (ids or references)?
+
+-Should relook at ValueObject one more time
+
+-I don't think the Id classes are complete. Equality operator and stuff.
+	-Look here:
+		-https://github.com/andrewlock/StronglyTypedId
+		-https://andrewlock.net/strongly-typed-ids-in-ef-core-using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-4/
+
 -

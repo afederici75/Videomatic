@@ -31,12 +31,17 @@ public class Playlist : IAggregateRoot
         get => _playlistVideos.ToList();
     }
 
-    public Video AddVideo(string location, string title, VideoDetails details, string? description)
+    public void AddVideo(VideoId videoId)
     {
-        var video = Video.Create(location, title, details, description);
-        _videos.Add(video);
-        return video;
+        _playlistVideos.Add(PlaylistVideo.Create(Id, videoId));
     }
+
+    //public Video AddVideo(string location, string title, VideoDetails details, string? description)
+    //{
+    //    var video = Video.Create(location, title, details, description);
+    //    _videos.Add(video);
+    //    return video;
+    //}
 
     // I removed this as it creates more problems than not.
     //public Playlist AddPlaylistVideo(long videoId)

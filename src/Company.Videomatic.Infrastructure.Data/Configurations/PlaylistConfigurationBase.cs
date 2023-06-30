@@ -25,10 +25,14 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithMany(x => x.Playlists)
-               .UsingEntity<PlaylistVideo>(
-                l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
-                r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
-               );
+               //.UsingEntity<PlaylistVideo>(
+               //     l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
+               //     r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
+               // );
+                .UsingEntity(typeof(PlaylistVideo),
+                    l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
+                    r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
+                );
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

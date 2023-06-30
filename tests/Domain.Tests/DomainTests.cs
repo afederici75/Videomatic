@@ -59,7 +59,7 @@ public class DomainTests
     public void CreatePlaylistWithVideo()
     {
         var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
-        var video = playlist.AddVideo("http://somewhere", "Title",
+        var video = Video.Create("http://somewhere", "Title",
             details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
             "Video description");
 
