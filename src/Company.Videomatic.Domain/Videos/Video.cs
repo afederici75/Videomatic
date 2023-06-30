@@ -6,7 +6,7 @@ public record VideoId(long Value = 0)
     public static implicit operator VideoId(long x) => new VideoId(x);
 }
 
-public class Video //: EntityBase
+public class Video : IAggregateRoot
 {
     public static Video Create(string location, string title, VideoDetails details, string? description)
     {
@@ -28,6 +28,7 @@ public class Video //: EntityBase
 
     public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
+    // 
     public IReadOnlyCollection<Playlist> Playlists => _playLists.ToList();    
     public IReadOnlyCollection<PlaylistVideo> PlaylistVideos => _playlistVideos.ToList();
     public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();    

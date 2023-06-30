@@ -7,7 +7,7 @@ public record PlaylistId(long Value = 0)
 }
 
 
-public class Playlist //: EntityBase
+public class Playlist : IAggregateRoot
 {
     public static Playlist Create(string name, string? description)
     {

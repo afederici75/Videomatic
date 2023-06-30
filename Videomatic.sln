@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		Notes.txt = Notes.txt
 		README.md = README.md
+		TODOs.txt = TODOs.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi", "src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj", "{69249D8E-AB6B-4F38-8159-3A8F9935D147}"

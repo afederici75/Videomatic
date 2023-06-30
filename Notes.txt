@@ -1,3 +1,10 @@
+6/30
+	-A lot of other good changes
+		-Introduced ValueObject
+		-Made Ids a ValueObject
+		-Simplified navigations for EF
+
+
 6/28
 	-Did a ton of work to improve the architecture. 
 		-The Domain belongs. While it looked appealing to have that stuff in the Data assembly,
