@@ -39,15 +39,11 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
 
         if (request.PlaylistIds != null)
         {
-            //var videosOfPlaylists = 
-            //    from pl in DbContext.Playlists
-            //    from v in pl.PlaylistVideos
-            //    where request.PlaylistIds.Contains(pl.PlaylistId))
-            //    .Select(pv => pv.VideoId);
-            var usedVideoIds = from pl in DbContext.Playlists
-                    where request.PlaylistIds.Contains(pl.Id)
-                    from v in pl.PlaylistVideos
-                    select v.VideoId.Value;
+            var usedVideoIds = await (
+                from pl in DbContext.Playlists
+                where request.PlaylistIds.Contains(pl.Id)
+                from v in pl.PlaylistVideos
+                select v.VideoId.Value).ToArrayAsync(cancellationToken);
 
             query = query.Where(v => usedVideoIds.Contains(v.Id));
         }
