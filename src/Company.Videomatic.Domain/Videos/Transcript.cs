@@ -3,7 +3,7 @@
 public record TranscriptId(long Value = 0)
 {
     public static implicit operator long(TranscriptId x) => x.Value;
-    //public static implicit operator TranscriptId(long x) => new TranscriptId(x);
+    public static implicit operator TranscriptId(long x) => new TranscriptId(x);
 }
 
 public class Transcript //: EntityBase
@@ -29,7 +29,7 @@ public class Transcript //: EntityBase
 
     public TranscriptLine AddLine(string text, TimeSpan duration, TimeSpan startsAt)
     {         
-        var line = TranscriptLine.Create(Id, text, duration, startsAt);
+        var line = TranscriptLine.Create(text, duration, startsAt);
         _lines.Add(line);   
 
         return line;

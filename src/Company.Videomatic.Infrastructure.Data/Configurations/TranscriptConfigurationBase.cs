@@ -24,11 +24,15 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
                .HasMaxLength(FieldLengths.Language);
 
         // Relationships
-        builder.HasMany(x => x.Lines)
-               .WithOne()               
-               .HasForeignKey("TranscriptId")
-               .IsRequired(true)
-               .OnDelete(DeleteBehavior.Cascade);
+        builder.OwnsMany(x => x.Lines, (builder) =>
+        {
+            builder.WithOwner().HasForeignKey("TranscriptId");
+            builder.Property("Id");
+            builder.HasKey("Id");
+
+            // No Dups the video
+            builder.HasIndex(nameof(TranscriptLine.Text));
+        });
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

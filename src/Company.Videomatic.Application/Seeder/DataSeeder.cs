@@ -185,6 +185,19 @@ public class DataSeeder : IDataSeeder
             })
         }));
 
+        // Artifacts
+        var summaryArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+            "Summary",
+            "SUMMARY",
+            "This will be another AI generated artifact"
+            ));
+
+        var contentsArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+            "Contents",
+            "CONTENTS_LIST",
+            "This will be another AI generated artifact listing all the topics discussed in this video"
+            ));
+
         return video.Id;
     }
 }

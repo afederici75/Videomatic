@@ -175,11 +175,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "TranscriptLines",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
-                    TranscriptId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: false)
+                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TranscriptId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,12 +211,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Thumbnails_VideoId",
                 table: "Thumbnails",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_Id",
-                table: "TranscriptLines",
-                column: "Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TranscriptLines_Text",
