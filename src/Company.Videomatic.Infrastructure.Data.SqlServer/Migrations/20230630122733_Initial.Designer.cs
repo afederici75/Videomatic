@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230630115408_Initial")]
+    [Migration("20230630122733_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -98,9 +98,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.HasIndex("Title");
 

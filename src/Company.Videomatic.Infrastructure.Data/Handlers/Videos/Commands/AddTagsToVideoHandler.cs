@@ -26,6 +26,6 @@ public class AddTagsToVideoHandler : BaseRequestHandler<AddTagsToVideoCommand, A
 
         await DbContext.CommitChangesAsync(cancellationToken);
 
-        return new AddTagsToVideoResponse(request.VideoId, validTags);
+        return new AddTagsToVideoResponse(request.VideoId, validTags.Count);
     }
 }

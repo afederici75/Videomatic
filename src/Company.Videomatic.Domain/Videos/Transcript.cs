@@ -15,7 +15,7 @@ public class Transcript //: EntityBase
             VideoId = videoId,
             Language = language
         };
-    }   
+    }
 
     public TranscriptId Id { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;

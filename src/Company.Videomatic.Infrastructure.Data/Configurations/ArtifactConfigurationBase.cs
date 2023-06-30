@@ -12,7 +12,10 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
     {        
         builder.ToTable("Artifacts");
 
-        // Fields        
+        // Fields
+        builder.Property(x => x.Id)
+               .HasConversion(x => x.Value, y => y);
+
         builder.Property(x => x.VideoId)
                .HasConversion(x => x.Value, y => new VideoId(y));
         

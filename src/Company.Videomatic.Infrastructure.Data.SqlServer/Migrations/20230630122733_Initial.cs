@@ -193,12 +193,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Artifacts_Id",
-                table: "Artifacts",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Artifacts_Title",
                 table: "Artifacts",
                 column: "Title");

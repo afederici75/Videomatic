@@ -30,6 +30,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         modelBuilder.HasSequence<long>(VideoConfiguration.ThumbnailSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(VideoConfiguration.TagsSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(PlaylistConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(ArtifactConfiguration.SequenceName); // TODO: fix this
     }
 
     public static bool TryGetSequenceOfType(Type type, out string sequenceName)

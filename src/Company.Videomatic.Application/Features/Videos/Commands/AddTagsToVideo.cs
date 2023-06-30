@@ -2,5 +2,6 @@
 
 public record AddTagsToVideoCommand(long VideoId, string[] Tags) : IRequest<AddTagsToVideoResponse>;
 
-public record AddTagsToVideoResponse(long VideoId, IEnumerable<string> TagNames);
+public record AddTagsToVideoResponse(long VideoId, int Count);
+
 

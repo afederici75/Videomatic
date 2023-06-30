@@ -96,9 +96,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("Title");
 
                     b.HasIndex("VideoId");
