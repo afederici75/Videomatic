@@ -13,15 +13,9 @@ public class VideomaticDbContext : DbContext
     {        
     }
     
-    public DbSet<Artifact> Artifacts { get; set; } = null!;
     public DbSet<Playlist> Playlists { get; set; } = null!;
-    //public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
-    //public DbSet<Thumbnail> Thumbnails { get; set; } = null!;
-    //public DbSet<TranscriptLine> TranscriptLines { get; set; } = null!;
-    public DbSet<Transcript> Transcripts { get; set; } = null!;
     public DbSet<Video> Videos { get; set; } = null!;
-    //public DbSet<VideoTag> VideoTags { get; set; } = null!;
-
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

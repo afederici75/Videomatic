@@ -24,8 +24,12 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
         
-        builder.Property(x => x.Description);                
+        builder.Property(x => x.Description);
         //.HasMaxLength(FieldLengths.Description);
+
+        builder.HasMany(x => x.PlaylistVideos)
+               .WithOne()
+               .HasForeignKey(x => x.VideoId);
 
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
             (builder) => 

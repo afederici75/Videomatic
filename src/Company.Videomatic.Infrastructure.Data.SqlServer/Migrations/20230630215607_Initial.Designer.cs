@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230630172554_Initial")]
+    [Migration("20230630215607_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -159,21 +159,17 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             modelBuilder.Entity("Company.Videomatic.Domain.Playlists.PlaylistVideo", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Playlists.Playlist", "Playlist")
+                    b.HasOne("Company.Videomatic.Domain.Playlists.Playlist", null)
                         .WithMany("PlaylistVideos")
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Company.Videomatic.Domain.Videos.Video", "Video")
+                    b.HasOne("Company.Videomatic.Domain.Videos.Video", null)
                         .WithMany("PlaylistVideos")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Playlist");
-
-                    b.Navigation("Video");
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Videos.Artifact", b =>
@@ -219,7 +215,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasIndex("TranscriptId");
 
-                            b1.ToTable("TranscriptLines");
+                            b1.ToTable("TranscriptLine");
 
                             b1.WithOwner()
                                 .HasForeignKey("TranscriptId");
@@ -258,7 +254,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasIndex("VideoId");
 
-                            b1.ToTable("Thumbnails");
+                            b1.ToTable("Thumbnail");
 
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
@@ -334,7 +330,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                             b1.HasIndex("Name", "VideoId")
                                 .IsUnique();
 
-                            b1.ToTable("VideoTags");
+                            b1.ToTable("VideoTag");
 
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");

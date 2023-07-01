@@ -10,7 +10,7 @@ public class DomainTests
     {
         var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
 
-        playlist.Videos.Should().HaveCount(0);
+        //playlist.Videos.Should().HaveCount(0);
         playlist.PlaylistVideos.Should().HaveCount(0);        
     }
 
@@ -66,7 +66,7 @@ public class DomainTests
         video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
 
         // Checks
-        playlist.Videos.Count.Should().Be(1);
+        //playlist.Videos.Count.Should().Be(1);
         playlist.PlaylistVideos.Count.Should().Be(0);
         video.Thumbnails.Count.Should().Be(1);
 

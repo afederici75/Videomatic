@@ -112,7 +112,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Thumbnails",
+                name: "Thumbnail",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR ThumbnailSequence"),
@@ -124,9 +124,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Thumbnails", x => x.Id);
+                    table.PrimaryKey("PK_Thumbnail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Thumbnails_Videos_VideoId",
+                        name: "FK_Thumbnail_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
@@ -153,7 +153,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VideoTags",
+                name: "VideoTag",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TagsSequence"),
@@ -162,9 +162,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VideoTags", x => x.Id);
+                    table.PrimaryKey("PK_VideoTag", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VideoTags_Videos_VideoId",
+                        name: "FK_VideoTag_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
@@ -172,7 +172,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TranscriptLines",
+                name: "TranscriptLine",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
@@ -183,9 +183,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TranscriptLines", x => x.Id);
+                    table.PrimaryKey("PK_TranscriptLine", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TranscriptLines_Transcripts_TranscriptId",
+                        name: "FK_TranscriptLine_Transcripts_TranscriptId",
                         column: x => x.TranscriptId,
                         principalTable: "Transcripts",
                         principalColumn: "Id",
@@ -208,18 +208,18 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_VideoId",
-                table: "Thumbnails",
+                name: "IX_Thumbnail_VideoId",
+                table: "Thumbnail",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_Text",
-                table: "TranscriptLines",
+                name: "IX_TranscriptLine_Text",
+                table: "TranscriptLine",
                 column: "Text");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_TranscriptId",
-                table: "TranscriptLines",
+                name: "IX_TranscriptLine_TranscriptId",
+                table: "TranscriptLine",
                 column: "TranscriptId");
 
             migrationBuilder.CreateIndex(
@@ -248,14 +248,14 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoTags_Name_VideoId",
-                table: "VideoTags",
+                name: "IX_VideoTag_Name_VideoId",
+                table: "VideoTag",
                 columns: new[] { "Name", "VideoId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoTags_VideoId",
-                table: "VideoTags",
+                name: "IX_VideoTag_VideoId",
+                table: "VideoTag",
                 column: "VideoId");
         }
 
@@ -269,13 +269,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "PlaylistVideos");
 
             migrationBuilder.DropTable(
-                name: "Thumbnails");
+                name: "Thumbnail");
 
             migrationBuilder.DropTable(
-                name: "TranscriptLines");
+                name: "TranscriptLine");
 
             migrationBuilder.DropTable(
-                name: "VideoTags");
+                name: "VideoTag");
 
             migrationBuilder.DropTable(
                 name: "Playlists");

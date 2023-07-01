@@ -13,10 +13,7 @@ public class PlaylistVideo
 
     public PlaylistId PlaylistId { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
-
-    private Video Video { get; set; } = default!;
-    private Playlist Playlist { get; set; } = default!;
-
+    
     #region Private
 
     private PlaylistVideo()

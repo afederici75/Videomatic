@@ -12,18 +12,14 @@ public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<
         builder.ToTable("PlaylistVideos");
 
         // Fields
+        builder.HasKey(x => new { x.PlaylistId, x.VideoId });
+
         builder.Property(x => x.VideoId)
                .HasConversion(x => x.Value, y => y);
 
         builder.Property(x => x.PlaylistId)
                .HasConversion(x => x.Value, y => y);
-
-        // Relationships
-        //builder.HasMany(x => x.Videos)
-        //       .WithMany(x => x.Tags);
-
-        // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
+      
     }
 }
 

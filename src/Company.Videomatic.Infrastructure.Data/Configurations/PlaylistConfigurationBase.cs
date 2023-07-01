@@ -20,19 +20,22 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
                .HasMaxLength(FieldLengths.Name);
 
         builder.Property(x => x.Description);
-               //.HasMaxLength(FieldLengths.Description);
+        //.HasMaxLength(FieldLengths.Description);
 
         // Relationships
-        builder.HasMany(x => x.Videos)
-               .WithMany(x => x.Playlists)
-               //.UsingEntity<PlaylistVideo>(
-               //     l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
-               //     r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
-               // );
-                .UsingEntity(typeof(PlaylistVideo),
-                    l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
-                    r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
-                );
+        //builder.HasMany(x => x.Videos)
+        //       .WithMany(x => x.Playlists)
+        //       //.UsingEntity<PlaylistVideo>(
+        //       //     l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
+        //       //     r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
+        //       // );
+        //        .UsingEntity(typeof(PlaylistVideo),
+        //            l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
+        //            r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
+        //        );
+        builder.HasMany(x => x.PlaylistVideos)
+               .WithOne()
+               .HasForeignKey(x => x.PlaylistId); 
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

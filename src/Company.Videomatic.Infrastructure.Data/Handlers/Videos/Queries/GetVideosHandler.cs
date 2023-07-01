@@ -20,7 +20,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         { nameof(VideoDTO.TranscriptCount), _ => _.Artifacts.Count },
         { nameof(VideoDTO.TagCount), _ => _.Artifacts.Count },
         { nameof(VideoDTO.ThumbnailCount), _ => _.Artifacts.Count },
-        { nameof(VideoDTO.PlaylistCount), _ => _.Playlists.Count },
+        { nameof(VideoDTO.PlaylistCount), _ => _.PlaylistVideos.Count },
     };
 
     public override async Task<PageResult<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
@@ -66,7 +66,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 video.Location,
                 video.Name,
                 video.Description,
-                (int?)(request.IncludeCounts ? video.Playlists.Count : null),
+                (int?)(request.IncludeCounts ? video.PlaylistVideos.Count : null),
                 (int?)(request.IncludeCounts ? video.Artifacts.Count : null),
                 (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
                 (int?)(request.IncludeCounts ? video.Transcripts.Count : null),

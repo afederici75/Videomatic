@@ -11,7 +11,6 @@ public sealed class UpdatePlaylistHandler : BaseRequestHandler<UpdatePlaylistCom
         var newValue = Mapper.Map<UpdatePlaylistCommand, Playlist>(request);
 
         var playlistDb = await DbContext.Playlists
-            .AsTracking()
             .SingleAsync(x => x.Id == request.Id, cancellationToken);
 
         Mapper.Map(request, playlistDb);

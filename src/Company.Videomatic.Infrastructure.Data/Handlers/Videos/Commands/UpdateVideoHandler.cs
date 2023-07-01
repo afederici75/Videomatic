@@ -11,7 +11,6 @@ public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, 
         var newValue = Mapper.Map<UpdateVideoCommand, Video>(request);
 
         var playlistDb = await DbContext.Videos
-            .AsTracking()
             .SingleAsync(x => x.Id == request.Id, cancellationToken);
 
         Mapper.Map(request, playlistDb);

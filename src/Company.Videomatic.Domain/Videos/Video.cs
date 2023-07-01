@@ -23,13 +23,10 @@ public class Video : IAggregateRoot
     public string Location { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
-
     public VideoDetails Details { get; private set; } = default!;    
 
     public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
-    public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
-    // 
-    public IReadOnlyCollection<Playlist> Playlists => _playLists.ToList();    
+    public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();    
     public IReadOnlyCollection<PlaylistVideo> PlaylistVideos => _playlistVideos.ToList();
     public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();    
     public IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
@@ -59,7 +56,7 @@ public class Video : IAggregateRoot
 
     public Transcript AddTranscript(string language)
     {
-        var transcript = Transcript.Create(Id, language);
+        var transcript = Transcript.Create(Id, language);        
         _transcripts.Add(transcript);
         return transcript;
     }
@@ -72,7 +69,6 @@ public class Video : IAggregateRoot
     HashSet<VideoTag> _videoTags = new ();
     HashSet<Thumbnail> _thumbnails = new ();
 
-    List<Playlist> _playLists = new ();
     List<Artifact> _artifacts = new ();    
     List<Transcript> _transcripts = new ();
     List<PlaylistVideo> _playlistVideos = new ();

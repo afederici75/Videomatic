@@ -19,10 +19,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            if (!TryGetSequenceOfType(entityType.ClrType, out var sequenceName))
-                continue;
-            
-            modelBuilder.HasSequence<long>(sequenceName);            
+            //modelBuilder.HasSequence<long>(sequenceName);            
         }
 
         modelBuilder.HasSequence<long>(TranscriptConfiguration.SequenceName); // TODO: fix this
@@ -32,15 +29,5 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         modelBuilder.HasSequence<long>(VideoConfiguration.TagsSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(PlaylistConfiguration.SequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(ArtifactConfiguration.SequenceName); // TODO: fix this
-    }
-
-    public static bool TryGetSequenceOfType(Type type, out string sequenceName)
-    {
-        sequenceName = default!;
-        if (!typeof(IEntity).IsAssignableFrom(type))
-            return false;
-
-        sequenceName = type.Name + "Sequence";
-        return true;
-    }
+    }    
 }
