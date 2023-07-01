@@ -33,9 +33,9 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         //            l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
         //            r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
         //        );
-        builder.HasMany(x => x.PlaylistVideos)
+        builder.HasMany(typeof(PlaylistVideo))
                .WithOne()
-               .HasForeignKey(x => x.PlaylistId); 
+               .HasForeignKey("PlaylistId");
 
         // Indices
         //builder.HasIndex(x => x.Id).IsUnique();

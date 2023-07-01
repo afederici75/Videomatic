@@ -17,23 +17,24 @@ public class LinkVideosAndPlaylistsHandler : BaseRequestHandler<LinkVideosToPlay
         var playlist = await playlistQuery.SingleAsync(cancellationToken);
 
         //
-        var alreadyLinkedVideoIdsQuery = 
-            from pl in playlistQuery
-            from plvid in pl.PlaylistVideos
-            where request.VideoIds.Contains(plvid.VideoId)
-            select plvid.VideoId.Value;
-        var dupIds = await alreadyLinkedVideoIdsQuery.ToArrayAsync(cancellationToken);
-
-        var notLinkedIds = request.VideoIds.Except(dupIds);
-        
-        foreach (var id in notLinkedIds)
-        {
-            playlist.AddVideo(id);            
-        }
-
-        var cnt = await DbContext.CommitChangesAsync(cancellationToken);
-
-        return new LinkVideosToPlaylistResponse(request.PlaylistId, notLinkedIds.ToArray());
+        throw new NotImplementedException();
+        //var alreadyLinkedVideoIdsQuery = 
+        //    from pl in playlistQuery
+        //    from plvid in pl.PlaylistVideos
+        //    where request.VideoIds.Contains(plvid.VideoId)
+        //    select plvid.VideoId.Value;
+        //var dupIds = await alreadyLinkedVideoIdsQuery.ToArrayAsync(cancellationToken);
+        //
+        //var notLinkedIds = request.VideoIds.Except(dupIds);
+        //
+        //foreach (var id in notLinkedIds)
+        //{
+        //    playlist.AddVideo(id);            
+        //}
+        //
+        //var cnt = await DbContext.CommitChangesAsync(cancellationToken);
+        //
+        //return new LinkVideosToPlaylistResponse(request.PlaylistId, notLinkedIds.ToArray());
     }
 
     //public async override Task<LinkVideosToPlaylistResponse> Handle(LinkVideosToPlaylistCommand request, CancellationToken cancellationToken = default)

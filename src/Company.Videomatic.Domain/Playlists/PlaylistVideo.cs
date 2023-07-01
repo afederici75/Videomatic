@@ -2,7 +2,7 @@
 
 public class PlaylistVideo
 {
-    public static PlaylistVideo Create(PlaylistId playlistId, VideoId videoId)
+    internal static PlaylistVideo Create(PlaylistId playlistId, VideoId videoId)
     {
         return new PlaylistVideo
         {

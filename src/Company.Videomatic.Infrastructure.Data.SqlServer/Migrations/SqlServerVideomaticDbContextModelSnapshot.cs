@@ -157,7 +157,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
             modelBuilder.Entity("Company.Videomatic.Domain.Playlists.PlaylistVideo", b =>
                 {
                     b.HasOne("Company.Videomatic.Domain.Playlists.Playlist", null)
-                        .WithMany("PlaylistVideos")
+                        .WithMany()
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -339,11 +339,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Thumbnails");
 
                     b.Navigation("VideoTags");
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Playlists.Playlist", b =>
-                {
-                    b.Navigation("PlaylistVideos");
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Videos.Video", b =>

@@ -16,7 +16,7 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
         { nameof(Playlist.Id), _ => _.Id },
         { nameof(Playlist.Name), _ => _.Name },
         { nameof(Playlist.Description), _ => _.Description },
-        { "VideoCount", _ => _.PlaylistVideos.Count },
+        //{ "VideoCount", _ => _.PlaylistVideos.Count },
     };
 
     public override async Task<PageResult<PlaylistDTO>> Handle(
@@ -35,13 +35,13 @@ public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, 
         
         // Custom OrderBy which takes in account what we allow to sort by
         query = query.OrderBy(request.OrderBy, SupportedOrderBys);
-        
+
         // Mapping
         var dtoQuery = query.Select(x => new PlaylistDTO(
               x.Id,
               x.Name,
               x.Description,
-              x.PlaylistVideos.Count));        
+              0));//x.PlaylistVideos.Count));        
 
         var page = await dtoQuery
             .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);

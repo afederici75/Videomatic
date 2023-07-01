@@ -11,7 +11,7 @@ public class DomainTests
         var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
 
         //playlist.Videos.Should().HaveCount(0);
-        playlist.PlaylistVideos.Should().HaveCount(0);        
+        //playlist.PlaylistVideos.Should().HaveCount(0);        
     }
 
     [Fact]
@@ -58,17 +58,18 @@ public class DomainTests
     [Fact]
     public void CreatePlaylistWithVideo()
     {
-        var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
-        var video = Video.Create("http://somewhere", "Title",
-            details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
-            "Video description");
-
-        video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
-
-        // Checks
-        //playlist.Videos.Count.Should().Be(1);
-        playlist.PlaylistVideos.Count.Should().Be(0);
-        video.Thumbnails.Count.Should().Be(1);
+        throw new NotImplementedException();
+        //var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
+        //var video = Video.Create("http://somewhere", "Title",
+        //    details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
+        //    "Video description");
+        //
+        //video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
+        //
+        //// Checks
+        ////playlist.Videos.Count.Should().Be(1);
+        //playlist.PlaylistVideos.Count.Should().Be(0);
+        //video.Thumbnails.Count.Should().Be(1);
 
     }
 }
