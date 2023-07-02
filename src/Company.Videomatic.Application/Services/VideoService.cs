@@ -2,6 +2,7 @@
 using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Video;
+using Company.Videomatic.Domain.Specifications;
 
 namespace Company.Videomatic.Application.Services;
 
@@ -14,17 +15,16 @@ public class VideoService : IVideoService
         _repository = repository;
     }
 
-    public async Task<int> LinkToPlaylists(VideoId videoId, params PlaylistId[] playlistIds)
+    public async Task<int> LinkToPlaylists(VideoId videoId, PlaylistId[] playlistIds, CancellationToken cancellationToken = default)
     {
-        var video = await _repository.GetByIdAsync(videoId);
+        var spec = new VideoWithPlaylistsSpecification(videoId);
+
+        var video = await _repository.SingleOrDefaultAsync(spec, cancellationToken); 
         if (video == null)
             return 0;
 
-        // get duplicated ids
-        foreach (var id in playlistIds)
-        { 
-            video.AddPlaylist(id);
-        }
+        //
+        video.LinkToPlaylists(playlistIds);
         
         var cnt = await _repository.SaveChangesAsync();
         return cnt;

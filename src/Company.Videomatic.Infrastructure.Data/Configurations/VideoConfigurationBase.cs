@@ -32,13 +32,13 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         builder.Property(x => x.Description);
         //.HasMaxLength(FieldLengths.Description);
 
-        builder.HasMany(typeof(PlaylistVideo), "_playlists")
-               .WithOne()
-               .HasForeignKey("VideoId");
-
-        //builder.HasMany(x => x.PlaylistVideos)
+        //builder.HasMany(typeof(PlaylistVideo), "_playlists")
         //       .WithOne()
-        //       .HasForeignKey(nameof(PlaylistVideo.VideoId));
+        //       .HasForeignKey("VideoId");
+
+        builder.HasMany(x => x.Playlists)
+               .WithOne()
+               .HasForeignKey(nameof(PlaylistVideo.VideoId));
 
         #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
