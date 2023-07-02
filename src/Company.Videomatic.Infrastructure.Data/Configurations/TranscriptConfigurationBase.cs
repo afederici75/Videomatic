@@ -26,7 +26,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
                .HasMaxLength(FieldLengths.Language);
 
         // Shadow Properties
-        builder.Property<Video>("Video");
+        //builder.Property<Video>("Video");
 
         // Relationships
         //builder.HasOne(typeof(Video), "Video")
