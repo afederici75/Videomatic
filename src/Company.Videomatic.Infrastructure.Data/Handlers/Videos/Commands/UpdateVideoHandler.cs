@@ -1,24 +1,31 @@
 ﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+using Company.Videomatic.Domain.Specifications;
+using MediatR;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
-public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, UpdatedResponse>
+public sealed class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdatedResponse>
 {
-    public UpdateVideoHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    private readonly IRepository<Video> _repository;
+    private readonly IMapper _mapper;
+
+    public UpdateVideoHandler(IRepository<Video> repository, IMapper mapper) //: base(repository, mapper)
     {
+        _repository = repository;
+        _mapper = mapper;
     }
 
-    public override async Task<UpdatedResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
+    public async Task<UpdatedResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
     {
-        var newValue = Mapper.Map<UpdateVideoCommand, Video>(request);
+        Video? video = await _repository.GetByIdAsync(request.Id, cancellationToken);
+        if (video == null)
+        {
+            return new UpdatedResponse(request.Id, false);
+        }
 
-        var playlistDb = await DbContext.Videos
-            .SingleAsync(x => x.Id == request.Id, cancellationToken);
-
-        Mapper.Map(request, playlistDb);
-
-        var cnt = await DbContext.CommitChangesAsync(cancellationToken);
-
+        _mapper.Map<UpdateVideoCommand, Video>(request, video);
+        var cnt = await _repository.SaveChangesAsync();
+        
         return new UpdatedResponse(request.Id, cnt > 0);
     }
 }

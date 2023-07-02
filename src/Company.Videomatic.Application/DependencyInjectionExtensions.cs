@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-using Company.Videomatic.Application.Behaviors;
-using Company.Videomatic.Application.Features.DataAccess;
+﻿using Company.Videomatic.Application.Behaviors;
 using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.Extensions.Configuration;
 
@@ -14,34 +11,47 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {    
+    /// <summary>
+    /// Adds 
+    /// -MediatR
+    /// -IPipelineBehavior for logging and validation
+    /// -AutoMapper
+    /// -FluentValidation validators
+    /// -IDataSeeder
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
     {
         // IOptions
 
         // Services
         //services.AddValidatorsFromAssembly(typeof(LoggingBehaviour<,>).Assembly);
-        services.AddValidatorsFromAssembly(
-            typeof(PageResult<>).Assembly, // The only validators are in this assembly
-            includeInternalTypes: true // TODO: Seems useless? Maybe it will surface in the app?
-            );
-
-        services.AddMediatR(cfg =>
+        services.AddMediatR(cfg =>        
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                         .Where(a => a.FullName?.Contains(".Videomatic.") ?? false);
-            cfg.RegisterServicesFromAssemblies(assemblies.ToArray());// typeof(LoggingBehaviour<,>).Assembly);            
-        })
-        .AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
-        .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            
+            var allAssemblies = assemblies.ToArray();
+            cfg.RegisterServicesFromAssemblies(allAssemblies);
+        });
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
         services.AddAutoMapper((cfg) =>
         {
         },
         AppDomain.CurrentDomain.GetAssemblies());
 
-        
-        
+
+        services.AddValidatorsFromAssembly(
+            typeof(PageResult<>).Assembly, // The only validators are in this assembly
+            includeInternalTypes: true // TODO: Seems useless? Maybe it will surface in the app?
+            );
+
         services.AddTransient<IDataSeeder, DataSeeder>();
+
 
         return services;
     }       

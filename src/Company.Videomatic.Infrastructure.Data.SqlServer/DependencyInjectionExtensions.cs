@@ -24,6 +24,12 @@ public static class DependencyInjectionExtensions
         // Services        
     }
 
+    /// <summary>
+    /// Adds scoped DbContext for VideomaticDbContext.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <returns></returns>
     public static IServiceCollection AddVideomaticDataForSqlServer(
         this IServiceCollection services,
         IConfiguration configuration)

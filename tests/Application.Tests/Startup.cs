@@ -11,17 +11,7 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddVideomaticApplication(cfg);
-
-        // Mocks
-
-        //services.AddVideomaticData(cfg);        
-        //services.AddVideomaticDataForSqlite(cfg);
-        //services.AddVideomaticDataForSqlServer(cfg);
-
-        // Overrides
-        //services.AddScoped<IVideoImporter, MockVideoImporter>();
-        //services.AddScoped<IVideoAnalyzer, MockVideoAnalyzer>();
+        services.AddVideomaticApplication(cfg);        
     }
 
     public static IConfiguration LoadConfiguration()
