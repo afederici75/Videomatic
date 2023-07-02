@@ -1,4 +1,6 @@
-﻿using Company.Videomatic.Application.Behaviors;
+﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Application.Behaviors;
+using Company.Videomatic.Application.Services;
 using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.Extensions.Configuration;
 
@@ -27,6 +29,9 @@ public static class DependencyInjectionExtensions
         // IOptions
 
         // Services
+        services.AddScoped<IVideoService, VideoService>();
+
+        // Infrastructure
         services.AddMediatR(cfg =>        
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()

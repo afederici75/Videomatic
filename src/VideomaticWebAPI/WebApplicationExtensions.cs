@@ -22,7 +22,7 @@ public static class WebApplicationExtensions
         app.MediatePost<AddTagsToVideoCommand>("Videos");
         app.MediatePost<AssignVideoThumnbailsCommand>("Videos");
         app.MediatePost<AddTranscriptsToVideoCommand>("Videos");
-        app.MediatePost<LinkVideosToPlaylistCommand>("Videos");
+        app.MediatePost<LinkVideoToPlaylistsCommand>("Videos");
         app.MediatePost<ImportVideoCommand>("Videos");
 
         return app;

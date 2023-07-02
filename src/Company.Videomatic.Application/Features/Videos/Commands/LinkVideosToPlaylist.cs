@@ -1,17 +1,16 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
-public record LinkVideosToPlaylistCommand(long PlaylistId, long[] VideoIds) : IRequest<LinkVideosToPlaylistResponse>;
+public record LinkVideoToPlaylistsCommand(long VideoId, long[] PlaylistIds) : IRequest<LinkVideoToPlaylistsResponse>;
 
-public record LinkVideosToPlaylistResponse(long PlaylistId, long[] VideoIds);
+public record LinkVideoToPlaylistsResponse(long VideoId, int count);
 
-internal class LinkVideosToPlaylistValidator : AbstractValidator<LinkVideosToPlaylistCommand>
+internal class LinkVideoToPlaylistsValidator : AbstractValidator<LinkVideoToPlaylistsCommand>
 {
-    public LinkVideosToPlaylistValidator()
+    public LinkVideoToPlaylistsValidator()
     {
-        RuleFor(x => x.PlaylistId).NotEmpty();
-        RuleFor(x => x.PlaylistId).GreaterThan(0);
+        RuleFor(x => x.VideoId).GreaterThan(0);
 
-        RuleFor(x => x.VideoIds).NotEmpty();
-        RuleForEach(x => x.VideoIds).GreaterThan(0);
+        RuleFor(x => x.PlaylistIds).NotEmpty();
+        RuleForEach(x => x.PlaylistIds).GreaterThan(0);        
     }
 }

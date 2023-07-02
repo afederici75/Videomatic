@@ -15,14 +15,7 @@ public class Playlist : IAggregateRoot
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
 
-    public void AddVideo(VideoId videoId)
-    {
-        _playlistVideos.Add(PlaylistVideo.Create(Id, videoId));
-    }
-
     #region Private
-
-    private List<PlaylistVideo> _playlistVideos = new List<PlaylistVideo>();
 
     private Playlist() { }
 

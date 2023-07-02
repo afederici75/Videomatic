@@ -29,7 +29,7 @@ public class DataSeeder : IDataSeeder
         long videoId1 = await CreateAldousHuxleyTheDancingShivaVideo();
         long videoId2 = await CreateIfRealityIsNonDualVideo();
 
-        var resp = await Sender.Send(new LinkVideosToPlaylistCommand(playlist.Id, new[] { videoId1, videoId2 }));
+        var resp = await Sender.Send(new LinkVideoToPlaylistsCommand(playlist.Id, new[] { videoId1, videoId2 }));
 
         return playlist.Id;
     }

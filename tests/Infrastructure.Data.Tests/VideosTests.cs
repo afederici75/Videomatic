@@ -29,18 +29,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Just a small test to see if LINQ creates a simpler query than
         // the one with all owned properties just down below.
         //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
-        throw new NotImplementedException();
-        //var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
-        //
-        //video.Name.Should().BeEquivalentTo(createCommand.Name);
-        //video.Description.Should().BeEquivalentTo(createCommand.Description);
-        //video.Location.Should().BeEquivalentTo(createCommand.Location);
-        //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
-        //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
-        //video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
-        //video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
-        //video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
-        //video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
+        var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
+        
+        video.Name.Should().BeEquivalentTo(createCommand.Name);
+        video.Description.Should().BeEquivalentTo(createCommand.Description);
+        video.Location.Should().BeEquivalentTo(createCommand.Location);
+        video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
+        video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
+        video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
+        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
+        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
+        video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
     }
 
     [Fact]
@@ -84,37 +83,49 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Fact]
-    public async Task LinksOnePlaylistWithTwoVideos()
+    public async Task LinksTwoVideoToPlaylist()
     {
         // Prepares
         var createPlaylistCmd = new CreatePlaylistCommand(
-            Name: nameof(LinksOnePlaylistWithTwoVideos),
+            Name: nameof(LinksTwoVideoToPlaylist),
             Description: $"A description for my playlist {DateTime.Now}");
 
         CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
 
         var createVid1Cmd = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksOnePlaylistWithTwoVideos) + "V1");
+            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
 
         CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksOnePlaylistWithTwoVideos) + "V2");
-
-        CreatedResponse createVid2Response = await Sender.Send(createVid2Cmd);
+            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
 
         // Executes
-        var addVidsCmd = new LinkVideosToPlaylistCommand(
-            createPlaylistResponse.Id,
-            VideoIds: new[] { createVid1Response.Id, createVid2Response.Id });
+        var addVidsCmd = new LinkVideoToPlaylistsCommand(
+            createVid1Response.Id,
+            new[] { createPlaylistResponse.Id });
 
-        LinkVideosToPlaylistResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideosToPlaylistResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
 
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
         createVid1Response.Id.Should().BeGreaterThan(0);
-        createVid2Response.Id.Should().BeGreaterThan(0);
+    }
+
+    [Fact]
+    public async Task LinksTwoVideoToPlaylist2()
+    {        
+        // Executes
+        var addVidsCmd = new LinkVideoToPlaylistsCommand(
+            1, new long[] { 1 });
+
+        LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+
+        // Checks
+        //createPlaylistResponse.Id.Should().BeGreaterThan(0);
+        //createVid1Response.Id.Should().BeGreaterThan(0);
     }
 
     [Theory]
