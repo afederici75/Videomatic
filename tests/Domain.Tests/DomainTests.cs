@@ -1,5 +1,5 @@
-﻿using Company.Videomatic.Domain.Entities.PlaylistAggregate;
-using Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Domain.Tests;
 
@@ -46,8 +46,8 @@ public class DomainTests
         video.AddTag("Tag1");
         video.AddTag("Tag2");
 
-        var arti1 = video.AddArtifact(title: "A complete summary", type: "AI", text: "Bla bla");
-        var arti2 = video.AddArtifact(title: "A complete analysis", type: "AI", text: "More bla bla");
+        //var arti1 = video.AddArtifact(title: "A complete summary", type: "AI", text: "Bla bla");
+        //var arti2 = video.AddArtifact(title: "A complete analysis", type: "AI", text: "More bla bla");
 
         throw new NotImplementedException();
 

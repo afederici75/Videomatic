@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 

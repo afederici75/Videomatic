@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
-
-namespace Company.Videomatic.Domain.Entities.PlaylistAggregate;
+﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
 public class PlaylistVideo
 {

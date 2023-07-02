@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Domain.Specifications;
 using MediatR;
 

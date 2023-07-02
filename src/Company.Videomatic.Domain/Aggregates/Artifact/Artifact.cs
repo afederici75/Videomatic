@@ -1,6 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Entities;
+﻿namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
-public class Artifact
+public class Artifact : IAggregateRoot
 {
     internal static Artifact Create(VideoId videoId, string title, string type, string? text = null)
     {

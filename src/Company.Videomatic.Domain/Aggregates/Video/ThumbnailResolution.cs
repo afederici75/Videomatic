@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿namespace Company.Videomatic.Domain.Aggregates.Video;
 
 public enum ThumbnailResolution
 {

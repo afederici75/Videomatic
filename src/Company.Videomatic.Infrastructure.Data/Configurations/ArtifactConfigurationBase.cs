@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities;
+﻿using Company.Videomatic.Domain.Aggregates.Artifact;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 

@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Entities.PlaylistAggregate;
+﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
 public record PlaylistId(long Value = 0)
 {

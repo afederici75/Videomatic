@@ -1,5 +1,6 @@
-﻿using Company.Videomatic.Domain.Entities.PlaylistAggregate;
-using Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Aggregates.Transcript;
+using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
@@ -38,6 +39,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                .WithOne()
                .HasForeignKey("VideoId");
 
+        #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
             (builder) => 
             {
@@ -79,19 +81,23 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
             builder.Property(x => x.VideoPublishedAt);
             builder.Property(x => x.PlaylistId);
             builder.Property(x => x.Position);
-        });           
-        
-        //builder.HasMany(x => x.Transcripts)
+        });
+
+        #endregion
+
+
+        //builder.Property<Video>("Video");
+        //builder.HasMany(typeof(Transcript), "Transcripts")
+        //       .WithOne()
+        //       .HasForeignKey("VideoIdXX")
+        //       .IsRequired(true)
+        //       .OnDelete(DeleteBehavior.Cascade);
+        //
+        //builder.HasMany(typeof(Transcript)
         //       .WithOne()
         //       .HasForeignKey(x => x.VideoId)
         //       .IsRequired(true)
         //       .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasMany(x => x.Artifacts)
-               .WithOne()
-               .HasForeignKey(x => x.VideoId)
-               .IsRequired(true)
-               .OnDelete(DeleteBehavior.Cascade);
 
         // Indices
         builder.HasIndex(x => x.Location);

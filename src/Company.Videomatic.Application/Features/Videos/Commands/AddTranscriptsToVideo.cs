@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.TranscriptAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Transcript;
 
 namespace Company.Videomatic.Application.Features.Videos.Commands;
 

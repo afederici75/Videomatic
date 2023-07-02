@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Entities;
+﻿namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
 public record ArtifactId(long Value = 0)
 {

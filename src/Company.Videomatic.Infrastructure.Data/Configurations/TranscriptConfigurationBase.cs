@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.TranscriptAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Transcript;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
@@ -25,10 +25,13 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
         builder.Property(x => x.Language)
                .HasMaxLength(FieldLengths.Language);
 
+        // Shadow Properties
+        builder.Property<Video>("Video");
+
         // Relationships
-        builder.HasOne(typeof(Video), "VideoId")
-               .WithMany()
-               .HasForeignKey("MaybeVideoId");
+        //builder.HasOne(typeof(Video), "Video")
+        //       .WithMany()
+        //       .HasForeignKey("MaybeVideoId");
 
         builder.OwnsMany(x => x.Lines, (builder) =>
         {

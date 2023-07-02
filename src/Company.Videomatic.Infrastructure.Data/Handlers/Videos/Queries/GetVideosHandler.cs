@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 
@@ -16,10 +16,10 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         { nameof(VideoDTO.Id), _ => _.Id },
         { nameof(VideoDTO.Title), _ => _.Name },
         { nameof(VideoDTO.Description), _ => _.Description },
-        { nameof(VideoDTO.ArtifactCount), _ => _.Artifacts.Count },
-        { nameof(VideoDTO.TranscriptCount), _ => _.Artifacts.Count },
-        { nameof(VideoDTO.TagCount), _ => _.Artifacts.Count },
-        { nameof(VideoDTO.ThumbnailCount), _ => _.Artifacts.Count },
+        //{ nameof(VideoDTO.ArtifactCount), _ => _.Artifacts.Count },
+        //{ nameof(VideoDTO.TranscriptCount), _ => _.Artifacts.Count },
+        //{ nameof(VideoDTO.TagCount), _ => _.Artifacts.Count },
+        //{ nameof(VideoDTO.ThumbnailCount), _ => _.Artifacts.Count },
         //{ nameof(VideoDTO.PlaylistCount), _ => _.PlaylistVideos.Count },
     };
 
@@ -68,7 +68,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 video.Name,
                 video.Description,
                 -1, //(int?)(request.IncludeCounts ? video.PlaylistVideos.Count : null),
-                (int?)(request.IncludeCounts ? video.Artifacts.Count : null),
+                -1,//(int?)(request.IncludeCounts ? video.Artifacts.Count : null),
                 (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
                 -1,//(int?)(request.IncludeCounts ? video.Transcripts.Count : null),
                 (int?)(request.IncludeCounts ? video.VideoTags.Count : null),

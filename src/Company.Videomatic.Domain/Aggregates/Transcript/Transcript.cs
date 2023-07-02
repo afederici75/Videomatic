@@ -1,6 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Entities.TranscriptAggregate;
+﻿namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
-public class Transcript //: EntityBase
+public class Transcript : IAggregateRoot
 {
     internal static Transcript Create(VideoId videoId, string language)
     {
@@ -34,7 +34,7 @@ public class Transcript //: EntityBase
     private Transcript()
     { }
 
-    private List<TranscriptLine> _lines { get; set; } = new();
+    private List<TranscriptLine> _lines { get; set; } = new();    
 
     #endregion
 }

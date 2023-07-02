@@ -27,7 +27,6 @@ public static class DependencyInjectionExtensions
         // IOptions
 
         // Services
-        //services.AddValidatorsFromAssembly(typeof(LoggingBehaviour<,>).Assembly);
         services.AddMediatR(cfg =>        
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()

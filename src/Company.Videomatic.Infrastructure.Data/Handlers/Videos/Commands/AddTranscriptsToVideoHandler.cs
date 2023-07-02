@@ -1,5 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Domain.Entities.TranscriptAggregate;
+using Company.Videomatic.Domain.Aggregates.Transcript;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 

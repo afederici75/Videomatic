@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Entities.VideoAggregate;
+﻿namespace Company.Videomatic.Domain.Aggregates.Video;
 
 public class Video : IAggregateRoot
 {
@@ -21,8 +21,7 @@ public class Video : IAggregateRoot
 
     public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
-    public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();
-    //public IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
+    //public IReadOnlyCollection<Artifact> Artifacts => _artifacts.ToList();    
 
     public bool AddTag(string name)
     {
@@ -40,12 +39,12 @@ public class Video : IAggregateRoot
         _thumbnails.Add(new Thumbnail(location, resolution, height, width));
     }
 
-    public Artifact AddArtifact(string title, string type, string? text = null)
-    {
-        var artifact = Artifact.Create(Id, title, type, text);
-        _artifacts.Add(artifact);
-        return artifact;
-    }
+    //public Artifact AddArtifact(string title, string type, string? text = null)
+    //{
+    //    var artifact = Artifact.Create(Id, title, type, text);
+    //    _artifacts.Add(artifact);
+    //    return artifact;
+    //}
 
     //public Transcript AddTranscript(string language)
     //{
@@ -62,8 +61,10 @@ public class Video : IAggregateRoot
     HashSet<VideoTag> _videoTags = new();
     HashSet<Thumbnail> _thumbnails = new();
 
-    List<Artifact> _artifacts = new();
-    List<Transcript> _transcripts = new();
+    //List<Artifact> _artifacts = new();
+    //List<Transcript.Transcript> _transcripts = new();
+
+    //IReadOnlyCollection<Transcript> Transcripts => _transcripts.ToList();
 
     #endregion
 }
