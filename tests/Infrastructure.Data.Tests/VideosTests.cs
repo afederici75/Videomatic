@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Tests;
+﻿using Company.Videomatic.Domain.Abstractions;
+
+namespace Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]
 public class VideosTests : IClassFixture<DbContextFixture>
@@ -111,21 +113,6 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         createPlaylistResponse.Id.Should().BeGreaterThan(0);
         createVid1Response.Id.Should().BeGreaterThan(0);
-    }
-
-    [Fact]
-    public async Task LinksTwoVideoToPlaylist2()
-    {        
-        // Executes
-        var addVidsCmd = new LinkVideoToPlaylistsCommand(
-            1, new long[] { 1 });
-
-        LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
-
-        // Checks
-        //createPlaylistResponse.Id.Should().BeGreaterThan(0);
-        //createVid1Response.Id.Should().BeGreaterThan(0);
     }
 
     [Theory]

@@ -22,7 +22,7 @@ public class DbContextFixture : IAsyncLifetime
     public ITestOutputHelper Output => _outputAccessor.Output!;
 
 
-    protected bool SkipInsertTestData { get; set; } = true;
+    protected bool SkipInsertTestData { get; set; } = false;
     [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
     public bool SkipDeletingDatabase { get; set; }
 

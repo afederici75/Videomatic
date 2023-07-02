@@ -1,3 +1,5 @@
+using Company.Videomatic.Domain.Abstractions;
+
 namespace Infrastructure.Data.Tests;
 
 [Collection("DbContextTests")]

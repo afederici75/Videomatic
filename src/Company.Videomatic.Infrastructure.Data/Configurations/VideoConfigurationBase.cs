@@ -52,7 +52,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                 builder.Property(x => x.Location).HasMaxLength(FieldLengths.Location);
             });
 
-        var tags = builder.OwnsMany(x => x.VideoTags,
+        var tags = builder.OwnsMany(x => x.Tags,
            (builder) =>
            {
                // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types

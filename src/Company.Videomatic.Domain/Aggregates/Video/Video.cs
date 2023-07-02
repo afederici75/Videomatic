@@ -21,7 +21,7 @@ public class Video : IAggregateRoot
     public string? Description { get; private set; }
     public VideoDetails Details { get; private set; } = default!;
 
-    public IReadOnlyCollection<VideoTag> VideoTags => _videoTags.ToList();
+    public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
     public IReadOnlyCollection<PlaylistVideo> Playlists => _playlists.ToList();
 
@@ -43,6 +43,7 @@ public class Video : IAggregateRoot
 
     public int LinkToPlaylists(params PlaylistId[] playlistIds)
     {
+        // We have _playlists fetched from the db. The 
         var goodIds = playlistIds
             .Except(_playlists.Select(p => p.PlaylistId))
             .ToArray();

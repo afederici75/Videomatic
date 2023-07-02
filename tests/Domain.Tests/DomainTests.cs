@@ -27,10 +27,10 @@ public class DomainTests
         video.AddTag("TAG1");
         video.AddTag("TAG2");
 
-        video.VideoTags.Count.Should().Be(2);
+        video.Tags.Count.Should().Be(2);
 
         video.AddTag("TAG1");
-        video.VideoTags.Count.Should().Be(2);
+        video.Tags.Count.Should().Be(2);
     }
 
     [Fact]

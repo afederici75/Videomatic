@@ -13,10 +13,10 @@ public class AddTagsToVideoHandler : BaseRequestHandler<AddTagsToVideoCommand, A
     {
         var video = await DbContext.Videos
                 .Where(x => x.Id == request.VideoId)                
-                .Include(x => x.VideoTags)
+                .Include(x => x.Tags)
                 .SingleAsync();
 
-        var validTags = request.Tags.Except(video.VideoTags.Select(t => t.Name))
+        var validTags = request.Tags.Except(video.Tags.Select(t => t.Name))
             .ToList();
 
         foreach (var tag in validTags)

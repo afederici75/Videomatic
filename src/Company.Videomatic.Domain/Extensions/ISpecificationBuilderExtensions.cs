@@ -1,23 +1,35 @@
-﻿using System.Linq.Expressions;
+﻿using Ardalis.Specification;
+using Company.Videomatic.Domain.Abstractions;
+using System.Linq.Expressions;
 
-namespace System.Linq;
+namespace Company.Videomatic.Domain.Extensions;
 
-public static class IQueryableExtensions
+public static class ISpecificationBuilderExtensions
 {
+
+    public static ISpecificationBuilder<T> SetPagination<T>(
+        this ISpecificationBuilder<T> source,
+        int page,
+        int pageSize)
+    {
+        return source.Skip((page - 1) * pageSize)
+                     .Take(pageSize);
+    }
+
     const int DefaultPage = 1;
     const int DefaultPageSize = 10;
 
-    public static IQueryable<T> OrderBy<T>(
-        this IQueryable<T> source, 
+    public static ISpecificationBuilder<T> OrderByExpressions<T>(
+        this ISpecificationBuilder<T> source,
         string? orderByText,
-        IDictionary<string, Expression<Func<T, object?>>> sortExpressions)
+        IReadOnlyDictionary<string, Expression<Func<T, object?>>> sortExpressions)
     {
-        if (string.IsNullOrWhiteSpace(orderByText)) 
+        if (string.IsNullOrWhiteSpace(orderByText))
         {
             return source;
         }
 
-        IOrderedQueryable<T>? orderedQueryable = null;
+        IOrderedSpecificationBuilder<T>? orderedQueryable = null;
         var options = orderByText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         foreach (var sortOption in options)
         {
@@ -28,6 +40,8 @@ public static class IQueryableExtensions
 
             if (orderedQueryable == null)
             {
+                var x = source.OrderByDescending(sortExpr);
+
                 if (desc)
                     orderedQueryable = source.OrderByDescending(sortExpr);
                 else
@@ -42,26 +56,7 @@ public static class IQueryableExtensions
             }
         }
 
-        return orderedQueryable ?? source;
+        return source;
     }
 
-    public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
-        this IQueryable<TDTO> source,
-        int page,
-        int pageSize,
-        CancellationToken cancellationToken = default)
-    {
-        var totalCount = await source.CountAsync(cancellationToken);
-
-        var items = await source
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-
-        return new PageResult<TDTO>(
-            items,
-            page,
-            pageSize,
-            totalCount);
-    }
 }

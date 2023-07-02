@@ -3,18 +3,10 @@ using System.Threading;
 
 namespace Company.Videomatic.Domain.Specifications;
 
-public class VideoByIdSpecification : Specification<Video>, ISingleResultSpecification<Video>
+public class VideoWithPlaylistsSpecification : VideoByIdsSpecification, ISingleResultSpecification<Video>
 {
-    public VideoByIdSpecification(VideoId id)
-    {
-        Query.Where(v => v.Id == id);
-    }
-}
-
-public class VideoWithPlaylistsSpecification : VideoByIdSpecification, ISingleResultSpecification<Video>
-{
-    public VideoWithPlaylistsSpecification(VideoId id)
-        : base(id)
+    public VideoWithPlaylistsSpecification(params VideoId[] ids)
+        : base(ids)
     {
         Query.Include(v => v.Playlists);
     }

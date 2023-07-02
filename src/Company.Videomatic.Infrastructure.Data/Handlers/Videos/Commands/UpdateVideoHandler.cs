@@ -16,9 +16,8 @@ public sealed class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, Upd
     }
 
     public async Task<UpdatedResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
-    {
-        var id = new VideoId(request.Id);
-        Video? video = await _repository.GetByIdAsync(id, cancellationToken);
+    {        
+        Video? video = await _repository.GetByIdAsync<VideoId>(new (request.Id), cancellationToken);
         if (video == null)
         {
             return new UpdatedResponse(request.Id, false);

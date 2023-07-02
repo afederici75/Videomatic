@@ -22,7 +22,7 @@ public class VideoConfiguration : VideoConfigurationBase
                        .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode                
             });
 
-        var agss = builder.OwnsMany(x => x.VideoTags,
+        var agss = builder.OwnsMany(x => x.Tags,
             (builder) =>
             {
                 builder.Property("Id")

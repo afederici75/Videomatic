@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
+﻿using Company.Videomatic.Domain.Abstractions;
+
+namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 /// <summary>
 /// 

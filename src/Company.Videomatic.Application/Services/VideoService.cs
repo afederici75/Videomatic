@@ -23,7 +23,6 @@ public class VideoService : IVideoService
         if (video == null)
             return 0;
 
-        //
         video.LinkToPlaylists(playlistIds);
         
         var cnt = await _repository.SaveChangesAsync();
