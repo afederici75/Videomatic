@@ -9,7 +9,9 @@ public class AddTranscriptsToVideoHandler : BaseRequestHandler<AddTranscriptsToV
     {
     }
 
-    public override async Task<AddTranscriptsToVideoResponse> Handle(AddTranscriptsToVideoCommand request, CancellationToken cancellationToken)
+    public override async Task<AddTranscriptsToVideoResponse> Handle(
+        AddTranscriptsToVideoCommand request, 
+        CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
 
