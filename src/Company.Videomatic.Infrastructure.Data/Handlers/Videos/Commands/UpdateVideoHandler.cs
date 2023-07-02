@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public sealed class UpdateVideoHandler : BaseRequestHandler<UpdateVideoCommand, UpdatedResponse>
 {

@@ -8,6 +8,8 @@ public static class DependencyInjectionExtensions
     {
         // Services
         //services.AddScoped<IUnitOfWork, VideomaticDbContext>();
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 
         return services;
     }

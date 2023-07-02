@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using Company.Videomatic.Domain.Playlists;
-using Company.Videomatic.Domain.Videos;
+using Company.Videomatic.Domain.Entities.PlaylistAggregate;
+using Company.Videomatic.Domain.Entities.TranscriptAggregate;
+using Company.Videomatic.Domain.Entities.VideoAggregate;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

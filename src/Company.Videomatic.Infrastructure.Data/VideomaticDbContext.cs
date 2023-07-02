@@ -1,4 +1,7 @@
-﻿namespace Company.Videomatic.Infrastructure.Data;
+﻿using Company.Videomatic.Domain.Entities.PlaylistAggregate;
+using Company.Videomatic.Domain.Entities.VideoAggregate;
+
+namespace Company.Videomatic.Infrastructure.Data;
 
 public class VideomaticDbContext : DbContext
 {

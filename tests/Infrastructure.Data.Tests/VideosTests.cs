@@ -29,18 +29,18 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Just a small test to see if LINQ creates a simpler query than
         // the one with all owned properties just down below.
         //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
-
-        var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
-
-        video.Name.Should().BeEquivalentTo(createCommand.Name);
-        video.Description.Should().BeEquivalentTo(createCommand.Description);
-        video.Location.Should().BeEquivalentTo(createCommand.Location);
-        video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
-        video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
-        video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
-        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
-        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
-        video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
+        throw new NotImplementedException();
+        //var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
+        //
+        //video.Name.Should().BeEquivalentTo(createCommand.Name);
+        //video.Description.Should().BeEquivalentTo(createCommand.Description);
+        //video.Location.Should().BeEquivalentTo(createCommand.Location);
+        //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
+        //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
+        //video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
+        //video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
+        //video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
+        //video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
     }
 
     [Fact]

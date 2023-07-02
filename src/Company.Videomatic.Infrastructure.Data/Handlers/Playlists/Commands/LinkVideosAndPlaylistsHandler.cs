@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using Company.Videomatic.Domain.Entities.PlaylistAggregate;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 

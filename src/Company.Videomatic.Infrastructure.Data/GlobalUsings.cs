@@ -11,5 +11,5 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
 
 global using Company.Videomatic.Domain.Abstractions;
-global using Company.Videomatic.Domain.Playlists;
-global using Company.Videomatic.Domain.Videos;
+global using Company.Videomatic.Domain.Entities.PlaylistAggregate;
+global using Company.Videomatic.Domain.Entities.VideoAggregate;

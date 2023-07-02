@@ -1,4 +1,6 @@
 ﻿
+using Company.Videomatic.Domain.Entities;
+
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
 public class ArtifactConfiguration : ArtifactConfigurationBase 

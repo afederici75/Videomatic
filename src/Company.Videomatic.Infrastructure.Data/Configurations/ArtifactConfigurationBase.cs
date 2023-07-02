@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿using Company.Videomatic.Domain.Entities;
+
+namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {

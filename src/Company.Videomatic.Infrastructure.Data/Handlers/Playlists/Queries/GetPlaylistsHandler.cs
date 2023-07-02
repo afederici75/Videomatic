@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Linq.Expressions;
+using Company.Videomatic.Domain.Entities.PlaylistAggregate;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 

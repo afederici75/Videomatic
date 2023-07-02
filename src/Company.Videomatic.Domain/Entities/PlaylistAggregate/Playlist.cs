@@ -1,16 +1,11 @@
-﻿namespace Company.Videomatic.Domain.Playlists;
-
-public record PlaylistId(long Value = 0)
-{
-    public static implicit operator long(PlaylistId x) => x.Value;
-    public static implicit operator PlaylistId(long x) => new PlaylistId(x);
-}
+﻿namespace Company.Videomatic.Domain.Entities.PlaylistAggregate;
 
 public class Playlist : IAggregateRoot
 {
     public static Playlist Create(string name, string? description)
     {
-        return new Playlist {
+        return new Playlist
+        {
             Name = name,
             Description = description
         };
@@ -21,18 +16,15 @@ public class Playlist : IAggregateRoot
     public string? Description { get; private set; }
 
     public void AddVideo(VideoId videoId)
-    {        
+    {
         _playlistVideos.Add(PlaylistVideo.Create(Id, videoId));
     }
-    
+
     #region Private
 
     private List<PlaylistVideo> _playlistVideos = new List<PlaylistVideo>();
 
-    private Playlist()
-    {
-        // For entity framework
-    }
+    private Playlist() { }
 
     #endregion
 }

@@ -1,4 +1,7 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿using Company.Videomatic.Domain.Entities.PlaylistAggregate;
+using Company.Videomatic.Domain.Entities.VideoAggregate;
+
+namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 {
@@ -27,9 +30,13 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         builder.Property(x => x.Description);
         //.HasMaxLength(FieldLengths.Description);
 
-        builder.HasMany(x => x.PlaylistVideos)
+        //builder.HasMany(x => x.PlaylistVideos)
+        //       .WithOne()
+        //       .HasForeignKey(x => x.VideoId);
+
+        builder.HasMany(typeof(PlaylistVideo))
                .WithOne()
-               .HasForeignKey(x => x.VideoId);
+               .HasForeignKey("VideoId");
 
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
             (builder) => 
@@ -74,11 +81,11 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
             builder.Property(x => x.Position);
         });           
         
-        builder.HasMany(x => x.Transcripts)
-               .WithOne()
-               .HasForeignKey(x => x.VideoId)
-               .IsRequired(true)
-               .OnDelete(DeleteBehavior.Cascade);
+        //builder.HasMany(x => x.Transcripts)
+        //       .WithOne()
+        //       .HasForeignKey(x => x.VideoId)
+        //       .IsRequired(true)
+        //       .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(x => x.Artifacts)
                .WithOne()

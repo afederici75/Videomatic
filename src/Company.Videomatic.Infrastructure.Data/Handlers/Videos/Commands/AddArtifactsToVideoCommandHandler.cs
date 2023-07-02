@@ -8,15 +8,16 @@ public class AddArtifactsToVideoCommandHandler : BaseRequestHandler<AddArtifactT
 
     public override async Task<AddArtifactToVideoResponse> Handle(AddArtifactToVideoCommand request, CancellationToken cancellationToken)
     {
-        var video = await DbContext.Videos
-              .Where(x => x.Id == request.VideoId)
-              .Include(x => x.Transcripts)
-              .SingleAsync(cancellationToken);
-
-        var artifact = video.AddArtifact(request.Title, request.Type, request.Text);
-
-        var res = await DbContext.CommitChangesAsync(cancellationToken);
-
-        return new AddArtifactToVideoResponse(request.VideoId, artifact.Id);
+        throw new NotImplementedException();
+        //var video = await DbContext.Videos
+        //      .Where(x => x.Id == request.VideoId)
+        //      .Include(x => x.Transcripts)
+        //      .SingleAsync(cancellationToken);
+        //
+        //var artifact = video.AddArtifact(request.Title, request.Type, request.Text);
+        //
+        //var res = await DbContext.CommitChangesAsync(cancellationToken);
+        //
+        //return new AddArtifactToVideoResponse(request.VideoId, artifact.Id);
     }
 }

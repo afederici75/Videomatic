@@ -1,4 +1,7 @@
-﻿namespace Domain.Tests;
+﻿using Company.Videomatic.Domain.Entities.PlaylistAggregate;
+using Company.Videomatic.Domain.Entities.VideoAggregate;
+
+namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.
@@ -46,13 +49,17 @@ public class DomainTests
         var arti1 = video.AddArtifact(title: "A complete summary", type: "AI", text: "Bla bla");
         var arti2 = video.AddArtifact(title: "A complete analysis", type: "AI", text: "More bla bla");
 
-        var trans1 = video.AddTranscript("EN");
-        var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
-        var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
+        throw new NotImplementedException();
 
-        var trans2 = video.AddTranscript("IT");
-        var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
-        var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));        
+        // videoService.AddTranscript("EN", lines);
+
+        //var trans1 = video.AddTranscript("EN");
+        //var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
+        //var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
+        //
+        //var trans2 = video.AddTranscript("IT");
+        //var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
+        //var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));        
     }
 
     [Fact]

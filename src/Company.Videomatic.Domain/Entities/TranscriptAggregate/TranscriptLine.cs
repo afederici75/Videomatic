@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Videos;
+﻿namespace Company.Videomatic.Domain.Entities.TranscriptAggregate;
 
 public class TranscriptLine : ValueObject//: EntityBase
 {

@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Videos;
+﻿namespace Company.Videomatic.Domain.Entities.VideoAggregate;
 
 public record VideoDetails(
     string Provider,
@@ -16,7 +16,8 @@ public record VideoDetails(
              PlaylistId: "",
              Position: 0,
              VideoOwnerChannelTitle: "",
-             VideoOwnerChannelId: "") { }
+             VideoOwnerChannelId: "")
+    { }
 
     public static VideoDetails CreateEmpty()
     {

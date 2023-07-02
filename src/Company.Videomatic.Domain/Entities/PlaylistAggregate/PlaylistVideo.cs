@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Playlists;
+﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
+
+namespace Company.Videomatic.Domain.Entities.PlaylistAggregate;
 
 public class PlaylistVideo
 {
@@ -13,12 +15,12 @@ public class PlaylistVideo
 
     public PlaylistId PlaylistId { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
-    
+
     #region Private
 
     private PlaylistVideo()
     {
-            
+
     }
 
     #endregion

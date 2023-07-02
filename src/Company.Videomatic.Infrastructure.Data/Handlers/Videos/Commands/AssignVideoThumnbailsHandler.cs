@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-using System.Diagnostics;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public class AssignVideoThumnbailsHandler : BaseRequestHandler<AssignVideoThumnbailsCommand, AssignVideoThumnbailsResponse>
 {
@@ -22,7 +19,7 @@ public class AssignVideoThumnbailsHandler : BaseRequestHandler<AssignVideoThumnb
             //
             //if (item is null)
             //{
-                video.AddThumbnail(thumb.Location, (Domain.Videos.ThumbnailResolution)thumb.Resolution, thumb.Height, thumb.Width);
+                video.AddThumbnail(thumb.Location, (ThumbnailResolution)thumb.Resolution, thumb.Height, thumb.Width);
             //}
             //else
             //{

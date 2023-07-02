@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Videos;
+﻿using Company.Videomatic.Domain.Entities.VideoAggregate;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
 
@@ -20,7 +20,7 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
         { nameof(VideoDTO.TranscriptCount), _ => _.Artifacts.Count },
         { nameof(VideoDTO.TagCount), _ => _.Artifacts.Count },
         { nameof(VideoDTO.ThumbnailCount), _ => _.Artifacts.Count },
-        { nameof(VideoDTO.PlaylistCount), _ => _.PlaylistVideos.Count },
+        //{ nameof(VideoDTO.PlaylistCount), _ => _.PlaylistVideos.Count },
     };
 
     public override async Task<PageResult<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
@@ -67,13 +67,13 @@ public class GetVideosHandler : BaseRequestHandler<GetVideosQuery, PageResult<Vi
                 video.Location,
                 video.Name,
                 video.Description,
-                (int?)(request.IncludeCounts ? video.PlaylistVideos.Count : null),
+                -1, //(int?)(request.IncludeCounts ? video.PlaylistVideos.Count : null),
                 (int?)(request.IncludeCounts ? video.Artifacts.Count : null),
                 (int?)(request.IncludeCounts ? video.Thumbnails.Count : null),
-                (int?)(request.IncludeCounts ? video.Transcripts.Count : null),
+                -1,//(int?)(request.IncludeCounts ? video.Transcripts.Count : null),
                 (int?)(request.IncludeCounts ? video.VideoTags.Count : null),
                 thumb.Location ?? ""
-            );
+            );;
         
         var page = await dtoQuery
            .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);

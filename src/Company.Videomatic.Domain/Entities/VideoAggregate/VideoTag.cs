@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Videos;
+﻿namespace Company.Videomatic.Domain.Entities.VideoAggregate;
 
 public class VideoTag : ValueObject//:EntityBase
 {

@@ -4,8 +4,5 @@
     <PackageReference Include="Ardalis.Result" Version="7.1.0" />
     <PackageReference Include="Ardalis.Specification" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>  
-  <ItemGroup>
-    <Folder Include="Entities\" />
   </ItemGroup>
 </Project>
