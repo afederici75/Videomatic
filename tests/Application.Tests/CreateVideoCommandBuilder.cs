@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿namespace Application.Tests;
 
 public class CreateVideoCommandBuilder
 {

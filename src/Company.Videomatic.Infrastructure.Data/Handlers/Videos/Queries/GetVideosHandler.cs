@@ -1,6 +1,7 @@
 ﻿using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Extensions;
 using Company.Videomatic.Domain.Specifications;
+using Company.Videomatic.Domain.Specifications.Videos;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
@@ -39,7 +40,7 @@ public class GetVideosHandler :
     
     public async Task<IEnumerable<VideoDTO>> Handle(GetVideosByIdQuery request, CancellationToken cancellationToken)
     {
-        var spec = new VideoByIdsSpecification(request.VideoIds.Select(x => new VideoId(x)));
+        var spec = new VideosByIdSpecification(request.VideoIds.Select(x => new VideoId(x)));
 
         var videos = await _repository.ListAsync(spec, cancellationToken);        
 

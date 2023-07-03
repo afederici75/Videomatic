@@ -2,16 +2,19 @@
 
 namespace Company.Videomatic.Application.Features.Artifact.Queries;
 
-public record GetArtifactsQuery(
+public record GetArtifactsByIdQuery(
+    long[] ArtifactIds,
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null) : IRequest<PageResult<ArtifactDTO>>;
+    int? PageSize = null) : IRequest<IEnumerable<ArtifactDTO>>;
 
-internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
+internal class GetArtifactsByIdQueryValidator : AbstractValidator<GetArtifactsByIdQuery>
 {
-    public GetArtifactsQueryValidator()
+    public GetArtifactsByIdQueryValidator()
     {
+        RuleFor(x => x.ArtifactIds).NotEmpty();
+
         When(x => x.SearchText is not null, () =>
         {
             RuleFor(x => x.SearchText).NotEmpty();

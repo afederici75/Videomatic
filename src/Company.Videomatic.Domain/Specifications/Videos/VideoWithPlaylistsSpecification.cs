@@ -1,9 +1,9 @@
 ﻿using Ardalis.Specification;
 using System.Threading;
 
-namespace Company.Videomatic.Domain.Specifications;
+namespace Company.Videomatic.Domain.Specifications.Videos;
 
-public class VideoWithPlaylistsSpecification : VideoByIdsSpecification, ISingleResultSpecification<Video>
+public class VideoWithPlaylistsSpecification : VideosByIdSpecification, ISingleResultSpecification<Video>
 {
     public VideoWithPlaylistsSpecification(params VideoId[] ids)
         : base(ids)

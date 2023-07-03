@@ -2,7 +2,7 @@
 using Company.Videomatic.Domain.Extensions;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Domain.Specifications;
+namespace Company.Videomatic.Domain.Specifications.Videos;
 
 public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecification<Video>
 {
@@ -37,9 +37,9 @@ public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecif
         }
 
         // OrderBy
-        Query.OrderByExpressions(orderBy, SupportedOrderBys);        
+        Query.OrderByExpressions(orderBy, SupportedOrderBys);
     }
 
     public int Page { get; }
-    public int PageSize { get; }    
+    public int PageSize { get; }
 }

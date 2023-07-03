@@ -29,8 +29,6 @@ public static class ISpecificationBuilderExtensions
 
             if (orderedQueryable == null)
             {
-                var x = source.OrderByDescending(sortExpr);
-
                 if (desc)
                     orderedQueryable = source.OrderByDescending(sortExpr);
                 else

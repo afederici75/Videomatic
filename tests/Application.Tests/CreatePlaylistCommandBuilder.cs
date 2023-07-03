@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
+﻿namespace Application.Tests;    
 
 public class CreatePlaylistCommandBuilder
 { 

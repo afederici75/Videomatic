@@ -1,3 +1,4 @@
+using Application.Tests;
 using Company.Videomatic.Application.Features.Playlists;
 using Company.Videomatic.Domain.Abstractions;
 

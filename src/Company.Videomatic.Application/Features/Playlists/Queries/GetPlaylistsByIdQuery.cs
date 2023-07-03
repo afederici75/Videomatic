@@ -1,21 +1,20 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
+﻿using Company.Videomatic.Domain.Abstractions;
+
+namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 public record GetPlaylistsByIdQuery(
-    long[]? PlaylistIds = null,
+    long[] PlaylistIds,
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null);
+    int? PageSize = null) : IRequest<IEnumerable<PlaylistDTO>>;
 
 internal class GetPlaylistsByIdQueryValidator : AbstractValidator<GetPlaylistsByIdQuery>
 {
     public GetPlaylistsByIdQueryValidator()
     {
-        When(x => x.PlaylistIds is not null, () =>
-        {
-            RuleFor(x => x.PlaylistIds).NotEmpty();
-        });
-
+        RuleFor(x => x.PlaylistIds).NotEmpty();
+        
         When(x => x.SearchText is not null, () =>
         {
             RuleFor(x => x.SearchText).NotEmpty();

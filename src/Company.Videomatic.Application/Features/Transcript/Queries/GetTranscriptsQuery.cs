@@ -1,16 +1,17 @@
-﻿using Company.Videomatic.Domain.Abstractions;
+﻿using Company.Videomatic.Application.Features.Transcript;
+using Company.Videomatic.Domain.Abstractions;
 
 namespace Company.Videomatic.Application.Features.Artifact.Queries;
 
-public record GetArtifactsQuery(
+public record GetTranscriptsQuery(
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null) : IRequest<PageResult<ArtifactDTO>>;
+    int? PageSize = null) : IRequest<PageResult<TranscriptDTO>>;
 
-internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
+internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
 {
-    public GetArtifactsQueryValidator()
+    public GetTranscriptsQueryValidator()
     {
         When(x => x.SearchText is not null, () =>
         {

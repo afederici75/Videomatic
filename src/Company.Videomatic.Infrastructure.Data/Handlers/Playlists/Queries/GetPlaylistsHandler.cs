@@ -1,49 +1,49 @@
 ﻿using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Domain.Extensions;
+using Company.Videomatic.Domain.Specifications;
+using Company.Videomatic.Domain.Specifications.Playlists;
 using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
-public sealed class GetPlaylistsHandler : BaseRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
+public sealed class GetPlaylistsHandler : 
+    IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>,
+    IRequestHandler<GetPlaylistsByIdQuery, IEnumerable<PlaylistDTO>>
 {
-    public GetPlaylistsHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    public GetPlaylistsHandler(IReadRepository<Playlist> repository, IMapper mapper) 
     {
+        _repository = repository;
+        _mapper = mapper;
     }
+
+    readonly IReadRepository<Playlist> _repository;
+    readonly IMapper _mapper;
     
-    Dictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new (StringComparer.OrdinalIgnoreCase)
+    public async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {
-        { nameof(Playlist.Id), _ => _.Id },
-        { nameof(Playlist.Name), _ => _.Name },
-        { nameof(Playlist.Description), _ => _.Description },
-        //{ "VideoCount", _ => _.PlaylistVideos.Count },
-    };
+        var spec = new PlaylistsFilteredAndPaginated(
+            request.SearchText,
+            request.Page,
+            request.PageSize,
+            request.OrderBy);
 
-    public override async Task<PageResult<PlaylistDTO>> Handle(
-        GetPlaylistsQuery request, CancellationToken cancellationToken = default)
+        var res = await _repository.PageAsync<Playlist, PlaylistDTO>(
+            spec,
+            spec.Page,
+            spec.PageSize,
+            vid => _mapper.Map<PlaylistDTO>(vid),
+            cancellationToken);
+
+        return res;
+    }
+
+    public async Task<IEnumerable<PlaylistDTO>> Handle(GetPlaylistsByIdQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<Playlist> query = DbContext.Playlists;
+        var spec = new PlaylistsByIdSpecification(request.PlaylistIds.Select(x => new PlaylistId(x)));
 
-        // Query setup        
-        if (!string.IsNullOrWhiteSpace(request.SearchText))
-        {
-            // Search text fields must be specified directly
-            query = query.Where(x => 
-                x.Name.Contains(request.SearchText) || 
-                x.Description!.Contains(request.SearchText));            
-        }
-        
-        // Custom OrderBy which takes in account what we allow to sort by
-        query = query.OrderBy(request.OrderBy, SupportedOrderBys);
+        var videos = await _repository.ListAsync(spec, cancellationToken);
 
-        // Mapping
-        var dtoQuery = query.Select(x => new PlaylistDTO(
-              x.Id,
-              x.Name,
-              x.Description,
-              0));//x.PlaylistVideos.Count));        
+        return videos.Select(vid => _mapper.Map<PlaylistDTO>(vid));
 
-        var page = await dtoQuery
-            .ToPageAsync(request.Page ?? 1, request.PageSize ?? 10, cancellationToken);
-
-        return page;
-    }   
+    }
 }

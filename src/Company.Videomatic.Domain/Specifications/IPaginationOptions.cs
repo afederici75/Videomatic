@@ -14,17 +14,17 @@ public interface IPaginatedSpecification<T> : ISpecification<T>
     int PageSize { get; }
 }
 
-public class PaginatedSpecification<T> : Specification<T>, IPaginatedSpecification<T>
-{
-    public int Page { get; }
-    public int PageSize { get; }
+//public class PaginatedSpecification<T> : Specification<T>, IPaginatedSpecification<T>
+//{
+//    public int Page { get; }
+//    public int PageSize { get; }
     
-    public PaginatedSpecification(int? page, int? pageSize)
-    {
-        Page = page ?? 1;
-        PageSize = pageSize ?? 10;
+//    public PaginatedSpecification(int? page, int? pageSize)
+//    {
+//        Page = page ?? 1;
+//        PageSize = pageSize ?? 10;
 
-        Query.Skip((Page - 1) * PageSize);
-        Query.Take(PageSize);        
-    }
-}   
+//        Query.Skip((Page - 1) * PageSize);
+//        Query.Take(PageSize);        
+//    }
+//}   

@@ -8,20 +8,7 @@ public record GetPlaylistsQuery(
     string? OrderBy = null,
     int? Page = null,
     int? PageSize = null,
-    bool IncludeCounts = false) : IRequest<PageResult<PlaylistDTO>>
-{
-    public GetPlaylistsQuery(
-        long[] ids,
-        string? OrderBy = null,
-        int? Page = null,
-        int? PageSize = null,
-        bool IncludeCounts = false) : this(
-            $"{nameof(PlaylistDTO.Id)} in ({string.Join(", ", ids.Select(x => x.ToString()))}",
-            OrderBy: OrderBy,
-            Page: Page,
-            PageSize: PageSize,
-            IncludeCounts: IncludeCounts) { }
-}
+    bool IncludeCounts = false) : IRequest<PageResult<PlaylistDTO>>;
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {
