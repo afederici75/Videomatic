@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
-public sealed class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdatedResponse>
+public sealed class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, UpdateVideoResponse>
 {
     private readonly IRepository<Video> _repository;
     private readonly IMapper _mapper;
@@ -15,17 +15,17 @@ public sealed class UpdateVideoHandler : IRequestHandler<UpdateVideoCommand, Upd
         _mapper = mapper;
     }
 
-    public async Task<UpdatedResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
+    public async Task<UpdateVideoResponse> Handle(UpdateVideoCommand request, CancellationToken cancellationToken = default)
     {        
         Video? video = await _repository.GetByIdAsync<VideoId>(new (request.Id), cancellationToken);
         if (video == null)
         {
-            return new UpdatedResponse(request.Id, false);
+            return new UpdateVideoResponse(request.Id);
         }
 
         _mapper.Map<UpdateVideoCommand, Video>(request, video);
         var cnt = await _repository.SaveChangesAsync();
         
-        return new UpdatedResponse(request.Id, cnt > 0);
+        return new UpdateVideoResponse(request.Id);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
-public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, CreatedResponse>
+public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, CreateVideoResponse>
 {
     public CreateVideoHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 
-    public override async Task<CreatedResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
+    public override async Task<CreateVideoResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
     {
         Video video = Mapper.Map<CreateVideoCommand, Video>(request);
 
@@ -19,6 +19,6 @@ public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, 
         var entry = DbContext.Add(video);
         var res = await DbContext.CommitChangesAsync(cancellationToken);
 
-        return new CreatedResponse(Id: entry.Entity.Id);
+        return new CreateVideoResponse(Id: entry.Entity.Id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Domain.Abstractions;
+﻿using Company.Videomatic.Application.Features.Videos.Commands;
+using Company.Videomatic.Domain.Abstractions;
 
 namespace Infrastructure.Data.Tests;
 
@@ -23,7 +24,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        CreatedResponse response = await Sender.Send(createCommand);
+        CreateVideoResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
@@ -49,7 +50,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        CreatedResponse response = await Sender.Send(createCommand);
+        CreateVideoResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
@@ -63,8 +64,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     [Fact]
     public async Task UpdateVideo()
-    {        
-        CreatedResponse createResponse = await Sender.Send(
+    {
+        CreateVideoResponse createResponse = await Sender.Send(
             CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
         var updateCommand = new UpdateVideoCommand(
@@ -72,7 +73,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             "New Title",
             "New Description");
 
-        UpdatedResponse response = await Sender.Send(updateCommand);
+        UpdateVideoResponse response = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Videos
@@ -92,12 +93,12 @@ public class VideosTests : IClassFixture<DbContextFixture>
             Name: nameof(LinksTwoVideoToPlaylist),
             Description: $"A description for my playlist {DateTime.Now}");
 
-        CreatedResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
+        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
 
         var createVid1Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
 
-        CreatedResponse createVid1Response = await Sender.Send(createVid1Cmd);
+        CreateVideoResponse createVid1Response = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");

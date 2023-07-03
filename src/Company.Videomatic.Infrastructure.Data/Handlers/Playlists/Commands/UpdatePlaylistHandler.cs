@@ -2,13 +2,13 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
-public sealed class UpdatePlaylistHandler : BaseRequestHandler<UpdatePlaylistCommand, UpdatedResponse>
+public sealed class UpdatePlaylistHandler : BaseRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>
 {
     public UpdatePlaylistHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
     {
     }
 
-    public override async Task<UpdatedResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
+    public override async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
     {
         var newValue = Mapper.Map<UpdatePlaylistCommand, Playlist>(request);
 
@@ -19,6 +19,6 @@ public sealed class UpdatePlaylistHandler : BaseRequestHandler<UpdatePlaylistCom
 
         var cnt = await DbContext.CommitChangesAsync(cancellationToken);
 
-        return new UpdatedResponse(request.Id, cnt > 0);
+        return new UpdatePlaylistResponse(request.Id);
     }
 }

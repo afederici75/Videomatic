@@ -6,7 +6,9 @@
 public record UpdateVideoCommand(
     long Id, 
     string Name, 
-    string? Description = default) : IRequest<UpdatedResponse>;
+    string? Description = default) : IRequest<UpdateVideoResponse>;
+
+public record UpdateVideoResponse(long Id);
 
 
 internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>

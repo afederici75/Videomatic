@@ -113,20 +113,21 @@ public class DataSeeder : IDataSeeder
                 "he dances.",
                 "He's everywhere in the universe. I mean they said this is his dance.",
                 "Manifestation of the world is called his 'Lila', his play.",
-            }));        
+            }));
 
+        throw new NotImplementedException();
         // Artifacts
-        var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
-            "Summary",
-            "SUMMARY",
-            "This will be an AI generated artifact"
-            ));
-
-        var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
-            "Contents",
-            "CONTENTS_LIST",
-            "This will be an AI generated artifact listing all the topics discussed in this video"
-            ));
+        //var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
+        //    "Summary",
+        //    "SUMMARY",
+        //    "This will be an AI generated artifact"
+        //    ));
+        //
+        //var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
+        //    "Contents",
+        //    "CONTENTS_LIST",
+        //    "This will be an AI generated artifact listing all the topics discussed in this video"
+        //    ));
 
         return video.Id;
     }
@@ -180,18 +181,19 @@ public class DataSeeder : IDataSeeder
                 "But, this apparent conflict can be resolved with the help of an important principle  ", 
         }));
 
-        // Artifacts
-        var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
-            "Summary",
-            "SUMMARY",
-            "This will be another AI generated artifact"
-            ));
-
-        var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
-            "Contents",
-            "CONTENTS_LIST",
-            "This will be another AI generated artifact listing all the topics discussed in this video"
-            ));
+        throw new NotImplementedException();
+        //// Artifacts
+        //var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
+        //    "Summary",
+        //    "SUMMARY",
+        //    "This will be another AI generated artifact"
+        //    ));
+        //
+        //var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
+        //    "Contents",
+        //    "CONTENTS_LIST",
+        //    "This will be another AI generated artifact listing all the topics discussed in this video"
+        //    ));
 
         return video.Id;
     }

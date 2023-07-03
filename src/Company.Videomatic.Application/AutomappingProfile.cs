@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
+using Company.Videomatic.Application.Features.Artifact.Commands;
 using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Playlist;

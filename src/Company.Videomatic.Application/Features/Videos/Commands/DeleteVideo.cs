@@ -1,12 +1,12 @@
-﻿using Company.Videomatic.Application.Features.DataAccess;
-
-namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 /// <summary>
 /// This command is used to delete a video from the repository.
 /// </summary>
 /// <param name="Id"> The id of the video to delete. </param>
-public record DeleteVideoCommand(long Id) : IRequest<DeletedResponse>;
+public record DeleteVideoCommand(long Id) : IRequest<DeleteVideoResponse>;
+
+public record DeleteVideoResponse(long Id);
 
 /// <summary>
 /// The validator for DeleteVideoCommand.

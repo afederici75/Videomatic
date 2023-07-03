@@ -23,7 +23,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreatePlaylistCommandBuilder.WithDummyValues();
 
-        CreatedResponse response = await Sender.Send(createCommand);
+        CreatePlaylistResponse response = await Sender.Send(createCommand);
 
         // Checks
         response.Id.Should().BeGreaterThan(0);
@@ -63,7 +63,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
             "New Name",
             "New Description");
 
-        UpdatedResponse updatedResponse = await Sender.Send(updateCommand);
+        UpdatePlaylistResponse updatedResponse = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Playlists

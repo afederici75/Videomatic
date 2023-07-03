@@ -1,5 +1,4 @@
-﻿using Company.Videomatic.Application.Features.DataAccess;
-using Company.Videomatic.Domain.Abstractions;
+﻿using Company.Videomatic.Domain.Abstractions;
 
 namespace Company.Videomatic.Application.Features.Videos.Queries;
 
