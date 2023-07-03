@@ -2,10 +2,11 @@
 
 namespace Company.Videomatic.Domain.Specifications;
 
-public class VideoByIdsSpecification : Specification<Video>
+public class TranscriptByIdsSpecification : Specification<Transcript>
 {
-    public VideoByIdsSpecification(params VideoId[] ids)
+    public TranscriptByIdsSpecification(params TranscriptId[] ids)
     {
         Query.Where(v => ids.Contains(v.Id));
     }
 }
+

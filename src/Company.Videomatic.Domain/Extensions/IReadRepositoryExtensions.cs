@@ -2,7 +2,7 @@
 
 public static class IReadRepositoryExtensions
 {
-    public static async Task<PageResult<T>> ToPageAsync<T>(
+    public static async Task<PageResult<T>> PageAsync<T>(
         this IReadRepository<T> repository,
         IPaginatedSpecification<T> specification,
         CancellationToken cancellationToken = default)

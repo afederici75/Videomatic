@@ -24,7 +24,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, PageResult<Video
             request.PageSize, 
             request.OrderBy);
 
-        var page = await _repository.ToPageAsync(spec, cancellationToken);
+        var page = await _repository.PageAsync(spec, cancellationToken);
 
         // Mapping
         ThumbnailResolution expectedRes = request.IncludeThumbnail?.ToThumbnailResolution() ?? ThumbnailResolution.Default;

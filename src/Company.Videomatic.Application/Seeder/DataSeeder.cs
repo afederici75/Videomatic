@@ -98,24 +98,21 @@ public class DataSeeder : IDataSeeder
             }));
 
         // Transcripts
-        var transcript = await Sender.Send(new AddTranscriptsToVideoCommand(video.Id, new []
-        {
-            new TranscriptPayload("US", new TranscriptLinePayload[]
+        var transcript = await Sender.Send(new UpdateTranscriptCommand(video.Id, "US", new TranscriptLinePayload[]
             {
-                new ("when you think of the", new (0,0,0,0, 669), new (0, 0, 0, 0, 0)),
-                new ("staggering symbols that the Indians produced. I mean the the dancing Shiva for example.", new (0,0,0,2,8599998), new (0,0,0,5,7199997)),
-                new ("We've never produced anything as comprehensive as this.", new (0,0,0,8,5799999), new (0,0,0,3,7000000)),
-                new ("The dancing Shiva... There's this little bronze statues. It is the Shiva with four arms dancing with one foot raised.", new (0,0,0,7,2600002), new (0,0,0,12,7399997)),
-                new ("And well, I mean I'll go into the details: They are really quite extraordinary. It's said that the figure stands", new (0,0,0,20,7999992), new (0,0,0,05,6599998)),
-                new ("within a great circle - sort of halo which has flames going out on the symbols of flames and this is the", new (0,0,0,27,3390007), new (0,0,0,06,7399997)),
-                new ("circle of mass energy space-time. I mean this is the material world, the great world of the", new (0,0,0,34,7500000), new (0,0,0,06,8889999)),
-                new ("all-embracing", new (0,0,0,42,9399986), new (0,0,0,1,0490000)),
-                new ("Material world with its flames. Within this Shiva dances. He's called Nataraja, the Lord of the dance and", new (0,0,0,43,9889984), new (0,0,0,6,9790000)),
-                new ("he dances.", new (0,0,0,52,0299987), new (0,0,0,01,7990000)),
-                new ("He's everywhere in the universe. I mean they said this is his dance.", new (0,0,0,53,8289985), new (0,0,0,3,9790000)),
-                new ("Manifestation of the world is called his 'Lila', his play.", new (0,0,0,58,6290016), new (0,0,0,2,4200000)),
-            })
-        }));
+                "when you think of the",
+                "staggering symbols that the Indians produced. I mean the the dancing Shiva for example.",
+                "We've never produced anything as comprehensive as this.",
+                "The dancing Shiva... There's this little bronze statues. It is the Shiva with four arms dancing with one foot raised.",
+                "And well, I mean I'll go into the details: They are really quite extraordinary. It's said that the figure stands",
+                "within a great circle - sort of halo which has flames going out on the symbols of flames and this is the",
+                "circle of mass energy space-time. I mean this is the material world, the great world of the",
+                "all-embracing",
+                "Material world with its flames. Within this Shiva dances. He's called Nataraja, the Lord of the dance and",
+                "he dances.",
+                "He's everywhere in the universe. I mean they said this is his dance.",
+                "Manifestation of the world is called his 'Lila', his play.",
+            }));        
 
         // Artifacts
         var summaryArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
@@ -170,19 +167,16 @@ public class DataSeeder : IDataSeeder
             }));
 
         // Transcripts
-        var transcript = await Sender.Send(new AddTranscriptsToVideoCommand(video.Id, new[]
+        var transcript = await Sender.Send(new UpdateTranscriptCommand(video.Id, "US", new TranscriptLinePayload[]
         {
-            new TranscriptPayload("US", new TranscriptLinePayload[]
-            {
-                new TranscriptLinePayload("Here's a question from Sandeep who lives in Peoria, Illinois. He asks,  ", new TimeSpan(0,0,0,21,4400005), new (0,0,0,6,7199997)),
-                new TranscriptLinePayload("If non-dual brahman is the ultimate reality, then why did the ancient rishis say  ", new TimeSpan(0,0,0,28,7199993), new (0,0,0,7,6799998)),
-                new TranscriptLinePayload("that Brahma, Vishnu, and Shiva are the gods of creation, sustenance, and dissolution?  ", new TimeSpan(0,0,0,36,9599990), new (0,0,0,8,0799999)),
-                new TranscriptLinePayload("Questions like this one often arise when we look at conventional Hindu teachings from the  ",  new TimeSpan(0,0,0,47,4399986), new (0,0,0,6,8000001)),
-                new TranscriptLinePayload("lofty standpoint of non-duality, advaita. The scriptures of advaita Vedanta accept  ", new TimeSpan(0,0,0,54,2400016), new (0,0,0,8,3199996)),
-                new TranscriptLinePayload("only one, undifferentiated underlying reality called brahman. But most other scriptures accept  ", new TimeSpan(0,0,1,2,5600013), new (0,0,0,10,0)),
-                new TranscriptLinePayload("the existence of many gods. These two positions are contradictory and seem irreconcilable.  ", new TimeSpan(0,0,1,2,5600013), new (0,0,0,10,0)),
-                new TranscriptLinePayload("But, this apparent conflict can be resolved with the help of an important principle  ", new TimeSpan(0,0,1,22,6399993), new (0,0,0,8,0799999)),                
-            })
+                "Here's a question from Sandeep who lives in Peoria, Illinois. He asks,  ", 
+                "If non-dual brahman is the ultimate reality, then why did the ancient rishis say  ", 
+                "that Brahma, Vishnu, and Shiva are the gods of creation, sustenance, and dissolution?  ",
+                "Questions like this one often arise when we look at conventional Hindu teachings from the  ",  
+                "lofty standpoint of non-duality, advaita. The scriptures of advaita Vedanta accept  ", 
+                "only one, undifferentiated underlying reality called brahman. But most other scriptures accept  ", 
+                "the existence of many gods. These two positions are contradictory and seem irreconcilable.  ", 
+                "But, this apparent conflict can be resolved with the help of an important principle  ", 
         }));
 
         // Artifacts

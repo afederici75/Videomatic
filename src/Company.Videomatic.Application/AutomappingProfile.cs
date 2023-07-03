@@ -22,12 +22,14 @@ public class AutomappingProfile : Profile
 
         CreateMap<UpdateVideoCommand, Video>();
 
+        CreateMap<UpdateTranscriptCommand, Transcript>()
+            .ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines));
+        CreateMap<TranscriptLinePayload, TranscriptLine>();
+
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
         CreateMap<Thumbnail, ThumbnailDTO>();
 
-        CreateMap<ThumbnailInfo, Thumbnail>();
-        CreateMap<TranscriptPayload, Transcript>();
-        CreateMap<TranscriptLinePayload, TranscriptLine>();
+        CreateMap<ThumbnailInfo, Thumbnail>();        
     }
 }
