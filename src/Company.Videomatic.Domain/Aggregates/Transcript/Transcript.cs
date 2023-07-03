@@ -8,9 +8,9 @@ public class Transcript : IAggregateRoot
         {
             VideoId = videoId,
             Language = language,
-        };        
+        };
 
-        return t 
+        return t;
 
     }
     public static Transcript Create(VideoId videoId, string language, IEnumerable<string> lines)
@@ -38,14 +38,14 @@ public class Transcript : IAggregateRoot
         return this;
     }
 
-    //public Transcript AddLines(IEnumerable<string> allText)
-    //{
-    //    var lines = allText.Select(t => (TranscriptLine)t).ToArray();
-    //    _lines.AddRange(lines);
-    //    return this;
-    //}
+    public Transcript AddLines(IEnumerable<string> allText)
+    {
+        var lines = allText.Select(t => (TranscriptLine)t).ToArray();
+        _lines.AddRange(lines);
+        return this;
+    }
 
-    public Transcript AddLine(string text, TimeSpan duration, TimeSpan startsAt)
+    public Transcript AddLine(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {
         var line = TranscriptLine.Create(text, duration, startsAt);
         _lines.Add(line);

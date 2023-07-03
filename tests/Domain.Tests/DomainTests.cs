@@ -1,7 +1,5 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Domain.Tests;
 
@@ -15,8 +13,7 @@ public class DomainTests
     {
         var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
 
-        //playlist.Videos.Should().HaveCount(0);
-        //playlist.PlaylistVideos.Should().HaveCount(0);        
+        playlist.Should().NotBeNull();          
     }
 
     [Fact]
@@ -66,30 +63,25 @@ public class DomainTests
             "Second line"
         });
 
-        var trans1 = Transcript.Create("EN");
-        var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
-        var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
-        //
-        //var trans2 = video.AddTranscript("IT");
-        //var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
-        //var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));            
+        var trans1 = Transcript.Create(1, "EN");
+        trans1.AddLine(text: "This is a line with nothing");
+        trans1.AddLine(text: "This is a line with something", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
     }
 
     [Fact]
     public void LinkVideoToPlaylists()
     {
-        //throw new NotImplementedException();
-        //var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
-        //var video = Video.Create("http://somewhere", "Title",
-        //    details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
-        //    "Video description");
-        //
-        //video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
-        //
-        //// Checks
-        ////playlist.Videos.Count.Should().Be(1);
-        //playlist.PlaylistVideos.Count.Should().Be(0);
-        //video.Thumbnails.Count.Should().Be(1);
+        var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists), description: $"A playlist with 1 complete videos {DateTime.Now}");
+        var video = Video.Create("http://somewhere", "Title",
+            details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
+            "Video description");
+        
+        video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
+        
+        video.LinkToPlaylists(playlist.Id);
 
+        // Checks
+        video.Playlists.Count.Should().Be(1);
+        video.Thumbnails.Count.Should().Be(1);
     }
 }
