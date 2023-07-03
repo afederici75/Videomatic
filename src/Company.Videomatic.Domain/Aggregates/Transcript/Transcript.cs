@@ -2,13 +2,24 @@
 
 public class Transcript : IAggregateRoot
 {
-    internal static Transcript Create(VideoId videoId, string language)
+    public static Transcript Create(VideoId videoId, string language)
+    {
+        var t = new Transcript
+        {
+            VideoId = videoId,
+            Language = language,
+        };        
+
+        return t 
+
+    }
+    public static Transcript Create(VideoId videoId, string language, IEnumerable<string> lines)
     {
         return new Transcript
         {
             VideoId = videoId,
-            Language = language
-        };
+            Language = language,
+        }.AddLines(lines);
     }
 
     public TranscriptId Id { get; private set; } = default!;
@@ -21,12 +32,25 @@ public class Transcript : IAggregateRoot
         //private set => _lines = value.ToList();
     }
 
-    public TranscriptLine AddLine(string text, TimeSpan duration, TimeSpan startsAt)
+    public Transcript AddLines(IEnumerable<TranscriptLine> allLines)
+    {
+        _lines.AddRange(allLines);
+        return this;
+    }
+
+    //public Transcript AddLines(IEnumerable<string> allText)
+    //{
+    //    var lines = allText.Select(t => (TranscriptLine)t).ToArray();
+    //    _lines.AddRange(lines);
+    //    return this;
+    //}
+
+    public Transcript AddLine(string text, TimeSpan duration, TimeSpan startsAt)
     {
         var line = TranscriptLine.Create(text, duration, startsAt);
         _lines.Add(line);
 
-        return line;
+        return this;
     }
 
     #region Private

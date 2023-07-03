@@ -2,7 +2,7 @@
 
 public class Artifact : IAggregateRoot
 {
-    internal static Artifact Create(VideoId videoId, string title, string type, string? text = null)
+    public static Artifact Create(VideoId videoId, string title, string type, string? text = null)
     {
         return new Artifact
         {

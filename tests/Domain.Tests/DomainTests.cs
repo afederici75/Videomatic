@@ -1,4 +1,6 @@
-﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿using Company.Videomatic.Domain.Aggregates.Artifact;
+using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Domain.Tests;
@@ -36,8 +38,8 @@ public class DomainTests
     [Fact]
     public void CreateVideoWithAllDetails()
     {
-        var video = Video.Create(location: "youtube.com/v?VCompleteA", title: nameof(CreateVideoWithAllDetails), 
-            details: new ("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
+        var video = Video.Create(location: "youtube.com/v?VCompleteA", title: nameof(CreateVideoWithAllDetails),
+            details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
             description: "A complete description");
 
         video.AddThumbnail(location: "youtubethumbs.com/T1_1", resolution: ThumbnailResolution.Default, height: 100, width: 100);
@@ -45,27 +47,38 @@ public class DomainTests
 
         video.AddTag("Tag1");
         video.AddTag("Tag2");
+    }
 
-        //var arti1 = video.AddArtifact(title: "A complete summary", type: "AI", text: "Bla bla");
-        //var arti2 = video.AddArtifact(title: "A complete analysis", type: "AI", text: "More bla bla");
 
-        throw new NotImplementedException();
-
-        // videoService.AddTranscript("EN", lines);
-
-        //var trans1 = video.AddTranscript("EN");
-        //var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
-        //var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
-        //
-        //var trans2 = video.AddTranscript("IT");
-        //var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
-        //var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));        
+    [Fact]
+    public void CreateArtifact()
+    {
+        var artifact = Artifact.Create(1, title: "A complete summary", type: "AI", text: "Bla bla");        
+        artifact.Should().NotBeNull();
     }
 
     [Fact]
-    public void CreatePlaylistWithVideo()
+    public void CreateTranscript()
     {
-        throw new NotImplementedException();
+        var transcript = Transcript.Create(1, "EN", new[] 
+        { 
+            "First line",
+            "Second line"
+        });
+
+        var trans1 = Transcript.Create("EN");
+        var linet1_1 = trans1.AddLine(text: "This is", startsAt: TimeSpan.FromSeconds(0), duration: TimeSpan.FromSeconds(1));
+        var linet1_2 = trans1.AddLine(text: "a long transcript", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
+        //
+        //var trans2 = video.AddTranscript("IT");
+        //var linet2_1 = trans2.AddLine(text: "Questa e'", startsAt: TimeSpan.FromSeconds(1), duration: TimeSpan.FromSeconds(1));
+        //var linet2_2 = trans2.AddLine(text: "una lunga transcrizione", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));            
+    }
+
+    [Fact]
+    public void LinkVideoToPlaylists()
+    {
+        //throw new NotImplementedException();
         //var playlist = Playlist.Create(name: nameof(CreatePlaylistWithVideo), description: $"A playlist with 1 complete videos {DateTime.Now}");
         //var video = Video.Create("http://somewhere", "Title",
         //    details: new("YOUTUBE", DateTime.UtcNow, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"), 
