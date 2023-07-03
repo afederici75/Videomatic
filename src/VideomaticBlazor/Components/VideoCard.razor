@@ -1,18 +1,19 @@
-﻿@inject NavigationManager Navigation
+﻿@using Company.Videomatic.Application.Features.Videos;
+@inject NavigationManager Navigation
 
 <Div>
     <Card style="@MaxWidthStyle">
         <CardBody>            
-            <CardImage Source=@Video.Thumbnail Alt="@Video.Title"></CardImage>
-            <CardTitle><b>@Video.Title</b></CardTitle>
+            <CardImage Source=@Video.Thumbnail Alt="@Video.Name"></CardImage>
+            <CardTitle><b>@Video.Name</b></CardTitle>
 
             <CardText>
                 <div>
-                    <Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
+                    @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
                     <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
                     <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
                     <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
-                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>
+                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
                 </div>
 
                 <div><i>@Video.Description?</i></div>

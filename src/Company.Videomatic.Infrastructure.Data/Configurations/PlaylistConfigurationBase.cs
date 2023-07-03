@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Playlist;
-
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
@@ -35,7 +33,7 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         //            l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
         //            r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
         //        );
-        builder.HasMany(typeof(PlaylistVideo))
+        builder.HasMany(typeof(VideoPlaylist))
                .WithOne()
                .HasForeignKey("PlaylistId");
 

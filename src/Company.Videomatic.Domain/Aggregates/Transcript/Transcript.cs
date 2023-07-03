@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Transcript;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
+
+namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
 public class Transcript : IAggregateRoot
 {
@@ -26,17 +28,8 @@ public class Transcript : IAggregateRoot
     public VideoId VideoId { get; private set; } = default!;
     public string Language { get; private set; } = default!;
 
-    public IReadOnlyCollection<TranscriptLine> Lines
-    {
-        get => _lines.ToList();
-        //private set => _lines = value.ToList();
-    }
-
-    public Transcript AddLines(IEnumerable<TranscriptLine> allLines)
-    {
-        _lines.AddRange(allLines);
-        return this;
-    }
+    public IReadOnlyCollection<TranscriptLine> Lines => _lines.ToList();
+        
 
     public Transcript AddLines(IEnumerable<string> allText)
     {
@@ -58,7 +51,7 @@ public class Transcript : IAggregateRoot
     private Transcript()
     { }
 
-    private List<TranscriptLine> _lines { get; set; } = new();    
+    List<TranscriptLine> _lines = new();    
 
     #endregion
 }

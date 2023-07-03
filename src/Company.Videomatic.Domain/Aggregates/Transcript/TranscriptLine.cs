@@ -1,8 +1,6 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
+﻿namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
-namespace Company.Videomatic.Domain.Aggregates.Transcript;
-
-public class TranscriptLine : ValueObject//: EntityBase
+public class TranscriptLine : ValueObject
 {
     public static implicit operator string(TranscriptLine x) => x.Text;
     public static implicit operator TranscriptLine(string x) => TranscriptLine.Create(x, null, null);

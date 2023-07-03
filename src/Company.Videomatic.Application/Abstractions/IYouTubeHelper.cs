@@ -1,4 +1,7 @@
-﻿namespace Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Application.Features.Videos;
+
+namespace Company.Videomatic.Application.Abstractions;
 
 /// <summary>
 /// This niterface provides access to the YouTube APIs we are interested in.

@@ -1,5 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
-using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
+﻿using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 using Newtonsoft.Json;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
@@ -68,7 +67,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
                 if (item.status.privacyStatus != "public")
                     continue;
 
-                yield return new VideoDTO(Id: 0, Location: item.id, Title: item.snippet.title, Description: item.snippet.description);
+                yield return new VideoDTO(Id: 0, Location: item.id, Name: item.snippet.title, Description: item.snippet.description);
             }
             parameters["pageToken"] = response.nextPageToken;
         }

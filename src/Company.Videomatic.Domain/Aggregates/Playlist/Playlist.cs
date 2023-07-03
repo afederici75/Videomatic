@@ -2,7 +2,7 @@
 
 public class Playlist : IAggregateRoot
 {
-    public static Playlist Create(string name, string? description)
+    public static Playlist Create(string name, string? description = null)
     {
         return new Playlist
         {

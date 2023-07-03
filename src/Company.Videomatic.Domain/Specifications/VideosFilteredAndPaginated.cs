@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Domain.Specifications;
 
-public static class VideoOptions 
+public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecification<Video>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Video, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -15,10 +15,7 @@ public static class VideoOptions
         { "TagCount", _ => _.Tags.Count },
         { "ThumbnailsCount", _ => _.Thumbnails.Count },
     };
-}
 
-public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecification<Video>
-{
     public VideosFilteredAndPaginated(string? searchText = default,
                                       long[]? playlistIds = default,
                                       int? page = default,
@@ -40,7 +37,7 @@ public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecif
         }
 
         // OrderBy
-        Query.OrderByExpressions(orderBy, VideoOptions.SupportedOrderBys);        
+        Query.OrderByExpressions(orderBy, SupportedOrderBys);        
     }
 
     public int Page { get; }

@@ -3,7 +3,7 @@
 public class VideoTag : ValueObject//:EntityBase
 {
     public static implicit operator string(VideoTag x) => x.Name;
-    public static implicit operator VideoTag(string x) => new VideoTag(x);
+    public static implicit operator VideoTag(string x) => new (x);
 
     public VideoTag(string name)
     {

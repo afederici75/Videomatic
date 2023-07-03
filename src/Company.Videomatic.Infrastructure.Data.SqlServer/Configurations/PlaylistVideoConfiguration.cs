@@ -2,7 +2,7 @@
 
 public class PlaylistVideoConfiguration : PlaylistVideoConfigurationBase
 {
-    public override void Configure(EntityTypeBuilder<PlaylistVideo> builder)
+    public override void Configure(EntityTypeBuilder<VideoPlaylist> builder)
     {
         base.Configure(builder);
         

@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Model;
+﻿using Company.Videomatic.Application.Features.Videos;
 
 namespace Infrastructure.YouTube.Tests;
 

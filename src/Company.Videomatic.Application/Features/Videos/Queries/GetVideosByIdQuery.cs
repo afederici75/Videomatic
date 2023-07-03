@@ -4,8 +4,7 @@ namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosByIdQuery(
     long[] VideoIds,
-    bool IncludeCounts = false,
-    ThumbnailResolutionDTO? IncludeThumbnail = null) : IRequest<IEnumerable<VideoDTO>>;
+    ThumbnailResolutionDTO? Resolution = null) : IRequest<IEnumerable<VideoDTO>>;
 
 internal class GetVideosByIdQueryValidator : AbstractValidator<GetVideosByIdQuery>
 {

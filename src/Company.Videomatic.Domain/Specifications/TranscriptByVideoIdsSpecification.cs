@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification;
+using Company.Videomatic.Domain.Aggregates.Transcript;
 
 namespace Company.Videomatic.Domain.Specifications;
 

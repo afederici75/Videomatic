@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Domain.Abstractions;
 
 namespace Infrastructure.Data.Tests;
@@ -147,21 +148,19 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(new long[] { 1 }, true, null, 1)]
-    [InlineData(new long[] { 1, 2 }, true, null, 2)]
-    [InlineData(new long[] { 2 }, true, null, 1)]
-    [InlineData(new long[] { 3 }, true, null, 0)]
+    [InlineData(new long[] { 1 }, null, 1)]
+    [InlineData(new long[] { 1, 2 }, null, 2)]
+    [InlineData(new long[] { 2 }, null, 1)]
+    [InlineData(new long[] { 3 }, null, 0)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideosById(
         long[] videoIds,        
-        bool includeCounts,
         ThumbnailResolutionDTO? IncludeThumbnail,
         int expectedResults)
     {
         var query = new GetVideosByIdQuery(
-            VideoIds: videoIds, 
-            IncludeCounts: includeCounts,
-            IncludeThumbnail: IncludeThumbnail);
+            VideoIds: videoIds,             
+            Resolution: IncludeThumbnail);
 
         var items = await Sender.Send(query);
 

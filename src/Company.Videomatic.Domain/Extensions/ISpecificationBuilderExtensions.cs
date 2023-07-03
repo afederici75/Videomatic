@@ -6,26 +6,10 @@ namespace Company.Videomatic.Domain.Extensions;
 
 public static class ISpecificationBuilderExtensions
 {
-
-    //public static ISpecificationBuilder<T> SetPagination<T>(
-    //    this ISpecificationBuilder<T> source,
-    //    int? page = default,
-    //    int? pageSize = default)
-    //{
-    //    page ??= DefaultPage;
-    //    pageSize ??= DefaultPageSize;
-    //
-    //    return source.Skip((page.Value - 1) * pageSize.Value)
-    //                 .Take(pageSize.Value);
-    //}
-    //
-    //const int DefaultPage = 1;
-    //const int DefaultPageSize = 10;
-
     public static ISpecificationBuilder<T> OrderByExpressions<T>(
         this ISpecificationBuilder<T> source,
         string? orderByText,
-        IReadOnlyDictionary<string, Expression<Func<T, object?>>> sortExpressions)
+        IReadOnlyDictionary<string, Expression<Func<T, object?>>> validExpressions)
     {
         if (string.IsNullOrWhiteSpace(orderByText))
         {
@@ -37,8 +21,10 @@ public static class ISpecificationBuilderExtensions
         foreach (var sortOption in options)
         {
             var parts = sortOption.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            var desc = parts.Length > 1 ? parts[1].ToLower().Equals("desc") : false;
-            if (!sortExpressions.TryGetValue(parts[0], out var sortExpr))
+            
+            var desc = parts.Length > 1 && parts[1].ToLower().Equals("desc");
+
+            if (!validExpressions.TryGetValue(parts[0], out var sortExpr))
                 throw new Exception($"Cannot sort by '{sortOption}'.");
 
             if (orderedQueryable == null)

@@ -1,7 +1,5 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
@@ -38,7 +36,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         builder.HasMany(x => x.Playlists)
                .WithOne()
-               .HasForeignKey(nameof(PlaylistVideo.VideoId));
+               .HasForeignKey(nameof(VideoPlaylist.VideoId));
 
         #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,

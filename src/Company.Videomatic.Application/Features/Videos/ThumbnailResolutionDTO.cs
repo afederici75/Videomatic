@@ -1,6 +1,6 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Video;
 
-namespace Company.Videomatic.Application.Features.Model;
+namespace Company.Videomatic.Application.Features.Videos;
 
 public enum ThumbnailResolutionDTO
 {
@@ -25,7 +25,7 @@ public static class ThumbnailResolutionDTOExtensions
                 return ThumbnailResolution.Standard;
             case ThumbnailResolutionDTO.MaxRes:
                 return ThumbnailResolution.MaxRes;
-            default: 
+            default:
                 return ThumbnailResolution.Default;
         }
     }

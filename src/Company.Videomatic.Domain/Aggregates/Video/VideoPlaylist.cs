@@ -1,10 +1,12 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
+﻿using Company.Videomatic.Domain.Aggregates.Playlist;
 
-public class PlaylistVideo
+namespace Company.Videomatic.Domain.Aggregates.Video;
+
+public class VideoPlaylist
 {
-    internal static PlaylistVideo Create(PlaylistId playlistId, VideoId videoId)
+    internal static VideoPlaylist Create(PlaylistId playlistId, VideoId videoId)
     {
-        return new PlaylistVideo
+        return new VideoPlaylist
         {
             PlaylistId = playlistId,
             VideoId = videoId
@@ -16,7 +18,7 @@ public class PlaylistVideo
 
     #region Private
 
-    private PlaylistVideo()
+    private VideoPlaylist()
     {
 
     }

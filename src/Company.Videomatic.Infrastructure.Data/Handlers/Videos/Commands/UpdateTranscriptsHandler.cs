@@ -1,6 +1,5 @@
-﻿using Company.Videomatic.Application.Features.Model;
+﻿using Company.Videomatic.Application.Features.Transcript.Commands;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Extensions;
 using Company.Videomatic.Domain.Specifications;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;

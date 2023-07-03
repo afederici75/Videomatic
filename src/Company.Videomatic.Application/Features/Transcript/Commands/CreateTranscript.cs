@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Transcript;
+﻿namespace Company.Videomatic.Application.Features.Transcript.Commands;
 
 public record CreateTranscript(long VideoId, string Language);
 

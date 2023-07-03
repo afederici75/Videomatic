@@ -21,7 +21,7 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
         builder.Property(x => x.VideoId)
                .HasConversion(x => x.Value, y => new VideoId(y));
         
-        builder.Property(x => x.Title)
+        builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
 
         builder.Property(x => x.Type)
@@ -30,6 +30,6 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
         builder.Property(x => x.Text); // MAX
 
         // Indices
-        builder.HasIndex(x => x.Title);        
+        builder.HasIndex(x => x.Name);        
     }
 }

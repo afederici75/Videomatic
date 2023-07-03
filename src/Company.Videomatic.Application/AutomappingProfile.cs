@@ -1,6 +1,9 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using Company.Videomatic.Application.Features.Artifact.Commands;
+using Company.Videomatic.Application.Features.Playlists;
+using Company.Videomatic.Application.Features.Transcript.Commands;
+using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Playlist;
@@ -35,8 +38,6 @@ public class AutomappingProfile : Profile
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
         CreateMap<Thumbnail, ThumbnailDTO>();
-
-        CreateMap<ThumbnailInfo, Thumbnail>();
 
         CreateMap<PageResult<Video>, PageResult<VideoDTO>>();
     }

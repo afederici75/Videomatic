@@ -1,15 +1,13 @@
-﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
-
-public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<PlaylistVideo>
+public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<VideoPlaylist>
 {
     public static class FieldLengths
     {
         
     }
 
-    public virtual void Configure(EntityTypeBuilder<PlaylistVideo> builder)
+    public virtual void Configure(EntityTypeBuilder<VideoPlaylist> builder)
     {
         builder.ToTable("PlaylistVideos");
 

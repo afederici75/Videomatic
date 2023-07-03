@@ -1,4 +1,6 @@
-﻿namespace Application.Tests;
+﻿using Company.Videomatic.Application.Features.Videos;
+
+namespace Application.Tests;
 
 public class VideoRequestsValidatorTests
 {

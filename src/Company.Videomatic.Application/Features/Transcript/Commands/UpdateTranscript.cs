@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿namespace Company.Videomatic.Application.Features.Transcript.Commands;
 
 public record UpdateTranscriptCommand(
     long VideoId,

@@ -72,7 +72,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
                     VideoId = table.Column<long>(type: "bigint", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -177,8 +177,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: true),
+                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: true),
                     TranscriptId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -193,9 +193,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Artifacts_Title",
+                name: "IX_Artifacts_Name",
                 table: "Artifacts",
-                column: "Title");
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artifacts_VideoId",

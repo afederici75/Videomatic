@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Model;
+﻿namespace Company.Videomatic.Application.Features.Videos;
 
 public record ThumbnailDTO(
     long Id = 0,

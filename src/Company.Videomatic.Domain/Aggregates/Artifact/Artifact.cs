@@ -1,13 +1,15 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Artifact;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
+
+namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
 public class Artifact : IAggregateRoot
 {
-    public static Artifact Create(VideoId videoId, string title, string type, string? text = null)
+    public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
     {
         return new Artifact
         {
             VideoId = videoId,
-            Title = title,
+            Name = name,
             Type = type,
             Text = text,
         };
@@ -15,7 +17,7 @@ public class Artifact : IAggregateRoot
 
     public ArtifactId Id { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
-    public string Title { get; private set; } = default!;
+    public string Name { get; private set; } = default!;
     public string Type { get; private set; } = default!;
     public string? Text { get; private set; }
 

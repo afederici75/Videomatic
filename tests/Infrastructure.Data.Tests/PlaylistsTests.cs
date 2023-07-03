@@ -1,3 +1,4 @@
+using Company.Videomatic.Application.Features.Playlists;
 using Company.Videomatic.Domain.Abstractions;
 
 namespace Infrastructure.Data.Tests;

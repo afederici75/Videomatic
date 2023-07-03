@@ -20,6 +20,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Features\DataAccess\" />
+    <Folder Include="Features\Transcript\Queries\" />
   </ItemGroup>
 </Project>

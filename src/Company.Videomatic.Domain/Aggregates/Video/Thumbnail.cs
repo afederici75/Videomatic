@@ -2,7 +2,7 @@
 
 public class Thumbnail : ValueObject
 {
-    public Thumbnail(string location, ThumbnailResolution resolution, int height, int width)
+    public Thumbnail(ThumbnailResolution resolution, string location, int height, int width)
     {
         Location = location;
         Resolution = resolution;
