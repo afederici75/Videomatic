@@ -1,6 +1,6 @@
-﻿using Company.Videomatic.Application.Features.Artifact.Queries;
+﻿using Company.Videomatic.Application.Features.Artifacts.Queries;
 using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Transcript;
+using Company.Videomatic.Application.Features.Transcripts;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Specifications;
 using System.Linq.Expressions;
@@ -41,9 +41,9 @@ public class GetTranscriptHandler :
 
         var res = await _repository.PageAsync(
             spec,
+            vid => _mapper.Map<TranscriptDTO>(vid),
             spec.Page,
             spec.PageSize,
-            vid => _mapper.Map<TranscriptDTO>(vid),
             cancellationToken);
 
         return res;

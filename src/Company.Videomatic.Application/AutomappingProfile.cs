@@ -1,8 +1,10 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
-using Company.Videomatic.Application.Features.Artifact.Commands;
+using Company.Videomatic.Application.Features.Artifacts;
+using Company.Videomatic.Application.Features.Artifacts.Commands;
 using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Transcript.Commands;
+using Company.Videomatic.Application.Features.Transcripts;
+using Company.Videomatic.Application.Features.Transcripts.Commands;
 using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
@@ -16,9 +18,11 @@ public class AutomappingProfile : Profile
 {
     public AutomappingProfile()
     {
+        // Playlists
         CreateMap<CreatePlaylistCommand, Playlist>();
         CreateMap<UpdatePlaylistCommand, Playlist>();
 
+        // Videos
         CreateMap<CreateVideoCommand, Video>()
             .ForPath(dest => dest.Details.PlaylistId, opt => opt.MapFrom(src => src.PlaylistId))
             .ForPath(dest => dest.Details.ChannelId, opt => opt.MapFrom(src => src.ChannelId))
@@ -26,19 +30,23 @@ public class AutomappingProfile : Profile
             .ForPath(dest => dest.Details.VideoOwnerChannelTitle, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
             .ForPath(dest => dest.Details.VideoPublishedAt, opt => opt.MapFrom(src => src.VideoPublishedAt))
             .ForPath(dest => dest.Details.Provider, opt => opt.MapFrom(src => src.Provider));
-
         CreateMap<UpdateVideoCommand, Video>();
 
-        CreateMap<UpdateTranscriptCommand, Transcript>()
+        // Transcripts
+        CreateMap<CreateTranscriptCommand, Transcript>()
             .ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines));
-        CreateMap<TranscriptLinePayload, TranscriptLine>();
-
+        
+        // Artifacts
+        CreateMap<CreateArtifactCommand, Artifact>();
         CreateMap<UpdateArtifactCommand, Artifact>();
 
+        // DTOs
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
         CreateMap<Thumbnail, ThumbnailDTO>();
+        CreateMap<Transcript, TranscriptDTO>();
+        CreateMap<Artifact, ArtifactDTO>();
 
-        CreateMap<PageResult<Video>, PageResult<VideoDTO>>();
+        //CreateMap<PageResult<Video>, PageResult<VideoDTO>>();
     }
 }

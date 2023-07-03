@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Domain.Specifications.Transcripts;
 
-public class TranscriptsFilteredAndPaginated : Specification<Transcript>, IPaginatedSpecification<Transcript>
+public class TranscriptsFilteredAndPaginated : Specification<Transcript>//, IPaginatedSpecification<Transcript>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Transcript, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Transcript, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -25,7 +25,7 @@ public class TranscriptsFilteredAndPaginated : Specification<Transcript>, IPagin
         }
 
         // OrderBy
-        Query.OrderByExpressions(orderBy, SupportedOrderBys);
+        Query.OrderByText(orderBy, SupportedOrderBys);
     }
 
     public int Page { get; }

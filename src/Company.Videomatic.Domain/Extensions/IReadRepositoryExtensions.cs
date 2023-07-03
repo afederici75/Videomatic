@@ -1,23 +1,21 @@
-﻿using Ardalis.Specification;
-
-namespace Company.Videomatic.Domain.Extensions;
+﻿namespace Company.Videomatic.Domain.Extensions;
 
 public static class IReadRepositoryExtensions
 {
     public static async Task<PageResult<TDEST>> PageAsync<TSRC, TDEST>(
         this IReadRepository<TSRC> repository,
         ISpecification<TSRC> specification,
-        int page,
-        int pageSize,
         Func<TSRC, TDEST> map,
+        int? page = null,
+        int? pageSize = null,
         CancellationToken cancellationToken = default)
         where TSRC : class, IAggregateRoot
         where TDEST : class
     {
-        var aggrs = await repository.ListAsync(specification, cancellationToken);
+        var aggRoots = await repository.ListAsync(specification, cancellationToken);
         var totalCount = await repository.CountAsync(specification, cancellationToken);
 
-        return new PageResult<TDEST>(aggrs.Select(map), page, pageSize, totalCount);        
+        return new PageResult<TDEST>(aggRoots.Select(map), page ?? 1, pageSize ?? 10, totalCount);        
     }
 
     public record ListAndCountResult<T>(List<T> List, int TotalCount) where T : class;

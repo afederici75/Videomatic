@@ -1,7 +1,7 @@
-﻿using Application.Tests;
+﻿using Application.Tests.Helpers;
 using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Domain.Abstractions;
+using Infrastructure.Data.Tests.Helpers;
 
 namespace Infrastructure.Data.Tests;
 

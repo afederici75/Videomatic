@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Transcript.Commands;
+﻿using Company.Videomatic.Application.Features.Transcripts.Commands;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Specifications.Transcripts;
 
@@ -20,18 +20,19 @@ public class CreateTranscriptHandler : IRequestHandler<CreateTranscriptCommand, 
     {
         var spec = new TranscriptByVideoIdsSpecification(request.VideoId);
 
-        var Transcript = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
-        if (Transcript is null)
+        var transcript = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
+        if (transcript is null)
         {
-            Transcript = await _repository.AddAsync(_mapper.Map<Transcript>(request));
+            transcript = _mapper.Map<Transcript>(request);
+            await _repository.AddAsync(transcript);
         }
         else
         {
-            _mapper.Map(request, Transcript);
+            _mapper.Map(request, transcript);
         }
 
         var cnt = await _repository.SaveChangesAsync(cancellationToken);
 
-        return new CreateTranscriptResponse(Transcript.Id);
+        return new CreateTranscriptResponse(transcript.Id);
     }
 }

@@ -6,7 +6,7 @@ namespace Company.Videomatic.Domain.Extensions;
 
 public static class ISpecificationBuilderExtensions
 {
-    public static ISpecificationBuilder<T> OrderByExpressions<T>(
+    public static ISpecificationBuilder<T> OrderByText<T>(
         this ISpecificationBuilder<T> source,
         string? orderByText,
         IReadOnlyDictionary<string, Expression<Func<T, object?>>> validExpressions)

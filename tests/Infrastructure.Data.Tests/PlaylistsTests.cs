@@ -1,6 +1,7 @@
-using Application.Tests;
+using Application.Tests.Helpers;
 using Company.Videomatic.Application.Features.Playlists;
 using Company.Videomatic.Domain.Abstractions;
+using Infrastructure.Data.Tests.Helpers;
 
 namespace Infrastructure.Data.Tests;
 

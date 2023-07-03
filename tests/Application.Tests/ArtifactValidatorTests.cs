@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Artifact.Commands;
+﻿using Company.Videomatic.Application.Features.Artifacts.Commands;
 
 namespace Application.Tests;
 

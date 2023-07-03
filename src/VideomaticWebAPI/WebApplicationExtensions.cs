@@ -1,6 +1,6 @@
 ﻿using Company.Videomatic.Application.Features.Playlists.Commands;
 using Company.Videomatic.Application.Features.Playlists.Queries;
-using Company.Videomatic.Application.Features.Transcript.Commands;
+using Company.Videomatic.Application.Features.Transcripts.Commands;
 using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Application.Features.Videos.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,6 @@ public static class WebApplicationExtensions
         app.MediatePut<UpdateVideoCommand>("Videos");
         app.MediateDelete<DeleteVideoCommand>("Videos");
         app.MediatePost<SetVideoTags>("Videos");
-        app.MediatePost<UpdateTranscriptCommand>("Videos");
         app.MediatePost<LinkVideoToPlaylistsCommand>("Videos");
         app.MediatePost<ImportVideoCommand>("Videos");
 

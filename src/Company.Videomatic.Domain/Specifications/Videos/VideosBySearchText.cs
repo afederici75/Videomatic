@@ -1,10 +1,8 @@
-﻿using Ardalis.Specification;
-using Company.Videomatic.Domain.Extensions;
-using System.Linq.Expressions;
+﻿using Company.Videomatic.Domain.Extensions;
 
 namespace Company.Videomatic.Domain.Specifications.Videos;
 
-public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecification<Video>
+public class VideosBySearchText : Specification<Video>//, IPaginatedSpecification<Video>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Video, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -16,11 +14,9 @@ public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecif
         { "ThumbnailsCount", _ => _.Thumbnails.Count },
     };
 
-    public VideosFilteredAndPaginated(string? searchText = default,
-                                      long[]? playlistIds = default,
-                                      int? page = default,
-                                      int? pageSize = default,
-                                      string? orderBy = default)
+    public VideosBySearchText(string? searchText = default,
+                              long[]? playlistIds = default,
+                              string? orderBy = default)
     {
         // searchText is included in Name and Description
         if (!string.IsNullOrWhiteSpace(searchText))
@@ -37,9 +33,6 @@ public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecif
         }
 
         // OrderBy
-        Query.OrderByExpressions(orderBy, SupportedOrderBys);
+        Query.OrderByText(orderBy, SupportedOrderBys);
     }
-
-    public int Page { get; }
-    public int PageSize { get; }
 }

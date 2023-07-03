@@ -1,18 +1,21 @@
-﻿using Company.Videomatic.Application.Features.Transcript;
+﻿using Company.Videomatic.Application.Features.Transcripts;
 using Company.Videomatic.Domain.Abstractions;
 
-namespace Company.Videomatic.Application.Features.Artifact.Queries;
+namespace Company.Videomatic.Application.Features.Artifacts.Queries;
 
-public record GetTranscriptsQuery(
+public record GetTranscriptsByIdQuery(
+    long[] TranscriptIds,
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null) : IRequest<PageResult<TranscriptDTO>>;
+    int? PageSize = null) : IRequest<IEnumerable<TranscriptDTO>>;
 
-internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
+internal class GetTranscriptByIdQueryValidator : AbstractValidator<GetTranscriptsByIdQuery>
 {
-    public GetTranscriptsQueryValidator()
+    public GetTranscriptByIdQueryValidator()
     {
+        RuleFor(x => x.TranscriptIds).NotEmpty();
+
         When(x => x.SearchText is not null, () =>
         {
             RuleFor(x => x.SearchText).NotEmpty();

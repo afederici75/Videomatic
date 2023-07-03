@@ -1,18 +1,30 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿using Company.Videomatic.Application.Features.Artifacts.Commands;
+using Company.Videomatic.Domain.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Artifact;
+using Company.Videomatic.Domain.Specifications.Artifacts;
+using Company.Videomatic.Domain.Specifications.Videos;
 
-public sealed class DeleteVideoHandler : BaseRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+
+public sealed class DeleteVideoHandler : IRequestHandler<DeleteVideoCommand, DeleteVideoResponse>
 {
-    public DeleteVideoHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    public DeleteVideoHandler(IRepository<Video> repository)
     {
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public override async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken = default)
-    {
-        int cnt = await DbContext
-            .Videos
-            .Where(x => x.Id == request.Id).
-            ExecuteDeleteAsync(cancellationToken);
+    public IRepository<Video> Repository { get; }
 
-        return new DeleteVideoResponse(request.Id);
+    public async Task<DeleteVideoResponse> Handle(DeleteVideoCommand request, CancellationToken cancellationToken = default)
+    {
+        var spec = new VideosByIdSpecification(new VideoId[] { request.Id });
+
+        var Video = await Repository.FirstOrDefaultAsync(spec, cancellationToken);
+        if (Video == null)
+            return new DeleteVideoResponse(request.Id, false);
+
+        await Repository.DeleteAsync(Video);
+
+        return new DeleteVideoResponse(request.Id, true);        
     }
 }

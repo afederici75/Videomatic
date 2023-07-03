@@ -3,7 +3,7 @@
 
 public record DeletePlaylistCommand(long Id) : IRequest<DeletePlaylistResponse>;
 
-public record DeletePlaylistResponse(long Id);
+public record DeletePlaylistResponse(long Id, bool deleted);
 
 internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {

@@ -29,9 +29,9 @@ public sealed class GetPlaylistsHandler :
 
         var res = await _repository.PageAsync<Playlist, PlaylistDTO>(
             spec,
+            vid => _mapper.Map<PlaylistDTO>(vid),
             spec.Page,
             spec.PageSize,
-            vid => _mapper.Map<PlaylistDTO>(vid),
             cancellationToken);
 
         return res;

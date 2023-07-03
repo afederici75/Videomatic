@@ -6,7 +6,7 @@
 /// <param name="Id"> The id of the video to delete. </param>
 public record DeleteVideoCommand(long Id) : IRequest<DeleteVideoResponse>;
 
-public record DeleteVideoResponse(long Id);
+public record DeleteVideoResponse(long Id, bool Deleted);
 
 /// <summary>
 /// The validator for DeleteVideoCommand.

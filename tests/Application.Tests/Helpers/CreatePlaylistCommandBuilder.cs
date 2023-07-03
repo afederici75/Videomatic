@@ -1,7 +1,7 @@
-﻿namespace Application.Tests;    
+﻿namespace Application.Tests.Helpers;
 
 public class CreatePlaylistCommandBuilder
-{ 
+{
     /// <summary>
     /// Static factory method that requires no state.
     /// </summary>

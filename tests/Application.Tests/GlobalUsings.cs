@@ -7,3 +7,4 @@ global using FluentAssertions;
 global using FluentValidation;
 global using FluentValidation.TestHelper;
 global using Microsoft.Extensions.DependencyInjection;
+global using Application.Tests;

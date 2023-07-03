@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Transcript;
+﻿namespace Company.Videomatic.Application.Features.Transcripts;
 
 public record TranscriptDTO(
     long Id = 0,

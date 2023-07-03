@@ -1,4 +1,5 @@
 ﻿global using Ardalis.Specification;
+global using System.Linq.Expressions;
 
 global using Company.Videomatic.Domain.Abstractions;
 global using Company.Videomatic.Domain.Aggregates.Playlist;

@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Features.Transcript.Commands;
+﻿namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
 public record DeleteTranscriptCommand(long Id) : IRequest<DeleteTranscriptResponse>;
 

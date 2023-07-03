@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Application.Features.Videos;
+﻿using Application.Tests.Helpers;
+using Company.Videomatic.Application.Features.Videos;
 
 namespace Application.Tests;
 

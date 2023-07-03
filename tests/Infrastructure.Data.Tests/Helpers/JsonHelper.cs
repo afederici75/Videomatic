@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Company.Videomatic.Infrastructure.Data;
+namespace Infrastructure.Data.Tests.Helpers;
 
 public static class JsonHelper
 {
@@ -12,7 +12,7 @@ public static class JsonHelper
             NullValueHandling = NullValueHandling.Ignore,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
         };
-    }    
+    }
 
     public static string Serialize<T>(T obj)
     {
