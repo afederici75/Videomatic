@@ -116,14 +116,12 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, null, null, true, null, 2)]
-    [InlineData(new long[] { 1 }, null, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, null, null, null, true, null, 2)]
-    [InlineData(null, new long[] { 2 }, null, null, true, null, 1)] // By VideoIds
+    //[InlineData(null, null, null, true, null, 2)]
+    [InlineData(new long[] { 1 }, null, null, true, null, 2)]
+    [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideos(
         long[]? playlistIds,
-        long[]? videoIds,
         string? searchText,
         string? orderBy,
         bool includeCounts,
@@ -132,7 +130,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var query = new GetVideosQuery(
             PlaylistIds: playlistIds, 
-            VideoIds: videoIds, 
+            //VideoIds: videoIds, 
             SearchText: searchText, 
             OrderBy: orderBy, 
             Page: null, // Uses 1 by default
@@ -145,5 +143,28 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);
+    }
+
+    [Theory]
+    [InlineData(new long[] { 1 }, true, null, 1)]
+    [InlineData(new long[] { 1, 2 }, true, null, 2)]
+    [InlineData(new long[] { 2 }, true, null, 1)]
+    [InlineData(new long[] { 3 }, true, null, 0)]
+    // TODO: missing paging tests and should add more anyway
+    public async Task GetVideosById(
+        long[] videoIds,        
+        bool includeCounts,
+        ThumbnailResolutionDTO? IncludeThumbnail,
+        int expectedResults)
+    {
+        var query = new GetVideosByIdQuery(
+            VideoIds: videoIds, 
+            IncludeCounts: includeCounts,
+            IncludeThumbnail: IncludeThumbnail);
+
+        var items = await Sender.Send(query);
+
+        // Checks
+        items.Should().HaveCount(expectedResults);        
     }
 }

@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using Ardalis.Result;
+using AutoMapper;
+using Company.Videomatic.Domain.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
@@ -26,10 +29,14 @@ public class AutomappingProfile : Profile
             .ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines));
         CreateMap<TranscriptLinePayload, TranscriptLine>();
 
+        CreateMap<UpdateArtifactCommand, Artifact>();
+
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
         CreateMap<Thumbnail, ThumbnailDTO>();
 
-        CreateMap<ThumbnailInfo, Thumbnail>();        
+        CreateMap<ThumbnailInfo, Thumbnail>();
+
+        CreateMap<PageResult<Video>, PageResult<VideoDTO>>();
     }
 }

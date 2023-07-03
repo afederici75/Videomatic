@@ -40,13 +40,7 @@ public class VideosFilteredAndPaginated : Specification<Video>, IPaginatedSpecif
         }
 
         // OrderBy
-        Query.OrderByExpressions(orderBy, VideoOptions.SupportedOrderBys);
-
-        // Pagination
-        Page = page ?? 1;
-        PageSize = pageSize ?? 10;
-
-        Query.SetPagination(Page, PageSize);        
+        Query.OrderByExpressions(orderBy, VideoOptions.SupportedOrderBys);        
     }
 
     public int Page { get; }

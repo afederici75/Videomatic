@@ -7,16 +7,13 @@ namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public class UpdateTranscriptsHandler : IRequestHandler<UpdateTranscriptCommand, UpdateTranscriptResponse>
 {
-    private readonly IRepository<Transcript> _transcriptTepository;
-    private readonly IReadRepository<Video> _videoRepository;
+    private readonly IRepository<Transcript> _repository;
     private readonly IMapper _mapper;
 
-    public UpdateTranscriptsHandler(IRepository<Transcript> transcriptRepository, 
-        IReadRepository<Video> videoRepository,
-        IMapper mapper)
+    public UpdateTranscriptsHandler(IRepository<Transcript> repository,
+                                    IMapper mapper)
     {
-        _transcriptTepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
-        _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
@@ -26,17 +23,17 @@ public class UpdateTranscriptsHandler : IRequestHandler<UpdateTranscriptCommand,
     {
         var spec = new TranscriptByVideoIdsSpecification(request.VideoId);
 
-        var transcript = await _transcriptTepository.FirstOrDefaultAsync(spec, cancellationToken);
+        var transcript = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
         if (transcript is null)
         {
-            transcript = await _transcriptTepository.AddAsync(_mapper.Map<Transcript>(request));
+            transcript = await _repository.AddAsync(_mapper.Map<Transcript>(request));
         }
         else
         {
             _mapper.Map(request, transcript);
         }   
 
-        var cnt = await _transcriptTepository.SaveChangesAsync(cancellationToken);
+        var cnt = await _repository.SaveChangesAsync(cancellationToken);
         
         return new UpdateTranscriptResponse(transcript.Id);
     }

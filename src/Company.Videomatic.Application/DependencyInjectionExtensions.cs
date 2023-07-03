@@ -51,7 +51,7 @@ public static class DependencyInjectionExtensions
 
 
         services.AddValidatorsFromAssembly(
-            typeof(PageResult<>).Assembly, // The only validators are in this assembly
+            typeof(AutomappingProfile).Assembly, // The only validators are in this assembly
             includeInternalTypes: true // TODO: Seems useless? Maybe it will surface in the app?
             );
 

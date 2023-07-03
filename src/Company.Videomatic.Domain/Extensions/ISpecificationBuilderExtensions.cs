@@ -7,17 +7,20 @@ namespace Company.Videomatic.Domain.Extensions;
 public static class ISpecificationBuilderExtensions
 {
 
-    public static ISpecificationBuilder<T> SetPagination<T>(
-        this ISpecificationBuilder<T> source,
-        int page,
-        int pageSize)
-    {
-        return source.Skip((page - 1) * pageSize)
-                     .Take(pageSize);
-    }
-
-    const int DefaultPage = 1;
-    const int DefaultPageSize = 10;
+    //public static ISpecificationBuilder<T> SetPagination<T>(
+    //    this ISpecificationBuilder<T> source,
+    //    int? page = default,
+    //    int? pageSize = default)
+    //{
+    //    page ??= DefaultPage;
+    //    pageSize ??= DefaultPageSize;
+    //
+    //    return source.Skip((page.Value - 1) * pageSize.Value)
+    //                 .Take(pageSize.Value);
+    //}
+    //
+    //const int DefaultPage = 1;
+    //const int DefaultPageSize = 10;
 
     public static ISpecificationBuilder<T> OrderByExpressions<T>(
         this ISpecificationBuilder<T> source,

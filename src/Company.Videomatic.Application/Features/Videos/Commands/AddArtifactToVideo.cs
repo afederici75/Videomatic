@@ -1,5 +1,5 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
-public record AddArtifactToVideoCommand(long VideoId, string Title, string Type, string? Text = null) : IRequest<AddArtifactToVideoResponse>;
+public record UpdateArtifactCommand(long VideoId, string Title, string Type, string? Text = null) : IRequest<UpdateArtifactResponse>;
 
-public record AddArtifactToVideoResponse(long VideoId, long Id);
+public record UpdateArtifactResponse(long ArtifactId);

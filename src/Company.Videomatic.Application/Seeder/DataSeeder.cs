@@ -29,7 +29,8 @@ public class DataSeeder : IDataSeeder
         long videoId1 = await CreateAldousHuxleyTheDancingShivaVideo();
         long videoId2 = await CreateIfRealityIsNonDualVideo();
 
-        var resp = await Sender.Send(new LinkVideoToPlaylistsCommand(playlist.Id, new[] { videoId1, videoId2 }));
+        var resp1 = await Sender.Send(new LinkVideoToPlaylistsCommand(videoId1, new[] { playlist.Id }));
+        var resp2 = await Sender.Send(new LinkVideoToPlaylistsCommand(videoId2, new[] { playlist.Id }));
 
         return playlist.Id;
     }
@@ -115,13 +116,13 @@ public class DataSeeder : IDataSeeder
             }));        
 
         // Artifacts
-        var summaryArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+        var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
             "Summary",
             "SUMMARY",
             "This will be an AI generated artifact"
             ));
 
-        var contentsArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+        var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
             "Contents",
             "CONTENTS_LIST",
             "This will be an AI generated artifact listing all the topics discussed in this video"
@@ -180,13 +181,13 @@ public class DataSeeder : IDataSeeder
         }));
 
         // Artifacts
-        var summaryArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+        var summaryArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
             "Summary",
             "SUMMARY",
             "This will be another AI generated artifact"
             ));
 
-        var contentsArtifact = await Sender.Send(new AddArtifactToVideoCommand(video.Id,
+        var contentsArtifact = await Sender.Send(new UpdateArtifactCommand(video.Id,
             "Contents",
             "CONTENTS_LIST",
             "This will be another AI generated artifact listing all the topics discussed in this video"

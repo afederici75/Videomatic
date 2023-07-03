@@ -12,7 +12,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var query = new GetVideosQuery(
+        var query = new GetVideosByIdQuery(
             VideoIds: new[] { VideoId },
             IncludeCounts: true,
             IncludeThumbnail: ThumbnailResolutionDTO.Default
@@ -20,6 +20,6 @@
         
         var result = await Sender.Send(query);
         
-        Video = result.Items.Single();        
+        Video = result.Single();        
     }
 }

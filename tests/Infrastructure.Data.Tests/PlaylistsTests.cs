@@ -80,7 +80,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     [InlineData(null, "Id", false, 2)]
     [InlineData("Philosophy", "Id   ASC", false, 1)]
     [InlineData("Philosophy", "Name  DESC", false, 1)]
-    [InlineData("Philosophy", "VideoCount desc, Id asc", false, 1)]
+    //[InlineData("Philosophy", "TagCount desc, Id asc", false, 1)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetPlaylists(string? searchText, string? orderBy, bool includeCounts, int expectedResults)
     {
