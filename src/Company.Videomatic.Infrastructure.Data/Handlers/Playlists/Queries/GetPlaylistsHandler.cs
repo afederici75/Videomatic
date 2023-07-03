@@ -1,9 +1,5 @@
-﻿//using System.Linq.Dynamic.Core;
-
-using System.Linq;
+﻿using Company.Videomatic.Application.Features.Playlists;
 using System.Linq.Expressions;
-using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 

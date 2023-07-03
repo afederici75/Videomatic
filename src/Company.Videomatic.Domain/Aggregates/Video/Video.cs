@@ -11,7 +11,16 @@ public class Video : IAggregateRoot
             Location = location,
             Name = name,
             Description = description,
-            Details = details ?? VideoDetails.CreateEmpty()
+            Details = details ?? VideoDetails.CreateEmpty(),
+            
+            _thumbnails = new ()
+            {
+                new(ThumbnailResolution.Default, string.Empty, -1, -1),
+                new(ThumbnailResolution.Standard, string.Empty, -1, -1),
+                new(ThumbnailResolution.Medium, string.Empty, -1, -1),
+                new(ThumbnailResolution.High, string.Empty, -1, -1),
+                new(ThumbnailResolution.MaxRes, string.Empty, -1, -1),
+            }
         };
     }
 
@@ -78,18 +87,11 @@ public class Video : IAggregateRoot
     #region Private
 
     private Video()
-    { }
+    {       
+    }
 
     HashSet<VideoTag> _videoTags = new();
-    HashSet<Thumbnail> _thumbnails = new() 
-    { 
-        new (ThumbnailResolution.Default, string.Empty, -1, -1),
-        new (ThumbnailResolution.Standard, string.Empty, -1, -1),
-        new (ThumbnailResolution.Medium, string.Empty, -1, -1),
-        new (ThumbnailResolution.High, string.Empty, -1, -1),
-        new (ThumbnailResolution.MaxRes, string.Empty, -1, -1),
-    };
-
+    HashSet<Thumbnail> _thumbnails = new();    
     List<VideoPlaylist> _playlists = new();    
 
     #endregion

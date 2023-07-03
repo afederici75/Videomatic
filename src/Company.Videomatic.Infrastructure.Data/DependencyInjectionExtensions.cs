@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Infrastructure.Data.Seeder;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,7 @@ public static class DependencyInjectionExtensions
         // Services
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-
+        services.AddScoped(typeof(IDbSeeder), typeof(DbSeeder));
         return services;
     }
 }

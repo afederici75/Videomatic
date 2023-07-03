@@ -2,14 +2,7 @@
 
 namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="SearchText"></param>
-/// <param name="OrderBy"></param>
-/// <param name="Page"></param>
-/// <param name="PageSize"></param>
-/// <param name="IncludeCounts"></param>
+
 public record GetPlaylistsQuery(
     string? SearchText = null,
     string? OrderBy = null,

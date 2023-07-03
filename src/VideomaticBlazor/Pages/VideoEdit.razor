@@ -15,8 +15,7 @@
     {
         var query = new GetVideosByIdQuery(
             VideoIds: new[] { VideoId },
-            IncludeTags: true,
-            IncludeThumbnail: ThumbnailResolutionDTO.Default
+            Resolution: ThumbnailResolutionDTO.Default
         );        
         
         var result = await Sender.Send(query);

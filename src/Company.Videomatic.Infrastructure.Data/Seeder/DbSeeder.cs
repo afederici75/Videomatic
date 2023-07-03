@@ -1,16 +1,8 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Features.Transcript.Commands;
-using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Company.Videomatic.Infrastructure.Data.Seeder;
-
-public interface IDbSeeder
-{
-    Task SeedAsync();
-}
 
 public class DbSeeder : IDbSeeder
 {
@@ -192,7 +184,10 @@ public class DbSeeder : IDbSeeder
         video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", 360, 480);
         video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", 480, 640);
         video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
-        
+
+
+        await _videoRepository.AddAsync(video);
+
         // Transcripts
         await CreateIfRealityIsNotDualTranscription(video.Id);
 

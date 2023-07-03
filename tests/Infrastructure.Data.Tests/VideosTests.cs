@@ -138,7 +138,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             Page: null, // Uses 1 by default
             PageSize: null, // Uses 10 by default
             IncludeCounts: includeCounts, 
-            IncludeThumbnail: IncludeThumbnail);
+            Resolution: IncludeThumbnail);
 
         PageResult<VideoDTO> response = await Sender.Send(query);
 

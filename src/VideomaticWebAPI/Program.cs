@@ -41,19 +41,9 @@ if (app.Environment.IsDevelopment())
         var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
         db.Database.Migrate();
 
-        ISender sender = scope.ServiceProvider.GetRequiredService<ISender>();
+        IDbSeeder seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
 
-        var seeder = new DataSeeder(sender);
-        await seeder.CreateData();
-        //if (VideoDataGenerator.HasData() && !db.Videos.Any())
-        //{
-        //    //var logger = app.Services.GetRequiredService<ILogger<VideomaticDbContext>>();
-        //    //logger.LogWarning("Inserting test data...");
-        //    //// Adds test data if the db is new
-        //    //Video[] allVideos = VideoDataGenerator.CreateAllVideos(true).Result;
-        //    //db.Videos.AddRange(allVideos);
-        //    //db.SaveChanges();
-        //}
+        await seeder.SeedAsync();        
     }
 
     app.UseSwagger();

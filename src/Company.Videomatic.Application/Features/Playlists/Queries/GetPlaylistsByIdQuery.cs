@@ -1,20 +1,15 @@
-﻿using Company.Videomatic.Domain.Abstractions;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
-namespace Company.Videomatic.Application.Features.Videos.Queries;
-
-public record GetVideosQuery(
+public record GetPlaylistsByIdQuery(
     long[]? PlaylistIds = null,
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null,
-    bool IncludeCounts = false,
-    ThumbnailResolutionDTO? Resolution = null) : IRequest<PageResult<VideoDTO>>;
+    int? PageSize = null);
 
-
-internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
+internal class GetPlaylistsByIdQueryValidator : AbstractValidator<GetPlaylistsByIdQuery>
 {
-    public GetVideosQueryValidator()
+    public GetPlaylistsByIdQueryValidator()
     {
         When(x => x.PlaylistIds is not null, () =>
         {
@@ -27,10 +22,10 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
         });
 
         When(x => x.OrderBy is not null, () =>
-        { 
-           RuleFor(x => x.OrderBy).NotEmpty();
+        {
+            RuleFor(x => x.OrderBy).NotEmpty();
         });
-        
+
         RuleFor(x => x.Page).GreaterThan(0);
         RuleFor(x => x.PageSize).GreaterThan(0);
     }

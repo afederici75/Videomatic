@@ -5,7 +5,7 @@ public class DbContextFixture : IAsyncLifetime
     public DbContextFixture(
         VideomaticDbContext dbContext,
         ITestOutputHelperAccessor outputAccessor,
-        IDataSeeder seeder)
+        IDbSeeder seeder)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -17,7 +17,7 @@ public class DbContextFixture : IAsyncLifetime
     }
 
     readonly ITestOutputHelperAccessor _outputAccessor;
-    readonly IDataSeeder Seeder;
+    readonly IDbSeeder Seeder;
 
     public ITestOutputHelper Output => _outputAccessor.Output!;
 
@@ -43,8 +43,7 @@ public class DbContextFixture : IAsyncLifetime
         if (SkipInsertTestData)
             return;
 
-        await Seeder.CreateData();
-
+        await Seeder.SeedAsync();
 
         // Loads all videos from the TestData folder
         //var allVideos = await VideoDataGenerator.CreateAllVideos(true);
