@@ -43,15 +43,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3CBBE7E-CC5C-4FB3-886B-6404C0955B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi", "src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj", "{69249D8E-AB6B-4F38-8159-3A8F9935D147}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{E795DFD9-32D7-457C-B4FC-2187DE4CD935}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
 		Notes.txt = Notes.txt
 		README.md = README.md
 		TODOs.txt = TODOs.txt
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi", "src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj", "{69249D8E-AB6B-4F38-8159-3A8F9935D147}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
