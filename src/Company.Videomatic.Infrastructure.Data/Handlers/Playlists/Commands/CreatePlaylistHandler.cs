@@ -1,22 +1,22 @@
-﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
-
-public sealed class CreatePlaylistHandler : BaseRequestHandler<CreatePlaylistCommand, CreatePlaylistResponse>
+public sealed class CreatePlaylistHandler : IRequestHandler<CreatePlaylistCommand, CreatePlaylistResponse>
 {
-    public CreatePlaylistHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    private readonly IRepository<Playlist> _repository;
+    private readonly IMapper _mapper;
+
+    public CreatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) 
     {
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public override async Task<CreatePlaylistResponse> Handle(CreatePlaylistCommand request, CancellationToken cancellationToken = default)
-    {
-        Playlist dbPlaylist = Mapper.Map<CreatePlaylistCommand, Playlist>(request);
+    public async Task<CreatePlaylistResponse> Handle(CreatePlaylistCommand request, CancellationToken cancellationToken = default)
+    {        
+        Playlist newPlaylist = _mapper.Map<CreatePlaylistCommand, Playlist>(request);
 
-        var entry = DbContext.Add(dbPlaylist);
-        var res = await DbContext.CommitChangesAsync(cancellationToken);
-
-        //_dbContext.ChangeTracker.Clear();
-
-        return new CreatePlaylistResponse(Id: entry.Entity.Id);
+        var entry = await _repository.AddAsync(newPlaylist);
+        
+        return new CreatePlaylistResponse(Id: entry.Id);
     }
 }

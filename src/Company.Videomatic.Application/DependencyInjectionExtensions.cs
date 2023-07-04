@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Application;
+using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Behaviors;
 using Company.Videomatic.Application.Services;
 using Company.Videomatic.Domain.Abstractions;

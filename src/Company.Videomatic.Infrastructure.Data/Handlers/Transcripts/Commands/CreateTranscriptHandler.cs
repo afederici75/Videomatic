@@ -10,7 +10,7 @@ public class CreateTranscriptHandler : IRequestHandler<CreateTranscriptCommand, 
     private readonly IMapper _mapper;
 
     public CreateTranscriptHandler(IRepository<Transcript> repository,
-                                 IMapper mapper)
+                                   IMapper mapper)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -18,21 +18,10 @@ public class CreateTranscriptHandler : IRequestHandler<CreateTranscriptCommand, 
 
     public async Task<CreateTranscriptResponse> Handle(CreateTranscriptCommand request, CancellationToken cancellationToken)
     {
-        var spec = new TranscriptByVideoIdsSpecification(request.VideoId);
+        Transcript newTranscript = _mapper.Map<CreateTranscriptCommand, Transcript>(request);
 
-        var transcript = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
-        if (transcript is null)
-        {
-            transcript = _mapper.Map<Transcript>(request);
-            await _repository.AddAsync(transcript);
-        }
-        else
-        {
-            _mapper.Map(request, transcript);
-        }
+        var entry = await _repository.AddAsync(newTranscript);        
 
-        var cnt = await _repository.SaveChangesAsync(cancellationToken);
-
-        return new CreateTranscriptResponse(transcript.Id);
+        return new CreateTranscriptResponse(newTranscript.Id);
     }
 }

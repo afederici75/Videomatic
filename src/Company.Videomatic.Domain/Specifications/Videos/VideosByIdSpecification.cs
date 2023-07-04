@@ -9,4 +9,10 @@ public class VideosByIdSpecification : Specification<Video>
     {
         Query.Where(v => ids.Contains(v.Id));
     }
+
+    public VideosByIdSpecification(VideoId id)
+        : this(new[] { id })
+    {
+            
+    }
 }

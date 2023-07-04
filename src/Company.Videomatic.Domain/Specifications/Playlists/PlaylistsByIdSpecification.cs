@@ -9,4 +9,9 @@ public class PlaylistsByIdSpecification : Specification<Playlist>
     {
         Query.Where(p => playlistIds.Contains(p.Id));
     }
+
+    public PlaylistsByIdSpecification(PlaylistId playlistId)
+    {
+        Query.Where(p => playlistId == p.Id);
+    }
 }

@@ -2,23 +2,23 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
-public sealed class CreateVideoHandler : BaseRequestHandler<CreateVideoCommand, CreateVideoResponse>
+public sealed class CreateVideoHandler : IRequestHandler<CreateVideoCommand, CreateVideoResponse>
 {
-    public CreateVideoHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    private readonly IRepository<Video> _repository;
+    private readonly IMapper _mapper;
+
+    public CreateVideoHandler(IRepository<Video> repository, IMapper mapper)
     {
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public override async Task<CreateVideoResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
+    public async Task<CreateVideoResponse> Handle(CreateVideoCommand request, CancellationToken cancellationToken = default)
     {
-        Video video = Mapper.Map<CreateVideoCommand, Video>(request);
+        Video newVideo = _mapper.Map<CreateVideoCommand, Video>(request);
 
-        //var details = new VideoDetails(
-        //    Provider: "YOUTUBE",            
-        //    ); 
+        var entry = await _repository.AddAsync(newVideo);
 
-        var entry = DbContext.Add(video);
-        var res = await DbContext.CommitChangesAsync(cancellationToken);
-
-        return new CreateVideoResponse(Id: entry.Entity.Id);
+        return new CreateVideoResponse(Id: entry.Id);
     }
 }

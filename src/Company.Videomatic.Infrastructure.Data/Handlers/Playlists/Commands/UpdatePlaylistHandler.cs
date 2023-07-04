@@ -1,23 +1,31 @@
-﻿using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿using Company.Videomatic.Domain.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Specifications.Playlists;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
-public sealed class UpdatePlaylistHandler : BaseRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>
+public sealed class UpdatePlaylistHandler : IRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>
 {
-    public UpdatePlaylistHandler(VideomaticDbContext dbContext, IMapper mapper) : base(dbContext, mapper)
+    private readonly IRepository<Playlist> _repository;
+    private readonly IMapper _mapper;
+
+    public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) 
     {
+        _repository = repository;
+        _mapper = mapper;
     }
 
-    public override async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
+    public async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
     {
-        var newValue = Mapper.Map<UpdatePlaylistCommand, Playlist>(request);
+        var spec = new PlaylistsByIdSpecification(new PlaylistId(request.Id));
+        Playlist? Playlist = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
+        if (Playlist == null)
+        {
+            return new UpdatePlaylistResponse(request.Id);
+        }
 
-        var playlistDb = await DbContext.Playlists
-            .SingleAsync(x => x.Id == request.Id, cancellationToken);
-
-        Mapper.Map(request, playlistDb);
-
-        var cnt = await DbContext.CommitChangesAsync(cancellationToken);
+        _mapper.Map<UpdatePlaylistCommand, Playlist>(request, Playlist);
+        var cnt = await _repository.SaveChangesAsync();
 
         return new UpdatePlaylistResponse(request.Id);
     }
