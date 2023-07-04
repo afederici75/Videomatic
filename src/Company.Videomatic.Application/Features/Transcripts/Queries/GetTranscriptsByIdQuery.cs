@@ -1,7 +1,7 @@
 ﻿using Company.Videomatic.Application.Features.Transcripts;
 using Company.Videomatic.Domain.Abstractions;
 
-namespace Company.Videomatic.Application.Features.Artifacts.Queries;
+namespace Company.Videomatic.Application.Features.Transcripts.Queries;
 
 public record GetTranscriptsByIdQuery(
     long[] TranscriptIds,
@@ -10,9 +10,9 @@ public record GetTranscriptsByIdQuery(
     int? Page = null,
     int? PageSize = null) : IRequest<IEnumerable<TranscriptDTO>>;
 
-internal class GetTranscriptByIdQueryValidator : AbstractValidator<GetTranscriptsByIdQuery>
+internal class GetTranscriptsByIdQueryValidator : AbstractValidator<GetTranscriptsByIdQuery>
 {
-    public GetTranscriptByIdQueryValidator()
+    public GetTranscriptsByIdQueryValidator()
     {
         RuleFor(x => x.TranscriptIds).NotEmpty();
 

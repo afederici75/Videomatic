@@ -6,9 +6,9 @@ public record CreateTranscriptCommand(long VideoId, string Language, IEnumerable
 
 public record CreateTranscriptResponse(long Id);
 
-public class CreateTranscriptCommandValidatorx : AbstractValidator<CreateTranscriptCommand>
+public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {
-    public CreateTranscriptCommandValidatorx()
+    public CreateTranscriptCommandValidator()
     {
         RuleFor(x => x.VideoId).GreaterThan(0);
         RuleFor(x => x.Language).NotEmpty();

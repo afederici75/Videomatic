@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using Company.Videomatic.Domain.Extensions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Specifications.Transcripts;
+using Company.Videomatic.Application.Features.Transcripts.Queries;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Queries;
 
