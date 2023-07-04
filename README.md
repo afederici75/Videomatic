@@ -12,7 +12,7 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 
 
 ```
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --hostname mssql1 -d mcr.microsoft.com/mssql/server:2019-latest
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d mcr.microsoft.com/mssql/server:2019-latest 
 ```
 ## Modules
 
