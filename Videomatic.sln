@@ -53,8 +53,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi", "src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj", "{69249D8E-AB6B-4F38-8159-3A8F9935D147}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi.Tests", "src\YoutubeTranscriptApi.Tests\YoutubeTranscriptApi.Tests.csproj", "{C022FF56-E7A5-4454-BB09-85DD9DEABEE6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,10 +127,6 @@ Global
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C022FF56-E7A5-4454-BB09-85DD9DEABEE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C022FF56-E7A5-4454-BB09-85DD9DEABEE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C022FF56-E7A5-4454-BB09-85DD9DEABEE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C022FF56-E7A5-4454-BB09-85DD9DEABEE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,7 +149,6 @@ Global
 		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
-		{C022FF56-E7A5-4454-BB09-85DD9DEABEE6} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}
