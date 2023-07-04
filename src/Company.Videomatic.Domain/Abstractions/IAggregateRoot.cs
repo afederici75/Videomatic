@@ -6,3 +6,8 @@
 public interface IAggregateRoot
 {
 }
+
+public interface IAggregateRoot<TId> : IAggregateRoot
+{
+    TId Id { get; }
+}

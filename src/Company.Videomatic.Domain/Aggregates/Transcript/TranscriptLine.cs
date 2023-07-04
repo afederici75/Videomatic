@@ -5,6 +5,9 @@ public class TranscriptLine : ValueObject
     public static implicit operator string(TranscriptLine x) => x.Text;
     public static implicit operator TranscriptLine(string x) => TranscriptLine.Create(x, null, null);
 
+    public static TranscriptLine FromString(string text)
+        => TranscriptLine.Create(text, null, null);
+
     internal static TranscriptLine Create(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {
         return new TranscriptLine

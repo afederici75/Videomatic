@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatePlaylistResponse>;
+public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IRequest<UpdatePlaylistResponse>, ICommandWithEntityId;
 
-public record UpdatePlaylistResponse(long Id);
+public record UpdatePlaylistResponse(long Id, bool WasUpdated);
 
 internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
 {

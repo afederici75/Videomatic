@@ -1,10 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Domain.Extensions;
-using Company.Videomatic.Domain.Specifications;
-using Company.Videomatic.Domain.Specifications.Playlists;
-using System.Linq.Expressions;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : 
     IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>,

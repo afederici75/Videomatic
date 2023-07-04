@@ -1,9 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Extensions;
-using Company.Videomatic.Domain.Specifications.Videos;
-using System.Reflection.Metadata;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
 public class GetVideosHandler : 
     IRequestHandler<GetVideosQuery, PageResult<VideoDTO>>,

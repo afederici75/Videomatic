@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkVideoToPlaylistsCommand, LinkVideoToPlaylistsResponse>
 {
@@ -19,9 +17,9 @@ public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkVideoToPlaylistsC
     {
         PlaylistId[] plIds = request.PlaylistIds.Select(x => new PlaylistId(x)).ToArray();// TODO: a bit much
 
-        var cnt = await _videoService.LinkToPlaylists(request.VideoId, plIds);
+        var cnt = await _videoService.LinkToPlaylists(request.Id, plIds);
 
-        return new LinkVideoToPlaylistsResponse(request.VideoId, cnt);
+        return new LinkVideoToPlaylistsResponse(request.Id, cnt);
     }
 
 }

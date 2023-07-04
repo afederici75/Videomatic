@@ -1,10 +1,10 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers;
 
-public abstract class CreateEntityHandler<TRequest, TResponse, TEntity> : IRequestHandler<TRequest, TResponse>
+public abstract class CreateEntityHandlerBase<TRequest, TResponse, TEntity> : IRequestHandler<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TEntity : class, IAggregateRoot
 {    
-    public CreateEntityHandler(IRepository<TEntity> repository, IMapper mapper)
+    public CreateEntityHandlerBase(IRepository<TEntity> repository, IMapper mapper)
     {
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -13,7 +13,7 @@ public abstract class CreateEntityHandler<TRequest, TResponse, TEntity> : IReque
     protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
-    protected abstract TResponse CreateResponseFromEntity(TEntity entity);
+    protected abstract TResponse CreateResponseFor(TEntity createdEntity);
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
     {
@@ -21,6 +21,6 @@ public abstract class CreateEntityHandler<TRequest, TResponse, TEntity> : IReque
 
         TEntity entry = await Repository.AddAsync(newItem);
 
-        return CreateResponseFromEntity(entry);
+        return CreateResponseFor(entry);
     }
 }

@@ -1,15 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Artifacts.Queries;
-using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Transcripts;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Specifications;
-using System.Linq.Expressions;
-using Company.Videomatic.Domain.Extensions;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Specifications.Transcripts;
-using Company.Videomatic.Application.Features.Transcripts.Queries;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Queries;
 
 public class GetTranscriptHandler :
     IRequestHandler<GetTranscriptsQuery, PageResult<TranscriptDTO>>,
@@ -23,14 +12,6 @@ public class GetTranscriptHandler :
 
     readonly IReadRepository<Transcript> _repository;
     readonly IMapper _mapper;
-
-    Dictionary<string, Expression<Func<Transcript, object?>>> SupportedOrderBys = new(StringComparer.OrdinalIgnoreCase)
-    {
-        { nameof(Transcript.Id), _ => _.Id },
-        { nameof(Transcript.Language), _ => _.Language },
-        //{ nameof(Transcript.Description), _ => _.Description },
-        //{ "VideoCount", _ => _.PlaylistVideos.Count },
-    };
 
     public async Task<PageResult<TranscriptDTO>> Handle(GetTranscriptsQuery request, CancellationToken cancellationToken)
     {

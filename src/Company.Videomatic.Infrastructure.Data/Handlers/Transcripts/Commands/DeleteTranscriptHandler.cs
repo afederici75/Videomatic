@@ -1,11 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Artifacts.Commands;
-using Company.Videomatic.Application.Features.Transcripts.Commands;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Specifications.Artifacts;
-using Company.Videomatic.Domain.Specifications.Transcripts;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Commands;
 
 public class DeleteTranscriptHandler : IRequestHandler<DeleteTranscriptCommand, DeleteTranscriptResponse>
 {

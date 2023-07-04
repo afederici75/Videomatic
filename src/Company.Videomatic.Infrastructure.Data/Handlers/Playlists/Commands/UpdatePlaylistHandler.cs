@@ -1,32 +1,14 @@
-﻿using Company.Videomatic.Domain.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Specifications.Playlists;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
-
-public sealed class UpdatePlaylistHandler : IRequestHandler<UpdatePlaylistCommand, UpdatePlaylistResponse>
+public sealed class UpdatePlaylistHandler : UpdateEntityHandlerBase<UpdatePlaylistCommand, UpdatePlaylistResponse, Playlist, PlaylistId>
 {
-    private readonly IRepository<Playlist> _repository;
-    private readonly IMapper _mapper;
-
-    public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) 
+    public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
-        _repository = repository;
-        _mapper = mapper;
     }
 
-    public async Task<UpdatePlaylistResponse> Handle(UpdatePlaylistCommand request, CancellationToken cancellationToken = default)
-    {
-        var spec = new PlaylistsByIdSpecification(new PlaylistId(request.Id));
-        Playlist? Playlist = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
-        if (Playlist == null)
-        {
-            return new UpdatePlaylistResponse(request.Id);
-        }
+    protected override UpdatePlaylistResponse CreateResponseFor(PlaylistId updatedEntityId, bool wasUpdated)
+        => new(updatedEntityId, wasUpdated);
 
-        _mapper.Map<UpdatePlaylistCommand, Playlist>(request, Playlist);
-        var cnt = await _repository.SaveChangesAsync();
-
-        return new UpdatePlaylistResponse(request.Id);
-    }
+    protected override PlaylistId GetIdOfRequest(UpdatePlaylistCommand request) 
+        => request.Id;
 }

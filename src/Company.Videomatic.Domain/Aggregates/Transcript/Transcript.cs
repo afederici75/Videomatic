@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
-public class Transcript : IAggregateRoot
+public class Transcript : IAggregateRoot<TranscriptId>
 {
     public static Transcript Create(VideoId videoId, string language)
     {
@@ -28,7 +28,11 @@ public class Transcript : IAggregateRoot
     public VideoId VideoId { get; private set; } = default!;
     public string Language { get; private set; } = default!;
 
-    public IReadOnlyCollection<TranscriptLine> Lines => _lines.ToList();
+    public IReadOnlyCollection<TranscriptLine> Lines 
+    { 
+        get => _lines.ToList(); 
+        private set => _lines = value.ToList(); // For entity auto mapper when we convert string to TranscriptLine
+    }
         
 
     public Transcript AddLines(IEnumerable<string> allText)

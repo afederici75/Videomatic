@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Domain.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Video;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public sealed class ImportVideoHandler : IRequestHandler<ImportVideoCommand, ImportVideoResponse>
 {

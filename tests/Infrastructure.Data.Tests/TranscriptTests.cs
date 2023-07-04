@@ -8,7 +8,7 @@ using Infrastructure.Data.Tests.Helpers;
 
 namespace Infrastructure.Data.Tests;
 
-[Collection("DbContextTests")]
+[Collection("DbContextTests")] 
 public class TranscriptTests : IClassFixture<DbContextFixture>
 {
     public TranscriptTests(

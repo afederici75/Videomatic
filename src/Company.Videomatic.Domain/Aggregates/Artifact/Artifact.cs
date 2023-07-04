@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
-public class Artifact : IAggregateRoot
+public class Artifact : IAggregateRoot<ArtifactId>
 {
     public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
     {

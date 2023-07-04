@@ -1,8 +1,4 @@
-﻿using Company.Videomatic.Domain.Specifications.Videos;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
 
 public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsResponse>
 {
@@ -17,12 +13,12 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsRes
 
     public async Task<SetVideoTagsResponse> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
     {
-        var spec = new VideosByIdSpecification(request.VideoId); 
+        var spec = new VideosByIdSpecification(request.Id); 
 
         var video = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
         if (video is null)
         {
-            return new SetVideoTagsResponse(request.VideoId, 0);
+            return new SetVideoTagsResponse(request.Id, 0);
         }
 
         var validTags = request.Tags.Except(video.Tags.Select(t => t.Name))
@@ -32,6 +28,6 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsRes
         
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return new SetVideoTagsResponse(request.VideoId, validTags.Length);
+        return new SetVideoTagsResponse(request.Id, validTags.Length);
     }
 }
