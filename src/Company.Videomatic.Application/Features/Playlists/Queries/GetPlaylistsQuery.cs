@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Abstractions;
-
-namespace Company.Videomatic.Application.Features.Playlists.Queries;
+﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 
 public record GetPlaylistsQuery(

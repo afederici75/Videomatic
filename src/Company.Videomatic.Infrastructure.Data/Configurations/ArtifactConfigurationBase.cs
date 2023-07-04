@@ -19,7 +19,7 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
                .HasConversion(x => x.Value, y => y);
 
         builder.Property(x => x.VideoId)
-               .HasConversion(x => x.Value, y => new VideoId(y));
+               .HasConversion(x => x.Value, y => new (y));
         
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);

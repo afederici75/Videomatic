@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Video;
-
-namespace Company.Videomatic.Application.Features.Videos;
+﻿namespace Company.Videomatic.Application.Features.Videos;
 
 public enum ThumbnailResolutionDTO
 {

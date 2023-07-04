@@ -1,3 +1,11 @@
+7/4
+-IVideoService is used in 2 spots (handler *and* the seeder!): it does make sense to keep it.
+-Massive work of clean up:
+	-Domain assembly is very clean
+	-Application assembly is very clean
+	-And so are the others, until proven wrong.
+	-All important tests work (108/117)
+
 6/30
 -A lot of other good changes
 		-Introduced ValueObject

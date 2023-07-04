@@ -1,12 +1,4 @@
 ﻿using AutoMapper;
-using Company.Videomatic.Application.Features.Artifacts;
-using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Transcripts;
-using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
 
 namespace Company.Videomatic.Application;
 

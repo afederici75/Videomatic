@@ -1,9 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Company.Videomatic.Domain.Specifications;
-using Company.Videomatic.Domain.Specifications.Videos;
+﻿using Company.Videomatic.Domain.Specifications.Videos;
 
 namespace Company.Videomatic.Application.Services;
 

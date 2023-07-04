@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Abstractions;
-
-namespace Company.Videomatic.Application.Features.Videos.Queries;
+﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosQuery(
     long[]? PlaylistIds = null,

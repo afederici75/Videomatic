@@ -1,7 +1,4 @@
-﻿using Ardalis.Specification;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-
-namespace Company.Videomatic.Domain.Specifications.Playlists;
+﻿namespace Company.Videomatic.Domain.Specifications.Playlists;
 
 public class PlaylistsByIdSpecification : Specification<Playlist>
 {

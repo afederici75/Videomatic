@@ -1,10 +1,9 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.Extensions.Logging;
 
 namespace Company.Videomatic.Application.Behaviors;
 
-[DebuggerStepThrough]
+[System.Diagnostics.DebuggerStepThrough]
 public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : class
     where TResponse : class

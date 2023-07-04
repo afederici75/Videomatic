@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Features.Transcripts;
-using Company.Videomatic.Domain.Abstractions;
-
-namespace Company.Videomatic.Application.Features.Transcripts.Queries;
+﻿namespace Company.Videomatic.Application.Features.Transcripts.Queries;
 
 public record GetTranscriptsQuery(
     string? SearchText = null,
