@@ -1,0 +1,44 @@
+﻿@using Company.Videomatic.Application.Features.Videos;
+@inject NavigationManager Navigation
+
+<Div>
+    <Card style="@MaxWidthStyle">
+        <CardBody>            
+            <CardImage Source=@Video.Thumbnail Alt="@Video.Name"></CardImage>
+            <CardTitle><b>@Video.Name</b></CardTitle>
+
+            <CardText>
+                <div>
+                    @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
+                    <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
+                    <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
+                    <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
+                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
+                </div>
+
+                <div><i>@Video.Description?</i></div>
+            </CardText>
+                    
+            @if (GridMode)
+            {
+                <Button Color="Color.Primary" @onclick=OnOpenClicked>Open</Button>
+            }            
+        </CardBody>
+    </Card>
+</Div>
+
+@code {
+    [Parameter]
+    public VideoDTO Video { get; set; } = new(1, "Nowhere", "No Title", "No Description");
+
+    [Parameter]
+    public bool GridMode { get; set; } = false;
+
+    public string MaxWidthStyle => GridMode ? "max-width: 400px" : "max-width: 600px";
+
+    void OnOpenClicked()
+    {
+        Navigation.NavigateTo($"/{nameof(VideoEdit)}/{Video.Id}");        
+    }
+}
+    

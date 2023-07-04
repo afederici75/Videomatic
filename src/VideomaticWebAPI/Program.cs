@@ -1,8 +1,9 @@
-using Company.Videomatic.Application.Features;
-using Company.Videomatic.Application.Features.Videos.GetTranscript;
+using Company.Videomatic.Application.Features.Videos.Commands;
 using Company.Videomatic.Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
+using Company.Videomatic.Infrastructure.Data.Seeder;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
+using VideomaticWebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticSemanticKernel(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
+
 var provider = builder.Configuration.GetValue<string>("Provider");
 //provider = "Sqlite";
 switch (provider)
@@ -17,9 +19,9 @@ switch (provider)
     case Company.Videomatic.Infrastructure.Data.SqlServer.SqlServerVideomaticDbContext.ProviderName:
         builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
         break;
-    case Company.Videomatic.Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
-        builder.Services.AddVideomaticDataForSqlite(builder.Configuration);
-        break;
+    //case Company.Videomatic.Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
+    //    builder.Services.AddVideomaticDataForSqlite(builder.Configuration);
+    //    break;
     default:
         throw new ArgumentException($"Unsupported provider '{provider}'.");
 }
@@ -38,15 +40,10 @@ if (app.Environment.IsDevelopment())
     {
         var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
         db.Database.Migrate();
-        if (VideoDataGenerator.HasData() && !db.Videos.Any())
-        {
-            var logger = app.Services.GetRequiredService<ILogger<VideomaticDbContext>>();
-            logger.LogWarning("Inserting test data...");
-            // Adds test data if the db is new
-            Video[] allVideos = VideoDataGenerator.CreateAllVideos(true).Result;
-            db.Videos.AddRange(allVideos);
-            db.SaveChanges();
-        }
+
+        IDbSeeder seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
+
+        await seeder.SeedAsync();        
     }
 
     app.UseSwagger();
@@ -54,58 +51,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-//app.MapGet("/videos/" + nameof(GetVideosDTOQuery), 
-//    async ([AsParameters] GetVideosDTOQuery query,
-//           ISender sender) => 
-//    {
-//        var resp = await sender.Send(query);
-//        return Results.Ok(resp);
-//    }).res;
-app.MapGet("/videos/" + nameof(GetVideosDTOQuery), GetVideosDTOQuery);
-
-app.MapGet("/videos/" + nameof(GetTranscriptDTOQuery),
-    async ([AsParameters] GetTranscriptDTOQuery query,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(query);
-        return Results.Ok(resp);
-    });
-
-
-app.MapPost("videos/" + nameof(ImportVideoCommand),
-    async (ImportVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
-
-app.MapPut("videos/" + nameof(UpdateVideoCommand),
-    async (UpdateVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
-
-app.MapDelete("videos/" + nameof(DeleteVideoCommand),
-    async ([AsParameters] ImportVideoCommand command,
-           ISender sender) =>
-    {
-        var resp = await sender.Send(command);
-        return Results.Ok(resp);
-    });
+app.MapVideomaticEndpoints();
 
 app.Run();
 
 
-[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<VideoDTO>))]
-static async Task<IResult> GetVideosDTOQuery(
-    [AsParameters] GetVideosDTOQuery query,
-    ISender sender)
-{
-    QueryResponse<VideoDTO> resp = await sender.Send(query);
-    
-    return TypedResults.Ok(resp);
-}
+//[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<GetVideosResult>))]
+//static async Task<IResult> GetVideosDTOQuery(
+//    [AsParameters] GetVideosByIdQuery query,
+//    ISender sender)
+//{
+//    QueryResponse<GetVideosResult> resp = await sender.Send(query);
+//    
+//    return TypedResults.Ok(resp);
+//}

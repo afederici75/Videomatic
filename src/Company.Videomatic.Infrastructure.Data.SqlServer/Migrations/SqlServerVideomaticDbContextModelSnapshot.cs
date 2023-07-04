@@ -17,279 +17,333 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.HasSequence("MainId");
+            modelBuilder.HasSequence("ArtifactSequence");
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Artifact", b =>
+            modelBuilder.HasSequence("PlaylistSequence");
+
+            modelBuilder.HasSequence("TagsSequence");
+
+            modelBuilder.HasSequence("ThumbnailSequence");
+
+            modelBuilder.HasSequence("TranscriptLineSequence");
+
+            modelBuilder.HasSequence("TranscriptSequence");
+
+            modelBuilder.HasSequence("VideoSequence");
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Artifact.Artifact", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("NEXT VALUE FOR ArtifactSequence");
 
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("VideoId")
-                        .HasColumnType("int");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long>("VideoId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("Title");
+                    b.HasIndex("Name");
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("Artifact");
+                    b.ToTable("Artifacts", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Folders");
+                    b.ToTable("Playlists", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Thumbnail", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Transcript.Transcript", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
-
-                    b.Property<int?>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Resolution")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<int?>("VideoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Width")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Height");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("Resolution");
-
-                    b.HasIndex("Url");
-
-                    b.HasIndex("VideoId");
-
-                    b.HasIndex("Width");
-
-                    b.ToTable("Thumbnails");
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("NEXT VALUE FOR TranscriptSequence");
 
                     b.Property<string>("Language")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
 
-                    b.Property<int?>("VideoId")
-                        .HasColumnType("int");
+                    b.Property<long>("VideoId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("Transcripts");
+                    b.ToTable("Transcripts", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.TranscriptLine", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.Video", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeSpan?>("Duration")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan?>("StartsAt")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TranscriptId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TranscriptId");
-
-                    b.ToTable("TranscriptLine");
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValueSql("NEXT VALUE FOR MainId");
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("NEXT VALUE FOR VideoSequence");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FolderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProviderId")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ProviderVideoId")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("VideoUrl")
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FolderId");
+                    b.HasIndex("Location");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
+                    b.HasIndex("Name");
 
-                    b.HasIndex("ProviderId");
-
-                    b.HasIndex("Title");
-
-                    b.HasIndex("VideoUrl");
-
-                    b.ToTable("Videos");
+                    b.ToTable("Videos", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Artifact", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.VideoPlaylist", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
-                        .WithMany("Artifacts")
+                    b.Property<long>("PlaylistId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("VideoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("PlaylistId", "VideoId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("PlaylistVideos", (string)null);
+                });
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Artifact.Artifact", b =>
+                {
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
+                        .WithMany()
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
-                {
-                    b.HasOne("Company.Videomatic.Domain.Model.Folder", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Thumbnail", b =>
-                {
-                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
-                        .WithMany("Thumbnails")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
-                {
-                    b.HasOne("Company.Videomatic.Domain.Model.Video", null)
-                        .WithMany("Transcripts")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.TranscriptLine", b =>
-                {
-                    b.HasOne("Company.Videomatic.Domain.Model.Transcript", null)
-                        .WithMany("Lines")
-                        .HasForeignKey("TranscriptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Transcript.Transcript", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Model.Folder", null)
-                        .WithMany("Videos")
-                        .HasForeignKey("FolderId");
-                });
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Folder", b =>
-                {
-                    b.Navigation("Children");
+                    b.OwnsMany("Company.Videomatic.Domain.Aggregates.Transcript.TranscriptLine", "Lines", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValueSql("NEXT VALUE FOR TranscriptLineSequence");
 
-                    b.Navigation("Videos");
-                });
+                            b1.Property<TimeSpan?>("Duration")
+                                .HasColumnType("time");
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Transcript", b =>
-                {
+                            b1.Property<TimeSpan?>("StartsAt")
+                                .HasColumnType("time");
+
+                            b1.Property<string>("Text")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<long>("TranscriptId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("Text");
+
+                            b1.HasIndex("TranscriptId");
+
+                            b1.ToTable("TranscriptLine");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TranscriptId");
+                        });
+
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Model.Video", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.Video", b =>
                 {
-                    b.Navigation("Artifacts");
+                    b.OwnsMany("Company.Videomatic.Domain.Aggregates.Video.Thumbnail", "Thumbnails", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValueSql("NEXT VALUE FOR ThumbnailSequence");
+
+                            b1.Property<int>("Height")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Location")
+                                .IsRequired()
+                                .HasMaxLength(1024)
+                                .HasColumnType("nvarchar(1024)");
+
+                            b1.Property<int>("Resolution")
+                                .HasColumnType("int");
+
+                            b1.Property<long>("VideoId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("Width")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("VideoId");
+
+                            b1.ToTable("Thumbnail");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VideoId");
+                        });
+
+                    b.OwnsOne("Company.Videomatic.Domain.Aggregates.Video.VideoDetails", "Details", b1 =>
+                        {
+                            b1.Property<long>("VideoId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("ChannelId")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("PlaylistId")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("Position")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Provider")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("VideoOwnerChannelId")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("VideoOwnerChannelTitle")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<DateTime>("VideoPublishedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("VideoId");
+
+                            b1.HasIndex("ChannelId");
+
+                            b1.HasIndex("VideoOwnerChannelId");
+
+                            b1.ToTable("Videos");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VideoId");
+                        });
+
+                    b.OwnsMany("Company.Videomatic.Domain.Aggregates.Video.VideoTag", "Tags", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasDefaultValueSql("NEXT VALUE FOR TagsSequence");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(35)
+                                .HasColumnType("nvarchar(35)");
+
+                            b1.Property<long>("VideoId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("VideoId");
+
+                            b1.HasIndex("Name", "VideoId")
+                                .IsUnique();
+
+                            b1.ToTable("VideoTag");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VideoId");
+                        });
+
+                    b.Navigation("Details")
+                        .IsRequired();
+
+                    b.Navigation("Tags");
 
                     b.Navigation("Thumbnails");
+                });
 
-                    b.Navigation("Transcripts");
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.VideoPlaylist", b =>
+                {
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", null)
+                        .WithMany()
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
+                        .WithMany("Playlists")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.Video", b =>
+                {
+                    b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
         }

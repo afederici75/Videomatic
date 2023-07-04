@@ -7,49 +7,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{71D366F8-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application", "src\Company.Videomatic.Application\Company.Videomatic.Application.csproj", "{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain", "src\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{39957660-CF9D-407D-8317-9B713A394B3F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel", "src\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.SqlServer", "src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.SharedKernel", "src\Company.SharedKernel\Company.SharedKernel.csproj", "{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube", "src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoMaticBlazorApp", "src\VideoMaticBlazorApp\VideoMaticBlazorApp.csproj", "{0920B386-81EA-4731-A28F-D99416377589}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2-5F63-469D-A6D4-873ECAD4F908}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube.Tests", "tests\Company.Videomatic.Infrastructure.YouTube.Tests\Company.Videomatic.Infrastructure.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.YouTube.Tests", "tests\Infrastructure.YouTube.Tests\Infrastructure.YouTube.Tests.csproj", "{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application.Tests", "tests\Company.Videomatic.Application.Tests\Company.Videomatic.Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "tests\Application.Tests\Application.Tests.csproj", "{8ED54D7E-C2CC-4B49-9497-F3174699BF29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Integration.Tests", "tests\Company.Videomatic.Integration.Tests\Company.Videomatic.Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests", "tests\Integration.Tests\Integration.Tests.csproj", "{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Tests", "tests\Company.Videomatic.Infrastructure.Data.Tests\Company.Videomatic.Infrastructure.Data.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data.Tests", "tests\Infrastructure.Data.Tests\Infrastructure.Data.Tests.csproj", "{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain.Tests", "tests\Company.Videomatic.Domain.Tests\Company.Videomatic.Domain.Tests.csproj", "{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel.Tests", "tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests\Company.Videomatic.Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.SemanticKernel.Tests", "tests\Infrastructure.SemanticKernel.Tests\Infrastructure.SemanticKernel.Tests.csproj", "{F37B951F-AB9D-4630-8FE9-80C9B6F12605}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticWebAPI", "src\VideomaticWebAPI\VideomaticWebAPI.csproj", "{1753EB30-9EAA-4FC2-A9F2-5CC729079D69}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Docs", "_Docs", "{F1C1BF6B-9F0A-41C3-8859-DB4B22950782}"
-	ProjectSection(SolutionItems) = preProject
-		Notes.txt = Notes.txt
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data", "src\Company.Videomatic.Infrastructure.Data\Company.Videomatic.Infrastructure.Data.csproj", "{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.Sqlite", "src\Company.Videomatic.Infrastructure.Data.Sqlite\Company.Videomatic.Infrastructure.Data.Sqlite.csproj", "{59FCA606-65BE-4EF4-9847-37C9E5A1C067}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticBlazor", "src\VideomaticBlazor\VideomaticBlazor.csproj", "{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{D9E32E3B-28BD-4ED7-A377-AB1E03B55564}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech", "src\Company.Videomatic.Infrastructure.AzureSpeech\Company.Videomatic.Infrastructure.AzureSpeech.csproj", "{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.AzureSpeech.Tests", "tests\Infrastructure.AzureSpeech.Tests\Infrastructure.AzureSpeech.Tests.csproj", "{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain", "src\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3CBBE7E-CC5C-4FB3-886B-6404C0955B58}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Notes.txt = Notes.txt
+		README.md = README.md
+		TODOs.txt = TODOs.txt
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoutubeTranscriptApi", "src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj", "{69249D8E-AB6B-4F38-8159-3A8F9935D147}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +63,6 @@ Global
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39957660-CF9D-407D-8317-9B713A394B3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,18 +71,10 @@ Global
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0920B386-81EA-4731-A28F-D99416377589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0920B386-81EA-4731-A28F-D99416377589}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0920B386-81EA-4731-A28F-D99416377589}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0920B386-81EA-4731-A28F-D99416377589}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,10 +91,6 @@ Global
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,31 +103,52 @@ Global
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59FCA606-65BE-4EF4-9847-37C9E5A1C067}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
-		{39957660-CF9D-407D-8317-9B713A394B3F} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{6E299DEC-3A1D-4525-B043-05CD89AEE67B} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 		{CD8CE0A9-0152-48F8-9034-17855A0BB4A9} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
-		{B1AC51FB-23D7-4703-94A6-5CCDCB8DA35E} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{4D3C829C-2B96-4D13-BD40-C08194647EEA} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
-		{0920B386-81EA-4731-A28F-D99416377589} = {C354FC42-1916-406F-B2AC-7604C423A028}
 		{CE9182E1-81C4-43A1-83B7-3A494B7DEFDA} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{8ED54D7E-C2CC-4B49-9497-F3174699BF29} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{E5F2559B-58B3-49A0-85E2-7D9CDE3B9B1B} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{65FEE9F8-CF2C-4B89-BC50-F0C03A0F04A8} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
-		{B81CCE2A-ACBD-43DB-9052-14524FAE81E4} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{F37B951F-AB9D-4630-8FE9-80C9B6F12605} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{1753EB30-9EAA-4FC2-A9F2-5CC729079D69} = {C354FC42-1916-406F-B2AC-7604C423A028}
 		{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
-		{59FCA606-65BE-4EF4-9847-37C9E5A1C067} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{5A74999D-C974-412E-8FAC-B9DD1D5CC7CD} = {C354FC42-1916-406F-B2AC-7604C423A028}
+		{C4D42D9F-CA05-4639-89FE-D961BB9D66B3} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{C4304726-5DBE-4C5F-BC34-96B2A9BBAA09} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
+		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
+		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
+		{69249D8E-AB6B-4F38-8159-3A8F9935D147} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}

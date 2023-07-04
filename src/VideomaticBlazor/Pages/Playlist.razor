@@ -1,0 +1,31 @@
+﻿@page "/Playlist/{PlaylistId:long}"
+@using Company.Videomatic.Domain.Abstractions;
+@using Company.Videomatic.Application.Features.Videos;
+@inject ISender Sender;
+
+<CardDeck>
+@foreach (var video in Videos)
+{
+    <VideoCard Video=video GridMode=true/>
+}   
+</CardDeck>
+
+@code {
+    VideoDTO[] Videos = Array.Empty<VideoDTO>();    
+
+    [Parameter]
+    public long PlaylistId { get; set; } = 0;
+    List<string> EventType = new List<string>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var query = new GetVideosQuery(
+            PlaylistIds: new[] { PlaylistId },
+            IncludeCounts: true, 
+            Resolution: ThumbnailResolutionDTO.Default);
+        
+        PageResult<VideoDTO> results = await Sender.Send(query);
+        
+        Videos = results.Items.ToArray();
+    }    
+}

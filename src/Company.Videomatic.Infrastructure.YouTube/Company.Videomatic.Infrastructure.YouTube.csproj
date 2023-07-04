@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Google.Apis.Auth" Version="1.60.0" />
-    <PackageReference Include="Google.Apis.Core" Version="1.60.0" />
-    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.60.0.2945" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

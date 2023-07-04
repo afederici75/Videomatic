@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SemanticKernel" Version="0.11.146.1-preview" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.13.277.1-preview" />
   </ItemGroup>
 
   <ItemGroup>

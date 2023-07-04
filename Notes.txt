@@ -1,3 +1,68 @@
+7/4
+-IVideoService is used in 2 spots (handler *and* the seeder!): it does make sense to keep it.
+-Massive work of clean up:
+	-Domain assembly is very clean
+	-Application assembly is very clean
+	-And so are the others, until proven wrong.
+	-All important tests work (108/117)
+
+6/30
+-A lot of other good changes
+		-Introduced ValueObject
+		-Made Ids a ValueObject
+		-Simplified navigations for EF
+
+-TIP: do not use strongly typed IDs in the web api. They don't look good (complexity in JSON)
+
+
+6/28
+	-Did a ton of work to improve the architecture. 
+		-The Domain belongs. While it looked appealing to have that stuff in the Data assembly,
+		it really belongs in a different place if we follow DDD.
+		
+6/19
+	-Worked all weekend and I think I finally resolved my problems with CA and DDD.
+		-I have virtually no use for aggregates right now
+		-The Domain assembly seems to only add complexity: vertical slice architecture is much easier			
+
+6/13
+-FINALLY PUBLISHED APP on AZURE!
+	-Should move to github actions
+-Managed to transcribe a good chunk of our MC#1
+	-It's slow... Does it need to listen to everything at the same speed we talk?!?!?
+-Added some WAV samples from https://voiceage.com/Audio-Samples-AMR-WB.html
+-Had a hickup in the speech tests: I forgot to mark the Theory arguments wqith FromServices
+
+5/22
+-Should look into DDD and CA and see how aggregates and stuff truly work.
+
+5/20
+-Made a lot of progress with the diagrams. I have enough to start trying Blazor code
+without wasting time figuring out the UI.
+-Object Model changes:
+	-Add Collections (video collection?) and remove folders?
+		-A video can be in multiple collections, so it works a little bit like tags.
+-I should make these changes and make sure I have the right test data instead of
+wasting time making mocks in the client
+-Semantic search is what I should think about vs the old 'sql-like filter' approach.
+
+5/14
+-When i buuild the Blazor SS app, I should use all messages from the API directly
+
+5/13
+-Watched Google IO donference
+	-Tailwind notebook
+	-UI like VideoM
+	-Metadata in AI artifacts
+	-Eliminate/gauge toxicity in AI models and general text
+
+5/3
+-Starting to reproduce the following:
+	-https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai
+-Everything uses IRepository and IReadOnlyRepository.
+-Found several articles on chunking 
+	-I will try to follow this one: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb?ref=mlq.ai
+
 4/29
 -Added WebAPI to the project. Technically we have a REST endpoint!
 -Trying to code a Blazor app that uses only the Swagger stuff.

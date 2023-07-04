@@ -1,0 +1,8 @@
+{
+  "SemanticKernel": {
+    "ApiKey": null,
+    "Organization": null,
+    "Model": "gpt-3.5-turbo", //"text-davinci-002",
+    "EmbeddingModel": "text-embedding-ada-002"
+  }  
+}

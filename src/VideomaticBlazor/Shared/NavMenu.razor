@@ -1,0 +1,81 @@
+﻿@using Company.Videomatic.Application.Features.Playlists;
+@inject ISender Sender;
+
+<Bar Breakpoint="Breakpoint.Desktop"
+     NavigationBreakpoint="Breakpoint.Tablet"
+     Background="Background.Dark"
+     ThemeContrast="ThemeContrast.Dark"
+     Mode="BarMode.VerticalInline"
+     CollapseMode="BarCollapseMode.Small">
+
+    <BarToggler Mode="BarTogglerMode.Normal" />
+
+    <BarMenu id="barMenu">
+        <!-- BAR START -->
+        <BarStart>
+            <BarItem>
+                <BarLink To="/">
+                    <BarIcon IconName="IconName.Home" />
+                    Home
+                </BarLink>
+            </BarItem>
+
+            <BarItem id="barItem1">
+                <BarDropdown id="barDropdown1" Class="XXX" >
+                    <BarDropdownToggle id="barDropToggle1" >
+                        <BarIcon IconName="IconName.Video" />
+                        My Videos
+                    </BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem>All</BarDropdownItem>
+                        <BarDropdownItem>Most Recent</BarDropdownItem>
+                        <BarDropdownDivider />
+
+                        @foreach (PlaylistDTO playlist in Playlists)
+                        {
+                            <BarDropdownItem To=@GetPlaylistLink(playlist) TextColor="TextColor.Light">@playlist.Name (@playlist.VideoCount)</BarDropdownItem>
+                        }
+
+                        <BarDropdownDivider />                        
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+        </BarStart>
+
+        <!-- BAR END -->
+        <BarEnd>
+            <BarItem>
+                <BarLink To=@nameof(Settings)>
+                    <BarIcon IconName="IconName.Gavel" />
+                    Settings
+                </BarLink>
+            </BarItem>
+
+            <BarItem>
+                <BarLink To=@nameof(Settings)>
+                    <BarIcon />
+                    Settings <i class="bi bi-box-arrow-right"></i>
+                </BarLink>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>
+
+@code {
+    PlaylistDTO[] Playlists = Array.Empty<PlaylistDTO>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var resp = await Sender.Send(new GetPlaylistsQuery(IncludeCounts: true));
+        Playlists = resp.Items.ToArray();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    string GetPlaylistLink(PlaylistDTO playlist)
+    {
+        return $"{nameof(Playlist)}/{playlist.Id}";
+    }
+
+    
+}

@@ -1,0 +1,28 @@
+﻿<Tabs SelectedTab="@selectedTab" SelectedTabChanged="@OnSelectedTabChanged">
+    <Items>
+        <Tab Name="transcript">Transcript</Tab>
+        <Tab Name="summary">Summary</Tab>
+        <Tab Name="notes">Notes</Tab>        
+    </Items>
+    <Content>
+        <TabPanel Name="transcript">
+            Content for transcript.
+        </TabPanel>
+        <TabPanel Name="summary">
+            Content for summary.
+        </TabPanel>
+        <TabPanel Name="notes">
+            Content for notes.
+        </TabPanel>
+    </Content>
+</Tabs>
+@code {
+    string selectedTab = "summary";
+
+    private Task OnSelectedTabChanged(string name)
+    {
+        selectedTab = name;
+
+        return Task.CompletedTask;
+    }
+}
