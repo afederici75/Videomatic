@@ -12,7 +12,13 @@ public class DbContextFixture : IAsyncLifetime
 
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
         Seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
-        DbContext.Database.EnsureDeleted();
+
+        try
+        {
+            DbContext.Database.EnsureDeleted();
+        }
+        catch
+        { }
         DbContext.Database.EnsureCreated();
     }
 

@@ -18,7 +18,9 @@ public class CreateTranscriptHandler : IRequestHandler<CreateTranscriptCommand, 
 
     public async Task<CreateTranscriptResponse> Handle(CreateTranscriptCommand request, CancellationToken cancellationToken)
     {
-        Transcript newTranscript = _mapper.Map<CreateTranscriptCommand, Transcript>(request);
+        //Transcript newTranscript = _mapper.Map<CreateTranscriptCommand, Transcript>(request); // TODO: Does not work with Lines
+
+        Transcript newTranscript = Transcript.Create(request.VideoId, request.Language, request.Lines); 
 
         var entry = await _repository.AddAsync(newTranscript);        
 

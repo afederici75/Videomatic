@@ -31,7 +31,10 @@ public class AutomappingProfile : Profile
         // Transcripts
         CreateMap<CreateTranscriptCommand, Transcript>()
             .ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines));
-        
+
+        CreateMap<string, TranscriptLine>();
+        CreateMap<TranscriptLine, string>();
+
         // Artifacts
         CreateMap<CreateArtifactCommand, Artifact>();
         CreateMap<UpdateArtifactCommand, Artifact>();

@@ -8,9 +8,11 @@ using Infrastructure.Data.Tests.Helpers;
 
 namespace Infrastructure.Data.Tests;
 
+[Collection("DbContextTests")]
 public class TranscriptTests : IClassFixture<DbContextFixture>
 {
-    public TranscriptTests(DbContextFixture fixture,
+    public TranscriptTests(
+        DbContextFixture fixture,
         IRepository<Transcript> repository,
         ISender sender)
     {
@@ -44,11 +46,13 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         // Checks
         response.Id.Should().BeGreaterThan(0);
 
-        var transcript = Fixture.DbContext.Transcripts.Single(x => x.Id == response.Id);
+        var transcript = Fixture.DbContext.            
+            Transcripts.
+            Single(x => x.Id == response.Id);
 
         transcript.Language.Should().Be(createCommand.Language);
         transcript.Lines.Should().HaveCount(createCommand.Lines.Count());
-        transcript.VideoId.Should().Be(videoId);
+        transcript.VideoId.Value.Should().Be(videoId);
     }
 
     [Fact]

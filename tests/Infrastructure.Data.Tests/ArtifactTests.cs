@@ -94,15 +94,15 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
             .SingleAsync();
 
         video.Text.Should().BeEquivalentTo(updateCommand.Text);
-        video.Type.Should().BeEquivalentTo(updateCommand.Title);
+        video.Name.Should().BeEquivalentTo(updateCommand.Name);
     }
 
     [Theory]
-    [InlineData(null, null, false, 2)]
-    [InlineData(null, "Id DESC", false, 2)]
-    [InlineData(null, "Id", false, 2)]
-    [InlineData("Philosophy", "Id   ASC", false, 1)]
-    [InlineData("Philosophy", "Name  DESC", false, 1)]
+    [InlineData(null, null, false, 4)]
+    [InlineData(null, "Id DESC", false, 4)]
+    [InlineData(null, "Id", false, 4)]
+    [InlineData("another AI generated", "Id   ASC", false, 2)]
+    [InlineData("another AI generated", "Name  DESC", false, 2)]
     //[InlineData("Philosophy", "TagCount desc, Id asc", false, 1)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetArtifacts(string? searchText, string? orderBy, bool includeCounts, int expectedResults)

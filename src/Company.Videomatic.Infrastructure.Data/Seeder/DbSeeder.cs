@@ -127,8 +127,8 @@ public class DbSeeder : IDbSeeder
 
     private async Task CreateAldousHuxleyTheDancingShivaArtifacts(VideoId videoId)
     {
-        var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be an AI generated artifact");
-        var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be an AI generated artifact listing all the topics discussed in this video");
+        var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be an AI generated artifact (#ShivaVideo)");
+        var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be an AI generated artifact listing all the topics discussed in this video (#ShivaVideo)");
 
         await _artifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
     }
@@ -221,8 +221,8 @@ public class DbSeeder : IDbSeeder
 
     private async Task CreateIfRealityIsNotDualArtifacts(VideoId videoId)
     {
-        var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be an AI generated artifact");
-        var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be an AI generated artifact listing all the topics discussed in this video");
+        var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be another AI generated artifact (#IfRealityVideo)");
+        var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be another AI generated artifact listing all the topics discussed in this video (#IfRealityVideo)");
 
         await _artifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
     }
