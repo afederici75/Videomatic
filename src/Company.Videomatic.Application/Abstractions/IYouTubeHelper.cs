@@ -20,7 +20,7 @@ public interface IYouTubeHelper
     /// </summary>
     /// <param name="playlistId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<VideoDTO> GetAllVideosOfPlaylist(string playlistId);
+    IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId);
 
     /// <summary>
     /// Gets the full transcription of a YouTube video.
@@ -30,5 +30,5 @@ public interface IYouTubeHelper
     //IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
 
     //
-    IAsyncEnumerable<Video> ImportVideoDetails(string[] youtubeVideoIds);
+    IAsyncEnumerable<Video> ImportVideoDetails(IEnumerable<string> youtubeVideoIds);
 }

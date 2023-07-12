@@ -49,31 +49,37 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(response.nextPageToken));
     }
 
-    public async IAsyncEnumerable<VideoDTO> GetAllVideosOfPlaylist(string playlistId)
+    public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
         var parameters = new Dictionary<string, string>
         {
             ["key"] = _options.ApiKey,
             ["playlistId"] = playlistId,
-            ["part"] = "snippet,contentDetails,id,status",
+            //["part"] = "snippet,contentDetails,id,status",
+            ["part"] = "contentDetails,status",
             ["maxResults"] = "50"
         };
 
         API.JsonPasteSpecial.PlaylistItemListResponse response;
         do
         {
+            // API call
             var fullUrl = MakeUrlWithQuery("playlistItems", parameters);
-
             string json = await _client.GetStringAsync(fullUrl);
             response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.PlaylistItemListResponse>(json)!;
 
-            foreach (var item in response.items)
-            {
-                if (item.status.privacyStatus != "public")
-                    continue;
+            // Gets all video Ids
+            var publicVideos = response.items.Where(i => i.status.privacyStatus == "public")
+                                             .Select(i => i.contentDetails.videoId);
 
-                yield return new VideoDTO(Id: 0, Location: item.id, Name: item.snippet.title, Description: item.snippet.description);
-            }
+            var videoIds = new HashSet<string>(publicVideos);
+            
+            await foreach (var video in ImportVideoDetails(videoIds.ToArray()))
+            {
+                yield return video;
+            };
+
+            // Pages
             parameters["pageToken"] = response.nextPageToken;
         }
         while (!string.IsNullOrEmpty(response.nextPageToken));
@@ -81,7 +87,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
     // ------------------------------
 
-    public async IAsyncEnumerable<Video> ImportVideoDetails(string[] youtubeVideoIds)
+    public async IAsyncEnumerable<Video> ImportVideoDetails(IEnumerable<string> youtubeVideoIds)
     {
         var parameters = new Dictionary<string, string>
         {
@@ -105,6 +111,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
                 description: item.snippet.description,
                 details: new VideoDetails(
                     Provider: ProviderId,
+                    ProviderVideoId: item.id,
                     VideoPublishedAt: item.snippet.publishedAt,
                     VideoOwnerChannelTitle: item.snippet.channelTitle,
                     VideoOwnerChannelId: item.snippet.channelId));

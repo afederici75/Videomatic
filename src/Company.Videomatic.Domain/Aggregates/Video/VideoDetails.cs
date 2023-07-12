@@ -2,6 +2,7 @@
 
 public record VideoDetails(
     string Provider,
+    string ProviderVideoId,
     DateTime VideoPublishedAt,
     //string ChannelId,
     //string PlaylistId,
@@ -11,6 +12,7 @@ public record VideoDetails(
 {
     private VideoDetails() :
         this(Provider: "NONE",
+             ProviderVideoId: "NONE",
              VideoPublishedAt: DateTime.UtcNow,
              //ChannelId: "",
              //PlaylistId: "",

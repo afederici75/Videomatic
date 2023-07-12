@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
 using FluentAssertions;
 
@@ -17,11 +18,10 @@ public class YouTubePlaylistImporterTests
     [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
     public async Task ImportPlaylist([FromServices] IYouTubeHelper helper , string url)
     {
-        List<VideoDTO> videos = new ();
-        await foreach (var video in helper.GetAllVideosOfPlaylist(url))
+        List<Video> videos = new ();
+        await foreach (var video in helper.ImportVideosOfPlaylist(url))
         {
             videos.Add(video);
-
         }
     }
 
