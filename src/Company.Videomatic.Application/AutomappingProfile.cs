@@ -12,8 +12,8 @@ public class AutomappingProfile : Profile
 
         // Videos
         CreateMap<CreateVideoCommand, Video>()
-            .ForPath(dest => dest.Details.PlaylistId, opt => opt.MapFrom(src => src.PlaylistId))
-            .ForPath(dest => dest.Details.ChannelId, opt => opt.MapFrom(src => src.ChannelId))
+            //.ForPath(dest => dest.Details.PlaylistId, opt => opt.MapFrom(src => src.PlaylistId))
+            //.ForPath(dest => dest.Details.ChannelId, opt => opt.MapFrom(src => src.ChannelId))
             .ForPath(dest => dest.Details.VideoOwnerChannelId, opt => opt.MapFrom(src => src.VideoOwnerChannelId))
             .ForPath(dest => dest.Details.VideoOwnerChannelTitle, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
             .ForPath(dest => dest.Details.VideoPublishedAt, opt => opt.MapFrom(src => src.VideoPublishedAt))

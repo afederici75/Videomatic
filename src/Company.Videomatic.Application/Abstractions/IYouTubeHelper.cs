@@ -28,4 +28,7 @@ public interface IYouTubeHelper
     /// <param name="videoId"></param>
     /// <returns></returns>
     //IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
+
+    //
+    IAsyncEnumerable<Video> ImportVideoDetails(string[] youtubeVideoIds);
 }

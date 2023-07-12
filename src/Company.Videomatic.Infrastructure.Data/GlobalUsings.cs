@@ -1,4 +1,5 @@
-﻿global using AutoMapper;
+﻿global using Ardalis.Result;
+global using AutoMapper;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

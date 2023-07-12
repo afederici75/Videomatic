@@ -1,0 +1,158 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "8Q8Hj2Z2SR2OgD_YNUzVadIDu78",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "seFcNODZEJsDuaM2KohH1exyxaw",
+      "id": "4Y4YSpF6d6w",
+      "snippet": {
+        "publishedAt": "2015-05-05T11:00:00Z",
+        "channelId": "UC8-Th83bH_thdKZDJCrn88g",
+        "title": "Jack Black's Son Racked Up a $3K App Bill",
+        "description": "Jack Black talks to Jimmy about life with his two sons, including occasionally getting attacked in his wallet and genitals.\n\nSubscribe NOW to The Tonight Show Starring Jimmy Fallon: http://bit.ly/1nwT1aN\n\nWatch The Tonight Show Starring Jimmy Fallon Weeknights 11:35/10:35c\nGet more Jimmy Fallon: \nFollow Jimmy: http://Twitter.com/JimmyFallon\nLike Jimmy: https://Facebook.com/JimmyFallon\n\nGet more The Tonight Show Starring Jimmy Fallon: \nFollow The Tonight Show: http://Twitter.com/FallonTonight\nLike The Tonight Show: https://Facebook.com/FallonTonight\nThe Tonight Show Tumblr: http://fallontonight.tumblr.com/\n\nGet more NBC: \nNBC YouTube: http://bit.ly/1dM1qBH\nLike NBC: http://Facebook.com/NBC\nFollow NBC: http://Twitter.com/NBC\nNBC Tumblr: http://nbctv.tumblr.com/\n\nThe Tonight Show Starring Jimmy Fallon features hilarious highlights from the show including: comedy sketches, music parodies, celebrity interviews, ridiculous games, and, of course, Jimmy's Thank You Notes and hashtags! You'll also find behind the scenes videos and other great web exclusives.\n\nJack Black's Son Racked Up a $3K App Bill\nhttp://www.youtube.com/fallontonight",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/4Y4YSpF6d6w/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/4Y4YSpF6d6w/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/4Y4YSpF6d6w/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/4Y4YSpF6d6w/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/4Y4YSpF6d6w/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "The Tonight Show Starring Jimmy Fallon",
+        "tags": [
+          "Jack Black",
+          "comedy sketches",
+          "ALL2015",
+          "The Tonight Show",
+          "interview",
+          "NBC TV",
+          "The Roots",
+          "talent",
+          "Fallon monologue",
+          "funny video",
+          "comedic",
+          "humor",
+          "Funny",
+          "music",
+          "$3K App Bill",
+          "snl",
+          "musical performance",
+          "Tonight Show Starring Jimmy Fallon",
+          "music comedy",
+          "Television",
+          "Talk Show",
+          "sketch comedy",
+          "Jimmy Fallon",
+          "show",
+          "tenacious d",
+          "Son",
+          "stand-up",
+          "Fallon Stand-up",
+          "celebrities",
+          "youtube",
+          "variety",
+          "video",
+          "NBC",
+          "clip",
+          "highlight",
+          "jokes",
+          "tonight",
+          "talking"
+        ],
+        "categoryId": "23",
+        "liveBroadcastContent": "none",
+        "localized": {
+          "title": "Jack Black's Son Racked Up a $3K App Bill",
+          "description": "Jack Black talks to Jimmy about life with his two sons, including occasionally getting attacked in his wallet and genitals.\n\nSubscribe NOW to The Tonight Show Starring Jimmy Fallon: http://bit.ly/1nwT1aN\n\nWatch The Tonight Show Starring Jimmy Fallon Weeknights 11:35/10:35c\nGet more Jimmy Fallon: \nFollow Jimmy: http://Twitter.com/JimmyFallon\nLike Jimmy: https://Facebook.com/JimmyFallon\n\nGet more The Tonight Show Starring Jimmy Fallon: \nFollow The Tonight Show: http://Twitter.com/FallonTonight\nLike The Tonight Show: https://Facebook.com/FallonTonight\nThe Tonight Show Tumblr: http://fallontonight.tumblr.com/\n\nGet more NBC: \nNBC YouTube: http://bit.ly/1dM1qBH\nLike NBC: http://Facebook.com/NBC\nFollow NBC: http://Twitter.com/NBC\nNBC Tumblr: http://nbctv.tumblr.com/\n\nThe Tonight Show Starring Jimmy Fallon features hilarious highlights from the show including: comedy sketches, music parodies, celebrity interviews, ridiculous games, and, of course, Jimmy's Thank You Notes and hashtags! You'll also find behind the scenes videos and other great web exclusives.\n\nJack Black's Son Racked Up a $3K App Bill\nhttp://www.youtube.com/fallontonight"
+        },
+        "defaultAudioLanguage": "en-US"
+      }
+    },
+    {
+      "kind": "youtube#video",
+      "etag": "4kZY4RE0QuDT2PLJ19sMEL9aMf8",
+      "id": "tWZQPCU4LJI",
+      "snippet": {
+        "publishedAt": "2023-07-11T23:31:44Z",
+        "channelId": "UCso1uUOa86mottj1jrawysg",
+        "title": "A Mental Model for Solving Enterprise AI Problems | Humans of AI clips",
+        "description": "Watch Govind walk through his mind map for solving some of the most challenging problems that enterprises face when building with AI.\n\nSee the full podcast here: https://youtu.be/EueJTTuluVQ\n\nSee Govind's work with Project Miyagi: https://github.com/Azure-Samples/miyagi\nhttps://agentmiyagi.com/\n\nIf you want to see more content like this, be sure to subscribe!\n\nAnd follow me on other platforms so you’ll never miss out on my updates!\n\n💌 Sign up for my free AI newsletter Chaos Theory: https://alexchao.substack.com/subscribe\n🐦 Follow me on Twitter https://twitter.com/alexchaomander\n🧵 And Threads! https://www.threads.net/@alexchaomander\n👥 Connect with me on LinkedIn https://www.linkedin.com/in/alexchao56/",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/tWZQPCU4LJI/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/tWZQPCU4LJI/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/tWZQPCU4LJI/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/tWZQPCU4LJI/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/tWZQPCU4LJI/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Alex Chao",
+        "tags": [
+          "microsoft copilot",
+          "copilot stack",
+          "enterprise ai",
+          "large language models",
+          "ai",
+          "llms",
+          "gpt4",
+          "chatgpt",
+          "enterprise",
+          "mental model",
+          "problem solving",
+          "solution",
+          "enterprise solution",
+          "microsoft azure",
+          "semantic kernel"
+        ],
+        "categoryId": "28",
+        "liveBroadcastContent": "none",
+        "localized": {
+          "title": "A Mental Model for Solving Enterprise AI Problems | Humans of AI clips",
+          "description": "Watch Govind walk through his mind map for solving some of the most challenging problems that enterprises face when building with AI.\n\nSee the full podcast here: https://youtu.be/EueJTTuluVQ\n\nSee Govind's work with Project Miyagi: https://github.com/Azure-Samples/miyagi\nhttps://agentmiyagi.com/\n\nIf you want to see more content like this, be sure to subscribe!\n\nAnd follow me on other platforms so you’ll never miss out on my updates!\n\n💌 Sign up for my free AI newsletter Chaos Theory: https://alexchao.substack.com/subscribe\n🐦 Follow me on Twitter https://twitter.com/alexchaomander\n🧵 And Threads! https://www.threads.net/@alexchaomander\n👥 Connect with me on LinkedIn https://www.linkedin.com/in/alexchao56/"
+        }
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 2,
+    "resultsPerPage": 2
+  }
+}

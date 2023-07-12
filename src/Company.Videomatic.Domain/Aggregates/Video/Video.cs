@@ -37,7 +37,7 @@ public class Video : IAggregateRoot
     public void ClearTags()
     {
         _videoTags.Clear();
-    }
+    }    
 
     public Thumbnail GetThumbnail(ThumbnailResolution resolution)
     {

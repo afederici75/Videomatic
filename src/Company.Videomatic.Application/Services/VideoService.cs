@@ -8,7 +8,7 @@ public class VideoService : IVideoService
 
     public VideoService(IRepository<Video> repository)
     {
-        _repository = repository;
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
     public async Task<int> LinkToPlaylists(VideoId videoId, PlaylistId[] playlistIds, CancellationToken cancellationToken = default)

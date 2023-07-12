@@ -1,4 +1,6 @@
 ﻿using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Infrastructure.YouTube;
+using FluentAssertions;
 
 namespace Infrastructure.YouTube.Tests;
 
@@ -19,6 +21,29 @@ public class YouTubePlaylistImporterTests
         await foreach (var video in helper.GetAllVideosOfPlaylist(url))
         {
             videos.Add(video);
+
+        }
+    }
+
+    [Theory]
+    [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI" })]
+    public async Task ImportVideos([FromServices] IYouTubeHelper helper, string[] ids)
+    {
+        await foreach (var video in helper.ImportVideoDetails(ids))
+        { 
+            video.Name.Should().NotBeNullOrEmpty();
+            video.Description.Should().NotBeNullOrEmpty();
+            video.Location.Should().NotBeNullOrEmpty();
+            video.Thumbnails.Should().HaveCount(5);
+            video.Tags.Should().NotBeEmpty();
+
+            video.Details.Provider.Should().Be(YouTubePlaylistsHelper.ProviderId);
+            video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
+            video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
+            video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
+
+
+            // TODO: add more tests for the thumbnails and tags
 
         }
     }

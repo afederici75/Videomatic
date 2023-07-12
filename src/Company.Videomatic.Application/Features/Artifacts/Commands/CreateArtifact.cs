@@ -1,9 +1,11 @@
-﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿using Ardalis.Result;
 
-public record CreateArtifactCommand(long VideoId,
+namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+
+public record CreateArtifactCommand(long Id,
                                     string Name,
                                     string Type,
-                                    string? Text) : IRequest<CreateArtifactResponse>;
+                                    string? Text) : IRequest<Result<CreateArtifactResponse>>, ICommandWithEntityId;
 
 public record CreateArtifactResponse(long Id);
 
@@ -11,7 +13,7 @@ public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCo
 {
     public CreateArtifactCommandValidator()
     {
-        RuleFor(x => x.VideoId).GreaterThan(0);
+        RuleFor(x => x.Id).GreaterThan(0);
         RuleFor(x => x.Name).NotEmpty();
         RuleFor(x => x.Type).NotEmpty();
         RuleFor(x => x.Text).NotEmpty();

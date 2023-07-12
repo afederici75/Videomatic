@@ -1,6 +1,6 @@
 {
   "kind": "youtube#playlistItemListResponse",
-  "etag": "Ss67T02qhW7Z21H58xkeRknewRQ",
+  "etag": "-b7pMoMP3-jYMogDvbUypEDOBnY",
   "nextPageToken": "EAAaBlBUOkNBVQ",
   "items": [
     {
@@ -59,7 +59,7 @@
     },
     {
       "kind": "youtube#playlistItem",
-      "etag": "wjevmGT_M8Al0rU6kl2o7SzmxYE",
+      "etag": "B80k2QBwi1NzKB9i_Fe1Ooh8OZI",
       "id": "UExMZGkxbGhlWllWS2t2WDIwaWhCN0F5MnVYTXhhMFE1ZS5CNTY2N0VCNUMyNjlFN0U5",
       "snippet": {
         "publishedAt": "2022-04-29T21:32:53Z",
@@ -167,56 +167,27 @@
     },
     {
       "kind": "youtube#playlistItem",
-      "etag": "Wlcv5F_Jc2BAPShpRjpxjrD1T24",
+      "etag": "SekGX6I52UKHJqoz6C0AqeOT_gw",
       "id": "UExMZGkxbGhlWllWS2t2WDIwaWhCN0F5MnVYTXhhMFE1ZS5ERkFEMTk1N0JBNjU0MzA4",
       "snippet": {
         "publishedAt": "2022-03-16T23:36:41Z",
         "channelId": "UCqiZA4pUT5RxrMCddeKdpGw",
-        "title": "This SCIENTIST is the Best QUESTIONER I've Ever Seen!👏🏻 Sadhguru with David Eagleman",
-        "description": "Neuroscientist Dr. David Eagleman and Sadhguru address a question by a member of the audience, each from their unique perspectives.\n\nThinking outside the box is common to both of them. When renowned neuroscientist Dr. David Eagleman and Sadhguru met in Houston, Texas on April 2015, an inspiring conversation about the intersection between science and mysticism ensued. In this article, they address a question by a member of the audience, each from their unique perspectives.\n\nSadhguru: When you say, “I am not the body; I am not the mind” during Isha Kriya, it is not a philosophy or an ideology. It is not a slogan that you keep shouting within yourself and one day become converted. This is a subtle reminder that you add to your breath. Do not use “I am not the body; I am not the mind” to try and psych yourself. You are just adding a certain element to your breath. Otherwise, you are not able to notice your breath. Right now, you are only able to watch the sensations caused by the movement of the air, not the breath itself.\n\nWhen you are inhaling, not necessarily is only inhalation happening – exhalation could be partly happening as well. Similarly, when you are exhaling, not necessarily is only exhalation happening – inhalation could be partly happening too. But you will not figure this until you notice the way of the breath. Though in many ways, physiologically, the breath is the basis of your life, most human beings have never really experienced their breath. Those who become conscious of just the sensations of the air passage claim all kinds of transformations, and that is true. Your sensations are the outermost layer of who you are. Knowing the sensations is most fundamental. Whatever you touch, whether you sit or stand, there are sensations. The breath is a more profound and subtle dimension which will not come into your experience easily.\n\n#Sadhguru #MahaShivRatri2022\n\nIf You think Our Work Deserves a Contribution, Feel Free to Contribute on Patreon!\nPatreon:https://www.patreon.com/BEwithSADHGURU\n\nJoin Our WhatsApp Community: \nhttps://chat.whatsapp.com/Iy1uQEvjYbfAqMS1ExyqtI\n\n\n♥Follow BEwithSADHGURU:\nFacebook: https://www.facebook.com/withsadhgurualways\nGroup: https://www.facebook.com/groups/1406734399669919\nInstagram: https://www.instagram.com/bewithsadhguru_/\nTwitter: https://twitter.com/SadhguruB\n\n©FAIR-USE COPYRIGHT DISCLAIMER©\nCopyright Disclaimer Under Section 107 of the Copyright Act 1976, allowance is made for \"fair use\" for purposes such as criticism, Commenting, News reporting, Teaching, Scholarship, and Research. Fair use is a use permitted by copyright statute that might otherwise be infringing. Non-profit, educational, or personal use tips the balance in favor of fair use.\n• This video has no negative impact (It would be actually positive for them).\n• As a Part of Isha Digital Veera team, we have Permissions and Guidance from the ashram team to use Sadhguru Videos.\n• This video is also for teaching purposes. Our team will edit the Video in such a Way it is Understandable for any common audience who is Hearing sadhguru for the first time.\n\nThank You So Much for Watching!\n\nIf you would like to write your ideas to me you can mail me at \nmahesh@bewithsadhguru.com\nPranam!",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/xmVOw1cGO34/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/xmVOw1cGO34/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/xmVOw1cGO34/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          },
-          "standard": {
-            "url": "https://i.ytimg.com/vi/xmVOw1cGO34/sddefault.jpg",
-            "width": 640,
-            "height": 480
-          },
-          "maxres": {
-            "url": "https://i.ytimg.com/vi/xmVOw1cGO34/maxresdefault.jpg",
-            "width": 1280,
-            "height": 720
-          }
-        },
+        "title": "Deleted video",
+        "description": "This video is unavailable.",
+        "thumbnails": {},
         "channelTitle": "Alessandro Federici",
         "playlistId": "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e",
         "position": 3,
         "resourceId": {
           "kind": "youtube#video",
           "videoId": "xmVOw1cGO34"
-        },
-        "videoOwnerChannelTitle": "BEwithSADHGURU",
-        "videoOwnerChannelId": "UCUKTrXf8KdGIVXudO3dqOWw"
+        }
       },
       "contentDetails": {
-        "videoId": "xmVOw1cGO34",
-        "videoPublishedAt": "2022-02-24T11:50:09Z"
+        "videoId": "xmVOw1cGO34"
       },
       "status": {
-        "privacyStatus": "public"
+        "privacyStatus": "privacyStatusUnspecified"
       }
     },
     {

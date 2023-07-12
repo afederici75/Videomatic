@@ -1,11 +1,13 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Artifacts.Commands;
+﻿using Ardalis.Specification;
 
-public class CreateArtifactHandler : CreateEntityHandlerBase<CreateArtifactCommand, CreateArtifactResponse, Artifact>
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Artifacts.Commands;
+
+public class CreateArtifactHandler : CreateEntityHandlerBase2<CreateArtifactCommand, Result<CreateArtifactResponse>, Artifact>
 {    
     public CreateArtifactHandler(IRepository<Artifact> repository,
                                  IMapper mapper) : base(repository, mapper)
     { }
 
-    protected override CreateArtifactResponse CreateResponseFor(Artifact entity)
-        => new CreateArtifactResponse(Id: entity.Id);    
+    protected override Result<CreateArtifactResponse> CreateResponseFor(Artifact entity)
+        => new CreateArtifactResponse(entity.Id);    
 }

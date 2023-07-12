@@ -11,7 +11,7 @@ public class CreateArtifactCommandBuilder
         string type = "ArtifactType",
         string text = "ArtifactText")
     {
-        return new CreateArtifactCommand(VideoId: videoId,
+        return new CreateArtifactCommand(Id: videoId,
                                          Name: name,
                                          Type: type,
                                          Text: text);

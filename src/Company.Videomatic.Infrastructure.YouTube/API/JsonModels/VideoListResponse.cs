@@ -2,16 +2,17 @@
 
 namespace Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 
-// API: https://developers.google.com/youtube/v3/docs/playlists/list
+// API: https://developers.google.com/youtube/v3/docs/videos/list
+// Example https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=4Y4YSpF6d6w,tWZQPCU4LJI
+
 // TODO: fix the warnings and possibly use directly the Google API nuget
 
-internal class GetPlaylistsResponse
+public class VideoListResponse
 {
     public string kind { get; set; }
     public string etag { get; set; }
-    public string nextPageToken { get; set; }
-    public Pageinfo pageInfo { get; set; }
     public Item[] items { get; set; }
+    public Pageinfo pageInfo { get; set; }
 
     public class Pageinfo
     {
@@ -25,7 +26,6 @@ internal class GetPlaylistsResponse
         public string etag { get; set; }
         public string id { get; set; }
         public Snippet snippet { get; set; }
-        public Contentdetails contentDetails { get; set; }
     }
 
     public class Snippet
@@ -36,12 +36,16 @@ internal class GetPlaylistsResponse
         public string description { get; set; }
         public Thumbnails thumbnails { get; set; }
         public string channelTitle { get; set; }
+        public string[] tags { get; set; }
+        public string categoryId { get; set; }
+        public string liveBroadcastContent { get; set; }
         public Localized localized { get; set; }
+        public string defaultAudioLanguage { get; set; }
     }
 
     public class Thumbnails
     {
-        public Default _default { get; set; }
+        public Default @default { get; set; }
         public Medium medium { get; set; }
         public High high { get; set; }
         public Standard standard { get; set; }
@@ -88,11 +92,6 @@ internal class GetPlaylistsResponse
         public string title { get; set; }
         public string description { get; set; }
     }
-
-    public class Contentdetails
-    {
-        public int itemCount { get; set; }
-    }
 }
 
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
