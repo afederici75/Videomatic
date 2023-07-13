@@ -12,5 +12,7 @@ public class ArtifactConfiguration : ArtifactConfigurationBase
 
         builder.Property(x => x.Id)
                .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode
+        builder.HasKey(builder => builder.Id);
+
     }
 }

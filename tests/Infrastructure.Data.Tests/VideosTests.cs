@@ -181,7 +181,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var json = await File.ReadAllTextAsync(fileName);
         var video = JsonConvert.DeserializeObject<Video>(json);
 
-        video.Location.Should().NotBeNullOrEmpty();
+        video!.Location.Should().NotBeNullOrEmpty();
         video.Tags.Should().HaveCount(25);
 
         await repository.AddAsync(video);
@@ -198,7 +198,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var json = await File.ReadAllTextAsync(fileName);
         var videos = JsonConvert.DeserializeObject<Video[]>(json);
         
-        await videoRepository.AddRangeAsync(videos);
+        await videoRepository.AddRangeAsync(videos!);
 
         var pl = Playlist.Create(nameof(ImportPlaylist));
         await playListRepository.AddAsync(pl);  

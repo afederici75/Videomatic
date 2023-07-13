@@ -1,3 +1,6 @@
+7/12
+-Imported a whole bunch of videos
+
 7/4
 -IVideoService is used in 2 spots (handler *and* the seeder!): it does make sense to keep it.
 -Massive work of clean up:

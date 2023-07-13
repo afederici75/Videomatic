@@ -36,7 +36,7 @@
 
     public string MaxWidthStyle => GridMode ? "max-width: 400px" : "max-width: 600px";
 
-    string? TruncateDescription(string? description, int maxLength = 100)
+    string? TruncateDescription(string? description, int maxLength = 250)
     {
         if ((description == null) || (description.Length <= maxLength))
         {
