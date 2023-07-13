@@ -1,6 +1,5 @@
 ﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 using Company.Videomatic.Infrastructure.SqlServer.Configurations;
-using System.Diagnostics;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer;
 
@@ -16,11 +15,10 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        //Debugger.Launch();
         base.OnModelCreating(modelBuilder);
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-        {            
+        {
             //modelBuilder.HasSequence<long>(sequenceName);            
         }
 

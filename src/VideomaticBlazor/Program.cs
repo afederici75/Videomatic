@@ -2,10 +2,6 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
-using Company.Videomatic.Infrastructure.Data;
-using Company.Videomatic.Infrastructure.Data.Seeder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,11 +45,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
-//var dbContext = app.Services.GetRequiredService<>();
-//await dbContext.Database.EnsureCreatedAsync();
-
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -64,16 +55,5 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 //app.UseCors("NewPolicy");
-
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
-    db.Database.Migrate();
-
-
-    //var seeder = app.Services.GetService<IDbSeeder>();
-    //await seeder!.SeedAsync();
-}
 
 app.Run();
