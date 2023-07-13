@@ -54,10 +54,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Details_Provider = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Details_ProviderVideoId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Details_VideoPublishedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Details_ChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Details_PlaylistId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Details_Position = table.Column<int>(type: "int", nullable: false),
                     Details_VideoOwnerChannelTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Details_VideoOwnerChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
@@ -157,7 +155,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TagsSequence"),
-                    Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     VideoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -226,11 +224,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Transcripts_VideoId",
                 table: "Transcripts",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Videos_Details_ChannelId",
-                table: "Videos",
-                column: "Details_ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Details_VideoOwnerChannelId",

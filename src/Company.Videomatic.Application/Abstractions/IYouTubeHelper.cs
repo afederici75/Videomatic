@@ -1,20 +1,10 @@
-﻿using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Application.Features.Videos;
-
-namespace Company.Videomatic.Application.Abstractions;
+﻿namespace Company.Videomatic.Application.Abstractions;
 
 /// <summary>
 /// This niterface provides access to the YouTube APIs we are interested in.
 /// </summary>
 public interface IYouTubeHelper
 {
-    /// <summary>
-    /// Returns all the play lists of a given YouTube channel.
-    /// </summary>
-    /// <param name="channelId"></param>
-    /// <returns></returns>
-    IAsyncEnumerable<PlaylistDTO> GetPlaylistsByChannel(string channelId);
-
     /// <summary>
     /// Returns all the videos in a given YouTube playlist.
     /// </summary>
@@ -30,5 +20,5 @@ public interface IYouTubeHelper
     //IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
 
     //
-    IAsyncEnumerable<Video> ImportVideoDetails(IEnumerable<string> youtubeVideoIds);
+    IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds);
 }

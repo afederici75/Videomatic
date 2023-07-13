@@ -1,7 +1,12 @@
 ﻿using Application.Tests.Helpers;
+using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Aggregates.Video;
 using Infrastructure.Data.Tests.Helpers;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Infrastructure.Data.Tests;
 
@@ -39,8 +44,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         video.Name.Should().BeEquivalentTo(createCommand.Name);
         video.Description.Should().BeEquivalentTo(createCommand.Description);
         video.Location.Should().BeEquivalentTo(createCommand.Location);
-        video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
-        video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
+        //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
+        //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
         video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
         video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
         video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
@@ -167,5 +172,40 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         // Checks
         items.Should().HaveCount(expectedResults);        
+    }
+
+    [Theory]
+    [InlineData("TestData//Video-n1kmKpjk_8E.json", null)]
+    public async Task ImportOneVideo(string fileName, [FromServices] IRepository<Video> repository)
+    {
+        var json = await File.ReadAllTextAsync(fileName);
+        var video = JsonConvert.DeserializeObject<Video>(json);
+
+        video.Location.Should().NotBeNullOrEmpty();
+        video.Tags.Should().HaveCount(25);
+
+        await repository.AddAsync(video);
+    }
+
+    [Theory]
+    [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null, null)]
+    public async Task ImportPlaylist(string fileName, 
+        [FromServices] IRepository<Video> videoRepository,
+        [FromServices] IRepository<Playlist> playListRepository,
+        [FromServices] IVideoService videoService
+        )
+    {
+        var json = await File.ReadAllTextAsync(fileName);
+        var videos = JsonConvert.DeserializeObject<Video[]>(json);
+        
+        await videoRepository.AddRangeAsync(videos);
+
+        var pl = Playlist.Create(nameof(ImportPlaylist));
+        await playListRepository.AddAsync(pl);  
+
+        foreach (var v in videos)
+        {
+            await videoService.LinkToPlaylists(v.Id.Value, new [] { pl.Id });
+        }       
     }
 }

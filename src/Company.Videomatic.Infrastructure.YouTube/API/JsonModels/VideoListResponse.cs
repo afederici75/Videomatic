@@ -45,42 +45,14 @@ public class VideoListResponse
 
     public class Thumbnails
     {
-        public Default @default { get; set; }
-        public Medium medium { get; set; }
-        public High high { get; set; }
-        public Standard standard { get; set; }
-        public Maxres maxres { get; set; }
+        public Thumbnail @default { get; set; }
+        public Thumbnail medium { get; set; }
+        public Thumbnail high { get; set; }
+        public Thumbnail standard { get; set; }
+        public Thumbnail maxres { get; set; }
     }
 
-    public class Default
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
-
-    public class Medium
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
-
-    public class High
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
-
-    public class Standard
-    {
-        public string url { get; set; }
-        public int width { get; set; }
-        public int height { get; set; }
-    }
-
-    public class Maxres
+    public class Thumbnail
     {
         public string url { get; set; }
         public int width { get; set; }

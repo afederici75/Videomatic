@@ -247,20 +247,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                             b1.Property<long>("VideoId")
                                 .HasColumnType("bigint");
 
-                            b1.Property<string>("ChannelId")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<string>("PlaylistId")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<int>("Position")
-                                .HasColumnType("int");
-
                             b1.Property<string>("Provider")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("ProviderVideoId")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
@@ -280,8 +272,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasKey("VideoId");
 
-                            b1.HasIndex("ChannelId");
-
                             b1.HasIndex("VideoOwnerChannelId");
 
                             b1.ToTable("Videos");
@@ -299,8 +289,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(35)
-                                .HasColumnType("nvarchar(35)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<long>("VideoId")
                                 .HasColumnType("bigint");

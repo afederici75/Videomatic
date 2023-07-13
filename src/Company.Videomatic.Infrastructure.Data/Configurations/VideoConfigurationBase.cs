@@ -9,7 +9,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
     {
         public const int Location = 1024;
         public const int Title = 500;
-        public const int TagName = 35;
+        public const int TagName = 100;
         //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
     }
 
@@ -69,17 +69,19 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         {
             const int TempSafeLength = 100;
             //builder.Property(x => x.VideoPublishedAt);
-            builder.Property(x => x.ChannelId).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.PlaylistId).HasMaxLength(TempSafeLength);
+            //builder.Property(x => x.ChannelId).HasMaxLength(TempSafeLength);
+            //builder.Property(x => x.PlaylistId).HasMaxLength(TempSafeLength);
+            builder.Property(x => x.ProviderVideoId).HasMaxLength(TempSafeLength);
             builder.Property(x => x.Provider).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelTitle).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelId).HasMaxLength(TempSafeLength);
 
             builder.HasIndex(x => x.VideoOwnerChannelId);
-            builder.HasIndex(x => x.ChannelId);
+            //builder.HasIndex(x => x.ChannelId);
             builder.Property(x => x.VideoPublishedAt);
-            builder.Property(x => x.PlaylistId);
-            builder.Property(x => x.Position);
+            builder.Property(x => x.ProviderVideoId);
+            //builder.Property(x => x.PlaylistId);
+            //builder.Property(x => x.Position);
         });
 
         #endregion

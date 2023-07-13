@@ -20,35 +20,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
     readonly YouTubeOptions _options;
     readonly HttpClient _client;
-
-    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsByChannel(string channelId)
-    {
-        var parameters = new Dictionary<string, string>
-        {
-            ["key"] = _options.ApiKey,
-            ["channelId"] = channelId,
-            ["part"] = "snippet,contentDetails",
-            ["fields"] = "pageInfo, items/snippet(title, description)",
-            ["maxResults"] = "50"
-        };
-
-        API.JsonPasteSpecial.PlaylistListResponse response;
-        do
-        {
-            var fullUrl = MakeUrlWithQuery("playlists", parameters);
-
-            string json = await _client.GetStringAsync(fullUrl);
-            response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.PlaylistListResponse>(json)!;
-
-            foreach (var item in response.items)
-            {
-                yield return new PlaylistDTO(Name: item.snippet.title, Description: item.snippet.description, VideoCount: -1); // TODO: fix video count
-            }
-            parameters["pageToken"] = response.nextPageToken;
-        }
-        while (!string.IsNullOrEmpty(response.nextPageToken));
-    }
-
+    
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
         var parameters = new Dictionary<string, string>
@@ -74,7 +46,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
             var videoIds = new HashSet<string>(publicVideos);
             
-            await foreach (var video in ImportVideoDetails(videoIds.ToArray()))
+            await foreach (var video in ImportVideos(videoIds.ToArray()))
             {
                 yield return video;
             };
@@ -87,7 +59,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
     // ------------------------------
 
-    public async IAsyncEnumerable<Video> ImportVideoDetails(IEnumerable<string> youtubeVideoIds)
+    public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
     {
         var parameters = new Dictionary<string, string>
         {
@@ -119,14 +91,22 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             var tags = (item.snippet.tags ?? Enumerable.Empty<string>()).ToArray();            
             video.AddTags(tags);
 
-            video.SetThumbnail(ThumbnailResolution.Default, item.snippet.thumbnails.@default.url, item.snippet.thumbnails.@default.height, item.snippet.thumbnails.@default.width);
-            video.SetThumbnail(ThumbnailResolution.High, item.snippet.thumbnails.high.url, item.snippet.thumbnails.high.height, item.snippet.thumbnails.high.width);
-            video.SetThumbnail(ThumbnailResolution.Standard, item.snippet.thumbnails.standard.url, item.snippet.thumbnails.standard.height, item.snippet.thumbnails.standard.width);
-            video.SetThumbnail(ThumbnailResolution.Medium, item.snippet.thumbnails.medium.url, item.snippet.thumbnails.medium.height, item.snippet.thumbnails.medium.width);
-            video.SetThumbnail(ThumbnailResolution.MaxRes, item.snippet.thumbnails.maxres.url, item.snippet.thumbnails.maxres.height, item.snippet.thumbnails.maxres.width);
+            var t = item.snippet.thumbnails;
+
+            video.SetThumbnail(ThumbnailResolution.Default, t.@default?.url ?? "", t.@default?.height ?? -1, t.@default?.width ?? -1);
+            video.SetThumbnail(ThumbnailResolution.High, t.high?.url ?? "", t.high?.height ?? -1, t.high?.width ?? -1);
+            video.SetThumbnail(ThumbnailResolution.Standard, t.standard?.url ?? "", t.standard?.height ?? -1, t.standard?.width ?? -1);
+            video.SetThumbnail(ThumbnailResolution.Medium, t.medium?.url ?? "", t.medium?.height ?? -1, t.medium?.width ?? -1);
+            video.SetThumbnail(ThumbnailResolution.MaxRes, t.maxres?.url ?? "", t.maxres?.height ?? -1, t.maxres?.width ?? -1);
 
             yield return video;
         }
+    }
+
+    void SetVideoThumbnails(Video video, VideoListResponse.Thumbnails thumbnails)
+    {
+        ThumbnailResolution resolution;
+                
     }
 
     public async Task ImportVideoTranscript(Video[] videos)

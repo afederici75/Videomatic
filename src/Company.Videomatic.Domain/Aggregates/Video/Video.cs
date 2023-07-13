@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Video;
 
@@ -23,6 +24,8 @@ public class Video : IAggregateRoot
             }
         };
     }
+
+
 
     public VideoId Id { get; private set; } = default!;
     public string Location { get; private set; } = default!;
@@ -85,9 +88,22 @@ public class Video : IAggregateRoot
 
 
     #region Private
-
+    
     private Video()
     {       
+    }
+
+    [JsonConstructor]
+    private Video(VideoId id, string location, string name, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails, List<VideoPlaylist> playlists)
+    {
+        Id = id;
+        Location = location;
+        Name = name;
+        Description = description;
+        Details = details;
+        _videoTags = new();// tags;
+        _thumbnails = thumbnails;
+        _playlists = playlists;
     }
 
     HashSet<VideoTag> _videoTags = new();

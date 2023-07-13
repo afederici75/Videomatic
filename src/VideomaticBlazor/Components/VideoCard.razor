@@ -16,7 +16,7 @@
                     <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
                 </div>
 
-                <div><i>@Video.Description?</i></div>
+                <div><i>@TruncateDescription(Video.Description)</i></div>
             </CardText>
                     
             @if (GridMode)
@@ -35,6 +35,16 @@
     public bool GridMode { get; set; } = false;
 
     public string MaxWidthStyle => GridMode ? "max-width: 400px" : "max-width: 600px";
+
+    string? TruncateDescription(string? description, int maxLength = 100)
+    {
+        if ((description == null) || (description.Length <= maxLength))
+        {
+            return description;
+        }
+
+        return description.Substring(0, maxLength);
+    }
 
     void OnOpenClicked()
     {

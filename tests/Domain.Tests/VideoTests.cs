@@ -29,7 +29,7 @@ public class VideoTests
         var video = Video.Create(
             location: DummyLocation, 
             name: nameof(CreateVideo),
-            details: new("YOUTUBE", pubAt, "#channelId", "#playlist", 1, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
+            details: new("YOUTUBE", "ABC123", pubAt, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
             description: "A complete description");
 
         video.Should().NotBeNull();
@@ -45,9 +45,9 @@ public class VideoTests
         video.Details.Should().NotBeNull();
         video.Details.Provider.Should().Be("YOUTUBE");
         video.Details.VideoPublishedAt.Should().Be(pubAt);
-        video.Details.ChannelId.Should().Be("#channelId");
-        video.Details.PlaylistId.Should().Be("#playlist");
-        video.Details.Position.Should().Be(1);
+        //video.Details.ChannelId.Should().Be("#channelId");
+        //video.Details.PlaylistId.Should().Be("#playlist");
+        //video.Details.Position.Should().Be(1);
         video.Details.VideoOwnerChannelTitle.Should().Be("#videoOwnerChannelTitle");
         video.Details.VideoOwnerChannelId.Should().Be("#videoOwnerChannelId");
     }
