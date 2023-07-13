@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Domain.Extensions;
+using System.Linq.Expressions;
 
 namespace Company.Videomatic.Domain.Specifications.Playlists;
 

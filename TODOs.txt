@@ -1,9 +1,3 @@
-[ ] 
-
-[ ] Copy AppLogger interface from eShopWeb (d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs)
-
---------------------------------
-
 [X] It's possible that PlaylistVideo has issues:
 	Should it expose all those props? Maybe pick one (ids or references)?
 
@@ -15,3 +9,6 @@
 		-https://andrewlock.net/strongly-typed-ids-in-ef-core-using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-4/
 
 [X] I should check all the equatable things for value objects, strongly typed ids 
+
+-Copy AppLogger interface from eShopWeb
+	-d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs
