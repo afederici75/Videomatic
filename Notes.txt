@@ -1,3 +1,8 @@
+7/13
+-Learnt how to revert check ins in Github! I made a ton of work trying to get LinqPAD to work (unsuccessfully).
+The branch name has the text 'linqpad' in it. 
+-
+
 7/4
 -IVideoService is used in 2 spots (handler *and* the seeder!): it does make sense to keep it.
 -Massive work of clean up:

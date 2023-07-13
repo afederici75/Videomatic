@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Artifacts.Commands;
 
-public class CreateArtifactHandler : CreateEntityHandlerBase2<CreateArtifactCommand, Result<CreateArtifactResponse>, Artifact>
+public class CreateArtifactHandler : CreateEntityHandlerBase<CreateArtifactCommand, Result<CreateArtifactResponse>, Artifact>
 {    
     public CreateArtifactHandler(IRepository<Artifact> repository,
                                  IMapper mapper) : base(repository, mapper)
