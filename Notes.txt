@@ -1,7 +1,8 @@
 7/14
 -The handlers are in the wrong place. I should move them to Application since I adopted 
 the IRepository<> stuff and their implementation should be EF independent.
-	-
+-Nice post about DTOs and domain objects: https://stackoverflow.com/questions/73640666/should-handler-from-the-application-layer-return-dto-or-domain-object
+
 
 7/13
 -Learnt how to revert check ins in Github! I made a ton of work trying to get LinqPAD to work (unsuccessfully).
