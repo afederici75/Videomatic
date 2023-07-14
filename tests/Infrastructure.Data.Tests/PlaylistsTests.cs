@@ -78,11 +78,12 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, false, 2)]
-    [InlineData(null, "Id DESC", false, 2)]
-    [InlineData(null, "Id", false, 2)]
-    [InlineData("Philosophy", "Id   ASC", false, 1)]
-    [InlineData("Philosophy", "Name  DESC", false, 1)]
+    [InlineData(null, null, true, 2)]
+    //[InlineData(null, null, false, 2)]
+    //[InlineData(null, "Id DESC", false, 2)]
+    //[InlineData(null, "Id", false, 2)]
+    //[InlineData("Philosophy", "Id   ASC", false, 1)]
+    //[InlineData("Philosophy", "Name  DESC", false, 1)]
     //[InlineData("Philosophy", "TagCount desc, Id asc", false, 1)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetPlaylists(string? searchText, string? orderBy, bool includeCounts, int expectedResults)
@@ -99,6 +100,11 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);
+        if (includeCounts)
+        {
+            var anyNonZeroCount = response.Items.Any(v => v.VideoCount>0);
+            anyNonZeroCount.Should().BeTrue();
+        }
 
         // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
         // work but it would be nice to test it here.

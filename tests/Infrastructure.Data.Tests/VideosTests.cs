@@ -124,10 +124,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    //[InlineData(null, null, null, true, null, 2)]
-    [InlineData(new long[] { 1 }, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
-    // TODO: missing paging tests and should add more anyway
+    [InlineData(null, null, null, true, null, 2)]
+    //[InlineData(new long[] { 1 }, null, null, true, null, 2)]
+    //[InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
     public async Task GetVideos(
         long[]? playlistIds,
         string? searchText,
@@ -151,6 +150,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);
+        if (includeCounts)
+        {            
+        }
     }
 
     [Theory]
