@@ -64,11 +64,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         videoId.Value.Id.Value.Should().BeGreaterThan(0);
 
-        var cnt = await Fixture.DbContext.Videos
-            .Where(x => x.Id == videoId.Value.Id)
-            .ExecuteDeleteAsync();
+        var row = await Fixture.DbContext.Videos.FirstOrDefaultAsync(x => x.Id == videoId.Value.Id);
 
-        cnt.Should().Be(1);
+        row.Should().BeNull();
     }
 
     [Fact]
@@ -82,7 +80,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             "New Title",
             "New Description");
 
-        UpdateVideoResponse response = await Sender.Send(updateCommand);
+        Result<Video> response = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Videos

@@ -2,11 +2,11 @@
 
 namespace Company.Videomatic.Application.Handlers;
 
-public class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot> : IRequestHandler<TDeleteCommand, Result<long>>
-    where TDeleteCommand : IDeleteCommand<TAggregateRoot>
+public class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot> : IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
+    where TUpdateCommand : IUpdateCommand<TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot
 {
-    public DeleteAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
+    public UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
@@ -19,20 +19,20 @@ public class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot> : IReque
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
 
-    public async Task<Result<long>> Handle(TDeleteCommand request, CancellationToken cancellationToken)
+    public async Task<Result<TAggregateRoot>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
         var id = Mapper.Map<TAggregateRoot>(request)
                        .GetId();
 
-        var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);
-        if (itemToDelete == null) 
-        { 
+        var itemToUpdate = await Repository.GetByIdAsync(id, cancellationToken);
+        if (itemToUpdate == null)
+        {
             return Result.NotFound();
         }
 
-        await Repository.DeleteAsync(itemToDelete);       
+        Mapper.Map(request, itemToUpdate);
+        await Repository.UpdateAsync(itemToUpdate);
 
-        return request.Id;
+        return itemToUpdate;
     }
 }
-

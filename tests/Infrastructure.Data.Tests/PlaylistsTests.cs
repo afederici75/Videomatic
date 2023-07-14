@@ -68,7 +68,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
             "New Name",
             "New Description");
 
-        UpdatePlaylistResponse updatedResponse = await Sender.Send(updateCommand);
+        Result<Playlist> updatedResponse = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Playlists

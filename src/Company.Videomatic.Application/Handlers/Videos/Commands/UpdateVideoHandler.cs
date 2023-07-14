@@ -1,14 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
-public sealed class UpdateVideoHandler : UpdateEntityHandlerBase<UpdateVideoCommand, UpdateVideoResponse, Video, VideoId>
+public sealed class UpdateVideoHandler : UpdateAggregateRootHandler<UpdateVideoCommand, Video>
 {
-    public UpdateVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
+    public UpdateVideoHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override UpdateVideoResponse CreateResponseFor(VideoId updatedEntityId, bool wasUpdated)
-    => new(updatedEntityId, wasUpdated);
-
-    protected override VideoId GetIdOfRequest(UpdateVideoCommand request)
-    => request.Id;
 }

@@ -86,7 +86,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
             "New Name",
             "New Description");
 
-        UpdateArtifactResponse updatedResponse = await Sender.Send(updateCommand);
+        Result<Artifact> updatedResponse = await Sender.Send(updateCommand);
 
         // Checks
         var video = await Fixture.DbContext.Artifacts

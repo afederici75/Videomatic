@@ -1,14 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
-public sealed class UpdatePlaylistHandler : UpdateEntityHandlerBase<UpdatePlaylistCommand, UpdatePlaylistResponse, Playlist, PlaylistId>
+public sealed class UpdatePlaylistHandler : UpdateAggregateRootHandler<UpdatePlaylistCommand, Playlist>
 {
-    public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
+    public UpdatePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override UpdatePlaylistResponse CreateResponseFor(PlaylistId updatedEntityId, bool wasUpdated)
-        => new(updatedEntityId, wasUpdated);
-
-    protected override PlaylistId GetIdOfRequest(UpdatePlaylistCommand request) 
-        => request.Id;
 }

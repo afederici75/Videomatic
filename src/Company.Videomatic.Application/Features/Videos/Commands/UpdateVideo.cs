@@ -6,9 +6,7 @@
 public record UpdateVideoCommand(
     long Id, 
     string Name, 
-    string? Description = default) : IRequest<UpdateVideoResponse>, ICommandWithEntityId;
-
-public record UpdateVideoResponse(long Id, bool WasUpdated);
+    string? Description = default) : IUpdateCommand<Video>;
 
 
 internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>

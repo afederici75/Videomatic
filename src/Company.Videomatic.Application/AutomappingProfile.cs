@@ -19,7 +19,7 @@ public class AutomappingProfile : Profile
             .ForPath(dest => dest.Details.VideoPublishedAt, opt => opt.MapFrom(src => src.VideoPublishedAt))
             .ForPath(dest => dest.Details.Provider, opt => opt.MapFrom(src => src.Provider));
         CreateMap<UpdateVideoCommand, Video>();
-
+        CreateMap<DeleteVideoCommand, Video>();
         // Transcripts
         CreateMap<CreateTranscriptCommand, Transcript>()
             //.ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines))
