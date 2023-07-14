@@ -39,7 +39,7 @@ public static class DependencyInjectionExtensions
                         .Where(a => a.FullName?.Contains(".Videomatic.") ?? false);
             
             var allAssemblies = assemblies.ToArray();
-            cfg.RegisterServicesFromAssemblies(allAssemblies);
+            cfg.RegisterServicesFromAssemblies(allAssemblies); // TODO: where do I set scoped?            
         });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));

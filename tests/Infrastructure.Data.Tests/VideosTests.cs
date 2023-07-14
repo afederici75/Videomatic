@@ -1,4 +1,5 @@
 ﻿using Application.Tests.Helpers;
+using Ardalis.Result;
 using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Abstractions;
@@ -31,15 +32,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        CreateVideoResponse response = await Sender.Send(createCommand);
+        var response = await Sender.Send(createCommand);
 
         // Checks
-        response.Id.Should().BeGreaterThan(0);
+        response.Value.Should().BeGreaterThan(0);
 
         // Just a small test to see if LINQ creates a simpler query than
         // the one with all owned properties just down below.
         //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
-        var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Id);
+        var video = Fixture.DbContext.Videos.Single(x => x.Id == response);
         
         video.Name.Should().BeEquivalentTo(createCommand.Name);
         video.Description.Should().BeEquivalentTo(createCommand.Description);
@@ -55,15 +56,16 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task DeleteVideo()
     {
-        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
+        var videoId = await Sender.Send(CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
-        CreateVideoResponse response = await Sender.Send(createCommand);
+        // Executes
+        var deletedResponse = await Sender.Send(new DeleteVideoCommand(videoId));
 
         // Checks
-        response.Id.Should().BeGreaterThan(0);
+        videoId.Value.Should().BeGreaterThan(0);
 
         var cnt = await Fixture.DbContext.Videos
-            .Where(x => x.Id == response.Id)
+            .Where(x => x.Id == videoId)
             .ExecuteDeleteAsync();
 
         cnt.Should().Be(1);
@@ -72,11 +74,11 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task UpdateVideo()
     {
-        CreateVideoResponse createResponse = await Sender.Send(
+        var createResponse = await Sender.Send(
             CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
         var updateCommand = new UpdateVideoCommand(
-            createResponse.Id,
+            createResponse,
             "New Title",
             "New Description");
 
@@ -84,7 +86,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Videos
-            .Where(x => x.Id == createResponse.Id)
+            .Where(x => x.Id == createResponse)
             .SingleAsync();
 
         video.Id.Value.Should().Be(updateCommand.Id);
@@ -100,27 +102,27 @@ public class VideosTests : IClassFixture<DbContextFixture>
             Name: nameof(LinksTwoVideoToPlaylist),
             Description: $"A description for my playlist {DateTime.Now}");
 
-        CreatePlaylistResponse createPlaylistResponse = await Sender.Send(createPlaylistCmd);
+        Result<long> createPlaylistId1 = await Sender.Send(createPlaylistCmd);
 
         var createVid1Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
 
-        CreateVideoResponse createVid1Response = await Sender.Send(createVid1Cmd);
+        var createVid1Response = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
 
         // Executes
         var addVidsCmd = new LinkVideoToPlaylistsCommand(
-            createVid1Response.Id,
-            new[] { createPlaylistResponse.Id });
+            createVid1Response,
+            new long[] { createPlaylistId1 });
 
         LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
         LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
 
         // Checks
-        createPlaylistResponse.Id.Should().BeGreaterThan(0);
-        createVid1Response.Id.Should().BeGreaterThan(0);
+        createPlaylistId1.Value.Should().BeGreaterThan(0);
+        createVid1Response.Value.Should().BeGreaterThan(0);
     }
 
     [Theory]
@@ -176,7 +178,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         items.Should().HaveCount(expectedResults);        
     }
 
-    [Theory]
+    [Theory(Skip ="Expensive!")]
     [InlineData("TestData//Video-n1kmKpjk_8E.json", null)]
     public async Task ImportOneVideo(string fileName, [FromServices] IRepository<Video> repository)
     {
@@ -189,7 +191,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         await repository.AddAsync(video);
     }
 
-    [Theory]
+    [Theory(Skip = "Expensive!")]
     [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null, null)]
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,

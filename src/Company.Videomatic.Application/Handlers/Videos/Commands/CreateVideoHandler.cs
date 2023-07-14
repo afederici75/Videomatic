@@ -1,11 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
-public sealed class CreateVideoHandler : CreateEntityHandlerBase<CreateVideoCommand, CreateVideoResponse, Video>
+public sealed class CreateVideoHandler : CreateAggregateRootHandler<CreateVideoCommand, Video>
 {
-    public CreateVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
+    public CreateVideoHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override CreateVideoResponse CreateResponseFor(Video entity)
-        => new CreateVideoResponse(Id: entity.Id);
 }

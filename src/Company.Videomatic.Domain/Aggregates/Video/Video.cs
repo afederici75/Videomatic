@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Video;
 
-public class Video : IAggregateRoot
+public class Video : IAggregateRoot<VideoId>
 {
     public static Video Create(string location, string name, VideoDetails? details = null, string? description = null)
     {

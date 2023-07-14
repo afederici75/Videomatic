@@ -1,8 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record DeletePlaylistCommand(long Id) : IRequest<DeletePlaylistResponse>, ICommandWithEntityId;
-
-public record DeletePlaylistResponse(long Id, bool deleted);
+public record DeletePlaylistCommand(long Id) : IDeleteCommand<Playlist>;
 
 internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {

@@ -25,6 +25,7 @@ public class AutomappingProfile : Profile
             //.ForPath(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines))
             .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines.Select(TranscriptLine.FromString)));
 
+        CreateMap<DeleteTranscriptCommand, Transcript>();
         // See https://stackoverflow.com/questions/24809956/automapper-and-mapping-list-within-a-complex-object-nested-mappings
         //CreateMap<string, TranscriptLine>()
         //    .ConstructUsing((val, ct) => ct.Mapper.Map<TranscriptLine>(val))

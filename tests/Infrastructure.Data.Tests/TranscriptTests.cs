@@ -31,8 +31,8 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
 
-        CreateVideoResponse response = await Sender.Send(createCommand);
-        return response.Id;
+        var response = await Sender.Send(createCommand);
+        return response;
     }
 
     [Fact]
@@ -41,14 +41,14 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         var videoId = await GenerateDummyVideoAsync();
         var createCommand = CreateTranscriptCommandBuilder.WithDummyValues(videoId);
 
-        CreateTranscriptResponse response = await Sender.Send(createCommand);
+        var response = await Sender.Send(createCommand);
 
         // Checks
-        response.Id.Should().BeGreaterThan(0);
+        response.Value.Should().BeGreaterThan(0);
 
         var transcript = Fixture.DbContext.            
             Transcripts.
-            Single(x => x.Id == response.Id);
+            Single(x => x.Id == response);
 
         transcript.Language.Should().Be(createCommand.Language);
         transcript.Lines.Should().HaveCount(createCommand.Lines.Count());
@@ -62,13 +62,13 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         var createdResponse = await Sender.Send(CreateTranscriptCommandBuilder.WithDummyValues(videoId));
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteTranscriptCommand(createdResponse.Id));
+        var deletedResponse = await Sender.Send(new DeleteTranscriptCommand(createdResponse));
 
         // Checks
-        createdResponse.Id.Should().BeGreaterThan(0);
+        createdResponse.Value.Should().BeGreaterThan(0);
 
         var row = await Fixture.DbContext.Transcripts
-            .Where(x => x.Id == createdResponse.Id)
+            .Where(x => x.Id == createdResponse)
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();

@@ -37,10 +37,27 @@ public class VideomaticDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
     }
 
-    public async Task<int> CommitChangesAsync(CancellationToken cancellationToken)
+    [Obsolete]
+    public override int SaveChanges()
     {
-        var res = await SaveChangesAsync(cancellationToken);
-        ChangeTracker.Clear();
-        return res;
+        throw new InvalidOperationException("Use SaveChangesAsync instead.");
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        //ChangeTracker.Clear();
+        return result;
+    }
+
+    [Obsolete]
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        throw new InvalidOperationException("Use SaveChangesAsync instead.");
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

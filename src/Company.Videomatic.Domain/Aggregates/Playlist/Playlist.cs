@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public class Playlist : IAggregateRoot
+public class Playlist : IAggregateRoot<PlaylistId>
 {
     public static Playlist Create(string name, string? description = null)
     {

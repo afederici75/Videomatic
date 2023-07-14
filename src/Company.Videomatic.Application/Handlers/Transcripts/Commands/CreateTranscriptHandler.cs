@@ -1,11 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
 
-public class CreateTranscriptHandler : CreateEntityHandlerBase<CreateTranscriptCommand, CreateTranscriptResponse, Transcript>
+public class CreateTranscriptHandler : CreateAggregateRootHandler<CreateTranscriptCommand, Transcript>
 {
-    public CreateTranscriptHandler(IRepository<Transcript> repository, IMapper mapper) : base(repository, mapper)
+    public CreateTranscriptHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override CreateTranscriptResponse CreateResponseFor(Transcript createdEntity)    
-        => new CreateTranscriptResponse(Id: createdEntity.Id);
 }

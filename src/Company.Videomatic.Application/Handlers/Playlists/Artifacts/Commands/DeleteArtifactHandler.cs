@@ -1,15 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Artifacts.Commands;
 
-public class DeleteArtifactHandler : DeleteEntityHandlerBase<DeleteArtifactCommand, DeleteArtifactResponse, Artifact, ArtifactId>
+public class DeleteArtifactHandler : DeleteAggregateRootHandler<DeleteArtifactCommand, Artifact>
 {
-    public DeleteArtifactHandler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
+    public DeleteArtifactHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override ArtifactId GetIdOfRequest(DeleteArtifactCommand request)
-        => new ArtifactId(request.Id);
-
-    protected override DeleteArtifactResponse CreateResponseFor(ArtifactId entityId, bool wasDeleted)
-        => new DeleteArtifactResponse(entityId, wasDeleted);
-
 }

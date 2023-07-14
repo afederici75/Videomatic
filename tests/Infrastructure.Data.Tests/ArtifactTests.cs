@@ -32,9 +32,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     async Task<VideoId> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
-
-        CreateVideoResponse response = await Sender.Send(createCommand);
-        return response.Id;
+        var response = await Sender.Send(createCommand);
+        return response.Value;
     }
 
     [Fact]
@@ -43,12 +42,12 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         var videoId = await GenerateDummyVideoAsync();
         var createCommand = CreateArtifactCommandBuilder.WithDummyValues(videoId);
 
-        Result<CreateArtifactResponse> response = await Sender.Send(createCommand);
+        var response = await Sender.Send(createCommand);
 
         // Checks
         response.IsSuccess.Should().BeTrue();
 
-        var artifact = Fixture.DbContext.Artifacts.Single(x => x.Id == response.Value.Id);
+        var artifact = Fixture.DbContext.Artifacts.Single(x => x.Id == response.Value);
 
         artifact.Text.Should().Be(createCommand.Text);
         artifact.Type.Should().Be(createCommand.Type);
@@ -62,13 +61,13 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         var createdResponse = await Sender.Send(CreateArtifactCommandBuilder.WithDummyValues(videoId));
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteArtifactCommand(createdResponse.Value.Id));
+        var deletedResponse = await Sender.Send(new DeleteArtifactCommand(createdResponse.Value));
 
         // Checks
         createdResponse.IsSuccess.Should().BeTrue();
 
         var row = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == createdResponse.Value.Id)
+            .Where(x => x.Id == createdResponse.Value)
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();
@@ -83,7 +82,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         // Executes
         var updateCommand = new UpdateArtifactCommand(
-            response.Value.Id,
+            response.Value,
             "New Name",
             "New Description");
 
@@ -91,7 +90,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == response.Value.Id)
+            .Where(x => x.Id == response.Value)
             .SingleAsync();
 
         video.Text.Should().BeEquivalentTo(updateCommand.Text);

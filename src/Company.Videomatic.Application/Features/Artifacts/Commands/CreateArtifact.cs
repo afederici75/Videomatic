@@ -5,9 +5,7 @@ namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 public record CreateArtifactCommand(long VideoId,
                                     string Name,
                                     string Type,
-                                    string? Text) : IRequest<Result<CreateArtifactResponse>>;
-
-public record CreateArtifactResponse(long Id);
+                                    string? Text) : ICreateCommand<Artifact>;
 
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {

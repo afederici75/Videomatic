@@ -1,13 +1,22 @@
-﻿namespace Company.Videomatic.Domain.Abstractions;
+﻿using System.Runtime.CompilerServices;
 
-/// <summary>
-/// A marker interface for aggregate roots.
-/// </summary>
+namespace Company.Videomatic.Domain.Abstractions;
+
 public interface IAggregateRoot
 {
+    long GetId();
+}
+
+public interface ILongId
+{ 
+    long Value { get; }
 }
 
 public interface IAggregateRoot<TId> : IAggregateRoot
+    where TId : ILongId
 {
     TId Id { get; }
+
+    long IAggregateRoot.GetId() => Id.Value;
+    
 }

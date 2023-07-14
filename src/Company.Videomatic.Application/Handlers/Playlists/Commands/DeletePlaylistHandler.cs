@@ -1,12 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
-public sealed class DeletePlaylistHandler : DeleteEntityHandlerBase<DeletePlaylistCommand, DeletePlaylistResponse, Playlist, PlaylistId>
+public sealed class DeletePlaylistHandler : DeleteAggregateRootHandler<DeletePlaylistCommand, Playlist>
 {
-    public DeletePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
+    public DeletePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override DeletePlaylistResponse CreateResponseFor(PlaylistId entityId, bool wasDeleted) => new(entityId, wasDeleted);
-
-    protected override PlaylistId GetIdOfRequest(DeletePlaylistCommand request) => new(request.Id);
 }

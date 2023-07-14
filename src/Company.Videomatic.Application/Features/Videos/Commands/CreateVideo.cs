@@ -10,9 +10,7 @@ public record CreateVideoCommand(
     string PlaylistId,
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId
-    ) : IRequest<CreateVideoResponse> { }
-
-public record CreateVideoResponse(long Id);
+    ) : ICreateCommand<Video> { }
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {

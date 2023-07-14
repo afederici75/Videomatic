@@ -1,12 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
-public sealed class CreatePlaylistHandler : CreateEntityHandlerBase<CreatePlaylistCommand, CreatePlaylistResponse, Playlist>
+public sealed class CreatePlaylistHandler : CreateAggregateRootHandler<CreatePlaylistCommand, Playlist>
 {
-    public CreatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
+    public CreatePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
     {
     }
-
-    protected override CreatePlaylistResponse CreateResponseFor(Playlist entity)
-        => new CreatePlaylistResponse(Id: entity.Id);
-    
 }

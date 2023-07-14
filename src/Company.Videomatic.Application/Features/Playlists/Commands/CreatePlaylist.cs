@@ -2,9 +2,7 @@
 
 public record CreatePlaylistCommand(
     string Name,
-    string? Description = null) : IRequest<CreatePlaylistResponse>;
-
-public record CreatePlaylistResponse(long Id);
+    string? Description = null) : ICreateCommand<Playlist>;
 
 internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {
