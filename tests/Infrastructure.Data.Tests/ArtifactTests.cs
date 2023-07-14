@@ -33,7 +33,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
         var response = await Sender.Send(createCommand);
-        return response.Value;
+        return response.Value.Id;
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         // Checks
         response.IsSuccess.Should().BeTrue();
 
-        var artifact = Fixture.DbContext.Artifacts.Single(x => x.Id == response.Value);
+        var artifact = Fixture.DbContext.Artifacts.Single(x => x.Id == response.Value.Id);
 
         artifact.Text.Should().Be(createCommand.Text);
         artifact.Type.Should().Be(createCommand.Type);
@@ -61,13 +61,13 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         var createdResponse = await Sender.Send(CreateArtifactCommandBuilder.WithDummyValues(videoId));
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteArtifactCommand(createdResponse.Value));
+        var deletedResponse = await Sender.Send(new DeleteArtifactCommand(createdResponse.Value.Id));
 
         // Checks
         createdResponse.IsSuccess.Should().BeTrue();
 
         var row = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == createdResponse.Value)
+            .Where(x => x.Id == createdResponse.Value.Id)
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();
@@ -82,7 +82,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         // Executes
         var updateCommand = new UpdateArtifactCommand(
-            response.Value,
+            response.Value.Id,
             "New Name",
             "New Description");
 
@@ -90,7 +90,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == response.Value)
+            .Where(x => x.Id == response.Value.Id)
             .SingleAsync();
 
         video.Text.Should().BeEquivalentTo(updateCommand.Text);

@@ -9,7 +9,7 @@ public class AutomappingProfile : Profile
         // Playlists
         CreateMap<CreatePlaylistCommand, Playlist>();
         CreateMap<UpdatePlaylistCommand, Playlist>();
-
+        CreateMap<DeletePlaylistCommand, Playlist>();
         // Videos
         CreateMap<CreateVideoCommand, Video>()
             //.ForPath(dest => dest.Details.PlaylistId, opt => opt.MapFrom(src => src.PlaylistId))
@@ -37,7 +37,7 @@ public class AutomappingProfile : Profile
         // Artifacts
         CreateMap<CreateArtifactCommand, Artifact>();
         CreateMap<UpdateArtifactCommand, Artifact>();
-
+        CreateMap<DeleteArtifactCommand, Artifact>();
         // DTOs
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();

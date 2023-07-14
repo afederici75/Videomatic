@@ -22,11 +22,14 @@ public class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot> : IReque
     public async Task<Result<long>> Handle(TDeleteCommand request, CancellationToken cancellationToken)
     {
         var aggRoot = Mapper.Map<TAggregateRoot>(request);
+        
+        var itemToDelete = await Repository.GetByIdAsync(request.Id, cancellationToken);
+
         await Repository.DeleteAsync(aggRoot);
 
         await Repository.SaveChangesAsync();
 
-        var itemToDelete = await Repository.GetByIdAsync(request.Id, cancellationToken);
+        
         //
         //if (itemToDelete == null)
         //    return Result.NotFound();

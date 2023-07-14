@@ -2,6 +2,7 @@ using Application.Tests.Helpers;
 using Ardalis.Result;
 using Company.Videomatic.Application.Features.Playlists;
 using Company.Videomatic.Domain.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Playlist;
 using Infrastructure.Data.Tests.Helpers;
 
 namespace Infrastructure.Data.Tests;
@@ -30,9 +31,9 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         var response = await Sender.Send(createCommand);
 
         // Checks
-        response.Value.Should().BeGreaterThan(0);
+        response.Value.Id.Value.Should().BeGreaterThan(0);
 
-        var playlist = Fixture.DbContext.Playlists.Single(x => x.Id == response);
+        var playlist = Fixture.DbContext.Playlists.Single(x => x.Id == response.Value.Id);
 
         playlist.Should().BeEquivalentTo(createCommand); // Name and Description are like in command        
     }
@@ -41,15 +42,15 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     public async Task DeletePlaylist()
     {
         var createdResponse = await Sender.Send(CreatePlaylistCommandBuilder.WithDummyValues());
+        createdResponse.Value.Id.Value.Should().BeGreaterThan(0);
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeletePlaylistCommand(createdResponse));
+        var deletedResponse = await Sender.Send(new DeletePlaylistCommand(createdResponse.Value.Id));
 
         // Checks
-        createdResponse.Value.Should().BeGreaterThan(0);
-
+        
         var row = await Fixture.DbContext.Playlists
-            .Where(x => x.Id == createdResponse)
+            .Where(x => x.Id == createdResponse.Value.Id)
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();
@@ -59,11 +60,11 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     public async Task UpdatePlaylist()
     {
         // Prepares        
-        var playlistId = await Sender.Send(CreatePlaylistCommandBuilder.WithDummyValues());
+        Result<Playlist> playlist = await Sender.Send(CreatePlaylistCommandBuilder.WithDummyValues());
 
         // Executes
         var updateCommand = new UpdatePlaylistCommand(
-            playlistId,
+            playlist.Value.Id,
             "New Name",
             "New Description");
 
@@ -71,7 +72,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Playlists
-            .Where(x => x.Id == playlistId)
+            .Where(x => x.Id == playlist.Value.Id)
             .SingleAsync();
 
         video.Name.Should().BeEquivalentTo(updateCommand.Name);

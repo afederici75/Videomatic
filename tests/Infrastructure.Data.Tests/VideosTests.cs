@@ -35,12 +35,12 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var response = await Sender.Send(createCommand);
 
         // Checks
-        response.Value.Should().BeGreaterThan(0);
+        response.Value.Id.Value.Should().BeGreaterThan(0);
 
         // Just a small test to see if LINQ creates a simpler query than
         // the one with all owned properties just down below.
         //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
-        var video = Fixture.DbContext.Videos.Single(x => x.Id == response);
+        var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Value.Id);
         
         video.Name.Should().BeEquivalentTo(createCommand.Name);
         video.Description.Should().BeEquivalentTo(createCommand.Description);
@@ -59,13 +59,13 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var videoId = await Sender.Send(CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteVideoCommand(videoId));
+        var deletedResponse = await Sender.Send(new DeleteVideoCommand(videoId.Value.Id));
 
         // Checks
-        videoId.Value.Should().BeGreaterThan(0);
+        videoId.Value.Id.Value.Should().BeGreaterThan(0);
 
         var cnt = await Fixture.DbContext.Videos
-            .Where(x => x.Id == videoId)
+            .Where(x => x.Id == videoId.Value.Id)
             .ExecuteDeleteAsync();
 
         cnt.Should().Be(1);
@@ -78,7 +78,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
 
         var updateCommand = new UpdateVideoCommand(
-            createResponse,
+            createResponse.Value.Id,
             "New Title",
             "New Description");
 
@@ -86,7 +86,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Videos
-            .Where(x => x.Id == createResponse)
+            .Where(x => x.Id == createResponse.Value.Id)
             .SingleAsync();
 
         video.Id.Value.Should().Be(updateCommand.Id);
@@ -102,27 +102,28 @@ public class VideosTests : IClassFixture<DbContextFixture>
             Name: nameof(LinksTwoVideoToPlaylist),
             Description: $"A description for my playlist {DateTime.Now}");
 
-        Result<long> createPlaylistId1 = await Sender.Send(createPlaylistCmd);
+        Result<Playlist> playlist1 = await Sender.Send(createPlaylistCmd);
 
         var createVid1Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
 
-        var createVid1Response = await Sender.Send(createVid1Cmd);
+        Result<Video> video1 = await Sender.Send(createVid1Cmd);
 
         var createVid2Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
 
+        throw new Exception("Finish this test");
         // Executes
-        var addVidsCmd = new LinkVideoToPlaylistsCommand(
-            createVid1Response,
-            new long[] { createPlaylistId1 });
-
-        LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
-
-        // Checks
-        createPlaylistId1.Value.Should().BeGreaterThan(0);
-        createVid1Response.Value.Should().BeGreaterThan(0);
+        //var addVidsCmd = new LinkVideoToPlaylistsCommand(
+        //    video1,
+        //    new long[] { playlist1 });
+        //
+        //LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        //LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        //
+        //// Checks
+        //playlist1.Value.Should().BeGreaterThan(0);
+        //video1.Value.Should().BeGreaterThan(0);
     }
 
     [Theory]

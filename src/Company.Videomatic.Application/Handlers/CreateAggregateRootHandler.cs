@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Application.Handlers;
 
-public class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IRequestHandler<TCreateCommand, Result<long>>
+public class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IRequestHandler<TCreateCommand, Result<TAggregateRoot>>
     where TCreateCommand : ICreateCommand<TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot
 {
@@ -19,12 +19,17 @@ public class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IReque
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
 
-    public async Task<Result<long>> Handle(TCreateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<TAggregateRoot>> Handle(TCreateCommand request, CancellationToken cancellationToken)
     {
         var aggRoot = Mapper.Map<ICreateCommand<TAggregateRoot>, TAggregateRoot>(request);
         var result = await Repository.AddAsync(aggRoot, cancellationToken);        
         //await Repository.SaveChangesAsync( cancellationToken);
-        return result.GetId();
+        return result;
     }
+
+    //Task<Result<TAggregateRoot>> IRequestHandler<TCreateCommand, Result<TAggregateRoot>>.Handle(TCreateCommand request, CancellationToken cancellationToken)
+    //{
+    //    throw new NotImplementedException();
+    //}
 }
 

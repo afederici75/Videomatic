@@ -1,12 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Abstractions;
 
-public interface ICRUDCommand<TAggregateRoot>
-    where TAggregateRoot : IAggregateRoot
-{
-    Type GetAggregateRootType() => typeof(TAggregateRoot);
-}
-
-public interface ICreateCommand<TAggregateRoot> : IRequest<Result<long>>
+public interface ICreateCommand<TAggregateRoot> : IRequest<Result<TAggregateRoot>>
     where TAggregateRoot : class, IAggregateRoot
 { }
 
