@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Queries;
+﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Queries;
 
 public class GetTranscriptHandler :
     IRequestHandler<GetTranscriptsQuery, PageResult<TranscriptDTO>>,

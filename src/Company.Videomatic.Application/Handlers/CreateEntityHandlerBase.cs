@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers;
+﻿namespace Company.Videomatic.Application.Handlers;
 
 public abstract class CreateEntityHandlerBase<TRequest, TResponse, TEntity> : IRequestHandler<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

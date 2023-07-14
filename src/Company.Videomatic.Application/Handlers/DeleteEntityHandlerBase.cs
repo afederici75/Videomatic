@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers;
+﻿namespace Company.Videomatic.Application.Handlers;
 
 public abstract class DeleteEntityHandlerBase<TRequest, TResponse, TEntity, TId> : IRequestHandler<TRequest, TResponse>
     where TRequest : IRequest<TResponse>, ICommandWithEntityId

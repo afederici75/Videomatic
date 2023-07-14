@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Specifications.Videos;
-
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
 public sealed class DeleteVideoHandler : DeleteEntityHandlerBase<DeleteVideoCommand, DeleteVideoResponse, Video, VideoId>
 {

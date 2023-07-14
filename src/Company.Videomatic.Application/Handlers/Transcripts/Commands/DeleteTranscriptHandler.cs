@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Transcripts.Commands;
+﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
 
 public class DeleteTranscriptHandler : IRequestHandler<DeleteTranscriptCommand, DeleteTranscriptResponse>
 {

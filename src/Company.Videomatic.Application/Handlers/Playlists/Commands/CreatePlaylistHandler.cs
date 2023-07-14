@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Commands;
+﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
 public sealed class CreatePlaylistHandler : CreateEntityHandlerBase<CreatePlaylistCommand, CreatePlaylistResponse, Playlist>
 {

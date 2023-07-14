@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+﻿namespace Company.Videomatic.Application.Handlers.Videos.Queries;
 
 public class GetVideosHandler : 
     IRequestHandler<GetVideosQuery, PageResult<VideoDTO>>,
