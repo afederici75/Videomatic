@@ -101,7 +101,7 @@ public class Video : IAggregateRoot
         Name = name;
         Description = description;
         Details = details;
-        _videoTags = new();// tags;
+        _videoTags = tags;
         _thumbnails = thumbnails;
         _playlists = playlists;
     }

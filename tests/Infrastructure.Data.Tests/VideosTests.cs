@@ -179,7 +179,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     public async Task ImportOneVideo(string fileName, [FromServices] IRepository<Video> repository)
     {
         var json = await File.ReadAllTextAsync(fileName);
-        var video = JsonConvert.DeserializeObject<Video>(json);
+        var video = JsonConvert.DeserializeObject<Video>(json)!;
 
         video.Location.Should().NotBeNullOrEmpty();
         video.Tags.Should().HaveCount(25);
@@ -196,10 +196,27 @@ public class VideosTests : IClassFixture<DbContextFixture>
         )
     {
         var json = await File.ReadAllTextAsync(fileName);
-        var videos = JsonConvert.DeserializeObject<Video[]>(json);
-        
+        var videos = JsonConvert.DeserializeObject<Video[]>(json)!;
+
+        #region One by one (debug)
+        //var idx = 0;
+        //foreach (var video in videos)
+        //{
+        //    try
+        //    {
+        //        await videoRepository.AddAsync(video);
+        //        idx++;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }   
+        //}
+        #endregion
+
         await videoRepository.AddRangeAsync(videos);
 
+        // Links to playlist
         var pl = Playlist.Create(nameof(ImportPlaylist));
         await playListRepository.AddAsync(pl);  
 

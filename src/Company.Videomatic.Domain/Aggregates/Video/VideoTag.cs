@@ -15,8 +15,13 @@ public class VideoTag : ValueObject//:EntityBase
     private VideoTag()
     { }
 
+    public override string ToString()
+    {
+        return $"VideoTag({Name})";
+    }
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Name;
+        yield return Name.ToUpper(); // Case insensitive
     }
 }
