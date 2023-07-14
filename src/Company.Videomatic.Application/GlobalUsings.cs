@@ -1,5 +1,7 @@
 ﻿global using FluentValidation;
 global using MediatR;
+global using Ardalis.Result;
+global using AutoMapper;
 
 global using Company.Videomatic.Domain.Extensions;
 global using Company.Videomatic.Application.Abstractions;

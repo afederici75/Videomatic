@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+﻿using AutoMapper;
+
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : 
     IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>,
