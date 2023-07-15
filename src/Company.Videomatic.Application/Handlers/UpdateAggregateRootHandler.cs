@@ -2,9 +2,10 @@
 
 namespace Company.Videomatic.Application.Handlers;
 
-public class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot> : IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
+public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> : IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
     where TUpdateCommand : IUpdateCommand<TAggregateRoot>
-    where TAggregateRoot : class, IAggregateRoot
+    where TAggregateRoot : class, IAggregateRoot<TId>
+    where TId: class
 {
     public UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
     {
@@ -19,20 +20,25 @@ public class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot> : IReque
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
 
+    abstract protected TId ConvertIdOfRequest(TUpdateCommand request);
+
     public async Task<Result<TAggregateRoot>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
-        var id = Mapper.Map<TAggregateRoot>(request)
-                       .GetId();
-
-        var itemToUpdate = await Repository.GetByIdAsync(id, cancellationToken);
-        if (itemToUpdate == null)
+        TId id = ConvertIdOfRequest(request);
+        
+        TAggregateRoot? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
+        if (currentAgg == null)
         {
             return Result.NotFound();
         }
 
-        Mapper.Map(request, itemToUpdate);
-        await Repository.UpdateAsync(itemToUpdate);
+        // TODO: this is where I could compare a version-id for the entity...
 
-        return itemToUpdate;
+        // Maps using Automapper which will access private setters to update currentAgg.
+        var res = Mapper.Map<TUpdateCommand, TAggregateRoot>(request, currentAgg);
+
+        await Repository.UpdateAsync(currentAgg, cancellationToken);
+        
+        return res;
     }
 }

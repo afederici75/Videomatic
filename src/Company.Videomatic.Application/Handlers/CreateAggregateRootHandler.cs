@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Company.Videomatic.Application.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.Videomatic.Application.Handlers;
 
-public class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IRequestHandler<TCreateCommand, Result<TAggregateRoot>>
+public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IRequestHandler<TCreateCommand, Result<TAggregateRoot>>
     where TCreateCommand : ICreateCommand<TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot
 {
@@ -21,15 +22,11 @@ public class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : IReque
 
     public async Task<Result<TAggregateRoot>> Handle(TCreateCommand request, CancellationToken cancellationToken)
     {
-        var aggRoot = Mapper.Map<ICreateCommand<TAggregateRoot>, TAggregateRoot>(request);
-        var result = await Repository.AddAsync(aggRoot, cancellationToken);        
-        //await Repository.SaveChangesAsync( cancellationToken);
-        return result;
-    }
+        var aggRoot = Mapper.Map<TCreateCommand, TAggregateRoot>(request);
+        
+        var result = await Repository.AddAsync(aggRoot, cancellationToken);                
 
-    //Task<Result<TAggregateRoot>> IRequestHandler<TCreateCommand, Result<TAggregateRoot>>.Handle(TCreateCommand request, CancellationToken cancellationToken)
-    //{
-    //    throw new NotImplementedException();
-    //}
+        return result;
+    }    
 }
 

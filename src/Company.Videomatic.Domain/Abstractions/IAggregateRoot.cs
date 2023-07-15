@@ -8,6 +8,7 @@ public interface IAggregateRoot
 }
 
 public interface IAggregateRoot<TId> : IAggregateRoot
+    where TId : class
 {
     TId Id { get; }
 
