@@ -30,8 +30,3 @@ global using Company.Videomatic.Application.Features.Transcripts.Queries;
 global using Company.Videomatic.Application.Features.Videos.Queries;
 
 
-global using Company.Videomatic.Domain.Specifications.Artifacts;
-global using Company.Videomatic.Domain.Specifications.Videos;
-global using Company.Videomatic.Domain.Specifications.Transcripts;
-global using Company.Videomatic.Domain.Specifications.Playlists;
-

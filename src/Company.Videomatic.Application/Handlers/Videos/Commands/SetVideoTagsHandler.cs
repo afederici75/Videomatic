@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
-public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsResponse>
+public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result<int>>
 {
     private readonly IRepository<Video> _repository;
     private readonly IMapper _mapper;
@@ -11,14 +11,13 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsRes
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<SetVideoTagsResponse> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
-    {
-        var spec = new VideosByIdSpecification(request.Id); 
+    public async Task<Result<int>> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
+    {        
+        var video =await _repository.GetByIdAsync(new VideoId(request.Id), cancellationToken);
 
-        var video = await _repository.FirstOrDefaultAsync(spec, cancellationToken);
         if (video is null)
         {
-            return new SetVideoTagsResponse(request.Id, 0);
+            return Result<int>.NotFound();
         }
 
         var validTags = request.Tags.Except(video.Tags.Select(t => t.Name))
@@ -28,6 +27,6 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, SetVideoTagsRes
         
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return new SetVideoTagsResponse(request.Id, validTags.Length);
+        return validTags.Length;
     }
 }
