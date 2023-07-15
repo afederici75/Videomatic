@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Specifications.Videos;
-
-namespace Company.Videomatic.Application.Services;
+﻿namespace Company.Videomatic.Application.Services;
 
 public class PlaylistService : IPlaylistService
 {
