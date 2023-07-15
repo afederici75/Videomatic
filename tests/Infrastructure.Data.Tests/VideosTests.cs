@@ -125,8 +125,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     [Theory]
     [InlineData(null, null, null, true, null, 2)]
-    //[InlineData(new long[] { 1 }, null, null, true, null, 2)]
-    //[InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
+    [InlineData(new long[] { 1 }, null, null, true, null, 2)]
+    [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
     public async Task GetVideos(
         long[]? playlistIds,
         string? searchText,

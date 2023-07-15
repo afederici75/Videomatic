@@ -40,12 +40,12 @@ public class PlaylistRequestsValidatorTests
     }
 
     [Theory]
-    [InlineData(null, null, null, null, false, 0)]
-    [InlineData(null, null, -1, -1, false, 2)]
-    [InlineData("", null, 1, 1, false, 1)]
-    [InlineData("filter", null, 1, 1, false, 0)]
-    public void ValidateGetPlaylistQuery(string? filter, string? orderBy, int? page, int? pageSize, bool includeCounts, int expectedErrors)
+    [InlineData(null, null, null, null, 0)]
+    [InlineData(null, null, -1, -1, 2)]
+    [InlineData("", null, 1, 1, 1)]
+    [InlineData("filter", null, 1, 1, 0)]
+    public void ValidateGetPlaylistQuery(string? filter, string? orderBy, int? page, int? pageSize, int expectedErrors)
     {
-        ValidatorHelper.Validate<GetPlaylistsQueryValidator, GetPlaylistsQuery>(new(filter, orderBy, page, pageSize, includeCounts), expectedErrors);        
+        ValidatorHelper.Validate<GetPlaylistsQueryValidator, GetPlaylistsQuery>(new(filter, orderBy, page, pageSize), expectedErrors);        
     }
 }

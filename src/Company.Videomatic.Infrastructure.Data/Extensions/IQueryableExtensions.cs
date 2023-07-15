@@ -10,7 +10,7 @@ public static class IQueryableExtensions
     public static IQueryable<T> OrderBy<T>(
         this IQueryable<T> source, 
         string? orderByText,
-        IDictionary<string, Expression<Func<T, object?>>> sortExpressions)
+        IReadOnlyDictionary<string, Expression<Func<T, object?>>> sortExpressions)
     {
         if (string.IsNullOrWhiteSpace(orderByText)) 
         {
