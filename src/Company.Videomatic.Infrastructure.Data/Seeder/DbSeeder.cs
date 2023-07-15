@@ -1,20 +1,16 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Company.Videomatic.Infrastructure.Data.Seeder;
+﻿namespace Company.Videomatic.Infrastructure.Data.Seeder;
 
 public class DbSeeder : IDbSeeder
 {
     private readonly VideomaticDbContext _dbContext;
-    private readonly IVideoService _videoService;
+    private readonly IPlaylistService _videoService;
     private readonly IRepository<Video> _videoRepository;
     private readonly IRepository<Playlist> _playlistRepository;
     private readonly IRepository<Artifact> _artifactRepository;
     private readonly IRepository<Transcript> _transcriptRepository;
 
     public DbSeeder(VideomaticDbContext dbContext,
-        IVideoService videoService,
+        IPlaylistService videoService,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         IRepository<Artifact> artifactRepository,
@@ -52,11 +48,11 @@ public class DbSeeder : IDbSeeder
         var shivaVideo = await CreateAldousHuxleyTheDancingShivaVideo();
         
         // If RealityIsNotDual
-        long realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
+        var realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
 
         //
-        var linked1 = await _videoService.LinkToPlaylists(shivaVideo.Id, new[] { playlist.Id });
-        var linked2 = await _videoService.LinkToPlaylists(realityNotDualVideo, new[] { playlist.Id });
+        var linked1 = await _videoService.LinkToPlaylists(playlist.Id, new[] { shivaVideo.Id});
+        var linked2 = await _videoService.LinkToPlaylists(playlist.Id, new[] { realityNotDualVideo.Id });
 
         return playlist.Id;
     }
@@ -155,7 +151,7 @@ public class DbSeeder : IDbSeeder
         await _transcriptRepository.AddAsync(transcript);
     }
 
-    async Task<long> CreateIfRealityIsNonDualVideo()
+    async Task<Video> CreateIfRealityIsNonDualVideo()
     {
         // Video
         var video = Video.Create(
@@ -194,7 +190,7 @@ public class DbSeeder : IDbSeeder
         // Artifacts
         await CreateIfRealityIsNotDualArtifacts(video.Id);
 
-        return video.Id;
+        return video;
     }
 
     private async Task CreateIfRealityIsNotDualTranscription(VideoId videoId)

@@ -33,7 +33,12 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         //            l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
         //            r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
         //        );
-        builder.HasMany(typeof(VideoPlaylist))
+        builder.HasMany(x => x.Videos)
+               .WithOne()
+               .HasForeignKey(nameof(PlaylistVideo.PlaylistId));
+
+
+        builder.HasMany(typeof(PlaylistVideo))
                .WithOne()
                .HasForeignKey("PlaylistId");
 

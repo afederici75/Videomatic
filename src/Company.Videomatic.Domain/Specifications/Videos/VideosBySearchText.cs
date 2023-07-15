@@ -9,7 +9,7 @@ public class VideosBySearchText : Specification<Video>//, IPaginatedSpecificatio
         { nameof(Video.Id), _ => _.Id },
         { nameof(Video.Name), _ => _.Name },
         { nameof(Video.Description), _ => _.Description },
-        { "PlaylistCount", _ => _.Playlists.Count },
+        //{ "PlaylistCount", _ => _.Playlists.Count },
         { "TagCount", _ => _.Tags.Count },
         { "ThumbnailsCount", _ => _.Thumbnails.Count },
     };
@@ -27,10 +27,10 @@ public class VideosBySearchText : Specification<Video>//, IPaginatedSpecificatio
         }
 
         // Video with references to any of the playlistIds
-        if (playlistIds != null && playlistIds.Any())
-        {
-            Query.Where(v => v.Playlists.Any(pv => playlistIds.Contains(pv.PlaylistId)));
-        }
+        //if (playlistIds != null && playlistIds.Any())
+        //{
+        //    Query.Where(v => v.Playlists.Any(pv => playlistIds.Contains(pv.PlaylistId)));
+        //}
 
         // OrderBy
         Query.OrderByText(orderBy, SupportedOrderBys);

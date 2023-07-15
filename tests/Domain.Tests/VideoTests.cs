@@ -18,7 +18,7 @@ public class VideoTests
         video.Should().NotBeNull();
         video.Thumbnails.Should().HaveCount(5); // It got 5 default thumbnail resolutions
         video.Tags.Should().BeEmpty(); // No tags yet
-        video.Playlists.Should().BeEmpty(); // No playlists yet 
+        //video.Playlists.Should().BeEmpty(); // No playlists yet 
     }
 
     [Fact]
@@ -38,7 +38,7 @@ public class VideoTests
         video.Name.Should().Be(nameof(CreateVideo));
         video.Description.Should().Be("A complete description");
 
-        video.Playlists.Should().BeEmpty(); // No playlists yet 
+        //video.Playlists.Should().BeEmpty(); // No playlists yet 
         video.Tags.Should().BeEmpty(); // No tags yet
         video.Thumbnails.Should().HaveCount(5); // It got 5 default thumbnail resolutions
         
@@ -88,31 +88,5 @@ public class VideoTests
         newDefault.Height.Should().NotBe(oldDefault.Height);
         newDefault.Width.Should().NotBe(oldDefault.Width);
     }
-
-    [Fact]
-    public void LinkVideoToPlaylists()
-    {
-        var video = Video.Create(DummyLocation, nameof(LinkVideoToPlaylists));
-        var count = video.LinkToPlaylists(new PlaylistId[] { 123, 342 });
-
-        // Checks
-        video.Playlists.Count.Should().Be(2);        
-    }
-
-    [Fact]
-    public void DoesNotLinkVideoToNullPlaylistId()
-    {
-        var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists));
-        var video = Video.Create(DummyLocation, nameof(DoesNotLinkVideoToNullPlaylistId));
-
-#pragma warning disable CS8620 
-        // If you pass a newly created Playlist (which has a null Id) it would be null.
-        // Nulls should be ignored.
-        var count = video.LinkToPlaylists(new[] { default(PlaylistId) });
-#pragma warning restore CS8620 
-
-        // Checks
-        video.Playlists.Count.Should().Be(0);
-        count.Should().Be(0);   
-    }
+    
 }

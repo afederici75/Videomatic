@@ -8,6 +8,6 @@ public class VideoWithPlaylistsSpecification : VideosByIdSpecification, ISingleR
     public VideoWithPlaylistsSpecification(params VideoId[] ids)
         : base(ids)
     {
-        Query.Include(v => v.Playlists);
+        //Query.Include(v => v.Playlists);
     }
 }

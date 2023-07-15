@@ -34,9 +34,9 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         //       .WithOne()
         //       .HasForeignKey("VideoId");
 
-        builder.HasMany(x => x.Playlists)
-               .WithOne()
-               .HasForeignKey(nameof(VideoPlaylist.VideoId));
+        //builder.HasMany(x => x.Playlists)
+        //       .WithOne()
+        //       .HasForeignKey(nameof(PlaylistVideo.VideoId));
 
         #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,

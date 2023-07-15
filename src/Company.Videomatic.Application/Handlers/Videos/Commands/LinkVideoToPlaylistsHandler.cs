@@ -1,25 +1,23 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
-public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkVideoToPlaylistsCommand, LinkVideoToPlaylistsResponse>
+public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkPlaylistToVideosCommand, Result<int>>
 {
-    private readonly IVideoService _videoService;
+    private readonly IPlaylistService _playlistService;
     private readonly IMapper _mapper;
 
     public LinkVideoToPlaylistsHandler(
-        IVideoService videoService,
+        IPlaylistService playlistService,
         IMapper mapper)
     {
-        _videoService = videoService ?? throw new ArgumentNullException(nameof(videoService));
+        _playlistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async Task<LinkVideoToPlaylistsResponse> Handle(LinkVideoToPlaylistsCommand request, CancellationToken cancellationToken = default)
+    public async Task<Result<int>> Handle(LinkPlaylistToVideosCommand request, CancellationToken cancellationToken = default)
     {
-        PlaylistId[] plIds = request.PlaylistIds.Select(x => new PlaylistId(x)).ToArray();// TODO: a bit much
+        var cnt = await _playlistService.LinkToPlaylists(request.Id, request.VideoIds.Select(x => new VideoId(x)));
 
-        var cnt = await _videoService.LinkToPlaylists(request.Id, plIds);
-
-        return new LinkVideoToPlaylistsResponse(request.Id, cnt);
+        return new Result<int>(cnt);
     }
 
 }

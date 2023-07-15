@@ -14,7 +14,18 @@ public sealed class GetPlaylistsHandler :
     readonly IMapper _mapper;
     
     public async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
-    {        
+    {
+        var q = from p in _dbContext.Playlists
+                select new PlaylistDTO(
+                    p.Id,
+                    p.Name,
+                    p.Description,
+                    p.Videos.Count()
+                    );
+        
+        var res = await q.ToListAsync();
+
+        return new PageResult<PlaylistDTO>(res, request.Page ?? 1, request.PageSize ?? 1, 10);
         //var spec = new PlaylistsFilteredAndPaginated(
         //    request.SearchText,
         //    request.Page,
@@ -28,8 +39,7 @@ public sealed class GetPlaylistsHandler :
         //    spec.PageSize,
         //    cancellationToken);
         //
-        //return res;
-        throw new NotImplementedException();
+        //return res;        
     }
 
     public async Task<IEnumerable<PlaylistDTO>> Handle(GetPlaylistsByIdQuery request, CancellationToken cancellationToken)

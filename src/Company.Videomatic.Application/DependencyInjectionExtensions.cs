@@ -30,7 +30,7 @@ public static class DependencyInjectionExtensions
         // IOptions
 
         // Services
-        services.AddScoped<IVideoService, VideoService>();
+        services.AddScoped<IPlaylistService, PlaylistService>();
 
         // Infrastructure
         services.AddMediatR(cfg =>        

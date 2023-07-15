@@ -110,18 +110,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
         var createVid2Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
 
-        throw new Exception("Finish this test");
         // Executes
-        //var addVidsCmd = new LinkVideoToPlaylistsCommand(
-        //    video1,
-        //    new long[] { playlist1 });
-        //
-        //LinkVideoToPlaylistsResponse addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
-        //LinkVideoToPlaylistsResponse emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
-        //
-        //// Checks
-        //playlist1.Value.Should().BeGreaterThan(0);
-        //video1.Value.Should().BeGreaterThan(0);
+        var addVidsCmd = new LinkPlaylistToVideosCommand(
+            playlist1.Value.Id,
+            new long[] { video1.Value.Id });
+        
+        var addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
+        var emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
+        
+        // Checks
+        playlist1.Value.Id.Value.Should().BeGreaterThan(0);
+        video1.Value.Id.Value.Should().BeGreaterThan(0);
     }
 
     [Theory]
@@ -195,7 +194,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,
         [FromServices] IRepository<Playlist> playListRepository,
-        [FromServices] IVideoService videoService
+        [FromServices] IPlaylistService videoService
         )
     {
         var json = await File.ReadAllTextAsync(fileName);
@@ -225,7 +224,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         foreach (var v in videos)
         {
-            await videoService.LinkToPlaylists(v.Id.Value, new [] { pl.Id });
+            await videoService.LinkToPlaylists(pl.Id, new [] { v.Id });
         }       
     }
 }
