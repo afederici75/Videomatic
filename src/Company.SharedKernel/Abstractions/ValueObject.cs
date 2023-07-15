@@ -1,5 +1,8 @@
-﻿namespace Company.Videomatic.Domain.Abstractions;
+﻿namespace Company.SharedKernel.Abstractions;
 
+/// <summary>
+/// The base class for value objects.
+/// </summary>
 public abstract class ValueObject
 {
     public static bool operator ==(ValueObject one, ValueObject two)

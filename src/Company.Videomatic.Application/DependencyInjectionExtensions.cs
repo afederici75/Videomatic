@@ -1,8 +1,6 @@
 ﻿using Company.Videomatic.Application;
-using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Behaviors;
 using Company.Videomatic.Application.Services;
-using Company.Videomatic.Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
 
 // This is required so I can mark validators as 'internal' (i.e. instead of public) and still be able to access them from the test project.

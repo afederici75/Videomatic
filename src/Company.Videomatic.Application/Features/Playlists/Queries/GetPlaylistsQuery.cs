@@ -5,7 +5,7 @@ public record GetPlaylistsQuery(
     string? OrderBy = null,
     int? Page = null,
     int? PageSize = null,
-    IEnumerable<long>? PlaylistIds = null) : IRequest<PageResult<PlaylistDTO>>;
+    IEnumerable<long>? PlaylistIds = null) : IRequest<Page<PlaylistDTO>>;
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {

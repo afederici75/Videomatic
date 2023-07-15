@@ -1,3 +1,9 @@
+
+-Copy AppLogger interface from eShopWeb
+	-d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs
+
+---------------------------
+
 [X] It's possible that PlaylistVideo has issues:
 	Should it expose all those props? Maybe pick one (ids or references)?
 
@@ -10,5 +16,3 @@
 
 [X] I should check all the equatable things for value objects, strongly typed ids 
 
--Copy AppLogger interface from eShopWeb
-	-d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs

@@ -43,7 +43,7 @@ public class Playlist : IAggregateRoot
     private Playlist() { }
 
     [JsonConstructor]
-    private Playlist(PlaylistId id, string name, string? description, List<PlaylistVideo> videos)
+    private Playlist(PlaylistId id, string name, string? description, List<PlaylistVideo> videos) 
     {
         Id = id;
         Name = name;

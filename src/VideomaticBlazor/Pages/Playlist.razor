@@ -1,5 +1,4 @@
 ﻿@page "/Playlist/{PlaylistId:long}"
-@using Company.Videomatic.Domain.Abstractions;
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
@@ -24,7 +23,7 @@
             IncludeTags: true, 
             IncludeThumbnail: ThumbnailResolutionDTO.Default);
         
-        PageResult<VideoDTO> results = await Sender.Send(query);
+        Page<VideoDTO> results = await Sender.Send(query);
         
         Videos = results.Items.ToArray();
     }    

@@ -2,13 +2,10 @@
 using Ardalis.Result;
 using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Infrastructure.Data.Tests.Helpers;
 using Newtonsoft.Json;
-using System.Net.NetworkInformation;
-using System.Text.Json;
 
 namespace Infrastructure.Data.Tests;
 
@@ -156,7 +153,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             IncludeTags: includeCounts, 
             IncludeThumbnail: IncludeThumbnail);
 
-        PageResult<VideoDTO> response = await Sender.Send(query);
+        Page<VideoDTO> response = await Sender.Send(query);
         if (response.Count != expectedResults)
         { }
         // Checks
@@ -182,7 +179,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
             VideoIds: videoIds,             
             IncludeThumbnail: IncludeThumbnail);
 
-        PageResult<VideoDTO> res = await Sender.Send(query);
+        Page<VideoDTO> res = await Sender.Send(query);
 
         // Checks
         res.Items.Should().HaveCount(expectedResults);        
@@ -201,7 +198,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         await repository.AddAsync(video);
     }
 
-    [Theory(Skip = "Expensive!")]
+    //[Theory(Skip = "Expensive!")]
+    [Theory]
     [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null, null)]
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,

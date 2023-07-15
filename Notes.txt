@@ -1,3 +1,9 @@
+7/15
+-Some constructors and factories need work
+	-PlaylistVideo is missing the jsonconstructor
+	-Are the factory methods a good idea?
+
+
 7/14
 -The handlers are in the wrong place. I should move them to Application since I adopted 
 the IRepository<> stuff and their implementation should be EF independent.

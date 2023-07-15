@@ -1,6 +1,4 @@
-﻿using Ardalis.Result;
-
-namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
 public record CreateArtifactCommand(long VideoId,
                                     string Name,

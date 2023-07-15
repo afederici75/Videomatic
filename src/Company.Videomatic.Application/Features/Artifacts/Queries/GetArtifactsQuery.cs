@@ -5,7 +5,7 @@ public record GetArtifactsQuery(
     string? OrderBy = null,
     int? Page = null,
     int? PageSize = null,
-    IEnumerable<long>? ArtifactIds = null) : IRequest<PageResult<ArtifactDTO>>;
+    IEnumerable<long>? ArtifactIds = null) : IRequest<Page<ArtifactDTO>>;
 
 internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
 {

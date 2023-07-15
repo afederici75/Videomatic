@@ -1,7 +1,6 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.Videomatic.Application.Handlers;
+namespace Company.SharedKernel.Handlers;
 
 public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : 
     AggregateRootCommandHandlerBase<TCreateCommand, TAggregateRoot>,
@@ -23,4 +22,3 @@ public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot>
         return result;
     }    
 }
-

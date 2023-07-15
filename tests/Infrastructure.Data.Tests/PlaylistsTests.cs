@@ -1,7 +1,6 @@
 using Application.Tests.Helpers;
 using Ardalis.Result;
 using Company.Videomatic.Application.Features.Playlists;
-using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Infrastructure.Data.Tests.Helpers;
 
@@ -95,7 +94,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
             Page: null, // Uses to 1 by default
             PageSize: null);
 
-        PageResult<PlaylistDTO> response = await Sender.Send(query);
+        Page<PlaylistDTO> response = await Sender.Send(query);
 
         // Checks
         response.Count.Should().Be(expectedResults);

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers;
+﻿using Company.SharedKernel.Abstractions;
+
+namespace Company.SharedKernel.Handlers;
 
 public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot, TId> : 
     AggregateRootCommandHandlerBase<TDeleteCommand, TAggregateRoot>,

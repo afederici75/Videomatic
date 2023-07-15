@@ -8,7 +8,7 @@ public record GetVideosQuery(
     int? PageSize = null,
     bool IncludeTags = false,
     ThumbnailResolutionDTO? IncludeThumbnail = null,
-    IEnumerable<long>? VideoIds = null) : IRequest<PageResult<VideoDTO>>;
+    IEnumerable<long>? VideoIds = null) : IRequest<Page<VideoDTO>>;
 
 
 internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>

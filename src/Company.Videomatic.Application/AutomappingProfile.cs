@@ -42,6 +42,6 @@ public class AutomappingProfile : Profile
         CreateMap<Transcript, TranscriptDTO>();
         CreateMap<Artifact, ArtifactDTO>();
 
-        //CreateMap<PageResult<Video>, PageResult<VideoDTO>>();
+        //CreateMap<Page<Video>, Page<VideoDTO>>();
     }
 }

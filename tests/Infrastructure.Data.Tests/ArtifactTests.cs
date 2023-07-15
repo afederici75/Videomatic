@@ -3,7 +3,6 @@ using Ardalis.Result;
 using Company.Videomatic.Application.Features.Artifacts;
 using Company.Videomatic.Application.Features.Artifacts.Commands;
 using Company.Videomatic.Application.Features.Artifacts.Queries;
-using Company.Videomatic.Domain.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Infrastructure.Data.Tests.Helpers;
@@ -113,7 +112,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
             Page: null, // Uses to 1 by default
             PageSize: null); // Uses 10 by default
 
-        PageResult<ArtifactDTO> response = await Sender.Send(query);
+        Page<ArtifactDTO> response = await Sender.Send(query);
 
         // Checks
         response.Count.Should().Be(expectedResults);

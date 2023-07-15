@@ -5,7 +5,7 @@ using Company.Videomatic.Application.Features.Videos;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Queries;
 
-public class GetVideosHandler : IRequestHandler<GetVideosQuery, PageResult<VideoDTO>>
+public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Video, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -24,7 +24,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, PageResult<Video
     readonly VideomaticDbContext _dbContext;
 
     // GetVideosQuery
-    public async Task<PageResult<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
+    public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
@@ -77,6 +77,6 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, PageResult<Video
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new PageResult<VideoDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<VideoDTO>(res, pageIdx, pageSize, totalCount);
     }
 }

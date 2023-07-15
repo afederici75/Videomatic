@@ -1,7 +1,6 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.Videomatic.Application.Handlers;
+namespace Company.SharedKernel.Handlers;
 
 public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> :
     AggregateRootCommandHandlerBase<TUpdateCommand, TAggregateRoot>, 

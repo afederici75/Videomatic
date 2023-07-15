@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
-public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
+public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Playlist, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -20,7 +20,7 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
 
     readonly VideomaticDbContext _dbContext;
 
-    public async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
+    public async Task<Page<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
@@ -56,6 +56,6 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new PageResult<PlaylistDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<PlaylistDTO>(res, pageIdx, pageSize, totalCount);
     }
 }

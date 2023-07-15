@@ -5,7 +5,7 @@ public record GetTranscriptsQuery(
     string? OrderBy = null,
     int? Page = null,
     int? PageSize = null,
-    IEnumerable<long>? VideoIds = null) : IRequest<PageResult<TranscriptDTO>>;
+    IEnumerable<long>? VideoIds = null) : IRequest<Page<TranscriptDTO>>;
 
 internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
 {

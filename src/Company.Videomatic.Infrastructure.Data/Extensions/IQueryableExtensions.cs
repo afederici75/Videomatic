@@ -45,7 +45,7 @@ public static class IQueryableExtensions
         return orderedQueryable ?? source;
     }
 
-    public static async Task<PageResult<TDTO>> ToPageAsync<TDTO>(
+    public static async Task<Page<TDTO>> ToPageAsync<TDTO>(
         this IQueryable<TDTO> source,
         int page,
         int pageSize,
@@ -58,7 +58,7 @@ public static class IQueryableExtensions
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        return new PageResult<TDTO>(
+        return new Page<TDTO>(
             items,
             page,
             pageSize,

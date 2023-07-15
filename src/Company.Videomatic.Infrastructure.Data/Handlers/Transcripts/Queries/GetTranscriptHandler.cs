@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Application.Handlers.Transcripts.Queries;
 
-public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, PageResult<TranscriptDTO>>
+public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<TranscriptDTO>>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Transcript, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Transcript, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
@@ -20,7 +20,7 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, PageRes
 
     readonly VideomaticDbContext _dbContext;
 
-    public async Task<PageResult<TranscriptDTO>> Handle(GetTranscriptsQuery request, CancellationToken cancellationToken)
+    public async Task<Page<TranscriptDTO>> Handle(GetTranscriptsQuery request, CancellationToken cancellationToken)
     {
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
@@ -56,6 +56,6 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, PageRes
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new PageResult<TranscriptDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<TranscriptDTO>(res, pageIdx, pageSize, totalCount);
     }
 }
