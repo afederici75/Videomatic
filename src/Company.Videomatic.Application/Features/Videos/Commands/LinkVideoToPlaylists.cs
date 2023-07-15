@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
-public record LinkVideoToPlaylistsCommand(long Id, long[] PlaylistIds) : IRequest<LinkVideoToPlaylistsResponse>, ICommandWithEntityId;
+public record LinkVideoToPlaylistsCommand(long Id, long[] PlaylistIds) : IRequest<LinkVideoToPlaylistsResponse>;
 
 public record LinkVideoToPlaylistsResponse(long VideoId, int count);
 
