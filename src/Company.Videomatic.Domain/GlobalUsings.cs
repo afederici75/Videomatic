@@ -1,8 +1,5 @@
-﻿global using Ardalis.Specification;
-global using System.Linq.Expressions;
+﻿global using System.Linq;
+global using Ardalis.GuardClauses;
+global using Newtonsoft.Json;
 
 global using Company.Videomatic.Domain.Abstractions;
-global using Company.Videomatic.Domain.Aggregates.Playlist;
-global using Company.Videomatic.Domain.Aggregates.Video;
-global using Company.Videomatic.Domain.Aggregates.Transcript;
-global using Company.Videomatic.Domain.Aggregates.Artifact;

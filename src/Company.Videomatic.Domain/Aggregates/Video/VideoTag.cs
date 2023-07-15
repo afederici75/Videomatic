@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Aggregates.Video;
 
-public class VideoTag : ValueObject//:EntityBase
+public class VideoTag : ValueObject
 {
     public static implicit operator string(VideoTag x) => x.Name;
     public static implicit operator VideoTag(string x) => new (x);

@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{E795DFD9
 		TODOs.txt = TODOs.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SharedKernel", "src\Company.SharedKernel\Company.SharedKernel.csproj", "{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +157,7 @@ Global
 		{0F4F05C4-3684-4C16-A0AF-EC2C553CD707} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{69249D8E-AB6B-4F38-8159-3A8F9935D147} = {BF763A0D-0B85-4487-B41B-BFC9E7401D83}
+		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}

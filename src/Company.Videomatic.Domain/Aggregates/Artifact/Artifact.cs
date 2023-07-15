@@ -1,5 +1,4 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Video;
-using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
@@ -7,7 +6,7 @@ public class Artifact : IAggregateRoot
 {
     public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
     {
-        return new Artifact
+        return new Artifact // TODO: code smell with the other ctors...
         {
             VideoId = videoId,
             Name = name,

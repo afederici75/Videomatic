@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Company.Videomatic.Domain.Abstractions;
+﻿namespace Company.Videomatic.Domain.Abstractions;
 
 public record PageResult<T>(IEnumerable<T> Items, int PageIndex, int PageSize, long TotalCount)
 {
