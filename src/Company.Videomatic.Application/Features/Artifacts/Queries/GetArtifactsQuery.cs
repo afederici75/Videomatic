@@ -4,7 +4,8 @@ public record GetArtifactsQuery(
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null) : IRequest<PageResult<ArtifactDTO>>;
+    int? PageSize = null,
+    IEnumerable<long>? ArtifactIds = null) : IRequest<PageResult<ArtifactDTO>>;
 
 internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
 {
@@ -13,6 +14,11 @@ internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
         When(x => x.SearchText is not null, () =>
         {
             RuleFor(x => x.SearchText).NotEmpty();
+        });
+
+        When(x => x.ArtifactIds is not null, () =>
+        {
+            RuleFor(x => x.ArtifactIds).NotEmpty();
         });
 
         When(x => x.OrderBy is not null, () =>

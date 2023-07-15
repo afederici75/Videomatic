@@ -21,8 +21,8 @@
     {
         var query = new GetVideosQuery(
             PlaylistIds: new[] { PlaylistId },
-            IncludeCounts: true, 
-            Resolution: ThumbnailResolutionDTO.Default);
+            IncludeTags: true, 
+            IncludeThumbnail: ThumbnailResolutionDTO.Default);
         
         PageResult<VideoDTO> results = await Sender.Send(query);
         

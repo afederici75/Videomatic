@@ -142,8 +142,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
             OrderBy: orderBy, 
             Page: null, // Uses 1 by default
             PageSize: null, // Uses 10 by default
-            IncludeCounts: includeCounts, 
-            Resolution: IncludeThumbnail);
+            IncludeTags: includeCounts, 
+            IncludeThumbnail: IncludeThumbnail);
 
         PageResult<VideoDTO> response = await Sender.Send(query);
 
@@ -166,14 +166,14 @@ public class VideosTests : IClassFixture<DbContextFixture>
         ThumbnailResolutionDTO? IncludeThumbnail,
         int expectedResults)
     {
-        var query = new GetVideosByIdQuery(
+        var query = new GetVideosQuery(
             VideoIds: videoIds,             
-            Resolution: IncludeThumbnail);
+            IncludeThumbnail: IncludeThumbnail);
 
-        var items = await Sender.Send(query);
+        PageResult<VideoDTO> res = await Sender.Send(query);
 
         // Checks
-        items.Should().HaveCount(expectedResults);        
+        res.Items.Should().HaveCount(expectedResults);        
     }
 
     [Theory(Skip ="Expensive!")]

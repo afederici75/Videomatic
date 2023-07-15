@@ -15,7 +15,7 @@ public class VideosBySearchText : Specification<Video>//, IPaginatedSpecificatio
     };
 
     public VideosBySearchText(string? searchText = default,
-                              long[]? playlistIds = default,
+                              IEnumerable<long>? playlistIds = default,
                               string? orderBy = default)
     {
         // searchText is included in Name and Description

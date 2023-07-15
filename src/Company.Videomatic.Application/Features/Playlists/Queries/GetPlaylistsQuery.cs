@@ -1,11 +1,11 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
-
 public record GetPlaylistsQuery(
     string? SearchText = null,
     string? OrderBy = null,
     int? Page = null,
-    int? PageSize = null) : IRequest<PageResult<PlaylistDTO>>;
+    int? PageSize = null,
+    IEnumerable<long>? PlaylistIds = null) : IRequest<PageResult<PlaylistDTO>>;
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {
@@ -19,6 +19,11 @@ internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
         When(x => x.OrderBy is not null, () =>
         {
             RuleFor(x => x.OrderBy).NotEmpty();
+        });
+
+        When(x => x.PlaylistIds is not null, () =>
+        {
+            RuleFor(x => x.PlaylistIds).NotEmpty();
         });
 
         RuleFor(x => x.Page).GreaterThan(0);

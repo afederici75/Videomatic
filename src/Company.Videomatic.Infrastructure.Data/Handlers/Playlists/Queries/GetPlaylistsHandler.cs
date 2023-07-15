@@ -3,19 +3,8 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
 
-public sealed class GetPlaylistsHandler : 
-    IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>,
-    IRequestHandler<GetPlaylistsByIdQuery, IEnumerable<PlaylistDTO>>
+public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, PageResult<PlaylistDTO>>
 {
-    public GetPlaylistsHandler(VideomaticDbContext dbContext, IMapper mapper)
-    {
-        _dbContext = dbContext;
-        _mapper = mapper;
-    }
-
-    readonly VideomaticDbContext _dbContext;
-    readonly IMapper _mapper;
-
     public static readonly IReadOnlyDictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Playlist, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
         { nameof(Playlist.Id), _ => _.Id },
@@ -24,58 +13,49 @@ public sealed class GetPlaylistsHandler :
         { "VideoCount", _ => _.Videos.Count()},
     };
 
+    public GetPlaylistsHandler(VideomaticDbContext dbContext)
+    {
+        _dbContext = dbContext;        
+    }
+
+    readonly VideomaticDbContext _dbContext;
+
     public async Task<PageResult<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
 
+        // Playlists
         IQueryable<Playlist> q = _dbContext.Playlists;
+
+        // Where
+        if (request.PlaylistIds != null)
+        {
+            q = q.Where(p => request.PlaylistIds.Contains(p.Id));
+        }
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
             q = q.Where(p => p.Name.Contains(request.SearchText) || ((p.Description != null) && p.Description.Contains(request.SearchText)));
         }
 
+        // OrderBy
         if (!string.IsNullOrWhiteSpace(request.OrderBy))
         {
             q = q.OrderBy(request.OrderBy, SupportedOrderBys);
         }        
 
+        // Projection
         var final = q.Select(p => new PlaylistDTO(
             p.Id,
             p.Name,
             p.Description,
             p.Videos.Count()));
 
+        // Counts
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
         return new PageResult<PlaylistDTO>(res, pageIdx, pageSize, totalCount);
-    }
-
-    public async Task<IEnumerable<PlaylistDTO>> Handle(GetPlaylistsByIdQuery request, CancellationToken cancellationToken)
-    {
-        IQueryable<Playlist> q = _dbContext.Playlists;
-
-        if (!string.IsNullOrWhiteSpace(request.SearchText))
-        {
-            q = q.Where(p => p.Name.Contains(request.SearchText) || ((p.Description != null) && p.Description.Contains(request.SearchText)));
-        }
-
-        if (!string.IsNullOrWhiteSpace(request.OrderBy))
-        {
-            q = q.OrderBy(request.OrderBy, SupportedOrderBys);
-        }
-
-        var final = q.Select(p => new PlaylistDTO(
-            p.Id,
-            p.Name,
-            p.Description,
-            p.Videos.Count()));
-
-        var res = await final.ToListAsync();
-
-        return res;
-
     }
 }

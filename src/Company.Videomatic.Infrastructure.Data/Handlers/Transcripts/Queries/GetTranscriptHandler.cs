@@ -1,8 +1,7 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Queries;
 
 public class GetTranscriptHandler :
-    IRequestHandler<GetTranscriptsQuery, PageResult<TranscriptDTO>>,
-    IRequestHandler<GetTranscriptsByIdQuery, IEnumerable<TranscriptDTO>>
+    IRequestHandler<GetTranscriptsQuery, PageResult<TranscriptDTO>>
 {
     public GetTranscriptHandler(IReadRepository<Transcript> repository, IMapper mapper)
     {
@@ -29,15 +28,5 @@ public class GetTranscriptHandler :
             cancellationToken);
 
         return res;
-    }
-
-    public async Task<IEnumerable<TranscriptDTO>> Handle(GetTranscriptsByIdQuery request, CancellationToken cancellationToken)
-    {
-        var spec = new TranscriptByIdsSpecification(
-            request.TranscriptIds.Select(x => new TranscriptId(x)));
-
-        var videos = await _repository.ListAsync(spec, cancellationToken);
-
-        return videos.Select(vid => _mapper.Map<TranscriptDTO>(vid));
     }
 }

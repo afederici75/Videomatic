@@ -5,5 +5,5 @@ public record VideoDTO(
     string Location = "",
     string Name = "",
     string? Description = null,
-    string[]? Tags = null,
+    IEnumerable<string>? Tags = null,
     string? Thumbnail = default);
