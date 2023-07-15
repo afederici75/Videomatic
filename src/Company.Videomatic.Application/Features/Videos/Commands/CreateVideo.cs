@@ -10,7 +10,7 @@ public record CreateVideoCommand(
     string PlaylistId,
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId
-    ) : ICreateCommand<Video> { }
+    ) : CreateAggregateRootCommand<Video>();
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {

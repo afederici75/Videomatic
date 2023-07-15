@@ -3,9 +3,7 @@
 public record CreateArtifactCommand(long VideoId,
                                     string Name,
                                     string Type,
-                                    string? Text) : ICreateCommand<Artifact>;
-
-// I should return a DTO...
+                                    string? Text) : CreateAggregateRootCommand<Artifact>();
 
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {

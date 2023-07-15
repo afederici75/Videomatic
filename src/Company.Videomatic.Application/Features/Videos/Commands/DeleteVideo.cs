@@ -4,7 +4,7 @@
 /// This command is used to delete a video from the repository.
 /// </summary>
 /// <param name="VideoId"> The id of the video to delete. </param>
-public record DeleteVideoCommand(long Id) : IDeleteCommand<Video>;
+public record DeleteVideoCommand(long Id) : DeleteAggregateRootCommand<Video>(Id);
 
 /// <summary>
 /// The validator for DeleteVideoCommand.

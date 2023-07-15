@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistCommand(long Id, string Name, string? Description) : IUpdateCommand<Playlist>;
+public record UpdatePlaylistCommand(long Id, string Name, string? Description) : UpdateAggregateRootCommand<Playlist>(Id);
 
 public record UpdatePlaylistResponse(long Id, bool WasUpdated);
 

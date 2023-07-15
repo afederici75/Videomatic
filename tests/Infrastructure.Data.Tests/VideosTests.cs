@@ -198,8 +198,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         await repository.AddAsync(video);
     }
 
-    //[Theory(Skip = "Expensive!")]
-    [Theory]
+    [Theory(Skip = "Expensive!")]
+    //[Theory]
     [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null, null)]
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,

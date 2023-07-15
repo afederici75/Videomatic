@@ -1,16 +1,26 @@
 ﻿using Company.SharedKernel.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.SharedKernel.Handlers;
 
 public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> :
-    AggregateRootCommandHandlerBase<TUpdateCommand, TAggregateRoot>, 
     IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
-    where TUpdateCommand : IUpdateCommand<TAggregateRoot>
+    where TUpdateCommand : UpdateAggregateRootCommand<TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot
     where TId: class
 {
-    protected UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper) { }
+    protected UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
+    {
+        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
 
+        var repoType = typeof(IRepository<TAggregateRoot>);
+        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(repoType);
+    }
+
+    protected IServiceProvider ServiceProvider { get; }
+    protected IRepository<TAggregateRoot> Repository { get; }
+    protected IMapper Mapper { get; }
     abstract protected TId ConvertIdOfRequest(TUpdateCommand request);
 
     public async Task<Result<TAggregateRoot>> Handle(TUpdateCommand request, CancellationToken cancellationToken)

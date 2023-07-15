@@ -2,7 +2,7 @@
 
 public record CreatePlaylistCommand(
     string Name,
-    string? Description = null) : ICreateCommand<Playlist>;
+    string? Description = null) : CreateAggregateRootCommand<Playlist>();
 
 internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {

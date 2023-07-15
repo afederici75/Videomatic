@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record DeletePlaylistCommand(long Id) : IDeleteCommand<Playlist>;
+public record DeletePlaylistCommand(long Id) : DeleteAggregateRootCommand<Playlist>(Id);
 
 internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {

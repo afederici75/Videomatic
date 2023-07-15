@@ -2,8 +2,7 @@
 
 public record CreateTranscriptCommand(long VideoId,
                                       string Language,
-                                      IEnumerable<string> Lines) : 
-    ICreateCommand<Transcript>;
+                                      IEnumerable<string> Lines) : CreateAggregateRootCommand<Transcript>();
 
 public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {

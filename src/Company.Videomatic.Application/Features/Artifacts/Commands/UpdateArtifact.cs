@@ -2,7 +2,7 @@
 
 public record UpdateArtifactCommand(long Id,
                                     string Name,
-                                    string? Text) : IUpdateCommand<Artifact>;
+                                    string? Text) : UpdateAggregateRootCommand<Artifact>(Id);
 
 public class UpdateArtifactCommandValidator : AbstractValidator<UpdateArtifactCommand>
 {

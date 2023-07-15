@@ -6,7 +6,7 @@
 public record UpdateVideoCommand(
     long Id, 
     string Name, 
-    string? Description = default) : IUpdateCommand<Video>;
+    string? Description = default) : UpdateAggregateRootCommand<Video>(Id);
 
 
 internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>

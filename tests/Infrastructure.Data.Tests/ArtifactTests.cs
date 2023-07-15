@@ -60,7 +60,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         var createdResponse = await Sender.Send(CreateArtifactCommandBuilder.WithDummyValues(videoId));
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteArtifactCommand(createdResponse.Value.Id));
+        var delReq = new DeleteArtifactCommand(createdResponse.Value.Id);
+        var deletedResponse = await Sender.Send(delReq);
 
         // Checks
         createdResponse.IsSuccess.Should().BeTrue();
