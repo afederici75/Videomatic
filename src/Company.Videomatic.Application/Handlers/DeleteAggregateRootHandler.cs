@@ -4,7 +4,7 @@ public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot,
     AggregateRootCommandHandlerBase<TDeleteCommand, TAggregateRoot>,
     IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IDeleteCommand<TAggregateRoot>
-    where TAggregateRoot : class, IAggregateRoot<TId>
+    where TAggregateRoot : class, IAggregateRoot
     where TId : class
 {
     public DeleteAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper) 

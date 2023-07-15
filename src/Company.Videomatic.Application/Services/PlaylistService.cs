@@ -18,8 +18,9 @@ public class PlaylistService : IPlaylistService
         }
 
         var newLinks = pl.LinkToVideos(videoIds);
+        
+        await _repository.SaveChangesAsync();
 
-        var cnt = await _repository.SaveChangesAsync();
-        return cnt;
+        return newLinks;
     }
 }

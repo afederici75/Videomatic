@@ -4,7 +4,6 @@ global using Ardalis.Result;
 global using Ardalis.Specification;
 global using AutoMapper;
 
-global using Company.Videomatic.Domain.Extensions;
 global using Company.Videomatic.Application.Abstractions;
 
 global using Company.Videomatic.Application.Features.Artifacts;

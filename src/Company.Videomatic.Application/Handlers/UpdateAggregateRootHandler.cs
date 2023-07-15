@@ -7,7 +7,7 @@ public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot,
     AggregateRootCommandHandlerBase<TUpdateCommand, TAggregateRoot>, 
     IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
     where TUpdateCommand : IUpdateCommand<TAggregateRoot>
-    where TAggregateRoot : class, IAggregateRoot<TId>
+    where TAggregateRoot : class, IAggregateRoot
     where TId: class
 {
     protected UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper) { }

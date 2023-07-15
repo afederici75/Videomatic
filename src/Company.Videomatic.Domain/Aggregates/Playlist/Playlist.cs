@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public class Playlist : IAggregateRoot<PlaylistId>
+public class Playlist : IAggregateRoot
 {
     public static Playlist Create(string name, string? description = null)
     {
@@ -27,7 +27,7 @@ public class Playlist : IAggregateRoot<PlaylistId>
 
         // We have _playlists fetched from the db. The 
         var goodIds = videoIds
-            //.Where(pid => pid is not null)
+            .Where(vid => vid is not null) // TODO: code smell?
             .Except(_videos.Select(p => p.VideoId))
             .ToArray();
 

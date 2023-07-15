@@ -5,7 +5,6 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
 
-global using Company.Videomatic.Domain.Extensions;
 global using Company.Videomatic.Application.Abstractions;
 
 global using Company.Videomatic.Application.Features.Artifacts;

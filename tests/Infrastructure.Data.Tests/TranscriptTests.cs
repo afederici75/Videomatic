@@ -1,8 +1,6 @@
 ﻿using Application.Tests.Helpers;
-using Company.Videomatic.Application.Features.Artifacts.Commands;
 using Company.Videomatic.Application.Features.Transcripts.Commands;
 using Company.Videomatic.Domain.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Infrastructure.Data.Tests.Helpers;
 

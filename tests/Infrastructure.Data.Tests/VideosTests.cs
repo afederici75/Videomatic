@@ -7,6 +7,7 @@ using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Infrastructure.Data.Tests.Helpers;
 using Newtonsoft.Json;
+using System.Net.NetworkInformation;
 using System.Text.Json;
 
 namespace Infrastructure.Data.Tests;
@@ -89,38 +90,48 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         video.Id.Value.Should().Be(updateCommand.Id);
         video.Name.Should().BeEquivalentTo(updateCommand.Name);
-        video.Description.Should().BeEquivalentTo(updateCommand.Description);        
+        video.Description.Should().BeEquivalentTo(updateCommand.Description);
+
+        await Sender.Send(new DeleteVideoCommand(video.Id));
     }
 
     [Fact]
     public async Task LinksTwoVideoToPlaylist()
     {
-        // Prepares
+        // Playlist
         var createPlaylistCmd = new CreatePlaylistCommand(
             Name: nameof(LinksTwoVideoToPlaylist),
             Description: $"A description for my playlist {DateTime.Now}");
-
+        
         Result<Playlist> playlist1 = await Sender.Send(createPlaylistCmd);
 
+        // Video 1
         var createVid1Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
-
+        
         Result<Video> video1 = await Sender.Send(createVid1Cmd);
 
+        // Video 2
         var createVid2Cmd = CreateVideoCommandBuilder
             .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
 
-        // Executes
+        var video2 = await Sender.Send(createVid2Cmd);
+
+        // Links
         var addVidsCmd = new LinkPlaylistToVideosCommand(
             playlist1.Value.Id,
-            new long[] { video1.Value.Id });
+            new long[] { video1.Value.Id, video2.Value.Id });
         
         var addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
         var emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
         
         // Checks
-        playlist1.Value.Id.Value.Should().BeGreaterThan(0);
-        video1.Value.Id.Value.Should().BeGreaterThan(0);
+        addVidsResponse.Value.Should().Be(2);
+        emptyAddVidsResponse.Value.Should().Be(0);
+
+        await Sender.Send(new DeletePlaylistCommand(playlist1.Value.Id));
+        await Sender.Send(new DeleteVideoCommand(video1.Value.Id));
+        await Sender.Send(new DeleteVideoCommand(video2.Value.Id));
     }
 
     [Theory]
@@ -146,7 +157,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
             IncludeThumbnail: IncludeThumbnail);
 
         PageResult<VideoDTO> response = await Sender.Send(query);
-
+        if (response.Count != expectedResults)
+        { }
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);

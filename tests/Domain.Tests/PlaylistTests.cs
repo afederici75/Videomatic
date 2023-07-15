@@ -21,29 +21,27 @@ public class PlaylistTests
     [Fact]
     public void LinkVideoToPlaylists()
     {
-        throw new Exception("Not implemented yet");
-        //var video = Video.Create(DummyLocation, nameof(LinkVideoToPlaylists));
-        //var count = video.LinkToPlaylists(new PlaylistId[] { 123, 342 });
-        //
-        //// Checks
-        //video.Playlists.Count.Should().Be(2);        
+        var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
+        var count = playlist.LinkToVideos(new VideoId[] { 123, 342 });
+        
+        // Checks
+        playlist.Videos.Count.Should().Be(2);        
     }
 
     [Fact]
     public void DoesNotLinkVideoToNullPlaylistId()
     {
-        throw new Exception("Not implemented yet");
-        //        var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists));
-        //        var video = Video.Create(DummyLocation, nameof(DoesNotLinkVideoToNullPlaylistId));
+        var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists));
+        var video = Video.Create(DummyLocation, nameof(DoesNotLinkVideoToNullPlaylistId));
+        
+        #pragma warning disable CS8620 
+        // If you pass a newly created Playlist (which has a null Id) it would be null.
+        // Nulls should be ignored.
+        var count = playlist.LinkToVideos(new [] { default(VideoId) });
+        #pragma warning restore CS8620 
 
-        //#pragma warning disable CS8620 
-        //        // If you pass a newly created Playlist (which has a null Id) it would be null.
-        //        // Nulls should be ignored.
-        //        var count = video.LinkToPlaylists(new[] { default(PlaylistId) });
-        //#pragma warning restore CS8620 
-
-        //        // Checks
-        //        video.Playlists.Count.Should().Be(0);
-        //        count.Should().Be(0);
+        // Checks
+        playlist.Videos.Count.Should().Be(0);
+        count.Should().Be(0);
     }
 }
