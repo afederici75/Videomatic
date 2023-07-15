@@ -2,6 +2,7 @@
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
+using Company.Videomatic.Infrastructure.Data.Configurations;
 
 namespace Company.Videomatic.Infrastructure.Data;
 
@@ -22,7 +23,8 @@ public class VideomaticDbContext : DbContext
     public DbSet<Transcript> Transcripts { get; set; } = null!;
     public DbSet<Playlist> Playlists { get; set; } = null!;
     public DbSet<Video> Videos { get; set; } = null!;
-    
+    public DbSet<VideoPlaylist> VideoPlaylists { get; set; } = null!;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);

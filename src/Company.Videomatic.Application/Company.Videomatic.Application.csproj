@@ -17,4 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Handlers\Playlists\Queries\" />
+  </ItemGroup>
 </Project>

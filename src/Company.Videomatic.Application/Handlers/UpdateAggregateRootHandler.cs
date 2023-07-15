@@ -1,24 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Company.Videomatic.Application.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.Videomatic.Application.Handlers;
 
-public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> : IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
+public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> :
+    AggregateRootCommandHandlerBase<TUpdateCommand, TAggregateRoot>, 
+    IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
     where TUpdateCommand : IUpdateCommand<TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot<TId>
     where TId: class
 {
-    public UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
-    {
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-
-        var repoType = typeof(IRepository<TAggregateRoot>);
-        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(repoType);
-    }
-
-    protected IServiceProvider ServiceProvider { get; }
-    protected IRepository<TAggregateRoot> Repository { get; }
-    protected IMapper Mapper { get; }
+    protected UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper) { }
 
     abstract protected TId ConvertIdOfRequest(TUpdateCommand request);
 
@@ -32,7 +24,7 @@ public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot,
             return Result.NotFound();
         }
 
-        // TODO: this is where I could compare a version-id for the entity...
+        // TODO?: this is where I could compare a version-id for the entity...
 
         // Maps using Automapper which will access private setters to update currentAgg.
         var res = Mapper.Map<TUpdateCommand, TAggregateRoot>(request, currentAgg);
