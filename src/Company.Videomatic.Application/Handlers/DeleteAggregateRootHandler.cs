@@ -30,6 +30,8 @@ public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot,
             return Result.NotFound();
         }
 
+        // TODO: this is where I could compare a version-id for the entity...
+
         await Repository.DeleteAsync(itemToDelete);
         return true;
     }

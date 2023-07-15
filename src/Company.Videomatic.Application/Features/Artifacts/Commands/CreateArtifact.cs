@@ -7,6 +7,8 @@ public record CreateArtifactCommand(long VideoId,
                                     string Type,
                                     string? Text) : ICreateCommand<Artifact>;
 
+// I should return a DTO...
+
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {
     public CreateArtifactCommandValidator()

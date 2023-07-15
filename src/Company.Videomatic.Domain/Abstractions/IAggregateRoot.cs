@@ -4,14 +4,14 @@ namespace Company.Videomatic.Domain.Abstractions;
 
 public interface IAggregateRoot
 {
-    object GetId();
+    //object GetId();
 }
 
 public interface IAggregateRoot<TId> : IAggregateRoot
     where TId : class
 {
-    TId Id { get; }
+    //TId Id { get; }
 
-    object IAggregateRoot.GetId() => Id ?? throw new Exception("No Id assigned yet.");
+    //object IAggregateRoot.GetId() => Id ?? throw new Exception("No Id assigned yet.");
     
 }
