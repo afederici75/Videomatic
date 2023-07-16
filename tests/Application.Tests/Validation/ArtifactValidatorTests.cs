@@ -1,6 +1,7 @@
-﻿using Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿using Application.Tests.Helpers;
+using Company.Videomatic.Application.Features.Artifacts.Commands;
 
-namespace Application.Tests;
+namespace Application.Tests.Validation;
 
 public class ArtifactValidatorTests
 {
@@ -13,7 +14,7 @@ public class ArtifactValidatorTests
 
 
     [Theory]
-    [InlineData(1, "AI", "Name", "Text", 0)]    
+    [InlineData(1, "AI", "Name", "Text", 0)]
     [InlineData(0, "AI", "Name", "Text", 1)]
     [InlineData(3, null, "Name", "Text", 1)]
     [InlineData(4, "AI", null, "Text", 1)]

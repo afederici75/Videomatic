@@ -1,7 +1,7 @@
 ﻿using Application.Tests.Helpers;
 using Company.Videomatic.Application.Features.Videos;
 
-namespace Application.Tests;
+namespace Application.Tests.Validation;
 
 public class VideoRequestsValidatorTests
 {
@@ -50,12 +50,12 @@ public class VideoRequestsValidatorTests
     [InlineData(new long[] { }, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
     public void ValidateGetVideosQuery(
         long[]? playlistIds,
-        string? filter, 
+        string? filter,
         string? orderBy,
         int? page,
         int? pageSize,
         bool includeCounts,
-        ThumbnailResolutionDTO? includeThumbnail, 
+        ThumbnailResolutionDTO? includeThumbnail,
         int expectedErrors)
     {
         ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(new(playlistIds, filter, orderBy, page, pageSize, includeCounts, includeThumbnail), expectedErrors);

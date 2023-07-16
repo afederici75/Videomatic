@@ -1,4 +1,4 @@
-﻿namespace Application.Tests;
+﻿namespace Application.Tests.Helpers;
 
 public class ValidatorHelper
 {

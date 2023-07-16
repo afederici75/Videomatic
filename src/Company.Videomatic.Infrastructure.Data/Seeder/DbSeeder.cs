@@ -63,7 +63,6 @@ public class DbSeeder : IDbSeeder
         var video = Video.Create(
                 location: "https://www.youtube.com/watch?v=n1kmKpjk_8E",
                 name: "Aldous Huxley - The Dancing Shiva",
-                details: VideoDetails.CreateEmpty(),
                 description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
                 "(Nataraja, Nataraj, nət̪əˈraːdʒ) of the Hindu spiritual tradition.  Aldous Huxley " +
                 "was the author of many excellent books and essays including; Brave New World, " +
@@ -97,7 +96,13 @@ public class DbSeeder : IDbSeeder
                 "(2) transformative in nature, (3) does not compete with the original work or have any negative " +
                 "effect on its market and (4) uses no more of the original work than necessary for the video's " +
                 "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
-                "poster.");
+                "poster.",
+                details: new VideoDetails(
+                    Provider: "YOUTUBE",
+                    ProviderVideoId: "n1kmKpjk_8E",
+                    VideoPublishedAt: new DateTime(2019, 12, 12), // Bogus date
+                    VideoOwnerChannelId: "UNKNOWN",
+                    VideoOwnerChannelTitle: "James Dearden Bush"));
 
         // Tags
         video.AddTags("HINDUISM", "HUXLEY");
@@ -169,7 +174,13 @@ public class DbSeeder : IDbSeeder
                 "liberation or enlightenment, instead." +
                 "\n" +
                 "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
-                "For more information, please see: https://www.arshabodha.org/");
+                "For more information, please see: https://www.arshabodha.org/",
+                details: new VideoDetails(
+                    Provider: "YOUTUBE",
+                    ProviderVideoId: "BBd3aHnVnuE",
+                    VideoPublishedAt: new DateTime(2021, 3, 23), // Bogus date
+                    VideoOwnerChannelId: "UNKNOWN",
+                    VideoOwnerChannelTitle: "ArshaBodha - Swami Tadatmananda"));
 
         // Tags
         video.AddTags("HINDUISM");

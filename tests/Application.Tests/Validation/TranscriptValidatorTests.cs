@@ -1,4 +1,6 @@
-﻿namespace Application.Tests;
+﻿using Application.Tests.Helpers;
+
+namespace Application.Tests.Validation;
 
 public class TranscriptValidatorTests
 {
