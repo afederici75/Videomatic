@@ -131,9 +131,10 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 
     //[Theory(Skip = "Slow!!!")]
     [Theory]
-    [InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
-    [InlineData("PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // Google I/O Keynote Films
-    public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistId)
+    [InlineData("Alternative Living, Sustainable Future", "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // 
+    [InlineData("Google I/O Keynote Films", "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // 
+    [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 
+    public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistName, string playlistId)
     {
         var ids = new List<VideoId>();
 
@@ -150,7 +151,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
             if (max<=0) break;
         }
         // Playlist 
-        var playlist = await Sender.Send(new CreatePlaylistCommand($"Imported[{playlistId}]", "Imported from YouTube"));
+        var playlist = await Sender.Send(new CreatePlaylistCommand(playlistName, $"Imported from YouTube playlist '{playlistId}'."));
         await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
 
         // Transcript

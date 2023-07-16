@@ -125,38 +125,10 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
         foreach (IEnumerable<string> responsePage in response.Value.Values.Page(50))
         {
-            (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) allTranscripts = new ();
-
             var currentSet = responsePage.ToHashSet();
             var badTranscripts = new List<Transcript>();
-            while (currentSet.Count > 0)
-            {
-                try
-                {
-                    // Yuck .ToList() below
-                    allTranscripts = api.GetTranscripts(currentSet.ToList(), continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
-                    break;
-                }
-                catch (YoutubeTranscriptApi.NoTranscriptFound ex)
-                {
-                    var videoId = videoIdsByVideoId.First(x => x.Value==ex.VideoId).Key;
-                    var badTranscrit = Transcript.Create(videoId, "??", new[] { $"No transcript found for video {ex.VideoId}." });
-                    
-                    badTranscripts.Add(badTranscrit);
-
-                    currentSet.Remove(ex.VideoId);                    
-                }
-                catch (YoutubeTranscriptApi.TranscriptsDisabled ex)
-                {
-                    var videoId = videoIdsByVideoId.First(x => x.Value == ex.VideoId).Key;
-                    var badTranscrit = Transcript.Create(videoId, "??", new[] { $"Transcripts disabled for video {ex.VideoId}." });
-
-                    badTranscripts.Add(badTranscrit);
-
-                    currentSet.Remove(ex.VideoId);                    
-                }
-            }
-
+            var allTranscripts = api.GetTranscripts(currentSet.ToList(), continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            
             var badOnes = allTranscripts.Item2!.Select(badId =>
             {
                 var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
