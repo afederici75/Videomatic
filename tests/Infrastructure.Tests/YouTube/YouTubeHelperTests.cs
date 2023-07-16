@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Xunit.Abstractions;
 
-namespace Infrastructure.YouTube.Tests;
+namespace Infrastructure.Tests.YouTube;
 
 public class YouTubePlaylistsHelperTests
 {

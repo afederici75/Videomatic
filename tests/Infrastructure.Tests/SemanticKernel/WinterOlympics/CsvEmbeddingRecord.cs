@@ -8,11 +8,11 @@ namespace Infrastructure.Tests.SemanticKernel;
 public class CsvEmbeddingRecord
 {
     [Name("text")]
-    [Index(0)]
+    [CsvHelper.Configuration.Attributes.Index(0)]
     public required string Text { get; init; }
 
     [Name("embedding")]
-    [Index(1)]
+    [CsvHelper.Configuration.Attributes.Index(1)]
     public required string ValuesArray { get; init; }
 
     static int _key = 0;

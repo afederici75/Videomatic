@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Data.Tests.Helpers;
+﻿namespace Infrastructure.Tests.Data.Helpers;
 
 public class DbContextFixture : IAsyncLifetime
 {

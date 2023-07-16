@@ -5,9 +5,9 @@ using Company.Videomatic.Application.Features.Artifacts.Commands;
 using Company.Videomatic.Application.Features.Artifacts.Queries;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Video;
-using Infrastructure.Data.Tests.Helpers;
+using Infrastructure.Tests.Data.Helpers;
 
-namespace Infrastructure.Data.Tests;
+namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
 public class ArtifactsTests : IClassFixture<DbContextFixture>

@@ -4,10 +4,9 @@ using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Video;
-using Infrastructure.Data.Tests.Helpers;
 using Newtonsoft.Json;
 
-namespace Infrastructure.Data.Tests;
+namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
 public class VideosTests : IClassFixture<DbContextFixture>

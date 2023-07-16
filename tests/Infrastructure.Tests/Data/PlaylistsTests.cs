@@ -2,9 +2,9 @@ using Application.Tests.Helpers;
 using Ardalis.Result;
 using Company.Videomatic.Application.Features.Playlists;
 using Company.Videomatic.Domain.Aggregates.Playlist;
-using Infrastructure.Data.Tests.Helpers;
+using Infrastructure.Tests.Data.Helpers;
 
-namespace Infrastructure.Data.Tests;
+namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
 public class PlaylistsTests : IClassFixture<DbContextFixture>

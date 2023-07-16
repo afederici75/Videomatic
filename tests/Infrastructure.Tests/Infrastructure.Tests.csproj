@@ -7,11 +7,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\TestData\BBd3aHnVnuE.json" />
+    <None Remove="Data\TestData\BFfb2P5wxC0.json" />
+    <None Remove="Data\TestData\dQw4w9WgXcQ.json" />
+    <None Remove="Data\TestData\n1kmKpjk_8E.json" />
+    <None Remove="Data\TestData\Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json" />
+    <None Remove="Data\TestData\Video-4Y4YSpF6d6w.json" />
+    <None Remove="Data\TestData\Video-BBd3aHnVnuE.json" />
+    <None Remove="Data\TestData\Video-BFfb2P5wxC0.json" />
+    <None Remove="Data\TestData\Video-dQw4w9WgXcQ.json" />
+    <None Remove="Data\TestData\Video-n1kmKpjk_8E.json" />
+    <None Remove="Data\TestData\Video-tWZQPCU4LJI.json" />
     <None Remove="SemanticKernel\TestData\HuxleysDancingShiva.json" />
     <None Remove="testSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\TestData\BBd3aHnVnuE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\BFfb2P5wxC0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\dQw4w9WgXcQ.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\n1kmKpjk_8E.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-4Y4YSpF6d6w.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-BBd3aHnVnuE.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-BFfb2P5wxC0.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-dQw4w9WgXcQ.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-n1kmKpjk_8E.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\TestData\Video-tWZQPCU4LJI.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SemanticKernel\TestData\HuxleysDancingShiva.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -49,6 +93,7 @@
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj" />
     <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\Application.Tests\Application.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

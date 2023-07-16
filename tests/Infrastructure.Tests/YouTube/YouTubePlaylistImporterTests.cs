@@ -1,9 +1,10 @@
-﻿using Company.Videomatic.Domain.Aggregates.Video;
+﻿using Company.Videomatic.Application.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
 using FluentAssertions;
 using System.Text.Json;
 
-namespace Infrastructure.YouTube.Tests;
+namespace Infrastructure.Tests.YouTube;
 
 public class YouTubePlaylistImporterTests
 {

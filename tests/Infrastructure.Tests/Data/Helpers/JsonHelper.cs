@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Infrastructure.Data.Tests.Helpers;
+namespace Infrastructure.Tests.Data.Helpers;
 
 public static class JsonHelper
 {

@@ -1,9 +1,8 @@
 ﻿using Application.Tests.Helpers;
 using Company.Videomatic.Application.Features.Transcripts.Commands;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Infrastructure.Data.Tests.Helpers;
 
-namespace Infrastructure.Data.Tests;
+namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")] 
 public class TranscriptTests : IClassFixture<DbContextFixture>

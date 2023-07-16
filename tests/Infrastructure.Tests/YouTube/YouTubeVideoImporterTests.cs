@@ -1,7 +1,7 @@
 ﻿//using Newtonsoft.Json;
 //using Xunit.Abstractions;
 
-//namespace Infrastructure.YouTube.Tests;
+namespace Infrastructure.Tests.YouTube;
 
 //public class YouTubeVideoImporterTests
 //{
@@ -11,7 +11,7 @@
 //    {
 //        Output = output ?? throw new ArgumentNullException(nameof(output));
 //    }
-    
+
 //    [Theory(DisplayName = nameof(ImportsAndVerifiesVideoFromYoutube))]
 //    [InlineData(null, YouTubeVideos.RickAstley_NeverGonnaGiveYouUp)]
 //    [InlineData(null, YouTubeVideos.AldousHuxley_DancingShiva)]
