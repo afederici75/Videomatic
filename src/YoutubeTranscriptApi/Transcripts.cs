@@ -264,8 +264,8 @@ namespace YoutubeTranscriptApi
                     }
                 }
             }
-
-            throw new NoTranscriptFound(VideoId, languageCodes, this);
+            
+            throw new NoTranscriptFound(VideoId, languageCodes, this);            
         }
 
         /// <inheritdoc/>

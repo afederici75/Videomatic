@@ -24,25 +24,25 @@ public static class IEnumerationExtensions
         }
     }
 
-    //public static async IAsyncEnumerable<IEnumerable<T>> PageAsync<T>(this IAsyncEnumerable<T> source, int pageSize)
-    //{
-    //    // See http://stackoverflow.com/questions/2380413/paging-with-linq-for-objects
-    //    using (var enumerator = source.GetAsyncEnumerator())
-    //    {
-    //        while (enumerator.MoveNextAsync())
-    //        {
-    //            var currentPage = new List<T>(pageSize)
-    //                {
-    //                    enumerator.Current
-    //                };
+    public static async IAsyncEnumerable<IEnumerable<T>> PageAsync<T>(this IAsyncEnumerable<T> source, int pageSize)
+    {
+        // See http://stackoverflow.com/questions/2380413/paging-with-linq-for-objects
+        await using (var enumerator = source.GetAsyncEnumerator())
+        {
+            while (await enumerator.MoveNextAsync())
+            {
+                var currentPage = new List<T>(pageSize)
+                    {
+                        enumerator.Current
+                    };
 
-    //            while (currentPage.Count < pageSize && enumerator.MoveNextAsync())
-    //            {
-    //                currentPage.Add(enumerator.Current);
-    //            }
+                while (currentPage.Count < pageSize && await enumerator.MoveNextAsync())
+                {
+                    currentPage.Add(enumerator.Current);
+                }
 
-    //            yield return new List<T>(currentPage);
-    //        }
-    //    }
-    //}
+                yield return new List<T>(currentPage);
+            }
+        }
+    }
 }

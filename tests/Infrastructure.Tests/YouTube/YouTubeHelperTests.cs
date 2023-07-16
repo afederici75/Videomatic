@@ -5,6 +5,7 @@ using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
 using Microsoft.CognitiveServices.Speech.Transcription;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Xunit.Abstractions;
@@ -136,33 +137,30 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     {
         var ids = new List<VideoId>();
 
-        var max = 100;
-        await foreach (Video video in Helper.ImportVideosOfPlaylist(playlistId))
+        var max = 1000;
+        var pageSize = 50;
+        await foreach (IEnumerable<Video> videos in Helper.ImportVideosOfPlaylist(playlistId).PageAsync(pageSize))
         {
             // Video
-            await VideoRepository.AddAsync(video);            
-            ids.Add(video.Id);
+            await VideoRepository.AddRangeAsync(videos);
+            ids.AddRange(videos.Select(x => x.Id));
             
-            Output.WriteLine($"[{video.Id}]: {video.Name}");
-
-            await Sender.Send(new LinkPlaylistToVideosCommand(1, new[] { video.Id }));
-
-            // Transcript
-            try
-            {
-                Transcript transcript = await Helper.ImportTranscriptions(new[] { video.Id }).SingleAsync();
-                await TranscriptRepository.AddAsync(transcript);
-
-                Output.WriteLine($"[{transcript.Language}]: {transcript.Lines.Count} Line(s))");
-            }
-            catch (Exception ex)
-            {
-                Output.WriteLine($"[{video.Id} {video.Details.ProviderVideoId}]: {ex.Message}");
-            }
-
-            max--;
+            //Output.WriteLine($"[{video.Id}]: {video.Name}");            
+            max -= pageSize;
             if (max<=0) break;
-        }        
+        }
+        // Playlist 
+        var playlist = await Sender.Send(new CreatePlaylistCommand($"Imported[{playlistId}]", "Imported from YouTube"));
+        await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
+
+        // Transcript
+        foreach (var idPage in ids.Page(50))
+        {
+            var transcripts = await Helper.ImportTranscriptions(idPage).ToListAsync();
+            await TranscriptRepository.AddRangeAsync(transcripts);
+
+            Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");
+        }
     }
 
     //[Theory]
