@@ -1,8 +1,9 @@
-﻿using Company.Videomatic.Application.Features.Transcripts;
-using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Application.Features.Videos.Queries;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
+using MediatR;
 using Newtonsoft.Json;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
@@ -11,16 +12,23 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubePlaylistsHelper(IOptions<YouTubeOptions> options, HttpClient client)
+    public YouTubePlaylistsHelper(IOptions<YouTubeOptions> options, HttpClient client, ISender sender, IRepository<Video> videoRepository, IRepository<Transcript> transcriptRepository)
     {
+        // TODO: messy / unfinished
         _options = options.Value;
         _client = client;
+        _videoRepository = videoRepository;
+        _transcriptRepository = transcriptRepository;
         _client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
+        _sender = sender;        
     }
 
     readonly YouTubeOptions _options;
     readonly HttpClient _client;
-    
+    IRepository<Video> _videoRepository;
+    IRepository<Transcript> _transcriptRepository;
+    ISender _sender;
+
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
         var parameters = new Dictionary<string, string>
@@ -47,7 +55,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             var videoIds = new HashSet<string>(publicVideos);
             
             await foreach (var video in ImportVideos(videoIds.ToArray()))
-            {
+            { 
                 yield return video;
             };
 
@@ -55,12 +63,12 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             parameters["pageToken"] = response.nextPageToken;
         }
         while (!string.IsNullOrEmpty(response.nextPageToken));
-    }
-
-    // ------------------------------
+    }    
 
     public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
     {
+        // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
+
         var parameters = new Dictionary<string, string>
         {
             ["key"] = _options.ApiKey,
@@ -75,6 +83,8 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
         string json = await _client.GetStringAsync(fullUrl);
         response = JsonConvert.DeserializeObject<VideoListResponse>(json)!;
 
+        var videoIds = response.items.Select(v => v.id).ToArray();
+
         foreach (var item in response.items)
         {
             var video = Video.Create(
@@ -88,11 +98,12 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
                     VideoOwnerChannelTitle: item.snippet.channelTitle,
                     VideoOwnerChannelId: item.snippet.channelId));
 
-            var tags = (item.snippet.tags ?? Enumerable.Empty<string>()).ToArray();            
+            // Tags
+            var tags = (item.snippet.tags ?? Enumerable.Empty<string>()).ToArray();
             video.AddTags(tags);
 
+            // Thumbnails
             var t = item.snippet.thumbnails;
-
             video.SetThumbnail(ThumbnailResolution.Default, t.@default?.url ?? "", t.@default?.height ?? -1, t.@default?.width ?? -1);
             video.SetThumbnail(ThumbnailResolution.High, t.high?.url ?? "", t.high?.height ?? -1, t.high?.width ?? -1);
             video.SetThumbnail(ThumbnailResolution.Standard, t.standard?.url ?? "", t.standard?.height ?? -1, t.standard?.width ?? -1);
@@ -100,36 +111,42 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             video.SetThumbnail(ThumbnailResolution.MaxRes, t.maxres?.url ?? "", t.maxres?.height ?? -1, t.maxres?.width ?? -1);
 
             yield return video;
+        }                
+    }
+
+    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)    
+    {
+        // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
+
+        var response = await _sender.Send(new GetProviderVideoIdsQuery(videoIds));
+        IReadOnlyDictionary<long, string> videoIdsByVideoId = response.Value;
+
+        using (var api = new YoutubeTranscriptApi.YouTubeTranscriptApi())
+        {
+            // Yuck .ToList() below
+            var allTranscripts = api.GetTranscripts(videoIdsByVideoId.Values.ToList()); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            
+            Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>> fetchedTranscripts = allTranscripts.Item1;
+            IReadOnlyList<string> failedToDownload = allTranscripts.Item2;
+
+            foreach (var v in videoIdsByVideoId)
+            {
+                if (!fetchedTranscripts.TryGetValue(v.Value, out var ytTranscriptItems))
+                {
+                    // No transcript?
+                    continue;
+                }
+
+                // ------------------------------
+                var newTranscr = Transcript.Create(v.Key, "US");
+                foreach (var item in ytTranscriptItems)
+                {
+                    newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
+                }
+             
+                yield return newTranscr;
+            }
         }
-    }
-
-    void SetVideoThumbnails(Video video, VideoListResponse.Thumbnails thumbnails)
-    {
-        ThumbnailResolution resolution;
-                
-    }
-
-    public async Task ImportVideoTranscript(Video[] videos)
-    {
-        throw new NotImplementedException();
-        //using (var api = new YoutubeTranscriptApi.YouTubeTranscriptApi())
-        //{
-        //    videos.Select(v => v.Details. Id);
-        //    
-        //    var allTranscripts = api.GetTranscripts(youtubeVideoIds); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
-        //
-        //    foreach (var t in allTranscripts.Item1)
-        //    {
-        //        IEnumerable<YoutubeTranscriptApi.TranscriptItem> items = api.GetTranscript(videoId);
-        //        
-        //        var result = Transcript.Create(videoId, t.Key);
-        //        
-        //        foreach (var item in items)
-        //        {
-        //            yield return new(item.Text, item.Start, item.Duration);
-        //        }
-        //    }            
-        //}
     }
 
     static string MakeUrlWithQuery(string endpoint,

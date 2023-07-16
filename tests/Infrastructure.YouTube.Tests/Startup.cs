@@ -12,6 +12,9 @@ public class Startup
         var cfg = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
+        services.AddVideomaticApplication(cfg);
+        services.AddVideomaticData(cfg);
+        services.AddVideomaticDataForSqlServer(cfg);
         services.AddVidematicYouTubeInfrastructure(cfg);
     }
 

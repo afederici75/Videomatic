@@ -2,9 +2,9 @@
 
 public record LinkPlaylistToVideosCommand(long Id, long[] VideoIds) : IRequest<Result<int>>;
 
-internal class LinkVideoToPlaylistsValidator : AbstractValidator<LinkPlaylistToVideosCommand>
+internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToVideosCommand>
 {
-    public LinkVideoToPlaylistsValidator()
+    public LinkPlaylistToVideosValidator()
     {
         RuleFor(x => x.Id).GreaterThan(0);
 

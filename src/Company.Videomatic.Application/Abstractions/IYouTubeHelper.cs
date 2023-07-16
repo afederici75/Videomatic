@@ -10,15 +10,11 @@ public interface IYouTubeHelper
     /// </summary>
     /// <param name="playlistId"></param>
     /// <returns></returns>
-    IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId);
+    IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId);// TODO: add cancellation  
 
-    /// <summary>
-    /// Gets the full transcription of a YouTube video.
-    /// </summary>
-    /// <param name="videoId"></param>
-    /// <returns></returns>
-    //IAsyncEnumerable<Domain.Model.Transcript> GetTranscriptionOfVideo(string videoId);
 
-    //
+    // TODO: add cancellation    
     IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds);
+    // TODO: add cancellation
+    IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds);    
 }
