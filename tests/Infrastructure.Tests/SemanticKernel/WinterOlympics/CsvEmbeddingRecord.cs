@@ -3,7 +3,7 @@ using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.Memory;
 using Newtonsoft.Json;
 
-namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.WinterOlympics;
+namespace Infrastructure.Tests.SemanticKernel;
 
 public class CsvEmbeddingRecord
 {

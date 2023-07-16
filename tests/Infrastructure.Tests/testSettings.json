@@ -6,7 +6,7 @@
     "EmbeddingModel": "text-embedding-ada-002"
   },
   "AzureSpeech": {
-      "ApiKey": null,
-      "ServiceRegion": null
+    "ApiKey": null,
+    "ServiceRegion": null
   }
 }

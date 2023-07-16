@@ -2,7 +2,7 @@
 
 using Microsoft.SemanticKernel.SemanticFunctions.Partitioning;
 
-namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.Chunking;
+namespace Infrastructure.Tests.SemanticKernel.Chunking;
 
 public class TextChunkerTests
 {

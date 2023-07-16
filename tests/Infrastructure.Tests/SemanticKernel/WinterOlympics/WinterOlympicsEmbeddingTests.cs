@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Company.Videomatic.Infrastructure.SemanticKernel;
+using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.TextEmbedding;
@@ -6,7 +7,7 @@ using Microsoft.SemanticKernel.Memory;
 
 using Xunit.Abstractions;
 
-namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.WinterOlympics;
+namespace Infrastructure.Tests.SemanticKernel;
 
 public partial class WinterOlympicsEmbeddingTests : IClassFixture<WinterOlympicsFixture>
 {

@@ -7,16 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SemanticKernel\TestData\HuxleysDancingShiva.json" />
     <None Remove="testSettings.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="SemanticKernel\TestData\HuxleysDancingShiva.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="testSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.13.277.1-preview" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />

@@ -4,7 +4,7 @@ using Microsoft.SemanticKernel.Memory;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-namespace Company.Videomatic.Infrastructure.SemanticKernel.Tests.WinterOlympics;
+namespace Infrastructure.Tests.SemanticKernel;
 
 public class WinterOlympicsFixture : IAsyncLifetime
 {
