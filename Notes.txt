@@ -1,3 +1,11 @@
+7/16
+-BIG EPHIPHANY: I am quite happy with many things but I realized I should consolidate the Intrastructure tests 
+in one assembly. In order to test the YT transcript import I need to access the db and this makes
+me have to configure a whole set of things in YouTube tests that make the separate test assembly 
+useless.
+-Closing the Upsert branch (it's a bit more complex than that: some things can upsert, some (eg videos) cannot not
+as we don't allow editing all fields on update!)
+
 7/15
 -Some constructors and factories need work
 	-PlaylistVideo is missing the jsonconstructor
