@@ -48,6 +48,9 @@ public class VideosTests : IClassFixture<DbContextFixture>
         video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
         video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
         video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
+
+        Fixture.DbContext.Videos.Remove(video);
+        await Fixture.DbContext.SaveChangesAsync();
     }
 
     [Fact]

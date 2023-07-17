@@ -9,6 +9,6 @@ public class PlaylistConfiguration : PlaylistConfigurationBase
         base.Configure(builder);
 
         builder.Property(x => x.Id)            
-               .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode
+               .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode        
     }
 }

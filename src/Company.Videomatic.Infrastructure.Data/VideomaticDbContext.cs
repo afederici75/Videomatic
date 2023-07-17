@@ -5,13 +5,7 @@ using Company.Videomatic.Infrastructure.Data.Configurations;
 namespace Company.Videomatic.Infrastructure.Data;
 
 public abstract class VideomaticDbContext : DbContext
-{
-    public VideomaticDbContext()
-        : base()
-    {
-        
-    }
-
+{    
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
     {        
@@ -25,16 +19,16 @@ public abstract class VideomaticDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder.EnableSensitiveDataLogging();
+        base.OnConfiguring(optionsBuilder);                
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);        
-        
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        base.OnModelCreating(modelBuilder);
+
+        var dbCtxType = GetType();
+        var baseType = typeof(VideomaticDbContext);
+        modelBuilder.ApplyConfigurationsFromAssembly(dbCtxType.Assembly);
     }
 
     [Obsolete]
