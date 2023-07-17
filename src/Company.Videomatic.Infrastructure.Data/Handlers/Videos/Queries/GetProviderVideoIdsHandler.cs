@@ -16,16 +16,18 @@ public class GetVideGetProviderVideoIdsQueryosHandler : IRequestHandler<GetProvi
         //{ "ThumbnailCount", _ => _.Thumbnails.Count()},
     };
 
-    public GetVideGetProviderVideoIdsQueryosHandler(VideomaticDbContext dbContext)
-    {
-        _dbContext = dbContext;
+    public GetVideGetProviderVideoIdsQueryosHandler(IDbContextFactory<VideomaticDbContext> dbFactory)
+    {        
+        DbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
     }
 
-    readonly VideomaticDbContext _dbContext;
+    public IDbContextFactory<VideomaticDbContext> DbFactory { get; }
 
     public async Task<Result<IReadOnlyDictionary<long, string>>> Handle(GetProviderVideoIdsQuery request, CancellationToken cancellationToken)
     {
-        var res = await _dbContext.Videos.Where(v => request.VideoIds.Contains(v.Id))
+        using var dbContext = DbFactory.CreateDbContext();
+
+        var res = await dbContext.Videos.Where(v => request.VideoIds.Contains(v.Id))
                                          .Select(v => new { v.Id, v.Details.ProviderVideoId })
                                          .ToDictionaryAsync(v => v.Id.Value, v => v.ProviderVideoId);
         

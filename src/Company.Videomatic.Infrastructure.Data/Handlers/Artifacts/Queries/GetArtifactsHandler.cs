@@ -15,20 +15,22 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
     };
 
 
-    public GetArtifactHandler(VideomaticDbContext dbContext)
+    public GetArtifactHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
-        _dbContext = dbContext;
+        DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    readonly VideomaticDbContext _dbContext;
+    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<ArtifactDTO>> Handle(GetArtifactsQuery request, CancellationToken cancellationToken)
     {
+        using var dbContext = DbContextFactory.CreateDbContext();
+
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
 
         // Artifacts
-        IQueryable<Artifact> q = _dbContext.Artifacts;
+        IQueryable<Artifact> q = dbContext.Artifacts;
 
         // Where
         if (request.ArtifactIds != null)

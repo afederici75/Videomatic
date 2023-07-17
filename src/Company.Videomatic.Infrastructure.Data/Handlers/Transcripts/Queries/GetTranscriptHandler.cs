@@ -13,20 +13,22 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
     };
 
 
-    public GetTranscriptHandler(VideomaticDbContext dbContext)
+    public GetTranscriptHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
-        _dbContext = dbContext;
+        DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    readonly VideomaticDbContext _dbContext;
+    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<TranscriptDTO>> Handle(GetTranscriptsQuery request, CancellationToken cancellationToken)
     {
+        using var dbContext = DbContextFactory.CreateDbContext();
+
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
 
         // Transcripts
-        IQueryable<Transcript> q = _dbContext.Transcripts;
+        IQueryable<Transcript> q = dbContext.Transcripts;
 
         // Where
         if (request.VideoIds != null)

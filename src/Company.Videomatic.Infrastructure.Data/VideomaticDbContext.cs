@@ -1,6 +1,7 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Infrastructure.Data.Configurations;
+using Microsoft.Extensions.Configuration;
 
 namespace Company.Videomatic.Infrastructure.Data;
 
@@ -16,42 +17,12 @@ public abstract class VideomaticDbContext : DbContext
     public DbSet<Playlist> Playlists { get; set; } = null!;
     public DbSet<Video> Videos { get; set; } = null!;
     public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);                
-    }
-
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        var dbCtxType = GetType();
-        var baseType = typeof(VideomaticDbContext);
-        modelBuilder.ApplyConfigurationsFromAssembly(dbCtxType.Assembly);
-    }
-
-    [Obsolete]
-    public override int SaveChanges()
-    {
-        throw new InvalidOperationException("Use SaveChangesAsync instead.");
-    }
-
-    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-    {
-        var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        //ChangeTracker.Clear();
-        return result;
-    }
-
-    [Obsolete]
-    public override int SaveChanges(bool acceptAllChangesOnSuccess)
-    {
-        throw new InvalidOperationException("Use SaveChangesAsync instead.");
-    }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        return base.SaveChangesAsync(cancellationToken);
+        var descendantType = GetType();
+        modelBuilder.ApplyConfigurationsFromAssembly(descendantType.Assembly);
     }
 }
