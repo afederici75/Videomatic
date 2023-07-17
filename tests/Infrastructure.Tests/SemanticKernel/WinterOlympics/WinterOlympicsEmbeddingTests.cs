@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Infrastructure.SemanticKernel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
@@ -17,7 +18,7 @@ public partial class WinterOlympicsEmbeddingTests : IClassFixture<WinterOlympics
 
     public WinterOlympicsEmbeddingTests(
         WinterOlympicsFixture fixture,
-        IOptions<SemanticKernelOptions> configuration,
+        IOptions<SemanticKernelOptions> configuration,     
         ITestOutputHelper output)
     {
         Configuration = configuration?.Value ?? throw new ArgumentNullException(nameof(configuration));

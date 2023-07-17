@@ -15,17 +15,9 @@ public static class DependencyInjectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(
-            (sp, optBuilder) =>
-            {
-                SqlServerVideomaticDbContextFactory.Configure(optBuilder, configuration);
-            }, ServiceLifetime.Scoped);
+        services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>();
 
-        services.AddDbContextFactory<VideomaticDbContext, SqlServerVideomaticDbContextFactory>(
-            (sp, optBuilder) =>
-            {
-                SqlServerVideomaticDbContextFactory.Configure(optBuilder, configuration);
-            });
+        services.AddDbContextFactory<VideomaticDbContext, SqlServerVideomaticDbContextFactory>();
 
         return services;
     }

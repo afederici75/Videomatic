@@ -6,6 +6,7 @@ using Company.Videomatic.Application.Features.Artifacts.Queries;
 using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Infrastructure.Tests.Data.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Tests.Data;
 
@@ -15,18 +16,20 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     public ArtifactsTests(
         DbContextFixture fixture,
         IRepository<Artifact> repository,
-        ISender sender)
+        ISender sender,
+        IConfiguration configuration)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
-
+        Configuration = configuration;
         Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }
     public IRepository<Artifact> Repository { get; }
     public ISender Sender { get; }
+    public IConfiguration Configuration { get; }
 
     async Task<VideoId> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
     {

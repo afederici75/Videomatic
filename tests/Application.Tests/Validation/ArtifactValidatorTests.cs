@@ -1,5 +1,6 @@
 ﻿using Application.Tests.Helpers;
 using Company.Videomatic.Application.Features.Artifacts.Commands;
+using Microsoft.Extensions.Configuration;
 
 namespace Application.Tests.Validation;
 
@@ -7,9 +8,12 @@ public class ArtifactValidatorTests
 {
     public ValidatorHelper ValidatorHelper { get; }
 
-    public ArtifactValidatorTests(IServiceProvider serviceProvider)
+    public ArtifactValidatorTests(IServiceProvider serviceProvider, IConfiguration xyz)
     {
         ValidatorHelper = new ValidatorHelper(serviceProvider);
+
+        var cfg = serviceProvider.GetRequiredService<Microsoft.Extensions.Configuration.IConfiguration>();
+        var tmp = cfg["Application::test"];
     }
 
 

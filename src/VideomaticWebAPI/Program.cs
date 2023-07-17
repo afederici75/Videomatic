@@ -40,9 +40,9 @@ if (app.Environment.IsDevelopment())
     {
         var db = scope.ServiceProvider.GetRequiredService<VideomaticDbContext>();
         db.Database.Migrate();
-
+        
         IDbSeeder seeder = scope.ServiceProvider.GetRequiredService<IDbSeeder>();
-
+        
         await seeder.SeedAsync();        
     }
 

@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Tests;
 
 public class Startup
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public static void ConfigureServices(IServiceCollection services, HostBuilderContext context)
     {
-        var cfg = LoadConfiguration();
+        context.Configuration = LoadConfiguration();
 
         services.AddLogging(x => x.AddConsole());
-        services.AddVideomaticApplication(cfg);        
+        services.AddVideomaticApplication(context.Configuration);        
     }
 
     public static IConfiguration LoadConfiguration()
