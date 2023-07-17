@@ -9,6 +9,8 @@
 
             <CardText>
                 <div>
+                    <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+                    
                     @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
                     <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
                     <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>

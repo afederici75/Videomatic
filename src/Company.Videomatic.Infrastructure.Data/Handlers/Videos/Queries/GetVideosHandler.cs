@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Company.Videomatic.Application.Features.Videos;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Queries;
 
@@ -16,18 +17,23 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         //{ "ThumbnailCount", _ => _.Thumbnails.Count()},
     };
 
-    public GetVideosHandler(VideomaticDbContext dbContext)
+    public GetVideosHandler(VideomaticDbContext dbContext, IDbContextFactory<VideomaticDbContext> factory)
     {
-        _dbContext = dbContext;
+        //_dbContext = dbContext;
+        Factory = factory;
     }
 
-    readonly VideomaticDbContext _dbContext;
+    //readonly VideomaticDbContext _dbContext;
+
+    public IDbContextFactory<VideomaticDbContext> Factory { get; }
 
     // GetVideosQuery
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
+
+        using var _dbContext = Factory.CreateDbContext();
 
         // Playlists
         IQueryable<Video> q = _dbContext.Videos;
@@ -74,9 +80,9 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             ));
 
         // Counts
-        var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
-
+        var totalCount = await final.CountAsync();
+        
         return new Page<VideoDTO>(res, pageIdx, pageSize, totalCount);
     }
 }

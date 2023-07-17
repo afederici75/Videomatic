@@ -4,7 +4,7 @@ using Company.Videomatic.Infrastructure.Data.Configurations;
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public class VideomaticDbContext : DbContext
+public abstract class VideomaticDbContext : DbContext
 {
     public VideomaticDbContext()
         : base()

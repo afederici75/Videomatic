@@ -4,7 +4,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
-    static void Configure(IServiceProvider sp, DbContextOptionsBuilder builder, IConfiguration configuration)
+    static void Configure(DbContextOptionsBuilder builder, IConfiguration configuration)
     {
         // Looks for the connection string Videomatic.SqlServer
         var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
@@ -34,9 +34,15 @@ public static class DependencyInjectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(
-            (sp, builder) => Configure(sp, builder, configuration),
-            ServiceLifetime.Scoped);
+        //services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(
+        //    (sp, builder) => Configure(sp, builder, configuration),
+        //    ServiceLifetime.Scoped);
+
+        services.AddDbContextFactory<VideomaticDbContext, SqlServerVideomaticDbContextFactory>(
+            (sp, builder) =>
+            {
+                Configure(builder, configuration);
+            });
 
         return services;
     }
