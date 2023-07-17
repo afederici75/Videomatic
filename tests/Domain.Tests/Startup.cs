@@ -9,13 +9,13 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
     {
-        var cfg = LoadConfiguration();
+        context.Configuration = LoadConfiguration();
     }
 
     public static IConfiguration LoadConfiguration()
     {
         return new ConfigurationBuilder()
-                        //.AddJsonFile("testSettings.json", false)
+                        //.AddJsonFile("testSettings.json", true)
                         //.AddUserSecrets(typeof(Startup).Assembly)
                         .Build();
     }

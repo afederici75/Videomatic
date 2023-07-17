@@ -1,24 +1,25 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Tests;
 
 public class Startup
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public static void ConfigureServices(IServiceCollection services, HostBuilderContext context)
     {
-        var cfg = LoadConfiguration();
-
+        context.Configuration = LoadConfiguration();        
+        
         services.AddLogging(x => x.AddConsole());
 
-        services.AddVideomaticApplication(cfg);
-        services.AddVideomaticData(cfg);
-        services.AddVideomaticDataForSqlServer(cfg);
+        services.AddVideomaticApplication(context.Configuration);
+        services.AddVideomaticData(context.Configuration);
+        services.AddVideomaticDataForSqlServer(context.Configuration);
         
-        services.AddVideomaticSemanticKernel(cfg);
-        services.AddVidematicYouTubeInfrastructure(cfg);
-        services.AddAzureSpeech(cfg);        
+        services.AddVideomaticSemanticKernel(context.Configuration);
+        services.AddVidematicYouTubeInfrastructure(context.Configuration);
+        services.AddAzureSpeech(context.Configuration);        
     }
 
     public static IConfiguration LoadConfiguration()

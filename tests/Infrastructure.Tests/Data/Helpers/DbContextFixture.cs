@@ -1,11 +1,14 @@
-﻿namespace Infrastructure.Tests.Data.Helpers;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Infrastructure.Tests.Data.Helpers;
 
 public class DbContextFixture : IAsyncLifetime
 {
     public DbContextFixture(
         VideomaticDbContext dbContext,
         ITestOutputHelperAccessor outputAccessor,
-        IDbSeeder seeder)
+        IDbSeeder seeder,
+        IConfiguration cg)
         : base()
     {
         DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
