@@ -35,6 +35,9 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         var playlist = Fixture.DbContext.Playlists.Single(x => x.Id == response.Value.Id);
 
         playlist.Should().BeEquivalentTo(createCommand); // Name and Description are like in command        
+
+        Fixture.DbContext.Remove(playlist);
+        await Fixture.DbContext.SaveChangesAsync();
     }
 
     [Fact]
