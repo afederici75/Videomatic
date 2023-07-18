@@ -1,15 +1,16 @@
 ﻿@page "/VideoEdit/{VideoId:long}"
+@using Blazorise.Video
 @using Company.Videomatic.Application.Features.Artifacts.Queries;
 @using Company.Videomatic.Application.Features.Transcripts.Queries;
 @using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
-<p>
+<h1>
     @Video.Name
-</p>
-<img src="@Video.Thumbnail" alt="@Video.Name" style="max-width:300px" />
+</h1>
 
+<iframe width="560" height="315" src=@EmbeddedVideoLink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <Div>
     <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
@@ -41,6 +42,8 @@
 
     Page<TranscriptDTO> Transcripts { get; set; } = Page<TranscriptDTO>.Empty;
 
+    public string EmbeddedVideoLink { get; set; } = string.Empty;
+
     protected override async Task OnParametersSetAsync()
     {
         var query = new GetVideosQuery(
@@ -51,6 +54,10 @@
 
         var result = await Sender.Send(query);
         Video = result.Items.Single();
+
+        EmbeddedVideoLink = "https://www.youtube.com/embed/" + 
+                            Video.Location.Substring(Video.Location.IndexOf("=") + 1);
+
 
         Transcripts = await Sender.Send(new GetTranscriptsQuery(VideoIds: new[] { VideoId }));                
     }
