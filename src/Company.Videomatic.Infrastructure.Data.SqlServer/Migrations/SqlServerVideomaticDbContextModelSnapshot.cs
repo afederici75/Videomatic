@@ -76,7 +76,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
