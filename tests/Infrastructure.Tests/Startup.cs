@@ -12,6 +12,18 @@ public class Startup
     public void ConfigureHost(IHostBuilder hostBuilder)
     {
         hostBuilder
+            .ConfigureServices((context, services) =>
+            {
+                services.AddLogging(x => x.AddConsole());
+
+                services.AddVideomaticApplication(context.Configuration);
+                services.AddVideomaticData(context.Configuration);
+                services.AddVideomaticDataForSqlServer(context.Configuration);
+
+                services.AddVideomaticSemanticKernel(context.Configuration);
+                services.AddVidematicYouTubeInfrastructure(context.Configuration);
+                services.AddAzureSpeech(context.Configuration);
+            })
             .ConfigureHostConfiguration(builder =>
             {
 
@@ -28,18 +40,5 @@ public class Startup
 
                 builder.AddConfiguration(cfg);
             });
-    }
-
-    public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
-    {
-        services.AddLogging(x => x.AddConsole());
-
-        services.AddVideomaticApplication(context.Configuration);
-        services.AddVideomaticData(context.Configuration);
-        services.AddVideomaticDataForSqlServer(context.Configuration);
-
-        services.AddVideomaticSemanticKernel(context.Configuration);
-        services.AddVidematicYouTubeInfrastructure(context.Configuration);
-        services.AddAzureSpeech(context.Configuration);
     }
 }
