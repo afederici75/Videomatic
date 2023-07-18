@@ -55,10 +55,5 @@ public class DbContextFixture : IAsyncLifetime
             return;
 
         await Seeder.SeedAsync();
-
-        // Loads all videos from the TestData folder
-        //var allVideos = await VideoDataGenerator.CreateAllVideos(true);
-        //DbContext.AddRange(allVideos);
-        //await DbContext.SaveChangesAsync();
     }
 }

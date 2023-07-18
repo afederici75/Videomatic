@@ -20,6 +20,7 @@ public class Startup
             {
                 // IMPORTANT: if I don't do this here the IConfiguration and IServiceProvider 
                 // are empty or default and tests fail later (e.g. read conn strings).
+                // See https://github.com/pengweiqhca/Xunit.DependencyInjection#how-to-inject-iconfiguration-or-ihostenvironment-into-startup
                 var cfg = new ConfigurationBuilder()
                         .AddJsonFile("testSettings.json", false)
                         .AddUserSecrets(typeof(Startup).Assembly)

@@ -13,10 +13,10 @@ public abstract class VideoMaticDbContextFactory<TDBCONTEXT> : IDbContextFactory
     protected virtual string GetConnectionString()
     {
         // Looks for the connection string Videomatic.<ProviderName> [e.g. SqlServer, Sqlite, etc.]
+        // Provider name is the prefix of the name of the DbContext class, e.g. **SqlServer**VideomaticDbContext
         var dbCtxNamePrefix = typeof(TDBCONTEXT).Name.Replace(nameof(VideomaticDbContext), string.Empty);
         var connectionName = $"Videomatic.{dbCtxNamePrefix}";
-        //var connString = Configuration.GetConnectionString(connectionName) ?? throw new Exception($"Required connection string '{connectionName}' missing.");
-        var connString = "Server=localhost;Database=Videomatic_IntegrationTests;User Id=sa;Password=G7i5z5mo;TrustServerCertificate=True";
+        var connString = Configuration.GetConnectionString(connectionName) ?? throw new Exception($"Required connection string '{connectionName}' missing.");
 
         return connString;
     }
