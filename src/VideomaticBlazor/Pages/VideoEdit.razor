@@ -5,7 +5,18 @@
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
-<VideoCard Video=@Video />
+<p>
+    @Video.Name
+</p>
+<img src="@Video.Thumbnail" alt="@Video.Name" style="max-width:300px" />
+
+
+<Div>
+    <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+</Div>
+<p>
+   @Video.Description
+</p>
 
 <div>Transcripts: @Transcripts.TotalCount</div>
 @foreach (var transcript in Transcripts.Items)

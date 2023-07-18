@@ -2,10 +2,12 @@
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
+<CardDeck>
 @foreach (var video in Videos)
 {
     <VideoCard Video=video GridMode=true/>
 }   
+</CardDeck>
 
 @code {
     VideoDTO[] Videos = Array.Empty<VideoDTO>();    

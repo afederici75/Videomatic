@@ -1,33 +1,34 @@
 ﻿@using Company.Videomatic.Application.Features.Videos;
 @inject NavigationManager Navigation
 
-<Div>
-    <Card style="@MaxWidthStyle">
-        <CardBody>            
-            <CardImage Source=@Video.Thumbnail Alt="@Video.Name"></CardImage>
-            <CardTitle><b>@Video.Name</b></CardTitle>
+<Card>
+    <CardBody>  
+        <CardTitle Size="3">@Video.Name</CardTitle>
+        <CardImage Source=@Video.Thumbnail Alt="@Video.Name"><a href="@Video.Location"></a></CardImage>
+        
+        <Div>
+            <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+            
+            @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
+            <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
+            <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
+            <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
+            <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
+        </Div>
 
-            <CardText>
-                <div>
-                    <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
-                    
-                    @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
-                    <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
-                    <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
-                    <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
-                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
-                </div>
+        <CardText>
+            @TruncateDescription(Video.Description)
+        </CardText>        
+        
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link" 
+                To="@Video.Location" Target="Target.Blank">
+                Watch</Button>
 
-                <div><i>@TruncateDescription(Video.Description)</i></div>
-            </CardText>
-                    
-            @if (GridMode)
-            {
-                <Button Color="Color.Primary" @onclick=OnOpenClicked>Open</Button>
-            }            
-        </CardBody>
-    </Card>
-</Div>
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
+            Read more <Icon Name="IconName.ArrowRight" /></Button>                        
+        
+    </CardBody>
+</Card>
 
 @code {
     [Parameter]
@@ -36,7 +37,7 @@
     [Parameter]
     public bool GridMode { get; set; } = false;
 
-    public string MaxWidthStyle => GridMode ? "max-width: 400px" : "max-width: 600px";
+    public string MaxWidthStyle => GridMode ? "max-width: 800px" : "max-width: 800px";
 
     string? TruncateDescription(string? description, int maxLength = 100)
     {
@@ -51,7 +52,7 @@
         return description.Substring(0, maxLength);
     }
 
-    void OnOpenClicked()
+    void OnEditClicked()
     {
         Navigation.NavigateTo($"/{nameof(VideoEdit)}/{Video.Id}");        
     }
