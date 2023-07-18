@@ -7,26 +7,38 @@ namespace Infrastructure.Tests;
 
 public class Startup
 {
-    public static void ConfigureServices(IServiceCollection services, HostBuilderContext context)
-    {
-        context.Configuration = LoadConfiguration();
+    public Startup() { }
 
+    public void ConfigureHost(IHostBuilder hostBuilder)
+    {
+        hostBuilder
+            .ConfigureHostConfiguration(builder =>
+            {
+
+            })
+            .ConfigureAppConfiguration((context, builder) =>
+            {
+                // IMPORTANT: if I don't do this here the IConfiguration and IServiceProvider 
+                // are empty or default and tests fail later (e.g. read conn strings).
+                var cfg = new ConfigurationBuilder()
+                        .AddJsonFile("testSettings.json", false)
+                        .AddUserSecrets(typeof(Startup).Assembly)
+                        .Build();
+
+                builder.AddConfiguration(cfg);
+            });
+    }
+
+    public void ConfigureServices(IServiceCollection services, HostBuilderContext context)
+    {
         services.AddLogging(x => x.AddConsole());
 
         services.AddVideomaticApplication(context.Configuration);
         services.AddVideomaticData(context.Configuration);
         services.AddVideomaticDataForSqlServer(context.Configuration);
-        
+
         services.AddVideomaticSemanticKernel(context.Configuration);
         services.AddVidematicYouTubeInfrastructure(context.Configuration);
-        services.AddAzureSpeech(context.Configuration);        
-    }
-
-    public static IConfiguration LoadConfiguration()
-    {
-        return new ConfigurationBuilder()
-                        .AddJsonFile("testSettings.json", true)
-                        .AddUserSecrets(typeof(Startup).Assembly, false)
-                        .Build();
+        services.AddAzureSpeech(context.Configuration);
     }
 }

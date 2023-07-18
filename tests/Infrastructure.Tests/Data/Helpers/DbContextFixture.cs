@@ -54,7 +54,7 @@ public class DbContextFixture : IAsyncLifetime
         if (SkipInsertTestData)
             return;
 
-        //await Seeder.SeedAsync();
+        await Seeder.SeedAsync();
 
         // Loads all videos from the TestData folder
         //var allVideos = await VideoDataGenerator.CreateAllVideos(true);
