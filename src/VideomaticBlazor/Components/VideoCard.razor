@@ -40,6 +40,9 @@
 
     string? TruncateDescription(string? description, int maxLength = 100)
     {
+        if (!GridMode)
+            return description;
+
         if ((description == null) || (description.Length <= maxLength))
         {
             return description;

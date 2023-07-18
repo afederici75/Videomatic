@@ -52,6 +52,7 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
             p.Id,
             p.VideoId,
             p.Language,
+            p.Lines.Select(x => new TranscriptLineDTO(x.Text, x.StartsAt, x.Duration)).ToArray(),
             p.Lines.Count()));
 
         // Counts

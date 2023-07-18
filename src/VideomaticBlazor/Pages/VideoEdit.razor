@@ -1,8 +1,25 @@
 ﻿@page "/VideoEdit/{VideoId:long}"
+@using Company.Videomatic.Application.Features.Artifacts.Queries;
+@using Company.Videomatic.Application.Features.Transcripts.Queries;
+@using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
 <VideoCard Video=@Video />
+
+<div>Transcripts: @Transcripts.TotalCount</div>
+@foreach (var transcript in Transcripts.Items)
+{
+    @transcript.Language
+    foreach (var line in transcript.Lines ?? Array.Empty<TranscriptLineDTO>())
+    {
+        <div>
+            <Badge Color="Color.Secondary">@(line.StartsAt?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
+            <Badge Color="Color.Primary">@(line.Duration?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
+            @line.Text
+        </div>
+    }
+}   
 
 @code {
     [Parameter]
@@ -11,15 +28,19 @@
     [Parameter]
     public long VideoId { get; set; } = 0;
 
+    Page<TranscriptDTO> Transcripts { get; set; } = Page<TranscriptDTO>.Empty;
+
     protected override async Task OnParametersSetAsync()
     {
         var query = new GetVideosQuery(
-            VideoIds: new[] { VideoId },
+            VideoIds: new[] { VideoId },            
+            IncludeTags: true,
             IncludeThumbnail: ThumbnailResolutionDTO.Default
         );        
 
         var result = await Sender.Send(query);
-
         Video = result.Items.Single();
+
+        Transcripts = await Sender.Send(new GetTranscriptsQuery(VideoIds: new[] { VideoId }));                
     }
 }
