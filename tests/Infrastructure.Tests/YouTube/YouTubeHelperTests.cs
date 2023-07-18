@@ -1,7 +1,11 @@
 ﻿using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Domain.Aggregates.Artifact;
+using Company.Videomatic.Domain.Aggregates.Playlist;
+using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
+using Microsoft.CognitiveServices.Speech.Transcription;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Xunit.Abstractions;
@@ -13,13 +17,19 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 {
     public YouTubePlaylistsHelperTests(ITestOutputHelper output,
         DbContextFixture fixture,
-        IRepository<Artifact> repository,
+        IRepository<Artifact> artifactRepository,
+        IRepository<Transcript> transcriptRepository,
+        IRepository<Playlist> playlistRepository,
+        IRepository<Video> videoRepository,
         ISender sender,
         IYouTubeHelper helper)
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        ArtifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
+        TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
+        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
+        VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         Helper = helper ?? throw new ArgumentNullException(nameof(helper));
 
@@ -28,26 +38,30 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 
     public ITestOutputHelper Output { get; }
     public DbContextFixture Fixture { get; }
-    public IRepository<Artifact> Repository { get; }
+    public IRepository<Artifact> ArtifactRepository { get; }
+    public IRepository<Transcript> TranscriptRepository { get; }
+    public IRepository<Playlist> PlaylistRepository { get; }
+    public IRepository<Video> VideoRepository { get; }
     public ISender Sender { get; }
     public IYouTubeHelper Helper { get; }
 
     [Theory]
     [InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
     [InlineData("PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylist(string playlistId)
+    public async Task ImportVideosOfPlaylistInMemory(string playlistId)
     {        
-        await foreach (var item in Helper.ImportVideosOfPlaylist(playlistId))
+        var ids = new List<VideoId>();
+        await foreach (Video video in Helper.ImportVideosOfPlaylist(playlistId))
         {
-            Output.WriteLine($"[{item.Id}]: {item.Name}");
+            Output.WriteLine($"[{video.Id}]: {video.Name}");
 
-            item.Id.Should().BeNull();
-            item.Name.Should().NotBeEmpty();
+            video.Id.Should().BeNull();
+            video.Name.Should().NotBeEmpty();
         }
     }
 
     [Fact]
-    public async Task ImportTranscriptionsOfSeededVideos()
+    public async Task ImportTranscriptionsOfSeededVideosInMemory()
     {
         await foreach (var transcript in Helper.ImportTranscriptions(new VideoId[] { 1, 2 }))
         {
@@ -57,7 +71,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 
     [Theory]
     [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
-    public async Task ImportPlaylistFromYouTube([FromServices] IYouTubeHelper helper, string playlistId)
+    public async Task ImportPlaylistFromYouTubeToJsonFile([FromServices] IYouTubeHelper helper, string playlistId)
     {
         List<Video> videos = new();
         await foreach (var video in helper.ImportVideosOfPlaylist(playlistId))
@@ -73,7 +87,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     [Theory]
     [InlineData(null, new[] { "BBd3aHnVnuE" })]
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
-    public async Task ImportVideosFromYouTube([FromServices] IYouTubeHelper helper, string[] ids)
+    public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IYouTubeHelper helper, string[] ids)
     {
         await foreach (var video in helper.ImportVideos(ids))
         {
@@ -96,7 +110,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     }
 
     [Fact]
-    public async Task ImportTranscriptionsFromYouTubeVideos()
+    public async Task ImportTranscriptionsFromYouTubeVideosToJsonFile()
     {
         var videos = new Dictionary<VideoId, string>()
         {
@@ -113,4 +127,70 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
             await File.WriteAllTextAsync($"Transcription-{src}.json", json);
         }
     }
+
+
+    //[Theory(Skip = "Slow!!!")]
+    [Theory]
+    [InlineData("Alternative Living, Sustainable Future", "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // 
+    [InlineData("Google I/O Keynote Films", "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // 
+    [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 
+    public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistName, string playlistId)
+    {
+        var ids = new List<VideoId>();
+
+        var max = 1000;
+        var pageSize = 50;
+        await foreach (IEnumerable<Video> videos in Helper.ImportVideosOfPlaylist(playlistId).PageAsync(pageSize))
+        {
+            // Video
+            await VideoRepository.AddRangeAsync(videos);
+            ids.AddRange(videos.Select(x => x.Id));
+            
+            //Output.WriteLine($"[{video.Id}]: {video.Name}");            
+            max -= pageSize;
+            if (max<=0) break;
+        }
+        // Playlist 
+        var playlist = await Sender.Send(new CreatePlaylistCommand(playlistName, $"Imported from YouTube playlist '{playlistId}'."));
+        await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
+
+        // Transcript
+        foreach (var idPage in ids.Page(50))
+        {
+            var transcripts = await Helper.ImportTranscriptions(idPage).ToListAsync();
+            await TranscriptRepository.AddRangeAsync(transcripts);
+
+            Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");
+        }
+    }
+
+    //[Theory]
+    //[InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
+    //[InlineData("PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // Google I/O Keynote Films
+    //public async Task FASTImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistId)
+    //{
+    //    var ids = new List<VideoId>();
+    //    await foreach (Video video in Helper.ImportVideosOfPlaylist(playlistId))
+    //    {
+    //        // Video
+    //        await VideoRepository.AddAsync(video);
+    //        ids.Add(video.Id);
+    //
+    //        Output.WriteLine($"[{video.Id}]: {video.Name}");
+    //    }
+    //
+    //    // Transcript
+    //    try
+    //    {
+    //        Transcript transcript = await Helper.ImportTranscriptions(new[] { video.Id }).SingleAsync();
+    //        await TranscriptRepository.AddAsync(transcript);
+    //
+    //        Output.WriteLine($"[{transcript.Language}]: {transcript.Lines.Count} Line(s))");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Output.WriteLine($"[{video.Id} {video.Details.ProviderVideoId}]: {ex.Message}");
+    //    }
+    //    
+    //}
 }

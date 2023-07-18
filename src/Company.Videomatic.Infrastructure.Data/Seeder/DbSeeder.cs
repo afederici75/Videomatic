@@ -2,14 +2,13 @@
 
 public class DbSeeder : IDbSeeder
 {
-    private readonly VideomaticDbContext _dbContext;
-    private readonly IPlaylistService _videoService;
+    private readonly IPlaylistService _playlistService;
     private readonly IRepository<Video> _videoRepository;
     private readonly IRepository<Playlist> _playlistRepository;
     private readonly IRepository<Artifact> _artifactRepository;
     private readonly IRepository<Transcript> _transcriptRepository;
 
-    public DbSeeder(VideomaticDbContext dbContext,
+    public DbSeeder(
         IPlaylistService videoService,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
@@ -17,8 +16,7 @@ public class DbSeeder : IDbSeeder
         IRepository<Transcript> transcriptRepository
         )
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _videoService = videoService ?? throw new ArgumentNullException(nameof(videoService));
+        _playlistService = videoService ?? throw new ArgumentNullException(nameof(videoService));
         _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         _playlistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
         _artifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
@@ -51,8 +49,8 @@ public class DbSeeder : IDbSeeder
         var realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
 
         //
-        var linked1 = await _videoService.LinkToPlaylists(playlist.Id, new[] { shivaVideo.Id});
-        var linked2 = await _videoService.LinkToPlaylists(playlist.Id, new[] { realityNotDualVideo.Id });
+        var linked1 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { shivaVideo.Id});
+        var linked2 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { realityNotDualVideo.Id });
 
         return playlist.Id;
     }

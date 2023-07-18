@@ -26,6 +26,11 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
                .WithOne()
                .HasForeignKey(nameof(PlaylistVideo.PlaylistId));
 
+
+        //builder.HasMany(typeof(PlaylistVideo))
+        //       .WithOne()
+        //       .HasForeignKey("PlaylistId");
+
         // Indices
         builder.HasIndex(x => x.Name);
         builder.HasIndex(x => x.Description);

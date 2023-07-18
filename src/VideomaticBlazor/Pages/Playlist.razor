@@ -2,12 +2,10 @@
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
-<CardDeck>
 @foreach (var video in Videos)
 {
     <VideoCard Video=video GridMode=true/>
 }   
-</CardDeck>
 
 @code {
     VideoDTO[] Videos = Array.Empty<VideoDTO>();    
@@ -21,7 +19,7 @@
         var query = new GetVideosQuery(
             PlaylistIds: new[] { PlaylistId },
             IncludeTags: true, 
-            IncludeThumbnail: ThumbnailResolutionDTO.Default);
+            IncludeThumbnail: ThumbnailResolutionDTO.Medium);
         
         Page<VideoDTO> results = await Sender.Send(query);
         

@@ -13,20 +13,22 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         { "VideoCount", _ => _.Videos.Count()},
     };
 
-    public GetPlaylistsHandler(VideomaticDbContext dbContext)
+    public GetPlaylistsHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
-        _dbContext = dbContext;        
+        DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    readonly VideomaticDbContext _dbContext;
+    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {
+        using var dbContext = DbContextFactory.CreateDbContext();
+
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
 
         // Playlists
-        IQueryable<Playlist> q = _dbContext.Playlists;
+        IQueryable<Playlist> q = dbContext.Playlists;
 
         // Where
         if (request.PlaylistIds != null)

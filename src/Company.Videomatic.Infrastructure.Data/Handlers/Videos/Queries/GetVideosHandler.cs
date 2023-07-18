@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Company.Videomatic.Application.Features.Videos;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Queries;
 
@@ -12,16 +13,15 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         { nameof(Video.Id), _ => _.Id },
         { nameof(Video.Name), _ => _.Name },
         { nameof(Video.Description), _ => _.Description },
-        { "TagCount", _ => _.Tags.Count()},
-        //{ "ThumbnailCount", _ => _.Thumbnails.Count()},
+        { "TagCount", _ => _.Tags.Count()},        
     };
 
-    public GetVideosHandler(VideomaticDbContext dbContext)
+    public GetVideosHandler(IDbContextFactory<VideomaticDbContext> factory)
     {
-        _dbContext = dbContext;
+        Factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
-
-    readonly VideomaticDbContext _dbContext;
+    
+    public IDbContextFactory<VideomaticDbContext> Factory { get; }
 
     // GetVideosQuery
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
@@ -29,13 +29,15 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         var pageIdx = request.Page ?? 1;
         var pageSize = request.PageSize ?? 10;
 
+        using var dbContext = Factory.CreateDbContext();
+
         // Playlists
-        IQueryable<Video> q = _dbContext.Videos;
+        IQueryable<Video> q = dbContext.Videos;
 
         // Where
         if (request.PlaylistIds != null)
         {
-            var vidsOfPlaylists = _dbContext.PlaylistVideos
+            var vidsOfPlaylists = dbContext.PlaylistVideos
                 .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
                 .Select(pv => pv.VideoId);
 
@@ -74,9 +76,9 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             ));
 
         // Counts
-        var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
-
+        var totalCount = await final.CountAsync();
+        
         return new Page<VideoDTO>(res, pageIdx, pageSize, totalCount);
     }
 }

@@ -16,73 +16,18 @@ public class GetVideGetProviderVideoIdsQueryosHandler : IRequestHandler<GetProvi
         //{ "ThumbnailCount", _ => _.Thumbnails.Count()},
     };
 
-    public GetVideGetProviderVideoIdsQueryosHandler(VideomaticDbContext dbContext)
-    {
-        _dbContext = dbContext;
+    public GetVideGetProviderVideoIdsQueryosHandler(IDbContextFactory<VideomaticDbContext> dbFactory)
+    {        
+        DbFactory = dbFactory ?? throw new ArgumentNullException(nameof(dbFactory));
     }
 
-    readonly VideomaticDbContext _dbContext;
-
-    // GetVideosQuery
-    //public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
-    //{
-    //    var pageIdx = request.Page ?? 1;
-    //    var pageSize = request.PageSize ?? 10;
-    //
-    //    // Playlists
-    //    IQueryable<Video> q = _dbContext.Videos;
-    //
-    //    // Where
-    //    if (request.PlaylistIds != null)
-    //    {
-    //        var vidsOfPlaylists = _dbContext.PlaylistVideos
-    //            .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
-    //            .Select(pv => pv.VideoId);
-    //
-    //        q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
-    //    }
-    //
-    //    if (request.VideoIds != null)
-    //    {
-    //        q = q.Where(v => request.VideoIds.Contains(v.Id));
-    //    }
-    //
-    //    if (!string.IsNullOrWhiteSpace(request.SearchText))
-    //    {
-    //        q = q.Where(v => v.Name.Contains(request.SearchText) ||                              
-    //                         ((v.Description != null) && v.Description.Contains(request.SearchText)));
-    //    }
-    //
-    //    // OrderBy
-    //    if (!string.IsNullOrWhiteSpace(request.OrderBy))
-    //    {
-    //        q = q.OrderBy(request.OrderBy, SupportedOrderBys);
-    //    }
-    //
-    //    var includeThumbnail = request.IncludeThumbnail != null;
-    //    var preferredRes = (request.IncludeThumbnail ?? ThumbnailResolutionDTO.Default)
-    //        .ToThumbnailResolution();
-    //
-    //    // Projection
-    //    var final = q.Select(v => new VideoDTO(
-    //        v.Id,
-    //        v.Location,
-    //        v.Name,
-    //        v.Description,
-    //        request.IncludeTags ? v.Tags.Select(t => t.Name) : null,
-    //        includeThumbnail ? v.Thumbnails.Single(t => t.Resolution==preferredRes).Location : null
-    //        ));
-    //
-    //    // Counts
-    //    var totalCount = await final.CountAsync();
-    //    var res = await final.ToListAsync();
-    //
-    //    return new Page<VideoDTO>(res, pageIdx, pageSize, totalCount);
-    //}
+    public IDbContextFactory<VideomaticDbContext> DbFactory { get; }
 
     public async Task<Result<IReadOnlyDictionary<long, string>>> Handle(GetProviderVideoIdsQuery request, CancellationToken cancellationToken)
     {
-        var res = await _dbContext.Videos.Where(v => request.VideoIds.Contains(v.Id))
+        using var dbContext = DbFactory.CreateDbContext();
+
+        var res = await dbContext.Videos.Where(v => request.VideoIds.Contains(v.Id))
                                          .Select(v => new { v.Id, v.Details.ProviderVideoId })
                                          .ToDictionaryAsync(v => v.Id.Value, v => v.ProviderVideoId);
         
