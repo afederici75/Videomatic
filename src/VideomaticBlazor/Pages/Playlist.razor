@@ -7,10 +7,11 @@
         <TopSearch OnStartSearch="OnStartSearch"/>
     </Column>
 </Row>
-    @foreach (var video in Videos)
-    {
-        <VideoCard Video=video GridMode=true/>        
-    }           
+
+@foreach (var video in Videos)
+{
+    <VideoCard Video=video GridMode=true/>        
+}           
 
 
 @code {

@@ -34,20 +34,31 @@
 
     .card img {
         width: 30%;
+        border-top-left-radius: 0;
         border-top-right-radius: 0;
-        border-bottom-left-radius: calc(0.25rem - 1px);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    
+    .my-custom-scrollbar {
+        position: relative;
+        width: 800px;
+        height: 400px;
+        overflow: auto;
     }
 </style>
 
 <Card Margin="Margin.Is2.FromTop.Is2.FromStart.Is5.FromEnd">
-    <CardImage Style="width: 30%" Source=@Video.Thumbnail Alt="@Video.Name" />
+    <CardImage Source=@Video.Thumbnail Alt="@Video.Name" Margin="Margin.Is2.FromStart" />
 
     <CardBody>
         <CardTitle Size="5">@Video.Name</CardTitle>
         <CardSubtitle Size="6">
             <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
         </CardSubtitle>
-        <CardText>@TruncateDescription(Video.Description).</CardText>
+        <CardText Overflow="Overflow.Scroll"
+                  Background="Background.Light" 
+                  Style="max-height: 80px;">@Video.Description</CardText>
 
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
                 To="@Video.Location" Target="Target.Blank">
@@ -55,7 +66,7 @@
         </Button>
 
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
-            Read more <Icon Name="IconName.ArrowRight" />
+            More <Icon Name="IconName.ArrowRight" />
         </Button>
     </CardBody>
 </Card>
