@@ -1,6 +1,8 @@
 using Blazorise;
+using Blazorise.AntDesign;
 using Blazorise.Bootstrap;
 using Blazorise.Bootstrap5;
+using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
 using Blazorise.Tailwind;
 
@@ -27,7 +29,9 @@ builder.Services
         options.Immediate = true;
     })
     //.AddBootstrapProviders()
-    .AddBootstrap5Providers()
+    //.AddBootstrap5Providers()
+    .AddBulmaProviders()
+    //.AddAntDesignProviders()
     //.AddTailwindProviders()
     .AddFontAwesomeIcons();
 
