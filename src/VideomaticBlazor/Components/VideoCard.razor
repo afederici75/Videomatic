@@ -1,24 +1,39 @@
 ﻿@using Company.Videomatic.Application.Features.Videos;
 @inject NavigationManager Navigation
 
-<Card Margin="Margin.Is1">
-    <CardBody>  
-        <CardTitle Size="3">@Video.Name</CardTitle>
-        <CardImage Source=@Video.Thumbnail Alt="@Video.Name"><a href="@Video.Location"></a></CardImage>
-        
-        <Div>
-            <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
-            
-            @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
-            <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
-            <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
-            <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>                    
-            <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
-        </Div>
+<Card Margin="Margin.Is2.FromTop">
+    <CardHeader>@Video.Name</CardHeader>
 
-        <CardText>
-            @TruncateDescription(Video.Description)
-        </CardText>        
+    <CardBody>  
+        <Row>
+            <Column>
+                <CardImage style="max-height: 200px; max-width: 320px" Source=@Video.Thumbnail Alt="@Video.Name" />
+            </Column>
+            <Column>
+                <CardTitle Size="2">@Video.Name</CardTitle>
+                <CardSubtitle Size="6" TextWeight="TextWeight.Light">@TruncateDescription(Video.Description)</CardSubtitle>
+                <Div>
+                    <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+
+                    @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
+                    <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
+                    <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
+                    <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>
+                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
+                </Div>
+            </Column>
+        </Row>
+        <Row>
+            <Column>                
+                
+                <CardText>
+
+                </CardText>
+                
+            </Column>
+        </Row>
+        
+
         
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link" 
                 To="@Video.Location" Target="Target.Blank">

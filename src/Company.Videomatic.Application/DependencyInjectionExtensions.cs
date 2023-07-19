@@ -34,7 +34,7 @@ public static class DependencyInjectionExtensions
         services.AddMediatR(cfg =>        
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                        .Where(a => a.FullName?.Contains(".Videomatic.") ?? false);
+                        .Where(a => a.FullName?.Contains("Videomatic") ?? false);
             
             var allAssemblies = assemblies.ToArray();
             cfg.RegisterServicesFromAssemblies(allAssemblies); // TODO: where do I set scoped?            

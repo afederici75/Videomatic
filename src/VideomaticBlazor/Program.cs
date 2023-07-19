@@ -2,6 +2,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.Tailwind;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,11 @@ builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 
+//builder.Services.AddMediatR(cfg =>
+//{
+//    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+//});
+
 #region Blazorise
 
 builder.Services
@@ -20,7 +26,9 @@ builder.Services
     {
         options.Immediate = true;
     })
+    //.AddBootstrapProviders()
     .AddBootstrap5Providers()
+    //.AddTailwindProviders()
     .AddFontAwesomeIcons();
 
 #endregion

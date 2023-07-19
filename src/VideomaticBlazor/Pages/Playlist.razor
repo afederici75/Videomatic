@@ -1,46 +1,44 @@
 ﻿@page "/Playlist/{PlaylistId:long}"
 @using Company.Videomatic.Application.Features.Videos;
-@inject ISender Sender;
+@using VideomaticBlazor.Events;
 
-
-<Div>
-    <Addons 
-        Margin="Margin.Is1">
-        <Addon AddonType="AddonType.Body">
-            <TextEdit Placeholder="Search text..." @bind-Text="@SearchText" />
-        </Addon>
-        <Addon AddonType="AddonType.End">
-            <Button Color="Color.Secondary" @onclick=@OnParametersSetAsync>Filter</Button>
-        </Addon>
-    </Addons>
-    
-    <CardDeck>
+<Row class="sticky-top">
+    <Column>
+        <TopSearch OnStartSearch="OnStartSearch"/>
+    </Column>
+</Row>
     @foreach (var video in Videos)
     {
-        <VideoCard Video=video GridMode=true/>
-    }   
-    </CardDeck>
-</Div>
+        <VideoCard Video=video GridMode=true/>        
+    }           
+
 
 @code {
     VideoDTO[] Videos = Array.Empty<VideoDTO>();    
 
     [Parameter]
     public long PlaylistId { get; set; } = 0;
-    List<string> EventType = new List<string>();
 
-    public string SearchText { get; set; } = string.Empty;
+    [Inject]
+    public ISender Sender { get; set; } 
+
+    List<string> EventType = new List<string>();
 
     protected override async Task OnParametersSetAsync()
     {
+        await OnStartSearch(string.Empty);
+    }
+
+    public async Task OnStartSearch(string searchText)
+    {
         var query = new GetVideosQuery(
-            PlaylistIds: new[] { PlaylistId },
-            SearchText: SearchText,
-            IncludeTags: true, 
-            IncludeThumbnail: ThumbnailResolutionDTO.Medium);
-        
+                PlaylistIds: new[] { PlaylistId },
+                SearchText: searchText,
+                IncludeTags: true,
+                IncludeThumbnail: ThumbnailResolutionDTO.Medium);
+
         Page<VideoDTO> results = await Sender.Send(query);
-        
+
         Videos = results.Items.ToArray();
-    }    
+    }
 }

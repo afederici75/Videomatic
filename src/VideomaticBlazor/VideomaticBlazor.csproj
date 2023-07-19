@@ -9,6 +9,7 @@
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.2.4" />
     <PackageReference Include="Blazorise.Generator.Features" Version="1.2.4" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.4" />
+    <PackageReference Include="Blazorise.Tailwind" Version="1.2.4" />
     <PackageReference Include="Blazorise.Video" Version="1.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">
       <PrivateAssets>all</PrivateAssets>
