@@ -5,33 +5,59 @@
 @using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
+<Div Margin="Margin.Is1">
+    <Div>
+        <TextEdit Text="@Video.Name" />
+    </Div>  
 
-<h1>
-    @Video.Name
-</h1>
+   <Div>
+        <iframe width="560" height="315" 
+                src=@EmbeddedVideoLink 
+                frameborder="0" 
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+    </Div>
+    
+    <Div>
+        <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+    </Div>
 
-<iframe width="560" height="315" src=@EmbeddedVideoLink frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<Accordion>
+    <Collapse Visible="@CollapseDescription">
+        <CollapseHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle><b>Description</b></AccordionToggle>
+            </Heading>
+        </CollapseHeader>
+        <CollapseBody>
+            @Video.Description
+        </CollapseBody>
+    </Collapse>
 
-<Div>
-    <Badge Color="Color.Success">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+    <Collapse Visible="@CollapseTranscripts">
+        <CollapseHeader>
+            <Heading Size="HeadingSize.Is5">
+                <AccordionToggle><b>@Transcripts.TotalCount Transcript(s)</b></AccordionToggle>
+                    </Heading>
+        </CollapseHeader>
+        <CollapseBody>
+            @foreach (var transcript in Transcripts.Items)
+            {
+                @transcript.Language
+                foreach (var line in transcript.Lines ?? Array.Empty<TranscriptLineDTO>())
+                {
+                    <div>
+                        <Badge Color="Color.Secondary">@(line.StartsAt?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
+                        <Badge Color="Color.Primary">@(line.Duration?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
+                        @line.Text
+                    </div>
+                }
+            }
+        </CollapseBody>
+    </Collapse>
+
+</Accordion>
 </Div>
-<p>
-   @Video.Description
-</p>
-
-<div>Transcripts: @Transcripts.TotalCount</div>
-@foreach (var transcript in Transcripts.Items)
-{
-    @transcript.Language
-    foreach (var line in transcript.Lines ?? Array.Empty<TranscriptLineDTO>())
-    {
-        <div>
-            <Badge Color="Color.Secondary">@(line.StartsAt?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
-            <Badge Color="Color.Primary">@(line.Duration?.ToString(@"hh\:mm\:ss") ?? "NA")</Badge>
-            @line.Text
-        </div>
-    }
-}   
 
 @code {
     [Parameter]
@@ -43,6 +69,9 @@
     Page<TranscriptDTO> Transcripts { get; set; } = Page<TranscriptDTO>.Empty;
 
     public string EmbeddedVideoLink { get; set; } = string.Empty;
+
+    public bool CollapseDescription { get; set; } = true;   
+    public bool CollapseTranscripts { get; set; } = false;
 
     protected override async Task OnParametersSetAsync()
     {

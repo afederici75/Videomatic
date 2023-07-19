@@ -2,12 +2,25 @@
 @using Company.Videomatic.Application.Features.Videos;
 @inject ISender Sender;
 
-<CardDeck>
-@foreach (var video in Videos)
-{
-    <VideoCard Video=video GridMode=true/>
-}   
-</CardDeck>
+
+<Div>
+    <Addons 
+        Margin="Margin.Is1">
+        <Addon AddonType="AddonType.Body">
+            <TextEdit Placeholder="Search text..." @bind-Text="@SearchText" />
+        </Addon>
+        <Addon AddonType="AddonType.End">
+            <Button Color="Color.Secondary" @onclick=@OnParametersSetAsync>Filter</Button>
+        </Addon>
+    </Addons>
+    
+    <CardDeck>
+    @foreach (var video in Videos)
+    {
+        <VideoCard Video=video GridMode=true/>
+    }   
+    </CardDeck>
+</Div>
 
 @code {
     VideoDTO[] Videos = Array.Empty<VideoDTO>();    
@@ -16,10 +29,13 @@
     public long PlaylistId { get; set; } = 0;
     List<string> EventType = new List<string>();
 
+    public string SearchText { get; set; } = string.Empty;
+
     protected override async Task OnParametersSetAsync()
     {
         var query = new GetVideosQuery(
             PlaylistIds: new[] { PlaylistId },
+            SearchText: SearchText,
             IncludeTags: true, 
             IncludeThumbnail: ThumbnailResolutionDTO.Medium);
         
