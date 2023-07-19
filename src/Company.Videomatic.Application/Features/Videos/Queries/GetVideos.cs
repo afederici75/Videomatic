@@ -25,10 +25,11 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
             RuleFor(x => x.VideoIds).NotEmpty();
         }); 
 
-        When(x => x.SearchText is not null, () =>
-        {
-            RuleFor(x => x.SearchText).NotEmpty();
-        });
+        //When(x => x.SearchText is not null, () =>
+        //{
+        //    // 
+        //    //RuleFor(x => x.SearchText).NotEmpty();
+        //});
 
         When(x => x.OrderBy is not null, () =>
         { 
