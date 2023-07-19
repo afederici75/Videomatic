@@ -1,47 +1,62 @@
 ﻿@using Company.Videomatic.Application.Features.Videos;
+
 @inject NavigationManager Navigation
 
-<Card Margin="Margin.Is2.FromTop">
-    <CardHeader>@Video.Name</CardHeader>
-
-    <CardBody>  
-        <Row>
-            <Column>
-                <CardImage style="max-height: 200px; max-width: 320px" Source=@Video.Thumbnail Alt="@Video.Name" />
-            </Column>
-            <Column>
-                <CardTitle Size="2">@Video.Name</CardTitle>
-                <CardSubtitle Size="6" TextWeight="TextWeight.Light">@TruncateDescription(Video.Description)</CardSubtitle>
-                <Div>
-                    <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
-
-                    @*<Badge Color="Color.Info">@Video.PlaylistCount Playlists</Badge>
-                    <Badge Color="Color.Success">@Video.TagCount Tags</Badge>
-                    <Badge Color="Color.Success">@Video.ArtifactCount Artifacts</Badge>
-                    <Badge Color="Color.Secondary">@Video.ThumbnailCount Thumbnails</Badge>
-                    <Badge Color="Color.Success">@Video.TranscriptCount Transcripts</Badge>*@
-                </Div>
-            </Column>
-        </Row>
-        <Row>
-            <Column>                
-                
-                <CardText>
-
-                </CardText>
-                
-            </Column>
-        </Row>
+@*<div class="card" style="width: 100%;">
+    <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" class="card-img-top" />
+    <div class="card-body">
+        <h5 class="card-title">@Video.Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+        </h6>
+        <p class="card-text">@TruncateDescription(Video.Description).</p>
         
-
-        
-        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link" 
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
                 To="@Video.Location" Target="Target.Blank">
-                Watch</Button>
+            Watch
+        </Button>
 
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
-            Read more <Icon Name="IconName.ArrowRight" /></Button>                        
-        
+            Read more <Icon Name="IconName.ArrowRight" />
+        </Button>
+
+    </div>
+</div>*@
+<style>
+    .card {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    .card img {
+        width: 30%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: calc(0.25rem - 1px);
+    }
+</style>
+
+<Card Margin="Margin.Is2.FromTop.Is2.FromStart.Is5.FromEnd">
+    <CardImage Style="width: 30%" Source=@Video.Thumbnail Alt="@Video.Name" />
+
+    <CardBody>
+        <CardTitle Size="5">@Video.Name</CardTitle>
+        <CardSubtitle Size="6">
+            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+        </CardSubtitle>
+        <CardText>@TruncateDescription(Video.Description).</CardText>
+
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
+                To="@Video.Location" Target="Target.Blank">
+            Watch
+        </Button>
+
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
+            Read more <Icon Name="IconName.ArrowRight" />
+        </Button>
     </CardBody>
 </Card>
 

@@ -19,7 +19,7 @@
 
     private async Task KeyboardEventHandler(KeyboardEventArgs e)
     {
-        if (e.CtrlKey && e.Code == "Enter")
+        if (/*e.CtrlKey && */e.Code == "Enter")
         {
             await PublishNotification();
             return;
