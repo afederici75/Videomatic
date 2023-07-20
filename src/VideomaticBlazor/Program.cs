@@ -1,10 +1,6 @@
 using Blazorise;
-using Blazorise.AntDesign;
-using Blazorise.Bootstrap;
 using Blazorise.Bootstrap5;
-using Blazorise.Bulma;
 using Blazorise.Icons.FontAwesome;
-using Blazorise.Tailwind;
 
 var builder = WebApplication.CreateBuilder(args);
 
