@@ -32,26 +32,25 @@
         <CardTitle Size="5">@Video.Name</CardTitle>
 
         <CardSubtitle Size="6">
-            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
-            <Badge Color="Color.Secondary">Details(s)</Badge>
-            <Badge Color="Color.Warning">1 Transcript</Badge>
-            <Badge Color="Color.Danger">?? Artifact(s)</Badge>
-            <Badge Color="Color.Default">?? Artifact(s)</Badge>
-            <Badge Color="Color.Info">?? Artifact(s)</Badge>
-            <Badge Color="Color.Light">?? Artifact(s)</Badge>
+            <Badge Style="color: chartreuse">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+            <Badge Color="Color.Warning">@Video.TranscriptCount Transcript(s)</Badge>
+            <Badge Color="Color.Danger">@Video.ArtifactCount Artifact(s)</Badge>
+            
+            @*<Badge Color="Color.Light">?? Artifact(s)</Badge> ss
             <Badge Color="Color.Link">?? Artifact(s)</Badge>
-            <Badge Color="Color.Success">?? Artifact(s)</Badge>            
-        </CardSubtitle>
-
-        <Field Horizontal>
-            <FieldLabel ColumnSize="ColumnSize.Is2">Id</FieldLabel>
-            <FieldBody ColumnSize="ColumnSize.Is10">
-                <TextEdit Placeholder="@Video.Id.ToString()" />
-            </FieldBody>
-        </Field>
+            <Badge Color="Color.Success">?? Artifact(s)</Badge>            *@
+        </CardSubtitle>                
 
         <CardText Overflow="Overflow.Auto"
                   Style="max-height: 100px;">@Video.Description</CardText>
+
+        <CardSubtitle Size="6">
+            <Badge Color="Color.Default">@Video.Provider</Badge>
+            <Badge Color="Color.Primary">@Video.ProviderVideoId</Badge>
+            <Badge Color="Color.Primary">@Video.VideoPublishedAt</Badge>
+            <Badge Color="Color.Primary">@Video.VideoOwnerChannelTitle</Badge>
+            <Badge Color="Color.Primary">@Video.VideoOwnerChannelId</Badge>            
+        </CardSubtitle>
 
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
                 To="@Video.Location" Target="Target.Blank">
