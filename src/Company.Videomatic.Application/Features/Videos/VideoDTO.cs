@@ -10,6 +10,7 @@ public record VideoDTO(
     // 
     int ArtifactCount = 0,
     int TranscriptCount = 0,
+    int TagCount = 0,
     //
     string Provider = "",
     string ProviderVideoId = "",
