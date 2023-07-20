@@ -72,7 +72,14 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             v.Name,
             v.Description,
             request.IncludeTags ? v.Tags.Select(t => t.Name) : null,
-            includeThumbnail ? v.Thumbnails.Single(t => t.Resolution==preferredRes).Location : null
+            includeThumbnail ? v.Thumbnails.Single(t => t.Resolution==preferredRes).Location : null,
+            0, // art count
+            0, // TranscriptCount
+            v.Details.Provider,
+            v.Details.ProviderVideoId,
+            v.Details.VideoPublishedAt,
+            v.Details.VideoOwnerChannelTitle,
+            v.Details.VideoOwnerChannelId
             ));
 
         // Counts

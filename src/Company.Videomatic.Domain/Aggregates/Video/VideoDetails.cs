@@ -7,16 +7,13 @@ public record VideoDetails(
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId)
 {
-    private VideoDetails() :
-        this(Provider: "NONE",
-             ProviderVideoId: "NONE",
-             VideoPublishedAt: DateTime.UtcNow,
-             VideoOwnerChannelTitle: "",
-             VideoOwnerChannelId: "")
-    { }
-
     public static VideoDetails CreateEmpty()
     {
-        return new VideoDetails();
+        return new VideoDetails(
+            Provider: "NONE",
+            ProviderVideoId: "NONE",
+            VideoPublishedAt: DateTime.UtcNow,
+            VideoOwnerChannelTitle: "",
+            VideoOwnerChannelId: "");
     }
 }
