@@ -1,3 +1,33 @@
+7/20
+-Yesterday was a great day. I feel unstuck with the UI now. By making the html-pure example for the 
+VideoCard (see yest nots) I realized I could write the whole UI by simply using basic Blazor (without Balzorise)
+and following the bootstrap specs instead of Balzorise's!!!
+	-The downside is I need to be more intimate with a JS framework...
+	-A pro is I could get regular web devs and they would find themselves more at home than with Blasorize stuff
+
+7/19
+From VideoCard
+@*<div class="card" style="width: 100%;">
+    <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" class="card-img-top" />
+    <div class="card-body">
+        <h5 class="card-title">@Video.Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+        </h6>
+        <p class="card-text">@TruncateDescription(Video.Description).</p>
+        
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
+                To="@Video.Location" Target="Target.Blank">
+            Watch
+        </Button>
+
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
+            Read more <Icon Name="IconName.ArrowRight" />
+        </Button>
+
+    </div>
+</div>*@
+
 7/16
 -BIG EPHIPHANY: I am quite happy with many things but I realized I should consolidate the Intrastructure tests 
 in one assembly. In order to test the YT transcript import I need to access the db and this makes

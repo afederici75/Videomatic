@@ -29,8 +29,8 @@ builder.Services
         options.Immediate = true;
     })
     //.AddBootstrapProviders()
-    //.AddBootstrap5Providers()
-    .AddBulmaProviders()
+    .AddBootstrap5Providers()
+    //.AddBulmaProviders()
     //.AddAntDesignProviders()
     //.AddTailwindProviders()
     .AddFontAwesomeIcons();

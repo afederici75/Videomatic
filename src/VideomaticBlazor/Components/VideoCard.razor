@@ -2,27 +2,7 @@
 
 @inject NavigationManager Navigation
 
-@*<div class="card" style="width: 100%;">
-    <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" class="card-img-top" />
-    <div class="card-body">
-        <h5 class="card-title">@Video.Name</h5>
-        <h6 class="card-subtitle mb-2 text-muted">
-            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
-        </h6>
-        <p class="card-text">@TruncateDescription(Video.Description).</p>
-        
-        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
-                To="@Video.Location" Target="Target.Blank">
-            Watch
-        </Button>
-
-        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
-            Read more <Icon Name="IconName.ArrowRight" />
-        </Button>
-
-    </div>
-</div>*@
-<style>
+<style>    
     .card {
         flex-direction: row;
         align-items: center;
@@ -38,27 +18,40 @@
         border-top-right-radius: 0;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-    }
-    
-    .my-custom-scrollbar {
-        position: relative;
-        width: 800px;
-        height: 400px;
-        overflow: auto;
-    }
+    }    
 </style>
 
-<Card Margin="Margin.Is2.FromTop.Is2.FromStart.Is5.FromEnd">
-    <CardImage Source=@Video.Thumbnail Alt="@Video.Name" Margin="Margin.Is2.FromStart" />
+<Card Background="Background.Dark" 
+      Margin="Margin.Is1.FromTop.Is3.FromStart.Is5.FromEnd" 
+      WhiteText>
 
+    <CardImage Source=@Video.Thumbnail Alt="@Video.Name" Margin="Margin.Is2.FromStart"
+               @onclick="@OnEditClicked" 
+               Style="cursor: pointer"/>
     <CardBody>
         <CardTitle Size="5">@Video.Name</CardTitle>
+
         <CardSubtitle Size="6">
             <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+            <Badge Color="Color.Secondary">Details(s)</Badge>
+            <Badge Color="Color.Warning">1 Transcript</Badge>
+            <Badge Color="Color.Danger">?? Artifact(s)</Badge>
+            <Badge Color="Color.Default">?? Artifact(s)</Badge>
+            <Badge Color="Color.Info">?? Artifact(s)</Badge>
+            <Badge Color="Color.Light">?? Artifact(s)</Badge>
+            <Badge Color="Color.Link">?? Artifact(s)</Badge>
+            <Badge Color="Color.Success">?? Artifact(s)</Badge>            
         </CardSubtitle>
-        <CardText Overflow="Overflow.Scroll"
-                  Background="Background.Light" 
-                  Style="max-height: 80px;">@Video.Description</CardText>
+
+        <Field Horizontal>
+            <FieldLabel ColumnSize="ColumnSize.Is2">Id</FieldLabel>
+            <FieldBody ColumnSize="ColumnSize.Is10">
+                <TextEdit Placeholder="@Video.Id.ToString()" />
+            </FieldBody>
+        </Field>
+
+        <CardText Overflow="Overflow.Auto"
+                  Style="max-height: 100px;">@Video.Description</CardText>
 
         <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
                 To="@Video.Location" Target="Target.Blank">
@@ -77,21 +70,6 @@
 
     [Parameter]
     public bool GridMode { get; set; } = false;
-
-    public string MaxWidthStyle => GridMode ? "max-width: 800px" : "max-width: 800px";
-
-    string? TruncateDescription(string? description, int maxLength = 100)
-    {
-        if (!GridMode)
-            return description;
-
-        if ((description == null) || (description.Length <= maxLength))
-        {
-            return description;
-        }
-
-        return description.Substring(0, maxLength);
-    }
 
     void OnEditClicked()
     {

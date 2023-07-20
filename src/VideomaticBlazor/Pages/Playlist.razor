@@ -4,14 +4,16 @@
 
 <Row class="sticky-top">
     <Column Background="Background.Dark">
-        <TopSearch OnStartSearch="OnStartSearch"/>
+        <TopSearch OnStartSearch="OnStartSearch"/>        
     </Column>
 </Row>
 
+<Row Style="background-color: SlateGray">
 @foreach (var video in Videos)
 {
     <VideoCard Video=video GridMode=true/>        
-}           
+}
+</Row>
 
 
 @code {
