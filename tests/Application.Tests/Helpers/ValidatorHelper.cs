@@ -1,4 +1,6 @@
-﻿namespace Application.Tests.Helpers;
+﻿using System.Diagnostics;
+
+namespace Application.Tests.Helpers;
 
 public class ValidatorHelper
 {
@@ -9,6 +11,7 @@ public class ValidatorHelper
 
     public IServiceProvider ServiceProvider { get; }
 
+    [DebuggerStepThrough]
     public void Validate<TVALIDATOR, TREQUEST>(TREQUEST request, int expectedErrors)
             where TVALIDATOR : IValidator<TREQUEST>
     {

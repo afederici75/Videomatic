@@ -45,7 +45,7 @@ public class VideoRequestsValidatorTests
 
     [Theory]
     [InlineData(null, "filter_here", "order_here", 1, 1, false, ThumbnailResolutionDTO.Standard, 0)]
-    [InlineData(null, "   ", "", -1, 0, false, ThumbnailResolutionDTO.Standard, 4)]
+    [InlineData(null, "   ", "", -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
     [InlineData(null, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 2)]
     [InlineData(new long[] { }, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
     public void ValidateGetVideosQuery(
