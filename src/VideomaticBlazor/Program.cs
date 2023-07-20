@@ -1,10 +1,11 @@
 using Blazorise;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using Blazorise.RichTextEdit;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// --------------------------------------------------------------------------
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
@@ -12,37 +13,20 @@ builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 
-//builder.Services.AddMediatR(cfg =>
-//{
-//    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
-//});
-
-#region Blazorise
-
 builder.Services
     .AddBlazorise(options =>
     {
         options.Immediate = true;
     })
-    //.AddBootstrapProviders()
-    .AddBootstrap5Providers()
-    //.AddBulmaProviders()
-    //.AddAntDesignProviders()
-    //.AddTailwindProviders()
+    .AddBootstrap5Providers()    
     .AddFontAwesomeIcons();
 
-#endregion
+builder.Services
+    .AddBlazoriseRichTextEdit(options => { 
+    
+    });
 
-//builder.Services.AddCors(options =>
-//    {
-//        options.AddPolicy("NewPolicy", builder =>
-//         builder.WithOrigins()
-//                      .AllowAnyMethod()
-//                      .AllowAnyHeader()
-//                      .AllowCredentials());
-//    });
-
-
+// --------------------------------------------------------------------------
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,6 +46,5 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-//app.UseCors("NewPolicy");
-
+// --------------------------------------------------------------------------
 app.Run();
