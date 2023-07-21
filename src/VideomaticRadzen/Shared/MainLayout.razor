@@ -1,38 +1,69 @@
 @inherits LayoutComponentBase
+
 <RadzenDialog />
 <RadzenNotification />
 <RadzenTooltip />
 <RadzenContextMenu />
 
-<RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
+<RadzenLayout Style="grid-template-columns: auto 1fr auto; grid-template-areas: 'rz-header rz-header rz-header' 'rz-sidebar rz-body rz-right-sidebar'">
     <RadzenHeader>
-        <RadzenRow JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenColumn Size="5">
-                <RadzenSidebarToggle Click="@SidebarToggleClick"></RadzenSidebarToggle>
+        <RadzenRow>
+            <!-- Logo and sandwich button top left-->
+            <RadzenColumn>
+                <RadzenStack Orientation="Orientation.Horizontal" 
+                             AlignItems="AlignItems.Center" 
+                             Gap="0">
+                    <RadzenSidebarToggle Click="@SidebarToggleClick" />
+                    <RadzenLabel Text="Videomatic">
+                        <RadzenImage Path="images/Banner.png"  />
+                    </RadzenLabel>
+                </RadzenStack>
             </RadzenColumn>
-            <RadzenColumn Size="7">
-                <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"></RadzenStack>
+            <RadzenColumn>
+                <!-- User icon top right-->
+                <RadzenStack Orientation="Orientation.Horizontal" 
+                             AlignItems="AlignItems.Center" 
+                             JustifyContent="JustifyContent.End" Gap="0">                    
+                    <RadzenIcon Icon="person" style="width:48px; height: 48px" />
+                </RadzenStack>            
             </RadzenColumn>
         </RadzenRow>
     </RadzenHeader>
-    <RadzenBody Expanded="@sidebarExpanded">
-        <RadzenRow class="rz-mx-auto rz-px-4 rz-pt-2 rz-pt-md-4 rz-pt-lg-6 rz-pt-xl-12 rz-pb-2 rz-pb-lg-12" Style="max-width: 1440px;">
-            <RadzenColumn Size="12">
-            @Body
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenBody>
-    <RadzenSidebar Expanded="@sidebarExpanded" style="z-index: 2">
-        <RadzenStack AlignItems="Radzen.AlignItems.Center" class="rz-py-4 rz-py-lg-6" Style="padding: var(--rz-panel-menu-item-padding); border-bottom: var(--rz-panel-menu-item-border);">
-            <RadzenImage Path="images/logo.png"  style="width: 48px; height: 48px;"></RadzenImage>
-            <RadzenText Text="VideomaticRadzen" TextStyle="Radzen.Blazor.TextStyle.Subtitle1" class="rz-mb-0" style="color: var(--rz-sidebar-color);" />
-        </RadzenStack>
-        <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Home" Path="" />
+
+    <!-- Menu Items -->
+    <RadzenSidebar @bind-Expanded="@sidebarExpanded">
+        <RadzenPanelMenu Multiple=false>
+            <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path=""/>
+            <RadzenPanelMenuItem Text="Videos" Icon="movie" Path="Videos" Style="color: azure">
+                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
+                <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
+                <RadzenPanelMenuItem Text="All" Icon="density_small" />
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists">
+                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
+                <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Spirituality" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Burning Man" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Programming" Icon="video_library" />
+            </RadzenPanelMenuItem>
         </RadzenPanelMenu>
-        <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-py-4 rz-py-lg-6" Style="padding: var(--rz-panel-menu-item-padding);">
-            <RadzenText Text="VideomaticRadzen v1.0.0" TextStyle="Radzen.Blazor.TextStyle.Caption" style="color: var(--rz-text-disabled-color);" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
-            <RadzenText Text="Copyright Ⓒ 2023" TextStyle="Radzen.Blazor.TextStyle.Caption" class="rz-mb-0" style="color: var(--rz-text-disabled-color);" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
-        </RadzenStack>
+
+        <RadzenPanelMenu Multiple=false>
+            <RadzenPanelMenuItem Text="You Tube" Image="https://www.youtube.com/favicon.ico" 
+                                Style="color: deepskyblue">
+                <RadzenPanelMenuItem Style="color: Gray" Text="History" Icon="history" />
+                <RadzenPanelMenuItem Style="color: gray" Text="Starred"  />
+                <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Hinduism" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Buddhism" Icon="video_library" />
+                <RadzenPanelMenuItem Text="Taoism" Icon="video_library" />
+            </RadzenPanelMenuItem>
+
+        </RadzenPanelMenu>
     </RadzenSidebar>
+
+    <!-- Body -->
+    <RadzenBody>
+        @Body        
+    </RadzenBody>    
 </RadzenLayout>
