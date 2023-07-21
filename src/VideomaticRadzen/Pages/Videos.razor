@@ -1,6 +1,32 @@
 ﻿@page "/videos"
+@inject ISender Sender
+
 <h3>Videos</h3>
 
 @code {
+    VideoDTO[] _videos = Array.Empty<VideoDTO>();
 
+    [Parameter]
+    public long PlaylistId { get; set; } = 0;
+
+    
+    List<string> EventType = new List<string>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnStartSearch(string.Empty);
+    }
+
+    public async Task OnStartSearch(string searchText)
+    {
+        var query = new GetVideosQuery(
+                //PlaylistIds: new[] { PlaylistId },
+                SearchText: searchText,
+                IncludeTags: true,
+                IncludeThumbnail: ThumbnailResolutionDTO.Medium);
+
+        Page<VideoDTO> results = await Sender.Send(query);
+
+        _videos = results.Items.ToArray();
+    }
 }

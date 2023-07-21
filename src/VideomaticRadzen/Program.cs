@@ -18,6 +18,10 @@ builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
 
+builder.Services.AddVideomaticApplication(builder.Configuration);
+builder.Services.AddVideomaticData(builder.Configuration);
+builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

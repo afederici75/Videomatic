@@ -14,9 +14,14 @@
                              AlignItems="AlignItems.Center" 
                              Gap="0">
                     <RadzenSidebarToggle Click="@SidebarToggleClick" />
-                    <RadzenLabel Text="Videomatic">
-                        <RadzenImage Path="images/Banner.png"  />
-                    </RadzenLabel>
+                    
+                    <RadzenImage   />
+                        <RadzenLink Path="" Text="Go to url" target="_blank">
+                            <RadzenImage Path="images/Banner.png"
+                                         Style="width: 100%">
+                            </RadzenImage>
+                        </RadzenLink>
+                    
                 </RadzenStack>
             </RadzenColumn>
             <RadzenColumn>
@@ -24,7 +29,7 @@
                 <RadzenStack Orientation="Orientation.Horizontal" 
                              AlignItems="AlignItems.Center" 
                              JustifyContent="JustifyContent.End" Gap="0">                    
-                    <RadzenIcon Icon="person" style="width:48px; height: 48px" />
+                    <RadzenIcon Icon="person" style="width:48px; height: 48px" sour />
                 </RadzenStack>            
             </RadzenColumn>
         </RadzenRow>
@@ -33,31 +38,45 @@
     <!-- Menu Items -->
     <RadzenSidebar @bind-Expanded="@sidebarExpanded">
         <RadzenPanelMenu Multiple=false>
-            <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path=""/>
-            <RadzenPanelMenuItem Text="Videos" Icon="movie" Path="Videos" Style="color: azure">
-                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
-                <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
-                <RadzenPanelMenuItem Text="All" Icon="density_small" />
-            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path="dashboard"/>
+            
             <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists">
-                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
+                <RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />
                 <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Spirituality" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Burning Man" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Programming" Icon="video_library" />
             </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Text="Videos" Icon="movie" Path="Videos" Style="color: azure">
+                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
+                <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
+                <RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />
+            </RadzenPanelMenuItem>            
         </RadzenPanelMenu>
 
         <RadzenPanelMenu Multiple=false>
             <RadzenPanelMenuItem Text="You Tube" Image="https://www.youtube.com/favicon.ico" 
-                                Style="color: deepskyblue">
+                                Style="color: deepskyblue"
+                                Path="youtube">
                 <RadzenPanelMenuItem Style="color: Gray" Text="History" Icon="history" />
-                <RadzenPanelMenuItem Style="color: gray" Text="Starred"  />
+                <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
                 <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Hinduism" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Buddhism" Icon="video_library" />
                 <RadzenPanelMenuItem Text="Taoism" Icon="video_library" />
             </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Text="Google Drive" Image="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png"
+                                 Style="color: deepskyblue">                
+            </RadzenPanelMenuItem>
+            
+            <RadzenPanelMenuItem Text="Vimeo" 
+                                 Image="https://vimeo.com/favicon.ico"
+                                 Style="color: deepskyblue">
+            </RadzenPanelMenuItem>
+
+            
 
         </RadzenPanelMenu>
     </RadzenSidebar>
