@@ -1,9 +1,98 @@
 ﻿@page "/videos"
+@using VideomaticRadzen.Components
 @inject ISender Sender
 
 <h3>Videos</h3>
 
-@code {
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem" Class="rz-p-2">
+    <RadzenCheckBox @bind-Value="@allowVirtualization" Name="allowVirtualization" />
+    <RadzenLabel Text="Allow virtualization" Component="allowVirtualization" />
+</RadzenStack>
+
+<RadzenDataList AllowVirtualization=@allowVirtualization Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")"
+                WrapItems="@(!allowVirtualization)" AllowPaging="@(!allowVirtualization)"
+                Data="@_videos" TItem="VideoDTO" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
+    <Template Context="video">
+        <RadzenCard Style="width: 100%; padding: 0;">
+            <RadzenRow Gap="0">
+                <!-- Title/Image -->
+                <RadzenColumn Size="12" SizeLG="3" Class="rz-p-4 product-title">
+                    <RadzenStack Orientation="Orientation.Vertical">
+                        <!-- Name-->
+                        <RadzenText TextStyle="TextStyle.H5" class="rz-color-secondary">@(video.Name)</RadzenText>
+
+                        <!-- Thumbnail -->
+                        <RadzenImage Path="@video.Thumbnail" Style="width: 160px; height: 90px" />
+                            
+                       <!-- Counts -->
+                       <RadzenStack Orientation="Orientation.Horizontal">
+                           <RadzenBadge Variant="Variant.Filled" Text="@(video.TagCount.ToString() + " Tag(s)")" class="rz-ml-2" />
+                           <RadzenBadge Variant="Variant.Filled" Text="@(video.TranscriptCount.ToString() + " Transcript(s)")" class="rz-ml-2" />
+                           <RadzenBadge Variant="Variant.Filled" Text="@(video.ArtifactCount.ToString() + " Artifact(s)")" class="rz-ml-2" />
+                       </RadzenStack>
+                    </RadzenStack>
+                </RadzenColumn>
+
+                <!-- Data Values -->
+                <RadzenColumn Size="12" SizeLG="7" Class="rz-p-4">
+                   
+                    <!-- Data Values -->
+                    <RadzenRow Gap="0">                            
+                        <!-- Data Values 1 -->
+                        <RadzenColumn Size="6">
+                            <RadzenStack Orientation="Orientation.Vertical">
+                                    <LabelWithText Label="Provider" Text="@(video.Provider)" />
+                                    <LabelWithText Label="Channel Id" Text="@(video.VideoOwnerChannelId)" />
+                                    <LabelWithText Label="Published" Text="@(video.VideoPublishedAt.ToString())" />
+                            </RadzenStack>
+                        </RadzenColumn>
+                        
+                        <!-- Data Values 2 -->
+                        <RadzenColumn Size="6">
+                            <RadzenStack Orientation="Orientation.Vertical">                                    
+                                <LabelWithText Label="Channel Title" Text="@(video.VideoOwnerChannelTitle)" />
+                                <LabelWithText Label="Channel Id" Text="@(video.VideoOwnerChannelId)" />
+                            </RadzenStack>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <!-- Description text area-->
+                    <RadzenRow>
+                        <RadzenColumn Size="12">
+                            <RadzenTextArea class="w-100" Style="height: 100px" Value="@video.Description" />
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenColumn>
+
+                <!-- Actions -->
+                <RadzenColumn Size="12" SizeLG="2" Class="rz-p-4">
+                    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
+                        <RadzenButton Text="Watch" Style="width: 100%" />
+                        <RadzenButton Text="More" Style="width: 100%" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
+
+    <style>
+        .product-title {
+            min-height: 72px;
+            background-color: var(--rz-secondary-lighter);
+        }
+
+        .price-badge {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 20px;
+            padding: 8px;
+        }
+    </style>
+
+    @code {
+    bool allowVirtualization;
+
     VideoDTO[] _videos = Array.Empty<VideoDTO>();
 
     [Parameter]
