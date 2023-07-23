@@ -4,8 +4,8 @@ public record GetVideosQuery(
     IEnumerable<long>? PlaylistIds = null,
     string? SearchText = null,
     string? OrderBy = null,
-    int? Page = null,
-    int? PageSize = null,
+    int? Skip = null,
+    int? Take = null,
     bool IncludeTags = false,
     ThumbnailResolutionDTO? IncludeThumbnail = null,
     IEnumerable<long>? VideoIds = null) : IRequest<Page<VideoDTO>>;
@@ -36,7 +36,7 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
            RuleFor(x => x.OrderBy).NotEmpty();
         });
         
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).GreaterThan(0);
+        RuleFor(x => x.Skip).GreaterThanOrEqualTo(0);
+        RuleFor(x => x.Take).GreaterThan(0);
     }
 }

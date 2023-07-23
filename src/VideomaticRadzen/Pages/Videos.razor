@@ -1,4 +1,5 @@
 ﻿@page "/videos"
+@using Company.Videomatic.Domain.Aggregates.Video;
 @using VideomaticRadzen.Components
 @inject ISender Sender
 
@@ -9,10 +10,36 @@
     <RadzenLabel Text="Allow virtualization" Component="allowVirtualization" />
 </RadzenStack>
 
-<RadzenDataList AllowVirtualization=@allowVirtualization Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")"
-                WrapItems="@(!allowVirtualization)" AllowPaging="@(!allowVirtualization)"
-                Data="@_videos" TItem="VideoDTO" PageSize="5" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true">
-    <Template Context="video">
+ <RadzenDataFilter @ref="dataFilter" 
+     Data="@filteredVideos" 
+     TItem="VideoDTO" 
+
+     Auto=auto      
+
+     ViewChanged=@(view => dataList.Reload())>
+        <Properties>
+            <RadzenDataFilterProperty TItem="VideoDTO" Type="@typeof(long)" Property="Id.Value" Title="Id" />
+            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.Name)" Title="Name" />
+            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.VideoPublishedAt)" Title="Published" />
+            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.VideoOwnerChannelId)" Title="Channel Id" />
+        </Properties>
+</RadzenDataFilter>
+
+<RadzenDataList 
+    @ref="dataList"
+    Data="@filteredVideos"
+    LoadData="@LoadData"    
+    
+    AllowVirtualization=@allowVirtualization 
+    AllowPaging="@(!allowVirtualization)"
+    TItem="VideoDTO" 
+    PageSize="5"
+                Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")"
+                WrapItems="@(!allowVirtualization)"     
+    PagerHorizontalAlign="HorizontalAlign.Left" 
+    ShowPagingSummary="true">
+
+        <Template Context="video">
         <RadzenCard Style="width: 100%; padding: 0;">
             <RadzenRow Gap="0">
                 <!-- Title/Image -->
@@ -91,19 +118,50 @@
     </style>
 
     @code {
+
+    bool auto = true;
+
+    RadzenDataFilter<VideoDTO> dataFilter;
+
+    IEnumerable<VideoDTO> filteredVideos = Enumerable.Empty<VideoDTO>();
+    IEnumerable<VideoDTO> videos = Enumerable.Empty<VideoDTO>();
+
+    RadzenDataList<VideoDTO> dataList;
+
+    // -------
     bool allowVirtualization;
+        
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
 
-    VideoDTO[] _videos = Array.Empty<VideoDTO>();
-
-    [Parameter]
-    public long PlaylistId { get; set; } = 0;
+        //filteredVideos = Enumerable.Empty<VideoDTO>();
+    }
 
     
-    List<string> EventType = new List<string>();
+    //async Task OnSelectedTitlesChange(object value)
+    //{
+    //    if (selectedTitles != null && !selectedTitles.Any())
+    //    {
+    //        selectedTitles = null;
+    //    }
+    //
+    //    await ordersGrid.FirstPage();
+    //}
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await OnStartSearch(string.Empty);
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            await dataFilter.AddFilter(new CompositeFilterDescriptor()
+                {
+                    Property = "Name",
+                    FilterValue = "a",
+                    FilterOperator = FilterOperator.Contains
+                });
+        }
     }
 
     public async Task OnStartSearch(string searchText)
@@ -116,6 +174,37 @@
 
         Page<VideoDTO> results = await Sender.Send(query);
 
-        _videos = results.Items.ToArray();
+        filteredVideos = results.Items;
+    }
+
+    bool isLoading;
+    int count;
+
+    async Task LoadData(LoadDataArgs args)
+    {
+        isLoading = true;
+
+        await Task.Yield();
+                
+        // This demo is using https://dynamic-linq.net
+        var query = new GetVideosQuery(
+                //PlaylistIds: new[] { PlaylistId },
+                Skip: args.Skip,
+                Take: args.Top,
+                SearchText: null,
+                IncludeTags: true,
+                IncludeThumbnail: ThumbnailResolutionDTO.Medium);
+
+        Page<VideoDTO> results = await Sender.Send(query);
+
+        filteredVideos = results.Items;
+
+        // Important!!! Make sure the Count property of RadzenDataGrid is set.
+        //count = query.Count();
+        //
+        //// Perform paging via Skip and Take.
+        //filteredOrders = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+
+        isLoading = false;
     }
 }

@@ -150,8 +150,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
             //VideoIds: videoIds, 
             SearchText: searchText, 
             OrderBy: orderBy, 
-            Page: null, // Uses 1 by default
-            PageSize: null, // Uses 10 by default
+            Skip: null, // Uses 1 by default
+            Take: null, // Uses 10 by default
             IncludeTags: includeCounts, 
             IncludeThumbnail: IncludeThumbnail);
 
