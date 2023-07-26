@@ -37,20 +37,31 @@
             LoadData="@LoadData"
             AllowFiltering="true" 
             AllowColumnResize="true"
-            FilterMode="FilterMode.SimpleWithMenu" 
+            FilterMode="FilterMode.Simple" 
             PageSize="@pageSize" 
-            AllowPaging="true"                          
+            ShowPagingSummary="true"
+            
+            AllowPaging="true"
+            PagerPosition="PagerPosition.TopAndBottom"
+            AllowVirtualization="@allowVirtualization"
             AllowSorting="true" 
-            ColumnWidth="100px"
+            
             FilterCaseSensitivity="@filterCaseSensitivity"
             LogicalFilterOperator="@logicalFilterOperator"
             IsLoading="@isLoading">
     <Columns>
+        <!-- 
+            // Thumbnail
+            // Tags
+        -->
+        
         <RadzenDataGridColumn TItem="VideoDTO" Property="Id" Title="Id" Filterable="false" Resizable=false Width="50px" />
         <RadzenDataGridColumn TItem="VideoDTO" Property="Name" Title="Name" />
         <RadzenDataGridColumn TItem="VideoDTO" Property="Location" Title="Location" />  
         <RadzenDataGridColumn TItem="VideoDTO" Property="Description" Title="Desc" />
+
         <RadzenDataGridColumn TItem="VideoDTO" Property="VideoOwnerChannelTitle" Title="Channel" />
+        <RadzenDataGridColumn TItem="VideoDTO" Property="Provider" Title="Provider" />
         <RadzenDataGridColumn TItem="VideoDTO" Property="ProviderVideoId" Title="VideoId" />
     </Columns>
 </RadzenDataGrid>
@@ -60,7 +71,7 @@
 @code {
     RadzenDataGrid<VideoDTO>? grid;
 
-    int pageSize = 20;
+    int pageSize = 10;
     bool allowVirtualization = false;
     bool auto = true;    
     FilterCaseSensitivity filterCaseSensitivity = FilterCaseSensitivity.CaseInsensitive;
@@ -106,10 +117,17 @@
 
         await Task.Yield();
 
+        string? sort = null;
+        if (args.Sorts.Any())
+        {
+            sort = string.Join(", ", args.Sorts.Select(s => $"{s.Property} {(s.SortOrder == SortOrder.Ascending ? "asc" : "desc")}"));
+        }
+
         var query = new GetVideosQuery(
                 //PlaylistIds: new[] { PlaylistId },
                 Skip: args.Skip,
                 Take: args.Top,
+                OrderBy: sort,
                 SearchText: null,
                 IncludeTags: true,
                 IncludeThumbnail: ThumbnailResolutionDTO.Medium);

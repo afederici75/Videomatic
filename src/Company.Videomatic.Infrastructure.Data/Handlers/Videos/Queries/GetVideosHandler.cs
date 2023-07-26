@@ -10,9 +10,11 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {
     public static readonly IReadOnlyDictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Video, object?>>>(StringComparer.OrdinalIgnoreCase)
     {
-        { nameof(Video.Id), _ => _.Id },
-        { nameof(Video.Name), _ => _.Name },
-        { nameof(Video.Description), _ => _.Description },
+        { nameof(VideoDTO.Id), _ => _.Id },
+        { nameof(VideoDTO.Name), _ => _.Name },
+        { nameof(VideoDTO.Description), _ => _.Description },
+        { nameof(VideoDTO.ArtifactCount), _ => _.Description },
+
         { "TagCount", _ => _.Tags.Count()},        
     };
 
@@ -61,6 +63,8 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             q = q.OrderBy(request.OrderBy, SupportedOrderBys);
         }
 
+        var totalCount = await q.CountAsync();
+
         // Pagination
         q = q.Skip(skip).Take(take);
 
@@ -90,8 +94,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         // Counts
         var res = await final.ToListAsync();
-        var totalCount = await final.CountAsync();
-
+        
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    
 }
