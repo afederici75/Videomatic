@@ -5,188 +5,107 @@
 
 <h3>Videos</h3>
 
-<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem" Class="rz-p-2">
-    <RadzenCheckBox @bind-Value="@allowVirtualization" Name="allowVirtualization" />
-    <RadzenLabel Text="Allow virtualization" Component="allowVirtualization" />
-</RadzenStack>
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-md-4 col-lg-3">
+            <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">
+                Filter case sensitivity
+            </RadzenText>
+            <RadzenDropDown @bind-Value="filterCaseSensitivity" Data="@(Enum.GetValues(typeof(FilterCaseSensitivity)))" Change="@(args => grid.Reload())">
+                <Template>
+                    @Enum.GetName((FilterCaseSensitivity)context)
+                </Template>
+            </RadzenDropDown>
+        </div>
+        <div class="col-md-8 col-lg-9">
+            <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">
+                Filter logical operator
+            </RadzenText>
+            <RadzenDropDown @bind-Value="logicalFilterOperator" Data="@(Enum.GetValues(typeof(LogicalFilterOperator)))" Change="@(args => grid.Reload())">
+                <Template>
+                    @Enum.GetName((LogicalFilterOperator)context)
+                </Template>
+            </RadzenDropDown>
+        </div>
+    </div>
+</div>
 
- <RadzenDataFilter @ref="dataFilter" 
-     Data="@filteredVideos" 
-     TItem="VideoDTO" 
+<RadzenButton Text="Reset" Click="@Reset" Style="margin-bottom: 20px;" />
 
-     Auto=auto      
+<RadzenDataGrid @ref="grid" 
+            TItem="VideoDTO" Data="@videos" Count="@count"
+            LoadData="@LoadData"
+            AllowFiltering="true" 
+            AllowColumnResize="true"
+            FilterMode="FilterMode.SimpleWithMenu" 
+            PageSize="@pageSize" 
+            AllowPaging="true"                          
+            AllowSorting="true" 
+            ColumnWidth="100px"
+            FilterCaseSensitivity="@filterCaseSensitivity"
+            LogicalFilterOperator="@logicalFilterOperator"
+            IsLoading="@isLoading">
+    <Columns>
+        <RadzenDataGridColumn TItem="VideoDTO" Property="Id" Title="Id" Filterable="false" Resizable=false Width="50px" />
+        <RadzenDataGridColumn TItem="VideoDTO" Property="Name" Title="Name" />
+        <RadzenDataGridColumn TItem="VideoDTO" Property="Location" Title="Location" />  
+        <RadzenDataGridColumn TItem="VideoDTO" Property="Description" Title="Desc" />
+        <RadzenDataGridColumn TItem="VideoDTO" Property="VideoOwnerChannelTitle" Title="Channel" />
+        <RadzenDataGridColumn TItem="VideoDTO" Property="ProviderVideoId" Title="VideoId" />
+    </Columns>
+</RadzenDataGrid>
 
-     ViewChanged=@(view => dataList.Reload())>
-        <Properties>
-            <RadzenDataFilterProperty TItem="VideoDTO" Type="@typeof(long)" Property="Id.Value" Title="Id" />
-            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.Name)" Title="Name" />
-            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.VideoPublishedAt)" Title="Published" />
-            <RadzenDataFilterProperty TItem="VideoDTO" Property="@nameof(VideoDTO.VideoOwnerChannelId)" Title="Channel Id" />
-        </Properties>
-</RadzenDataFilter>
+<RadzenLabel Text="@count.ToString()" />
 
-<RadzenDataList 
-    @ref="dataList"
-    Data="@filteredVideos"
-    LoadData="@LoadData"    
-    
-    AllowVirtualization=@allowVirtualization 
-    AllowPaging="@(!allowVirtualization)"
-    TItem="VideoDTO" 
-    PageSize="5"
-                Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")"
-                WrapItems="@(!allowVirtualization)"     
-    PagerHorizontalAlign="HorizontalAlign.Left" 
-    ShowPagingSummary="true">
+@code {
+    RadzenDataGrid<VideoDTO>? grid;
 
-        <Template Context="video">
-        <RadzenCard Style="width: 100%; padding: 0;">
-            <RadzenRow Gap="0">
-                <!-- Title/Image -->
-                <RadzenColumn Size="12" SizeLG="3" Class="rz-p-4 product-title">
-                    <RadzenStack Orientation="Orientation.Vertical">
-                        <!-- Name-->
-                        <RadzenText TextStyle="TextStyle.H5" class="rz-color-secondary">@(video.Name)</RadzenText>
+    int pageSize = 20;
+    bool allowVirtualization = false;
+    bool auto = true;    
+    FilterCaseSensitivity filterCaseSensitivity = FilterCaseSensitivity.CaseInsensitive;
+    LogicalFilterOperator logicalFilterOperator = LogicalFilterOperator.Or;
 
-                        <!-- Thumbnail -->
-                        <RadzenImage Path="@video.Thumbnail" Style="width: 160px; height: 90px" />
-                            
-                       <!-- Counts -->
-                       <RadzenStack Orientation="Orientation.Horizontal">
-                           <RadzenBadge Variant="Variant.Filled" Text="@(video.TagCount.ToString() + " Tag(s)")" class="rz-ml-2" />
-                           <RadzenBadge Variant="Variant.Filled" Text="@(video.TranscriptCount.ToString() + " Transcript(s)")" class="rz-ml-2" />
-                           <RadzenBadge Variant="Variant.Filled" Text="@(video.ArtifactCount.ToString() + " Artifact(s)")" class="rz-ml-2" />
-                       </RadzenStack>
-                    </RadzenStack>
-                </RadzenColumn>
+    bool isLoading = false;
 
-                <!-- Data Values -->
-                <RadzenColumn Size="12" SizeLG="7" Class="rz-p-4">
-                   
-                    <!-- Data Values -->
-                    <RadzenRow Gap="0">                            
-                        <!-- Data Values 1 -->
-                        <RadzenColumn Size="6">
-                            <RadzenStack Orientation="Orientation.Vertical">
-                                    <LabelWithText Label="Provider" Text="@(video.Provider)" />
-                                    <LabelWithText Label="Channel Id" Text="@(video.VideoOwnerChannelId)" />
-                                    <LabelWithText Label="Published" Text="@(video.VideoPublishedAt.ToString())" />
-                            </RadzenStack>
-                        </RadzenColumn>
-                        
-                        <!-- Data Values 2 -->
-                        <RadzenColumn Size="6">
-                            <RadzenStack Orientation="Orientation.Vertical">                                    
-                                <LabelWithText Label="Channel Title" Text="@(video.VideoOwnerChannelTitle)" />
-                                <LabelWithText Label="Channel Id" Text="@(video.VideoOwnerChannelId)" />
-                            </RadzenStack>
-                        </RadzenColumn>
-                    </RadzenRow>
+    IEnumerable<VideoDTO>? videos;
+    int count;    
 
-                    <!-- Description text area-->
-                    <RadzenRow>
-                        <RadzenColumn Size="12">
-                            <RadzenTextArea class="w-100" Style="height: 100px" Value="@video.Description" />
-                        </RadzenColumn>
-                    </RadzenRow>
-                </RadzenColumn>
-
-                <!-- Actions -->
-                <RadzenColumn Size="12" SizeLG="2" Class="rz-p-4">
-                    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem">
-                        <RadzenButton Text="Watch" Style="width: 100%" />
-                        <RadzenButton Text="More" Style="width: 100%" />
-                    </RadzenStack>
-                </RadzenColumn>
-            </RadzenRow>
-        </RadzenCard>
-    </Template>
-</RadzenDataList>
-
-    <style>
-        .product-title {
-            min-height: 72px;
-            background-color: var(--rz-secondary-lighter);
-        }
-
-        .price-badge {
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 20px;
-            padding: 8px;
-        }
-    </style>
-
-    @code {
-
-    bool auto = true;
-
-    RadzenDataFilter<VideoDTO> dataFilter;
-
-    IEnumerable<VideoDTO> filteredVideos = Enumerable.Empty<VideoDTO>();
-    IEnumerable<VideoDTO> videos = Enumerable.Empty<VideoDTO>();
-
-    RadzenDataList<VideoDTO> dataList;
-
-    // -------
-    bool allowVirtualization;
-        
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
-        //filteredVideos = Enumerable.Empty<VideoDTO>();
-    }
+        isLoading = true;
 
-    
-    //async Task OnSelectedTitlesChange(object value)
-    //{
-    //    if (selectedTitles != null && !selectedTitles.Any())
-    //    {
-    //        selectedTitles = null;
-    //    }
-    //
-    //    await ordersGrid.FirstPage();
-    //}
+        await Task.Yield();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (firstRender)
-        {
-            await dataFilter.AddFilter(new CompositeFilterDescriptor()
-                {
-                    Property = "Name",
-                    FilterValue = "a",
-                    FilterOperator = FilterOperator.Contains
-                });
-        }
-    }
-
-    public async Task OnStartSearch(string searchText)
-    {
         var query = new GetVideosQuery(
                 //PlaylistIds: new[] { PlaylistId },
-                SearchText: searchText,
+                Skip: 0,
+                Take: pageSize,
+                SearchText: null,
                 IncludeTags: true,
                 IncludeThumbnail: ThumbnailResolutionDTO.Medium);
 
         Page<VideoDTO> results = await Sender.Send(query);
 
-        filteredVideos = results.Items;
-    }
+        videos = results.Items;
+        count = Convert.ToInt32(results.TotalCount);
 
-    bool isLoading;
-    int count;
+        if (grid != null)
+        {
+            await grid.FirstPage(true);
+        }
+
+        isLoading = false;
+    }
 
     async Task LoadData(LoadDataArgs args)
     {
         isLoading = true;
 
         await Task.Yield();
-                
-        // This demo is using https://dynamic-linq.net
+
         var query = new GetVideosQuery(
                 //PlaylistIds: new[] { PlaylistId },
                 Skip: args.Skip,
@@ -197,8 +116,9 @@
 
         Page<VideoDTO> results = await Sender.Send(query);
 
-        filteredVideos = results.Items;
-
+        videos = results.Items;
+        count = Convert.ToInt32(results.TotalCount);
+        
         // Important!!! Make sure the Count property of RadzenDataGrid is set.
         //count = query.Count();
         //
@@ -206,5 +126,11 @@
         //filteredOrders = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
 
         isLoading = false;
+    }
+
+    async Task Reset()
+    {
+        grid.Reset(true);
+        await grid.FirstPage(true);
     }
 }

@@ -26,7 +26,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
     // GetVideosQuery
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
-        var skip = request.Skip ?? 1;
+        var skip = request.Skip ?? 0;
         var take = request.Take ?? 10;
 
         using var dbContext = Factory.CreateDbContext();
