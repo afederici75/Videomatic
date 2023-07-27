@@ -9,7 +9,7 @@ public class ArtifactConfiguration : ArtifactConfigurationBase
     public override void Configure(EntityTypeBuilder<Artifact> builder)
     {
         base.Configure(builder);
-
+        
         builder.Property(x => x.Id)
                .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode
     }

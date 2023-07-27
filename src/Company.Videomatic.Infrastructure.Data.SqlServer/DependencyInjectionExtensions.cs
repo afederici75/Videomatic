@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Company.Videomatic.Application.Handlers.Videos.Queries;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -34,13 +35,11 @@ public static class DependencyInjectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        // Keep this here!
         services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>();
-        //(sp, builder) =>
-        //{
-        //    var cfg = configuration;
-        //    Configure(builder, cfg);
-        //},
-        //ServiceLifetime.Scoped);
+
+        VideomaticDbFunctionsExtensions.Configuration.FreeTextFunction = SqlServerDbFunctionsExtensions.FreeText;
+        VideomaticDbFunctionsExtensions.Configuration.ContainsFunction = SqlServerDbFunctionsExtensions.Contains;
 
 
         services.AddDbContextFactory<VideomaticDbContext, VideomaticSqlServerDbContextFactory>(

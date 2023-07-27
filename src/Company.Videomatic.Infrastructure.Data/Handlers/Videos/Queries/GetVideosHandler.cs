@@ -1,8 +1,6 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Linq.Expressions;
-using Company.Videomatic.Application.Features.Videos;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Queries;
 
@@ -12,10 +10,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
     {
         { nameof(VideoDTO.Id), _ => _.Id },
         { nameof(VideoDTO.Name), _ => _.Name },
-        { nameof(VideoDTO.Description), _ => _.Description },
-        { nameof(VideoDTO.ArtifactCount), _ => _.Description },
-
-        { "TagCount", _ => _.Tags.Count()},        
+        { nameof(VideoDTO.Description), _ => _.Description }
     };
 
     public GetVideosHandler(IDbContextFactory<VideomaticDbContext> factory)
@@ -53,8 +48,8 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
-            q = q.Where(v => v.Name.Contains(request.SearchText) ||
-                             ((v.Description != null) && v.Description.Contains(request.SearchText)));
+            throw new NotSupportedException();
+            //q = q.Where(v => VideomaticDbFunctionsExtensions.___FreeText(v.Name, request.SearchText));
         }
 
         // OrderBy
