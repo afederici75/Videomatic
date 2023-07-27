@@ -16,13 +16,13 @@ public class DbContextFixture : IAsyncLifetime
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
         Seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
         Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        try
-        {
-            //DbContext.Database.EnsureDeleted();
-        }
-        catch
-        { }
-        //DbContext.Database.EnsureCreated();
+        //try
+        //{
+            DbContext.Database.EnsureDeleted();
+        //}
+        //catch
+        //{ }
+        DbContext.Database.Migrate();
     }    
 
     readonly ITestOutputHelperAccessor _outputAccessor;
