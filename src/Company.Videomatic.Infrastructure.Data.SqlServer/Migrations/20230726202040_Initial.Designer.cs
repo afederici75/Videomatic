@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230718150657_Initial")]
+    [Migration("20230726202040_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -105,6 +105,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("PlaylistId", "VideoId");
 
+                    b.HasIndex("VideoId");
+
                     b.ToTable("PlaylistVideos", (string)null);
                 });
 
@@ -173,6 +175,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.HasOne("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", null)
                         .WithMany("Videos")
                         .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

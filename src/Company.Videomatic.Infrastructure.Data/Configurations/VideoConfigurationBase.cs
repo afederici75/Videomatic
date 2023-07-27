@@ -29,11 +29,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         
         builder.Property(x => x.Description);
         //.HasMaxLength(FieldLengths.Description);
-
-        //builder.HasMany(typeof(PlaylistVideo), "_playlists")
-        //       .WithOne()
-        //       .HasForeignKey("VideoId");
-
+        
         //builder.HasMany(x => x.Playlists)
         //       .WithOne()
         //       .HasForeignKey(nameof(PlaylistVideo.VideoId));
@@ -89,16 +85,19 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         builder.HasMany(typeof(Artifact))
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(nameof(Artifact.VideoId))
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(typeof(Transcript))
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(nameof(Transcript.VideoId))
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(typeof(PlaylistVideo))
+               .WithOne()
+               .HasForeignKey(nameof(PlaylistVideo.VideoId));
 
 
         // Indices

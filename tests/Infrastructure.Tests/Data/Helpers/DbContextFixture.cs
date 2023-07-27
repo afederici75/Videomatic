@@ -18,11 +18,11 @@ public class DbContextFixture : IAsyncLifetime
         Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         try
         {
-            DbContext.Database.EnsureDeleted();
+            //DbContext.Database.EnsureDeleted();
         }
         catch
         { }
-        DbContext.Database.EnsureCreated();
+        //DbContext.Database.EnsureCreated();
     }    
 
     readonly ITestOutputHelperAccessor _outputAccessor;

@@ -32,7 +32,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         Helper = helper ?? throw new ArgumentNullException(nameof(helper));
-
+        
         Fixture.SkipDeletingDatabase = true;
     }
 

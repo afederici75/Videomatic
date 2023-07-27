@@ -65,6 +65,27 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Artifacts",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
+                    VideoId = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Artifacts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Artifacts_Videos_VideoId",
+                        column: x => x.VideoId,
+                        principalTable: "Videos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PlaylistVideos",
                 columns: table => new
                 {
@@ -80,23 +101,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         principalTable: "Playlists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Artifacts",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Artifacts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Artifacts_Videos_VideoId",
+                        name: "FK_PlaylistVideos_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",
                         principalColumn: "Id",
@@ -203,6 +209,11 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "IX_Playlists_Name",
                 table: "Playlists",
                 column: "Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlaylistVideos_VideoId",
+                table: "PlaylistVideos",
+                column: "VideoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Thumbnail_VideoId",
