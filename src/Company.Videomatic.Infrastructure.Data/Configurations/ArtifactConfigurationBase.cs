@@ -4,15 +4,17 @@ namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {
+    public const string TableName = "Artifacts";
+
     public static class FieldLengths
     { 
-        public const int Title = 450;
-        public const int Type = 128;    
+        public const int Title = 100;
+        public const int Type = 128; // TODO: Could be way smaller
     }
 
     public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {        
-        builder.ToTable("Artifacts");
+        builder.ToTable(TableName);
 
         // Fields
         builder.Property(x => x.Id)

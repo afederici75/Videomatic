@@ -2,15 +2,16 @@
 
 public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
+    public const string TableName = "Playlists";
+
     public static class FieldLengths
     {
         public const int Name = 120;
-        //public const int Description = 4096;
     }
 
     public virtual void Configure(EntityTypeBuilder<Playlist> builder)
     {
-        builder.ToTable("Playlists");
+        builder.ToTable(TableName);
 
         // Fields
         builder.Property(x => x.Id)
@@ -19,18 +20,13 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Name);
 
-        builder.Property(x => x.Description);
+        builder.Property(x => x.Description); // MAX
         
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithOne()
                .HasForeignKey(nameof(PlaylistVideo.PlaylistId));
-
-
-        //builder.HasMany(typeof(PlaylistVideo))
-        //       .WithOne()
-        //       .HasForeignKey("PlaylistId");
-
+       
         // Indices
         builder.HasIndex(x => x.Name);
         builder.HasIndex(x => x.Description);

@@ -16,7 +16,7 @@ public class TranscriptConfiguration : TranscriptConfigurationBase
 
         var thumbnails = builder.OwnsMany(x => x.Lines,
             (builder) =>
-            {
+            {                
                 builder.Property("Id")
                        .HasDefaultValueSql($"NEXT VALUE FOR {TranscriptLineSequenceName}"); // TODO: unhardcode                
             });

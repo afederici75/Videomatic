@@ -7,7 +7,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer;
 public class SqlServerVideomaticDbContext : VideomaticDbContext
 {
     public const string ProviderName = "SqlServer";
-    public const string SequenceName = "MainId";    
+    public const string SequenceName = "MainId";
+
+    public SqlServerVideomaticDbContext()
+        : base()
+    {
+            
+    }
 
     public SqlServerVideomaticDbContext(DbContextOptions options) : base(options)
     {

@@ -6,7 +6,13 @@ using Microsoft.Extensions.Configuration;
 namespace Company.Videomatic.Infrastructure.Data;
 
 public abstract class VideomaticDbContext : DbContext
-{    
+{
+    public VideomaticDbContext()
+        : base()
+    {
+        
+    }
+
     public VideomaticDbContext(DbContextOptions options) 
         : base(options)
     {        
