@@ -2,7 +2,7 @@
 
 public sealed class CreatePlaylistHandler : CreateAggregateRootHandler<CreatePlaylistCommand, Playlist>
 {
-    public CreatePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public CreatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

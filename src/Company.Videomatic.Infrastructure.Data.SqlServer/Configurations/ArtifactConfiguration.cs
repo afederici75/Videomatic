@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
+﻿
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 

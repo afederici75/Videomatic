@@ -94,8 +94,8 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         var query = new GetPlaylistsQuery(
             SearchText: searchText,
             OrderBy: orderBy,
-            Page: null, // Uses to 1 by default
-            PageSize: null);
+            Skip: null, // Uses to 1 by default
+            Take: null);
 
         Page<PlaylistDTO> response = await Sender.Send(query);
 

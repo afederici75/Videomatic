@@ -1,7 +1,30 @@
-﻿global using Company.Videomatic.Infrastructure.Data;
-global using Company.Videomatic.Infrastructure.Data.Configurations;
-global using Company.Videomatic.Infrastructure.Data.SqlServer;
-global using Microsoft.EntityFrameworkCore;
+﻿global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using Company.Videomatic.Domain.Aggregates.Video;
+
+global using Ardalis.Result;
+global using AutoMapper;
+global using MediatR;
+global using Microsoft.Extensions.Configuration;
+
+global using Company.SharedKernel.Abstractions;
+global using Company.Videomatic.Application.Abstractions;
+
+global using Company.Videomatic.Infrastructure.Data;
+global using Company.Videomatic.Infrastructure.Data.SqlServer;
+
+global using Company.Videomatic.Infrastructure.Data.Configurations;
+
+global using Company.Videomatic.Application.Features.Artifacts;
+global using Company.Videomatic.Application.Features.Playlists;
+global using Company.Videomatic.Application.Features.Transcripts;
+global using Company.Videomatic.Application.Features.Videos;
+
+global using Company.Videomatic.Domain.Aggregates.Artifact;
 global using Company.Videomatic.Domain.Aggregates.Playlist;
+global using Company.Videomatic.Domain.Aggregates.Transcript;
+global using Company.Videomatic.Domain.Aggregates.Video;
+
+global using Company.Videomatic.Application.Features.Artifacts.Queries;
+global using Company.Videomatic.Application.Features.Playlists.Queries;
+global using Company.Videomatic.Application.Features.Transcripts.Queries;
+global using Company.Videomatic.Application.Features.Videos.Queries;

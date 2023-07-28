@@ -1,7 +1,7 @@
 ﻿using Company.Videomatic.Infrastructure.Data;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Application.Handlers.Transcripts.Queries;
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Transcripts.Queries;
 
 public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<TranscriptDTO>>
 {
@@ -24,8 +24,8 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
     {
         using var dbContext = DbContextFactory.CreateDbContext();
 
-        var pageIdx = request.Page ?? 1;
-        var pageSize = request.PageSize ?? 10;
+        var skip = request.Skip ?? 0;
+        var take = request.Take ?? 10;
 
         // Transcripts
         IQueryable<Transcript> q = dbContext.Transcripts;
@@ -59,6 +59,6 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new Page<TranscriptDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<TranscriptDTO>(res, skip, take, totalCount);
     }
 }

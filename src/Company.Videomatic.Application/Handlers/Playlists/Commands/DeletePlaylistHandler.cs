@@ -2,7 +2,7 @@
 
 public sealed class DeletePlaylistHandler : DeleteAggregateRootHandler<DeletePlaylistCommand, Playlist, PlaylistId>
 {
-    public DeletePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public DeletePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
     }
     

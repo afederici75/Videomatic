@@ -1,8 +1,11 @@
-﻿namespace Company.Videomatic.Application.Handlers.Artifacts.Commands;
+﻿using AutoMapper;
+using Company.SharedKernel.Abstractions;
+
+namespace Company.Videomatic.Application.Handlers.Artifacts.Commands;
 
 public class DeleteArtifactHandler : DeleteAggregateRootHandler<DeleteArtifactCommand, Artifact, ArtifactId>
 {
-    public DeleteArtifactHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public DeleteArtifactHandler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

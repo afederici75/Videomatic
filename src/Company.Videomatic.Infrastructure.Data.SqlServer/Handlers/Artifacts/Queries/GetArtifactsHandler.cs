@@ -1,7 +1,6 @@
-﻿using Company.Videomatic.Infrastructure.Data;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Artifacts.Queries;
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Artifacts.Queries;
 
 public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<ArtifactDTO>>
 {
@@ -11,7 +10,6 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
         { nameof(Artifact.Name), _ => _.Type },
         { nameof(Artifact.Type), _ => _.Type },
         { nameof(Artifact.Text), _ => _.Text },
-
     };
 
 
@@ -26,8 +24,8 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
     {
         using var dbContext = DbContextFactory.CreateDbContext();
 
-        var pageIdx = request.Page ?? 1;
-        var pageSize = request.PageSize ?? 10;
+        var skip = request.Skip ?? 0;
+        var take = request.Take ?? 10;
 
         // Artifacts
         IQueryable<Artifact> q = dbContext.Artifacts;
@@ -63,6 +61,6 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new Page<ArtifactDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<ArtifactDTO>(res, skip, take, totalCount);
     }
 }

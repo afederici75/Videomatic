@@ -1,14 +1,16 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Queries;
 
 public record GetVideosQuery(
-    IEnumerable<long>? PlaylistIds = null,
+    // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,
     int? Skip = null,
     int? Take = null,
+    // Additional
     bool IncludeTags = false,
-    ThumbnailResolutionDTO? IncludeThumbnail = null,
-    IEnumerable<long>? VideoIds = null) : IRequest<Page<VideoDTO>>;
+    ThumbnailResolutionDTO? SelectedThumbnail = null,
+    IEnumerable<long>? PlaylistIds = null,
+    IEnumerable<long>? VideoIds = null) : IRequest<Page<VideoDTO>>, IBasicQuery;
 
 
 internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
@@ -25,11 +27,11 @@ internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
             RuleFor(x => x.VideoIds).NotEmpty();
         }); 
 
-        //When(x => x.SearchText is not null, () =>
-        //{
-        //    // 
-        //    //RuleFor(x => x.SearchText).NotEmpty();
-        //});
+        When(x => x.SearchText is not null, () =>
+        {
+            // 
+            //RuleFor(x => x.SearchText).NotEmpty();
+        });
 
         When(x => x.OrderBy is not null, () =>
         { 

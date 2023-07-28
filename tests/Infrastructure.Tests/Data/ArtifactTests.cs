@@ -53,7 +53,9 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         artifact.Text.Should().Be(createCommand.Text);
         artifact.Type.Should().Be(createCommand.Type);
-        artifact.VideoId.Should().Be(videoId);        
+        artifact.VideoId.Should().Be(videoId);
+
+        await Sender.Send(new DeleteVideoCommand(videoId));         
     }
 
     [Fact]
@@ -74,6 +76,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();
+
+        await Sender.Send(new DeleteVideoCommand(videoId));
     }
 
     [Fact]
@@ -98,6 +102,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 
         video.Text.Should().BeEquivalentTo(updateCommand.Text);
         video.Name.Should().BeEquivalentTo(updateCommand.Name);
+
+        await Sender.Send(new DeleteVideoCommand(videoId));
     }
 
     [Theory]
@@ -113,8 +119,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         var query = new GetArtifactsQuery(
             SearchText: searchText,
             OrderBy: orderBy,
-            Page: null, // Uses to 1 by default
-            PageSize: null); // Uses 10 by default
+            Skip: null, // Uses to 0 by default
+            Take: null); // Uses 10 by default
 
         Page<ArtifactDTO> response = await Sender.Send(query);
 

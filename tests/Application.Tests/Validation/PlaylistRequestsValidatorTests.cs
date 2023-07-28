@@ -48,6 +48,6 @@ public class PlaylistRequestsValidatorTests
     [InlineData("filter", null, 1, 1, 0)]
     public void ValidateGetPlaylistQuery(string? filter, string? orderBy, int? page, int? pageSize, int expectedErrors)
     {
-        ValidatorHelper.Validate<GetPlaylistsQueryValidator, GetPlaylistsQuery>(new(filter, orderBy, page, pageSize), expectedErrors);
+        ValidatorHelper.Validate<GetPlaylistsQueryValidator, GetPlaylistsQuery>(new(filter, orderBy, pageSize, page), expectedErrors);
     }
 }

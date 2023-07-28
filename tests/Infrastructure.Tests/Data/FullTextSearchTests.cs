@@ -1,23 +1,39 @@
-﻿namespace Infrastructure.Tests.Data;
+﻿using Infrastructure.Tests.Data.Helpers;
+
+namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
-public class FullTextSearchTests
+public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLifetime
 {
     public FullTextSearchTests(
-        IDbContextFactory<VideomaticDbContext> dbContextFactory,
+        DbContextFixture fixture,
         ITestOutputHelperAccessor outputAccessor,
         ISender sender)
     {
-        DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
         Output = outputAccessor?.Output ?? throw new ArgumentNullException(nameof(outputAccessor));
-
+        Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+
+        fixture.SkipDeletingDatabase = true;
     }
 
-    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
+    //// Leaves time for full text indices to get updated
+    //static bool _waitedOnce = false;
+    //public Task InitializeAsync()
+    //{
+    //    if (_waitedOnce)
+    //        return Task.CompletedTask;
+    //
+    //    _waitedOnce = true; 
+    //    return Task.Delay(2500);        
+    //}
+    //
+    //public Task DisposeAsync() => Task.CompletedTask;
+
     public ITestOutputHelper Output { get; }
-    public ISender Sender { get; }
-   
+    public DbContextFixture Fixture { get; }
+    public ISender Sender { get; }       
+
     [Theory]
     [InlineData("gods", 1)]
     [InlineData("god", 1)]
@@ -26,17 +42,21 @@ public class FullTextSearchTests
     [InlineData("huxley AND gods", 2)] // It's searching on all 3 terms!
     public async Task FT_VideoFreeText(string freeText, int expectedResults)
     {
-        using var db = await DbContextFactory.CreateDbContextAsync();
-        
+        var db = Fixture.DbContext;
+
         // FreeText is more restrictive predicate which by default does a search based
         // on various forms of a word or phrase (that means it by default includes Inflectional
         // forms as well as thesaurus).
 
+        var cnt = await db.Videos.CountAsync();
+        cnt.Should().Be(2);
+
         var res = await db.Videos.Where(x => 
-            EF.Functions.FreeText(x.Name, $"\"{freeText}\"") ||
-            EF.Functions.FreeText(x.Description!, $"\"{freeText}\""))
+            EF.Functions.FreeText(x.Name, $"{freeText}") ||
+            EF.Functions.FreeText(x.Description!, $"{freeText}"))
             .ToListAsync();
 
+        var allVids = await db.Videos.ToListAsync();
         res.Count.Should().Be(expectedResults);
     }
 
@@ -58,7 +78,7 @@ public class FullTextSearchTests
     [InlineData("\"describes\" OR \"offer\"", 2)] 
     public async Task FT_VideoContains(string contains, int expectedResults)
     {
-        using var db = await DbContextFactory.CreateDbContextAsync();
+        var db = Fixture.DbContext;
 
         // Contains, unlike FreeText, gives you flexibility to do various forms of search separately.
         var res = await db.Videos.Where(x =>
@@ -66,6 +86,19 @@ public class FullTextSearchTests
             EF.Functions.Contains(x.Description!, $"{contains}"))
             .ToListAsync();
 
-        res.Count.Should().Be(expectedResults);
+        try
+        {
+            res.Count.Should().Be(expectedResults);
+        }
+        catch 
+        {
+            res = await db.Videos.Where(x =>
+                EF.Functions.Contains(x.Name, $"{contains}") ||
+                EF.Functions.Contains(x.Description!, $"{contains}"))
+                .ToListAsync();
+
+            res.Count.Should().Be(expectedResults);
+        }
     }
+
 }

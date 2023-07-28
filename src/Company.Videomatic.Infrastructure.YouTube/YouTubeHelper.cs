@@ -118,12 +118,12 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
     {
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
 
-        var response = await _sender.Send(new GetProviderVideoIdsQuery(videoIds));
-        IReadOnlyDictionary<long, string> videoIdsByVideoId = response.Value;
+        var response = await _sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
+        var videoIdsByVideoId = response.Value;
 
         using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
 
-        foreach (IEnumerable<string> responsePage in response.Value.Values.Page(50))
+        foreach (IEnumerable<string> responsePage in response.Value.Page(50))
         {
             var currentSet = responsePage.ToHashSet();
             var badTranscripts = new List<Transcript>();
@@ -131,7 +131,7 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             
             var badOnes = allTranscripts.Item2!.Select(badId =>
             {
-                var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
+                var videoId = videoIdsByVideoId.First(x => x.ProviderVideoId == badId).VideoId;
                 return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
             });
             
@@ -139,7 +139,6 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             {
                 yield return badOne;
             }
-
             
             // ------------------------------
             Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
@@ -147,14 +146,14 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
 
             foreach (var v in videoIdsByVideoId)
             {
-                if (!fetchedTranscripts!.TryGetValue(v.Value, out var ytTranscriptItems))
+                if (!fetchedTranscripts!.TryGetValue(v.ProviderVideoId, out var ytTranscriptItems))
                 {
                     // No transcript?
                     continue;
                 }
 
                 // ------------------------------
-                var newTranscr = Transcript.Create(v.Key, "US");
+                var newTranscr = Transcript.Create(v.VideoId, "US");
                 foreach (var item in ytTranscriptItems)
                 {
                     newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));

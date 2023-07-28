@@ -1,11 +1,14 @@
 ﻿namespace Company.Videomatic.Application.Features.Transcripts.Queries;
 
 public record GetTranscriptsQuery(
+    // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,
-    int? Page = null,
-    int? PageSize = null,
-    IEnumerable<long>? VideoIds = null) : IRequest<Page<TranscriptDTO>>;
+    int? Skip = null,
+    int? Take = null,
+    // Additional
+    IEnumerable<long>? VideoIds = null,
+    IEnumerable<long>? TranscriptIds = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery;
 
 internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
 {
@@ -21,13 +24,18 @@ internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQu
             RuleFor(x => x.VideoIds).NotEmpty();
         });
 
+        When(x => x.TranscriptIds is not null, () =>
+        {
+            RuleFor(x => x.TranscriptIds).NotEmpty();
+        });
+
         When(x => x.OrderBy is not null, () =>
         {
             RuleFor(x => x.OrderBy).NotEmpty();
         });
 
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).GreaterThan(0);
+        RuleFor(x => x.Take).GreaterThan(0);
+        RuleFor(x => x.Skip).GreaterThan(0);
     }
 }
 

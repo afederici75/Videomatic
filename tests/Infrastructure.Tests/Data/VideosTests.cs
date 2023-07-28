@@ -137,25 +137,27 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [InlineData(null, null, null, true, null, 2)]
     [InlineData(new long[] { 1 }, null, null, true, null, 2)]
     [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, "god", null, true, null, 1)]
+    [InlineData(new long[] { 1, 2 }, "gods", null, true, null, 1)]
     public async Task GetVideos(
         long[]? playlistIds,
         string? searchText,
         string? orderBy,
-        bool includeCounts,
-        ThumbnailResolutionDTO? IncludeThumbnail,
+        bool includeTags,
+        ThumbnailResolutionDTO? selectedThumbnail,
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            PlaylistIds: playlistIds, 
             //VideoIds: videoIds, 
-            SearchText: searchText, 
-            OrderBy: orderBy, 
-            Skip: null, // Uses 1 by default
-            Take: null, // Uses 10 by default
-            IncludeTags: includeCounts, 
-            IncludeThumbnail: IncludeThumbnail);
+            SearchText: searchText,
+            OrderBy: orderBy,
+            Skip: null,
+            Take: null, // Uses 1 by default
+            IncludeTags: includeTags, // Uses 10 by default
+            SelectedThumbnail: selectedThumbnail,
+            PlaylistIds: playlistIds);
 
+        if (searchText != null)
+        { }
         Page<VideoDTO> response = await Sender.Send(query);
         if (response.Count != expectedResults)
         { 
@@ -165,7 +167,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);
-        if (includeCounts)
+        if (includeTags)
         {            
         }
     }
@@ -182,8 +184,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            VideoIds: videoIds,             
-            IncludeThumbnail: IncludeThumbnail);
+            VideoIds: videoIds,
+            SelectedThumbnail: IncludeThumbnail);
 
         Page<VideoDTO> res = await Sender.Send(query);
 

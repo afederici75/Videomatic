@@ -2,7 +2,7 @@
 
 public class CreateArtifactHandler : CreateAggregateRootHandler<CreateArtifactCommand, Artifact>
 {
-    public CreateArtifactHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public CreateArtifactHandler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
     {
     }    
 }

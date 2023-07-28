@@ -2,9 +2,10 @@
 using Company.Videomatic.Application.Features.Videos;
 using Company.Videomatic.Application.Features.Videos.Queries;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {
@@ -43,26 +44,23 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
         }
 
-        if (request.VideoIds != null)
-        {
-            q = q.Where(v => request.VideoIds.Contains(v.Id));
-        }
-
+        q = !request.VideoIds.IsNullOrEmpty() ? q.Where(v => request.VideoIds!.Contains(v.Id)) : q;
+        
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
             // TODO: create a replacement of EF.Functions.FreeText so I can use this
-            // in the .Data assembly. I don't have time now, but this shows how:
+            // in the .Data assembly and pass multiple columns. I don't have time now, but this shows how:
             // https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
             // https://www.thinktecture.com/entity-framework-core/custom-functions-using-hasdbfunction-in-2-1/
-            q = q.Where(v => EF.Functions.FreeText(v.Name, request.SearchText));
+            q = q.Where(v => 
+                EF.Functions.FreeText(v.Name, request.SearchText) ||
+                ((v.Description != null) && EF.Functions.FreeText(v.Description, request.SearchText))
+            );
         }
 
         // OrderBy
-        if (!string.IsNullOrWhiteSpace(request.OrderBy))
-        {
-            q = q.OrderBy(request.OrderBy, SupportedOrderBys);
-        }
-
+        q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy, SupportedOrderBys) : q;
+        
         var totalCount = await q.CountAsync();
 
         // Pagination
@@ -70,9 +68,9 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         // ---
 
-        var includeThumbnail = request.IncludeThumbnail != null;
-        var preferredRes = (request.IncludeThumbnail ?? ThumbnailResolutionDTO.Default)
-            .ToThumbnailResolution();
+        var includeThumbnail = request.SelectedThumbnail != null;
+        var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
+                                .ToThumbnailResolution();
 
         // Projection
         var final = q.Select(v => new VideoDTO(

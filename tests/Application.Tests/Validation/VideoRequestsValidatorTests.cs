@@ -58,6 +58,6 @@ public class VideoRequestsValidatorTests
         ThumbnailResolutionDTO? includeThumbnail,
         int expectedErrors)
     {
-        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(new(playlistIds, filter, orderBy, page, pageSize, includeCounts, includeThumbnail), expectedErrors);
+        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(new(filter, orderBy, page, pageSize, includeCounts, includeThumbnail, playlistIds), expectedErrors);
     }
 }

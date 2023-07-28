@@ -2,7 +2,7 @@
 
 public class UpdateArtifactHandler : UpdateAggregateRootHandler<UpdateArtifactCommand, Artifact, ArtifactId>
 {
-    public UpdateArtifactHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public UpdateArtifactHandler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

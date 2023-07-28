@@ -49,6 +49,8 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         transcript.Language.Should().Be(createCommand.Language);
         transcript.Lines.Should().HaveCount(createCommand.Lines.Count());
         transcript.VideoId.Value.Should().Be(videoId);
+
+        await Sender.Send(new DeleteVideoCommand(videoId));
     }
 
     [Fact]
@@ -68,5 +70,7 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
             .FirstOrDefaultAsync();
 
         row.Should().BeNull();
+
+        await Sender.Send(new DeleteVideoCommand(videoId));
     }
 }

@@ -2,7 +2,7 @@
 
 public sealed class UpdateVideoHandler : UpdateAggregateRootHandler<UpdateVideoCommand, Video, VideoId>
 {
-    public UpdateVideoHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public UpdateVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

@@ -102,7 +102,7 @@
                 Take: pageSize,
                 SearchText: searchText,
                 IncludeTags: true,
-                IncludeThumbnail: ThumbnailResolutionDTO.Medium);
+                SelectedThumbnail: ThumbnailResolutionDTO.Medium);
 
         Page<VideoDTO> results = await Sender.Send(query);
 
@@ -136,7 +136,7 @@
                 OrderBy: sort,
                 SearchText: searchText,
                 IncludeTags: true,
-                IncludeThumbnail: ThumbnailResolutionDTO.Medium);
+                SelectedThumbnail: ThumbnailResolutionDTO.Medium);
 
         Page<VideoDTO> results = await Sender.Send(query);
 

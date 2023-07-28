@@ -2,7 +2,7 @@
 
 public sealed class UpdatePlaylistHandler : UpdateAggregateRootHandler<UpdatePlaylistCommand, Playlist, PlaylistId>
 {
-    public UpdatePlaylistHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

@@ -23,6 +23,7 @@ public static class IQueryableExtensions
         {
             var parts = sortOption.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             var desc = parts.Length > 1 ? parts[1].ToLower().Equals("desc") : false;
+
             if (!sortExpressions.TryGetValue(parts[0], out var sortExpr))
                 throw new Exception($"Cannot sort by '{sortOption}'.");
 

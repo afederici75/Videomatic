@@ -1,11 +1,13 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists.Queries;
 
 public record GetPlaylistsQuery(
+    // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,
-    int? Page = null,
-    int? PageSize = null,
-    IEnumerable<long>? PlaylistIds = null) : IRequest<Page<PlaylistDTO>>;
+    int? Skip = null,
+    int? Take = null,
+    // Additional
+    IEnumerable<long>? PlaylistIds = null) : IRequest<Page<PlaylistDTO>>, IBasicQuery;
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {
@@ -26,7 +28,7 @@ internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
             RuleFor(x => x.PlaylistIds).NotEmpty();
         });
 
-        RuleFor(x => x.Page).GreaterThan(0);
-        RuleFor(x => x.PageSize).GreaterThan(0);
+        RuleFor(x => x.Take).GreaterThan(0);
+        RuleFor(x => x.Skip).GreaterThan(0);
     }
 }

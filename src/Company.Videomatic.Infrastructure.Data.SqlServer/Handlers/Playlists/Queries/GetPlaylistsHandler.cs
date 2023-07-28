@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Infrastructure.Data.Handlers.Playlists.Queries;
+namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
 {
@@ -24,8 +24,8 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
     {
         using var dbContext = DbContextFactory.CreateDbContext();
 
-        var pageIdx = request.Page ?? 1;
-        var pageSize = request.PageSize ?? 10;
+        var skip = request.Skip ?? 0;
+        var take = request.Take ?? 10;
 
         // Playlists
         IQueryable<Playlist> q = dbContext.Playlists;
@@ -58,6 +58,6 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
-        return new Page<PlaylistDTO>(res, pageIdx, pageSize, totalCount);
+        return new Page<PlaylistDTO>(res, skip, take, totalCount);
     }
 }

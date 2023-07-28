@@ -2,7 +2,7 @@
 
 public sealed class DeleteVideoHandler : DeleteAggregateRootHandler<DeleteVideoCommand, Video, VideoId>
 {
-    public DeleteVideoHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public DeleteVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

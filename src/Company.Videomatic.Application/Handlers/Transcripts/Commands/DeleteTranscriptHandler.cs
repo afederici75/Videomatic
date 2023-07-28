@@ -1,8 +1,11 @@
-﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
+﻿using AutoMapper;
+using Company.SharedKernel.Abstractions;
+
+namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
 
 public class DeleteTranscriptHandler : DeleteAggregateRootHandler<DeleteTranscriptCommand, Transcript, TranscriptId>
 {
-    public DeleteTranscriptHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public DeleteTranscriptHandler(IRepository<Transcript> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 

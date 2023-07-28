@@ -2,7 +2,7 @@
 
 public class CreateTranscriptHandler : CreateAggregateRootHandler<CreateTranscriptCommand, Transcript>
 {
-    public CreateTranscriptHandler(IServiceProvider serviceProvider, IMapper mapper) : base(serviceProvider, mapper)
+    public CreateTranscriptHandler(IRepository<Transcript> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }
