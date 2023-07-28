@@ -1,12 +1,12 @@
 
-7/20/2023 [F0001] Feature: expand VideoDTO and include more properties to be displayed in the UI.
-
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 -Copy AppLogger interface from eShopWeb
 	-d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs
 
 ---------------------------
+
+[X] 7/20/2023 [F0001] Feature: expand VideoDTO and include more properties to be displayed in the UI.
 
 [X] It's possible that PlaylistVideo has issues:
 	Should it expose all those props? Maybe pick one (ids or references)?

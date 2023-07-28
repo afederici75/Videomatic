@@ -1,14 +1,4 @@
-﻿using Azure.Core;
-using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.SemanticKernel.Orchestration;
-using System.ComponentModel;
-using System.Configuration;
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
-
-namespace Infrastructure.Tests.Data;
+﻿namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
 public class FullTextSearchTests

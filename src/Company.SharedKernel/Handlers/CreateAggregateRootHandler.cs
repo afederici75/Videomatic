@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Company.SharedKernel.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using Company.SharedKernel.Abstractions;
 
 namespace Company.SharedKernel.Handlers;
 
@@ -10,14 +7,12 @@ public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot>
     where TCreateCommand : IRequest<Result<TAggregateRoot>>
     where TAggregateRoot : class, IAggregateRoot
 {
-    protected CreateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
+    protected CreateAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(typeof(IRepository<TAggregateRoot>));
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IServiceProvider ServiceProvider { get; }
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
 

@@ -1,5 +1,4 @@
 ﻿using Company.SharedKernel.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.SharedKernel.Handlers;
 
@@ -8,14 +7,12 @@ public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot,
     where TAggregateRoot : class, IAggregateRoot
     where TId : class
 {    
-    public DeleteAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper) 
+    public DeleteAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper) 
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(typeof(IRepository<TAggregateRoot>));
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IServiceProvider ServiceProvider { get; }
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
 

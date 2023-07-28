@@ -1,3 +1,7 @@
+7/29
+-Added full text search to the migrations and then built a bunch of tests for it.
+-
+
 7/22
 -Excellent experience with RadZen stuff. Really natural for me now.
 -Selected a PRO theme. Will need to resolve later before going commercial.

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Company.SharedKernel.Abstractions;
+﻿namespace Company.SharedKernel.Abstractions;
 
 public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot, TId> :
     IRequestHandler<TUpsertCommand, Result<TAggregateRoot>>
@@ -8,16 +6,12 @@ public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot,
     where TAggregateRoot : class, IAggregateRoot
     where TId : class
 {
-    protected UpsertAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
+    protected UpsertAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-
-        var repoType = typeof(IRepository<TAggregateRoot>);
-        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(repoType);
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IServiceProvider ServiceProvider { get; }
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
     abstract protected TId ConvertIdOfRequest(TUpsertCommand request);

@@ -1,5 +1,4 @@
 ﻿using Company.SharedKernel.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Company.SharedKernel.Handlers;
 
@@ -9,16 +8,12 @@ public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot,
     where TAggregateRoot : class, IAggregateRoot
     where TId: class
 {
-    protected UpdateAggregateRootHandler(IServiceProvider serviceProvider, IMapper mapper)
+    protected UpdateAggregateRootHandler(IRepository<TAggregateRoot>  repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        ServiceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-
-        var repoType = typeof(IRepository<TAggregateRoot>);
-        Repository = (IRepository<TAggregateRoot>)ServiceProvider.GetRequiredService(repoType);
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IServiceProvider ServiceProvider { get; }
     protected IRepository<TAggregateRoot> Repository { get; }
     protected IMapper Mapper { get; }
     abstract protected TId ConvertIdOfRequest(TUpdateCommand request);

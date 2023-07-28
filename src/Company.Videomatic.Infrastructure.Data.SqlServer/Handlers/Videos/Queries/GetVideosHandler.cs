@@ -40,9 +40,6 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
                 .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
                 .Select(pv => pv.VideoId);
 
-            var xx = vidsOfPlaylists.ToList();
-            var xx2 = q.Where(v => vidsOfPlaylists.Contains(v.Id)).ToList();
-
             q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
         }
 
@@ -53,6 +50,10 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
+            // TODO: create a replacement of EF.Functions.FreeText so I can use this
+            // in the .Data assembly. I don't have time now, but this shows how:
+            // https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
+            // https://www.thinktecture.com/entity-framework-core/custom-functions-using-hasdbfunction-in-2-1/
             q = q.Where(v => EF.Functions.FreeText(v.Name, request.SearchText));
         }
 
