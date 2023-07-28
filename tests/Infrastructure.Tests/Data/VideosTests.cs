@@ -137,7 +137,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     [InlineData(null, null, null, true, null, 2)]
     [InlineData(new long[] { 1 }, null, null, true, null, 2)]
     [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, "banana", null, true, null, 2)]
+    [InlineData(new long[] { 1, 2 }, "god", null, true, null, 1)]
     public async Task GetVideos(
         long[]? playlistIds,
         string? searchText,
@@ -158,7 +158,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         Page<VideoDTO> response = await Sender.Send(query);
         if (response.Count != expectedResults)
-        { }
+        { 
+            
+        }
+
         // Checks
         response.Count.Should().Be(expectedResults);
         response.TotalCount.Should().Be(expectedResults);

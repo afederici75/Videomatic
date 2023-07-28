@@ -27,6 +27,12 @@
                 </Template>
             </RadzenDropDown>
         </div>
+        <div class="col-md-8 col-lg-9">
+            <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">
+                Search Text
+            </RadzenText>
+            <RadzenTextBox @bind-Value="searchText" Change="@(args => grid.FirstPage(true))" />
+        </div>
     </div>
 </div>
 
@@ -78,7 +84,7 @@
     LogicalFilterOperator logicalFilterOperator = LogicalFilterOperator.Or;
 
     bool isLoading = false;
-
+    string searchText;
     IEnumerable<VideoDTO>? videos;
     int count;    
 
@@ -94,7 +100,7 @@
                 //PlaylistIds: new[] { PlaylistId },
                 Skip: 0,
                 Take: pageSize,
-                SearchText: null,
+                SearchText: searchText,
                 IncludeTags: true,
                 IncludeThumbnail: ThumbnailResolutionDTO.Medium);
 
@@ -128,7 +134,7 @@
                 Skip: args.Skip,
                 Take: args.Top,
                 OrderBy: sort,
-                SearchText: null,
+                SearchText: searchText,
                 IncludeTags: true,
                 IncludeThumbnail: ThumbnailResolutionDTO.Medium);
 

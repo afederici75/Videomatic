@@ -1,8 +1,10 @@
-﻿using Company.Videomatic.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Application.Features.Videos;
+using Company.Videomatic.Application.Features.Videos.Queries;
+using MediatR;
 using System.Linq.Expressions;
 
-namespace Company.Videomatic.Application.Handlers.Videos.Queries;
+namespace Company.Videomatic.Infrastructure.Data.Handlers.Videos.Queries;
 
 public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {
@@ -38,6 +40,9 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
                 .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
                 .Select(pv => pv.VideoId);
 
+            var xx = vidsOfPlaylists.ToList();
+            var xx2 = q.Where(v => vidsOfPlaylists.Contains(v.Id)).ToList();
+
             q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
         }
 
@@ -48,8 +53,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
-            throw new NotSupportedException();
-            //q = q.Where(v => VideomaticDbFunctionsExtensions.___FreeText(v.Name, request.SearchText));
+            q = q.Where(v => EF.Functions.FreeText(v.Name, request.SearchText));
         }
 
         // OrderBy

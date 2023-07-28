@@ -38,10 +38,6 @@ public static class DependencyInjectionExtensions
         // Keep this here!
         services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>();
 
-        VideomaticDbFunctionsExtensions.Configuration.FreeTextFunction = SqlServerDbFunctionsExtensions.FreeText;
-        VideomaticDbFunctionsExtensions.Configuration.ContainsFunction = SqlServerDbFunctionsExtensions.Contains;
-
-
         services.AddDbContextFactory<VideomaticDbContext, VideomaticSqlServerDbContextFactory>(
             (sp, builder) =>
             {
