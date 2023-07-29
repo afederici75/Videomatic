@@ -44,7 +44,7 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
         // OrderBy
         if (!string.IsNullOrWhiteSpace(request.OrderBy))
         {
-            q = q.OrderBy(request.OrderBy, SupportedOrderBys);
+            q = q.OrderBy(request.OrderBy);
         }
 
         // Projection

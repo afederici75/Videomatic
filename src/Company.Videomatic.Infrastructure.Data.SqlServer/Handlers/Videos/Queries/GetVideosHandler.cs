@@ -1,8 +1,4 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Application.Features.Videos.Queries;
-using MediatR;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
@@ -27,7 +23,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
         var skip = request.Skip ?? 0;
-        var take = request.Take ?? 10;
+        var take = request.Take ?? 50;
 
         using var dbContext = Factory.CreateDbContext();
 
@@ -59,7 +55,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         }
 
         // OrderBy
-        q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy, SupportedOrderBys) : q;
+        q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy) : q;
         
         var totalCount = await q.CountAsync();
 

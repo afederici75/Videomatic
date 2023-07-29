@@ -55,6 +55,7 @@ public class DbContextFixture : IAsyncLifetime
 
         await _seeder.SeedAsync();
 
+        // TODO: Refactor
         DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Videos start full population");
         DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Playlists start full population");
         DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Transcripts start full population");
