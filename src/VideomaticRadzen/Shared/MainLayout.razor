@@ -1,5 +1,8 @@
 @inherits LayoutComponentBase
 
+@inject ISender Sender
+@inject NavigationManager NavManager
+
 <RadzenDialog />
 <RadzenNotification />
 <RadzenTooltip />
@@ -41,11 +44,15 @@
             <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path="dashboard"/>
             
             <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists">
-                <RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />
-                <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />
-                <RadzenPanelMenuItem Text="Spirituality" Icon="video_library" />
-                <RadzenPanelMenuItem Text="Burning Man" Icon="video_library" />
-                <RadzenPanelMenuItem Text="Programming" Icon="video_library" />
+                @*<RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />*@
+
+                @foreach (var playlist in playlists ?? Array.Empty<PlaylistDTO>())
+                {
+                    <RadzenPanelMenuItem Text="@playlist.Name" Icon="video_library"
+                                         Path="@($"Videos?PlaylistId={playlist.Id}")"                                         
+                    
+                    />
+                }                
             </RadzenPanelMenuItem>
 
             <RadzenPanelMenuItem Text="Videos" Icon="movie" Path="Videos" Style="color: azure">
@@ -86,3 +93,28 @@
         @Body        
     </RadzenBody>    
 </RadzenLayout>
+
+@code
+{
+    public IEnumerable<PlaylistDTO>? playlists { get; set; }
+
+    void OnPlaylistClick(long playlistId)
+    {
+        NavManager.NavigateTo($"Videos?PlaylistId={playlistId}", true);
+    }
+
+    override protected async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var msg = new GetPlaylistsQuery(
+            SearchText: null,
+            OrderBy: null,
+            Skip: 0,
+            Take: 1024
+        );
+
+        Page<PlaylistDTO> response = await Sender.Send(msg);
+        playlists = response.Items;
+    }
+}

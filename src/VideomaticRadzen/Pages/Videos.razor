@@ -3,37 +3,34 @@
 @using VideomaticRadzen.Components
 @inject ISender Sender
 
-<RadzenRow class="container-fluid my-0 sticky-top" style="background-color: red;">
-    <div class="row">
-        <h3>Videos here</h3>
-    </div>
-
-    <div class="row">
-        <div>
-            <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">
-                Search Text
-            </RadzenText>
-            <RadzenButton Text="Reset" Click="@Reset" Style="margin-bottom: 20px;" />
-            <RadzenTextBox @bind-Value="SearchText" Change="@(args => list.FirstPage(true))" />
-            <RadzenLabel Text="@(count.ToString() + " Result(s)")" />
-        </div>
-    </div>    
+<RadzenRow class="container-fluid my-0 sticky-top" style="background-color: #1f1f1f">
+    <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">Search Text</RadzenText>
+    <RadzenTextBox @bind-Value="SearchText" Change="@ExecuteSearch" />
+    <RadzenButton Text="Reset" Click="@ExecuteSearch" Style="margin-bottom: 20px;" />
+    <RadzenLabel Text="@(count.ToString() + " Result(s)")" />
+            
+    <RadzenCheckBox @bind-Value="@allowVirtualization" Name="allowVirtualization" />
+    <RadzenLabel Text="Allow virtualization" Component="allowVirtualization" />
 </RadzenRow>
 
-
 <RadzenDataList @ref="list" TItem="VideoDTO" 
+                Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")" 
                 Data="@videos" Count="@count" 
                 PageSize="@pageSize"
                 LoadData="@LoadData" IsLoading="@isLoading"
-                AllowVirtualization=true
+                AllowVirtualization=@allowVirtualization                
+                AllowPaging="@(!allowVirtualization)"
+                PagerPosition="PagerPosition.TopAndBottom"
+                PagerHorizontalAlign="HorizontalAlign.Left" 
+                ShowPagingSummary="true"
                 WrapItems=false>
     <Template Context="video">
         <RadzenCard>
             <RadzenRow>
-                <RadzenColumn Size="4" Style="background: red">
+                <RadzenColumn Size="4" xStyle="background: red">
                     <RadzenImage Path="@video.Thumbnail" style="border-radius: 4px 4px 0 0;" />
                 </RadzenColumn>
-                <RadzenColumn Size="8" Style="background: green">
+                <RadzenColumn Size="8" xStyle="background: green">
                     <RadzenText TextStyle="TextStyle.DisplayH5">@(video.Name ?? "")</RadzenText>
                     <RadzenTextArea Cols="90" Rows="3" ReadOnly=true Value="@(video.Description)" 
                         TextStyle="TextStyle.Caption">@(video.Description)</RadzenTextArea>
@@ -41,7 +38,7 @@
             </RadzenRow>
             
             <RadzenRow>
-                    <RadzenColumn Size="12" Style="background: blue">
+                    <RadzenColumn Size="12" xStyle="background: blue">
                     <RadzenStack Orientation="Orientation.Horizontal">
                             <RadzenText>@(video.Provider)</RadzenText>
                             <RadzenText>@(video.ProviderVideoId)</RadzenText>
@@ -53,7 +50,7 @@
     </Template>
 </RadzenDataList>
 
-@code {
+    @code {
     RadzenDataList<VideoDTO>? list;
     IEnumerable<VideoDTO>? videos;
     int count;
@@ -63,45 +60,55 @@
     public string? SearchText { get; set; }
 
     [Parameter]
-    [SupplyParameterFromQuery]
+    [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
     public long? PlaylistId { get; set; }
+    long? _priorPlaylistId;
 
-    int pageSize = 10;
-    bool allowVirtualization = false;
-    bool auto = true;    
-
+    int pageSize = 4;
     bool isLoading = false;
-    
-    
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
 
-        await LoadData(new LoadDataArgs()
+    bool allowVirtualization;
+
+    async Task ExecuteSearch()
+    {
+        if (list == null)
+            return;
+
+        await list.FirstPage(true);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (list != null)
         {
-            Skip = 0,
-            Top = pageSize,
-            OrderBy = "Id desc"
-        });
+            if (PlaylistId.HasValue && PlaylistId != _priorPlaylistId)
+            {
+                _priorPlaylistId = PlaylistId;
+
+                await ExecuteSearch();
+            }
+        }
+
+        await base.OnParametersSetAsync();
     }
 
     async Task LoadData(LoadDataArgs args)
     {
+        if (list == null)
+        { }
+
+        if (videos == null)
+        { }
+
         isLoading = true;
 
         await Task.Yield();
-
-        string? sort = null;        
-        if ((args.Sorts != null) && args.Sorts.Any())
-        {
-            sort = string.Join(", ", args.Sorts.Select(s => $"{s.Property} {(s.SortOrder == SortOrder.Ascending ? "asc" : "desc")}"));
-        }
 
         var query = new GetVideosQuery(
                 PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value }: null,
                 Skip: args.Skip,
                 Take: args.Top,
-                OrderBy: sort,
+                OrderBy: null,
                 SearchText: SearchText,
                 IncludeTags: true,
                 SelectedThumbnail: ThumbnailResolutionDTO.Medium);
@@ -109,14 +116,10 @@
         Page<VideoDTO> results = await Sender.Send(query);
 
         videos = results.Items;
-        count = Convert.ToInt32(results.TotalCount);
-        
-        isLoading = false;
-    }
+        count = Convert.ToInt32(results.TotalCount);        
 
-    async Task Reset()
-    {
-        //grid.Reset(true);
-        await list.FirstPage(true);
+        isLoading = false;
+
+        //StateHasChanged();
     }
 }

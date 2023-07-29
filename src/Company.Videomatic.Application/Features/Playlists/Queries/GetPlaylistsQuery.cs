@@ -29,6 +29,6 @@ internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
         });
 
         RuleFor(x => x.Take).GreaterThan(0);
-        RuleFor(x => x.Skip).GreaterThan(0);
+        RuleFor(x => x.Skip).GreaterThanOrEqualTo(0);
     }
 }
