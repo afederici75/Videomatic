@@ -14,7 +14,7 @@
 </RadzenRow>
 
 <RadzenDataList @ref="list" TItem="VideoDTO" 
-                Style="@(allowVirtualization ? "height:100%;overflow:auto;" : "")" 
+                Style="@(allowVirtualization ? "height:80%;overflow:auto;" : "")" 
                 Data="@videos" Count="@count" 
                 PageSize="@pageSize"
                 LoadData="@LoadData" IsLoading="@isLoading"
@@ -23,7 +23,7 @@
                 PagerPosition="PagerPosition.TopAndBottom"
                 PagerHorizontalAlign="HorizontalAlign.Left" 
                 ShowPagingSummary="true"
-                WrapItems=false>
+                WrapItems="@(!allowVirtualization)">
     <Template Context="video">
         <RadzenCard>
             <RadzenRow>
@@ -64,7 +64,7 @@
     public long? PlaylistId { get; set; }
     long? _priorPlaylistId;
 
-    int pageSize = 4;
+    int pageSize = 10;
     bool isLoading = false;
 
     bool allowVirtualization;
@@ -120,6 +120,6 @@
 
         isLoading = false;
 
-        //StateHasChanged();
+        StateHasChanged();
     }
 }
