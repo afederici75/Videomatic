@@ -3,54 +3,44 @@
 @using VideomaticRadzen.Components
 @inject ISender Sender
 
-<RadzenRow class="container-fluid my-0 sticky-top" style="background-color: #1f1f1f">
-    <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.H2">Search Text</RadzenText>
-    <RadzenTextBox @bind-Value="SearchText" Change="@ExecuteSearch" />
-    <RadzenButton Text="Reset" Click="@ExecuteSearch" Style="margin-bottom: 20px;" />
-    <RadzenLabel Text="@(count.ToString() + " Result(s)")" />
-            
-    <RadzenCheckBox @bind-Value="@allowVirtualization" Name="allowVirtualization" />
-    <RadzenLabel Text="Allow virtualization" Component="allowVirtualization" />
+<RadzenRow class="sticky-top" style="background-color: #1f1f1f">
+    <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
+    <RadzenButton Text="Reset" Style="margin-bottom: 20px;" Click="@Refresh" />
+        
+    <RadzenPager @ref="pager" ShowPagingSummary="true"
+                 HorizontalAlign="HorizontalAlign.Right" Count="count"
+                 PageSize="@pageSize" PageNumbersCount="5" PageChanged="@PageChanged" />
 </RadzenRow>
 
-<RadzenDataList @ref="list" TItem="VideoDTO" 
-                Style="@(allowVirtualization ? "height:80%;overflow:auto;" : "")" 
-                Data="@videos" Count="@count" 
-                PageSize="@pageSize"
-                LoadData="@LoadData" IsLoading="@isLoading"
-                AllowVirtualization=@allowVirtualization                
-                AllowPaging="@(!allowVirtualization)"
-                PagerPosition="PagerPosition.TopAndBottom"
-                PagerHorizontalAlign="HorizontalAlign.Left" 
-                ShowPagingSummary="true"
-                WrapItems="@(!allowVirtualization)">
+
+<RadzenDataList @ref="list" TItem="VideoDTO"  Data="@videos" 
+                Count="@count" 
+                WrapItems="true"                 
+                AllowPaging="true">
     <Template Context="video">
-        <RadzenCard>
-            <RadzenRow>
-                <RadzenColumn Size="4" xStyle="background: red">
-                    <RadzenImage Path="@video.Thumbnail" style="border-radius: 4px 4px 0 0;" />
-                </RadzenColumn>
-                <RadzenColumn Size="8" xStyle="background: green">
-                    <RadzenText TextStyle="TextStyle.DisplayH5">@(video.Name ?? "")</RadzenText>
-                    <RadzenTextArea Cols="90" Rows="3" ReadOnly=true Value="@(video.Description)" 
-                        TextStyle="TextStyle.Caption">@(video.Description)</RadzenTextArea>
-                </RadzenColumn>
-            </RadzenRow>
-            
-            <RadzenRow>
-                    <RadzenColumn Size="12" xStyle="background: blue">
-                    <RadzenStack Orientation="Orientation.Horizontal">
-                            <RadzenText>@(video.Provider)</RadzenText>
-                            <RadzenText>@(video.ProviderVideoId)</RadzenText>
-                    </RadzenStack>                    
-                </RadzenColumn>
-            </RadzenRow>
+        <RadzenCard xStyle="max-width: 400px; min-width:400px">          
+            <RadzenImage Path="@video.Thumbnail" Style="background: yellow; max-width: 160px; max-block-size; max-height: 90px" />
+
+            <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
+
+                <RadzenStack Orientation="Orientation.Horizontal">
+                    <RadzenText TextStyle="TextStyle.Overline">@(video.Provider)</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Overline">@(video.ProviderVideoId)</RadzenText>
+                </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.Caption">@(video.VideoOwnerChannelTitle ?? ""), @(video.VideoPublishedAt)</RadzenText>
+                <RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>
             
         </RadzenCard>
     </Template>
 </RadzenDataList>
 
-    @code {
+
+
+@code {
+    string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
+    RadzenPager? pager;  
+
     RadzenDataList<VideoDTO>? list;
     IEnumerable<VideoDTO>? videos;
     int count;
@@ -67,47 +57,38 @@
     int pageSize = 10;
     bool isLoading = false;
 
-    bool allowVirtualization;
-
-    async Task ExecuteSearch()
+    async Task PageChanged(PagerEventArgs args)
     {
-        if (list == null)
-            return;
-
-        await list.FirstPage(true);
+        await GetVideos(args.Skip, args.Top);
     }
 
-    protected override async Task OnParametersSetAsync()
+    async Task Refresh()
     {
-        if (list != null)
+        if (pager == null)
         {
-            if (PlaylistId.HasValue && PlaylistId != _priorPlaylistId)
-            {
-                _priorPlaylistId = PlaylistId;
-
-                await ExecuteSearch();
-            }
+            return;    
         }
+
+        await pager.FirstPage(true);
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await GetVideos(0, pageSize);
 
         await base.OnParametersSetAsync();
     }
 
-    async Task LoadData(LoadDataArgs args)
+    async Task GetVideos(int skip, int take)
     {
-        if (list == null)
-        { }
-
-        if (videos == null)
-        { }
-
         isLoading = true;
 
         await Task.Yield();
 
         var query = new GetVideosQuery(
-                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value }: null,
-                Skip: args.Skip,
-                Take: args.Top,
+                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value } : null,
+                Skip: skip,
+                Take: take,
                 OrderBy: null,
                 SearchText: SearchText,
                 IncludeTags: true,
@@ -116,10 +97,8 @@
         Page<VideoDTO> results = await Sender.Send(query);
 
         videos = results.Items;
-        count = Convert.ToInt32(results.TotalCount);        
+        count = Convert.ToInt32(results.TotalCount);
 
-        isLoading = false;
-
-        StateHasChanged();
+        isLoading = false;        
     }
 }
