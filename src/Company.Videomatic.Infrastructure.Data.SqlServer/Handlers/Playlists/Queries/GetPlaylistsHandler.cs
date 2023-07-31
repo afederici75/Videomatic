@@ -4,15 +4,7 @@ using System.Linq.Expressions;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
-{
-    //public static readonly IReadOnlyDictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Playlist, object?>>>(StringComparer.OrdinalIgnoreCase)
-    //{
-    //    { nameof(Playlist.Id), _ => _.Id },
-    //    { nameof(Playlist.Name), _ => _.Name },
-    //    { nameof(Playlist.Description), _ => _.Description },
-    //    { "VideoCount", _ => _.Videos.Count()},
-    //};
-
+{    
     public GetPlaylistsHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
@@ -23,10 +15,7 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
     public async Task<Page<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {
         using var dbContext = DbContextFactory.CreateDbContext();
-
-        var skip = request.Skip ?? 0;
-        var take = request.Take ?? 10;
-
+        
         // Playlists
         IQueryable<Playlist> q = dbContext.Playlists;
 
@@ -44,10 +33,15 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         }
 
         // OrderBy
-        if (!string.IsNullOrWhiteSpace(request.OrderBy))
-        {
-            q = q.OrderBy(request.OrderBy);
-        }        
+        q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy) : q;
+
+        var totalCount = await q.CountAsync();
+
+        // Pagination
+        var skip = request.Skip ?? 0;
+        var take = request.Take ?? 10;
+
+        q = q.Skip(skip).Take(take);
 
         // Projection
         var final = q.Select(p => new PlaylistDTO(
@@ -57,7 +51,6 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
             p.Videos.Count()));
 
         // Counts
-        var totalCount = await final.CountAsync();
         var res = await final.ToListAsync();
 
         return new Page<PlaylistDTO>(res, skip, take, totalCount);

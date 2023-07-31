@@ -44,7 +44,7 @@ public class PlaylistRequestsValidatorTests
     [Theory]
     [InlineData(null, null, null, null, 0)]
     [InlineData(null, null, -1, -1, 2)]
-    [InlineData("", null, 1, 1, 1)]
+    [InlineData("", null, 1, 1, 0)]
     [InlineData("filter", null, 1, 1, 0)]
     public void ValidateGetPlaylistQuery(string? filter, string? orderBy, int? page, int? pageSize, int expectedErrors)
     {

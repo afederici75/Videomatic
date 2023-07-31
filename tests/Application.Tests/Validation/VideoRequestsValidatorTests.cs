@@ -1,4 +1,5 @@
 ﻿using Application.Tests.Helpers;
+using Company.Videomatic.Application.Abstractions;
 using Company.Videomatic.Application.Features.Videos;
 
 namespace Application.Tests.Validation;
@@ -58,6 +59,7 @@ public class VideoRequestsValidatorTests
         ThumbnailResolutionDTO? includeThumbnail,
         int expectedErrors)
     {
-        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(new(filter, orderBy, page, pageSize, includeCounts, includeThumbnail, playlistIds), expectedErrors);
+        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(
+            new(filter, orderBy, page, pageSize, FullTextSearchType.FreeText, includeCounts, includeThumbnail, playlistIds), expectedErrors);
     }
 }

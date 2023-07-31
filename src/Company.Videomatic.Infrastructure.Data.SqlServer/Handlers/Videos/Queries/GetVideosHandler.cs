@@ -4,14 +4,7 @@ using System.Linq.Expressions;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
-{
-    public static readonly IReadOnlyDictionary<string, Expression<Func<Video, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Video, object?>>>(StringComparer.OrdinalIgnoreCase)
-    {
-        { nameof(VideoDTO.Id), _ => _.Id },
-        { nameof(VideoDTO.Name), _ => _.Name },
-        { nameof(VideoDTO.Description), _ => _.Description }
-    };
-
+{    
     public GetVideosHandler(IDbContextFactory<VideomaticDbContext> factory)
     {
         Factory = factory ?? throw new ArgumentNullException(nameof(factory));
@@ -22,9 +15,6 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
     // GetVideosQuery
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     {
-        var skip = request.Skip ?? 0;
-        var take = request.Take ?? 50;
-
         using var dbContext = Factory.CreateDbContext();
 
         // Playlists
@@ -56,19 +46,20 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         // OrderBy
         q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy) : q;
-        
+
         var totalCount = await q.CountAsync();
 
         // Pagination
+        var skip = request.Skip ?? 0;
+        var take = request.Take ?? 10;
+
         q = q.Skip(skip).Take(take);
 
-        // ---
-
+        // Projection
         var includeThumbnail = request.SelectedThumbnail != null;
         var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
                                 .ToThumbnailResolution();
 
-        // Projection
         var final = q.Select(v => new VideoDTO(
             v.Id,
             v.Location,

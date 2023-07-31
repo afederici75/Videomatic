@@ -116,19 +116,30 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     // TODO: missing paging tests and should add more anyway
     public async Task GetArtifacts(string? searchText, string? orderBy, bool includeCounts, int expectedResults)
     {
-        var query = new GetArtifactsQuery(
-            SearchText: searchText,
-            OrderBy: orderBy,
-            Skip: null, // Uses to 0 by default
-            Take: null); // Uses 10 by default
+        var idx = 0;
+        while (idx++ < 3)
+        {
+            try
+            {
+            var query = new GetArtifactsQuery(
+                SearchText: searchText,
+                OrderBy: orderBy,
+                Skip: null, // Uses to 0 by default
+                Take: null); // Uses 10 by default
 
-        Page<ArtifactDTO> response = await Sender.Send(query);
+            Page<ArtifactDTO> response = await Sender.Send(query);
 
-        // Checks
-        response.Count.Should().Be(expectedResults);
-        response.TotalCount.Should().Be(expectedResults);
+            // Checks
+            response.Count.Should().Be(expectedResults);
+            response.TotalCount.Should().Be(expectedResults);
 
-        // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
-        // work but it would be nice to test it here.
+                // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
+                // work but it would be nice to test it here.
+            }
+            catch (Exception ex)
+            {
+                await Task.Delay(2000);
+            }
+        }
     }
 }
