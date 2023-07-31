@@ -1,0 +1,61 @@
+﻿@page "/videoDetails/{videoId:long?}"
+@using Company.Videomatic.Domain.Aggregates.Video;
+@using VideomaticRadzen.Components
+@inject ISender Sender
+
+<RadzenCard Style="max-width: 340px; min-width:200px">          
+    <RadzenImage Path="@video?.Thumbnail" Style="max-width: 60px; max-height: 40px" />
+
+    <RadzenText TextStyle="TextStyle.H6">@(video?.Name ?? "")</RadzenText>
+
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText TextStyle="TextStyle.Overline">@(video?.Provider)</RadzenText>
+            <RadzenText TextStyle="TextStyle.Overline">@(video?.ProviderVideoId)</RadzenText>
+        </RadzenStack>
+
+    <RadzenText TextStyle="TextStyle.Caption">@(video?.VideoOwnerChannelTitle ?? ""), @(video?.VideoPublishedAt)</RadzenText>
+    @*<RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>*@
+        
+    <RadzenTextArea Cols="40" 
+                    Rows="5"
+                    MaxLength="300" 
+                    Value="@(video?.Description)" />
+    
+</RadzenCard>
+
+
+
+    @code {
+    bool isLoading = false;
+    VideoDTO? video;
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = nameof(VideoId))]
+    public long? VideoId { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        if (VideoId != null)
+            await GetVideo();
+
+        await base.OnParametersSetAsync();
+    }
+
+    async Task GetVideo()
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        var query = new GetVideosQuery(
+                VideoIds: new long[] { VideoId!.Value },
+                IncludeTags: true,
+                SelectedThumbnail: ThumbnailResolutionDTO.Standard);
+
+        Page<VideoDTO> results = await Sender.Send(query);
+
+        video = results.Items.Single();
+        
+        isLoading = false;        
+    }
+}

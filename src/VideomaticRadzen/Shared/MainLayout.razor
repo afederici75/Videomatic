@@ -40,7 +40,7 @@
 
     <!-- Menu Items -->
     <RadzenSidebar @bind-Expanded="@sidebarExpanded">
-        <RadzenPanelMenu Multiple=false>
+        <RadzenPanelMenu Multiple=true>
             <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path="dashboard"/>
             
             <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists">
@@ -48,7 +48,7 @@
 
                 @foreach (var playlist in playlists ?? Array.Empty<PlaylistDTO>())
                 {
-                    <RadzenPanelMenuItem Text="@playlist.Name" Icon="video_library"
+                    <RadzenPanelMenuItem Text="@(playlist.Name + " (" + playlist.VideoCount + ")")" Icon="video_library"
                                          Path="@($"Videos?PlaylistId={playlist.Id}")"                                         
                     
                     />

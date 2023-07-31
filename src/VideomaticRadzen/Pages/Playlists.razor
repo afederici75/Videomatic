@@ -1,7 +1,10 @@
 ﻿@page "/playlists"
+
 @using Company.Videomatic.Domain.Aggregates.Playlist;
 @using VideomaticRadzen.Components
+
 @inject ISender Sender
+@inject NavigationManager NavigationManager
 
 <RadzenRow class="sticky-top" style="background-color: #1f1f1f">
     <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
@@ -28,6 +31,7 @@
                                 MaxLength="300"
                                 Value="@(playlist.Description)" />
 
+            <RadzenButton Click=@(() => GoToPlaylistVideos(playlist.Id))>Details</RadzenButton>
             </RadzenCard>
         </Template>
     </RadzenDataList>
@@ -53,6 +57,11 @@
 
     int pageSize = 10;
     bool isLoading = false;
+
+    async Task GoToPlaylistVideos(long playlistId)
+    {
+        NavigationManager.NavigateTo($"Videos?PlaylistId={playlistId}");
+    }
 
     async Task PageChanged(PagerEventArgs args)
     {

@@ -138,6 +138,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
             }
             catch (Exception ex)
             {
+                // TODO: replace with Polly
                 await Task.Delay(2000);
             }
         }

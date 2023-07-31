@@ -1,7 +1,9 @@
 ﻿@page "/videos"
 @using Company.Videomatic.Domain.Aggregates.Video;
 @using VideomaticRadzen.Components
+
 @inject ISender Sender
+@inject NavigationManager NavigationManager
 
 <RadzenRow class="sticky-top" style="background-color: #1f1f1f">
     <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
@@ -36,13 +38,14 @@
                             MaxLength="300" 
                             Value="@(video.Description)" />
             
+                            <RadzenButton Text="Details" Click=@(() => GoToDetails(video.Id))  />
         </RadzenCard>
     </Template>
 </RadzenDataList>
 
 
 
-@code {
+    @code {
     string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
     RadzenPager? pager;  
 
@@ -61,6 +64,11 @@
 
     int pageSize = 10;
     bool isLoading = false;
+
+    async Task GoToDetails(long videoId)
+    {
+        NavigationManager.NavigateTo($"videoDetails?VideoId={videoId}");
+    }
 
     async Task PageChanged(PagerEventArgs args)
     {
