@@ -38,9 +38,10 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
-            q = q.Where(a => a.Name.Contains(request.SearchText) ||
-                             a.Type.Contains(request.SearchText) || 
-                             ((a.Text != null) && a.Text.Contains(request.SearchText)));
+            q = q.Where(a =>
+                EF.Functions.FreeText(a.Name, request.SearchText) ||
+                ((a.Text != null) && EF.Functions.FreeText(a.Text, request.SearchText))
+            );
         }
 
         // OrderBy

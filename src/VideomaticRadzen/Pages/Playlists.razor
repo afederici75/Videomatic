@@ -1,6 +1,99 @@
 ﻿@page "/playlists"
-<h3>Playlists</h3>
+@using Company.Videomatic.Domain.Aggregates.Playlist;
+@using VideomaticRadzen.Components
+@inject ISender Sender
 
-@code {
+<RadzenRow class="sticky-top" style="background-color: #1f1f1f">
+    <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
+    <RadzenButton Text="Reset" Style="margin-bottom: 20px;" Click="@Refresh" />
 
+    <RadzenPager @ref="pager" ShowPagingSummary="true"
+                 HorizontalAlign="HorizontalAlign.Right" Count="count"
+                 PageSize="@pageSize" PageNumbersCount="5" PageChanged="@PageChanged" />
+</RadzenRow>
+
+
+<RadzenDataList @ref="list" TItem="PlaylistDTO" Data="@playlists"
+                Count="@count"
+                WrapItems="true"
+                AllowPaging="true">
+    <Template Context="playlist">
+        <RadzenCard Style="max-width: 340px; min-width:200px">
+            
+            <RadzenText TextStyle="TextStyle.H6">@(playlist.Name ?? "")</RadzenText>
+            <RadzenText TextStyle="TextStyle.Overline">@(playlist.VideoCount) Video(s)</RadzenText>
+            
+                <RadzenTextArea Cols="40"
+                                Rows="5"
+                                MaxLength="300"
+                                Value="@(playlist.Description)" />
+
+            </RadzenCard>
+        </Template>
+    </RadzenDataList>
+
+
+
+    @code {
+    string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
+    RadzenPager? pager;
+
+    RadzenDataList<PlaylistDTO>? list;
+    IEnumerable<PlaylistDTO>? playlists;
+    int count;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? SearchText { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
+    public long? PlaylistId { get; set; }
+    long? _priorPlaylistId;
+
+    int pageSize = 10;
+    bool isLoading = false;
+
+    async Task PageChanged(PagerEventArgs args)
+    {
+        await GetVideos(args.Skip, args.Top);
+    }
+
+    async Task Refresh()
+    {
+        if (pager == null)
+        {
+            return;
+        }
+
+        await pager.FirstPage(true);
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await GetVideos(0, pageSize);
+
+        await base.OnParametersSetAsync();
+    }
+
+    async Task GetVideos(int skip, int take)
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        var query = new GetPlaylistsQuery(
+                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value } : null,
+                Skip: skip,
+                Take: take,
+                OrderBy: null,
+                SearchText: SearchText);
+
+        Page<PlaylistDTO> results = await Sender.Send(query);
+
+        playlists = results.Items;
+        count = Convert.ToInt32(results.TotalCount);
+
+        isLoading = false;
+    }
 }

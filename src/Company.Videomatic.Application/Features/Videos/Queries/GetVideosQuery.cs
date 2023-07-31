@@ -6,6 +6,7 @@ public record GetVideosQuery(
     string? OrderBy = null,
     int? Skip = null,
     int? Take = null,
+    FullTextSearchType? SearchType = null,
     // Additional
     bool IncludeTags = false,
     ThumbnailResolutionDTO? SelectedThumbnail = null,

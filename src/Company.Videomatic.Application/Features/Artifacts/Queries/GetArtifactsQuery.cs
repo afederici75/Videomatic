@@ -6,6 +6,7 @@ public record GetArtifactsQuery(
     string? OrderBy = null,
     int? Skip = null,
     int? Take = null,
+    FullTextSearchType? SearchType = null,
     // Additional
     IEnumerable<long>? VideoIds = null,
     IEnumerable<long>? ArtifactIds = null) : IRequest<Page<ArtifactDTO>>, IBasicQuery;

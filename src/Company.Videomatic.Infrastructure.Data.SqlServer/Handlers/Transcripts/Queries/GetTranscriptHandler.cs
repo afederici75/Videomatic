@@ -38,7 +38,8 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
-            q = q.Where(p => p.Language.Contains(request.SearchText));
+            q = q.Where(t =>
+                EF.Functions.FreeText(t.Language, request.SearchText));            
         }
 
         // OrderBy

@@ -5,13 +5,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Playlists.Qu
 
 public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
 {
-    public static readonly IReadOnlyDictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Playlist, object?>>>(StringComparer.OrdinalIgnoreCase)
-    {
-        { nameof(Playlist.Id), _ => _.Id },
-        { nameof(Playlist.Name), _ => _.Name },
-        { nameof(Playlist.Description), _ => _.Description },
-        { "VideoCount", _ => _.Videos.Count()},
-    };
+    //public static readonly IReadOnlyDictionary<string, Expression<Func<Playlist, object?>>> SupportedOrderBys = new Dictionary<string, Expression<Func<Playlist, object?>>>(StringComparer.OrdinalIgnoreCase)
+    //{
+    //    { nameof(Playlist.Id), _ => _.Id },
+    //    { nameof(Playlist.Name), _ => _.Name },
+    //    { nameof(Playlist.Description), _ => _.Description },
+    //    { "VideoCount", _ => _.Videos.Count()},
+    //};
 
     public GetPlaylistsHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
@@ -30,6 +30,7 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         // Playlists
         IQueryable<Playlist> q = dbContext.Playlists;
 
+        
         // Where
         if (request.PlaylistIds != null)
         {
@@ -38,7 +39,8 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
-            q = q.Where(p => p.Name.Contains(request.SearchText) || ((p.Description != null) && p.Description.Contains(request.SearchText)));
+            q = q.Where(p => EF.Functions.FreeText(p.Name, request.SearchText) ||
+                ((p.Description != null) && EF.Functions.FreeText(p.Description, request.SearchText)));
         }
 
         // OrderBy

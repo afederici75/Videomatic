@@ -18,8 +18,8 @@
                 WrapItems="true"                 
                 AllowPaging="true">
     <Template Context="video">
-        <RadzenCard xStyle="max-width: 400px; min-width:400px">          
-            <RadzenImage Path="@video.Thumbnail" Style="background: yellow; max-width: 160px; max-block-size; max-height: 90px" />
+        <RadzenCard Style="max-width: 340px; min-width:200px">          
+            <RadzenImage Path="@video.Thumbnail" Style="max-width: 60px, max-block-size, max-height: 40px" />
 
             <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
 
@@ -29,7 +29,12 @@
                 </RadzenStack>
 
             <RadzenText TextStyle="TextStyle.Caption">@(video.VideoOwnerChannelTitle ?? ""), @(video.VideoPublishedAt)</RadzenText>
-                <RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>
+            @*<RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>*@
+                
+            <RadzenTextArea Cols="40" 
+                            Rows="5"
+                            MaxLength="300" 
+                            Value="@(video.Description)" />
             
         </RadzenCard>
     </Template>
