@@ -6,6 +6,7 @@ using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
 using Microsoft.CognitiveServices.Speech.Transcription;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Xunit.Abstractions;
@@ -17,6 +18,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 {
     public YouTubePlaylistsHelperTests(ITestOutputHelper output,
         DbContextFixture fixture,
+        IOptions<YouTubeOptions> options,
         IRepository<Artifact> artifactRepository,
         IRepository<Transcript> transcriptRepository,
         IRepository<Playlist> playlistRepository,
@@ -26,6 +28,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
+        Options = options?.Value ?? throw new ArgumentException(nameof(options));
         ArtifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
         TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
         PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
@@ -38,6 +41,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 
     public ITestOutputHelper Output { get; }
     public DbContextFixture Fixture { get; }
+    public YouTubeOptions Options { get; }
     public IRepository<Artifact> ArtifactRepository { get; }
     public IRepository<Transcript> TranscriptRepository { get; }
     public IRepository<Playlist> PlaylistRepository { get; }
@@ -97,7 +101,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
             video.Thumbnails.Should().HaveCount(5);
             video.Tags.Should().NotBeEmpty();
 
-            video.Details.Provider.Should().Be(YouTubePlaylistsHelper.ProviderId);
+            video.Details.Provider.Should().Be(YouTubeHelper.ProviderId);
             video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
             video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
             video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
@@ -193,4 +197,10 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     //    }
     //    
     //}
+
+    [Fact]
+    public async Task AuthenticateGoogleOAuth()
+    {
+        var x = Options.ChannelName;
+    }
 }

@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="*" />
-
+    <PackageReference Include="Google.Apis.Auth.AspNetCore" Version="1.61.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
     <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data\Company.Videomatic.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
   </ItemGroup>
 
 </Project>
