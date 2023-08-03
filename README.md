@@ -23,6 +23,12 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 ```
 docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d videomatic/mssql-fts 
 ```
+
+-Optional: Install SEQ to capture logs from the application in a friendly UI.
+```
+docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 80:80 -p 5341:5341 datalust/seq
+```
+
 ## Modules
 
 ### Shared Kernel
