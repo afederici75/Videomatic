@@ -2,10 +2,10 @@
 Non UI
 ******************
 
-- [ ] Add logging
-	- [ ] Add logging to files
-	- [ ] Add logging to the console
-	- [ ] Add logging to Seq
+- [X] Add logging
+	- [X] Add logging to files
+	- [X] Add logging to the console
+	- [X] Add logging to Seq
 	- [ ] R&D on application insights
 		- [ ] Add logging to application insights
 
