@@ -1,3 +1,9 @@
+8/3
+-Done a lot of work on the Blazor UI and learnt a ton about HTML, CSS and JS. 
+I am now able to do a lot of things.
+-I made a massive update to TODOs.txt so I now have an fairly complete list of things to do.
+
+
 7/29
 -Added full text search to the migrations and then built a bunch of tests for it.
 -
