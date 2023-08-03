@@ -9,7 +9,9 @@ Non UI
 	- [ ] R&D on application insights
 		- [ ] Add logging to application insights
 
-- [ ] Add the ability to Star videos by adding an extra property to the entities
+- [ ] Add the ability to Star Videos by adding an extra property
+	- [ ] Requires rescaffolding the database
+- [ ] Add the ability to Star Playlists by adding an extra property
 	- [ ] Requires rescaffolding the database
 
 - [ ] Remove my custom code for accessing the YT API and swap to the Google nuget package
