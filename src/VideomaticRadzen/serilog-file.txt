@@ -1,0 +1,175 @@
+2023-08-03 10:47:53.673 -04:00 [INF] User profile is available. Using 'C:\Users\afede\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-03 10:47:53.893 -04:00 [INF] Now listening on: https://localhost:5001
+2023-08-03 10:47:53.894 -04:00 [INF] Now listening on: http://localhost:5000
+2023-08-03 10:47:53.896 -04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-03 10:47:53.896 -04:00 [INF] Hosting environment: Development
+2023-08-03 10:47:53.897 -04:00 [INF] Content root path: D:\Videomatic\src\VideomaticRadzen
+2023-08-03 10:47:54.587 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/videos - -
+2023-08-03 10:47:54.638 -04:00 [INF] Executing endpoint '/_Host'
+2023-08-03 10:47:54.652 -04:00 [INF] Route matched with {page = "/_Host"}. Executing page /_Host
+2023-08-03 10:47:54.663 -04:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2023-08-03 10:47:54.666 -04:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2023-08-03 10:47:54.768 -04:00 [INF] Handling GetPlaylistsQuery
+2023-08-03 10:47:54.770 -04:00 [INF] SearchText : null
+2023-08-03 10:47:54.771 -04:00 [INF] OrderBy : null
+2023-08-03 10:47:54.771 -04:00 [INF] Skip : 0
+2023-08-03 10:47:54.772 -04:00 [INF] Take : 1024
+2023-08-03 10:47:54.773 -04:00 [INF] SearchType : null
+2023-08-03 10:47:54.774 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:47:55.756 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:47:55.757 -04:00 [INF] SearchText : null
+2023-08-03 10:47:55.757 -04:00 [INF] OrderBy : null
+2023-08-03 10:47:55.758 -04:00 [INF] Skip : 0
+2023-08-03 10:47:55.759 -04:00 [INF] Take : 10
+2023-08-03 10:47:55.759 -04:00 [INF] SearchType : null
+2023-08-03 10:47:55.760 -04:00 [INF] IncludeTags : true
+2023-08-03 10:47:55.761 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:47:55.762 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:47:55.763 -04:00 [INF] VideoIds : null
+2023-08-03 10:47:55.919 -04:00 [INF] Handled Page`1
+2023-08-03 10:47:55.941 -04:00 [INF] Handled Page`1
+2023-08-03 10:47:56.022 -04:00 [INF] Executed page /_Host in 1365.9288ms
+2023-08-03 10:47:56.024 -04:00 [INF] Executed endpoint '/_Host'
+2023-08-03 10:47:56.039 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/css/bootstrap/bootstrap.min.css - -
+2023-08-03 10:47:56.039 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/css/site.css - -
+2023-08-03 10:47:56.039 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/images/Banner.png - -
+2023-08-03 10:47:56.039 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/css/fluent-dark-base.css - -
+2023-08-03 10:47:56.055 -04:00 [INF] The file /css/site.css was not modified
+2023-08-03 10:47:56.055 -04:00 [INF] The file /css/fluent-dark-base.css was not modified
+2023-08-03 10:47:56.055 -04:00 [INF] The file /css/bootstrap/bootstrap.min.css was not modified
+2023-08-03 10:47:56.055 -04:00 [INF] The file /images/Banner.png was not modified
+2023-08-03 10:47:56.057 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/blazor.server.js - -
+2023-08-03 10:47:56.057 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2023-08-03 10:47:56.058 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_content/Radzen.Blazor/Radzen.Blazor.js - -
+2023-08-03 10:47:56.060 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/css/bootstrap/bootstrap.min.css - - - 304 - text/css 19.7478ms
+2023-08-03 10:47:56.061 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/css/fluent-dark-base.css - - - 304 - text/css 18.6545ms
+2023-08-03 10:47:56.061 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/css/site.css - - - 304 - text/css 18.1027ms
+2023-08-03 10:47:56.061 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink - -
+2023-08-03 10:47:56.062 -04:00 [INF] The file /_content/Radzen.Blazor/Radzen.Blazor.js was not modified
+2023-08-03 10:47:56.067 -04:00 [INF] The file /_framework/blazor.server.js was not modified
+2023-08-03 10:47:56.068 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/images/Banner.png - - - 304 - image/png 28.8974ms
+2023-08-03 10:47:56.068 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/videos - - - 200 - text/html;+charset=utf-8 1483.1817ms
+2023-08-03 10:47:56.071 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/blazor.server.js - - - 304 - text/javascript 12.7124ms
+2023-08-03 10:47:56.074 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 12002 application/javascript;+charset=utf-8 16.2087ms
+2023-08-03 10:47:56.075 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_content/Radzen.Blazor/Radzen.Blazor.js - - - 304 - text/javascript 17.0006ms
+2023-08-03 10:47:56.114 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 53.0176ms
+2023-08-03 10:47:56.127 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/fonts/MaterialIcons-Regular.woff - -
+2023-08-03 10:47:56.128 -04:00 [INF] The file /fonts/MaterialIcons-Regular.woff was not modified
+2023-08-03 10:47:56.129 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/fonts/MaterialIcons-Regular.woff - - - 304 - application/font-woff 1.7619ms
+2023-08-03 10:47:56.131 -04:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_blazor/initializers - -
+2023-08-03 10:47:56.133 -04:00 [INF] Executing endpoint 'Blazor initializers'
+2023-08-03 10:47:56.138 -04:00 [INF] Executed endpoint 'Blazor initializers'
+2023-08-03 10:47:56.139 -04:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_blazor/initializers - - - 200 - application/json;+charset=utf-8 7.9093ms
+2023-08-03 10:47:56.145 -04:00 [INF] Request starting HTTP/2 POST https://localhost:5001/_blazor/negotiate?negotiateVersion=1 - 0
+2023-08-03 10:47:56.146 -04:00 [INF] Executing endpoint '/_blazor/negotiate'
+2023-08-03 10:47:56.154 -04:00 [INF] Executed endpoint '/_blazor/negotiate'
+2023-08-03 10:47:56.155 -04:00 [INF] Request finished HTTP/2 POST https://localhost:5001/_blazor/negotiate?negotiateVersion=1 - 0 - 200 316 application/json 10.2219ms
+2023-08-03 10:47:56.157 -04:00 [INF] Request starting HTTP/2 CONNECT https://localhost:5001/_blazor?id=FcVIU-U8S325bv1v-nEtdA - -
+2023-08-03 10:47:56.158 -04:00 [INF] Executing endpoint '/_blazor'
+2023-08-03 10:47:56.227 -04:00 [INF] Handling GetPlaylistsQuery
+2023-08-03 10:47:56.228 -04:00 [INF] SearchText : null
+2023-08-03 10:47:56.228 -04:00 [INF] OrderBy : null
+2023-08-03 10:47:56.229 -04:00 [INF] Skip : 0
+2023-08-03 10:47:56.230 -04:00 [INF] Take : 1024
+2023-08-03 10:47:56.230 -04:00 [INF] SearchType : null
+2023-08-03 10:47:56.231 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:47:56.280 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:47:56.281 -04:00 [INF] SearchText : null
+2023-08-03 10:47:56.282 -04:00 [INF] OrderBy : null
+2023-08-03 10:47:56.282 -04:00 [INF] Skip : 0
+2023-08-03 10:47:56.283 -04:00 [INF] Take : 10
+2023-08-03 10:47:56.284 -04:00 [INF] SearchType : null
+2023-08-03 10:47:56.285 -04:00 [INF] IncludeTags : true
+2023-08-03 10:47:56.287 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:47:56.287 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:47:56.288 -04:00 [INF] VideoIds : null
+2023-08-03 10:47:56.291 -04:00 [INF] Handled Page`1
+2023-08-03 10:47:56.324 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:07.021 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:07.022 -04:00 [INF] SearchText : null
+2023-08-03 10:48:07.022 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:07.023 -04:00 [INF] Skip : 10
+2023-08-03 10:48:07.024 -04:00 [INF] Take : 10
+2023-08-03 10:48:07.024 -04:00 [INF] SearchType : null
+2023-08-03 10:48:07.025 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:07.025 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:07.026 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:07.027 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:07.083 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:08.395 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:08.396 -04:00 [INF] SearchText : null
+2023-08-03 10:48:08.397 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:08.397 -04:00 [INF] Skip : 20
+2023-08-03 10:48:08.398 -04:00 [INF] Take : 10
+2023-08-03 10:48:08.398 -04:00 [INF] SearchType : null
+2023-08-03 10:48:08.399 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:08.400 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:08.400 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:08.401 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:08.421 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:10.615 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:10.615 -04:00 [INF] SearchText : null
+2023-08-03 10:48:10.617 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:10.617 -04:00 [INF] Skip : 40
+2023-08-03 10:48:10.618 -04:00 [INF] Take : 10
+2023-08-03 10:48:10.618 -04:00 [INF] SearchType : null
+2023-08-03 10:48:10.619 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:10.619 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:10.620 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:10.620 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:10.640 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:14.300 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:14.301 -04:00 [INF] SearchText : null
+2023-08-03 10:48:14.302 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:14.303 -04:00 [INF] Skip : 20
+2023-08-03 10:48:14.303 -04:00 [INF] Take : 10
+2023-08-03 10:48:14.304 -04:00 [INF] SearchType : null
+2023-08-03 10:48:14.304 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:14.305 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:14.305 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:14.306 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:14.326 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:15.194 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:15.194 -04:00 [INF] SearchText : null
+2023-08-03 10:48:15.196 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:15.196 -04:00 [INF] Skip : 10
+2023-08-03 10:48:15.197 -04:00 [INF] Take : 10
+2023-08-03 10:48:15.197 -04:00 [INF] SearchType : null
+2023-08-03 10:48:15.198 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:15.198 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:15.199 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:15.199 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:15.225 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:15.878 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:15.879 -04:00 [INF] SearchText : null
+2023-08-03 10:48:15.880 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:15.880 -04:00 [INF] Skip : 0
+2023-08-03 10:48:15.881 -04:00 [INF] Take : 10
+2023-08-03 10:48:15.881 -04:00 [INF] SearchType : null
+2023-08-03 10:48:15.882 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:15.882 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:15.883 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:15.883 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:15.894 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:18.672 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:18.673 -04:00 [INF] SearchText : null
+2023-08-03 10:48:18.674 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:18.674 -04:00 [INF] Skip : 10
+2023-08-03 10:48:18.675 -04:00 [INF] Take : 10
+2023-08-03 10:48:18.675 -04:00 [INF] SearchType : null
+2023-08-03 10:48:18.676 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:18.676 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:18.677 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:18.678 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:18.706 -04:00 [INF] Handled Page`1
+2023-08-03 10:48:19.096 -04:00 [INF] Handling GetVideosQuery
+2023-08-03 10:48:19.097 -04:00 [INF] SearchText : null
+2023-08-03 10:48:19.098 -04:00 [INF] OrderBy : null
+2023-08-03 10:48:19.098 -04:00 [INF] Skip : 20
+2023-08-03 10:48:19.099 -04:00 [INF] Take : 10
+2023-08-03 10:48:19.099 -04:00 [INF] SearchType : null
+2023-08-03 10:48:19.100 -04:00 [INF] IncludeTags : true
+2023-08-03 10:48:19.100 -04:00 [INF] SelectedThumbnail : "Medium"
+2023-08-03 10:48:19.101 -04:00 [INF] PlaylistIds : null
+2023-08-03 10:48:19.101 -04:00 [INF] VideoIds : null
+2023-08-03 10:48:19.121 -04:00 [INF] Handled Page`1
