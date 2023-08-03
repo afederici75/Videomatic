@@ -19,6 +19,7 @@ Non UI
 - [ ] Speed up the crap to get the transcripts at some point
 	- [ ] Wait for queuing to be done before doing this
 
+
 -----------
 
 - [ ] Integrate Identity platform
