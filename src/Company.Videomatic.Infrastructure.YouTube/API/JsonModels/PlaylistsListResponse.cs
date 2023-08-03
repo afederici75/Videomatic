@@ -2,17 +2,18 @@
 
 namespace Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 
-// API: https://developers.google.com/youtube/v3/docs/videos/list
-// Example https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=4Y4YSpF6d6w,tWZQPCU4LJI
-
+// API: https://developers.google.com/youtube/v3/docs/playlists/list
 // TODO: fix the warnings and possibly use directly the Google API nuget
 
-public class VideoListResponse
+
+public class PlaylistsListResponse
 {
     public string kind { get; set; }
     public string etag { get; set; }
-    public Item[] items { get; set; }
+    public string nextPageToken { get; set; }
     public Pageinfo pageInfo { get; set; }
+    public Item[] items { get; set; }
+
 
     public class Pageinfo
     {
@@ -26,6 +27,8 @@ public class VideoListResponse
         public string etag { get; set; }
         public string id { get; set; }
         public Snippet snippet { get; set; }
+        public Status status { get; set; }
+        public Contentdetails contentDetails { get; set; }
     }
 
     public class Snippet
@@ -36,23 +39,47 @@ public class VideoListResponse
         public string description { get; set; }
         public Thumbnails thumbnails { get; set; }
         public string channelTitle { get; set; }
-        public string[] tags { get; set; }
-        public string categoryId { get; set; }
-        public string liveBroadcastContent { get; set; }
         public Localized localized { get; set; }
-        public string defaultAudioLanguage { get; set; }
     }
 
     public class Thumbnails
     {
-        public Thumbnail @default { get; set; }
-        public Thumbnail medium { get; set; }
-        public Thumbnail high { get; set; }
-        public Thumbnail standard { get; set; }
-        public Thumbnail maxres { get; set; }
+        public Default _default { get; set; }
+        public Medium medium { get; set; }
+        public High high { get; set; }
+        public Standard standard { get; set; }
+        public Maxres maxres { get; set; }
     }
 
-    public class Thumbnail
+    public class Default
+    {
+        public string url { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+    }
+
+    public class Medium
+    {
+        public string url { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+    }
+
+    public class High
+    {
+        public string url { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+    }
+
+    public class Standard
+    {
+        public string url { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+    }
+
+    public class Maxres
     {
         public string url { get; set; }
         public int width { get; set; }
@@ -64,6 +91,14 @@ public class VideoListResponse
         public string title { get; set; }
         public string description { get; set; }
     }
+
+    public class Status
+    {
+        public string privacyStatus { get; set; }
+    }
+
+    public class Contentdetails
+    {
+        public int itemCount { get; set; }
+    }
 }
-
-

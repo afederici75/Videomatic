@@ -5,16 +5,11 @@
 /// </summary>
 public interface IYouTubeHelper
 {
-    /// <summary>
-    /// Returns all the videos in a given YouTube playlist.
-    /// </summary>
-    /// <param name="playlistId"></param>
-    /// <returns></returns>
+    IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser(); // TODO: add cancellation    
+
     IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId);// TODO: add cancellation  
 
-
-    // TODO: add cancellation    
-    IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds);
-    // TODO: add cancellation
-    IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds);    
+    IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds); // TODO: add cancellation    
+    
+    IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds); // TODO: add cancellation    
 }

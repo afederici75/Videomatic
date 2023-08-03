@@ -43,29 +43,24 @@
         <RadzenPanelMenu Multiple=true>
             <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path="dashboard"/>
             
-            <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists">
-                @*<RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />*@
+            <RadzenPanelMenuItem Text="Playlists" Icon="video_library" Path="Playlists" Expanded=true>
+            <RadzenPanelMenuItem Style="color: gray" Text="All Videos" Path="Videos?all" Icon="density_small" />
+            <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
+            <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
 
-                @foreach (var playlist in playlists ?? Array.Empty<PlaylistDTO>())
-                {
-                    <RadzenPanelMenuItem Text="@(playlist.Name + " (" + playlist.VideoCount + ")")" Icon="video_library"
-                                         Path="@($"Videos?PlaylistId={playlist.Id}")"                                         
-                    
-                    />
-                }                
+            @foreach (var playlist in playlists ?? Array.Empty<PlaylistDTO>())
+            {
+                <RadzenPanelMenuItem Text="@(playlist.Name + " (" + playlist.VideoCount + ")")" Icon="video_library"
+                                     Path="@($"Videos?PlaylistId={playlist.Id}")" />
+            }                
             </RadzenPanelMenuItem>
-
-            <RadzenPanelMenuItem Text="Videos" Icon="movie" Path="Videos" Style="color: azure">
-                <RadzenPanelMenuItem Style="color: gray" Text="History" Icon="history" />
-                <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
-                <RadzenPanelMenuItem Style="color: gray" Text="All" Icon="density_small" />
-            </RadzenPanelMenuItem>            
+              
         </RadzenPanelMenu>
 
         <RadzenPanelMenu Multiple=false>
             <RadzenPanelMenuItem Text="You Tube" Image="https://www.youtube.com/favicon.ico" 
                                 Style="color: deepskyblue"
-                                Path="youtube">
+                                 Path="youtubePlaylists">
                 <RadzenPanelMenuItem Style="color: Gray" Text="History" Icon="history" />
                 <RadzenPanelMenuItem Style="color: gray" Text="Starred" Icon="star" />
                 <RadzenPanelMenuItem Text="Van Life" Icon="video_library" />

@@ -1,33 +1,124 @@
 ﻿using Company.SharedKernel.Abstractions;
 using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using Google.Apis.YouTube.v3;
 using MediatR;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using static Google.Apis.Requests.BatchRequest;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
-public class YouTubePlaylistsHelper : IYouTubeHelper
+public class YouTubeHelper : IYouTubeHelper
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubePlaylistsHelper(IOptions<YouTubeOptions> options, HttpClient client, ISender sender, IRepository<Video> videoRepository, IRepository<Transcript> transcriptRepository)
+    public YouTubeHelper(IOptions<YouTubeOptions> options, HttpClient client, ISender sender)
     {
         // TODO: messy / unfinished
         _options = options.Value;
         _client = client;
-        _videoRepository = videoRepository;
-        _transcriptRepository = transcriptRepository;
         _client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
         _sender = sender;        
     }
 
     readonly YouTubeOptions _options;
     readonly HttpClient _client;
-    IRepository<Video> _videoRepository;
-    IRepository<Transcript> _transcriptRepository;
     ISender _sender;
+
+    record AuthResponse();
+
+    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser()
+    {
+        String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
+
+        var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
+
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+           new ServiceAccountCredential.Initializer(serviceAccountEmail)
+           {
+               Scopes = new[] { YouTubeService.Scope.Youtube }
+           }.FromCertificate(certificate));
+
+        // Create the service.
+        var service = new YouTubeService(new BaseClientService.Initializer()
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = "API Sample",
+        });
+
+        //var request = service.Playlists.List("snippet");
+        //request.ChannelId = "@MicrosoftDeveloper";
+        //request.MaxResults = 50;
+        ////request.Mine = false;
+        //Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
+
+        // -----------------
+
+        var request = service.Playlists.List("snippet,contentDetails,id,status");
+        request.ChannelId = "UCqiZA4pUT5RxrMCddeKdpGw";
+        request.MaxResults = 50;
+        //request.Mine = true;
+
+        do
+        {
+            var response = await request.ExecuteAsync();
+
+            foreach (var playlist in response.Items)
+            {
+                var pl = new PlaylistDTO(-1, playlist.Snippet.Title, playlist.Snippet.Description, playlist.ContentDetails.ItemCount);
+                yield return pl;
+            };
+
+            // Pages
+            request.PageToken = response.NextPageToken;
+        }                    
+        while (!string.IsNullOrEmpty(request.PageToken));     
+    }
+
+    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser2()
+    {
+        var parameters = new Dictionary<string, string>
+        {
+            ["key"] = _options.ApiKey,
+            ["mine"] = "true",
+            //["part"] = "snippet,contentDetails,id,status",
+            ["part"] = "contentDetails,snippet,status",
+            ["maxResults"] = "50"
+        };
+
+        API.JsonPasteSpecial.PlaylistsListResponse response;
+        do
+        {
+            // API call
+            var fullUrl = MakeUrlWithQuery("playlists", parameters);
+            string json = await _client.GetStringAsync(fullUrl);
+            response = JsonConvert.DeserializeObject<PlaylistsListResponse>(json)!;
+
+            // Gets all video Ids            
+            foreach (var playlist in response.items)
+            {
+                var pl = new PlaylistDTO(-1, playlist.snippet.title, playlist.snippet.description, playlist.contentDetails.itemCount);
+                yield return pl;
+            };
+
+            // Pages
+            parameters["pageToken"] = response.nextPageToken;
+        }
+        while (!string.IsNullOrEmpty(response.nextPageToken));        
+    }
 
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
@@ -77,11 +168,11 @@ public class YouTubePlaylistsHelper : IYouTubeHelper
             //["maxResults"] = "50"
         };
 
-        API.JsonPasteSpecial.VideoListResponse response;
+        API.JsonPasteSpecial.VideosListResponse response;
         var fullUrl = MakeUrlWithQuery("videos", parameters);
 
         string json = await _client.GetStringAsync(fullUrl);
-        response = JsonConvert.DeserializeObject<VideoListResponse>(json)!;
+        response = JsonConvert.DeserializeObject<VideosListResponse>(json)!;
 
         var videoIds = response.items.Select(v => v.id).ToArray();
 

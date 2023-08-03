@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +16,26 @@ builder.Services.AddScoped<ContextMenuService>();
 builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
+builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
+
+//builder.Services.AddAuthentication(o =>
+//{
+//    // This forces challenge results to be handled by Google OpenID Handler, so there's no
+//    // need to add an AccountController that emits challenges for Login.
+//    o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+//    // This forces forbid results to be handled by Google OpenID Handler, which checks if
+//    // extra scopes are required and does automatic incremental auth.
+//    o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+//    // Default scheme that will handle everything else.
+//    // Once a user is authenticated, the OAuth2 token info is stored in cookies.
+//    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//})
+//        .AddCookie()
+//        .AddGoogleOpenIdConnect(options =>
+//        {
+//            options.ClientId = builder.Configuration["YouTube:ClientId"];
+//            options.ClientSecret = builder.Configuration["YouTube:ClientSecret"];
+//        });
 
 var app = builder.Build();
 
@@ -37,6 +52,20 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+app.MapGet("/a", (string? code, string? scope) => $"This is a GET -> Code:{code}, State:{scope}");
+app.MapGet("/oauthCallback", (string? code, string? scope) =>
+{
+    var str = $"Code:{code}, State:{scope}";
+
+    //RedirectResult redirect = new RedirectResult("/Videos", true);
+    return Results.RedirectToRoute("/Videos");
+});
+
+
 app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
