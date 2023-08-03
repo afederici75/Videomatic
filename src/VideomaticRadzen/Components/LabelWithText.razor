@@ -1,0 +1,12 @@
+﻿<RadzenStack Orientation="Orientation.Horizontal" Gap="10">
+    <RadzenText TextStyle="TextStyle.H6">@Label</RadzenText>
+    <RadzenText TextStyle="TextStyle.Body1">@Text</RadzenText>
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Text { get; set; } = string.Empty;
+}

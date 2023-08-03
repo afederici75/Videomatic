@@ -1,8 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
-public record DeleteTranscriptCommand(long Id) : IRequest<DeleteTranscriptResponse>, ICommandWithEntityId;
-
-public record DeleteTranscriptResponse(long Id, bool Deleted);
+public record DeleteTranscriptCommand(long Id) : DeleteAggregateRootCommand<Transcript>(Id);
 
 public class DeleteTranscriptCommandValidator : AbstractValidator<DeleteTranscriptCommand>
 {

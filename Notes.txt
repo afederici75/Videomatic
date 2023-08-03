@@ -1,3 +1,78 @@
+8/3
+-Done a lot of work on the Blazor UI and learnt a ton about HTML, CSS and JS. 
+I am now able to do a lot of things.
+-I made a massive update to TODOs.txt so I now have an fairly complete list of things to do.
+
+
+7/29
+-Added full text search to the migrations and then built a bunch of tests for it.
+-
+
+7/22
+-Excellent experience with RadZen stuff. Really natural for me now.
+-Selected a PRO theme. Will need to resolve later before going commercial.
+-DataList (https://blazor.radzen.com/datalist)
+	-Perfect for both infinite scrolling and data grid style
+-DataFilter (https://blazor.radzen.com/datafilter-loaddata)
+	-Almost-perfect filter UI.
+
+
+
+7/20
+-Yesterday was a great day. I feel unstuck with the UI now. By making the html-pure example for the 
+VideoCard (see yest nots) I realized I could write the whole UI by simply using basic Blazor (without Balzorise)
+and following the bootstrap specs instead of Balzorise's!!!
+	-The downside is I need to be more intimate with a JS framework...
+	-A pro is I could get regular web devs and they would find themselves more at home than with Blasorize stuff
+
+7/19
+From VideoCard
+@*<div class="card" style="width: 100%;">
+    <img src="https://codingyaar.com/wp-content/uploads/bootstrap-4-card-image-left-demo-image.jpg" class="card-img-top" />
+    <div class="card-body">
+        <h5 class="card-title">@Video.Name</h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            <Badge Color="Color.Primary">@(Video.Tags?.Count() ?? 0) Tags</Badge>
+        </h6>
+        <p class="card-text">@TruncateDescription(Video.Description).</p>
+        
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Type="ButtonType.Link"
+                To="@Video.Location" Target="Target.Blank">
+            Watch
+        </Button>
+
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick=OnEditClicked>
+            Read more <Icon Name="IconName.ArrowRight" />
+        </Button>
+
+    </div>
+</div>*@
+
+7/16
+-BIG EPHIPHANY: I am quite happy with many things but I realized I should consolidate the Intrastructure tests 
+in one assembly. In order to test the YT transcript import I need to access the db and this makes
+me have to configure a whole set of things in YouTube tests that make the separate test assembly 
+useless.
+-Closing the Upsert branch (it's a bit more complex than that: some things can upsert, some (eg videos) cannot not
+as we don't allow editing all fields on update!)
+
+7/15
+-Some constructors and factories need work
+	-PlaylistVideo is missing the jsonconstructor
+	-Are the factory methods a good idea?
+
+
+7/14
+-The handlers are in the wrong place. I should move them to Application since I adopted 
+the IRepository<> stuff and their implementation should be EF independent.
+-Nice post about DTOs and domain objects: https://stackoverflow.com/questions/73640666/should-handler-from-the-application-layer-return-dto-or-domain-object
+
+
+7/13
+-Learnt how to revert check ins in Github! I made a ton of work trying to get LinqPAD to work (unsuccessfully).
+The branch name has the text 'linqpad' in it. 
+-
+
 7/4
 -IVideoService is used in 2 spots (handler *and* the seeder!): it does make sense to keep it.
 -Massive work of clean up:

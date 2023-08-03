@@ -4,6 +4,9 @@ namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {
+    public const string TableName = "Transcripts";
+    public const string TableNameForLines = "TranscriptLines";
+
     public static class FieldLengths
     {
         public const int Language = 2;
@@ -11,7 +14,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
 
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
-        builder.ToTable("Transcripts");        
+        builder.ToTable(TableName);        
         
         // Fields
         builder.Property(x => x.Id)
@@ -23,27 +26,23 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
                .IsRequired(true);
 
         builder.Property(x => x.Language)
-               .HasMaxLength(FieldLengths.Language);
-
-        // Shadow Properties
-        //builder.Property<Video>("Video");
-
-        // Relationships
-        //builder.HasOne(typeof(Video), "Video")
-        //       .WithMany()
-        //       .HasForeignKey("MaybeVideoId");
+               .HasMaxLength(FieldLengths.Language);        
 
         builder.OwnsMany(x => x.Lines, (builder) =>
         {
+            builder.ToTable(TableNameForLines);
+
+            // Shadow properties
             builder.WithOwner().HasForeignKey("TranscriptId");
+            
             builder.Property("Id");
             builder.HasKey("Id");
 
-            // No Dups the video
+            // Indices
             builder.HasIndex(nameof(TranscriptLine.Text));
         });
 
         // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
+        builder.HasIndex(x => x.Language);
     }
 }   

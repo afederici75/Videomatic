@@ -1,8 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
-public record DeleteArtifactCommand(long Id) : IRequest<DeleteArtifactResponse>, ICommandWithEntityId;
-
-public record DeleteArtifactResponse(long Id, bool Deleted);
+public record DeleteArtifactCommand(long Id) : DeleteAggregateRootCommand<Artifact>(Id);
 
 public class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
 {

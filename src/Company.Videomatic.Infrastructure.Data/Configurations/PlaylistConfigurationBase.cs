@@ -2,15 +2,16 @@
 
 public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
+    public const string TableName = "Playlists";
+
     public static class FieldLengths
     {
         public const int Name = 120;
-        //public const int Description = 4096;
     }
 
     public virtual void Configure(EntityTypeBuilder<Playlist> builder)
     {
-        builder.ToTable("Playlists");
+        builder.ToTable(TableName);
 
         // Fields
         builder.Property(x => x.Id)
@@ -19,25 +20,15 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Name);
 
-        builder.Property(x => x.Description);
-        //.HasMaxLength(FieldLengths.Description);
-
+        builder.Property(x => x.Description); // MAX
+        
         // Relationships
-        //builder.HasMany(x => x.Videos)
-        //       .WithMany(x => x.Playlists)
-        //       //.UsingEntity<PlaylistVideo>(
-        //       //     l => l.HasOne<Video>(x => x.Video).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.VideoId),
-        //       //     r => r.HasOne<Playlist>(x => x.Playlist).WithMany(x => x.PlaylistVideos).HasForeignKey(x => x.PlaylistId)
-        //       // );
-        //        .UsingEntity(typeof(PlaylistVideo),
-        //            l => l.HasOne(typeof(Video), "Video").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("VideoId"),
-        //            r => r.HasOne(typeof(Playlist), "Playlist").WithMany(nameof(Video.PlaylistVideos)).HasForeignKey("PlaylistId")
-        //        );
-        builder.HasMany(typeof(VideoPlaylist))
+        builder.HasMany(x => x.Videos)
                .WithOne()
-               .HasForeignKey("PlaylistId");
-
+               .HasForeignKey(nameof(PlaylistVideo.PlaylistId));
+       
         // Indices
-        //builder.HasIndex(x => x.Id).IsUnique();
+        builder.HasIndex(x => x.Name);
+        builder.HasIndex(x => x.Description);
     }
 }

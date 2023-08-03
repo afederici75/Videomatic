@@ -2,5 +2,5 @@
 
 public record TranscriptLineDTO(
     string Text = "",
-    TimeSpan StartsAt = default,
-    TimeSpan Duration = default);
+    TimeSpan? StartsAt = default,
+    TimeSpan? Duration = default);

@@ -1,15 +1,17 @@
 ﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
-public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<VideoPlaylist>
+public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<PlaylistVideo>
 {
+    private const string TableName = "PlaylistVideos";
+
     public static class FieldLengths
     {
         
     }
 
-    public virtual void Configure(EntityTypeBuilder<VideoPlaylist> builder)
+    public virtual void Configure(EntityTypeBuilder<PlaylistVideo> builder)
     {
-        builder.ToTable("PlaylistVideos");
+        builder.ToTable(TableName);
 
         // Fields
         builder.HasKey(x => new { x.PlaylistId, x.VideoId });

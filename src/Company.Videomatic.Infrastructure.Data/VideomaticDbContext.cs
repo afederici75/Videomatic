@@ -1,11 +1,11 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
+using Company.Videomatic.Infrastructure.Data.Configurations;
+using Microsoft.Extensions.Configuration;
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public class VideomaticDbContext : DbContext
+public abstract class VideomaticDbContext : DbContext
 {
     public VideomaticDbContext()
         : base()
@@ -22,25 +22,13 @@ public class VideomaticDbContext : DbContext
     public DbSet<Transcript> Transcripts { get; set; } = null!;
     public DbSet<Playlist> Playlists { get; set; } = null!;
     public DbSet<Video> Videos { get; set; } = null!;
-    
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder.EnableSensitiveDataLogging();
-    }
-
+    public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);        
-        
-        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-    }
+        base.OnModelCreating(modelBuilder);
 
-    public async Task<int> CommitChangesAsync(CancellationToken cancellationToken)
-    {
-        var res = await SaveChangesAsync(cancellationToken);
-        ChangeTracker.Clear();
-        return res;
+        var descendantType = GetType();
+        modelBuilder.ApplyConfigurationsFromAssembly(descendantType.Assembly);
     }
 }

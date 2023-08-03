@@ -1,0 +1,118 @@
+﻿@page "/videos"
+@using Company.Videomatic.Domain.Aggregates.Video;
+@using VideomaticRadzen.Components
+
+@inject ISender Sender
+@inject NavigationManager NavigationManager
+
+<RadzenRow class="sticky-top" style="background-color: #1f1f1f">
+    <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
+    <RadzenButton Text="Reset" Style="margin-bottom: 20px;" Click="@Refresh" />
+        
+    <RadzenPager @ref="pager" ShowPagingSummary="true"
+                 HorizontalAlign="HorizontalAlign.Right" Count="count"
+                 PageSize="@pageSize" PageNumbersCount="5" PageChanged="@PageChanged" />
+</RadzenRow>
+
+
+<RadzenDataList @ref="list" TItem="VideoDTO"  Data="@videos" 
+                Count="@count" 
+                WrapItems="true"                 
+                AllowPaging="true">
+    <Template Context="video">
+        <RadzenCard Style="max-width: 340px; min-width:200px">          
+            <RadzenImage Path="@video.Thumbnail" Style="max-width: 60px, max-block-size, max-height: 40px" />
+
+            <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
+
+                <RadzenStack Orientation="Orientation.Horizontal">
+                    <RadzenText TextStyle="TextStyle.Overline">@(video.Provider)</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Overline">@(video.ProviderVideoId)</RadzenText>
+                </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.Caption">@(video.VideoOwnerChannelTitle ?? ""), @(video.VideoPublishedAt)</RadzenText>
+            @*<RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>*@
+                
+            <RadzenTextArea Cols="40" 
+                            Rows="5"
+                            MaxLength="300" 
+                            Value="@(video.Description)" />
+            
+                            <RadzenButton Text="Details" Click=@(() => GoToDetails(video.Id))  />
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
+
+
+
+    @code {
+
+    string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
+    RadzenPager? pager;
+     
+    RadzenDataList<VideoDTO>? list;
+    IEnumerable<VideoDTO>? videos;
+    int count;
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? SearchText { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
+    public long? PlaylistId { get; set; }
+    long? _priorPlaylistId;
+
+    int pageSize = 10;
+    bool isLoading = false;
+
+    async Task GoToDetails(long videoId)
+    {
+        NavigationManager.NavigateTo($"videoDetails?VideoId={videoId}");
+    }
+
+    async Task PageChanged(PagerEventArgs args)
+    {
+        await GetVideos(args.Skip, args.Top);
+    }
+
+    async Task Refresh()
+    {
+        if (pager == null)
+        {
+            return;    
+        }
+
+        await pager.FirstPage(true);
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await GetVideos(0, pageSize);
+
+        await base.OnParametersSetAsync();
+    }
+
+    async Task GetVideos(int skip, int take)
+    {
+        isLoading = true;
+
+        await Task.Yield();
+
+        var query = new GetVideosQuery(
+                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value } : null,
+                Skip: skip,
+                Take: take,
+                OrderBy: null,
+                SearchText: SearchText,
+                IncludeTags: true,
+                SelectedThumbnail: ThumbnailResolutionDTO.Medium);
+
+        Page<VideoDTO> results = await Sender.Send(query);
+
+        videos = results.Items;
+        count = Convert.ToInt32(results.TotalCount);
+
+        isLoading = false;        
+    }
+}

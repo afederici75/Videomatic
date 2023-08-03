@@ -2,25 +2,22 @@
 
 public record VideoDetails(
     string Provider,
+    string ProviderVideoId,
     DateTime VideoPublishedAt,
-    string ChannelId,
-    string PlaylistId,
-    int Position,
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId)
 {
-    private VideoDetails() :
-        this(Provider: "NONE",
-             VideoPublishedAt: DateTime.UtcNow,
-             ChannelId: "",
-             PlaylistId: "",
-             Position: 0,
-             VideoOwnerChannelTitle: "",
-             VideoOwnerChannelId: "")
-    { }
-
+    // Factory methods.
     public static VideoDetails CreateEmpty()
     {
         return new VideoDetails();
     }
+
+    // Automapper.
+    private VideoDetails() : this(
+        Provider: "NONE",
+        ProviderVideoId: "NONE",
+        VideoPublishedAt: DateTime.UtcNow,
+        VideoOwnerChannelTitle: "",
+        VideoOwnerChannelId: "") { }    
 }

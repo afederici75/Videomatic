@@ -2,11 +2,11 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
-public class Artifact : IAggregateRoot<ArtifactId>
+public class Artifact : IAggregateRoot
 {
     public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
     {
-        return new Artifact
+        return new Artifact // TODO: code smell with the other ctors...
         {
             VideoId = videoId,
             Name = name,
@@ -25,6 +25,17 @@ public class Artifact : IAggregateRoot<ArtifactId>
 
     private Artifact()
     { }
+
+
+    [JsonConstructor]
+    private Artifact(ArtifactId id, VideoId videoId, string name, string type, string? text)
+    {
+        Id = id;
+        VideoId = videoId;
+        Name = name;
+        Type = type;
+        Text = text;
+    }
 
     #endregion
 }

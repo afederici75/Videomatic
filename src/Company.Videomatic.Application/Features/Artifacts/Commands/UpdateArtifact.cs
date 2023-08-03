@@ -2,9 +2,7 @@
 
 public record UpdateArtifactCommand(long Id,
                                     string Name,
-                                    string? Text) : IRequest<UpdateArtifactResponse>, ICommandWithEntityId;
-
-public record UpdateArtifactResponse(long ArtifactId, bool wasUpdated);
+                                    string? Text) : UpdateAggregateRootCommand<Artifact>(Id);
 
 public class UpdateArtifactCommandValidator : AbstractValidator<UpdateArtifactCommand>
 {

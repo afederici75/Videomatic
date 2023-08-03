@@ -3,10 +3,8 @@
 /// <summary>
 /// This command is used to delete a video from the repository.
 /// </summary>
-/// <param name="Id"> The id of the video to delete. </param>
-public record DeleteVideoCommand(long Id) : IRequest<DeleteVideoResponse>, ICommandWithEntityId;
-
-public record DeleteVideoResponse(long Id, bool Deleted);
+/// <param name="VideoId"> The id of the video to delete. </param>
+public record DeleteVideoCommand(long Id) : DeleteAggregateRootCommand<Video>(Id);
 
 /// <summary>
 /// The validator for DeleteVideoCommand.

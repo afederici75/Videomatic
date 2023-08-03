@@ -10,9 +10,18 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 
 ## Installation
 
+-We want to install MSSQL on Linux with Full Text Search installed.
+-This is a good article:
+	https://gianluigi.sellitto.it/2020/03/mssql-server-2019-on-docker-e-full-text-search/
+-Steps:
 
+	-Run the following command (might take a minute or two):
 ```
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --hostname mssql1 -d mcr.microsoft.com/mssql/server:2019-latest
+		docker build -t videomatic/mssql-fts .
+```				
+	-Run the following command:
+```
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d videomatic/mssql-fts 
 ```
 ## Modules
 

@@ -1,28 +1,22 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Company.Videomatic.Infrastructure.Data.Seeder;
+﻿namespace Company.Videomatic.Infrastructure.Data.Seeder;
 
 public class DbSeeder : IDbSeeder
 {
-    private readonly VideomaticDbContext _dbContext;
-    private readonly IVideoService _videoService;
+    private readonly IPlaylistService _playlistService;
     private readonly IRepository<Video> _videoRepository;
     private readonly IRepository<Playlist> _playlistRepository;
     private readonly IRepository<Artifact> _artifactRepository;
     private readonly IRepository<Transcript> _transcriptRepository;
 
-    public DbSeeder(VideomaticDbContext dbContext,
-        IVideoService videoService,
+    public DbSeeder(
+        IPlaylistService videoService,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         IRepository<Artifact> artifactRepository,
         IRepository<Transcript> transcriptRepository
         )
     {
-        _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        _videoService = videoService ?? throw new ArgumentNullException(nameof(videoService));
+        _playlistService = videoService ?? throw new ArgumentNullException(nameof(videoService));
         _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         _playlistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
         _artifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
@@ -52,11 +46,11 @@ public class DbSeeder : IDbSeeder
         var shivaVideo = await CreateAldousHuxleyTheDancingShivaVideo();
         
         // If RealityIsNotDual
-        long realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
+        var realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
 
         //
-        var linked1 = await _videoService.LinkToPlaylists(shivaVideo.Id, new[] { playlist.Id });
-        var linked2 = await _videoService.LinkToPlaylists(realityNotDualVideo, new[] { playlist.Id });
+        var linked1 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { shivaVideo.Id});
+        var linked2 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { realityNotDualVideo.Id });
 
         return playlist.Id;
     }
@@ -67,7 +61,6 @@ public class DbSeeder : IDbSeeder
         var video = Video.Create(
                 location: "https://www.youtube.com/watch?v=n1kmKpjk_8E",
                 name: "Aldous Huxley - The Dancing Shiva",
-                details: VideoDetails.CreateEmpty(),
                 description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
                 "(Nataraja, Nataraj, nət̪əˈraːdʒ) of the Hindu spiritual tradition.  Aldous Huxley " +
                 "was the author of many excellent books and essays including; Brave New World, " +
@@ -101,7 +94,13 @@ public class DbSeeder : IDbSeeder
                 "(2) transformative in nature, (3) does not compete with the original work or have any negative " +
                 "effect on its market and (4) uses no more of the original work than necessary for the video's " +
                 "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
-                "poster.");
+                "poster.",
+                details: new VideoDetails(
+                    Provider: "YOUTUBE",
+                    ProviderVideoId: "n1kmKpjk_8E",
+                    VideoPublishedAt: new DateTime(2019, 12, 12), // Bogus date
+                    VideoOwnerChannelId: "UNKNOWN",
+                    VideoOwnerChannelTitle: "James Dearden Bush"));
 
         // Tags
         video.AddTags("HINDUISM", "HUXLEY");
@@ -155,7 +154,7 @@ public class DbSeeder : IDbSeeder
         await _transcriptRepository.AddAsync(transcript);
     }
 
-    async Task<long> CreateIfRealityIsNonDualVideo()
+    async Task<Video> CreateIfRealityIsNonDualVideo()
     {
         // Video
         var video = Video.Create(
@@ -173,7 +172,13 @@ public class DbSeeder : IDbSeeder
                 "liberation or enlightenment, instead." +
                 "\n" +
                 "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
-                "For more information, please see: https://www.arshabodha.org/");
+                "For more information, please see: https://www.arshabodha.org/",
+                details: new VideoDetails(
+                    Provider: "YOUTUBE",
+                    ProviderVideoId: "BBd3aHnVnuE",
+                    VideoPublishedAt: new DateTime(2021, 3, 23), // Bogus date
+                    VideoOwnerChannelId: "UNKNOWN",
+                    VideoOwnerChannelTitle: "ArshaBodha - Swami Tadatmananda"));
 
         // Tags
         video.AddTags("HINDUISM");
@@ -194,7 +199,7 @@ public class DbSeeder : IDbSeeder
         // Artifacts
         await CreateIfRealityIsNotDualArtifacts(video.Id);
 
-        return video.Id;
+        return video;
     }
 
     private async Task CreateIfRealityIsNotDualTranscription(VideoId videoId)

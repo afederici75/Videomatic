@@ -3,7 +3,6 @@
   <PropertyGroup>    
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UserSecretsId>dcf822d1-fd46-4423-8868-9560684f0f33</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,10 +12,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="Xunit.DependencyInjection" Version="8.7.1" />
+    <PackageReference Include="xunit" Version="2.5.0" />
+    <PackageReference Include="Xunit.DependencyInjection" Version="8.7.2" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.1.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

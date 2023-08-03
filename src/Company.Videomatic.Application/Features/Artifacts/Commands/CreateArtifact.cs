@@ -3,9 +3,7 @@
 public record CreateArtifactCommand(long VideoId,
                                     string Name,
                                     string Type,
-                                    string? Text) : IRequest<CreateArtifactResponse>;
-
-public record CreateArtifactResponse(long Id);
+                                    string? Text) : CreateAggregateRootCommand<Artifact>();
 
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {

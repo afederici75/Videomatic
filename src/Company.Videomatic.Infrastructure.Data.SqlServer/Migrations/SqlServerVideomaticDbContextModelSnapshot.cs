@@ -17,7 +17,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -45,8 +45,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +76,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -85,7 +85,26 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Description");
+
+                    b.HasIndex("Name");
+
                     b.ToTable("Playlists", (string)null);
+                });
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.PlaylistVideo", b =>
+                {
+                    b.Property<long>("PlaylistId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("VideoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("PlaylistId", "VideoId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("PlaylistVideos", (string)null);
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Transcript.Transcript", b =>
@@ -104,6 +123,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Language");
 
                     b.HasIndex("VideoId");
 
@@ -139,23 +160,23 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Videos", (string)null);
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.VideoPlaylist", b =>
-                {
-                    b.Property<long>("PlaylistId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("VideoId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PlaylistId", "VideoId");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("PlaylistVideos", (string)null);
-                });
-
             modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Artifact.Artifact", b =>
                 {
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.PlaylistVideo", b =>
+                {
+                    b.HasOne("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", null)
+                        .WithMany("Videos")
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
                         .WithMany()
                         .HasForeignKey("VideoId")
@@ -197,7 +218,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasIndex("TranscriptId");
 
-                            b1.ToTable("TranscriptLine");
+                            b1.ToTable("TranscriptLines", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("TranscriptId");
@@ -236,7 +257,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasIndex("VideoId");
 
-                            b1.ToTable("Thumbnail");
+                            b1.ToTable("Thumbnails", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
@@ -247,20 +268,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                             b1.Property<long>("VideoId")
                                 .HasColumnType("bigint");
 
-                            b1.Property<string>("ChannelId")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<string>("PlaylistId")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
-
-                            b1.Property<int>("Position")
-                                .HasColumnType("int");
-
                             b1.Property<string>("Provider")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("ProviderVideoId")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
@@ -280,9 +293,15 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.HasKey("VideoId");
 
-                            b1.HasIndex("ChannelId");
+                            b1.HasIndex("Provider");
+
+                            b1.HasIndex("ProviderVideoId");
 
                             b1.HasIndex("VideoOwnerChannelId");
+
+                            b1.HasIndex("VideoOwnerChannelTitle");
+
+                            b1.HasIndex("VideoPublishedAt");
 
                             b1.ToTable("Videos");
 
@@ -299,8 +318,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(35)
-                                .HasColumnType("nvarchar(35)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<long>("VideoId")
                                 .HasColumnType("bigint");
@@ -312,7 +331,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                             b1.HasIndex("Name", "VideoId")
                                 .IsUnique();
 
-                            b1.ToTable("VideoTag");
+                            b1.ToTable("VideoTags", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
@@ -326,24 +345,9 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Thumbnails");
                 });
 
-            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.VideoPlaylist", b =>
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", b =>
                 {
-                    b.HasOne("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", null)
-                        .WithMany()
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Company.Videomatic.Domain.Aggregates.Video.Video", null)
-                        .WithMany("Playlists")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Video.Video", b =>
-                {
-                    b.Navigation("Playlists");
+                    b.Navigation("Videos");
                 });
 #pragma warning restore 612, 618
         }

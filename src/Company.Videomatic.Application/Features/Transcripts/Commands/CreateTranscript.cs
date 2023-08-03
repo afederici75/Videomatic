@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
-public record CreateTranscriptCommand(long VideoId, string Language, IEnumerable<string> Lines) : IRequest<CreateTranscriptResponse>;
-
-public record CreateTranscriptResponse(long Id);
+public record CreateTranscriptCommand(long VideoId,
+                                      string Language,
+                                      IEnumerable<string> Lines) : CreateAggregateRootCommand<Transcript>();
 
 public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {

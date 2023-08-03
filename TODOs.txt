@@ -1,14 +1,209 @@
--It's possible that PlaylistVideo has issues:
-	-Should it expose all those props? Maybe pick one (ids or references)?
+******************
+Non UI
+******************
 
--Should relook at ValueObject one more time
+- [ ] Add logging
+	- [ ] Add logging to files
+	- [ ] Add logging to the console
+	- [ ] Add logging to Seq
+	- [ ] R&D on application insights
+		- [ ] Add logging to application insights
 
--I don't think the Id classes are complete. Equality operator and stuff.
-	-Look here:
-		-https://github.com/andrewlock/StronglyTypedId
-		-https://andrewlock.net/strongly-typed-ids-in-ef-core-using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-4/
+- [ ] Add the ability to Star videos by adding an extra property to the entities
+	- [ ] Requires rescaffolding the database
 
--I should check all the equatable things for value objects, strongly typed ids 
+- [ ] Future: it's probably wise to make playlists work like a tree so we will
+need to add a ParentId property or something at some point
 
--Copy AppLogger interface from eShopWeb
-	-d:\eShopOnWeb\src\ApplicationCore\Interfaces\IAppLogger.cs
+- [ ] Remove my custom code for accessing the YT API and swap to the Google nuget package
+
+- [ ] Speed up the crap to get the transcripts at some point
+	- [ ] Wait for queuing to be done before doing this
+
+-----------
+
+- [ ] Integrate Identity platform
+	- [ ] The database will need to be updated.
+		- [ ] Maybe I switch long to int in the primary keys?
+
+- [ ] Add whatever fields we need to make the DB multi tenant.
+	- [ ] This is probably the best time to change the id from long to int!
+	- [ ] Add Owner fields to all entities
+	- [ ] R&D on how to do this:
+		- [ ] There's something in the EF Core docs about this
+
+- [ ] Ensure I can login at least with Google
+	- [ ] See if I can grab the YT user id and channelid from the claims!!
+
+- [ ] Add authorization!!
+	- [ ] At the beginning it will probably be all allowed with the 
+	exception of the developer/tester pages so there's really 
+	a few roles to think about: ADMIN/USER/TESTER.
+
+- [ ] Finish the Semantic Kernel integration or make some basic stuff work.
+	- [ ] Consider using the database or configuration to store the Prompts		
+	
+- [ ] Add caching
+	- [ ] I will start with in memory cache:
+		- [ ] Add Redis at a later time (after MVP).
+
+- [ ] Find out how to store secrets in Azure.
+	- [ ] CONSIDERATION: I don't need to have a full CI/CD pipeline working.
+	If I can do a simple manual deploy of sorts (from VS) it should be fine for
+	the time being.
+
+- [ ] Documentation in code
+
+- [ ] Documentation on github
+
+
+- [ ] Ability to queue jobes;
+	- [ ] USE HANGFIRE? Do a little R&D on it
+	- [ ] Video imports from YouTube
+		- [ ] We can speed up the transcription reading later
+	- [ ] Play list imports from YouTube
+
+******************
+User interface
+******************
+
+- [ ] Add pages to edit:
+	- [ ] Playlist		
+	- [ ] Video
+		- [ ] Main (card again?)
+		- [ ] Artifacts
+		- [ ] Transcripts		
+		- [ ] Some control to add Tags
+
+- [ ] Make the cards nicer:
+	- [ ] Playlist
+	- [ ] Video
+
+- [ ] Make the YouTube interface a single page deal instead of adding all those submenus:
+	- [ ] The page would focus on importing videos from Youtube 
+	- [ ] Sources:		
+		- [ ] The youtube playlists of user 
+			- [ ] I need the user's channel id from somewhere (maybe settings?)
+			- [ ] IMPORTANT: what happens if we continue reimporting the same playlist
+			over and over? We need to be sure we don't duplicate playlist and videos.
+				- [ ] At the very least it should warn the user that the playlist already exists
+				and ask if they want to continue by simply adding the new videos to the existing
+				playlist
+				- [ ] If the user accepts we would only import videos that are not already in videomatic.
+					- [ ] If the video is already in videomatic we would simply now link it to this 
+					playlist (if it isn't already)
+					- [ ] If the video is not alreayd in videomatic we would import it and then link it 
+					to this playlist			
+		- [ ] A simple Youtube video URL 
+			- [ ] this can be either typed in a text box or dragged and dropped
+		- [ ] A YouTube playlist URL
+			- [ ] it would be nice if dragging and dropping would detect this
+			- [ ] ultimately this would queue the import of videos and associate a playlist
+			tag to them for when the import is done. 
+		- [ ] The youtube history of user (future)
+			- [ ] this might be an issue unless I OAUTH2 this crap
+
+		- [ ] Provide a button to start queueing video imports
+			- [ ] This will queue the import of videos from the sources above
+			
+		- [ ] This page should also display what is still being imported server side.
+			- [ ] When videos are imported the user shluld get a notification in the UI
+			which allows him to go to the video or playlist which was just imported
+			- [ ] Possibly send an email?
+
+- [ ] Remove Videos submenu and do the following:
+	- [ ] Add the following under Playlist
+		- [ ] Create a 'All Videos' fake playlist (gray/system) which will
+		display all the videos
+		- [ ] Create a 'Starred' fake playlist (gray/system) which will
+		display all the videos that have been starred
+		- [ ] Create a 'History' fake playlist (gray/system) which will
+		display all the videos in order of last imported
+			- [ ] In the future we can add a 'Last Viewed' property too or 
+			something like that
+	- [ ] [PLUS] This should address the issue with the menu items!
+
+- [ ] Divide the Videos page:
+	- [ ] SearchBar should be reusable (component)
+		INPUT: TTYPE (Type)
+
+		- [ ] Search textbox and search Button with Voice detection
+
+		- [ ] Fulltext search options (component)
+			INPUT: TTYPE (Type)
+
+			- [ ] the type of FullTextSearch to perform (FreeText or Contains)
+			- [ ] A checkbox list dropdown of fields to search in our full text for a given TDTO
+		
+		- [ ] Sorting options<TDTO> (component)
+			INPUT: TTYPE (Type)
+
+			- [ ] A drop down for sorting
+			- [ ] A drop down for sorting order (ascending or descending)						
+
+		- [ ] A numeric box or drop down to select how many records per page to show
+		
+		- [ ] Event callback or whatever for OnSearch, so it can notify the parent component
+		of all the options above
+
+	- [ ] Results page?
+		INPUT: TTYPE (Type)
+			   TCARDTYPE
+		- [ ] Contains the base datagrid or datalist with all default property configurations
+			- [ ] Maybe make properties for thins like max- [ ] width, max- [ ] height, etc
+		- [ ] Exposes a data property for the binding
+		- [ ] 
+
+		- [ ] Displays what is fetched after the OnSearch callback is invoked from the SearchBar
+		and excuted by the Videos page which contains such searchbar.
+		- [ ] Ideally it should display either either:
+			- [ ] Cards
+			- [ ] Infinite scroll
+			- [ ] Maybe grid?
+		- [ ] Displays the pagination component
+
+		- [ ] Add a way to star a video
+
+- [ ] Playlists page should follow suit:
+	- [ ] Use the SearchBar component
+	- [ ] Use the Results component
+
+
+- [ ] Finish resolving the issue with the Videos menu conflicting with those under 
+ Playlists. It's basically highlighting by action uri
+
+- [ ] Add functionality for user button at the top of the screen
+	- [ ] Should show a sub menu with these options (similar to Chrome):
+		- [ ] Manage your Profile
+		- [ ] Settings
+		- [ ] Logout
+
+- [ ] Add "Manage your Profile" page
+	- [ ] Hopefully the Identity screens will suffice?
+
+- [ ] Add "Settings" page
+	- [ ] Should show at least
+		- [ ] Change password
+		- [ ] Change email
+		- [ ] Change profile picture
+		- [ ] Change theme (later)
+		[Definitely needs more]
+
+- [ ] Add "Logout" functionality 
+
+- [ ] Implement Dashboard page
+	- [ ] Should show at least 
+		- [ ] The number of playlists
+		- [ ] The number of videos
+		- [ ] The number of artifacts
+		- [ ] The number of lines for transcriptions
+		- [ ] The number of tags
+		[Definitely needs more]
+
+******************
+Graphics 
+******************
+
+- [ ] Need an icon for the web application
+- [ ] Need a logo for the web application
+

@@ -1,0 +1,599 @@
+{
+  "Id": null,
+  "VideoId": {
+    "Value": 2
+  },
+  "Language": "US",
+  "Lines": [
+    {
+      "Text": "Here\u0027s a question from Sandeep who\u00A0\nlives in Peoria, Illinois. He asks,\u00A0\u00A0",
+      "Duration": "00:00:00.0214400",
+      "StartsAt": "00:00:00.0067199"
+    },
+    {
+      "Text": "\u0022If non-dual brahman is the ultimate\u00A0\nreality, then why did the ancient rishis say\u00A0\u00A0",
+      "Duration": "00:00:00.0287199",
+      "StartsAt": "00:00:00.0076799"
+    },
+    {
+      "Text": "that Brahma, Vishnu, and Shiva are the gods\u00A0\nof creation, sustenance, and dissolution?\u0022\u00A0\u00A0",
+      "Duration": "00:00:00.0369599",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "Questions like this one often arise when we\u00A0\nlook at conventional Hindu teachings from the\u00A0\u00A0",
+      "Duration": "00:00:00.0474399",
+      "StartsAt": "00:00:00.0068000"
+    },
+    {
+      "Text": "lofty standpoint of non-duality, advaita.\u00A0\nThe scriptures of advaita Vedanta accept\u00A0\u00A0",
+      "Duration": "00:00:00.0542400",
+      "StartsAt": "00:00:00.0083199"
+    },
+    {
+      "Text": "only one, undifferentiated underlying reality\u00A0\ncalled brahman. But most other scriptures accept\u00A0\u00A0",
+      "Duration": "00:00:00.0625600",
+      "StartsAt": "00:00:00.0100000"
+    },
+    {
+      "Text": "the existence of many gods. These two positions\u00A0\nare contradictory and seem irreconcilable.\u00A0\u00A0",
+      "Duration": "00:00:00.0725599",
+      "StartsAt": "00:00:00.0091199"
+    },
+    {
+      "Text": "But, this apparent conflict can be resolved\u00A0\nwith the help of an important principle\u00A0\u00A0",
+      "Duration": "00:00:00.0826399",
+      "StartsAt": "00:00:00.0071199"
+    },
+    {
+      "Text": "that applies to all Hindu scriptures, yet it\u0027s\u00A0\nseldom discussed except in scholarly commentaries.\u00A0\u00A0",
+      "Duration": "00:00:00.0897600",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "That principle is called adhikari bheda.\nBheda means difference,\u00A0\u00A0",
+      "Duration": "00:00:00.0989599",
+      "StartsAt": "00:00:00.0067199"
+    },
+    {
+      "Text": "and the expression adhikari bheda\u00A0\nrefers to differences among people\u00A0\u00A0",
+      "Duration": "00:00:00.1064000",
+      "StartsAt": "00:00:00.0066399"
+    },
+    {
+      "Text": "who have a wide range of educational backgrounds,\u00A0\nwho come from various social and economic groups,\u00A0\u00A0",
+      "Duration": "00:00:00.1130400",
+      "StartsAt": "00:00:00.0088000"
+    },
+    {
+      "Text": "who have distinct personalities,\u00A0\ndifferent emotional temperaments,\u00A0\u00A0",
+      "Duration": "00:00:00.1225599",
+      "StartsAt": "00:00:00.0047199"
+    },
+    {
+      "Text": "and so on. The level of diversity among people is\u00A0\nastounding. We all differ in the foods we like,\u00A0\u00A0",
+      "Duration": "00:00:00.1272799",
+      "StartsAt": "00:00:00.0093599"
+    },
+    {
+      "Text": "the kinds of entertainment we enjoy, the clothes\u00A0\nwe wear, and in thousands of other ways. So, it\u0027s\u00A0\u00A0",
+      "Duration": "00:00:00.1366399",
+      "StartsAt": "00:00:00.0085600"
+    },
+    {
+      "Text": "no surprise that we also differ from one another\u00A0\nin our religious and spiritual inclinations.\u00A0\u00A0",
+      "Duration": "00:00:00.1451999",
+      "StartsAt": "00:00:00.0077600"
+    },
+    {
+      "Text": "The principle of adhikari bheda acknowledges\u00A0\nthese differences and wholeheartedly embraces them\u00A0\u00A0",
+      "Duration": "00:00:00.1540800",
+      "StartsAt": "00:00:00.0085600"
+    },
+    {
+      "Text": "by enabling the Hindu tradition to provide\u00A0\ndifferent religious and spiritual teachings\u00A0\u00A0",
+      "Duration": "00:00:00.1633600",
+      "StartsAt": "00:00:00.0067199"
+    },
+    {
+      "Text": "to different people, according to their\u00A0\nindividual preferences, needs and capabilities.\n\u00A0",
+      "Duration": "00:00:00.1700800",
+      "StartsAt": "00:00:00.0077600"
+    },
+    {
+      "Text": "This principle is commonly found elsewhere, like\u00A0\nin our schools. Students first learn basic math.\u00A0\u00A0",
+      "Duration": "00:00:00.1790399",
+      "StartsAt": "00:00:00.0081599"
+    },
+    {
+      "Text": "Later, they learn algebra, geometry,\u00A0\nand trigonometry. And later yet, they\u00A0\u00A0",
+      "Duration": "00:00:00.1881600",
+      "StartsAt": "00:00:00.0072800"
+    },
+    {
+      "Text": "might learn calculus. Each of these subjects are\u00A0\ntaught according to a student\u0027s age and ability.\u00A0\u00A0",
+      "Duration": "00:00:00.1954400",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "Not surprisingly, some students advance\u00A0\nmore rapidly than their peers, while\u00A0\u00A0",
+      "Duration": "00:00:00.2043999",
+      "StartsAt": "00:00:00.0061599"
+    },
+    {
+      "Text": "others opt out of advanced classes.\u00A0\nIt\u0027s different for each individual.\u00A0\u00A0",
+      "Duration": "00:00:00.2105599",
+      "StartsAt": "00:00:00.0060000"
+    },
+    {
+      "Text": "All this holds true for the study of\u00A0\nreligious and spiritual teachings as well.\u00A0\u00A0",
+      "Duration": "00:00:00.2180800",
+      "StartsAt": "00:00:00.0050399"
+    },
+    {
+      "Text": "First we learn the basics, about God,\u00A0\nprayer, and the importance of dharma.\u00A0\u00A0",
+      "Duration": "00:00:00.2244799",
+      "StartsAt": "00:00:00.0062399"
+    },
+    {
+      "Text": "Then, we gradually proceed to more complex\u00A0\ntopics, to the extent we\u0027re inclined to do so.\u00A0\u00A0",
+      "Duration": "00:00:00.2317599",
+      "StartsAt": "00:00:00.0082399"
+    },
+    {
+      "Text": "And, just like students have different books for\u00A0\nalgebra, geometry, and so on, in the same way,\u00A0\u00A0",
+      "Duration": "00:00:00.2400000",
+      "StartsAt": "00:00:00.0072800"
+    },
+    {
+      "Text": "we have different scriptures that present a wide\u00A0\nrange of religious and spiritual subjects.\n\u00A0",
+      "Duration": "00:00:00.2472799",
+      "StartsAt": "00:00:00.0065599"
+    },
+    {
+      "Text": "Consider this. Young children would find a\u00A0\ncalculus textbook to be incomprehensible.\u00A0\u00A0",
+      "Duration": "00:00:00.2551199",
+      "StartsAt": "00:00:00.0074400"
+    },
+    {
+      "Text": "In the same way, those just beginning their\u00A0\nspiritual journeys would probably find the\u00A0\u00A0",
+      "Duration": "00:00:00.2637600",
+      "StartsAt": "00:00:00.0070399"
+    },
+    {
+      "Text": "loftiest teachings of Advaita Vedanta to be\u00A0\nbeyond their reach. Before studying calculus,\u00A0\u00A0",
+      "Duration": "00:00:00.2707999",
+      "StartsAt": "00:00:00.0083999"
+    },
+    {
+      "Text": "students have to be adequately prepared by\u00A0\nstudying algebra and the rest. It\u0027s the same\u00A0\u00A0",
+      "Duration": "00:00:00.2797600",
+      "StartsAt": "00:00:00.0082399"
+    },
+    {
+      "Text": "for spiritual seekers. Before they can grasp\u00A0\nthe highest teachings of non-duality, they too,\u00A0\u00A0",
+      "Duration": "00:00:00.2880000",
+      "StartsAt": "00:00:00.0083199"
+    },
+    {
+      "Text": "have to be adequately prepared. Traditional\u00A0\nVedanta texts list the necessary prerequisites.\u00A0\u00A0",
+      "Duration": "00:00:00.2969599",
+      "StartsAt": "00:00:00.0089600"
+    },
+    {
+      "Text": "Those prerequisites include the cultivation\u00A0\nof qualities like discernment, dispassion\u00A0\u00A0",
+      "Duration": "00:00:00.3070400",
+      "StartsAt": "00:00:00.0070399"
+    },
+    {
+      "Text": "toward worldly pleasures, equanimity,\u00A0\nand self-control, in addition to prayer,\u00A0\u00A0",
+      "Duration": "00:00:00.3140799",
+      "StartsAt": "00:00:00.0066399"
+    },
+    {
+      "Text": "meditation, and the study of introductory texts\u00A0\nunder the guidance of a qualified teacher.\n\u00A0",
+      "Duration": "00:00:00.3207200",
+      "StartsAt": "00:00:00.0066399"
+    },
+    {
+      "Text": "A problem I\u0027ve noticed from time to time is\u00A0\nthat some advanced spiritual students claim\u00A0\u00A0",
+      "Duration": "00:00:00.3288800",
+      "StartsAt": "00:00:00.0072800"
+    },
+    {
+      "Text": "that Advaita Vedanta is better than other\u00A0\nteachings because it reveals the highest reality,\u00A0\u00A0",
+      "Duration": "00:00:00.3361600",
+      "StartsAt": "00:00:00.0088800"
+    },
+    {
+      "Text": "non-dual brahman. But their claims\u00A0\nreally aren\u0027t justified at all.\u00A0\u00A0",
+      "Duration": "00:00:00.3458399",
+      "StartsAt": "00:00:00.0065599"
+    },
+    {
+      "Text": "A book on advanced calculus isn\u0027t better than\u00A0\nan introductory algebra text. These books have\u00A0\u00A0",
+      "Duration": "00:00:00.3536799",
+      "StartsAt": "00:00:00.0090399"
+    },
+    {
+      "Text": "different subject matters and are intended for\u00A0\nstudents of different levels. In the same way,\u00A0\u00A0",
+      "Duration": "00:00:00.3627200",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "our scriptures have different subject matters,\u00A0\nintended for different types of students. \n\u00A0",
+      "Duration": "00:00:00.3705599",
+      "StartsAt": "00:00:00.0062399"
+    },
+    {
+      "Text": "For example, consider the Upanishads, the\u00A0\nscriptures on which Advaita Vedanta is based.\u00A0\u00A0",
+      "Duration": "00:00:00.3782399",
+      "StartsAt": "00:00:00.0071999"
+    },
+    {
+      "Text": "They\u0027re primarily focused on teaching non-duality\u00A0\nfor those who are adequately prepared for\u00A0\u00A0",
+      "Duration": "00:00:00.3864800",
+      "StartsAt": "00:00:00.0073600"
+    },
+    {
+      "Text": "that profound subject matter. The Ramayana and\u00A0\nMahabharata mostly teach dharma, righteousness,\u00A0\u00A0",
+      "Duration": "00:00:00.3938399",
+      "StartsAt": "00:00:00.0091999"
+    },
+    {
+      "Text": "for those who need guidance in coping\u00A0\nwith the complexities of day to day life.\u00A0\u00A0",
+      "Duration": "00:00:00.4038399",
+      "StartsAt": "00:00:00.0050399"
+    },
+    {
+      "Text": "The eighteen Puranas recount the lives of ancient\u00A0\nsaints and tell stories about gods like Brahma,\u00A0\u00A0",
+      "Duration": "00:00:00.4101600",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "Vishnu, Shiva, for those who want to\u00A0\ncultivate their prayer and devotion. It\u0027s true\u00A0\u00A0",
+      "Duration": "00:00:00.4182399",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "that each of these scriptures\u00A0\ninclude a range of subjects,\u00A0\u00A0",
+      "Duration": "00:00:00.4260799",
+      "StartsAt": "00:00:00.0039200"
+    },
+    {
+      "Text": "including topics found in other scriptures,\u00A0\nso there\u0027s a lot of overlap. But in general,\u00A0\u00A0",
+      "Duration": "00:00:00.4300000",
+      "StartsAt": "00:00:00.0072800"
+    },
+    {
+      "Text": "each scripture has a primary subject matter\u00A0\nthat\u0027s meant for a particular group of people.\u00A0\u00A0",
+      "Duration": "00:00:00.4378399",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "For these reasons, no single scripture or\u00A0\nteaching tradition can really be considered best.\u00A0\u00A0",
+      "Duration": "00:00:00.4467999",
+      "StartsAt": "00:00:00.0068800"
+    },
+    {
+      "Text": "It\u0027s more accurate to say that certain\u00A0\nscriptures and teachings are well-suited\u00A0\u00A0",
+      "Duration": "00:00:00.4545599",
+      "StartsAt": "00:00:00.0063200"
+    },
+    {
+      "Text": "for someone\u0027s unique preferences, needs, and\u00A0\ncapabilities, while other scriptures are not.\n\u00A0",
+      "Duration": "00:00:00.4616799",
+      "StartsAt": "00:00:00.0068800"
+    },
+    {
+      "Text": "The principle of adhikari bheda also explains why\u00A0\nthere are so many gods in the Hindu tradition.\u00A0\u00A0",
+      "Duration": "00:00:00.4700000",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "The earliest Hindu scripture, Rig Veda,\u00A0\nclearly says, \u0022God is one, which the\u00A0\u00A0",
+      "Duration": "00:00:00.4791199",
+      "StartsAt": "00:00:00.0080000"
+    },
+    {
+      "Text": "wise call by many names.\u0022 How many names? The\u00A0\nPuranic scriptures refer to 330 million gods,\u00A0\u00A0",
+      "Duration": "00:00:00.4871199",
+      "StartsAt": "00:00:00.0112799"
+    },
+    {
+      "Text": "all of them different names and forms for the\u00A0\none god of the cosmos. That huge number is\u00A0\u00A0",
+      "Duration": "00:00:00.4993599",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "interesting because it\u0027s more than the population\u00A0\nof our planet in ancient times. That means, each\u00A0\u00A0",
+      "Duration": "00:00:00.5074400",
+      "StartsAt": "00:00:00.0092799"
+    },
+    {
+      "Text": "person could worship his or her own individual\u00A0\nform of god, worshipped by no one else.\n\u00A0",
+      "Duration": "00:00:00.5167199",
+      "StartsAt": "00:00:00.0076799"
+    },
+    {
+      "Text": "This observation shows how the Hindu approach\u00A0\nto devotional life recognizes the importance of\u00A0\u00A0",
+      "Duration": "00:00:00.5258400",
+      "StartsAt": "00:00:00.0085600"
+    },
+    {
+      "Text": "personal preferences and religious inclinations.\u00A0\nThe Hindu tradition allows and encourages\u00A0\u00A0",
+      "Duration": "00:00:00.5344000",
+      "StartsAt": "00:00:00.0083999"
+    },
+    {
+      "Text": "followers to choose a particular form of god\u00A0\nas their main focus for prayer and worship.\u00A0\u00A0",
+      "Duration": "00:00:00.5427999",
+      "StartsAt": "00:00:00.0076799"
+    },
+    {
+      "Text": "This attitude is refreshingly\u00A0\ndifferent from most other religions\u00A0\u00A0",
+      "Duration": "00:00:00.5519199",
+      "StartsAt": "00:00:00.0047199"
+    },
+    {
+      "Text": "that prescribe one and only one\u00A0\nform of god for prayer and worship.\u00A0\u00A0",
+      "Duration": "00:00:00.5566400",
+      "StartsAt": "00:00:00.0051999"
+    },
+    {
+      "Text": "In my classes for children, I jokingly call this a\u00A0\n\u0022one size fits all\u0022 approach to religion. One size\u00A0\u00A0",
+      "Duration": "00:00:00.5635999",
+      "StartsAt": "00:00:00.0104799"
+    },
+    {
+      "Text": "of clothing certainly doesn\u0027t fit our many\u00A0\ndifferent shapes and sizes. So how can one\u00A0\u00A0",
+      "Duration": "00:00:00.5740800",
+      "StartsAt": "00:00:00.0072800"
+    },
+    {
+      "Text": "form of god be suitable for us all, given our\u00A0\nwide range of preferences and inclinations?\n\u00A0",
+      "Duration": "00:00:00.5813599",
+      "StartsAt": "00:00:00.0084799"
+    },
+    {
+      "Text": "Another question that\u0027s related to the principle\u00A0\nof adhikari bheda comes from Ramya in India.\u00A0\u00A0",
+      "Duration": "00:00:00.5919199",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "She asks, \u0022What\u0027s your view on the philosophy of\u00A0\nDvaita, duality, because it seems contradictory\u00A0\u00A0",
+      "Duration": "00:00:00.6020800",
+      "StartsAt": "00:00:00.0118400"
+    },
+    {
+      "Text": "to the philosophy of Advaita.\u0022 In\u00A0\nfact, the teachings of Vedanta include\u00A0\u00A0",
+      "Duration": "00:00:00.6139199",
+      "StartsAt": "00:00:00.0086400"
+    },
+    {
+      "Text": "several different schools of thought that were\u00A0\nestablished by greatly-revered scholars long ago.\u00A0\u00A0",
+      "Duration": "00:00:00.6225599",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "In the eighth century, Shankara developed the\u00A0\nteachings of Advaita or non-dualistic Vedanta.\u00A0\u00A0",
+      "Duration": "00:00:00.6315200",
+      "StartsAt": "00:00:00.0082399"
+    },
+    {
+      "Text": "Three centuries later, Ramanuja developed\u00A0\nthe teachings of Vishishta Advaita,\u00A0\u00A0",
+      "Duration": "00:00:00.6407999",
+      "StartsAt": "00:00:00.0073600"
+    },
+    {
+      "Text": "or qualified non-dualism. Later yet, Madhva\u00A0\ndeveloped the teachings of Dvaita, dualism.\n\u00A0",
+      "Duration": "00:00:00.6481599",
+      "StartsAt": "00:00:00.0100000"
+    },
+    {
+      "Text": "We can t get into the details of these three\u00A0\nschools of thought, so here\u0027s a brief but\u00A0\u00A0",
+      "Duration": "00:00:00.6597600",
+      "StartsAt": "00:00:00.0070399"
+    },
+    {
+      "Text": "highly oversimplified account. Dvaita, dualism,\u00A0\nteaches that God is separate and distinct from\u00A0\u00A0",
+      "Duration": "00:00:00.6667999",
+      "StartsAt": "00:00:00.0091999"
+    },
+    {
+      "Text": "all individual souls, from the consciousness or\u00A0\nawareness that\u0027s the essential nature of us all.\u00A0\u00A0",
+      "Duration": "00:00:00.6760000",
+      "StartsAt": "00:00:00.0075999"
+    },
+    {
+      "Text": "Vishishta Advaita, qualified non-dualism, teaches\u00A0\nthat each individual soul is a small part of God\u00A0\u00A0",
+      "Duration": "00:00:00.6850399",
+      "StartsAt": "00:00:00.0104799"
+    },
+    {
+      "Text": "and shares God\u0027s divine qualities. And Advaita\u00A0\nboldly declares that there\u0027s only God, nothing\u00A0\u00A0",
+      "Duration": "00:00:00.6962399",
+      "StartsAt": "00:00:00.0106400"
+    },
+    {
+      "Text": "else. All that exists is a form\u00A0\nor manifestation of the divine.\n\u00A0",
+      "Duration": "00:00:00.7068800",
+      "StartsAt": "00:00:00.0064000"
+    },
+    {
+      "Text": "All three teachings seek to explain the very\u00A0\nsame reality, but they adopt three different\u00A0\u00A0",
+      "Duration": "00:00:00.7151199",
+      "StartsAt": "00:00:00.0086400"
+    },
+    {
+      "Text": "perspectives for their explanations.\u00A0\nTo understand the dualistic perspective\u00A0\u00A0",
+      "Duration": "00:00:00.7237600",
+      "StartsAt": "00:00:00.0064000"
+    },
+    {
+      "Text": "of Dvaita, suppose you gaze at the ocean and see\u00A0\nmany individual waves. You could observe how each\u00A0\u00A0",
+      "Duration": "00:00:00.7301599",
+      "StartsAt": "00:00:00.0101599"
+    },
+    {
+      "Text": "wave is born from the ocean, sustained by the\u00A0\nocean, and eventually returns to the ocean.\u00A0\u00A0",
+      "Duration": "00:00:00.7403200",
+      "StartsAt": "00:00:00.0075999"
+    },
+    {
+      "Text": "This metaphor nicely represents Dvaita\u0027s teachings\u00A0\nabout the relationship between individual souls\u00A0\u00A0",
+      "Duration": "00:00:00.7490399",
+      "StartsAt": "00:00:00.0086400"
+    },
+    {
+      "Text": "and God, who is the source, sustainer, and\u00A0\nultimate destination for all that exists. \n\u00A0",
+      "Duration": "00:00:00.7576799",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "To understand Vishistha Advaita\u0027s view, suppose\u00A0\nyou consider the fact that each wave is actually\u00A0\u00A0",
+      "Duration": "00:00:00.7669600",
+      "StartsAt": "00:00:00.0089600"
+    },
+    {
+      "Text": "a small part of the ocean. The ocean is made\u00A0\nof countless waves that share its qualities.\u00A0\u00A0",
+      "Duration": "00:00:00.7759199",
+      "StartsAt": "00:00:00.0085600"
+    },
+    {
+      "Text": "This metaphor represents the teachings of\u00A0\nVishistha Advaita. Each individual soul\u00A0\u00A0",
+      "Duration": "00:00:00.7856799",
+      "StartsAt": "00:00:00.0077600"
+    },
+    {
+      "Text": "is a small part of God, a spark of\u00A0\ndivinity as they say. And God is the unity\u00A0\u00A0",
+      "Duration": "00:00:00.7934400",
+      "StartsAt": "00:00:00.0103999"
+    },
+    {
+      "Text": "because of which the diversity of souls exists.\u00A0\nFinally, to understand Advaita\u0027s view, suppose\u00A0\u00A0",
+      "Duration": "00:00:00.8038400",
+      "StartsAt": "00:00:00.0096800"
+    },
+    {
+      "Text": "you appreciate the fact that, ultimately, there\u0027s\u00A0\nonly water; there are no waves or ocean at all.\u00A0\u00A0",
+      "Duration": "00:00:00.8135200",
+      "StartsAt": "00:00:00.0083999"
+    },
+    {
+      "Text": "This metaphor represents Advaita\u0027s sole\u00A0\nacceptance of one, non-dual brahman.\n\u00A0",
+      "Duration": "00:00:00.8232800",
+      "StartsAt": "00:00:00.0076799"
+    },
+    {
+      "Text": "Regarding the ocean, you can\u0027t say that one\u00A0\nperspective is right and the others are wrong.\u00A0\u00A0",
+      "Duration": "00:00:00.8325599",
+      "StartsAt": "00:00:00.0060799"
+    },
+    {
+      "Text": "Each is correct from its own standpoint. But\u00A0\nthe three perspectives do differ in complexity\u00A0\u00A0",
+      "Duration": "00:00:00.8396799",
+      "StartsAt": "00:00:00.0097600"
+    },
+    {
+      "Text": "and subtlety. One ocean with many waves is\u00A0\na simple concept. It\u0027s a bit more complex\u00A0\u00A0",
+      "Duration": "00:00:00.8494400",
+      "StartsAt": "00:00:00.0085600"
+    },
+    {
+      "Text": "to say that each wave is part of the ocean.\u00A0\nAnd to say, there are no waves or ocean,\u00A0\u00A0",
+      "Duration": "00:00:00.8580000",
+      "StartsAt": "00:00:00.0079200"
+    },
+    {
+      "Text": "there\u0027s only water, is quite subtle since it\u00A0\nrequires a radical shift of perspective. \n\u00A0",
+      "Duration": "00:00:00.8659199",
+      "StartsAt": "00:00:00.0075199"
+    },
+    {
+      "Text": "All this holds true for the three Vedantic\u00A0\nschools of thought as well. You can\u0027t say one\u00A0\u00A0",
+      "Duration": "00:00:00.8752800",
+      "StartsAt": "00:00:00.0083999"
+    },
+    {
+      "Text": "is right and the others are wrong because each\u00A0\nis correct from its own standpoint. But they do\u00A0\u00A0",
+      "Duration": "00:00:00.8836799",
+      "StartsAt": "00:00:00.0089600"
+    },
+    {
+      "Text": "differ in complexity and subtlety, and that\u0027s\u00A0\nwhere the principle of adhikari bheda comes in.\u00A0\u00A0",
+      "Duration": "00:00:00.8926400",
+      "StartsAt": "00:00:00.0083999"
+    },
+    {
+      "Text": "For those just setting out on a spiritual\u00A0\npath, Dvaita is a good starting point,\u00A0\u00A0",
+      "Duration": "00:00:00.9024000",
+      "StartsAt": "00:00:00.0060000"
+    },
+    {
+      "Text": "not just because it\u0027s the simplest of the\u00A0\nthree, but because it most strongly supports\u00A0\u00A0",
+      "Duration": "00:00:00.9094400",
+      "StartsAt": "00:00:00.0078400"
+    },
+    {
+      "Text": "the practice of prayer, and prayer\u00A0\nis essential for spiritual growth.\u00A0\u00A0",
+      "Duration": "00:00:00.9172800",
+      "StartsAt": "00:00:00.0056799"
+    },
+    {
+      "Text": "The teachings of Dvaita are sufficient for a\u00A0\nlifelong practice of prayer and worship, but for\u00A0\u00A0",
+      "Duration": "00:00:00.9241599",
+      "StartsAt": "00:00:00.0080799"
+    },
+    {
+      "Text": "those who want to understand their relationship\u00A0\nwith God more deeply, it might be helpful to\u00A0\u00A0",
+      "Duration": "00:00:00.9322399",
+      "StartsAt": "00:00:00.0076799"
+    },
+    {
+      "Text": "explore the teachings of Vishishta Advaita\u00A0\nor Advaita. It all depends on the individual.\u00A0\u00A0",
+      "Duration": "00:00:00.9399199",
+      "StartsAt": "00:00:00.0088800"
+    },
+    {
+      "Text": "Based on the principle of adhikari bheda, any of\u00A0\nthese three three teachings can be followed.\n\u00A0",
+      "Duration": "00:00:00.9502399",
+      "StartsAt": "00:00:00.0071199"
+    },
+    {
+      "Text": "The many different scriptures, gods and\u00A0\nteachings found in the Hindu tradition are all\u00A0\u00A0",
+      "Duration": "00:00:00.9592800",
+      "StartsAt": "00:00:00.0067199"
+    },
+    {
+      "Text": "examples of adhikari bheda. This principle often\u00A0\ngoes unrecognized, but it\u0027s crucial because it\u00A0\u00A0",
+      "Duration": "00:00:00.9660000",
+      "StartsAt": "00:00:00.0108800"
+    },
+    {
+      "Text": "ensures that individual religious and\u00A0\nspiritual needs are never ignored. \n\u00A0",
+      "Duration": "00:00:00.9768800",
+      "StartsAt": "00:00:00.0071999"
+    },
+    {
+      "Text": "This is the eighth video in a series that\u00A0\nanswers questions submitted by viewers. If\u00A0\u00A0",
+      "Duration": "00:00:00.9861599",
+      "StartsAt": "00:00:00.0070399"
+    },
+    {
+      "Text": "you have a question that would serve as\u00A0\na good topic for a video like this one,\u00A0\u00A0",
+      "Duration": "00:00:00.9932000",
+      "StartsAt": "00:00:00.0045599"
+    },
+    {
+      "Text": "please email me at this address, and be\u00A0\nsure to indicate \u0022video question\u0022 as the\u00A0\u00A0",
+      "Duration": "00:00:00.9983200",
+      "StartsAt": "00:00:00.0063200"
+    },
+    {
+      "Text": "subject of the email. I\u0027ll try to address\u00A0\nyour question in a future video.",
+      "Duration": "00:00:01.0046400",
+      "StartsAt": "00:00:00.0051999"
+    }
+  ]
+}

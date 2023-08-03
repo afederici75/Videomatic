@@ -12,8 +12,8 @@ public class Thumbnail : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return Location;
-        yield return Resolution;    
+        yield return Location.ToUpper(); // Case insensitive
+        yield return Resolution;
         yield return Height;
         yield return Width;
     }

@@ -5,17 +5,21 @@ namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 {
+    public const string TableName = "Videos";
+    public const string TableNameForThumbnails = "Thumbnails";
+    public const string TableNameForTags = "VideoTags";
+
     public class FieldLengths
     {
         public const int Location = 1024;
         public const int Title = 500;
-        public const int TagName = 35;
+        public const int TagName = 100;
         //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
     }
 
     public virtual void Configure(EntityTypeBuilder<Video> builder)
     {
-        builder.ToTable("Videos");
+        builder.ToTable(TableName);
 
         // Fields
         builder.Property(x => x.Id)
@@ -27,33 +31,31 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
         
-        builder.Property(x => x.Description);
-        //.HasMaxLength(FieldLengths.Description);
-
-        //builder.HasMany(typeof(PlaylistVideo), "_playlists")
-        //       .WithOne()
-        //       .HasForeignKey("VideoId");
-
-        builder.HasMany(x => x.Playlists)
-               .WithOne()
-               .HasForeignKey(nameof(VideoPlaylist.VideoId));
+        builder.Property(x => x.Description);        
 
         #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
             (builder) => 
             {
+                builder.ToTable(TableNameForThumbnails);
+
                 // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
+                // Shadow properties
                 builder.WithOwner().HasForeignKey("VideoId");
                 builder.Property("Id");
                 builder.HasKey("Id");
                 
-                builder.Property(x => x.Location).HasMaxLength(FieldLengths.Location);
+                builder.Property(x => x.Location)
+                       .HasMaxLength(FieldLengths.Location);
             });
 
         var tags = builder.OwnsMany(x => x.Tags,
            (builder) =>
            {
+               builder.ToTable(TableNameForTags);
+
                // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
+               // Shadow properties
                builder.WithOwner().HasForeignKey("VideoId");
                builder.Property("Id");
                builder.HasKey("Id");
@@ -68,18 +70,21 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         var details = builder.OwnsOne(x => x.Details, (builder) => 
         {
             const int TempSafeLength = 100;
-            //builder.Property(x => x.VideoPublishedAt);
-            builder.Property(x => x.ChannelId).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.PlaylistId).HasMaxLength(TempSafeLength);
+            
+            builder.Property(x => x.ProviderVideoId).HasMaxLength(TempSafeLength);
             builder.Property(x => x.Provider).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelTitle).HasMaxLength(TempSafeLength);
             builder.Property(x => x.VideoOwnerChannelId).HasMaxLength(TempSafeLength);
-
-            builder.HasIndex(x => x.VideoOwnerChannelId);
-            builder.HasIndex(x => x.ChannelId);
             builder.Property(x => x.VideoPublishedAt);
-            builder.Property(x => x.PlaylistId);
-            builder.Property(x => x.Position);
+            builder.Property(x => x.ProviderVideoId);
+
+            // Indices
+            builder.HasIndex(x => x.ProviderVideoId);
+            builder.HasIndex(x => x.Provider);
+            builder.HasIndex(x => x.VideoOwnerChannelTitle);
+            builder.HasIndex(x => x.VideoOwnerChannelId);
+            builder.HasIndex(x => x.VideoPublishedAt);
+            builder.HasIndex(x => x.ProviderVideoId);
         });
 
         #endregion
@@ -87,16 +92,19 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         builder.HasMany(typeof(Artifact))
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(nameof(Artifact.VideoId))
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(typeof(Transcript))
                .WithOne()
-               .HasForeignKey("VideoId")
+               .HasForeignKey(nameof(Transcript.VideoId))
                .IsRequired(true)
                .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(typeof(PlaylistVideo))
+               .WithOne()
+               .HasForeignKey(nameof(PlaylistVideo.VideoId));
 
 
         // Indices

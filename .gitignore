@@ -397,3 +397,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /tests/Company.Videomatic.Infrastructure.SemanticKernel.Tests/TestData/winter_olympics_2022.csv
+/docs/UI/.$VideomaticUI.drawio.dtmp
+/docs/UI/.$VideomaticUI.drawio.bkp
+/src/Company.Videomatic.Infrastructure.YouTube/googlekey.p12
+/src/VideomaticRadzen/googlekey.p12

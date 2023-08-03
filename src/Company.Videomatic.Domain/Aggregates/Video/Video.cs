@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Video;
 
@@ -24,6 +25,8 @@ public class Video : IAggregateRoot
         };
     }
 
+
+
     public VideoId Id { get; private set; } = default!;
     public string Location { get; private set; } = default!;
     public string Name { get; private set; } = default!;
@@ -32,12 +35,12 @@ public class Video : IAggregateRoot
 
     public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
-    public IReadOnlyCollection<VideoPlaylist> Playlists => _playlists.ToList();
+    
 
     public void ClearTags()
     {
         _videoTags.Clear();
-    }
+    }    
 
     public Thumbnail GetThumbnail(ThumbnailResolution resolution)
     {
@@ -66,33 +69,27 @@ public class Video : IAggregateRoot
         _thumbnails.Add(new Thumbnail(resolution, location, height, width));
     }
 
-    public int LinkToPlaylists(PlaylistId[] playlistIds)
-    {
-        Guard.Against.Null(playlistIds, nameof(playlistIds));
-        
-        // We have _playlists fetched from the db. The 
-        var goodIds = playlistIds
-            .Where(pid => pid is not null)
-            .Except(_playlists.Select(p => p.PlaylistId))
-            .ToArray();
-
-        foreach (var playlistId in goodIds)
-        {
-            _playlists.Add(VideoPlaylist.Create(playlistId, Id));            
-        }
-        return goodIds.Length;
-    }
-
-
+    
     #region Private
-
+    
     private Video()
     {       
     }
 
+    [JsonConstructor]
+    private Video(VideoId id, string location, string name, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
+    {
+        Id = id;
+        Location = location;
+        Name = name;
+        Description = description;
+        Details = details;
+        _videoTags = tags;
+        _thumbnails = thumbnails;        
+    }
+
     HashSet<VideoTag> _videoTags = new();
-    HashSet<Thumbnail> _thumbnails = new();    
-    List<VideoPlaylist> _playlists = new();    
+    HashSet<Thumbnail> _thumbnails = new();        
 
     #endregion
 }
