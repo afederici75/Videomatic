@@ -28,7 +28,7 @@ public class VideoRequestsValidatorTests
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
-    public void ValidateDeleteVideoCommand(long id, int expectedErrors)
+    public void ValidateDeleteVideoCommand(int id, int expectedErrors)
     {
         ValidatorHelper.Validate<DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
     }
@@ -39,7 +39,7 @@ public class VideoRequestsValidatorTests
     [InlineData(1, null, null, 1)]
     [InlineData(1, "Play list", null, 0)]
     [InlineData(2, "Play list", "Description", 0)]
-    public void ValidateUpdateVideoCommand(long id, string title, string? description, int expectedErrors)
+    public void ValidateUpdateVideoCommand(int id, string title, string? description, int expectedErrors)
     {
         ValidatorHelper.Validate<UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
     }
@@ -48,9 +48,9 @@ public class VideoRequestsValidatorTests
     [InlineData(null, "filter_here", "order_here", 1, 1, false, ThumbnailResolutionDTO.Standard, 0)]
     [InlineData(null, "   ", "", -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
     [InlineData(null, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 2)]
-    [InlineData(new long[] { }, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
+    [InlineData(new int[] { }, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
     public void ValidateGetVideosQuery(
-        long[]? playlistIds,
+        int[]? playlistIds,
         string? filter,
         string? orderBy,
         int? page,

@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
-public record CreateTranscriptCommand(long VideoId,
+public record CreateTranscriptCommand(int VideoId,
                                       string Language,
                                       IEnumerable<string> Lines) : CreateAggregateRootCommand<Transcript>();
 

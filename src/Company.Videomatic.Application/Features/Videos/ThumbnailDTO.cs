@@ -1,8 +1,8 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos;
 
 public record ThumbnailDTO(
-    long Id = 0,
-    long VideoId = 0,
+    int Id = 0,
+    int VideoId = 0,
     string Location = "",
     ThumbnailResolutionDTO Resolution = ThumbnailResolutionDTO.Default,
     int Height = 0,

@@ -202,7 +202,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     //    
     //}
 
-    [Fact]
+    [Fact(Skip = "I need to recreate the google credentials (svc acct)")]
     public async Task AuthenticateGoogleOAuth()
     {
         String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
@@ -223,7 +223,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
         });
 
         var request = service.Playlists.List("snippet");
-        request.ChannelId = "@MicrosoftDeveloper";
+        request.ChannelId = "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e"; // My philosophy playlist for now
         request.MaxResults = 50;
         //request.Mine = false;
         Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();

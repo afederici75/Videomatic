@@ -4,7 +4,7 @@
 /// This command is used to update a video in the repository.
 /// </summary>
 public record UpdateVideoCommand(
-    long Id, 
+    int Id, 
     string Name, 
     string? Description = default) : UpdateAggregateRootCommand<Video>(Id);
 

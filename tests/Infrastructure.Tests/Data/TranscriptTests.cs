@@ -23,7 +23,7 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
     public IRepository<Transcript> Repository { get; }
     public ISender Sender { get; }
 
-    async Task<long> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
+    async Task<int> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
     {
         var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
 

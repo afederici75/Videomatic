@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
-public record UpdateArtifactCommand(long Id,
+public record UpdateArtifactCommand(int Id,
                                     string Name,
                                     string? Text) : UpdateAggregateRootCommand<Artifact>(Id);
 

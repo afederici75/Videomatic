@@ -16,6 +16,7 @@ public class Playlist : IAggregateRoot
     public PlaylistId Id { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
+    public bool IsStarred { get; private set; } = false;
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 
@@ -36,6 +37,10 @@ public class Playlist : IAggregateRoot
         return goodIds.Length;
     }
 
+    public void ToggleStarred()
+    {
+        IsStarred = !IsStarred;
+    }
 
 
     #region Private
@@ -43,10 +48,11 @@ public class Playlist : IAggregateRoot
     private Playlist() { }
 
     [JsonConstructor]
-    private Playlist(PlaylistId id, string name, string? description, List<PlaylistVideo> videos) 
+    private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
     {
         Id = id;
         Name = name;
+        IsStarred = isStarred;
         Description = description;
         _videos = videos;
     }
