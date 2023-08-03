@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using static Google.Apis.Requests.BatchRequest;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
@@ -41,50 +42,35 @@ public class YouTubeHelper : IYouTubeHelper
 
     public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser()
     {
-        var token = new TokenResponse()
-        {
-            AccessToken = "werwdsgfdg...",
-            ExpiresInSeconds = 3600,
-            RefreshToken = "3/dsdfsf...",
-            TokenType = "Bearer"
-        };
+        String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
 
-        var url = $"https://accounts.google.com/o/oauth2/v2/auth?" +
-                  $"client_id={_options.ClientId}" +
-                  $"&response_type=code" +
-                  $"&scope=https://www.googleapis.com/auth/youtube" +
-                  $"&redirect_uri=https://localhost:5001/oauthCallback" +
-                  $"&access_type=offline";
+        var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
 
-        HttpResponseMessage authCode = await _client.GetAsync(url);
-        var resp = await authCode.Content.ReadAsStringAsync();
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+           new ServiceAccountCredential.Initializer(serviceAccountEmail)
+           {
+               Scopes = new[] { YouTubeService.Scope.Youtube }
+           }.FromCertificate(certificate));
 
-
-        UserCredential credential;
-        using (var stream = new FileStream("client_secrets.json", FileMode.Open, FileAccess.Read))
-        {
-            credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
-                GoogleClientSecrets.FromStream(stream).Secrets,
-                // This OAuth 2.0 access scope allows an application to upload files to the
-                // authenticated user's YouTube channel, but doesn't allow other types of access.
-                new[] { YouTubeService.Scope.Youtube },
-                "afederici75@gmail.com",
-                CancellationToken.None ,
-                null
-            );
-        }
-
-        var youtubeService = new YouTubeService(new BaseClientService.Initializer()
+        // Create the service.
+        var service = new YouTubeService(new BaseClientService.Initializer()
         {
             HttpClientInitializer = credential,
-            ApplicationName = this.GetType().ToString()
+            ApplicationName = "API Sample",
         });
+
+        //var request = service.Playlists.List("snippet");
+        //request.ChannelId = "@MicrosoftDeveloper";
+        //request.MaxResults = 50;
+        ////request.Mine = false;
+        //Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
 
         // -----------------
 
-        var request = youtubeService.Playlists.List("snippet,contentDetails,id,status");
+        var request = service.Playlists.List("snippet,contentDetails,id,status");
+        request.ChannelId = "UCqiZA4pUT5RxrMCddeKdpGw";
         request.MaxResults = 50;
-        request.Mine = true;
+        //request.Mine = true;
 
         do
         {

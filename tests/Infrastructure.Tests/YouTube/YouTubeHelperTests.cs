@@ -4,10 +4,14 @@ using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
 using Microsoft.CognitiveServices.Speech.Transcription;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using Xunit.Abstractions;
 
@@ -201,6 +205,27 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task AuthenticateGoogleOAuth()
     {
-        var x = Options.ChannelName;
+        String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
+
+        var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
+
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+           new ServiceAccountCredential.Initializer(serviceAccountEmail)
+           {
+               Scopes = new[] { YouTubeService.Scope.Youtube }
+           }.FromCertificate(certificate));
+
+        // Create the service.
+        var service = new YouTubeService(new BaseClientService.Initializer()
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = "API Sample",
+        });
+
+        var request = service.Playlists.List("snippet");
+        request.ChannelId = "@MicrosoftDeveloper";
+        request.MaxResults = 50;
+        //request.Mine = false;
+        Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
     }
 }

@@ -31,21 +31,20 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IPlaylistService, PlaylistService>();
 
         // Infrastructure
+        var videomaticAssemblies = AppDomain.CurrentDomain.GetAssemblies() 
+            .Where(a => a.FullName?.Contains("Videomatic") ?? false)
+            .ToArray();
+
         services.AddMediatR(cfg =>        
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                        .Where(a => a.FullName?.Contains("Videomatic") ?? false);
-            
-            var allAssemblies = assemblies.ToArray();
-            cfg.RegisterServicesFromAssemblies(allAssemblies); // TODO: where do I set scoped?            
+            cfg.RegisterServicesFromAssemblies(videomaticAssemblies); // TODO: where do I set scoped?            
         });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
-        services.AddAutoMapper((cfg) =>
-        {
-        },
-        AppDomain.CurrentDomain.GetAssemblies());
+        services.AddAutoMapper((cfg) => { },
+            videomaticAssemblies
+        );
 
 
         services.AddValidatorsFromAssembly(
