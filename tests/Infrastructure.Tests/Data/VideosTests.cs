@@ -119,7 +119,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Links
         var addVidsCmd = new LinkPlaylistToVideosCommand(
             playlist1.Value.Id,
-            new long[] { video1.Value.Id, video2.Value.Id });
+            new int[] { video1.Value.Id, video2.Value.Id });
         
         var addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
         var emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
@@ -135,11 +135,11 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     [Theory]
     [InlineData(null, null, null, true, null, 2)]
-    [InlineData(new long[] { 1 }, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, null, null, true, null, 2)]
-    [InlineData(new long[] { 1, 2 }, "gods", null, true, null, 1)]
+    [InlineData(new int[] { 1 }, null, null, true, null, 2)]
+    [InlineData(new int[] { 1, 2 }, null, null, true, null, 2)]
+    [InlineData(new int[] { 1, 2 }, "gods", null, true, null, 1)]
     public async Task GetVideos(
-        long[]? playlistIds,
+        int[]? playlistIds,
         string? searchText,
         string? orderBy,
         bool includeTags,
@@ -173,13 +173,13 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(new long[] { 1 }, null, 1)]
-    [InlineData(new long[] { 1, 2 }, null, 2)]
-    [InlineData(new long[] { 2 }, null, 1)]
-    [InlineData(new long[] { 3 }, null, 0)]
+    [InlineData(new int[] { 1 }, null, 1)]
+    [InlineData(new int[] { 1, 2 }, null, 2)]
+    [InlineData(new int[] { 2 }, null, 1)]
+    [InlineData(new int[] { 3 }, null, 0)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideosById(
-        long[] videoIds,        
+        int[] videoIds,        
         ThumbnailResolutionDTO? IncludeThumbnail,
         int expectedResults)
     {

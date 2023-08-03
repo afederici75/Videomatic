@@ -10,8 +10,8 @@ public record GetVideosQuery(
     // Additional
     bool IncludeTags = false,
     ThumbnailResolutionDTO? SelectedThumbnail = null,
-    IEnumerable<long>? PlaylistIds = null,
-    IEnumerable<long>? VideoIds = null) : IRequest<Page<VideoDTO>>, IBasicQuery;
+    IEnumerable<int>? PlaylistIds = null,
+    IEnumerable<int>? VideoIds = null) : IRequest<Page<VideoDTO>>, IBasicQuery;
 
 
 internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>

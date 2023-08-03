@@ -1,7 +1,7 @@
 ﻿namespace Company.Videomatic.Domain.Aggregates.Video;
 
-public record VideoId(long Value = 0)
+public record VideoId(int Value = 0)
 {
-    public static implicit operator long(VideoId x) => x.Value;
-    public static implicit operator VideoId(long x) => new (x);
+    public static implicit operator int(VideoId x) => x.Value;
+    public static implicit operator VideoId(int x) => new (x);
 }

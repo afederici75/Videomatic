@@ -60,7 +60,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
-    public long? PlaylistId { get; set; }
+    public int? PlaylistId { get; set; }
     long? _priorPlaylistId;
 
     int pageSize = 10;
@@ -100,7 +100,7 @@
         await Task.Yield();
 
         var query = new GetVideosQuery(
-                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value } : null,
+                PlaylistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
                 Skip: skip,
                 Take: take,
                 OrderBy: null,
