@@ -30,6 +30,7 @@ public class Video : IAggregateRoot
     public VideoId Id { get; private set; } = default!;
     public string Location { get; private set; } = default!;
     public string Name { get; private set; } = default!;
+    public bool IsStarred { get; private set; } = false;
     public string? Description { get; private set; }
     public VideoDetails Details { get; private set; } = default!;
 
@@ -69,6 +70,11 @@ public class Video : IAggregateRoot
         _thumbnails.Add(new Thumbnail(resolution, location, height, width));
     }
 
+    public void ToggleStarred()
+    { 
+        IsStarred = !IsStarred;
+    }
+
     
     #region Private
     
@@ -77,11 +83,12 @@ public class Video : IAggregateRoot
     }
 
     [JsonConstructor]
-    private Video(VideoId id, string location, string name, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
+    private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
     {
         Id = id;
         Location = location;
         Name = name;
+        IsStarred = isStarred;
         Description = description;
         Details = details;
         _videoTags = tags;
