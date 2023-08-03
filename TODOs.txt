@@ -12,9 +12,6 @@ Non UI
 - [ ] Add the ability to Star videos by adding an extra property to the entities
 	- [ ] Requires rescaffolding the database
 
-- [ ] Future: it's probably wise to make playlists work like a tree so we will
-need to add a ParentId property or something at some point
-
 - [ ] Remove my custom code for accessing the YT API and swap to the Google nuget package
 
 - [ ] Speed up the crap to get the transcripts at some point
@@ -25,6 +22,9 @@ need to add a ParentId property or something at some point
 - [ ] Integrate Identity platform
 	- [ ] The database will need to be updated.
 		- [ ] Maybe I switch long to int in the primary keys?
+
+		- [ ] Future: it's probably wise to make playlists work like a tree so we will
+need to add a ParentId property or something at some point
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
 	- [ ] This is probably the best time to change the id from long to int!
