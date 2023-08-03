@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialWithoutFullTextIndexing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,9 +36,10 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Playlists",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsStarred = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,9 +50,10 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Videos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
                     Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsStarred = table.Column<bool>(type: "bit", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Details_Provider = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Details_ProviderVideoId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -68,8 +70,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Artifacts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR ArtifactSequence"),
+                    VideoId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -89,8 +91,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "PlaylistVideos",
                 columns: table => new
                 {
-                    PlaylistId = table.Column<long>(type: "bigint", nullable: false),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false)
+                    PlaylistId = table.Column<int>(type: "int", nullable: false),
+                    VideoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,7 +120,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Resolution = table.Column<int>(type: "int", nullable: false),
                     Height = table.Column<int>(type: "int", nullable: false),
                     Width = table.Column<int>(type: "int", nullable: false),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false)
+                    VideoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,8 +137,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "Transcripts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
+                    VideoId = table.Column<int>(type: "int", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false)
                 },
                 constraints: table =>
@@ -156,7 +158,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TagsSequence"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    VideoId = table.Column<long>(type: "bigint", nullable: false)
+                    VideoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,7 +179,7 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: true),
                     StartsAt = table.Column<TimeSpan>(type: "time", nullable: true),
-                    TranscriptId = table.Column<long>(type: "bigint", nullable: false)
+                    TranscriptId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

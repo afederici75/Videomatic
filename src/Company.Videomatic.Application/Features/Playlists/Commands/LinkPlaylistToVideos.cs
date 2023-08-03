@@ -2,9 +2,9 @@
 
 namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
-public record LinkPlaylistToVideosCommand(long Id, IEnumerable<long> VideoIds) : IRequest<Result<int>>
+public record LinkPlaylistToVideosCommand(int Id, IEnumerable<int> VideoIds) : IRequest<Result<int>>
 {
-    public LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<VideoId> VideoIds) : this(Id, VideoIds.Select(x => (long)x)) { }
+    public LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<VideoId> VideoIds) : this(Id, VideoIds.Select(x => (int)x)) { }
 };
 
 internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToVideosCommand>

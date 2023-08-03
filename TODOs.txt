@@ -9,13 +9,16 @@ Non UI
 	- [ ] R&D on application insights
 		- [ ] Add logging to application insights
 
-- [ ] Add the ability to Star videos by adding an extra property to the entities
-	- [ ] Requires rescaffolding the database
+- [X] Add the ability to Star Videos by adding an extra property
+	- [X] Requires rescaffolding the database
+- [X] Add the ability to Star Playlists by adding an extra property
+	- [X] Requires rescaffolding the database
 
 - [ ] Remove my custom code for accessing the YT API and swap to the Google nuget package
 
 - [ ] Speed up the crap to get the transcripts at some point
 	- [ ] Wait for queuing to be done before doing this
+
 
 -----------
 

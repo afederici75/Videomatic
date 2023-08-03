@@ -3,13 +3,13 @@
 /// <summary>
 /// This command is used to import video data located at a given url.
 /// </summary>
-public partial record ImportVideoCommand(string Location, long? PlaylistId) : IRequest<ImportVideoResponse>;
+public partial record ImportVideoCommand(string Location, int? PlaylistId) : IRequest<ImportVideoResponse>;
 
 /// <summary>
 /// The response returned by ImportVideoCommand.
 /// </summary>
 /// <param name="VideoId"></param>
-public record ImportVideoResponse(bool Queued, long VideoId, long? PlaylistId = null);
+public record ImportVideoResponse(bool Queued, int VideoId, int? PlaylistId = null);
 
 /// <summary>
 /// This event is published when a video is imported.

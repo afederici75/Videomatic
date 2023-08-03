@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
 
-public record SetVideoTags(long Id, string[] Tags) : IRequest<Result<int>>;
+public record SetVideoTags(int Id, string[] Tags) : IRequest<Result<int>>;
 
 public class SetVideoTagsValidator : AbstractValidator<SetVideoTags>
 {

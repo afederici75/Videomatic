@@ -31,7 +31,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(VideoId))]
-    public long? VideoId { get; set; }
+    public int? VideoId { get; set; }
 
     protected async override Task OnParametersSetAsync()
     {
@@ -48,7 +48,7 @@
         await Task.Yield();
 
         var query = new GetVideosQuery(
-                VideoIds: new long[] { VideoId!.Value },
+                VideoIds: new int[] { VideoId!.Value },
                 IncludeTags: true,
                 SelectedThumbnail: ThumbnailResolutionDTO.Standard);
 
