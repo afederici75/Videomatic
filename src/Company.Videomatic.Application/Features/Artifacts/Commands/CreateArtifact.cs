@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
-public record CreateArtifactCommand(long VideoId,
+public record CreateArtifactCommand(int VideoId,
                                     string Name,
                                     string Type,
                                     string? Text) : CreateAggregateRootCommand<Artifact>();

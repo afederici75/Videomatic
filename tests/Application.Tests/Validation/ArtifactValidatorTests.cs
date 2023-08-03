@@ -20,7 +20,7 @@ public class ArtifactValidatorTests
     [InlineData(3, null, "Name", "Text", 1)]
     [InlineData(4, "AI", null, "Text", 1)]
     [InlineData(5, null, null, null, 3)]
-    public void ValidateCreateArtifactCommand(long videoId, string type, string name, string? text, int expectedErrors)
+    public void ValidateCreateArtifactCommand(int videoId, string type, string name, string? text, int expectedErrors)
     {
         ValidatorHelper.Validate<CreateArtifactCommandValidator, CreateArtifactCommand>(new(videoId, name, type, text), expectedErrors);
     }

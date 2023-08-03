@@ -78,7 +78,7 @@ public class YouTubeHelper : IYouTubeHelper
 
             foreach (var playlist in response.Items)
             {
-                var pl = new PlaylistDTO(-1, playlist.Snippet.Title, playlist.Snippet.Description, playlist.ContentDetails.ItemCount);
+                var pl = new PlaylistDTO(-1, playlist.Snippet.Title, playlist.Snippet.Description, Convert.ToInt32(playlist.ContentDetails.ItemCount));
                 yield return pl;
             };
 
