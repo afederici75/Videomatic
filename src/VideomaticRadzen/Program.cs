@@ -3,6 +3,7 @@ using Company.Videomatic.Infrastructure.Data.SqlServer;
 using Hangfire;
 using Radzen;
 using Serilog;
+using VideomaticRadzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,14 +59,26 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+GlobalConfiguration.Configuration.UseActivator(new ContainerJobActivator(app.Services));
+GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
+
 app.UseHangfireDashboard();
 
 
 app.UseRouting();
 
-// Hangfire test
-var hangfire = app.Services.GetService<IBackgroundJobClient>();
-hangfire.Enqueue(() => Console.WriteLine("Videomatic connected to Hangfire successfully."));
+//// Hangfire test
+//var hangfire = app.Services.GetService<IBackgroundJobClient>();
+//var mediator = app.Services.GetService<IMediator>();
+//
+//var qry = new GetVideosQuery($"Test@({DateTime.Now})", null, 0, null, null, true, null, null, null);
+//ISender sender = app.Services.GetRequiredService<ISender>();
+////hangfire.Enqueue(() => sender.Send(qry, default));
+//hangfire.Enqueue(() => Task.Delay(12000));
+//hangfire.Enqueue(() => Task.Delay(12000));
+//hangfire.Enqueue(() => Task.Delay(12000));
+//hangfire.Enqueue(() => Task.Delay(12000));
+//hangfire.Enqueue(() => Task.Delay(12000));
 
 //app.MapGet("/a", (string? code, string? scope) => $"This is a GET -> Code:{code}, State:{scope}");
 //app.MapGet("/oauthCallback", (string? code, string? scope) =>
@@ -75,7 +88,6 @@ hangfire.Enqueue(() => Console.WriteLine("Videomatic connected to Hangfire succe
 //    //RedirectResult redirect = new RedirectResult("/Videos", true);
 //    return Results.RedirectToRoute("/Videos");
 //});
-
 
 app.MapControllers();
 app.MapBlazorHub();

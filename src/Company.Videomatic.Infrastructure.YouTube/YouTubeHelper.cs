@@ -63,7 +63,7 @@ public class YouTubeHelper : IYouTubeHelper
 
             var videoIds = response.Items.Select(i => i.ContentDetails.VideoId).ToArray();
 
-            await foreach (var video in ImportVideos(videoIds))
+            await foreach (var video in ImportVideosById(videoIds))
             {
                 yield return video;
             };
@@ -72,9 +72,19 @@ public class YouTubeHelper : IYouTubeHelper
             request.PageToken = response.NextPageToken;
         }
         while (!string.IsNullOrEmpty(request.PageToken));       
-    }    
+    }
 
-    public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
+    public IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls)
+    {
+        // TODO: this is ghetto code
+        var idsOnly = youtubeVideoUrls
+            .Select(url => url.Replace("https://www.youtube.com/watch?v=", string.Empty))
+            .ToArray();
+
+        return ImportVideosById(idsOnly);
+    }
+
+    public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds)
     {
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
         using YouTubeService service = CreateYouTubeService();
@@ -185,19 +195,6 @@ public class YouTubeHelper : IYouTubeHelper
                 yield return newTranscr;
             }
         }
-    }
-
-    static string MakeUrlWithQuery(string endpoint,
-            IEnumerable<KeyValuePair<string, string>> parameters)
-    {
-        if (string.IsNullOrEmpty(endpoint))
-            throw new ArgumentNullException(nameof(endpoint));
-
-        if (parameters == null || parameters.Count() == 0)
-            return endpoint;
-
-        return parameters.Aggregate(endpoint + '?',
-            (accumulated, kvp) => string.Format($"{accumulated}{kvp.Key}={kvp.Value}&"));
     }
 
     YouTubeService CreateYouTubeService()

@@ -1,6 +1,19 @@
 ﻿@page "/youtube"
-<h3>Youtube</h3>
+
+@inject ISender Sender
+
+<RadzenTextBox @bind-value="@Url" Placeholder="Enter a URL here..." />
+
+<RadzenButton Click="ClickImport" />
+
 
 @code {
+    public string? Url { get; set; } = "https://www.youtube.com/watch?v=BBd3aHnVnuE";
 
+    async Task ClickImport()
+    {
+        var cmd = new ImportYoutubeVideosCommand(new[] { Url! }, null);
+        
+        ImportYoutubeVideosResponse response = await Sender.Send(cmd);
+    }
 }
