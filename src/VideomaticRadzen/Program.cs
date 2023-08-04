@@ -1,4 +1,6 @@
-using Microsoft.Extensions.Configuration;
+using Company.Videomatic.Infrastructure.Data;
+using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Hangfire;
 using Radzen;
 using Serilog;
 
@@ -19,6 +21,18 @@ builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
+
+// Add Hangfire services.
+var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
+
+builder.Services.AddHangfire(configuration => configuration
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName)));
+
+// Add the processing server as IHostedService
+builder.Services.AddHangfireServer();
 
 // Use Serilog
 builder.Logging.ClearProviders();
@@ -44,19 +58,23 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseHangfireDashboard();
+
+
 app.UseRouting();
 
-//app.UseAuthentication();
-//app.UseAuthorization();
+// Hangfire test
+var hangfire = app.Services.GetService<IBackgroundJobClient>();
+hangfire.Enqueue(() => Console.WriteLine("Videomatic connected to Hangfire successfully."));
 
-app.MapGet("/a", (string? code, string? scope) => $"This is a GET -> Code:{code}, State:{scope}");
-app.MapGet("/oauthCallback", (string? code, string? scope) =>
-{
-    var str = $"Code:{code}, State:{scope}";
-
-    //RedirectResult redirect = new RedirectResult("/Videos", true);
-    return Results.RedirectToRoute("/Videos");
-});
+//app.MapGet("/a", (string? code, string? scope) => $"This is a GET -> Code:{code}, State:{scope}");
+//app.MapGet("/oauthCallback", (string? code, string? scope) =>
+//{
+//    var str = $"Code:{code}, State:{scope}";
+//
+//    //RedirectResult redirect = new RedirectResult("/Videos", true);
+//    return Results.RedirectToRoute("/Videos");
+//});
 
 
 app.MapControllers();

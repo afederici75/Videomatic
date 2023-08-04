@@ -2,6 +2,8 @@
 Non UI
 ******************
 
+- [X] Remove my custom code for accessing the YT API and swap to the Google nuget package
+
 - [ ] Ability to queue jobes;
 	- [ ] USE HANGFIRE? Do a little R&D on it
 	- [ ] Video imports from YouTube
@@ -64,8 +66,6 @@ Non UI
 	- [X] Requires rescaffolding the database
 - [X] Add the ability to Star Playlists by adding an extra property
 	- [X] Requires rescaffolding the database
-
-- [X] Remove my custom code for accessing the YT API and swap to the Google nuget package
 
 - [X] This is probably the best time to change the id from long to int!	
 
