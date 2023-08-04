@@ -5,9 +5,9 @@
 /// </summary>
 public interface IYouTubeHelper
 {
-    IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser(); // TODO: add cancellation    
+    IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId); // TODO: add cancellation  
 
-    IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId);// TODO: add cancellation  
+    IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId); // TODO: add cancellation  
 
     IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds); // TODO: add cancellation    
     

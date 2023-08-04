@@ -24,13 +24,13 @@ Non UI
 
 - [ ] Integrate Identity platform
 	- [ ] The database will need to be updated.
-		- [ ] Maybe I switch long to int in the primary keys?
+		- [X] Maybe I switch long to int in the primary keys?
 
 		- [ ] Future: it's probably wise to make playlists work like a tree so we will
 need to add a ParentId property or something at some point
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
-	- [ ] This is probably the best time to change the id from long to int!
+	- [X] This is probably the best time to change the id from long to int!
 	- [ ] Add Owner fields to all entities
 	- [ ] R&D on how to do this:
 		- [ ] There's something in the EF Core docs about this

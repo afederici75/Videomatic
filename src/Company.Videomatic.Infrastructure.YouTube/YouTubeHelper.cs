@@ -1,23 +1,13 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Application.Features.Videos.Queries;
-using Company.Videomatic.Domain.Aggregates.Playlist;
+﻿using Company.Videomatic.Application.Features.Videos.Queries;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using Google.Apis.YouTube.v3;
 using MediatR;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Linq;
-using System.Net;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -40,38 +30,14 @@ public class YouTubeHelper : IYouTubeHelper
 
     record AuthResponse();
 
-    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser()
+    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId)
     {
-        String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
-
-        var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
-
-        ServiceAccountCredential credential = new ServiceAccountCredential(
-           new ServiceAccountCredential.Initializer(serviceAccountEmail)
-           {
-               Scopes = new[] { YouTubeService.Scope.Youtube }
-           }.FromCertificate(certificate));
-
-        // Create the service.
-        var service = new YouTubeService(new BaseClientService.Initializer()
-        {
-            HttpClientInitializer = credential,
-            ApplicationName = "API Sample",
-        });
-
-        //var request = service.Playlists.List("snippet");
-        //request.ChannelId = "@MicrosoftDeveloper";
-        //request.MaxResults = 50;
-        ////request.Mine = false;
-        //Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
-
-        // -----------------
-
-        var request = service.Playlists.List("snippet,contentDetails,id,status");
-        request.ChannelId = "UCqiZA4pUT5RxrMCddeKdpGw";
+        using YouTubeService service = CreateYouTubeService();
+        
+        var request = service.Playlists.List("snippet,contentDetails,status");
+        request.ChannelId = channelId;
         request.MaxResults = 50;
-        //request.Mine = true;
-
+        
         do
         {
             var response = await request.ExecuteAsync();
@@ -84,76 +50,58 @@ public class YouTubeHelper : IYouTubeHelper
 
             // Pages
             request.PageToken = response.NextPageToken;
-        }                    
-        while (!string.IsNullOrEmpty(request.PageToken));     
-    }
-
-    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfAuthenticatedUser2()
-    {
-        var parameters = new Dictionary<string, string>
-        {
-            ["key"] = _options.ApiKey,
-            ["mine"] = "true",
-            //["part"] = "snippet,contentDetails,id,status",
-            ["part"] = "contentDetails,snippet,status",
-            ["maxResults"] = "50"
-        };
-
-        API.JsonPasteSpecial.PlaylistsListResponse response;
-        do
-        {
-            // API call
-            var fullUrl = MakeUrlWithQuery("playlists", parameters);
-            string json = await _client.GetStringAsync(fullUrl);
-            response = JsonConvert.DeserializeObject<PlaylistsListResponse>(json)!;
-
-            // Gets all video Ids            
-            foreach (var playlist in response.items)
-            {
-                var pl = new PlaylistDTO(-1, playlist.snippet.title, playlist.snippet.description, playlist.contentDetails.itemCount);
-                yield return pl;
-            };
-
-            // Pages
-            parameters["pageToken"] = response.nextPageToken;
         }
-        while (!string.IsNullOrEmpty(response.nextPageToken));        
+        while (!string.IsNullOrEmpty(request.PageToken));
     }
 
+    
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
-        var parameters = new Dictionary<string, string>
-        {
-            ["key"] = _options.ApiKey,
-            ["playlistId"] = playlistId,
-            //["part"] = "snippet,contentDetails,id,status",
-            ["part"] = "contentDetails,status",
-            ["maxResults"] = "50"
-        };
+        using YouTubeService service = CreateYouTubeService();
+        var request = service.PlaylistItems.List("contentDetails,status");
+        request.PlaylistId = playlistId;
+        request.MaxResults = 50;
 
-        API.JsonPasteSpecial.PlaylistItemListResponse response;
         do
         {
-            // API call
-            var fullUrl = MakeUrlWithQuery("playlistItems", parameters);
-            string json = await _client.GetStringAsync(fullUrl);
-            response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.PlaylistItemListResponse>(json)!;
+            var response = await request.ExecuteAsync();
 
-            // Gets all video Ids
-            var publicVideos = response.items.Where(i => i.status.privacyStatus == "public")
-                                             .Select(i => i.contentDetails.videoId);
+            var videoIds = response.Items.Select(i => i.ContentDetails.VideoId).ToArray();
 
-            var videoIds = new HashSet<string>(publicVideos);
-            
-            await foreach (var video in ImportVideos(videoIds.ToArray()))
-            { 
+            await foreach (var video in ImportVideos(videoIds))
+            {
                 yield return video;
             };
 
             // Pages
-            parameters["pageToken"] = response.nextPageToken;
+            request.PageToken = response.NextPageToken;
         }
-        while (!string.IsNullOrEmpty(response.nextPageToken));
+        while (!string.IsNullOrEmpty(request.PageToken));
+
+
+        //API.JsonPasteSpecial.PlaylistItemListResponse response;
+        //do
+        //{
+        //    // API call
+        //    var fullUrl = MakeUrlWithQuery("playlistItems", parameters);
+        //    string json = await _client.GetStringAsync(fullUrl);
+        //    response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.PlaylistItemListResponse>(json)!;
+        //
+        //    // Gets all video Ids
+        //    var publicVideos = response.items.Where(i => i.status.privacyStatus == "public")
+        //                                     .Select(i => i.contentDetails.videoId);
+        //
+        //    var videoIds = new HashSet<string>(publicVideos);
+        //    
+        //    await foreach (var video in ImportVideos(videoIds.ToArray()))
+        //    { 
+        //        yield return video;
+        //    };
+        //
+        //    // Pages
+        //    parameters["pageToken"] = response.nextPageToken;
+        //}
+        //while (!string.IsNullOrEmpty(response.nextPageToken));
     }    
 
     public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
@@ -162,7 +110,7 @@ public class YouTubeHelper : IYouTubeHelper
 
         var parameters = new Dictionary<string, string>
         {
-            ["key"] = _options.ApiKey,
+            //["key"] = _options.ApiKey,
             ["id"] = string.Join(',', youtubeVideoIds),
             ["part"] = "snippet,contentDetails,id,status",
             //["maxResults"] = "50"
@@ -267,4 +215,25 @@ public class YouTubeHelper : IYouTubeHelper
         return parameters.Aggregate(endpoint + '?',
             (accumulated, kvp) => string.Format($"{accumulated}{kvp.Key}={kvp.Value}&"));
     }
+
+    YouTubeService CreateYouTubeService()
+    {
+        var certificate = new X509Certificate2(@"VideomaticService.p12", _options.CertificatePassword, X509KeyStorageFlags.Exportable);
+
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+           new ServiceAccountCredential.Initializer(_options.ServiceAccountEmail)
+           {
+               Scopes = new[] { YouTubeService.Scope.Youtube }
+           }.FromCertificate(certificate));
+
+        // Create the service.
+        var service = new YouTubeService(new BaseClientService.Initializer()
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = AppDomain.CurrentDomain.FriendlyName
+        });
+
+        return service;
+    }
+
 }

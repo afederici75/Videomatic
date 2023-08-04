@@ -93,7 +93,7 @@
         await Task.Yield();
 
         var query = new GetYoutubePlaylistsQuery(                
-                SearchText: SearchText);
+                ChannelId: "UCqiZA4pUT5RxrMCddeKdpGw"); // TODO: get from settings
 
         IEnumerable<PlaylistDTO> results = await Sender.Send(query);
 
