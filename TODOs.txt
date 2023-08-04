@@ -2,39 +2,30 @@
 Non UI
 ******************
 
-- [X] Add logging
-	- [X] Add logging to files
-	- [X] Add logging to the console
-	- [X] Add logging to Seq
-	- [ ] R&D on application insights
-		- [ ] Add logging to application insights
-
-- [X] Add the ability to Star Videos by adding an extra property
-	- [X] Requires rescaffolding the database
-- [X] Add the ability to Star Playlists by adding an extra property
-	- [X] Requires rescaffolding the database
-
-- [ ] Remove my custom code for accessing the YT API and swap to the Google nuget package
-
-- [ ] Speed up the crap to get the transcripts at some point
-	- [ ] Wait for queuing to be done before doing this
-
+- [ ] Ability to queue jobes;
+	- [ ] USE HANGFIRE? Do a little R&D on it
+	- [ ] Video imports from YouTube
+		- [ ] We can speed up the transcription reading later
+	- [ ] Play list imports from YouTube
 
 -----------
 
 - [ ] Integrate Identity platform
 	- [ ] The database will need to be updated.
-		- [ ] Maybe I switch long to int in the primary keys?
+		- [X] Maybe I switch long to int in the primary keys?
 
 		- [ ] Future: it's probably wise to make playlists work like a tree so we will
-need to add a ParentId property or something at some point
+			  need to add a ParentId property or something at some point
+		- Verify we log the IP of the users and all that type of stuff.
+
+- [ ] Speed up the crap to get the transcripts at some point
+	- [ ] Wait for queuing to be done before doing this
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
-	- [ ] This is probably the best time to change the id from long to int!
 	- [ ] Add Owner fields to all entities
 	- [ ] R&D on how to do this:
 		- [ ] There's something in the EF Core docs about this
-
+	
 - [ ] Ensure I can login at least with Google
 	- [ ] See if I can grab the YT user id and channelid from the claims!!
 
@@ -60,11 +51,23 @@ need to add a ParentId property or something at some point
 - [ ] Documentation on github
 
 
-- [ ] Ability to queue jobes;
-	- [ ] USE HANGFIRE? Do a little R&D on it
-	- [ ] Video imports from YouTube
-		- [ ] We can speed up the transcription reading later
-	- [ ] Play list imports from YouTube
+- DONE
+
+- [X] Add logging
+	- [X] Add logging to files
+	- [X] Add logging to the console
+	- [X] Add logging to Seq
+	- [ ] R&D on application insights
+		- [ ] Add logging to application insights
+
+- [X] Add the ability to Star Videos by adding an extra property
+	- [X] Requires rescaffolding the database
+- [X] Add the ability to Star Playlists by adding an extra property
+	- [X] Requires rescaffolding the database
+
+- [X] Remove my custom code for accessing the YT API and swap to the Google nuget package
+
+- [X] This is probably the best time to change the id from long to int!	
 
 ******************
 User interface
