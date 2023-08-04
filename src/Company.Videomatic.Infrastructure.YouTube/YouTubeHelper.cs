@@ -1,14 +1,11 @@
-﻿using Company.Videomatic.Application.Features.Videos.Queries;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Transcript;
+﻿using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
-using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MediatR;
-using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -18,16 +15,12 @@ public class YouTubeHelper : IYouTubeHelper
 
     public YouTubeHelper(IOptions<YouTubeOptions> options, HttpClient client, ISender sender)
     {
-        // TODO: messy / unfinished
-        _options = options.Value;
-        _client = client;
-        _client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
-        _sender = sender;        
+        Options = options.Value;
+        Sender = sender ?? throw new ArgumentNullException(nameof(sender));        
     }
 
-    readonly YouTubeOptions _options;
-    readonly HttpClient _client;
-    ISender _sender;
+    readonly YouTubeOptions Options;
+    readonly ISender Sender;
 
     record AuthResponse();
 
@@ -128,52 +121,62 @@ public class YouTubeHelper : IYouTubeHelper
 
     public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)    
     {
+        using YouTubeService service = CreateYouTubeService();
+
+        CaptionsResource.DownloadRequest response = service.Captions.Download("BBd3aHnVnuE");
+
+
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
+        var stream = new MemoryStream();
+        var resp = await response.DownloadAsync(stream);
+        
+        var s = Encoding.UTF8.GetString(stream.ToArray());
+        
+        var t = Transcript.Create(1, "xx");
+        yield return t;
 
-        var response = await _sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
-        var videoIdsByVideoId = response.Value;
-
-        using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
-
-        foreach (IEnumerable<string> responsePage in response.Value.Page(50))
-        {
-            var currentSet = responsePage.ToHashSet();
-            var badTranscripts = new List<Transcript>();
-            var allTranscripts = api.GetTranscripts(currentSet.ToList(), continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+        
+        //using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
+        
+        //foreach (IEnumerable<string> responsePage in response.Value.Page(50))
+        //{
+        //    var currentSet = responsePage.ToHashSet();
+        //    var badTranscripts = new List<Transcript>();
+        //    var allTranscripts = api.GetTranscripts(currentSet.ToList(), continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
             
-            var badOnes = allTranscripts.Item2!.Select(badId =>
-            {
-                var videoId = videoIdsByVideoId.First(x => x.ProviderVideoId == badId).VideoId;
-                return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
-            });
+        //    var badOnes = allTranscripts.Item2!.Select(badId =>
+        //    {
+        //        var videoId = videoIdsByVideoId.First(x => x.ProviderVideoId == badId).VideoId;
+        //        return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
+        //    });
             
-            foreach (var badOne in badOnes)
-            {
-                yield return badOne;
-            }
+        //    foreach (var badOne in badOnes)
+        //    {
+        //        yield return badOne;
+        //    }
             
-            // ------------------------------
-            Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
-            IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
-
-            foreach (var v in videoIdsByVideoId)
-            {
-                if (!fetchedTranscripts!.TryGetValue(v.ProviderVideoId, out var ytTranscriptItems))
-                {
-                    // No transcript?
-                    continue;
-                }
-
-                // ------------------------------
-                var newTranscr = Transcript.Create(v.VideoId, "US");
-                foreach (var item in ytTranscriptItems)
-                {
-                    newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
-                }
-
-                yield return newTranscr;
-            }
-        }
+        //    // ------------------------------
+        //    Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
+        //    IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
+        
+        //    foreach (var v in videoIdsByVideoId)
+        //    {
+        //        if (!fetchedTranscripts!.TryGetValue(v.ProviderVideoId, out var ytTranscriptItems))
+        //        {
+        //            // No transcript?
+        //            continue;
+        //        }
+        
+        //        // ------------------------------
+        //        var newTranscr = Transcript.Create(v.VideoId, "US");
+        //        foreach (var item in ytTranscriptItems)
+        //        {
+        //            newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
+        //        }
+        
+        //        yield return newTranscr;
+        //    }
+        //}
     }
 
     static string MakeUrlWithQuery(string endpoint,
@@ -191,10 +194,10 @@ public class YouTubeHelper : IYouTubeHelper
 
     YouTubeService CreateYouTubeService()
     {
-        var certificate = new X509Certificate2(@"VideomaticService.p12", _options.CertificatePassword, X509KeyStorageFlags.Exportable);
+        var certificate = new X509Certificate2(@"VideomaticService.p12", Options.CertificatePassword, X509KeyStorageFlags.Exportable);
 
         ServiceAccountCredential credential = new ServiceAccountCredential(
-           new ServiceAccountCredential.Initializer(_options.ServiceAccountEmail)
+           new ServiceAccountCredential.Initializer(Options.ServiceAccountEmail)
            {
                Scopes = new[] { YouTubeService.Scope.Youtube }
            }.FromCertificate(certificate));
