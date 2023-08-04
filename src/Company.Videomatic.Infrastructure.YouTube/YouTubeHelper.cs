@@ -1,4 +1,5 @@
-﻿using Company.Videomatic.Domain.Aggregates.Transcript;
+﻿using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
@@ -119,64 +120,71 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)    
+    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)
     {
-        using YouTubeService service = CreateYouTubeService();
+        /*
+         using YouTubeService service = CreateYouTubeService();
 
-        CaptionsResource.DownloadRequest response = service.Captions.Download("BBd3aHnVnuE");
+    CaptionsResource.DownloadRequest response = service.Captions.Download("BBd3aHnVnuE");
 
+    service.
 
+    // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
+    var stream = new MemoryStream();
+    var resp = await response.DownloadAsync(stream);
+
+    var s = Encoding.UTF8.GetString(stream.ToArray());
+
+    var t = Transcript.Create(1, "xx");
+    yield return t;
+        */
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
-        var stream = new MemoryStream();
-        var resp = await response.DownloadAsync(stream);
-        
-        var s = Encoding.UTF8.GetString(stream.ToArray());
-        
-        var t = Transcript.Create(1, "xx");
-        yield return t;
 
-        
-        //using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
-        
-        //foreach (IEnumerable<string> responsePage in response.Value.Page(50))
-        //{
-        //    var currentSet = responsePage.ToHashSet();
-        //    var badTranscripts = new List<Transcript>();
-        //    var allTranscripts = api.GetTranscripts(currentSet.ToList(), continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
-            
-        //    var badOnes = allTranscripts.Item2!.Select(badId =>
-        //    {
-        //        var videoId = videoIdsByVideoId.First(x => x.ProviderVideoId == badId).VideoId;
-        //        return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
-        //    });
-            
-        //    foreach (var badOne in badOnes)
-        //    {
-        //        yield return badOne;
-        //    }
-            
-        //    // ------------------------------
-        //    Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
-        //    IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
-        
-        //    foreach (var v in videoIdsByVideoId)
-        //    {
-        //        if (!fetchedTranscripts!.TryGetValue(v.ProviderVideoId, out var ytTranscriptItems))
-        //        {
-        //            // No transcript?
-        //            continue;
-        //        }
-        
-        //        // ------------------------------
-        //        var newTranscr = Transcript.Create(v.VideoId, "US");
-        //        foreach (var item in ytTranscriptItems)
-        //        {
-        //            newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
-        //        }
-        
-        //        yield return newTranscr;
-        //    }
-        //}
+        var response = await Sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
+        Dictionary<int, string> videoIdsByVideoId = response.Value.ToDictionary(x => x.VideoId, x => x.ProviderVideoId);
+
+        using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
+
+        foreach (var responsePage in response.Value.Page(50))
+        {
+            var currentSet = responsePage.ToHashSet();
+            var badTranscripts = new List<Transcript>();
+            var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
+            var allTranscripts = api.GetTranscripts(requestedIds, continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+
+            var badOnes = allTranscripts.Item2!.Select(badId =>
+            {
+                var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
+                return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
+            });
+
+            foreach (var badOne in badOnes)
+            {
+                yield return badOne;
+            }
+
+            // ------------------------------
+            Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
+            IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
+
+            foreach (var v in videoIdsByVideoId)
+            {
+                if (!fetchedTranscripts!.TryGetValue(v.Value, out var ytTranscriptItems))
+                {
+                    // No transcript?
+                    continue;
+                }
+
+                // ------------------------------
+                var newTranscr = Transcript.Create(v.Key, "US");
+                foreach (var item in ytTranscriptItems)
+                {
+                    newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
+                }
+
+                yield return newTranscr;
+            }
+        }
     }
 
     static string MakeUrlWithQuery(string endpoint,
