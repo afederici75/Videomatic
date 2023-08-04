@@ -1,4 +1,5 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube.API.JsonPasteSpecial;
@@ -76,81 +77,53 @@ public class YouTubeHelper : IYouTubeHelper
             // Pages
             request.PageToken = response.NextPageToken;
         }
-        while (!string.IsNullOrEmpty(request.PageToken));
-
-
-        //API.JsonPasteSpecial.PlaylistItemListResponse response;
-        //do
-        //{
-        //    // API call
-        //    var fullUrl = MakeUrlWithQuery("playlistItems", parameters);
-        //    string json = await _client.GetStringAsync(fullUrl);
-        //    response = JsonConvert.DeserializeObject<API.JsonPasteSpecial.PlaylistItemListResponse>(json)!;
-        //
-        //    // Gets all video Ids
-        //    var publicVideos = response.items.Where(i => i.status.privacyStatus == "public")
-        //                                     .Select(i => i.contentDetails.videoId);
-        //
-        //    var videoIds = new HashSet<string>(publicVideos);
-        //    
-        //    await foreach (var video in ImportVideos(videoIds.ToArray()))
-        //    { 
-        //        yield return video;
-        //    };
-        //
-        //    // Pages
-        //    parameters["pageToken"] = response.nextPageToken;
-        //}
-        //while (!string.IsNullOrEmpty(response.nextPageToken));
+        while (!string.IsNullOrEmpty(request.PageToken));       
     }    
 
     public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
     {
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
+        using YouTubeService service = CreateYouTubeService();
+        var request = service.Videos.List("snippet,contentDetails,id,status");
+        request.Id = string.Join(',', youtubeVideoIds);
+        request.MaxResults = 50;
 
-        var parameters = new Dictionary<string, string>
+        do
         {
-            //["key"] = _options.ApiKey,
-            ["id"] = string.Join(',', youtubeVideoIds),
-            ["part"] = "snippet,contentDetails,id,status",
-            //["maxResults"] = "50"
-        };
+            var response = await request.ExecuteAsync();
+        
+            var videoIds = response.Items.Select(v => v.Id).ToArray();
 
-        API.JsonPasteSpecial.VideosListResponse response;
-        var fullUrl = MakeUrlWithQuery("videos", parameters);
+            foreach (var item in response.Items)
+            {
+                var video = Video.Create(
+                    location: $"https://www.youtube.com/watch?v={item.Id}",
+                    name: item.Snippet.Title,
+                    description: item.Snippet.Description,
+                    details: new VideoDetails(
+                        Provider: ProviderId,
+                        ProviderVideoId: item.Id,
+                        VideoPublishedAt: item.Snippet.PublishedAt ?? new DateTime(),
+                        VideoOwnerChannelTitle: item.Snippet.ChannelTitle,
+                        VideoOwnerChannelId: item.Snippet.ChannelId));
 
-        string json = await _client.GetStringAsync(fullUrl);
-        response = JsonConvert.DeserializeObject<VideosListResponse>(json)!;
+                // Tags
+                var tags = (item. Snippet.Tags ?? Enumerable.Empty<string>()).ToArray();
+                video.AddTags(tags);
 
-        var videoIds = response.items.Select(v => v.id).ToArray();
+                // Thumbnails
+                var t = item.Snippet.Thumbnails;
+                video.SetThumbnail(ThumbnailResolution.Default, t.Default__?.Url ?? "", Convert.ToInt32(t.Default__?.Height ?? -1), Convert.ToInt32(t.Default__?.Width ?? -1));
+                video.SetThumbnail(ThumbnailResolution.High, t.High?.Url ?? "", Convert.ToInt32(t.High?.Height ?? -1), Convert.ToInt32(t.High?.Width ?? -1));
+                video.SetThumbnail(ThumbnailResolution.Standard, t.Standard?.Url ?? "", Convert.ToInt32(t.Standard?.Height ?? -1), Convert.ToInt32(t.Standard?.Width ?? -1));
+                video.SetThumbnail(ThumbnailResolution.Medium, t.Medium?.Url ?? "", Convert.ToInt32(t.Medium?.Height ?? -1), Convert.ToInt32(t.Medium?.Width ?? -1));
+                video.SetThumbnail(ThumbnailResolution.MaxRes, t.Maxres?.Url ?? "", Convert.ToInt32(t.Maxres?.Height ?? -1), Convert.ToInt32(t.Maxres?.Width ?? -1));
 
-        foreach (var item in response.items)
-        {
-            var video = Video.Create(
-                location: $"https://www.youtube.com/watch?v={item.id}",
-                name: item.snippet.title,
-                description: item.snippet.description,
-                details: new VideoDetails(
-                    Provider: ProviderId,
-                    ProviderVideoId: item.id,
-                    VideoPublishedAt: item.snippet.publishedAt,
-                    VideoOwnerChannelTitle: item.snippet.channelTitle,
-                    VideoOwnerChannelId: item.snippet.channelId));
-
-            // Tags
-            var tags = (item.snippet.tags ?? Enumerable.Empty<string>()).ToArray();
-            video.AddTags(tags);
-
-            // Thumbnails
-            var t = item.snippet.thumbnails;
-            video.SetThumbnail(ThumbnailResolution.Default, t.@default?.url ?? "", t.@default?.height ?? -1, t.@default?.width ?? -1);
-            video.SetThumbnail(ThumbnailResolution.High, t.high?.url ?? "", t.high?.height ?? -1, t.high?.width ?? -1);
-            video.SetThumbnail(ThumbnailResolution.Standard, t.standard?.url ?? "", t.standard?.height ?? -1, t.standard?.width ?? -1);
-            video.SetThumbnail(ThumbnailResolution.Medium, t.medium?.url ?? "", t.medium?.height ?? -1, t.medium?.width ?? -1);
-            video.SetThumbnail(ThumbnailResolution.MaxRes, t.maxres?.url ?? "", t.maxres?.height ?? -1, t.maxres?.width ?? -1);
-
-            yield return video;
-        }                
+                yield return video;
+            }            // Pages
+            request.PageToken = response.NextPageToken;
+        }
+        while (!string.IsNullOrEmpty(request.PageToken));
     }
 
     public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)    
