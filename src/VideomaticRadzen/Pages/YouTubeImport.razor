@@ -1,0 +1,42 @@
+﻿@page "/youtubeimport"
+
+@inject ISender Sender
+
+<RadzenRow>
+    <RadzenTextBox @bind-value="@VideoUrl" Placeholder="Enter a URL here..." />
+    <RadzenButton Click="ClickImportVideo" Text="Import Video" />
+</RadzenRow>
+
+<RadzenText>@VideoImportResult</RadzenText>
+
+<RadzenRow>
+    <RadzenTextBox @bind-value="@PlaylistId" Placeholder="Enter an Id here..." />
+    <RadzenButton Click="ClickImportPlaylist" Text="Import Playlist" />
+</RadzenRow>
+
+<RadzenText>@PlaylistImportResult</RadzenText>
+
+
+@code {
+    public string? VideoUrl { get; set; } = "https://www.youtube.com/watch?v=BBd3aHnVnuE";
+    public string? PlaylistId { get; set; } = "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e";
+
+    public string VideoImportResult { get; set; } = "No video imported yet...";
+    public string PlaylistImportResult { get; set; } = "No playlist imported yet...";
+
+    async Task ClickImportVideo()
+    {
+        var cmd = new ImportYoutubeVideosCommand(new[] { VideoUrl! }, null);        
+        ImportYoutubeVideosResponse response = await Sender.Send(cmd);
+
+        VideoImportResult = response.ToString();
+    }
+
+    async Task ClickImportPlaylist()
+    {
+        var cmd = new ImportYoutubePlaylistsCommand(new[] { PlaylistId! });
+        var response = await Sender.Send(cmd);
+
+        PlaylistImportResult = response.ToString();
+    }
+}

@@ -12,6 +12,6 @@ public interface IYouTubeHelper
     IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds); // TODO: add cancellation    
     IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls); // TODO: should be an extension method
 
-
+    Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId);
     IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds); // TODO: add cancellation    
 }

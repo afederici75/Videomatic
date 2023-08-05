@@ -49,7 +49,28 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    
+    public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId)
+    {
+        using YouTubeService service = CreateYouTubeService();
+        var request = service.PlaylistItems.List("contentDetails,status");
+        request.PlaylistId = playlistId;
+        request.MaxResults = 50;
+
+        var videoIds = new List<string>();
+        do
+        {
+            var response = await request.ExecuteAsync();
+
+            videoIds.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
+            
+            // Pages
+            request.PageToken = response.NextPageToken;
+        }
+        while (!string.IsNullOrEmpty(request.PageToken));
+
+        return videoIds;
+    }
+
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
         using YouTubeService service = CreateYouTubeService();
