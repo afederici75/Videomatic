@@ -1,10 +1,12 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -24,6 +26,22 @@ public class YouTubeHelper : IYouTubeHelper
     readonly ISender Sender;
 
     record AuthResponse();
+
+
+    public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId)
+    {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
+        using YouTubeService service = CreateYouTubeService();
+
+        var request = service.Playlists.List("snippet,contentDetails,status");
+        request.Id = playlistId;
+
+        var response = await request.ExecuteAsync();
+        var pl = response.Items.Single();
+
+        return new PlaylistInfo(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
+    }
 
     public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId)
     {
@@ -49,8 +67,32 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
+    string FromStringOrQueryString(string text, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            throw new ArgumentNullException(nameof(text));
+
+        if (string.IsNullOrWhiteSpace(parameterName))
+            throw new ArgumentException($"'{nameof(parameterName)}' cannot be null or whitespace.", nameof(parameterName));
+        
+        var idx = text.IndexOf("?");
+        if (idx <0)
+            return text;
+
+        // https://www.youtube.com/watch?v=V8WuljiJFBI&something=else&more=here
+        text = text.Substring(idx);
+
+        var args = QueryHelpers.ParseQuery(text);
+        if (!args.TryGetValue(parameterName, out var res))
+            throw new Exception($"Parameter '{parameterName}' not found in '{text}'");
+
+        return res!;        
+    }
+
     public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId)
     {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
         using YouTubeService service = CreateYouTubeService();
         var request = service.PlaylistItems.List("contentDetails,status");
         request.PlaylistId = playlistId;
@@ -73,6 +115,8 @@ public class YouTubeHelper : IYouTubeHelper
 
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
         using YouTubeService service = CreateYouTubeService();
         var request = service.PlaylistItems.List("contentDetails,status");
         request.PlaylistId = playlistId;
@@ -106,7 +150,7 @@ public class YouTubeHelper : IYouTubeHelper
     }
 
     public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds)
-    {
+    {        
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
         using YouTubeService service = CreateYouTubeService();
         var request = service.Videos.List("snippet,contentDetails,id,status");

@@ -213,7 +213,7 @@ User interface
 can see which movies we've seen in what day?
 
 - [ ] Add Gravatar support for the profile picture (https://blazor.radzen.com/gravatar)
-
+	- [ ] Use ProfileMenu component to display the picture (https://blazor.radzen.com/profile-menu)
 
 
 DONE

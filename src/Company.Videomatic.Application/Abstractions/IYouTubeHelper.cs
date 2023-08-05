@@ -14,4 +14,8 @@ public interface IYouTubeHelper
 
     Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId);
     IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds); // TODO: add cancellation    
+
+    Task<PlaylistInfo> GetPlaylistInformation(string playlistId);
 }
+
+public record PlaylistInfo(string Id, string Name, string Description);

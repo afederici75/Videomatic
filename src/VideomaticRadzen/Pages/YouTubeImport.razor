@@ -2,31 +2,91 @@
 
 @inject ISender Sender
 
-<RadzenRow>
-    <RadzenTextBox @bind-value="@VideoUrl" Placeholder="Enter a URL here..." />
-    <RadzenButton Click="ClickImportVideo" Text="Import Video" />
-</RadzenRow>
+<RadzenPanel AllowCollapse="true">
+    <HeaderTemplate>
+        <RadzenText TextStyle="TextStyle.H6" >
+            <RadzenIcon Icon="account_box" />Import Videos
+        </RadzenText>
+    </HeaderTemplate>
 
-<RadzenText>@VideoImportResult</RadzenText>
+    <ChildContent>
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenTextArea @bind-value="@VideoUrls" Placeholder="Enter one or more YouTube videos here..." Cols="50" Rows="10" />
+            
+            <RadzenStack Orientation="Orientation.Horizontal">
+            Target Playlist<RadzenDropDown @bind-Value=@TargetPlaylistId Data=@PlaylistDTOs TextProperty="Name" ValueProperty="Id" Style="width: 100%; max-width: 400px;" />
+            </RadzenStack>
 
-<RadzenRow>
-    <RadzenTextBox @bind-value="@PlaylistId" Placeholder="Enter an Id here..." />
-    <RadzenButton Click="ClickImportPlaylist" Text="Import Playlist" />
-</RadzenRow>
+            <RadzenButton Click="ClickImportVideo" Text="Import Video(s)" />
 
-<RadzenText>@PlaylistImportResult</RadzenText>
+            <RadzenText>@VideoImportResult</RadzenText>
+        </RadzenStack>
+    </ChildContent>
+
+    <SummaryTemplate>
+
+    </SummaryTemplate>
+</RadzenPanel>
+
+
+<RadzenPanel AllowCollapse="true">
+    <HeaderTemplate>
+        <RadzenText TextStyle="TextStyle.H6">
+            <RadzenIcon Icon="account_box" />Import Playlists
+        </RadzenText>
+    </HeaderTemplate>
+
+    <ChildContent>
+        <RadzenStack Orientation="Orientation.Vertical">
+            <RadzenTextArea @bind-value="@PlaylistUrls" Placeholder="Enter one or more YouTube playlists here..." Cols="50" Rows="10" />
+            
+            <RadzenButton Click="ClickImportPlaylist" Text="Import Playlist(s)" />
+            
+            <RadzenText>@PlaylistImportResult</RadzenText>
+        </RadzenStack>
+    </ChildContent>
+
+    <SummaryTemplate>
+
+    </SummaryTemplate>
+</RadzenPanel>
+
+
 
 
 @code {
-    public string? VideoUrl { get; set; } = "https://www.youtube.com/watch?v=BBd3aHnVnuE";
-    public string? PlaylistId { get; set; } = "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e";
+    public string? VideoUrls { get; set; } = @"https://www.youtube.com/watch?v=V8WuljiJFBI
+https://www.youtube.com/watch?v=YzPhcUyZXWA
+https://www.youtube.com/watch?v=Ma8oi5MU1dk";
 
-    public string VideoImportResult { get; set; } = "No video imported yet...";
-    public string PlaylistImportResult { get; set; } = "No playlist imported yet...";
+    public string? PlaylistUrls { get; set; } = @"https://www.youtube.com/playlist?list=PLLdi1lheZYVK7x4Cv6vSDJJe2DuMUZHjt
+https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
+
+    public string VideoImportResult { get; set; } = "No videos imported yet...";
+    public string PlaylistImportResult { get; set; } = "No playlists imported yet...";
+
+    public IEnumerable<PlaylistDTO> PlaylistDTOs { get; set; } = new List<PlaylistDTO>();
+    public int? TargetPlaylistId { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = new GetPlaylistsQuery(OrderBy: "Name");
+
+        Page<PlaylistDTO> results = await Sender.Send(query);
+
+        PlaylistDTOs = results.Items;
+
+        await base.OnInitializedAsync();
+    }
 
     async Task ClickImportVideo()
     {
-        var cmd = new ImportYoutubeVideosCommand(new[] { VideoUrl! }, null);        
+        if (string.IsNullOrEmpty(VideoUrls))
+            return;
+
+        var urls = VideoUrls.Split(new[] { '\r', '\n' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+        var cmd = new ImportYoutubeVideosCommand(urls, TargetPlaylistId);        
         ImportYoutubeVideosResponse response = await Sender.Send(cmd);
 
         VideoImportResult = response.ToString();
@@ -34,7 +94,12 @@
 
     async Task ClickImportPlaylist()
     {
-        var cmd = new ImportYoutubePlaylistsCommand(new[] { PlaylistId! });
+        if (string.IsNullOrEmpty(PlaylistUrls))
+            return;
+
+        var urls = PlaylistUrls.Split(new[] { '\r','\n'}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        var cmd = new ImportYoutubePlaylistsCommand(urls);
         var response = await Sender.Send(cmd);
 
         PlaylistImportResult = response.ToString();

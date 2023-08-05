@@ -1,4 +1,5 @@
-﻿using Hangfire;
+﻿using Company.Videomatic.Application.Abstractions;
+using Hangfire;
 
 namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
@@ -41,12 +42,13 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
     }
 
     public async Task ImportPlaylistJob(string playlistId)
-    {
+    {        
         var videoIds = await YouTubeHelper.GetPlaylistVideoIds(playlistId);
+        var playlistInfo = await YouTubeHelper.GetPlaylistInformation(playlistId);
 
         var newPlaylist = Playlist.Create(
-            name: $"Imported from {playlistId}",
-            description: "Test import");
+            name: $"{playlistInfo.Name} (Imported on {DateTime.Now})",
+            description: playlistInfo.Description);
 
         var storedPlaylist = await Repository.AddAsync(newPlaylist);
 
