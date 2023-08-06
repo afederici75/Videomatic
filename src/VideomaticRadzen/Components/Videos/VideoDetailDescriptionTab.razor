@@ -1,0 +1,14 @@
+﻿<RadzenRow>
+    Original Description
+    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@(Video.Description)" />
+</RadzenRow>
+<RadzenRow>
+    AI-Generated Description
+    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="coming soon..." />
+</RadzenRow>
+
+@code
+{
+    [Parameter]
+    public required VideoDTO Video { get; set; }
+}
