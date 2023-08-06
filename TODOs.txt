@@ -1,7 +1,7 @@
 SPRINT
 
 - [X] Make the YouTube interface a single page deal instead of adding all those submenus:
-	- [ ] The page would focus on importing videos from Youtube 
+	- [X] The page would focus on importing videos from Youtube 
 	- [ ] Sources:		
 		- [ ] The youtube playlists of user 
 			- [ ] I need the user's channel id from somewhere (maybe settings?)
@@ -15,17 +15,17 @@ SPRINT
 					playlist (if it isn't already)
 					- [ ] If the video is not alreayd in videomatic we would import it and then link it 
 					to this playlist			
-		- [ ] A simple Youtube video URL 
-			- [ ] this can be either typed in a text box or dragged and dropped
-		- [ ] A YouTube playlist URL
+		- [X] A simple Youtube video URL 
+			- [X] this can be either typed in a text box or dragged and dropped
+		- [X] A YouTube playlist URL
 			- [ ] it would be nice if dragging and dropping would detect this
-			- [ ] ultimately this would queue the import of videos and associate a playlist
+			- [X] ultimately this would queue the import of videos and associate a playlist
 			tag to them for when the import is done. 
 		- [ ] The youtube history of user (future)
 			- [ ] this might be an issue unless I OAUTH2 this crap
 
-		- [ ] Provide a button to start queueing video imports
-			- [ ] This will queue the import of videos from the sources above
+		- [X] Provide a button to start queueing video imports
+			- [X] This will queue the import of videos from the sources above
 			
 		- [ ] This page should also display what is still being imported server side.
 			- [ ] When videos are imported the user shluld get a notification in the UI

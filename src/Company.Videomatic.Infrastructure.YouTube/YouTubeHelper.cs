@@ -225,7 +225,11 @@ public class YouTubeHelper : IYouTubeHelper
             var currentSet = responsePage.ToHashSet();
             var badTranscripts = new List<Transcript>();
             var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
-            var allTranscripts = api.GetTranscripts(requestedIds, continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
+            var allTranscripts = api.GetTranscripts(
+                requestedIds, 
+                languages: languages,
+                continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
 
             var badOnes = allTranscripts.Item2!.Select(badId =>
             {
