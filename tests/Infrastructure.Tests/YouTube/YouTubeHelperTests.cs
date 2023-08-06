@@ -97,7 +97,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
     public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IYouTubeHelper helper, string[] ids)
     {
-        await foreach (var video in helper.ImportVideos(ids))
+        await foreach (var video in helper.ImportVideosById(ids))
         {
             video.Name.Should().NotBeNullOrEmpty();
             video.Description.Should().NotBeNullOrEmpty();
@@ -202,18 +202,30 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     //    
     //}
 
-    [Fact]
+    [Fact(Skip = "I need to recreate the google credentials (svc acct)")]
     public async Task AuthenticateGoogleOAuth()
     {
-        var list = Helper.GetPlaylistsOfChannel("UCqiZA4pUT5RxrMCddeKdpGw").ToListAsync();
-        { 
-            
-        }
+        String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
 
-        //var request = service.Playlists.List("snippet");
-        //request.ChannelId = "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e"; // My philosophy playlist for now
-        //request.MaxResults = 50;
-        ////request.Mine = false;
-        //Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
+        var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
+
+        ServiceAccountCredential credential = new ServiceAccountCredential(
+           new ServiceAccountCredential.Initializer(serviceAccountEmail)
+           {
+               Scopes = new[] { YouTubeService.Scope.Youtube }
+           }.FromCertificate(certificate));
+
+        // Create the service.
+        var service = new YouTubeService(new BaseClientService.Initializer()
+        {
+            HttpClientInitializer = credential,
+            ApplicationName = "API Sample",
+        });
+
+        var request = service.Playlists.List("snippet");
+        request.ChannelId = "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e"; // My philosophy playlist for now
+        request.MaxResults = 50;
+        //request.Mine = false;
+        Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
     }
 }

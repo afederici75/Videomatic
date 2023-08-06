@@ -8,8 +8,8 @@ public record GetTranscriptsQuery(
     int? Take = null,
     FullTextSearchType? SearchType = null,
     // Additional
-    IEnumerable<long>? VideoIds = null,
-    IEnumerable<long>? TranscriptIds = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery;
+    IEnumerable<int>? VideoIds = null,
+    IEnumerable<int>? TranscriptIds = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery;
 
 internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
 {

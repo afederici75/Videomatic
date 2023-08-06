@@ -1,10 +1,12 @@
 ﻿using Company.Videomatic.Application.Features.Videos.Queries;
+using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
 using Company.Videomatic.Domain.Aggregates.Video;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MediatR;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -24,6 +26,22 @@ public class YouTubeHelper : IYouTubeHelper
     readonly ISender Sender;
 
     record AuthResponse();
+
+
+    public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId)
+    {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
+        using YouTubeService service = CreateYouTubeService();
+
+        var request = service.Playlists.List("snippet,contentDetails,status");
+        request.Id = playlistId;
+
+        var response = await request.ExecuteAsync();
+        var pl = response.Items.Single();
+
+        return new PlaylistInfo(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
+    }
 
     public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId)
     {
@@ -49,9 +67,56 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    
+    string FromStringOrQueryString(string text, string parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            throw new ArgumentNullException(nameof(text));
+
+        if (string.IsNullOrWhiteSpace(parameterName))
+            throw new ArgumentException($"'{nameof(parameterName)}' cannot be null or whitespace.", nameof(parameterName));
+        
+        var idx = text.IndexOf("?");
+        if (idx <0)
+            return text;
+
+        // https://www.youtube.com/watch?v=V8WuljiJFBI&something=else&more=here
+        text = text.Substring(idx);
+
+        var args = QueryHelpers.ParseQuery(text);
+        if (!args.TryGetValue(parameterName, out var res))
+            throw new Exception($"Parameter '{parameterName}' not found in '{text}'");
+
+        return res!;        
+    }
+
+    public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId)
+    {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
+        using YouTubeService service = CreateYouTubeService();
+        var request = service.PlaylistItems.List("contentDetails,status");
+        request.PlaylistId = playlistId;
+        request.MaxResults = 50;
+
+        var videoIds = new List<string>();
+        do
+        {
+            var response = await request.ExecuteAsync();
+
+            videoIds.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
+            
+            // Pages
+            request.PageToken = response.NextPageToken;
+        }
+        while (!string.IsNullOrEmpty(request.PageToken));
+
+        return videoIds;
+    }
+
     public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
     {
+        playlistId = FromStringOrQueryString(playlistId, "list");
+
         using YouTubeService service = CreateYouTubeService();
         var request = service.PlaylistItems.List("contentDetails,status");
         request.PlaylistId = playlistId;
@@ -63,7 +128,7 @@ public class YouTubeHelper : IYouTubeHelper
 
             var videoIds = response.Items.Select(i => i.ContentDetails.VideoId).ToArray();
 
-            await foreach (var video in ImportVideos(videoIds))
+            await foreach (var video in ImportVideosById(videoIds))
             {
                 yield return video;
             };
@@ -72,10 +137,20 @@ public class YouTubeHelper : IYouTubeHelper
             request.PageToken = response.NextPageToken;
         }
         while (!string.IsNullOrEmpty(request.PageToken));       
-    }    
+    }
 
-    public async IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> youtubeVideoIds)
+    public IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls)
     {
+        // TODO: this is ghetto code
+        var idsOnly = youtubeVideoUrls
+            .Select(url => url.Replace("https://www.youtube.com/watch?v=", string.Empty))
+            .ToArray();
+
+        return ImportVideosById(idsOnly);
+    }
+
+    public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds)
+    {        
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
         using YouTubeService service = CreateYouTubeService();
         var request = service.Videos.List("snippet,contentDetails,id,status");
@@ -150,7 +225,11 @@ public class YouTubeHelper : IYouTubeHelper
             var currentSet = responsePage.ToHashSet();
             var badTranscripts = new List<Transcript>();
             var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
-            var allTranscripts = api.GetTranscripts(requestedIds, continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
+            var allTranscripts = api.GetTranscripts(
+                requestedIds, 
+                languages: languages,
+                continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
 
             var badOnes = allTranscripts.Item2!.Select(badId =>
             {
@@ -185,19 +264,6 @@ public class YouTubeHelper : IYouTubeHelper
                 yield return newTranscr;
             }
         }
-    }
-
-    static string MakeUrlWithQuery(string endpoint,
-            IEnumerable<KeyValuePair<string, string>> parameters)
-    {
-        if (string.IsNullOrEmpty(endpoint))
-            throw new ArgumentNullException(nameof(endpoint));
-
-        if (parameters == null || parameters.Count() == 0)
-            return endpoint;
-
-        return parameters.Aggregate(endpoint + '?',
-            (accumulated, kvp) => string.Format($"{accumulated}{kvp.Key}={kvp.Value}&"));
     }
 
     YouTubeService CreateYouTubeService()

@@ -22,7 +22,7 @@ public static class WebApplicationExtensions
         app.MediateDelete<DeleteVideoCommand>("Videos");
         app.MediatePost<SetVideoTags>("Videos");
         app.MediatePost<LinkPlaylistToVideosCommand>("Videos");
-        app.MediatePost<ImportVideoCommand>("Videos");
+        app.MediatePost<ImportYoutubeVideosCommand>("Videos");
 
         return app;
     }

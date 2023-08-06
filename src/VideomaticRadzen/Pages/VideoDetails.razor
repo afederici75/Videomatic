@@ -1,33 +1,61 @@
 ﻿@page "/videoDetails/{videoId:long?}"
+@using Company.Videomatic.Application.Features.Transcripts.Queries;
+@using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Domain.Aggregates.Video;
 @using VideomaticRadzen.Components
+@using VideomaticRadzen.Components.Videos
 @inject ISender Sender
 
-<RadzenCard Style="max-width: 340px; min-width:200px">          
-    <RadzenImage Path="@video?.Thumbnail" Style="max-width: 60px; max-height: 40px" />
+@if (video != null)
+{
+<VideoDetailHeader Video="@video" />
+}
 
-    <RadzenText TextStyle="TextStyle.H6">@(video?.Name ?? "")</RadzenText>
-
-        <RadzenStack Orientation="Orientation.Horizontal">
-            <RadzenText TextStyle="TextStyle.Overline">@(video?.Provider)</RadzenText>
-            <RadzenText TextStyle="TextStyle.Overline">@(video?.ProviderVideoId)</RadzenText>
-        </RadzenStack>
-
-    <RadzenText TextStyle="TextStyle.Caption">@(video?.VideoOwnerChannelTitle ?? ""), @(video?.VideoPublishedAt)</RadzenText>
-    @*<RadzenText TextStyle="TextStyle.Body2" class="rz-text-wrap">@(video.Description)</RadzenText>*@
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Description">
+                <RadzenRow>
+                    Original Description
+                    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@(video?.Description)" />
+                </RadzenRow>
+                <RadzenRow>
+                    AI-Generated Description
+                    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="coming soon..." />
+                </RadzenRow>
+        </RadzenTabsItem>
         
-    <RadzenTextArea Cols="40" 
-                    Rows="5"
-                    MaxLength="300" 
-                    Value="@(video?.Description)" />
-    
-</RadzenCard>
+        <RadzenTabsItem Text="Transcripts">
+            @foreach (var t in transcripts)
+            {
+                if (t.Lines == null)
+                    continue;
+                
+                <RadzenText Text="@(t.LineCount.ToString())"></RadzenText>
+
+                foreach (var l in t.Lines)
+                {
+                    <RadzenStack Orientation="Orientation.Horizontal">
+                        <RadzenText Text="@(l.StartsAt.ToString())"></RadzenText>
+                        <RadzenText Text="@(l.Duration.ToString())"></RadzenText>
+                        <RadzenText Text="@(l.Text)"></RadzenText>
+                    </RadzenStack>
+                }
+            }                 
+        </RadzenTabsItem>
+
+        <RadzenTabsItem Text="Table of Contents (AI)">
+        </RadzenTabsItem>
+
+        <RadzenTabsItem Text="Topics (AI)">
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>        
 
 
-
-    @code {
+@code {
     bool isLoading = false;
     VideoDTO? video;
+    IEnumerable<TranscriptDTO> transcripts = new TranscriptDTO[0];  
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(VideoId))]
@@ -54,8 +82,15 @@
 
         Page<VideoDTO> results = await Sender.Send(query);
 
-        video = results.Items.Single();
-        
+        video = results.Items.SingleOrDefault();
+        if (video != null)
+        {
+            var query2 = new GetTranscriptsQuery(VideoIds: new[] { VideoId!.Value });
+            var resp2 = await Sender.Send(query2);
+
+            transcripts = resp2.Items;
+        }
+
         isLoading = false;        
     }
 }
