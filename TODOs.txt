@@ -80,6 +80,8 @@ Non UI
 
 - [ ] Documentation on github
 
+- [ ] Add support for cancellation tokens in unit tests: the SLOWxxx tests don't 
+stop if I click the Stop button in VS.
 
 DONE
 
