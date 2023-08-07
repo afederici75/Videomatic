@@ -2,7 +2,5 @@
 
 public interface IPlaylistService
 {
-    Task<Result<int>> LinkToPlaylists(PlaylistId playlistId,
-                                      IEnumerable<VideoId> videoIds,
-                                      CancellationToken cancellationToken = default);
+    Task<Result<int>> LinkPlaylistToVideos(PlaylistId playlistId, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default);
 }

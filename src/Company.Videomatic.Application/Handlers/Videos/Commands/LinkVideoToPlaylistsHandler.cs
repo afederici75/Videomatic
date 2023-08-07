@@ -15,7 +15,7 @@ public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkPlaylistToVideosC
 
     public async Task<Result<int>> Handle(LinkPlaylistToVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var cnt = await _playlistService.LinkToPlaylists(request.Id, request.VideoIds.Select(x => new VideoId(x)));
+        var cnt = await _playlistService.LinkPlaylistToVideos(request.Id, request.VideoIds.Select(x => new VideoId(x)));
 
         return new Result<int>(cnt);
     }

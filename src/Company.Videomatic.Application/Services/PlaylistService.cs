@@ -9,7 +9,7 @@ public class PlaylistService : IPlaylistService
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    public async Task<Result<int>> LinkToPlaylists(PlaylistId playlistId, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
+    public async Task<Result<int>> LinkPlaylistToVideos(PlaylistId playlistId, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
     {
         var pl = await _repository.GetByIdAsync(playlistId, cancellationToken);
         if (pl is null)

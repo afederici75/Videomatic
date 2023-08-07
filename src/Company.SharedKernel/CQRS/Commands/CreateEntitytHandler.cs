@@ -1,6 +1,6 @@
 ﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.SharedKernel.Common.CQRS;
+namespace Company.SharedKernel.CQRS.Commands;
 
 public abstract class CreateEntitytHandler<TCreateCommand, TEntity> :
     IRequestHandler<TCreateCommand, Result<TEntity>>

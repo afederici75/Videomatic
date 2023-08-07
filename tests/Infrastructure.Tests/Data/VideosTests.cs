@@ -242,7 +242,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         foreach (var v in videos)
         {
-            await videoService.LinkToPlaylists(pl.Id, new [] { v.Id });
+            await videoService.LinkPlaylistToVideos(pl.Id, new [] { v.Id });
         }       
     }
 }

@@ -49,8 +49,8 @@ public class DbSeeder : IDbSeeder
         var realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
 
         //
-        var linked1 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { shivaVideo.Id});
-        var linked2 = await _playlistService.LinkToPlaylists(playlist.Id, new[] { realityNotDualVideo.Id });
+        await _playlistService.LinkPlaylistToVideos(playlist.Id, new[] { shivaVideo.Id});
+        await _playlistService.LinkPlaylistToVideos(playlist.Id, new[] { realityNotDualVideo.Id });
 
         return playlist.Id;
     }

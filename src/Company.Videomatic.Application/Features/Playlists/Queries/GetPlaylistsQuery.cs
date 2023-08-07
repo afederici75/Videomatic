@@ -6,9 +6,10 @@ public record GetPlaylistsQuery(
     string? OrderBy = null,
     int? Skip = null,
     int? Take = null,
-    FullTextSearchType? SearchType = null,
+    TextSearchType? SearchType = null,
     // Additional
-    IEnumerable<int>? PlaylistIds = null) : IRequest<Page<PlaylistDTO>>, IBasicQuery;
+    IEnumerable<int>? PlaylistIds = null,
+    string? SearchOn = null) : IRequest<Page<PlaylistDTO>>, IBasicQuery;
 
 internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
 {

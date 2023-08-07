@@ -36,6 +36,9 @@ SPRINT
 Non UI
 ******************
 
+- [ ] I need thumbnails for Playlist as well. I also don't think I need 5 thumbs for Videos;
+	- [ ] Consolidate the multiple thumbs into one and add it as Owned to both Playlist and Video.
+
 - [ ] Integrate Identity platform
 	- [ ] The database will need to be updated.
 		- [X] Maybe I switch long to int in the primary keys?

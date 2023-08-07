@@ -8,12 +8,13 @@ using Google.Apis.YouTube.v3;
 //using Google.Apis.YouTube.v3.Data;
 using MediatR;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
-public class YouTubeHelper : IYouTubeHelper
+public class YouTubeHelper : IYouTubeImporter
 {
     public const string ProviderId = "YOUTUBE";
 
@@ -31,11 +32,11 @@ public class YouTubeHelper : IYouTubeHelper
     public IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> idOrUrls, CancellationToken cancellation)
     {
         var videoIds = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();
-        return ImportVideosById(videoIds);
+        return ImportVideosById(videoIds, cancellation);
     }
 
 
-    public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId)
+    public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId, CancellationToken cancellation)
     {
         playlistId = FromStringOrQueryString(playlistId, "list");
 
@@ -44,13 +45,13 @@ public class YouTubeHelper : IYouTubeHelper
         var request = service.Playlists.List("snippet,contentDetails,status");
         request.Id = playlistId;
 
-        var response = await request.ExecuteAsync();
+        var response = await request.ExecuteAsync(cancellation);
         var pl = response.Items.Single();
 
         return new PlaylistInfo(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
     }
 
-    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId)
+    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId, CancellationToken cancellation)
     {
         using YouTubeService service = CreateYouTubeService();
         
@@ -60,7 +61,7 @@ public class YouTubeHelper : IYouTubeHelper
         
         do
         {
-            var response = await request.ExecuteAsync();
+            var response = await request.ExecuteAsync(cancellation);
 
             foreach (var playlist in response.Items)
             {
@@ -96,7 +97,7 @@ public class YouTubeHelper : IYouTubeHelper
         return res!;        
     }
 
-    public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId)
+    public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId, CancellationToken cancellation)
     {
         playlistId = FromStringOrQueryString(playlistId, "list");
 
@@ -108,7 +109,7 @@ public class YouTubeHelper : IYouTubeHelper
         var videoIds = new List<string>();
         do
         {
-            var response = await request.ExecuteAsync();
+            var response = await request.ExecuteAsync(cancellation);
 
             videoIds.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
             
@@ -120,7 +121,7 @@ public class YouTubeHelper : IYouTubeHelper
         return videoIds;
     }
 
-    public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId)
+    public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId, CancellationToken cancellation)
     {
         playlistId = FromStringOrQueryString(playlistId, "list");
 
@@ -135,7 +136,7 @@ public class YouTubeHelper : IYouTubeHelper
 
             var videoIds = response.Items.Select(i => i.ContentDetails.VideoId).ToArray();
 
-            await foreach (var video in ImportVideosById(videoIds))
+            await foreach (var video in ImportVideosById(videoIds, cancellation))
             {
                 yield return video;
             };
@@ -146,17 +147,17 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));       
     }
 
-    public IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls)
+    public IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls, CancellationToken cancellation)
     {
         // TODO: this is ghetto code
         var idsOnly = youtubeVideoUrls
             .Select(url => url.Replace("https://www.youtube.com/watch?v=", string.Empty))
             .ToArray();
 
-        return ImportVideosById(idsOnly);
+        return ImportVideosById(idsOnly, cancellation);
     }
 
-    public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds)
+    public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds, [EnumeratorCancellation] CancellationToken cancellation)
     {        
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
         using YouTubeService service = CreateYouTubeService();
@@ -166,7 +167,7 @@ public class YouTubeHelper : IYouTubeHelper
 
         do
         {
-            var response = await request.ExecuteAsync();
+            var response = await request.ExecuteAsync(cancellation);
         
             var videoIds = response.Items.Select(v => v.Id).ToArray();
 
@@ -196,13 +197,17 @@ public class YouTubeHelper : IYouTubeHelper
                 video.SetThumbnail(ThumbnailResolution.MaxRes, t.Maxres?.Url ?? "", Convert.ToInt32(t.Maxres?.Height ?? -1), Convert.ToInt32(t.Maxres?.Width ?? -1));
 
                 yield return video;
-            }            // Pages
+
+                cancellation.ThrowIfCancellationRequested();
+            }
+
+            // Pages
             request.PageToken = response.NextPageToken;
         }
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds)
+    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds, CancellationToken cancellation)
     {
         /*
          using YouTubeService service = CreateYouTubeService();
@@ -229,6 +234,8 @@ public class YouTubeHelper : IYouTubeHelper
 
         foreach (var responsePage in response.Value.Page(50))
         {
+            cancellation.ThrowIfCancellationRequested();
+
             var currentSet = responsePage.ToHashSet();
             var badTranscripts = new List<Transcript>();
             var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
@@ -247,6 +254,8 @@ public class YouTubeHelper : IYouTubeHelper
             foreach (var badOne in badOnes)
             {
                 yield return badOne;
+
+                cancellation.ThrowIfCancellationRequested();
             }
 
             // ------------------------------
@@ -269,6 +278,8 @@ public class YouTubeHelper : IYouTubeHelper
                 }
 
                 yield return newTranscr;
+
+                cancellation.ThrowIfCancellationRequested();
             }
         }
     }
