@@ -6,6 +6,11 @@
 @inject ISender Sender
 @inject NavigationManager NavigationManager
 
+@if (playlists == null)
+{
+    return;
+})
+
 <RadzenRow class="sticky-top" style="background-color: #1f1f1f">
     <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
     <RadzenButton Text="Reset" Style="margin-bottom: 20px;" Click="@Refresh" />
@@ -31,14 +36,16 @@
                                 MaxLength="300"
                                 Value="@(playlist.Description)" />
 
-            <RadzenButton Click=@(() => GoToPlaylistVideos(playlist.Id))>Details</RadzenButton>
-            </RadzenCard>
-        </Template>
-    </RadzenDataList>
+            <RadzenButton Click=@(() => GoToPlaylistVideos(playlist.Id))>Videos</RadzenButton>
+
+            <RadzenButton Click=@(() => GoToPlaylistDetails(playlist.Id))>Details</RadzenButton>
+        </RadzenCard>
+    </Template>
+</RadzenDataList>
 
 
 
-    @code {
+@code {
     string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
     RadzenPager? pager;
 
@@ -52,11 +59,16 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
-    public long? PlaylistId { get; set; }
+    public int? PlaylistId { get; set; }
     long? _priorPlaylistId;
 
     int pageSize = 10;
     bool isLoading = false;
+
+    async Task GoToPlaylistDetails(long playlistId)
+    {
+        NavigationManager.NavigateTo($"PlaylistDetails/{playlistId}");
+    }
 
     async Task GoToPlaylistVideos(long playlistId)
     {
@@ -92,7 +104,7 @@
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: (PlaylistId != null) ? new long[] { PlaylistId.Value } : null,
+                PlaylistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
                 Skip: skip,
                 Take: take,
                 OrderBy: null,

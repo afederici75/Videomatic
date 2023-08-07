@@ -1,4 +1,6 @@
-﻿namespace Company.SharedKernel.Abstractions;
+﻿using Company.SharedKernel.Abstractions;
+
+namespace Company.SharedKernel.Common.CQRS;
 
 public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot, TId> :
     IRequestHandler<TUpsertCommand, Result<TAggregateRoot>>
@@ -17,9 +19,19 @@ public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot,
     abstract protected TId ConvertIdOfRequest(TUpsertCommand request);
 
     public Task<Result<TAggregateRoot>> Handle(TUpsertCommand request, CancellationToken cancellationToken)
-        => !request.Id.HasValue ? InsertAggregateRoot(request, cancellationToken): UpdateAggregateRoot(request, cancellationToken);
+    {
+        if (request.Id.HasValue)
+        {
+            return UpdateAggregateRoot(request, cancellationToken);
+        }
+        else
+        {
+            return InsertAggregateRoot(request, cancellationToken);
+        }               
+                
+    } 
 
-    public async Task<Result<TAggregateRoot>> InsertAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
+    async Task<Result<TAggregateRoot>> InsertAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
     {
         var aggRoot = Mapper.Map<TUpsertCommand, TAggregateRoot>(request);
 
@@ -28,7 +40,7 @@ public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot,
         return result;
     }
 
-    private async Task<Result<TAggregateRoot>> UpdateAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
+    async Task<Result<TAggregateRoot>> UpdateAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
     {
         TId id = ConvertIdOfRequest(request);
 
@@ -41,7 +53,7 @@ public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot,
         // TODO?: this is where I could compare a version-id for the entity...
 
         // Maps using Automapper which will access private setters to update currentAgg.
-        var res = Mapper.Map<TUpsertCommand, TAggregateRoot>(request, currentAgg);
+        var res = Mapper.Map(request, currentAgg);
 
         await Repository.UpdateAsync(currentAgg, cancellationToken);
 

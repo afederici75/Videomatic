@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Playlists.Commands;
 
 public record UpdatePlaylistCommand(int Id, string Name, string? Description) : UpdateAggregateRootCommand<Playlist>(Id);
 

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers.Artifacts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Handlers.Artifacts.Commands;
 
 public class CreateArtifactHandler : CreateAggregateRootHandler<CreateArtifactCommand, Artifact>
 {

@@ -1,4 +1,4 @@
-﻿@page "/videoDetails/{videoId:long?}"
+﻿@page "/videoDetails/{videoId:int?}"
 @using Company.Videomatic.Application.Features.Transcripts.Queries;
 @using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Domain.Aggregates.Video;
@@ -16,14 +16,15 @@
 <RadzenTabs>
     <Tabs>
         <RadzenTabsItem Text="Description">
-                <VideoDetailDescriptionTab Video="@video" />
+            <VideoDetailDescriptionTab Video="@video" />
         </RadzenTabsItem>
         
         <RadzenTabsItem Text="@("Transcripts ("+ transcripts.Count().ToString() + ")" )">
-                <VideoDetailsTranscriptsTab Transcripts="@transcripts" />
+            <VideoDetailsTranscriptsTab Transcripts="@transcripts" />
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Table of Contents (AI)">
+
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Topics (AI)">

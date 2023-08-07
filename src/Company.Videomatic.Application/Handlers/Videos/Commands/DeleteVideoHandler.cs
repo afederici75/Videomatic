@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
 public sealed class DeleteVideoHandler : DeleteAggregateRootHandler<DeleteVideoCommand, Video, VideoId>
 {

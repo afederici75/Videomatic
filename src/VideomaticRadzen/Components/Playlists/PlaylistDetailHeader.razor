@@ -1,0 +1,26 @@
+﻿<RadzenRow>
+    <RadzenColumn Size="4">
+        @*<RadzenImage Path="@Playlist.Thumbnail" Style="max-width: 100%; max-height: 100%" />*@
+    </RadzenColumn>
+
+    <RadzenColumn Size="8">
+        <RadzenText TextStyle="TextStyle.H5">@Playlist.Name ?? "[No Name]")</RadzenText>
+
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenText TextStyle="TextStyle.Overline">#VideoCount</RadzenText>
+            <RadzenText TextStyle="TextStyle.Overline">#CreatedOn</RadzenText>
+            <RadzenText TextStyle="TextStyle.Overline">#LastUpdated</RadzenText>
+            <RadzenText TextStyle="TextStyle.Caption">???</RadzenText>
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>
+
+<RadzenRow>
+        <RadzenTextArea Style="min-width: 80%" Rows="15" Value="@Playlist?.Description" />
+</RadzenRow>
+    
+@code
+{
+    [Parameter]
+    public required PlaylistDTO Playlist { get; set; } 
+}

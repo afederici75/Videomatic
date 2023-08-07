@@ -5,6 +5,7 @@ using Company.Videomatic.Domain.Aggregates.Video;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+//using Google.Apis.YouTube.v3.Data;
 using MediatR;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography.X509Certificates;
@@ -26,6 +27,12 @@ public class YouTubeHelper : IYouTubeHelper
     readonly ISender Sender;
 
     record AuthResponse();
+
+    public IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> idOrUrls, CancellationToken cancellation)
+    {
+        var videoIds = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();
+        return ImportVideosById(videoIds);
+    }
 
 
     public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId)

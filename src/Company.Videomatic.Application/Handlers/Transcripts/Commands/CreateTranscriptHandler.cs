@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
 
 public class CreateTranscriptHandler : CreateAggregateRootHandler<CreateTranscriptCommand, Transcript>
 {

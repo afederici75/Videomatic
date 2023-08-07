@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
 public sealed class UpdatePlaylistHandler : UpdateAggregateRootHandler<UpdatePlaylistCommand, Playlist, PlaylistId>
 {

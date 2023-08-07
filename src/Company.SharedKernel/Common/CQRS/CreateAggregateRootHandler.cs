@@ -1,8 +1,8 @@
 ﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.SharedKernel.Handlers;
+namespace Company.SharedKernel.Common.CQRS;
 
-public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> : 
+public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot> :
     IRequestHandler<TCreateCommand, Result<TAggregateRoot>>
     where TCreateCommand : IRequest<Result<TAggregateRoot>>
     where TAggregateRoot : class, IAggregateRoot
@@ -18,10 +18,17 @@ public abstract class CreateAggregateRootHandler<TCreateCommand, TAggregateRoot>
 
     public async Task<Result<TAggregateRoot>> Handle(TCreateCommand request, CancellationToken cancellationToken)
     {
-        var aggRoot = Mapper.Map<TCreateCommand, TAggregateRoot>(request);
-        
-        var result = await Repository.AddAsync(aggRoot, cancellationToken);                
+        try
+        {
+            var aggRoot = Mapper.Map<TCreateCommand, TAggregateRoot>(request);
 
-        return result;
-    }    
+            var result = await Repository.AddAsync(aggRoot, cancellationToken);
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return Result<TAggregateRoot>.Error(ex.Message);
+        }
+    }
 }

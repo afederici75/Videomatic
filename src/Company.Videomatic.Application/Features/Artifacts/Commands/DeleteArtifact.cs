@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
 public record DeleteArtifactCommand(int Id) : DeleteAggregateRootCommand<Artifact>(Id);
 

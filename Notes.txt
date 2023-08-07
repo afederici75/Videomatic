@@ -1,3 +1,6 @@
+8/7
+-I think I should create an IEntity abstraction...
+
 8/3
 -Done a lot of work on the Blazor UI and learnt a ton about HTML, CSS and JS. 
 I am now able to do a lot of things.

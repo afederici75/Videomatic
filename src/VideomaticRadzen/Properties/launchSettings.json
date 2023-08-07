@@ -4,8 +4,9 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "videoDetails?VideoId=3171",
-      "https": null, 
+      //"launchUrl": "videoDetails?VideoId=3171",
+      "launchUrl": "PlaylistDetails/28",
+      "https": null,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Transcripts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
 public record DeleteTranscriptCommand(int Id) : DeleteAggregateRootCommand<Transcript>(Id);
 
