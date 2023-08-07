@@ -53,8 +53,7 @@ public static class DependencyInjectionExtensions
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
-
-        public IServiceProvider ServiceProvider { get; }
+        
         public IConfiguration Configuration { get; }
 
         public TDBCONTEXT CreateDbContext()
