@@ -60,8 +60,7 @@
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
     public int? PlaylistId { get; set; }
-    long? _priorPlaylistId;
-
+    
     int pageSize = 10;
     bool isLoading = false;
 
