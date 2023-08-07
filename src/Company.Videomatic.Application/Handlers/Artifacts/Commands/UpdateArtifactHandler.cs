@@ -7,6 +7,4 @@ public class UpdateArtifactHandler : UpdateEntityHandler<UpdateArtifactCommand, 
     public UpdateArtifactHandler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
     {
     }
-
-    protected override ArtifactId ConvertIdOfRequest(UpdateArtifactCommand request) => request.Id;
 }

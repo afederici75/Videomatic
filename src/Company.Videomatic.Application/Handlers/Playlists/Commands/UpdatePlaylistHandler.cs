@@ -7,6 +7,4 @@ public sealed class UpdatePlaylistHandler : UpdateEntityHandler<UpdatePlaylistCo
     public UpdatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
     }
-
-    protected override PlaylistId ConvertIdOfRequest(UpdatePlaylistCommand request) => new PlaylistId(request.Id);
 }

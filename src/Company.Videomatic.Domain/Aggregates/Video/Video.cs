@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Video;
 
-public class Video : IEntity, IAggregateRootx
+public class Video : IEntity, IAggregateRoot
 {
     public static Video Create(string location, string name, VideoDetails? details = null, string? description = null)
     {
@@ -95,8 +95,8 @@ public class Video : IEntity, IAggregateRootx
 
     int IEntity.Id => this.Id;
 
-    HashSet<VideoTag> _videoTags = new();
-    HashSet<Thumbnail> _thumbnails = new();        
+    readonly HashSet<VideoTag> _videoTags = new();
+    HashSet<Thumbnail> _thumbnails = new(); // TODO: not readonly == code smell?
 
     #endregion
 }

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Company.SharedKernel.Abstractions;
-using Company.SharedKernel.Common.CQRS;
+﻿using Company.SharedKernel.Common.CQRS;
 
 namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
 
@@ -9,6 +7,4 @@ public class DeleteTranscriptHandler : DeleteEntityHandler<DeleteTranscriptComma
     public DeleteTranscriptHandler(IRepository<Transcript> repository, IMapper mapper) : base(repository, mapper)
     {
     }
-
-    protected override TranscriptId ConvertIdOfRequest(DeleteTranscriptCommand request) => request.Id;
 }

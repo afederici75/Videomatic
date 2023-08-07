@@ -4,7 +4,7 @@ namespace Company.SharedKernel.Common.CQRS;
 
 public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     IRequestHandler<TUpdateCommand, Result<TEntity>>
-    where TUpdateCommand : UpdateEntityCommand<TEntity>
+    where TUpdateCommand : UpdateEntityCommand<TEntity>, IRequestWithId
     where TEntity : class, IEntity
     where TId : class
 {
@@ -16,8 +16,7 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
 
     protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
-    abstract protected TId ConvertIdOfRequest(TUpdateCommand request);
-
+    
     public async Task<Result<TEntity>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
         TId id = ConvertIdOfRequest(request);
@@ -36,5 +35,12 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
         await Repository.UpdateAsync(currentAgg, cancellationToken);
 
         return res;
+    }
+
+    protected TId ConvertIdOfRequest(IRequestWithId request)
+    {
+        TId result = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+
+        return result;
     }
 }

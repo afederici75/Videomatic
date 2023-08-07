@@ -4,7 +4,7 @@ using System;
 namespace Company.SharedKernel.Common.CQRS;
 
 public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
-    where TDeleteCommand : IRequest<Result<bool>>
+    where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
     where TAggregateRoot : class, IEntity
     where TId : class
 {
@@ -21,9 +21,6 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> :
     {
         try
         {
-            // int -> TId
-            var id2 = ConvertIdOfRequest(request);
-
             object id = ConvertIdOfRequest(request);
 
             var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);
@@ -34,7 +31,7 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> :
 
             // TODO: this is where I could compare a version-id for the entity...
 
-            await Repository.DeleteAsync(itemToDelete);
+            await Repository.DeleteAsync(itemToDelete, cancellationToken);
 
             return true;
         }
@@ -49,6 +46,11 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> :
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
-    protected abstract TId ConvertIdOfRequest(TDeleteCommand request);
+    protected TId ConvertIdOfRequest(IRequestWithId request)
+    {
+        TId result = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+
+        return result;
+    }
 }
 

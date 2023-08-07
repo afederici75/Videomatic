@@ -7,6 +7,4 @@ public sealed class DeleteVideoHandler : DeleteEntityHandler<DeleteVideoCommand,
     public DeleteVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
     {
     }
-
-    protected override VideoId ConvertIdOfRequest(DeleteVideoCommand request) => request.Id;
 }

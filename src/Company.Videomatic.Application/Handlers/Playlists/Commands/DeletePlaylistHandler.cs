@@ -7,6 +7,4 @@ public sealed class DeletePlaylistHandler : DeleteEntityHandler<DeletePlaylistCo
     public DeletePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {
     }
-    
-    protected override PlaylistId ConvertIdOfRequest(DeletePlaylistCommand request) => request.Id;
 }
