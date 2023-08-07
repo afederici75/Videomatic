@@ -2,23 +2,23 @@
 
 namespace Company.SharedKernel.Common.CQRS;
 
-public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot, TId> :
-    IRequestHandler<TUpsertCommand, Result<TAggregateRoot>>
-    where TUpsertCommand : UpsertAggregateRootCommand<TAggregateRoot>
-    where TAggregateRoot : class, IAggregateRoot
+public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
+    IRequestHandler<TUpsertCommand, Result<TEntity>>
+    where TUpsertCommand : UpsertEntityCommand<TEntity>
+    where TEntity : class, IEntity
     where TId : class
 {
-    protected UpsertAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
+    protected UpsertEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IRepository<TAggregateRoot> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
     abstract protected TId ConvertIdOfRequest(TUpsertCommand request);
 
-    public Task<Result<TAggregateRoot>> Handle(TUpsertCommand request, CancellationToken cancellationToken)
+    public Task<Result<TEntity>> Handle(TUpsertCommand request, CancellationToken cancellationToken)
     {
         if (request.Id.HasValue)
         {
@@ -31,20 +31,20 @@ public abstract class UpsertAggregateRootHandler<TUpsertCommand, TAggregateRoot,
                 
     } 
 
-    async Task<Result<TAggregateRoot>> InsertAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
+    async Task<Result<TEntity>> InsertAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
     {
-        var aggRoot = Mapper.Map<TUpsertCommand, TAggregateRoot>(request);
+        var aggRoot = Mapper.Map<TUpsertCommand, TEntity>(request);
 
         var result = await Repository.AddAsync(aggRoot, cancellationToken);
 
         return result;
     }
 
-    async Task<Result<TAggregateRoot>> UpdateAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
+    async Task<Result<TEntity>> UpdateAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
     {
         TId id = ConvertIdOfRequest(request);
 
-        TAggregateRoot? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
+        TEntity? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
         if (currentAgg == null)
         {
             return Result.NotFound();

@@ -12,7 +12,7 @@ public record CreateVideoCommand(
     string PlaylistId,
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId
-    ) : CreateAggregateRootCommand<Video>();
+    ) : CreateEntityCommand<Video>();
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {

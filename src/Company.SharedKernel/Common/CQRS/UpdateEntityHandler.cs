@@ -2,27 +2,27 @@
 
 namespace Company.SharedKernel.Common.CQRS;
 
-public abstract class UpdateAggregateRootHandler<TUpdateCommand, TAggregateRoot, TId> :
-    IRequestHandler<TUpdateCommand, Result<TAggregateRoot>>
-    where TUpdateCommand : UpdateAggregateRootCommand<TAggregateRoot>
-    where TAggregateRoot : class, IAggregateRoot
+public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
+    IRequestHandler<TUpdateCommand, Result<TEntity>>
+    where TUpdateCommand : UpdateEntityCommand<TEntity>
+    where TEntity : class, IEntity
     where TId : class
 {
-    protected UpdateAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
+    protected UpdateEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IRepository<TAggregateRoot> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
     abstract protected TId ConvertIdOfRequest(TUpdateCommand request);
 
-    public async Task<Result<TAggregateRoot>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
+    public async Task<Result<TEntity>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
         TId id = ConvertIdOfRequest(request);
 
-        TAggregateRoot? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
+        TEntity? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
         if (currentAgg == null)
         {
             return Result.NotFound();

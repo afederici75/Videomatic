@@ -8,7 +8,7 @@ namespace Company.Videomatic.Application.Features.Videos.Commands;
 public record UpdateVideoCommand(
     int Id, 
     string Name, 
-    string? Description = default) : UpdateAggregateRootCommand<Video>(Id);
+    string? Description = default) : UpdateEntityCommand<Video>(Id);
 
 
 internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>

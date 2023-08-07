@@ -5,7 +5,7 @@ namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 public record CreateArtifactCommand(int VideoId,
                                     string Name,
                                     string Type,
-                                    string? Text) : CreateAggregateRootCommand<Artifact>();
+                                    string? Text) : CreateEntityCommand<Artifact>();
 
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {

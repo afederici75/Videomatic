@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public class Playlist : IAggregateRoot
+public class Playlist : IEntity, IAggregateRootx
 {
     public static Playlist Create(string name, string? description = null)
     {
@@ -58,6 +58,8 @@ public class Playlist : IAggregateRoot
     }
 
     List<PlaylistVideo> _videos = new();
+
+    int IEntity.Id => this.Id;
 
     #endregion
 }

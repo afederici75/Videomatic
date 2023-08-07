@@ -1,13 +1,14 @@
 ﻿using Company.SharedKernel.Abstractions;
+using System;
 
 namespace Company.SharedKernel.Common.CQRS;
 
-public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
+public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IRequest<Result<bool>>
-    where TAggregateRoot : class, IAggregateRoot
+    where TAggregateRoot : class, IEntity
     where TId : class
 {
-    public DeleteAggregateRootHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
+    public DeleteEntityHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
@@ -19,7 +20,10 @@ public abstract class DeleteAggregateRootHandler<TDeleteCommand, TAggregateRoot,
     public async Task<Result<bool>> Handle(TDeleteCommand request, CancellationToken cancellationToken)
     {
         try
-        {            
+        {
+            // int -> TId
+            var id2 = ConvertIdOfRequest(request);
+
             object id = ConvertIdOfRequest(request);
 
             var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);

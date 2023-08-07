@@ -4,7 +4,7 @@ namespace Company.Videomatic.Application.Features.Transcripts.Commands;
 
 public record CreateTranscriptCommand(int VideoId,
                                       string Language,
-                                      IEnumerable<string> Lines) : CreateAggregateRootCommand<Transcript>();
+                                      IEnumerable<string> Lines) : CreateEntityCommand<Transcript>();
 
 public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {

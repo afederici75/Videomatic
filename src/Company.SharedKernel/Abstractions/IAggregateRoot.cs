@@ -3,6 +3,11 @@
 /// <summary>
 /// Marker interface for aggregate roots.
 /// </summary>
-public interface IAggregateRoot
+public interface IAggregateRootx : IEntity
 {
+}
+
+public interface IEntity
+{ 
+    public int Id { get; }
 }

@@ -1,9 +1,12 @@
 ﻿namespace System.Collections.Generic;
 
 public static class IEnumerationExtensions
-{
+{    
     public static IEnumerable<IEnumerable<T>> Page<T>(this IEnumerable<T> source, int pageSize)
     {
+        source = source ?? throw new ArgumentNullException(nameof(source));
+        pageSize = CheckPageSize(pageSize);
+
         // See http://stackoverflow.com/questions/2380413/paging-with-linq-for-objects
         using (var enumerator = source.GetEnumerator())
         {
@@ -26,6 +29,9 @@ public static class IEnumerationExtensions
 
     public static async IAsyncEnumerable<IEnumerable<T>> PageAsync<T>(this IAsyncEnumerable<T> source, int pageSize)
     {
+        source = source ?? throw new ArgumentNullException(nameof(source));
+        pageSize = CheckPageSize(pageSize);
+
         // See http://stackoverflow.com/questions/2380413/paging-with-linq-for-objects
         await using (var enumerator = source.GetAsyncEnumerator())
         {
@@ -45,4 +51,8 @@ public static class IEnumerationExtensions
             }
         }
     }
+
+    static int CheckPageSize(int pageSize)
+        => pageSize > 0 ? pageSize : throw new ArgumentOutOfRangeException(nameof(pageSize), $"{nameof(pageSize)} must be greater than zero.");    
+
 }

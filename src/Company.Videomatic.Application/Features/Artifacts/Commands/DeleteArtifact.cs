@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
-public record DeleteArtifactCommand(int Id) : DeleteAggregateRootCommand<Artifact>(Id);
+public record DeleteArtifactCommand(int Id) : DeleteEntityCommand<Artifact>(Id);
 
 public class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
 {
