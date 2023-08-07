@@ -42,7 +42,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public async Task ImportVideoJob(string url, int? playlistId)
     {
-        await foreach (var v in YouTubeHelper.ImportVideosByUrl(new[] { url }))
+        await foreach (var v in YouTubeHelper.ImportVideos(new[] { url }))
         { 
             var savedVideo = await Repository.AddAsync(v);
 

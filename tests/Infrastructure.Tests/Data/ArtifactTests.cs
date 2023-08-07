@@ -107,14 +107,14 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, false, 4)]
-    [InlineData(null, "Id DESC", false, 4)]
-    [InlineData(null, "Id", false, 4)]
-    [InlineData("another AI generated", "Id   ASC", false, 2)]
-    [InlineData("another AI generated", "Name  DESC", false, 2)]
+    [InlineData(null, null, 4)]
+    [InlineData(null, "Id DESC", 4)]
+    [InlineData(null, "Id", 4)]
+    [InlineData("another AI generated", "Id   ASC", 2)]
+    [InlineData("another AI generated", "Name  DESC", 2)]
     //[InlineData("Philosophy", "TagCount desc, Id asc", false, 1)]
     // TODO: missing paging tests and should add more anyway
-    public async Task GetArtifacts(string? searchText, string? orderBy, bool includeCounts, int expectedResults)
+    public async Task GetArtifacts(string? searchText, string? orderBy, int expectedResults)
     {
         var idx = 0;
         while (idx++ < 3)
@@ -136,9 +136,9 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
                 // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
                 // work but it would be nice to test it here.
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // TODO: replace with Polly
+                // TODO: replace with Polly or something
                 await Task.Delay(2000);
             }
         }

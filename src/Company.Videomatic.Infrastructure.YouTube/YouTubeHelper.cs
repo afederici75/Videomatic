@@ -5,6 +5,7 @@ using Company.Videomatic.Domain.Aggregates.Video;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+//using Google.Apis.YouTube.v3.Data;
 using MediatR;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Cryptography.X509Certificates;
@@ -16,7 +17,7 @@ public class YouTubeHelper : IYouTubeHelper
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubeHelper(IOptions<YouTubeOptions> options, HttpClient client, ISender sender)
+    public YouTubeHelper(IOptions<YouTubeOptions> options, ISender sender)
     {
         Options = options.Value;
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));        
@@ -26,6 +27,12 @@ public class YouTubeHelper : IYouTubeHelper
     readonly ISender Sender;
 
     record AuthResponse();
+
+    public IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> idOrUrls, CancellationToken cancellation)
+    {
+        var videoIds = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();
+        return ImportVideosById(videoIds);
+    }
 
 
     public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId)
@@ -67,7 +74,7 @@ public class YouTubeHelper : IYouTubeHelper
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    string FromStringOrQueryString(string text, string parameterName)
+    static string FromStringOrQueryString(string text, string parameterName)
     {
         if (string.IsNullOrWhiteSpace(text))
             throw new ArgumentNullException(nameof(text));
@@ -80,7 +87,7 @@ public class YouTubeHelper : IYouTubeHelper
             return text;
 
         // https://www.youtube.com/watch?v=V8WuljiJFBI&something=else&more=here
-        text = text.Substring(idx);
+        text = text[idx..];
 
         var args = QueryHelpers.ParseQuery(text);
         if (!args.TryGetValue(parameterName, out var res))
@@ -270,7 +277,7 @@ public class YouTubeHelper : IYouTubeHelper
     {
         var certificate = new X509Certificate2(@"VideomaticService.p12", Options.CertificatePassword, X509KeyStorageFlags.Exportable);
 
-        ServiceAccountCredential credential = new ServiceAccountCredential(
+        ServiceAccountCredential credential = new (
            new ServiceAccountCredential.Initializer(Options.ServiceAccountEmail)
            {
                Scopes = new[] { YouTubeService.Scope.Youtube }

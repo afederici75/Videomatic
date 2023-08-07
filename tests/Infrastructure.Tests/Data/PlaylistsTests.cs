@@ -114,9 +114,9 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
                 // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
                 // work but it would be nice to test it here.
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Replace with Polly
+                // TODO: Replace with Polly or something
                 await Task.Delay(2000);
             }
         }

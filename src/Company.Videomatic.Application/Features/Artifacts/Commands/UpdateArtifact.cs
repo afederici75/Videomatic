@@ -1,8 +1,10 @@
-﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
 public record UpdateArtifactCommand(int Id,
                                     string Name,
-                                    string? Text) : UpdateAggregateRootCommand<Artifact>(Id);
+                                    string? Text) : UpdateEntityCommand<Artifact>(Id);
 
 public class UpdateArtifactCommandValidator : AbstractValidator<UpdateArtifactCommand>
 {

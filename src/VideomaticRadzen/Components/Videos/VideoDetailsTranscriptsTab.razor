@@ -1,0 +1,40 @@
+﻿@using Company.Videomatic.Application.Features.Transcripts;
+
+@foreach (var t in Transcripts)
+{
+    if (t.Lines == null)
+        continue;
+
+    <RadzenRow>
+        Transcript
+        <RadzenText Text="@(" (" + t.LineCount.ToString() + " Lines)")"></RadzenText>
+
+        <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@FullTranscriptText" />
+    </RadzenRow>
+}
+
+@code {
+    [Parameter]
+    public required IEnumerable<TranscriptDTO> Transcripts { get; set; }
+
+    public string FullTranscriptText { get; set; } = string.Empty;
+
+    public string GetFullTranscriptText()
+    {
+        var firstEnglishTrans = Transcripts.FirstOrDefault();
+        if (firstEnglishTrans?.Lines == null)
+            return string.Empty;
+
+        var texts = firstEnglishTrans.Lines.Select(lne => 
+            $"{lne.StartsAt?.ToString(@"hh\:mm\:ss") ?? ""} {lne.Duration?.ToString(@"hh\:mm\:ss") ?? ""} {lne.Text}");
+
+        return string.Join("\n", texts);
+    }
+
+    protected override void OnInitialized()
+    {
+        FullTranscriptText = GetFullTranscriptText();
+
+        base.OnInitialized();
+    }
+}

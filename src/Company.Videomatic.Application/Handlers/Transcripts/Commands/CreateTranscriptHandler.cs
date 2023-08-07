@@ -1,6 +1,8 @@
-﻿namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
 
-public class CreateTranscriptHandler : CreateAggregateRootHandler<CreateTranscriptCommand, Transcript>
+namespace Company.Videomatic.Application.Handlers.Transcripts.Commands;
+
+public class CreateTranscriptHandler : CreateEntitytHandler<CreateTranscriptCommand, Transcript>
 {
     public CreateTranscriptHandler(IRepository<Transcript> repository, IMapper mapper) : base(repository, mapper)
     {

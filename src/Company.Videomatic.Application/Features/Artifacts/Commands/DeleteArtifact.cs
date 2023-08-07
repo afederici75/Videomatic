@@ -1,6 +1,8 @@
-﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
 
-public record DeleteArtifactCommand(int Id) : DeleteAggregateRootCommand<Artifact>(Id);
+namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+
+public record DeleteArtifactCommand(int Id) : DeleteEntityCommand<Artifact>(Id);
 
 public class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
 {

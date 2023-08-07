@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Company.Videomatic.Infrastructure.Data;
 
-public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IAggregateRoot
+public class EfRepository<T> : RepositoryBase<T>, IReadRepository<T>, IRepository<T> where T : class, IEntity
 {
     public EfRepository(VideomaticDbContext dbContext) : base(dbContext)
     {

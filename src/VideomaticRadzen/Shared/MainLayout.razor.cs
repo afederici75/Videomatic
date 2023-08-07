@@ -15,22 +15,22 @@ namespace VideomaticRadzen.Shared
     public partial class MainLayout
     {
         [Inject]
-        protected IJSRuntime JSRuntime { get; set; }
+        protected IJSRuntime JSRuntime { get; set; } = default!;
 
         [Inject]
-        protected NavigationManager NavigationManager { get; set; }
+        protected NavigationManager NavigationManager { get; set; } = default!;
 
         [Inject]
-        protected DialogService DialogService { get; set; }
+        protected DialogService DialogService { get; set; } = default!;
 
         [Inject]
-        protected TooltipService TooltipService { get; set; }
+        protected TooltipService TooltipService { get; set; } = default!;
 
         [Inject]
-        protected ContextMenuService ContextMenuService { get; set; }
+        protected ContextMenuService ContextMenuService { get; set; } = default!;
 
         [Inject]
-        protected NotificationService NotificationService { get; set; }
+        protected NotificationService NotificationService { get; set; } = default!;
 
         private bool sidebarExpanded = true;
 

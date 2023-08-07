@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Company.Videomatic.Domain.Aggregates.Video;
 
-public class Video : IAggregateRoot
+public class Video : IEntity, IAggregateRoot
 {
     public static Video Create(string location, string name, VideoDetails? details = null, string? description = null)
     {
@@ -26,7 +26,6 @@ public class Video : IAggregateRoot
     }
 
 
-
     public VideoId Id { get; private set; } = default!;
     public string Location { get; private set; } = default!;
     public string Name { get; private set; } = default!;
@@ -36,7 +35,6 @@ public class Video : IAggregateRoot
 
     public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
-    
 
     public void ClearTags()
     {
@@ -82,21 +80,23 @@ public class Video : IAggregateRoot
     {       
     }
 
-    [JsonConstructor]
-    private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
-    {
-        Id = id;
-        Location = location;
-        Name = name;
-        IsStarred = isStarred;
-        Description = description;
-        Details = details;
-        _videoTags = tags;
-        _thumbnails = thumbnails;        
-    }
+    //[JsonConstructor]
+    //private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
+    //{
+    //    Id = id;
+    //    Location = location;
+    //    Name = name;
+    //    IsStarred = isStarred;
+    //    Description = description;
+    //    Details = details;
+    //    _videoTags = tags;
+    //    _thumbnails = thumbnails;        
+    //}
 
-    HashSet<VideoTag> _videoTags = new();
-    HashSet<Thumbnail> _thumbnails = new();        
+    int IEntity.Id => this.Id;
+
+    readonly HashSet<VideoTag> _videoTags = new();
+    HashSet<Thumbnail> _thumbnails = new(); // TODO: not readonly == code smell?
 
     #endregion
 }

@@ -1,4 +1,4 @@
-﻿@page "/videoDetails/{videoId:long?}"
+﻿@page "/videoDetails/{videoId:int?}"
 @using Company.Videomatic.Application.Features.Transcripts.Queries;
 @using Company.Videomatic.Application.Features.Transcripts;
 @using Company.Videomatic.Domain.Aggregates.Video;
@@ -6,51 +6,31 @@
 @using VideomaticRadzen.Components.Videos
 @inject ISender Sender
 
-@if (video != null)
+@if (video == null)
 {
-<VideoDetailHeader Video="@video" />
+    return;
 }
+
+<VideoDetailHeader Video="@video" />
 
 <RadzenTabs>
     <Tabs>
         <RadzenTabsItem Text="Description">
-                <RadzenRow>
-                    Original Description
-                    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@(video?.Description)" />
-                </RadzenRow>
-                <RadzenRow>
-                    AI-Generated Description
-                    <RadzenTextArea Style="min-width: 100%" Rows="15" Value="coming soon..." />
-                </RadzenRow>
+            <VideoDetailDescriptionTab Video="@video" />
         </RadzenTabsItem>
         
-        <RadzenTabsItem Text="Transcripts">
-            @foreach (var t in transcripts)
-            {
-                if (t.Lines == null)
-                    continue;
-                
-                <RadzenText Text="@(t.LineCount.ToString())"></RadzenText>
-
-                foreach (var l in t.Lines)
-                {
-                    <RadzenStack Orientation="Orientation.Horizontal">
-                        <RadzenText Text="@(l.StartsAt.ToString())"></RadzenText>
-                        <RadzenText Text="@(l.Duration.ToString())"></RadzenText>
-                        <RadzenText Text="@(l.Text)"></RadzenText>
-                    </RadzenStack>
-                }
-            }                 
+        <RadzenTabsItem Text="@("Transcripts ("+ transcripts.Count().ToString() + ")" )">
+            <VideoDetailsTranscriptsTab Transcripts="@transcripts" />
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Table of Contents (AI)">
+
         </RadzenTabsItem>
 
         <RadzenTabsItem Text="Topics (AI)">
         </RadzenTabsItem>
     </Tabs>
 </RadzenTabs>        
-
 
 @code {
     bool isLoading = false;

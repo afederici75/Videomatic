@@ -1,10 +1,12 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 /// <summary>
 /// This command is used to delete a video from the repository.
 /// </summary>
 /// <param name="VideoId"> The id of the video to delete. </param>
-public record DeleteVideoCommand(int Id) : DeleteAggregateRootCommand<Video>(Id);
+public record DeleteVideoCommand(int Id) : DeleteEntityCommand<Video>(Id);
 
 /// <summary>
 /// The validator for DeleteVideoCommand.

@@ -2,13 +2,11 @@
 
 public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result<int>>
 {
-    private readonly IRepository<Video> _repository;
-    private readonly IMapper _mapper;
+    private readonly IRepository<Video> _repository;    
 
-    public SetVideoTagsHandler(IRepository<Video> repository, IMapper mapper)
+    public SetVideoTagsHandler(IRepository<Video> repository)
     {
-        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));        
     }
 
     public async Task<Result<int>> Handle(SetVideoTags request, CancellationToken cancellationToken = default)

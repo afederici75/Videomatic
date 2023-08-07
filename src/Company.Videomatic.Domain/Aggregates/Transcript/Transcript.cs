@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
-public class Transcript : IAggregateRoot
+public class Transcript : IEntity, IAggregateRoot
 {
     public static Transcript Create(VideoId videoId, string language)
     {
@@ -57,7 +57,9 @@ public class Transcript : IAggregateRoot
 
 
 
-    List<TranscriptLine> _lines = new();    
+    List<TranscriptLine> _lines = new();
+
+    int IEntity.Id => this.Id;
 
     #endregion
 }

@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public class Playlist : IAggregateRoot
+public class Playlist : IEntity, IAggregateRoot
 {
     public static Playlist Create(string name, string? description = null)
     {
@@ -47,17 +47,19 @@ public class Playlist : IAggregateRoot
 
     private Playlist() { }
 
-    [JsonConstructor]
-    private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
-    {
-        Id = id;
-        Name = name;
-        IsStarred = isStarred;
-        Description = description;
-        _videos = videos;
-    }
+    //[JsonConstructor]
+    //private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
+    //{
+    //    Id = id;
+    //    Name = name;
+    //    IsStarred = isStarred;
+    //    Description = description;
+    //    _videos = videos;
+    //}
 
-    List<PlaylistVideo> _videos = new();
+    readonly List<PlaylistVideo> _videos = new();
+
+    int IEntity.Id => this.Id;
 
     #endregion
 }

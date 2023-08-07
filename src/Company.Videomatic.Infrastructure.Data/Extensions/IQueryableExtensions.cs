@@ -1,13 +1,11 @@
-﻿using Ardalis.Specification;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace System.Linq;
 
+// TODO: this stuff might needs some clean up. I don't like the pragmas I had to add to get it to compile without warnings or messages.
+
 public static class IQueryableExtensions
 {
-    const int DefaultPage = 1;
-    const int DefaultPageSize = 10;
-
     public enum SortDirection
     { 
         Asc,
@@ -45,6 +43,9 @@ public static class IQueryableExtensions
 
         Expression<Func<IOrderedQueryable<TEntity>>>? sortMethod = null;
 
+#pragma warning disable CS8603 // Possible null reference return.
+
+#pragma warning disable IDE0066 // Convert switch statement to expression
         switch (sortDirection)
         {
             case SortDirection.Asc when query.Expression.Type == typeof(IOrderedQueryable<TEntity>):
@@ -61,36 +62,36 @@ public static class IQueryableExtensions
                 sortMethod = () => query.OrderByDescending<TEntity, object>(k => null);
                 break;
         }
+#pragma warning restore IDE0066 // Convert switch statement to expression
 
-        var methodCallExpression = (sortMethod.Body as MethodCallExpression);
-        if (methodCallExpression == null)
-            throw new Exception("MethodCallExpression null");
-
+        var methodCallExpression = (sortMethod.Body as MethodCallExpression) ?? throw new Exception("MethodCallExpression null");
         var method = methodCallExpression.Method.GetGenericMethodDefinition();
         var genericSortMethod = method.MakeGenericMethod(typeof(TEntity), prop.Type);
 
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         return (IOrderedQueryable<TEntity>)genericSortMethod.Invoke(query, new object[] { query, sortLambda });
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
-    public static async Task<Page<TDTO>> ToPageAsync<TDTO>(
-        this IQueryable<TDTO> source,
-        int page,
-        int pageSize,
-        CancellationToken cancellationToken = default)
-    {
-        var totalCount = await source.CountAsync(cancellationToken);
+    //public static async Task<Page<TDTO>> ToPageAsync<TDTO>(
+    //    this IQueryable<TDTO> source,
+    //    int page,
+    //    int pageSize,
+    //    CancellationToken cancellationToken = default)
+    //{
+    //    var totalCount = await source.CountAsync(cancellationToken);
 
-        var items = await source
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
+    //    var items = await source
+    //        .Skip((page - 1) * pageSize)
+    //        .Take(pageSize)
+    //        .ToListAsync(cancellationToken);
 
-        return new Page<TDTO>(
-            items,
-            page,
-            pageSize,
-            totalCount);
-    }
+    //    return new Page<TDTO>(
+    //        items,
+    //        page,
+    //        pageSize,
+    //        totalCount);
+    //}
 }

@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 public record CreateVideoCommand(
     string Location,
@@ -10,7 +12,7 @@ public record CreateVideoCommand(
     string PlaylistId,
     string VideoOwnerChannelTitle,
     string VideoOwnerChannelId
-    ) : CreateAggregateRootCommand<Video>();
+    ) : CreateEntityCommand<Video>();
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {

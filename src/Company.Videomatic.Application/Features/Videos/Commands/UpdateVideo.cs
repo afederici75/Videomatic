@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Features.Videos.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
+
+namespace Company.Videomatic.Application.Features.Videos.Commands;
 
 /// <summary>
 /// This command is used to update a video in the repository.
@@ -6,7 +8,7 @@
 public record UpdateVideoCommand(
     int Id, 
     string Name, 
-    string? Description = default) : UpdateAggregateRootCommand<Video>(Id);
+    string? Description = default) : UpdateEntityCommand<Video>(Id);
 
 
 internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>

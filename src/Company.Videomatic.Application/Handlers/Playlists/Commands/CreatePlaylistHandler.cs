@@ -1,6 +1,8 @@
-﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
+﻿using Company.SharedKernel.Common.CQRS;
 
-public sealed class CreatePlaylistHandler : CreateAggregateRootHandler<CreatePlaylistCommand, Playlist>
+namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
+
+public sealed class CreatePlaylistHandler : CreateEntitytHandler<CreatePlaylistCommand, Playlist>
 {
     public CreatePlaylistHandler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
     {

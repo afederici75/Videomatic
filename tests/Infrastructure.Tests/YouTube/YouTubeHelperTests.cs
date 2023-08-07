@@ -97,7 +97,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
     public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IYouTubeHelper helper, string[] ids)
     {
-        await foreach (var video in helper.ImportVideosById(ids))
+        await foreach (var video in helper.ImportVideos(ids))
         {
             video.Name.Should().NotBeNullOrEmpty();
             video.Description.Should().NotBeNullOrEmpty();
