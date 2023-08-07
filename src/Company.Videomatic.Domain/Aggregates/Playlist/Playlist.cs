@@ -47,15 +47,15 @@ public class Playlist : IEntity, IAggregateRoot
 
     private Playlist() { }
 
-    [JsonConstructor]
-    private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
-    {
-        Id = id;
-        Name = name;
-        IsStarred = isStarred;
-        Description = description;
-        _videos = videos;
-    }
+    //[JsonConstructor]
+    //private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
+    //{
+    //    Id = id;
+    //    Name = name;
+    //    IsStarred = isStarred;
+    //    Description = description;
+    //    _videos = videos;
+    //}
 
     readonly List<PlaylistVideo> _videos = new();
 

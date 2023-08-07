@@ -80,18 +80,18 @@ public class Video : IEntity, IAggregateRoot
     {       
     }
 
-    [JsonConstructor]
-    private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
-    {
-        Id = id;
-        Location = location;
-        Name = name;
-        IsStarred = isStarred;
-        Description = description;
-        Details = details;
-        _videoTags = tags;
-        _thumbnails = thumbnails;        
-    }
+    //[JsonConstructor]
+    //private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
+    //{
+    //    Id = id;
+    //    Location = location;
+    //    Name = name;
+    //    IsStarred = isStarred;
+    //    Description = description;
+    //    Details = details;
+    //    _videoTags = tags;
+    //    _thumbnails = thumbnails;        
+    //}
 
     int IEntity.Id => this.Id;
 

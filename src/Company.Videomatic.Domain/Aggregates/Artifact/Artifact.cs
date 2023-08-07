@@ -27,15 +27,15 @@ public class Artifact : IEntity, IAggregateRoot
     { }
 
 
-    [JsonConstructor]
-    private Artifact(ArtifactId id, VideoId videoId, string name, string type, string? text)
-    {
-        Id = id;
-        VideoId = videoId;
-        Name = name;
-        Type = type;
-        Text = text;
-    }
+    //[JsonConstructor]
+    //private Artifact(ArtifactId id, VideoId videoId, string name, string type, string? text)
+    //{
+    //    Id = id;
+    //    VideoId = videoId;
+    //    Name = name;
+    //    Type = type;
+    //    Text = text;
+    //}
 
     int IEntity.Id => this.Id;
 
