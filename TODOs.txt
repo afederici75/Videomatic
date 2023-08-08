@@ -32,6 +32,12 @@ SPRINT
 			which allows him to go to the video or playlist which was just imported
 			- [ ] Possibly send an email?
 
+- [ ] NEW: Generalize some interfaces and reduce complexity. 
+	- See https://chat.openai.com/share/71433e49-94b4-4c7c-b0b3-f1189a2d32a7 for more info.	
+	- [ ] Make sure we return Result<> from all methods that should!
+		- Like IVideoHostingProvider
+
+
 ******************
 Non UI
 ******************

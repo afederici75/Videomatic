@@ -6,7 +6,7 @@ namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVideosCommand, ImportYoutubeVideosResponse>
 {
     readonly IRepository<Video> Repository;
-    readonly IYouTubeImporter YouTubeImporter;
+    readonly IVideoImporter YouTubeImporter;
     readonly IPlaylistService PlaylistService;
     readonly IRepository<Transcript> TranscriptRepository;
     readonly IBackgroundJobClient JobClient;
@@ -14,7 +14,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
     public ImportYoutubeVideosHandler(
         IBackgroundJobClient jobClient, 
         IRepository<Video> repository, 
-        IYouTubeImporter youTubeImporter, 
+        IVideoImporter youTubeImporter, 
         IPlaylistService playlistService,
         IRepository<Transcript> transcriptRepository)
     {

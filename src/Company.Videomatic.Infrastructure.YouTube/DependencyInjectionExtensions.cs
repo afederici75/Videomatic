@@ -12,12 +12,9 @@ public static class DependencyInjectionExtensions
         services.Configure<YouTubeOptions>(section);
 
         // Services
-        services.AddScoped<IYouTubeImporter, YouTubeHelper>();
-        services.AddHttpClient<YouTubeHelper>(client =>
-        {
-            client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
-        });
-
+        services.AddScoped<IVideoHostingProvider, YouTubeVideoHostingProvider>();
+        services.AddScoped<IVideoImporter, YouTubeImporter>();
+        
         return services;
     }   
 }

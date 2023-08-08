@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Abstractions;
 
-public interface IYouTubeImporter
+public interface IVideoImporter
 {
     IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> idOrUrls, CancellationToken cancellation = default);
 

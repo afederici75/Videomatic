@@ -14,11 +14,11 @@ using System.Text;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
-public class YouTubeHelper : IYouTubeImporter
+public class YouTubeImporter : IVideoImporter
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubeHelper(IOptions<YouTubeOptions> options, ISender sender)
+    public YouTubeImporter(IOptions<YouTubeOptions> options, ISender sender)
     {
         Options = options.Value;
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));        
@@ -36,19 +36,20 @@ public class YouTubeHelper : IYouTubeImporter
     }
 
 
-    public async Task<PlaylistInfo> GetPlaylistInformation(string playlistId, CancellationToken cancellation)
+    public async Task<GenericPlaylist> GetPlaylistInformation(string playlistId, CancellationToken cancellation)
     {
-        playlistId = FromStringOrQueryString(playlistId, "list");
-
-        using YouTubeService service = CreateYouTubeService();
-
-        var request = service.Playlists.List("snippet,contentDetails,status");
-        request.Id = playlistId;
-
-        var response = await request.ExecuteAsync(cancellation);
-        var pl = response.Items.Single();
-
-        return new PlaylistInfo(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
+        throw new NotImplementedException();
+        //playlistId = FromStringOrQueryString(playlistId, "list");
+        //
+        //using YouTubeService service = CreateYouTubeService();
+        //
+        //var request = service.Playlists.List("snippet,contentDetails,status");
+        //request.Id = playlistId;
+        //
+        //var response = await request.ExecuteAsync(cancellation);
+        //var pl = response.Items.Single();
+        //
+        //return new GenericPlaylist(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
     }
 
     public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId, CancellationToken cancellation)

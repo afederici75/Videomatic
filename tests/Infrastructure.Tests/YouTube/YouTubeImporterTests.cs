@@ -7,20 +7,16 @@ using Company.Videomatic.Infrastructure.YouTube;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
-using Microsoft.CognitiveServices.Speech.Transcription;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
-using Xunit.Abstractions;
 
 namespace Infrastructure.Tests.YouTube;
 
 [Collection("DbContextTests")]
-public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
+public class YouTubeImporterTests : IClassFixture<DbContextFixture>
 {
-    public YouTubePlaylistsHelperTests(ITestOutputHelper output,
+    public YouTubeImporterTests(ITestOutputHelper output,
         DbContextFixture fixture,
         IOptions<YouTubeOptions> options,
         IRepository<Artifact> artifactRepository,
@@ -28,7 +24,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
         IRepository<Playlist> playlistRepository,
         IRepository<Video> videoRepository,
         ISender sender,
-        IYouTubeImporter importer)
+        IVideoImporter importer)
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
@@ -51,7 +47,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     public IRepository<Playlist> PlaylistRepository { get; }
     public IRepository<Video> VideoRepository { get; }
     public ISender Sender { get; }
-    public IYouTubeImporter Importer { get; }
+    public IVideoImporter Importer { get; }
 
     [Theory]
     [InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
@@ -79,7 +75,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
 
     [Theory]
     [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
-    public async Task ImportPlaylistFromYouTubeToJsonFile([FromServices] IYouTubeImporter helper, string playlistId)
+    public async Task ImportPlaylistFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string playlistId)
     {
         List<Video> videos = new();
         await foreach (var video in helper.ImportVideosOfPlaylist(playlistId))
@@ -95,7 +91,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     [Theory]
     [InlineData(null, new[] { "BBd3aHnVnuE" })]
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
-    public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IYouTubeImporter helper, string[] ids)
+    public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string[] ids)
     {
         await foreach (var video in helper.ImportVideos(ids))
         {
@@ -105,7 +101,7 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
             video.Thumbnails.Should().HaveCount(5);
             video.Tags.Should().NotBeEmpty();
 
-            video.Details.Provider.Should().Be(YouTubeHelper.ProviderId);
+            video.Details.Provider.Should().Be(YouTubeVideoHostingProvider.ProviderId);
             video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
             video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
             video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
@@ -137,8 +133,8 @@ public class YouTubePlaylistsHelperTests : IClassFixture<DbContextFixture>
     }
 
 
-    //[Theory(Skip = "Slow!!!")]
-    [Theory]
+    [Theory(Skip = "Slow to execute. use only when needed.")]
+    //[Theory]
     [InlineData("Alternative Living, Sustainable Future", "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // 
     [InlineData("Google I/O Keynote Films", "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // 
     [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 

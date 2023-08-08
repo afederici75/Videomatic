@@ -6,8 +6,8 @@ namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlaylistsCommand, ImportYoutubePlaylistsResponse>
 {
     readonly IRepository<Playlist> Repository;
-    readonly IYouTubeImporter Importer;
-    readonly IYouTubeHelper Helper;
+    readonly IVideoImporter Importer;
+    readonly IVideoHostingProvider Helper;
     readonly IMapper Mapper;
     readonly IPlaylistService PlaylistService;
     private readonly ISender Sender;
@@ -17,8 +17,8 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
     public ImportYoutubePlaylistsHandler(
         IBackgroundJobClient jobClient, 
         IRepository<Playlist> repository, 
-        IYouTubeImporter youTubeImporter, 
-        IYouTubeHelper youTubeHelper,
+        IVideoImporter youTubeImporter, 
+        IVideoHostingProvider youTubeHelper,
         IMapper mapper, 
         IPlaylistService playlistService,
         ISender sender)
@@ -46,16 +46,18 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
 
     public async Task ImportPlaylistJob(string playlistId)
     {        
-        var videoIds = await Helper.GetPlaylistVideoIds(playlistId);
-        var playlistInfo = await Helper.GetPlaylistInformation(playlistId);
+        throw new NotImplementedException("Should use the new GetPlaylist with inner items");
 
-        var newPlaylist = Playlist.Create(
-            name: $"{playlistInfo.Name} (Imported on {DateTime.Now})",
-            description: playlistInfo.Description);
-
-        var storedPlaylist = await Repository.AddAsync(newPlaylist);
-
-        var req = new ImportYoutubeVideosCommand(videoIds, storedPlaylist.Id);
-        await Sender.Send(req);
+        //var videoIds = (await Helper.GetPlaylistVideo (playlistId)).Select(v => v.Id);
+        //var playlistInfo = await Helper.GetPlaylistInformation(playlistId);
+        //
+        //var newPlaylist = Playlist.Create(
+        //    name: $"{playlistInfo.Name} (Imported on {DateTime.Now})",
+        //    description: playlistInfo.Description);
+        //
+        //var storedPlaylist = await Repository.AddAsync(newPlaylist);
+        //
+        //var req = new ImportYoutubeVideosCommand(videoIds, storedPlaylist.Id);
+        //await Sender.Send(req);
     }
 }
