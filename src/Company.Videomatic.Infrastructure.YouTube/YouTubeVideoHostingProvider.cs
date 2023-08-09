@@ -43,38 +43,42 @@ public class YouTubeVideoHostingProvider : IVideoProvider
                 string? thubUrl = thumbs.Default__?.Url ?? thumbs.Medium?.Url ?? thumbs.High?.Url ?? thumbs.Standard?.Url ?? thumbs.Maxres?.Url;
                 string? pictUrl = thumbs.Maxres?.Url ?? thumbs.Standard?.Url ?? thumbs.High?.Url ?? thumbs.Medium?.Url ?? thumbs.Default__?.Url;
 
-                LocalizationInfo? locInfo = null;
+                NameAndDescription? locInfo = null;
                 if (channel.Snippet.Localized != null)
                     locInfo = new(channel.Snippet.Localized.Title, channel.Snippet.Localized.Description);
 
-                ContentOwnerDetail? contDetails = null;
-                if (channel.ContentOwnerDetails != null)
-                    contDetails = new ContentOwnerDetail(channel.ContentOwnerDetails.ContentOwner, channel.ContentOwnerDetails.TimeLinked);
+                //ContentOwnerDetail? contDetails = null;
+                //if (channel.ContentOwnerDetails != null)
+                //    contDetails = new ContentOwnerDetail(channel.ContentOwnerDetails.ContentOwner, channel.ContentOwnerDetails.TimeLinked);
 
-                GenericChannelTopics? genericChannelTopics = null;
-                if (channel.TopicDetails != null)
-                    genericChannelTopics = new GenericChannelTopics(channel.TopicDetails.TopicIds, channel.TopicDetails.TopicCategories);
+                //GenericChannelTopics? genericChannelTopics = null;
+                //if (channel.TopicDetails != null)
+                //    genericChannelTopics = new GenericChannelTopics(channel.TopicDetails.TopicIds, channel.TopicDetails.TopicCategories);
 
-                GenericChannelStatistcs? genericChannelStatistcs = null; 
-                if (channel.Statistics != null)
-                    genericChannelStatistcs = new GenericChannelStatistcs(
-                        VideoCount: channel.Statistics.VideoCount,
-                        SuscriberCount: channel.Statistics.SubscriberCount,
-                        ViewCount: channel.Statistics.ViewCount);
+                //GenericChannelStatistcs? genericChannelStatistcs = null; 
+                //if (channel.Statistics != null)
+                //    genericChannelStatistcs = new GenericChannelStatistcs(
+                //        VideoCount: channel.Statistics.VideoCount,
+                //        SuscriberCount: channel.Statistics.SubscriberCount,
+                //        ViewCount: channel.Statistics.ViewCount);
 
                 var pl = new GenericChannel(
                     Id: channel.Id,
                     ETag: channel.ETag,
                     Name: channel.Snippet.Title,
                     Description: channel.Snippet.Description,
-                    PublishedAt: channel.Snippet.PublishedAt ?? DateTime.UtcNow,
+                    PublishedAt: channel.Snippet.PublishedAtDateTimeOffset?.UtcDateTime,
                     ThumbnailUrl: thubUrl,
                     PictureUrl: pictUrl,
                     DefaultLanguage: channel.Snippet.DefaultLanguage,
                     LocalizationInfo: locInfo,
-                    ContentOwnerDetail: contDetails,
-                    Topics: genericChannelTopics,
-                    Statistics: genericChannelStatistcs);
+                    Owner: channel.ContentOwnerDetails?.ContentOwner,
+                    TimeCreated: channel.ContentOwnerDetails?.TimeLinkedDateTimeOffset?.UtcDateTime,
+                    TopicCategories: channel.TopicDetails?.TopicCategories ?? Enumerable.Empty<string>(),
+                    TopicIds: channel.TopicDetails?.TopicIds ?? Enumerable.Empty<string>(),
+                    VideoCount: channel.Statistics?.VideoCount,
+                    SuscriberCount: channel.Statistics?.SubscriberCount,
+                    ViewCount: channel.Statistics?.ViewCount);
 
                 yield return pl;
             };
@@ -105,7 +109,7 @@ public class YouTubeVideoHostingProvider : IVideoProvider
                     PictureUrl: playlist.Snippet.Thumbnails.Maxres.Url,
                     EmbedHtml: playlist.Player.EmbedHtml,
                     DefaultLanguage: playlist.Snippet.DefaultLanguage,
-                    LocalizationInfo: new LocalizationInfo(playlist.Snippet.Localized?.Title, playlist.Snippet.Localized?.Description), 
+                    LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title, playlist.Snippet.Localized?.Description), 
                     PrivacyStatus: playlist.Status.PrivacyStatus,
                     VideoCount: Convert.ToInt32(playlist.ContentDetails.ItemCount));
 
@@ -136,7 +140,7 @@ public class YouTubeVideoHostingProvider : IVideoProvider
                     PictureUrl: video.Snippet.Thumbnails.Maxres.Url,
                     EmbedHtml: video.Player.EmbedHtml,
                     DefaultLanguage: video.Snippet.DefaultLanguage,
-                    LocalizationInfo: new LocalizationInfo(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
+                    LocalizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
                     PrivacyStatus: video.Status.PrivacyStatus);
 
                 yield return pl;

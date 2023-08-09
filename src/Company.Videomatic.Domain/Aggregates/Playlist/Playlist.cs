@@ -2,6 +2,22 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
+public record PlaylistOrigin(
+    string Id,
+    string ETag,
+    string ChannelId,
+
+    string Name,
+    string? Description,
+
+    DateTime? PublishedAt,
+
+    string? ThumbnailUrl,
+    string? PictureUrl,
+
+    string? EmbedHtml,
+    string? DefaultLanguage);
+
 public class Playlist : IEntity, IAggregateRoot
 {
     public static Playlist Create(string name, string? description = null)
@@ -16,7 +32,9 @@ public class Playlist : IEntity, IAggregateRoot
     public PlaylistId Id { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
-    public bool IsStarred { get; private set; } = false;
+    public bool IsStarred { get; private set; } = false;    
+
+    public PlaylistOrigin Origin { get; private set; } = default!;
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 
