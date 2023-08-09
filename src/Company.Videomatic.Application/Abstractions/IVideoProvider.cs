@@ -7,18 +7,20 @@ namespace Company.Videomatic.Application.Abstractions;
 /// </summary>
 public interface IVideoProvider
 {
-    IAsyncEnumerable<GenericChannel> GetChannelInformationAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericChannel> GetChannelsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
 
-    IAsyncEnumerable<GenericPlaylist> GetPlaylistInformationAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericPlaylist> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    
+    IAsyncEnumerable<GenericVideo> GetVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
 
-    IAsyncEnumerable<GenericVideo> GetVideoInformationAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericVideo> GetVideosOfPlaylistAsync(string playlistIdOrUrl, CancellationToken cancellation = default);
 }
 
 public static class IVideoHostingProviderExtensions
 {
-    public static async Task<Result<GenericPlaylist>> GetPlaylistInformationAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
+    public static async Task<Result<GenericPlaylist>> GetPlaylistAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
     {
-        await foreach (var item in instance.GetPlaylistInformationAsync(new[] { idsOrUrl }, cancellation))
+        await foreach (var item in instance.GetPlaylistsAsync(new[] { idsOrUrl }, cancellation))
         {
             return Result.Success(item);
         }
@@ -26,9 +28,9 @@ public static class IVideoHostingProviderExtensions
         return Result.NotFound();
     }
 
-    public static async Task<Result<GenericChannel>> GetChannelInformationAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
+    public static async Task<Result<GenericChannel>> GetChannelAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
     {
-        await foreach (var item in instance.GetChannelInformationAsync(new[] { idsOrUrl }, cancellation))
+        await foreach (var item in instance.GetChannelsAsync(new[] { idsOrUrl }, cancellation))
         {
             return Result.Success(item);
         }
@@ -36,9 +38,9 @@ public static class IVideoHostingProviderExtensions
         return Result.NotFound();
     }
 
-    public static async Task<Result<GenericVideo>> GetVideoInformationAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
+    public static async Task<Result<GenericVideo>> GetVideoAsync(this IVideoProvider instance, string idsOrUrl, CancellationToken cancellation = default)
     {
-        await foreach (var item in instance.GetVideoInformationAsync(new[] { idsOrUrl }, cancellation))
+        await foreach (var item in instance.GetVideosAsync(new[] { idsOrUrl }, cancellation))
         {
             return Result.Success(item);
         }

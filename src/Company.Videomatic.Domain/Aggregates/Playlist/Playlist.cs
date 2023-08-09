@@ -20,12 +20,27 @@ public record PlaylistOrigin(
 
 public class Playlist : IEntity, IAggregateRoot
 {
+    public static Playlist Create(PlaylistOrigin origin)
+    {
+        if (origin is null)
+        {
+            throw new ArgumentNullException(nameof(origin));
+        }
+
+        return new Playlist
+        {
+            Name = origin.Name,
+            Description = origin.Description,
+            Origin = origin,
+        };
+    }
+
     public static Playlist Create(string name, string? description = null)
     {
         return new Playlist
         {
             Name = name,
-            Description = description
+            Description = description,            
         };
     }
 
@@ -34,7 +49,7 @@ public class Playlist : IEntity, IAggregateRoot
     public string? Description { get; private set; }
     public bool IsStarred { get; private set; } = false;    
 
-    public PlaylistOrigin Origin { get; private set; } = default!;
+    public PlaylistOrigin? Origin { get; private set; } = default!;
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 

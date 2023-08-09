@@ -39,7 +39,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public async Task ImportVideoJob(string url, int? playlistId)
     {
-        await foreach (var v in YouTubeImporter.ImportVideos(new[] { url }))
+        await foreach (var v in YouTubeImporter.ImportVideosAsync(new[] { url }))
         { 
             var savedVideo = await Repository.AddAsync(v);
 
@@ -54,7 +54,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public async Task ImportTranscriptionsOfVideo(VideoId videoId)
     {
-        await foreach (var transcript in YouTubeImporter.ImportTranscriptions(new[] { videoId }))
+        await foreach (var transcript in YouTubeImporter.ImportTranscriptionsAsync(new[] { videoId }))
         {
             await TranscriptRepository.AddAsync(transcript);
         }

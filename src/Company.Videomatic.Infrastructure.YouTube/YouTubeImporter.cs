@@ -1,16 +1,6 @@
-﻿using Company.Videomatic.Application.Features.Videos.Queries;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
+﻿using Company.SharedKernel.Abstractions;
 using Google.Apis.YouTube.v3;
-//using Google.Apis.YouTube.v3.Data;
-using MediatR;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+using Hangfire;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -18,152 +8,69 @@ public class YouTubeImporter : IVideoImporter
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubeImporter(IOptions<YouTubeOptions> options, ISender sender)
+    public YouTubeImporter(
+        YouTubeService youTubeService,
+        IBackgroundJobClient jobClient,
+        IPlaylistService playlistService,
+        IRepository<Video> videoRepository,
+        IRepository<Playlist> playlistRepository)
     {
-        Options = options.Value;
-        Sender = sender ?? throw new ArgumentNullException(nameof(sender));        
+        YouTubeService = youTubeService ?? throw new ArgumentNullException(nameof(youTubeService));
+        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
+        PlaylistService = playlistService;
+        VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
+        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));        
     }
+    
+    readonly YouTubeService YouTubeService;
+    readonly IBackgroundJobClient JobClient;
+    readonly IPlaylistService PlaylistService;
+    readonly IRepository<Video> VideoRepository;
+    readonly IRepository<Playlist> PlaylistRepository;
 
-    readonly YouTubeOptions Options;
-    readonly ISender Sender;
-
-    record AuthResponse();
-
-    public IAsyncEnumerable<Video> ImportVideos(IEnumerable<string> idOrUrls, CancellationToken cancellation)
+    public async IAsyncEnumerable<Playlist> ImportPlaylistsAsync(IEnumerable<string> idOrUrls, [EnumeratorCancellation] CancellationToken cancellation)        
     {
-        var videoIds = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();
-        return ImportVideosById(videoIds, cancellation);
-    }
-
-
-    public async Task<GenericPlaylist> GetPlaylistInformation(string playlistId, CancellationToken cancellation)
-    {
-        throw new NotImplementedException();
-        //playlistId = FromStringOrQueryString(playlistId, "list");
-        //
-        //using YouTubeService service = CreateYouTubeService();
-        //
-        //var request = service.Playlists.List("snippet,contentDetails,status");
-        //request.Id = playlistId;
-        //
-        //var response = await request.ExecuteAsync(cancellation);
-        //var pl = response.Items.Single();
-        //
-        //return new GenericPlaylist(pl.Id, pl.Snippet.Title, pl.Snippet.Description);
-    }
-
-    public async IAsyncEnumerable<PlaylistDTO> GetPlaylistsOfChannel(string channelId, CancellationToken cancellation)
-    {
-        using YouTubeService service = CreateYouTubeService();
+        var ids = idOrUrls.Select(x => FromStringOrQueryString(x, "list")).ToArray();
         
-        var request = service.Playlists.List("snippet,contentDetails,status");
-        request.ChannelId = channelId;
-        request.MaxResults = 50;
-        
-        do
-        {
-            var response = await request.ExecuteAsync(cancellation);
-
-            foreach (var playlist in response.Items)
-            {
-                var pl = new PlaylistDTO(-1, playlist.Snippet.Title, playlist.Snippet.Description, Convert.ToInt32(playlist.ContentDetails.ItemCount));
-                yield return pl;
-            };
-
-            // Pages
-            request.PageToken = response.NextPageToken;
-        }
-        while (!string.IsNullOrEmpty(request.PageToken));
-    }
-
-    static string FromStringOrQueryString(string text, string parameterName)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-            throw new ArgumentNullException(nameof(text));
-
-        if (string.IsNullOrWhiteSpace(parameterName))
-            throw new ArgumentException($"'{nameof(parameterName)}' cannot be null or whitespace.", nameof(parameterName));
-        
-        var idx = text.IndexOf("?");
-        if (idx <0)
-            return text;
-
-        // https://www.youtube.com/watch?v=V8WuljiJFBI&something=else&more=here
-        text = text[idx..];
-
-        var args = QueryHelpers.ParseQuery(text);
-        if (!args.TryGetValue(parameterName, out var res))
-            throw new Exception($"Parameter '{parameterName}' not found in '{text}'");
-
-        return res!;        
-    }
-
-    public async Task<IEnumerable<string>> GetPlaylistVideoIds(string playlistId, CancellationToken cancellation)
-    {
-        playlistId = FromStringOrQueryString(playlistId, "list");
-
-        using YouTubeService service = CreateYouTubeService();
-        var request = service.PlaylistItems.List("contentDetails,status");
-        request.PlaylistId = playlistId;
-        request.MaxResults = 50;
-
-        var videoIds = new List<string>();
-        do
-        {
-            var response = await request.ExecuteAsync(cancellation);
-
-            videoIds.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
-            
-            // Pages
-            request.PageToken = response.NextPageToken;
-        }
-        while (!string.IsNullOrEmpty(request.PageToken));
-
-        return videoIds;
-    }
-
-    public async IAsyncEnumerable<Video> ImportVideosOfPlaylist(string playlistId, CancellationToken cancellation)
-    {
-        playlistId = FromStringOrQueryString(playlistId, "list");
-
-        using YouTubeService service = CreateYouTubeService();
-        var request = service.PlaylistItems.List("contentDetails,status");
-        request.PlaylistId = playlistId;
+        var request = YouTubeService.Playlists.List("contentDetails,status,snippet,player");
+        request.Id = string.Join(',', ids);
         request.MaxResults = 50;
 
         do
         {
             var response = await request.ExecuteAsync();
 
-            var videoIds = response.Items.Select(i => i.ContentDetails.VideoId).ToArray();
+            foreach (var ytPlaylist in response.Items)
+            { 
+                var origin = new PlaylistOrigin(
+                    Id: ytPlaylist.Id,
+                    ETag: ytPlaylist.ETag,
+                    ChannelId: ytPlaylist.Snippet.ChannelId,
+                    Name: ytPlaylist.Snippet.Title,
+                    Description: ytPlaylist.Snippet.Description,    
+                    PublishedAt: ytPlaylist.Snippet.PublishedAtDateTimeOffset?.UtcDateTime,
+                    ThumbnailUrl: ytPlaylist.Snippet.Thumbnails.Default__.Url,
+                    PictureUrl: ytPlaylist.Snippet.Thumbnails.High.Url,
+                    EmbedHtml: ytPlaylist.Player.EmbedHtml,
+                    DefaultLanguage: ytPlaylist.Snippet.DefaultLanguage);
 
-            await foreach (var video in ImportVideosById(videoIds, cancellation))
-            {
-                yield return video;
-            };
-
+                var playlist = Playlist.Create(origin);
+                yield return playlist;
+            }
+           
             // Pages
             request.PageToken = response.NextPageToken;
         }
         while (!string.IsNullOrEmpty(request.PageToken));       
     }
-
-    public IAsyncEnumerable<Video> ImportVideosByUrl(IEnumerable<string> youtubeVideoUrls, CancellationToken cancellation)
+    
+    public async IAsyncEnumerable<Video> ImportVideosAsync(IEnumerable<string> idOrUrls, [EnumeratorCancellation] CancellationToken cancellation)
     {
-        // TODO: this is ghetto code
-        var idsOnly = youtubeVideoUrls
-            .Select(url => url.Replace("https://www.youtube.com/watch?v=", string.Empty))
-            .ToArray();
+        var ids = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();        
 
-        return ImportVideosById(idsOnly, cancellation);
-    }
-
-    public async IAsyncEnumerable<Video> ImportVideosById(IEnumerable<string> youtubeVideoIds, [EnumeratorCancellation] CancellationToken cancellation)
-    {        
         // TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
-        using YouTubeService service = CreateYouTubeService();
-        var request = service.Videos.List("snippet,contentDetails,id,status");
-        request.Id = string.Join(',', youtubeVideoIds);
+        var request = YouTubeService.Videos.List("snippet,contentDetails,id,status");
+        request.Id = string.Join(',', ids);
         request.MaxResults = 50;
 
         do
@@ -181,7 +88,7 @@ public class YouTubeImporter : IVideoImporter
                     details: new VideoDetails(
                         Provider: ProviderId,
                         ProviderVideoId: item.Id,
-                        VideoPublishedAt: item.Snippet.PublishedAt ?? new DateTime(),
+                        VideoPublishedAt: item.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
                         VideoOwnerChannelTitle: item.Snippet.ChannelTitle,
                         VideoOwnerChannelId: item.Snippet.ChannelId));
 
@@ -208,7 +115,7 @@ public class YouTubeImporter : IVideoImporter
         while (!string.IsNullOrEmpty(request.PageToken));
     }
 
-    public async IAsyncEnumerable<Transcript> ImportTranscriptions(IEnumerable<VideoId> videoIds, CancellationToken cancellation)
+    public async IAsyncEnumerable<Transcript> ImportTranscriptionsAsync(IEnumerable<VideoId> videoIds, [EnumeratorCancellation] CancellationToken cancellation)
     {
         /*
          using YouTubeService service = CreateYouTubeService();
@@ -284,25 +191,27 @@ public class YouTubeImporter : IVideoImporter
             }
         }
     }
-
-    YouTubeService CreateYouTubeService()
+   
+    static string FromStringOrQueryString(string text, string parameterName)
     {
-        var certificate = new X509Certificate2(@"VideomaticService.p12", Options.CertificatePassword, X509KeyStorageFlags.Exportable);
+        if (string.IsNullOrWhiteSpace(text))
+            throw new ArgumentNullException(nameof(text));
 
-        ServiceAccountCredential credential = new (
-           new ServiceAccountCredential.Initializer(Options.ServiceAccountEmail)
-           {
-               Scopes = new[] { YouTubeService.Scope.Youtube }
-           }.FromCertificate(certificate));
+        if (string.IsNullOrWhiteSpace(parameterName))
+            throw new ArgumentException($"'{nameof(parameterName)}' cannot be null or whitespace.", nameof(parameterName));
 
-        // Create the service.
-        var service = new YouTubeService(new BaseClientService.Initializer()
-        {
-            HttpClientInitializer = credential,
-            ApplicationName = AppDomain.CurrentDomain.FriendlyName
-        });
+        var idx = text.IndexOf("?");
+        if (idx < 0)
+            return text;
 
-        return service;
+        // https://www.youtube.com/watch?v=V8WuljiJFBI&something=else&more=here
+        text = text[idx..];
+
+        var args = QueryHelpers.ParseQuery(text);
+        if (!args.TryGetValue(parameterName, out var res))
+            throw new Exception($"Parameter '{parameterName}' not found in '{text}'");
+
+        return res!;
     }
 
 }

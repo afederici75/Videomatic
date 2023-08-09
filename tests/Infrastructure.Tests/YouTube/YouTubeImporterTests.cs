@@ -55,19 +55,19 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public async Task ImportVideosOfPlaylistInMemory(string playlistId)
     {        
         var ids = new List<VideoId>();
-        await foreach (Video video in Importer.ImportVideosOfPlaylist(playlistId))
+        await foreach (Playlist playlist in Importer.ImportPlaylistsAsync(new[] { playlistId }))
         {
-            Output.WriteLine($"[{video.Id}]: {video.Name}");
+            Output.WriteLine($"[{playlist.Id}]: {playlist.Name}");
 
-            video.Id.Should().BeNull();
-            video.Name.Should().NotBeEmpty();
+            playlist.Id.Should().BeNull();
+            playlist.Name.Should().NotBeEmpty();
         }
     }
 
     [Fact]
     public async Task ImportTranscriptionsOfSeededVideosInMemory()
     {
-        await foreach (var transcript in Importer.ImportTranscriptions(new VideoId[] { 1, 2 }))
+        await foreach (var transcript in Importer.ImportTranscriptionsAsync(new VideoId[] { 1, 2 }))
         {
             Output.WriteLine($"[{transcript.Language}]: {transcript.Lines.Count} Line(s))");
         }
@@ -77,15 +77,16 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
     public async Task ImportPlaylistFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string playlistId)
     {
-        List<Video> videos = new();
-        await foreach (var video in helper.ImportVideosOfPlaylist(playlistId))
-        {
-            videos.Add(video);
-        }
+        throw new NotImplementedException("Useless?");
+        //List<Video> videos = new();
+        //await foreach (var video in helper.ImportPlaylistsAsync(new[] { playlistId }))
+        //{
+        //    videos.Add(video);
+        //}
 
-        // Saves a file with the list of videos
-        var json = JsonSerializer.Serialize(videos);
-        await File.WriteAllTextAsync($"Playlist-{playlistId}.json", json);
+        //// Saves a file with the list of videos
+        //var json = JsonSerializer.Serialize(videos);
+        //await File.WriteAllTextAsync($"Playlist-{playlistId}.json", json);
     }
 
     [Theory]
@@ -93,7 +94,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
     public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string[] ids)
     {
-        await foreach (var video in helper.ImportVideos(ids))
+        await foreach (var video in helper.ImportVideosAsync(ids))
         {
             video.Name.Should().NotBeNullOrEmpty();
             video.Description.Should().NotBeNullOrEmpty();
@@ -101,7 +102,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
             video.Thumbnails.Should().HaveCount(5);
             video.Tags.Should().NotBeEmpty();
 
-            video.Details.Provider.Should().Be(YouTubeVideoHostingProvider.ProviderId);
+            video.Details.Provider.Should().Be(YouTubeVideoProvider.ProviderId);
             video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
             video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
             video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
@@ -122,7 +123,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
             { 2, "BBd3aHnVnuE" }  // If Reality is NON-DUAL, Why are there so...
         };
 
-        await foreach (var transcript in Importer.ImportTranscriptions(videos.Select(x => x.Key)))
+        await foreach (var transcript in Importer.ImportTranscriptionsAsync(videos.Select(x => x.Key)))
         {
             string src = videos[transcript.VideoId];
 
@@ -144,7 +145,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
 
         var max = 1000;
         var pageSize = 50;
-        await foreach (IEnumerable<Video> videos in Importer.ImportVideosOfPlaylist(playlistId).PageAsync(pageSize))
+        await foreach (IEnumerable<Video> videos in Importer.ImportPlaylistsAsync(new[] { playlistId }).PageAsync(pageSize))
         {
             // Video
             await VideoRepository.AddRangeAsync(videos);
@@ -161,7 +162,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
         // Transcript
         foreach (var idPage in ids.Page(50))
         {
-            var transcripts = await Importer.ImportTranscriptions(idPage).ToListAsync();
+            var transcripts = await Importer.ImportTranscriptionsAsync(idPage).ToListAsync();
             await TranscriptRepository.AddRangeAsync(transcripts);
 
             Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");

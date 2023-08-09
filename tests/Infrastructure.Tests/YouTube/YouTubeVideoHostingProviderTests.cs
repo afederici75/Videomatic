@@ -25,7 +25,7 @@ public class YouTubeVideoHostingProviderTests
     {
         var count = 0;
 
-        await foreach (var p in Provider.GetPlaylistInformationAsync(idsOrUrls, token))
+        await foreach (var p in Provider.GetPlaylistsAsync(idsOrUrls, token))
         {
             count++;
             Output.WriteLine(p.ToString());
@@ -47,7 +47,7 @@ public class YouTubeVideoHostingProviderTests
     {
         var count = 0;
 
-        await foreach (var p in Provider.GetChannelInformationAsync(idsOrUrls, token))
+        await foreach (var p in Provider.GetChannelsAsync(idsOrUrls, token))
         {
             count++;
             Output.WriteLine(p.ToString());
@@ -68,7 +68,7 @@ public class YouTubeVideoHostingProviderTests
     {
         var count = 0;
 
-        await foreach (var p in Provider.GetVideoInformationAsync(idsOrUrls, token))
+        await foreach (var p in Provider.GetVideosAsync(idsOrUrls, token))
         {
             count++;
             Output.WriteLine(p.ToString());
