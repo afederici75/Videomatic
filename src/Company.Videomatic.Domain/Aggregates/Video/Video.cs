@@ -5,7 +5,7 @@ namespace Company.Videomatic.Domain.Aggregates.Video;
 
 public class Video : IEntity, IAggregateRoot
 {
-    public static Video Create(string location, string name, VideoDetails? details = null, string? description = null)
+    public static Video Create(string location, string name, string pictureUrl, string thumbnailUrl, VideoDetails? details = null, string? description = null)
     {
         return new Video
         {
@@ -13,6 +13,8 @@ public class Video : IEntity, IAggregateRoot
             Name = name,
             Description = description,
             Details = details ?? VideoDetails.CreateEmpty(),
+            PictureUrl = pictureUrl,
+            ThumbnailUrl = thumbnailUrl,
             
             _thumbnails = new ()
             {
@@ -35,6 +37,9 @@ public class Video : IEntity, IAggregateRoot
 
     public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
+
+    public string ThumbnailUrl { get; private set; }
+    public string PictureUrl { get; private set; }
 
     public void ClearTags()
     {

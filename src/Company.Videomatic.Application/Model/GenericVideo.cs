@@ -18,4 +18,5 @@ public record GenericVideo(
     string? EmbedHtml,
     string? DefaultLanguage,
     NameAndDescription LocalizationInfo,
-    string PrivacyStatus) : GenericImportable(Id, ETag, Name, Description, PublishedAt, ThumbnailUrl, PictureUrl);
+    string PrivacyStatus,
+    IEnumerable<string> Tags) : GenericImportable(Id, ETag, Name, Description, PublishedAt, ThumbnailUrl, PictureUrl);

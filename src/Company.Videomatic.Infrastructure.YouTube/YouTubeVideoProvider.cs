@@ -163,25 +163,4 @@ public class YouTubeVideoProvider : IVideoProvider
 
         return res!;
     }
-
-
-    //YouTubeService CreateYouTubeService()
-    //{
-    //    var certificate = new X509Certificate2(@"VideomaticService.p12", Options.CertificatePassword, X509KeyStorageFlags.Exportable);
-
-    //    ServiceAccountCredential credential = new (
-    //       new ServiceAccountCredential.Initializer(Options.ServiceAccountEmail)
-    //       {
-    //           Scopes = new[] { YouTubeService.Scope.Youtube }
-    //       }.FromCertificate(certificate));
-
-    //    // Create the service.
-    //    var service = new YouTubeService(new BaseClientService.Initializer()
-    //    {
-    //        HttpClientInitializer = credential,
-    //        ApplicationName = AppDomain.CurrentDomain.FriendlyName
-    //    });
-
-    //    return service;
-    //} 
 }
