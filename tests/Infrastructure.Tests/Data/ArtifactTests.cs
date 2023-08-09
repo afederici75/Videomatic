@@ -106,7 +106,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         await Sender.Send(new DeleteVideoCommand(videoId));
     }
 
-    [Theory]
+    [Theory()]//DisplayName = "Nice name")]
     [InlineData(null, null, 4)]
     [InlineData(null, "Id DESC", 4)]
     [InlineData(null, "Id", 4)]

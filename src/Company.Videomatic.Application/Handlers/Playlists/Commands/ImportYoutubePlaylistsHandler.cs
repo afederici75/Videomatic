@@ -7,7 +7,7 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
 {
     readonly IRepository<Playlist> Repository;
     readonly IVideoImporter Importer;
-    readonly IVideoHostingProvider Helper;
+    readonly IVideoProvider Helper;
     readonly IMapper Mapper;
     readonly IPlaylistService PlaylistService;
     private readonly ISender Sender;
@@ -18,7 +18,7 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
         IBackgroundJobClient jobClient, 
         IRepository<Playlist> repository, 
         IVideoImporter youTubeImporter, 
-        IVideoHostingProvider youTubeHelper,
+        IVideoProvider youTubeHelper,
         IMapper mapper, 
         IPlaylistService playlistService,
         ISender sender)

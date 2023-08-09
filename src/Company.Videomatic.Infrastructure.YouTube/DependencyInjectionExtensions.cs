@@ -12,7 +12,7 @@ public static class DependencyInjectionExtensions
         services.Configure<YouTubeOptions>(section);
 
         // Services
-        services.AddScoped<IVideoHostingProvider, YouTubeVideoHostingProvider>();
+        services.AddScoped<IVideoProvider, YouTubeVideoHostingProvider>();
         services.AddScoped<IVideoImporter, YouTubeImporter>();
         
         return services;

@@ -42,6 +42,10 @@ SPRINT
 Non UI
 ******************
 
+- [ ] At some point I will need to have Github:
+	- [ ] Run tests and abort commit if tests fail
+	- [ ] Deploy to Azure if tests pass
+
 - [ ] I need thumbnails for Playlist as well. I also don't think I need 5 thumbs for Videos;
 	- [ ] Consolidate the multiple thumbs into one and add it as Owned to both Playlist and Video.
 

@@ -10,12 +10,12 @@ namespace Company.Videomatic.Infrastructure.YouTube.Handlers.Playlists;
 
 public class GetYoutubePlaylistsHandler : IRequestHandler<GetYoutubePlaylistsQuery, IEnumerable<GenericPlaylist>>
 {
-    public GetYoutubePlaylistsHandler(IVideoHostingProvider youTubeHelper)
+    public GetYoutubePlaylistsHandler(IVideoProvider youTubeHelper)
     {
         YouTubeHelper = youTubeHelper ?? throw new ArgumentNullException(nameof(youTubeHelper));
     }
 
-    public IVideoHostingProvider YouTubeHelper { get; }
+    public IVideoProvider YouTubeHelper { get; }
 
     public async Task<IEnumerable<GenericPlaylist>> Handle(GetYoutubePlaylistsQuery request, CancellationToken cancellationToken)
     {

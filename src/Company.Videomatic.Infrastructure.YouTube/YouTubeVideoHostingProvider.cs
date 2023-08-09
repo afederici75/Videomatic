@@ -11,7 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
-public class YouTubeVideoHostingProvider : IVideoHostingProvider
+public class YouTubeVideoHostingProvider : IVideoProvider
 {
     public const string ProviderId = "YOUTUBE";
 

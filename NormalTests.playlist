@@ -1,0 +1,501 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="Infrastructure.Tests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Infrastructure.Tests.AzureSpeech" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="AzureSpeechTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.AzureSpeech.AzureSpeechTests.TranscribeBigWav" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="TranscribeBigWav" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.AzureSpeech.AzureSpeechTests.TranscribeWav" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="TranscribeWav" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Infrastructure.Tests.Data" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ArtifactsTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.ArtifactsTests.CreateArtifact" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateArtifact" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.ArtifactsTests.DeleteArtifact" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeleteArtifact" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.ArtifactsTests.GetArtifacts" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetArtifacts(searchText: null, orderBy: null, expectedResults: 4)" />
+                        <Property Name="DisplayName" Value="GetArtifacts(searchText: null, orderBy: &quot;Id DESC&quot;, expectedResults: 4)" />
+                        <Property Name="DisplayName" Value="GetArtifacts(searchText: null, orderBy: &quot;Id&quot;, expectedResults: 4)" />
+                        <Property Name="DisplayName" Value="GetArtifacts(searchText: &quot;another AI generated&quot;, orderBy: &quot;Id   ASC&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetArtifacts(searchText: &quot;another AI generated&quot;, orderBy: &quot;Name  DESC&quot;, expectedResults: 2)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.ArtifactsTests.UpdateArtifact" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="UpdateArtifact" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="FullTextSearchTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.FullTextSearchTests.FT_VideoContains" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;describes\&quot; OR \&quot;offer\&quot;&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;huxley\&quot; AND \&quot;gods\&quot;&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;huxley AND gods\&quot;&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;huxley\&quot; AND \&quot;god\&quot;&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;huxley\&quot; OR \&quot;gods\&quot;&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;huxley OR gods\&quot;&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;huxj*&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;\&quot;hux*\&quot;&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;huxl&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;huxley&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;FORMSOF(Inflectional, gods)&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;FORMSOF(Inflectional, god)&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;god&quot;, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="FT_VideoContains(contains: &quot;gods&quot;, expectedResults: 1)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.FullTextSearchTests.FT_VideoFreeText" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="FT_VideoFreeText(freeText: &quot;huxley AND gods&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="FT_VideoFreeText(freeText: &quot;huxley gods&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="FT_VideoFreeText(freeText: &quot;huxley&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoFreeText(freeText: &quot;god&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="FT_VideoFreeText(freeText: &quot;gods&quot;, expectedResults: 1)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="PlaylistsTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.PlaylistsTests.CreatePlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreatePlaylist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.PlaylistsTests.DeletePlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeletePlaylist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.PlaylistsTests.GetPlaylists" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: &quot;Philosophy&quot;, orderBy: &quot;Id desc&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: &quot;Philosophy&quot;, orderBy: &quot;Name  DESC&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: &quot;Philosophy&quot;, orderBy: &quot;Id   ASC&quot;, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: null, orderBy: &quot;Id&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: null, orderBy: &quot;Id DESC&quot;, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetPlaylists(searchText: null, orderBy: null, expectedResults: 2)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.PlaylistsTests.UpdatePlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="UpdatePlaylist" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TranscriptTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.TranscriptTests.CreateTranscript" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateTranscript" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.TranscriptTests.DeleteTranscript" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeleteTranscript" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="VideosTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.CreateVideo" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateVideo" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.DeleteVideo" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DeleteVideo" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.GetVideos" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetVideos(playlistIds: [1, 2], searchText: &quot;gods&quot;, orderBy: null, includeTags: True, selectedThumbnail: null, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="GetVideos(playlistIds: [1, 2], searchText: null, orderBy: null, includeTags: True, selectedThumbnail: null, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetVideos(playlistIds: [1], searchText: null, orderBy: null, includeTags: True, selectedThumbnail: null, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetVideos(playlistIds: null, searchText: null, orderBy: null, includeTags: True, selectedThumbnail: null, expectedResults: 2)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.GetVideosById" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetVideosById(videoIds: [3], IncludeThumbnail: null, expectedResults: 0)" />
+                        <Property Name="DisplayName" Value="GetVideosById(videoIds: [2], IncludeThumbnail: null, expectedResults: 1)" />
+                        <Property Name="DisplayName" Value="GetVideosById(videoIds: [1, 2], IncludeThumbnail: null, expectedResults: 2)" />
+                        <Property Name="DisplayName" Value="GetVideosById(videoIds: [1], IncludeThumbnail: null, expectedResults: 1)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.ImportOneVideo" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportOneVideo" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.ImportPlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportPlaylist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.LinksTwoVideoToPlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="LinksTwoVideoToPlaylist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.Data.VideosTests.UpdateVideo" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="UpdateVideo" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Infrastructure.Tests.SemanticKernel" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="WinterOlympicsEmbeddingTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.SemanticKernel.WinterOlympicsEmbeddingTests.LoadWinterOlympicsData" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="LoadWinterOlympicsData" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Infrastructure.Tests.YouTube" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="YouTubeImporterTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.AuthenticateGoogleOAuth" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="AuthenticateGoogleOAuth" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.ImportPlaylistFromYouTubeToJsonFile" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportPlaylistFromYouTubeToJsonFile(helper: null, playlistId: &quot;PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e&quot;)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.ImportTranscriptionsFromYouTubeVideosToJsonFile" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportTranscriptionsFromYouTubeVideosToJsonFile" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.ImportTranscriptionsOfSeededVideosInMemory" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportTranscriptionsOfSeededVideosInMemory" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.ImportVideosFromYouTubeToJsonFile" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportVideosFromYouTubeToJsonFile(helper: null, ids: [&quot;BBd3aHnVnuE&quot;])" />
+                        <Property Name="DisplayName" Value="ImportVideosFromYouTubeToJsonFile(helper: null, ids: [&quot;4Y4YSpF6d6w&quot;, &quot;tWZQPCU4LJI&quot;, &quot;BBd3aHnVnuE&quot;, &quot;BFfb2P5wxC0&quot;, &quot;dQw4w9WgXcQ&quot;, ···])" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.ImportVideosOfPlaylistInMemory" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ImportVideosOfPlaylistInMemory(playlistId: &quot;PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu&quot;)" />
+                        <Property Name="DisplayName" Value="ImportVideosOfPlaylistInMemory(playlistId: &quot;PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb&quot;)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeImporterTests.SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="YouTubeVideoHostingProviderTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeVideoHostingProviderTests.GetChannelInformation" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetChannelInformation(idsOrUrls: [&quot;UC0YvoAYGgdOfySQSLcxtu1w&quot;], expectedCount: 1, token: null)" />
+                        <Property Name="DisplayName" Value="GetChannelInformation(idsOrUrls: [&quot;UCso1uUOa86mottj1jrawysg&quot;], expectedCount: 1, token: null)" />
+                        <Property Name="DisplayName" Value="GetChannelInformation(idsOrUrls: [&quot;UC0YvoAYGgdOfySQSLcxtu1w&quot;, &quot;UCso1uUOa86mottj1jrawysg&quot;], expectedCount: 2, token: null)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeVideoHostingProviderTests.GetPlaylistInformation" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetPlaylistInformation(idsOrUrls: [&quot;https://www.youtube.com/watch?v=WlFz5olN3V8&amp;list=P&quot;···], expectedCount: 1, token: null)" />
+                        <Property Name="DisplayName" Value="GetPlaylistInformation(idsOrUrls: [&quot;PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu&quot;], expectedCount: 1, token: null)" />
+                        <Property Name="DisplayName" Value="GetPlaylistInformation(idsOrUrls: [&quot;PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb&quot;, &quot;PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu&quot;], expectedCount: 2, token: null)" />
+                        <Property Name="DisplayName" Value="GetPlaylistInformation(idsOrUrls: [&quot;PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb&quot;], expectedCount: 1, token: null)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Infrastructure.Tests.YouTube.YouTubeVideoHostingProviderTests.GetVideoInformation" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="GetVideoInformation(idsOrUrls: [&quot;BBd3aHnVnuE&quot;], expectedCount: 1, token: null)" />
+                        <Property Name="DisplayName" Value="GetVideoInformation(idsOrUrls: [&quot;4Y4YSpF6d6w&quot;, &quot;BBd3aHnVnuE&quot;], expectedCount: 2, token: null)" />
+                        <Property Name="DisplayName" Value="GetVideoInformation(idsOrUrls: [&quot;BFfb2P5wxC0&quot;, &quot;dQw4w9WgXcQ&quot;, &quot;BBd3aHnVnuE&quot;], expectedCount: 3, token: null)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+        <Rule Match="All">
+          <Property Name="Project" Value="Domain.Tests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Domain.Tests" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="ArtifactTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.ArtifactTests.CreateArtifact" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateArtifact" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="PlaylistTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.PlaylistTests.CreatePlaylist" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreatePlaylist" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.PlaylistTests.DoesNotLinkVideoToNullPlaylistId" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="DoesNotLinkVideoToNullPlaylistId" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.PlaylistTests.LinkVideoToPlaylists" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="LinkVideoToPlaylists" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="TranscriptTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.TranscriptTests.CreateEmptyTranscriptAndAddLines" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateEmptyTranscriptAndAddLines" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.TranscriptTests.CreateTranscriptWithLines" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateTranscriptWithLines" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="VideoTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.VideoTests.CreateVideo" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="CreateVideo" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.VideoTests.NoDuplicateTagsAndClearTags" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="NoDuplicateTagsAndClearTags" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.VideoTests.SetThumbnails" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="SetThumbnails" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Domain.Tests.VideoTests.VideoGetsDefault5ThumbnailsAndNoOther" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="VideoGetsDefault5ThumbnailsAndNoOther" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+        <Rule Match="All">
+          <Property Name="Project" Value="Application.Tests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="Application.Tests.Validation" />
+              <Rule Match="Any">
+                <Rule Match="All">
+                  <Property Name="Class" Value="PlaylistRequestsValidatorTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.PlaylistRequestsValidatorTests.ValidateCreatePlaylistCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateCreatePlaylistCommand(name: &quot;Play list&quot;, description: &quot;Description&quot;, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateCreatePlaylistCommand(name: &quot;Play list&quot;, description: null, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateCreatePlaylistCommand(name: &quot;&quot;, description: null, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateCreatePlaylistCommand(name: null, description: null, expectedErrors: 1)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.PlaylistRequestsValidatorTests.ValidateDeletePlaylistCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateDeletePlaylistCommand(id: 1, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateDeletePlaylistCommand(id: -1, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateDeletePlaylistCommand(id: 0, expectedErrors: 1)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.PlaylistRequestsValidatorTests.ValidateGetPlaylistQuery" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateGetPlaylistQuery(filter: null, orderBy: null, page: -1, pageSize: -1, expectedErrors: 2)" />
+                        <Property Name="DisplayName" Value="ValidateGetPlaylistQuery(filter: null, orderBy: null, page: null, pageSize: null, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateGetPlaylistQuery(filter: &quot;filter&quot;, orderBy: null, page: 1, pageSize: 1, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateGetPlaylistQuery(filter: &quot;&quot;, orderBy: null, page: 1, pageSize: 1, expectedErrors: 0)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.PlaylistRequestsValidatorTests.ValidateUpdatePlaylistCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateUpdatePlaylistCommand(id: 2, name: &quot;Play list&quot;, description: &quot;Description&quot;, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateUpdatePlaylistCommand(id: 1, name: &quot;Play list&quot;, description: null, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateUpdatePlaylistCommand(id: 1, name: null, description: null, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateUpdatePlaylistCommand(id: -1, name: &quot;&quot;, description: null, expectedErrors: 2)" />
+                        <Property Name="DisplayName" Value="ValidateUpdatePlaylistCommand(id: -1, name: null, description: null, expectedErrors: 2)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Rule Match="All">
+                  <Property Name="Class" Value="VideoRequestsValidatorTests" />
+                  <Rule Match="Any">
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.VideoRequestsValidatorTests.ValidateCreateVideoCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateCreateVideoCommand(location: &quot;http://somethingElse/2 &quot;, title: &quot;Video title&quot;, description: &quot;Description&quot;, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateCreateVideoCommand(location: &quot;http://something/1&quot;, title: null, description: null, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateCreateVideoCommand(location: &quot;&quot;, title: &quot;&quot;, description: null, expectedErrors: 2)" />
+                        <Property Name="DisplayName" Value="ValidateCreateVideoCommand(location: null, title: null, description: null, expectedErrors: 2)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.VideoRequestsValidatorTests.ValidateDeleteVideoCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateDeleteVideoCommand(id: 1, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateDeleteVideoCommand(id: -1, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateDeleteVideoCommand(id: 0, expectedErrors: 1)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.VideoRequestsValidatorTests.ValidateGetVideosQuery" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateGetVideosQuery(playlistIds: [], filter: null, orderBy: null, page: -1, pageSize: 0, includeCounts: False, includeThumbnail: Standard, expectedErrors: 3)" />
+                        <Property Name="DisplayName" Value="ValidateGetVideosQuery(playlistIds: null, filter: null, orderBy: null, page: -1, pageSize: 0, includeCounts: False, includeThumbnail: Standard, expectedErrors: 2)" />
+                        <Property Name="DisplayName" Value="ValidateGetVideosQuery(playlistIds: null, filter: &quot;   &quot;, orderBy: &quot;&quot;, page: -1, pageSize: 0, includeCounts: False, includeThumbnail: Standard, expectedErrors: 3)" />
+                        <Property Name="DisplayName" Value="ValidateGetVideosQuery(playlistIds: null, filter: &quot;filter_here&quot;, orderBy: &quot;order_here&quot;, page: 1, pageSize: 1, includeCounts: False, includeThumbnail: Standard, expectedErrors: 0)" />
+                      </Rule>
+                    </Rule>
+                    <Rule Match="All">
+                      <Property Name="TestWithNormalizedFullyQualifiedName" Value="Application.Tests.Validation.VideoRequestsValidatorTests.ValidateUpdateVideoCommand" />
+                      <Rule Match="Any">
+                        <Property Name="DisplayName" Value="ValidateUpdateVideoCommand(id: 2, title: &quot;Play list&quot;, description: &quot;Description&quot;, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateUpdateVideoCommand(id: 1, title: &quot;Play list&quot;, description: null, expectedErrors: 0)" />
+                        <Property Name="DisplayName" Value="ValidateUpdateVideoCommand(id: 1, title: null, description: null, expectedErrors: 1)" />
+                        <Property Name="DisplayName" Value="ValidateUpdateVideoCommand(id: -1, title: &quot;&quot;, description: null, expectedErrors: 2)" />
+                        <Property Name="DisplayName" Value="ValidateUpdateVideoCommand(id: -1, title: null, description: null, expectedErrors: 2)" />
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+                <Property Name="Class" Value="ArtifactValidatorTests" />
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

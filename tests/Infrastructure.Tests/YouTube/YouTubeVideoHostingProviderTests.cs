@@ -6,14 +6,14 @@ public class YouTubeVideoHostingProviderTests
 {
     public YouTubeVideoHostingProviderTests(
         ITestOutputHelper output,
-        IVideoHostingProvider videoHostingProvider)
+        IVideoProvider videoHostingProvider)
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
         Provider = videoHostingProvider ?? throw new ArgumentNullException(nameof(videoHostingProvider));
     }
 
     public ITestOutputHelper Output { get; }
-    public IVideoHostingProvider Provider { get; }
+    public IVideoProvider Provider { get; }
 
     [Theory]
     [InlineData(new[] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 1, null)] // Alternative Living, Sustainable Future
