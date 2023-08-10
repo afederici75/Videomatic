@@ -50,18 +50,21 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public IVideoImporter Importer { get; }
 
     [Theory]
-    [InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
-    [InlineData("PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylistInMemory(string playlistId)
+    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, null)] // Alternative Living, Sustainable Future
+    [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, null)] // Google I/O Keynote Films
+    public async Task ImportVideosOfPlaylists(string[] playlistIds, CancellationToken cancellationToken)
     {        
-        var ids = new List<VideoId>();
-        await foreach (Playlist playlist in Importer.ImportPlaylistsAsync(new[] { playlistId }))
-        {
-            Output.WriteLine($"[{playlist.Id}]: {playlist.Name}");
+        
 
-            playlist.Id.Should().BeNull();
-            playlist.Name.Should().NotBeEmpty();
-        }
+        throw new NotImplementedException("");
+        //var ids = new List<VideoId>();
+        //await foreach (Playlist playlist in Importer.ImportPlaylistsAsync(new[] { playlistId }))
+        //{
+        //    Output.WriteLine($"[{playlist.Id}]: {playlist.Name}");
+        //
+        //    playlist.Id.Should().BeNull();
+        //    playlist.Name.Should().NotBeEmpty();
+        //}
     }
 
     [Fact]
@@ -94,24 +97,26 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
     public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string[] ids)
     {
-        await foreach (var video in helper.ImportVideosAsync(ids))
-        {
-            video.Name.Should().NotBeNullOrEmpty();
-            video.Description.Should().NotBeNullOrEmpty();
-            video.Location.Should().NotBeNullOrEmpty();
-            video.Thumbnails.Should().HaveCount(5);
-            video.Tags.Should().NotBeEmpty();
+        throw new NotImplementedException("Useless?");
 
-            video.Details.Provider.Should().Be(YouTubeVideoProvider.ProviderId);
-            video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
-            video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
-            video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
+        //await foreach (var video in helper.ImportVideosAsync(ids))
+        //{
+        //    video.Name.Should().NotBeNullOrEmpty();
+        //    video.Description.Should().NotBeNullOrEmpty();
+        //    video.Location.Should().NotBeNullOrEmpty();
+        //    video.Thumbnails.Should().HaveCount(5);
+        //    video.Tags.Should().NotBeEmpty();
+
+        //    video.Details.Provider.Should().Be(YouTubeVideoProvider.ProviderId);
+        //    video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
+        //    video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
+        //    video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
 
 
-            // Saves a file with the video information
-            var json = JsonSerializer.Serialize(video);
-            await File.WriteAllTextAsync($"Video-{video.Details.ProviderVideoId}.json", json);
-        }
+        //    // Saves a file with the video information
+        //    var json = JsonSerializer.Serialize(video);
+        //    await File.WriteAllTextAsync($"Video-{video.Details.ProviderVideoId}.json", json);
+        //}
     }
 
     [Fact]
@@ -141,32 +146,33 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 
     public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistName, string playlistId)
     {
-        var ids = new List<VideoId>();
+        throw new NotImplementedException();
+        //var ids = new List<VideoId>();
 
-        var max = 1000;
-        var pageSize = 50;
-        await foreach (IEnumerable<Video> videos in Importer.ImportPlaylistsAsync(new[] { playlistId }).PageAsync(pageSize))
-        {
-            // Video
-            await VideoRepository.AddRangeAsync(videos);
-            ids.AddRange(videos.Select(x => x.Id));
+        //var max = 1000;
+        //var pageSize = 50;
+        //await foreach (IEnumerable<Video> videos in Importer.ImportPlaylistsAsync(new[] { playlistId }).PageAsync(pageSize))
+        //{
+        //    // Video
+        //    await VideoRepository.AddRangeAsync(videos);
+        //    ids.AddRange(videos.Select(x => x.Id));
             
-            //Output.WriteLine($"[{video.Id}]: {video.Name}");            
-            max -= pageSize;
-            if (max<=0) break;
-        }
-        // Playlist 
-        var playlist = await Sender.Send(new CreatePlaylistCommand(playlistName, $"Imported from YouTube playlist '{playlistId}'."));
-        await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
+        //    //Output.WriteLine($"[{video.Id}]: {video.Name}");            
+        //    max -= pageSize;
+        //    if (max<=0) break;
+        //}
+        //// Playlist 
+        //var playlist = await Sender.Send(new CreatePlaylistCommand(playlistName, $"Imported from YouTube playlist '{playlistId}'."));
+        //await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
 
-        // Transcript
-        foreach (var idPage in ids.Page(50))
-        {
-            var transcripts = await Importer.ImportTranscriptionsAsync(idPage).ToListAsync();
-            await TranscriptRepository.AddRangeAsync(transcripts);
+        //// Transcript
+        //foreach (var idPage in ids.Page(50))
+        //{
+        //    var transcripts = await Importer.ImportTranscriptionsAsync(idPage).ToListAsync();
+        //    await TranscriptRepository.AddRangeAsync(transcripts);
 
-            Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");
-        }
+        //    Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");
+        //}
     }
 
     //[Theory]

@@ -39,17 +39,18 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public async Task ImportVideoJob(string url, int? playlistId)
     {
-        await foreach (var v in YouTubeImporter.ImportVideosAsync(new[] { url }))
-        { 
-            var savedVideo = await Repository.AddAsync(v);
-
-            JobClient.Enqueue<ImportYoutubeVideosHandler>(x => x.ImportTranscriptionsOfVideo(savedVideo.Id));
-
-            if (!playlistId.HasValue)
-                continue;
-            
-            var linkRes = await PlaylistService.LinkPlaylistToVideos(playlistId.Value, new[] { savedVideo.Id });            
-        }
+        throw new NotImplementedException();
+        //await foreach (var v in YouTubeImporter.ImportVideosAsync(new[] { url }))
+        //{ 
+        //    var savedVideo = await Repository.AddAsync(v);
+        //
+        //    JobClient.Enqueue<ImportYoutubeVideosHandler>(x => x.ImportTranscriptionsOfVideo(savedVideo.Id));
+        //
+        //    if (!playlistId.HasValue)
+        //        continue;
+        //    
+        //    var linkRes = await PlaylistService.LinkPlaylistToVideos(playlistId.Value, new[] { savedVideo.Id });            
+        //}
     }
 
     public async Task ImportTranscriptionsOfVideo(VideoId videoId)

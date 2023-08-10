@@ -1,8 +1,4 @@
-﻿using Company.SharedKernel.Abstractions;
-using Google.Apis.YouTube.v3;
-using MediatR;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Runtime.CompilerServices;
+﻿using Google.Apis.YouTube.v3;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -118,7 +114,8 @@ public class YouTubeVideoProvider : IVideoProvider
                     EmbedHtml: video.Player.EmbedHtml,
                     DefaultLanguage: video.Snippet.DefaultLanguage,
                     LocalizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
-                    PrivacyStatus: video.Status.PrivacyStatus);
+                    PrivacyStatus: video.Status.PrivacyStatus,
+                    Tags: video.Snippet.Tags);
 
                 yield return pl;
             };

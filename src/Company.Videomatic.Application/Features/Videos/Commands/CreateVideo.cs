@@ -11,7 +11,9 @@ public record CreateVideoCommand(
     string ChannelId,
     string PlaylistId,
     string VideoOwnerChannelTitle,
-    string VideoOwnerChannelId
+    string VideoOwnerChannelId,
+    string ThumbnailUrl,
+    string PictureUrl
     ) : CreateEntityCommand<Video>();
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
@@ -27,5 +29,7 @@ internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoComman
         RuleFor(x => x.PlaylistId).NotEmpty();
         RuleFor(x => x.VideoOwnerChannelTitle).NotEmpty();
         RuleFor(x => x.VideoOwnerChannelId).NotEmpty();
+        RuleFor(x => x.PictureUrl).NotEmpty();
+        RuleFor(x => x.ThumbnailUrl).NotEmpty();
     }
 }

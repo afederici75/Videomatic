@@ -95,6 +95,8 @@ public class DbSeeder : IDbSeeder
                 "effect on its market and (4) uses no more of the original work than necessary for the video's " +
                 "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
                 "poster.",
+                pictureUrl: "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg",
+                thumbnailUrl: "https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg",
                 details: new VideoDetails(
                     Provider: "YOUTUBE",
                     ProviderVideoId: "n1kmKpjk_8E",
@@ -173,6 +175,8 @@ public class DbSeeder : IDbSeeder
                 "\n" +
                 "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
                 "For more information, please see: https://www.arshabodha.org/",
+                pictureUrl: "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg",
+                thumbnailUrl: "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg",
                 details: new VideoDetails(
                     Provider: "YOUTUBE",
                     ProviderVideoId: "BBd3aHnVnuE",

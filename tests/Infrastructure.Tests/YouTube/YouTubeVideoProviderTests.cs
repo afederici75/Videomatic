@@ -2,9 +2,9 @@
 
 namespace Infrastructure.Tests.YouTube;
 
-public class YouTubeVideoHostingProviderTests
+public class YouTubeVideoProviderTests
 {
-    public YouTubeVideoHostingProviderTests(
+    public YouTubeVideoProviderTests(
         ITestOutputHelper output,
         IVideoProvider videoHostingProvider)
     {

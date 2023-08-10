@@ -21,7 +21,9 @@ public class CreateVideoCommandBuilder
             ChannelId: None,
             PlaylistId: None,
             VideoOwnerChannelTitle: None,
-            VideoOwnerChannelId: None);
+            VideoOwnerChannelId: None,
+            ThumbnailUrl: "http://1",
+            PictureUrl: "http://2");
     }
 
     /// <summary>

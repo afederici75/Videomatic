@@ -11,12 +11,12 @@ public record GenericVideo(
 
     DateTime? PublishedAt,
 
-    string? ThumbnailUrl,
-    string? PictureUrl,
+    string ThumbnailUrl,
+    string PictureUrl,
 
     // New
     string? EmbedHtml,
     string? DefaultLanguage,
     NameAndDescription LocalizationInfo,
     string PrivacyStatus,
-    IEnumerable<string> Tags) : GenericImportable(Id, ETag, Name, Description, PublishedAt, ThumbnailUrl, PictureUrl);
+    IEnumerable<string> Tags) : GenericImportable(Id, ETag, Name, Description, PublishedAt, PictureUrl, ThumbnailUrl);

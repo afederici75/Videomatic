@@ -1,8 +1,5 @@
 ﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 using Google.Apis.YouTube.v3;
-using Hangfire;
-using static Google.Apis.Requests.BatchRequest;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -13,161 +10,117 @@ public class YouTubeImporter : IVideoImporter
     public YouTubeImporter(
         YouTubeService youTubeService,
         IVideoProvider provider,
-        IBackgroundJobClient jobClient,
         IPlaylistService playlistService,
         IRepository<Video> videoRepository,
-        IRepository<Playlist> playlistRepository)
+        IRepository<Playlist> playlistRepository,
+        ISender sender)
     {
         YouTubeService = youTubeService ?? throw new ArgumentNullException(nameof(youTubeService));
         Provider = provider;
-        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
         PlaylistService = playlistService;
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
-        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));        
+        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
+        Sender = sender ?? throw new ArgumentNullException(nameof(sender));
     }
     
     readonly YouTubeService YouTubeService;
     readonly IVideoProvider Provider;
-    readonly IBackgroundJobClient JobClient;
     readonly IPlaylistService PlaylistService;
     readonly IRepository<Video> VideoRepository;
     readonly IRepository<Playlist> PlaylistRepository;
+    readonly ISender Sender;
 
     public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation)        
     {
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(50))
         {
             var playlists = page.Select(gpl => MapToPlaylist(gpl));
-
             IEnumerable<Playlist> res = await PlaylistRepository.AddRangeAsync(playlists, cancellation);
+
+            PlaylistRepository.Foo();
+
+            foreach (var pl in res)
+            { 
+                await ImportVideosAsync(new[] { pl.Origin.Id }, cancellation);
+            }
         }
+    }    
 
-        //var ids = idsOrUrls.Select(x => FromStringOrQueryString(x, "list")).ToArray();
-        //
-        //var request = YouTubeService.Playlists.List("contentDetails,status,snippet,player");
-        //request.Id = string.Join(',', ids);
-        //request.MaxResults = 50;
-        //
-        //do
-        //{
-        //    var response = await request.ExecuteAsync();
-        //
-        //    var playlists = response.Items.Select(ytpl => MapToPlaylist(ytpl));
-        //
-        //    IEnumerable<Playlist> res = await PlaylistRepository.AddRangeAsync(playlists, cancellation);
-        //
-        //    foreach (var pl in res)
-        //    {
-        //        //var jobId = JobClient.Enqueue<YouTubeImporter>(async x => await x.ImportVideosAsync(null, pl.Id, cancellation));
-        //    }
-        //
-        //    // Pages
-        //    request.PageToken = response.NextPageToken;
-        //}
-        //while (!string.IsNullOrEmpty(request.PageToken));       
-    }
-
-    public async Task ImportVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation)
-    {
-        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(50))
-        {
-            var videos = page.Select(gv => MapToVideo(gv));
-
-            IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);
-        }
-
-        //var ids = idOrUrls.Select(x => FromStringOrQueryString(x, "v")).ToArray();        
-        //
-        //// TODO: should page, e.g. if we send 200 ids it should page in 50 items blocks
-        //var request = YouTubeService.Videos.List("snippet,contentDetails,id,status");
-        //request.Id = string.Join(',', ids);
-        //request.MaxResults = 50;
-        //
-        //do
-        //{
-        //    var response = await request.ExecuteAsync(cancellation);
-        //
-        //    var videoIds = response.Items.Select(v => v.Id).ToArray();
-        //
-        //    foreach (var item in response.Items)
-        //    {
-        //        MapToVideo(item);
-        //    }
-        //
-        //    // Pages
-        //    request.PageToken = response.NextPageToken;
-        //}
-        //while (!string.IsNullOrEmpty(request.PageToken));
-    }
+    public Task ImportVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation)
+      =>  InternalImportVideosAsync(idsOrUrls, null, cancellation);  
 
     public async Task ImportVideosAsync(PlaylistId playlistId, CancellationToken cancellation)
     {
         var pl = await PlaylistRepository.GetByIdAsync(playlistId, cancellation);
         if (pl?.Origin?.Id == null)
-            return; // TODO: log issue
+            throw new ArgumentException($"Playlist '{playlistId}' does not exist have an origin or does not exist.", nameof(playlistId));
 
-        await ImportVideosAsync(new[] { pl.Origin.Id }, cancellation);
+        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.Id, cancellation).PageAsync(50))
+        {
+            var videoIds = videoPage.Select(v => v.Id);
+
+            await InternalImportVideosAsync(videoIds, playlistId, cancellation);
+        }        
     }
 
 
     public async IAsyncEnumerable<Transcript> ImportTranscriptionsAsync(IEnumerable<VideoId> videoIds, [EnumeratorCancellation] CancellationToken cancellation)
-    {
-        throw new NotImplementedException();
-        //var response = await Sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
-        //Dictionary<int, string> videoIdsByVideoId = response.Value.ToDictionary(x => x.VideoId, x => x.ProviderVideoId);
+    {        
+        var response = await Sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
+        Dictionary<int, string> videoIdsByVideoId = response.Value.ToDictionary(x => x.VideoId, x => x.ProviderVideoId);
 
-        //using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
+        using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
 
-        //foreach (var responsePage in response.Value.Page(50))
-        //{
-        //    cancellation.ThrowIfCancellationRequested();
+        foreach (var responsePage in response.Value.Page(50))
+        {
+            cancellation.ThrowIfCancellationRequested();
 
-        //    var currentSet = responsePage.ToHashSet();
-        //    var badTranscripts = new List<Transcript>();
-        //    var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
-        //    var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
-        //    var allTranscripts = api.GetTranscripts(
-        //        requestedIds, 
-        //        languages: languages,
-        //        continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            var currentSet = responsePage.ToHashSet();
+            var badTranscripts = new List<Transcript>();
+            var requestedIds = currentSet.Select(x => x.ProviderVideoId).ToList();
+            var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
+            var allTranscripts = api.GetTranscripts(
+                requestedIds, 
+                languages: languages,
+                continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
 
-        //    var badOnes = allTranscripts.Item2!.Select(badId =>
-        //    {
-        //        var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
-        //        return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
-        //    });
+            var badOnes = allTranscripts.Item2!.Select(badId =>
+            {
+                var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
+                return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
+            });
 
-        //    foreach (var badOne in badOnes)
-        //    {
-        //        yield return badOne;
+            foreach (var badOne in badOnes)
+            {
+                yield return badOne;
 
-        //        cancellation.ThrowIfCancellationRequested();
-        //    }
+                cancellation.ThrowIfCancellationRequested();
+            }
 
-        //    // ------------------------------
-        //    Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
-        //    IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
+            // ------------------------------
+            Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
+            IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
 
-        //    foreach (var v in videoIdsByVideoId)
-        //    {
-        //        if (!fetchedTranscripts!.TryGetValue(v.Value, out var ytTranscriptItems))
-        //        {
-        //            // No transcript?
-        //            continue;
-        //        }
+            foreach (var v in videoIdsByVideoId)
+            {
+                if (!fetchedTranscripts!.TryGetValue(v.Value, out var ytTranscriptItems))
+                {
+                    // No transcript?
+                    continue;
+                }
 
-        //        // ------------------------------
-        //        var newTranscr = Transcript.Create(v.Key, "US");
-        //        foreach (var item in ytTranscriptItems)
-        //        {
-        //            newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
-        //        }
+                // ------------------------------
+                var newTranscr = Transcript.Create(v.Key, "US");
+                foreach (var item in ytTranscriptItems)
+                {
+                    newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
+                }
 
-        //        yield return newTranscr;
+                yield return newTranscr;
 
-        //        cancellation.ThrowIfCancellationRequested();
-        //    }
-        //}
+                cancellation.ThrowIfCancellationRequested();
+            }
+        }
     }
    
     static string FromStringOrQueryString(string text, string parameterName)
@@ -213,8 +166,9 @@ public class YouTubeImporter : IVideoImporter
         var video = Video.Create(
                             location: $"https://www.youtube.com/watch?v={item.Id}",
                             name: item.Name,
-                            description: item.Description,
-                            
+                            pictureUrl: item.PictureUrl,
+                            thumbnailUrl: item.ThumbnailUrl,
+                            description: item.Description,                            
                             details: new VideoDetails(
                                 Provider: ProviderId,
                                 ProviderVideoId: item.Id,
@@ -227,7 +181,7 @@ public class YouTubeImporter : IVideoImporter
         video.AddTags(tags);
 
         // Thumbnails
-        video.ThumbnailUrl = item.ThumbnailUrl;
+        //video.ThumbnailUrl = item.ThumbnailUrl;
         //var t = item.Thumbnails;
         //video.SetThumbnail(ThumbnailResolution.Default, t.Default__?.Url ?? "", Convert.ToInt32(t.Default__?.Height ?? -1), Convert.ToInt32(t.Default__?.Width ?? -1));
         //video.SetThumbnail(ThumbnailResolution.High, t.High?.Url ?? "", Convert.ToInt32(t.High?.Height ?? -1), Convert.ToInt32(t.High?.Width ?? -1));
@@ -238,4 +192,16 @@ public class YouTubeImporter : IVideoImporter
         return video;
     }
 
+    async Task InternalImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? playlistId, CancellationToken cancellation)
+    {
+        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(50))
+        {
+            var videos = page.Select(gv => MapToVideo(gv));
+
+            IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);
+
+            if (playlistId != null)
+                await PlaylistService.LinkPlaylistToVideos(playlistId, res.Select(x => x.Id).ToList());
+        }
+    }
 }
