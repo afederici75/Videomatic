@@ -43,7 +43,7 @@ public class YouTubeImporter : IVideoImporter
             {
                 var res = await PlaylistRepository.AddAsync(pl, cancellation);
 
-                JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(res.Id, cancellation));
+                var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(res.Id, cancellation));
             }                                    
         }
     }

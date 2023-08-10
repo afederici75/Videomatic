@@ -82,7 +82,7 @@ public class YouTubeVideoProvider : IVideoProvider
                     PictureUrl: playlist.Snippet.Thumbnails.Maxres.Url,
                     EmbedHtml: playlist.Player.EmbedHtml,
                     DefaultLanguage: playlist.Snippet.DefaultLanguage,
-                    LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title, playlist.Snippet.Localized?.Description), 
+                    LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title ?? "??", playlist.Snippet.Localized?.Description), 
                     PrivacyStatus: playlist.Status.PrivacyStatus,
                     VideoCount: Convert.ToInt32(playlist.ContentDetails.ItemCount));
 
@@ -101,7 +101,12 @@ public class YouTubeVideoProvider : IVideoProvider
             var response = await request.ExecuteAsync(cancellation);
 
             foreach (var video in response.Items)
-            {
+            {               
+                var picUrl = video.Snippet.Thumbnails.Maxres?.Url ?? video.Snippet.Thumbnails.Standard?.Url ?? video.Snippet.Thumbnails.High?.Url ?? video.Snippet.Thumbnails.Medium?.Url ?? video.Snippet.Thumbnails.Default__?.Url
+                              ?? "http://nodata";
+                var thumbUrl  = video.Snippet.Thumbnails.Default__?.Url ?? video.Snippet.Thumbnails.Medium?.Url ?? video.Snippet.Thumbnails.High?.Url ?? video.Snippet.Thumbnails.Standard?.Url ?? video.Snippet.Thumbnails.Maxres?.Url
+                              ?? "http://nodata";
+
                 var pl = new GenericVideo(
                     Id: video.Id,
                     ETag: video.ETag,
@@ -109,13 +114,13 @@ public class YouTubeVideoProvider : IVideoProvider
                     Name: video.Snippet.Title,
                     Description: video.Snippet.Description,
                     PublishedAt: video.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                    ThumbnailUrl: video.Snippet.Thumbnails.Default__.Url,
-                    PictureUrl: video.Snippet.Thumbnails.Maxres.Url,
+                    ThumbnailUrl: thumbUrl,
+                    PictureUrl: picUrl,
                     EmbedHtml: video.Player.EmbedHtml,
                     DefaultLanguage: video.Snippet.DefaultLanguage,
                     LocalizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
                     PrivacyStatus: video.Status.PrivacyStatus,
-                    Tags: video.Snippet.Tags);
+                    Tags: video.Snippet.Tags ?? Array.Empty<string>());
 
                 yield return pl;
             };
@@ -126,17 +131,22 @@ public class YouTubeVideoProvider : IVideoProvider
     {
         var request = YouTubeService.PlaylistItems.List("snippet");
         request.PlaylistId = FromStringOrQueryString(playlistIdOrUrl, "list");
-        
-        var response = await request.ExecuteAsync(cancellation);
+
+        Google.Apis.YouTube.v3.Data.PlaylistItemListResponse response;
         do
         {
+            response = await request.ExecuteAsync(cancellation);
+
             var videoIds = response.Items.Select(i => i.Snippet.ResourceId.VideoId);
+
             await foreach (var video in GetVideosAsync(videoIds, cancellation))
             {
                 yield return video;
             }
+
+            request.PageToken = response.NextPageToken;
         }
-        while (response.NextPageToken != null);
+        while (request.PageToken != null);
     }
  
     static string FromStringOrQueryString(string text, string parameterName)

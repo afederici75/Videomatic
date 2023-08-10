@@ -1,14 +1,4 @@
-﻿using Application.Tests.Helpers;
-using Ardalis.Result;
-using Company.Videomatic.Application.Features.Artifacts;
-using Company.Videomatic.Application.Features.Artifacts.Commands;
-using Company.Videomatic.Application.Features.Artifacts.Queries;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Infrastructure.Tests.Data.Helpers;
-using Microsoft.Extensions.Configuration;
-
-namespace Infrastructure.Tests.Data;
+﻿namespace Infrastructure.Tests.Data;
 
 [Collection("DbContextTests")]
 public class ArtifactsTests : IClassFixture<DbContextFixture>
@@ -16,130 +6,82 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     public ArtifactsTests(
         DbContextFixture fixture,
         IRepository<Artifact> repository,
-        ISender sender,
-        IConfiguration configuration)
+        ISender sender)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
-        Configuration = configuration;
     }
 
     public DbContextFixture Fixture { get; }
     public IRepository<Artifact> Repository { get; }
     public ISender Sender { get; }
-    public IConfiguration Configuration { get; }
-
-    async Task<VideoId> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
-    {
-        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
-        var response = await Sender.Send(createCommand);
-        return response.Value.Id;
-    }
 
     [Fact]
-    public async Task CreateArtifact()
+    public async Task CreateAndDeleteArtifact()
     {
-        var videoId = await GenerateDummyVideoAsync();
-        var createCommand = CreateArtifactCommandBuilder.WithDummyValues(videoId);
-
+        // Creates
+        var createCommand = CreateArtifactCommandBuilder.WithDummyValues(1);
         var response = await Sender.Send(createCommand);
 
         // Checks
         response.IsSuccess.Should().BeTrue();
+        
+        var artifact = await Repository.GetByIdAsync(response.Value.Id);    
 
-        var artifact = Fixture.DbContext.Artifacts.Single(x => x.Id == response.Value.Id);
+        artifact.Should().NotBeNull();
+        artifact!.Text.Should().Be(createCommand.Text);
+        artifact!.Type.Should().Be(createCommand.Type);
+        artifact!.VideoId.Value.Should().Be(createCommand.VideoId);
 
-        artifact.Text.Should().Be(createCommand.Text);
-        artifact.Type.Should().Be(createCommand.Type);
-        artifact.VideoId.Should().Be(videoId);
-
-        await Sender.Send(new DeleteVideoCommand(videoId));         
-    }
-
-    [Fact]
-    public async Task DeleteArtifact()
-    {
-        var videoId = await GenerateDummyVideoAsync();
-        var createdResponse = await Sender.Send(CreateArtifactCommandBuilder.WithDummyValues(videoId));
-
-        // Executes
-        var delReq = new DeleteArtifactCommand(createdResponse.Value.Id);
-        var deletedResponse = await Sender.Send(delReq);
-
-        // Checks
-        createdResponse.IsSuccess.Should().BeTrue();
-
-        var row = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == createdResponse.Value.Id)
-            .FirstOrDefaultAsync();
-
-        row.Should().BeNull();
-
-        await Sender.Send(new DeleteVideoCommand(videoId));
+        // Deletes
+        var ok = await Sender.Send(new DeleteArtifactCommand(artifact.Id));        
+        ok.IsSuccess.Should().Be(true);
     }
 
     [Fact]
     public async Task UpdateArtifact()
     {
-        // Prepares        
-        var videoId = await GenerateDummyVideoAsync();
-        var response = await Sender.Send(CreateArtifactCommandBuilder.WithDummyValues(videoId));
+        // Creates
+        var createCommand = CreateArtifactCommandBuilder.WithDummyValues(1);
+        var response = await Sender.Send(createCommand);
+
+        // Checks
+        response.IsSuccess.Should().BeTrue();
 
         // Executes
-        var updateCommand = new UpdateArtifactCommand(
-            response.Value.Id,
-            "New Name",
-            "New Description");
-
+        var updateCommand = new UpdateArtifactCommand(response.Value.Id, "New Name", "New Description");        
         Result<Artifact> updatedResponse = await Sender.Send(updateCommand);
 
         // Checks
-        var video = await Fixture.DbContext.Artifacts
-            .Where(x => x.Id == response.Value.Id)
-            .SingleAsync();
+        updatedResponse.IsSuccess.Should().BeTrue();
 
-        video.Text.Should().BeEquivalentTo(updateCommand.Text);
-        video.Name.Should().BeEquivalentTo(updateCommand.Name);
+        var dbArtifact = await Repository.GetByIdAsync(updatedResponse.Value.Id);        
+        
+        dbArtifact.Should().NotBeNull();
+        dbArtifact!.Text.Should().BeEquivalentTo(updateCommand.Text);
+        dbArtifact!.Name.Should().BeEquivalentTo(updateCommand.Name);
 
-        await Sender.Send(new DeleteVideoCommand(videoId));
+        // Deletes
+        var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
+        ok.IsSuccess.Should().Be(true);
     }
 
-    [Theory()]//DisplayName = "Nice name")]
+    [Theory()]
     [InlineData(null, null, 4)]
     [InlineData(null, "Id DESC", 4)]
     [InlineData(null, "Id", 4)]
-    [InlineData("another AI generated", "Id   ASC", 2)]
-    [InlineData("another AI generated", "Name  DESC", 2)]
+    [InlineData("#shivavideo", "Id   ASC", 2)]
+    [InlineData("#IfRealityVideo", "Name  DESC", 2)]
     //[InlineData("Philosophy", "TagCount desc, Id asc", false, 1)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetArtifacts(string? searchText, string? orderBy, int expectedResults)
     {
-        var idx = 0;
-        while (idx++ < 3)
-        {
-            try
-            {
-            var query = new GetArtifactsQuery(
-                SearchText: searchText,
-                OrderBy: orderBy,
-                Skip: null, // Uses to 0 by default
-                Take: null); // Uses 10 by default
+        var query = new GetArtifactsQuery(SearchText: searchText, OrderBy: orderBy);
+        Page<ArtifactDTO> response = await Sender.Send(query);
 
-            Page<ArtifactDTO> response = await Sender.Send(query);
-
-            // Checks
-            response.Count.Should().Be(expectedResults);
-            response.TotalCount.Should().Be(expectedResults);
-
-                // TODO: find a way to check the SQL uses DESC and ASC. I checked and it seems to 
-                // work but it would be nice to test it here.
-            }
-            catch (Exception)
-            {
-                // TODO: replace with Polly or something
-                await Task.Delay(2000);
-            }
-        }
+        // Checks
+        response.Count.Should().Be(expectedResults);
+        response.TotalCount.Should().Be(expectedResults);        
     }
 }

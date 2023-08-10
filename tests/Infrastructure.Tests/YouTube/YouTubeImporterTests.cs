@@ -50,16 +50,40 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public IVideoImporter Importer { get; }
 
     [Theory]
-    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, null)] // Alternative Living, Sustainable Future
-    [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, null)] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylists(string[] playlistIds, CancellationToken cancellationToken)
+    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, null)] // Alternative Living, Sustainable Future
+    [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, 5, null)] // Google I/O Keynote Films
+    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, CancellationToken cancellationToken)
     {
-        var count = await PlaylistRepository.CountAsync();
+        var videoCount = await VideoRepository.CountAsync(); 
+        var playlistCount = await PlaylistRepository.CountAsync();
 
         await Importer.ImportPlaylistsAsync(playlistIds, cancellationToken);
 
-        var newCount = await PlaylistRepository.CountAsync();
-        newCount.Should().Be(count + 1);
+        var newPlaylistCount = await PlaylistRepository.CountAsync();
+        newPlaylistCount.Should().Be(playlistCount + 1);
+
+        // TODO: refactor
+        var max = 100;
+        do
+        {
+            max--;
+                
+            var newVideoCount = await VideoRepository.CountAsync();
+            if (newVideoCount == videoCount + expectedCount)
+            {
+                break;
+            }
+            
+            await Task.Delay(500);
+        } while (max-- > 0);
+
+        if (max == 0)
+        {
+            throw new Exception("Videos were not imported");
+        }
+
+        var finalVideoCount = await VideoRepository.CountAsync();
+        finalVideoCount.Should().Be(videoCount + expectedCount);        
     }
 
     [Fact]
