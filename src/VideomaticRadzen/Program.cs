@@ -30,7 +30,13 @@ builder.Services.AddHangfire(configuration => configuration
         .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
         .UseSimpleAssemblyNameTypeSerializer()
         .UseRecommendedSerializerSettings()
-        .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName)));
+        .UseActivator(new ContainerJobActivator(builder.Services.BuildServiceProvider()))
+        .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
+        .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName),
+                            new Hangfire.SqlServer.SqlServerStorageOptions()
+                            {
+                                PrepareSchemaIfNecessary = true
+                            }));
 
 // Add the processing server as IHostedService
 builder.Services.AddHangfireServer();
@@ -59,16 +65,13 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-GlobalConfiguration.Configuration.UseActivator(new ContainerJobActivator(app.Services));
-GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
-
 app.UseHangfireDashboard();
 
 
 app.UseRouting();
 
 //// Hangfire test
-//var hangfire = app.Services.GetService<IBackgroundJobClient>();
+var hangfire = app.Services.GetService<IBackgroundJobClient>();
 //var mediator = app.Services.GetService<IMediator>();
 //
 //var qry = new GetVideosQuery($"Test@({DateTime.Now})", null, 0, null, null, true, null, null, null);

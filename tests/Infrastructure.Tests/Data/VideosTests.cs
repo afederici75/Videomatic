@@ -208,11 +208,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     [Theory(Skip = "Expensive!")]
     //[Theory]
-    [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null, null)]
+    [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null)]
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,
-        [FromServices] IRepository<Playlist> playListRepository,
-        [FromServices] IPlaylistService videoService
+        [FromServices] IRepository<Playlist> playListRepository        
         )
     {
         var json = await File.ReadAllTextAsync(fileName);
@@ -242,7 +241,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         foreach (var v in videos)
         {
-            await videoService.LinkPlaylistToVideos(pl.Id, new [] { v.Id });
+            await playListRepository.LinkPlaylistToVideos(pl.Id, new [] { v.Id });
         }       
     }
 }

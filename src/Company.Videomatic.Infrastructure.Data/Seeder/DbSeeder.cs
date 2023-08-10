@@ -2,25 +2,21 @@
 
 public class DbSeeder : IDbSeeder
 {
-    private readonly IPlaylistService _playlistService;
-    private readonly IRepository<Video> _videoRepository;
-    private readonly IRepository<Playlist> _playlistRepository;
-    private readonly IRepository<Artifact> _artifactRepository;
-    private readonly IRepository<Transcript> _transcriptRepository;
+    readonly IRepository<Video> VideoRepository;
+    readonly IRepository<Playlist> PlaylistRepository;
+    readonly IRepository<Artifact> ArtifactRepository;
+    readonly IRepository<Transcript> TranscriptRepository;
 
     public DbSeeder(
-        IPlaylistService videoService,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         IRepository<Artifact> artifactRepository,
-        IRepository<Transcript> transcriptRepository
-        )
+        IRepository<Transcript> transcriptRepository)
     {
-        _playlistService = videoService ?? throw new ArgumentNullException(nameof(videoService));
-        _videoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
-        _playlistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
-        _artifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
-        _transcriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
+        VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
+        PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
+        ArtifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
+        TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
     }
 
     public async Task SeedAsync()
@@ -32,7 +28,7 @@ public class DbSeeder : IDbSeeder
     async Task<long> CreateBurningManPlaylist()
     {
         var playlist = Playlist.Create("Burning Man", "Videos about Burning Man");
-        await _playlistRepository.AddAsync(playlist);        
+        await PlaylistRepository.AddAsync(playlist);        
 
         return playlist.Id;
     }
@@ -40,7 +36,7 @@ public class DbSeeder : IDbSeeder
     async Task<long> CreateEasternPhilosophyPlaylist()
     {
         var playlist = Playlist.Create("Eastern Philosophy", "Videos about Eastern Philosophy");
-        await _playlistRepository.AddAsync(playlist);
+        await PlaylistRepository.AddAsync(playlist);
 
         // Aldous Huxley - The Dancing Shiva
         var shivaVideo = await CreateAldousHuxleyTheDancingShivaVideo();
@@ -49,8 +45,8 @@ public class DbSeeder : IDbSeeder
         var realityNotDualVideo = await CreateIfRealityIsNonDualVideo();
 
         //
-        await _playlistService.LinkPlaylistToVideos(playlist.Id, new[] { shivaVideo.Id});
-        await _playlistService.LinkPlaylistToVideos(playlist.Id, new[] { realityNotDualVideo.Id });
+        await PlaylistRepository.LinkPlaylistToVideos(playlist.Id, new[] { shivaVideo.Id});
+        await PlaylistRepository.LinkPlaylistToVideos(playlist.Id, new[] { realityNotDualVideo.Id });
 
         return playlist.Id;
     }
@@ -115,7 +111,7 @@ public class DbSeeder : IDbSeeder
         video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", 480, 640);
         video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 720, 1280);
 
-        await _videoRepository.AddAsync(video);        
+        await VideoRepository.AddAsync(video);        
 
         // Transcript
         await CreateAldousHuxleyTheDancingShivaTranscription(video.Id);
@@ -131,7 +127,7 @@ public class DbSeeder : IDbSeeder
         var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be an AI generated artifact (#ShivaVideo)");
         var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be an AI generated artifact listing all the topics discussed in this video (#ShivaVideo)");
 
-        await _artifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
+        await ArtifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
     }
 
     private async Task CreateAldousHuxleyTheDancingShivaTranscription(VideoId videoId)
@@ -153,7 +149,7 @@ public class DbSeeder : IDbSeeder
             "Manifestation of the world is called his 'Lila', his play.",
         });
 
-        await _transcriptRepository.AddAsync(transcript);
+        await TranscriptRepository.AddAsync(transcript);
     }
 
     async Task<Video> CreateIfRealityIsNonDualVideo()
@@ -195,7 +191,7 @@ public class DbSeeder : IDbSeeder
         video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
 
 
-        await _videoRepository.AddAsync(video);
+        await VideoRepository.AddAsync(video);
 
         // Transcripts
         await CreateIfRealityIsNotDualTranscription(video.Id);
@@ -225,7 +221,7 @@ public class DbSeeder : IDbSeeder
             "Manifestation of the world is called his 'Lila', his play.",
         });
 
-        await _transcriptRepository.AddAsync(transcript);
+        await TranscriptRepository.AddAsync(transcript);
     }
 
     private async Task CreateIfRealityIsNotDualArtifacts(VideoId videoId)
@@ -233,6 +229,6 @@ public class DbSeeder : IDbSeeder
         var summaryArtifact = Artifact.Create(videoId, "Summary", "SUMMARY", "This will be another AI generated artifact (#IfRealityVideo)");
         var contentsArtifact = Artifact.Create(videoId, "Contents", "CONTENTS_LIST", "This will be another AI generated artifact listing all the topics discussed in this video (#IfRealityVideo)");
 
-        await _artifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
+        await ArtifactRepository.AddRangeAsync(new[] { summaryArtifact, contentsArtifact });
     }
 }

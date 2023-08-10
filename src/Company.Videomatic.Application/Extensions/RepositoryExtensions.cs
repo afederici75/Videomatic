@@ -28,6 +28,16 @@ public static class RepositoryExtensions
 
         return videos.ToDictionary(v => v.Id, v => v.Details.ProviderVideoId);
     }
+
+    //public static async Task<IReadOnlyDictionary<VideoId, string>> GetPlaylistVideoIds(this IRepository<Playlist> repository, PlaylistId playlistId, CancellationToken cancellationToken = default)
+    //{        
+    //    var playlists = await repository.ListAsync(new PlaylistWithVideosSpec(playlistId), cancellationToken);
+    //    var videoIds = playlists.SelectMany(pl => pl.Videos)
+    //                            .Select(v => v.VideoId);
+    //
+    //    
+    //    return videos.ToDictionary(v => v.Id, v => v.Details.ProviderVideoId);
+    //}
 }
 
 public class VideosByIdsSpec : Specification<Video>
@@ -36,4 +46,13 @@ public class VideosByIdsSpec : Specification<Video>
     {
         Query.Where(v => ids.Contains(v.Id));
     }
+}
+
+public class PlaylistWithVideosSpec : Specification<Playlist>
+{
+    public PlaylistWithVideosSpec(params PlaylistId[] playlistIds)
+    {
+        Query.Where(pl => playlistIds.Contains(pl.Id))
+             .Include(pl => pl.Videos);
+    }    
 }

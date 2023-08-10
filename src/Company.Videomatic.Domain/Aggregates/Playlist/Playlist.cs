@@ -31,7 +31,7 @@ public class Playlist : IEntity, IAggregateRoot
         {
             Name = origin.Name,
             Description = origin.Description,
-            Origin = origin,
+            Origin = origin,            
         };
     }
 

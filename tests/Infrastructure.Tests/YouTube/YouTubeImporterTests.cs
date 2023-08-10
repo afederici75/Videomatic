@@ -53,90 +53,39 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, null)] // Alternative Living, Sustainable Future
     [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, null)] // Google I/O Keynote Films
     public async Task ImportVideosOfPlaylists(string[] playlistIds, CancellationToken cancellationToken)
-    {        
-        
+    {
+        var count = await PlaylistRepository.CountAsync();
 
-        throw new NotImplementedException("");
-        //var ids = new List<VideoId>();
-        //await foreach (Playlist playlist in Importer.ImportPlaylistsAsync(new[] { playlistId }))
-        //{
-        //    Output.WriteLine($"[{playlist.Id}]: {playlist.Name}");
-        //
-        //    playlist.Id.Should().BeNull();
-        //    playlist.Name.Should().NotBeEmpty();
-        //}
+        await Importer.ImportPlaylistsAsync(playlistIds, cancellationToken);
+
+        var newCount = await PlaylistRepository.CountAsync();
+        newCount.Should().Be(count + 1);
     }
 
     [Fact]
     public async Task ImportTranscriptionsOfSeededVideosInMemory()
     {
-        await foreach (var transcript in Importer.ImportTranscriptionsAsync(new VideoId[] { 1, 2 }))
-        {
-            Output.WriteLine($"[{transcript.Language}]: {transcript.Lines.Count} Line(s))");
-        }
+        var count = await TranscriptRepository.CountAsync();
+
+        await Importer.ImportTranscriptionsAsync(new VideoId[] { 1, 2 });
+
+        var newCount = await TranscriptRepository.CountAsync();
+        newCount.Should().Be(count);
     }
+   
 
     [Theory]
-    [InlineData(null, "PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e")]
-    public async Task ImportPlaylistFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string playlistId)
+    [InlineData(new[] { "BBd3aHnVnuE" }, null)]
+    [InlineData(new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" }, null)]
+    public async Task ImportVideosFromYouTube(string[] ids, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException("Useless?");
-        //List<Video> videos = new();
-        //await foreach (var video in helper.ImportPlaylistsAsync(new[] { playlistId }))
-        //{
-        //    videos.Add(video);
-        //}
+        var count = await VideoRepository.CountAsync();
 
-        //// Saves a file with the list of videos
-        //var json = JsonSerializer.Serialize(videos);
-        //await File.WriteAllTextAsync($"Playlist-{playlistId}.json", json);
-    }
+        await Importer.ImportVideosAsync(ids, null, cancellationToken);
 
-    [Theory]
-    [InlineData(null, new[] { "BBd3aHnVnuE" })]
-    [InlineData(null, new[] { "4Y4YSpF6d6w", "tWZQPCU4LJI", "BBd3aHnVnuE", "BFfb2P5wxC0", "dQw4w9WgXcQ", "n1kmKpjk_8E" })]
-    public async Task ImportVideosFromYouTubeToJsonFile([FromServices] IVideoImporter helper, string[] ids)
-    {
-        throw new NotImplementedException("Useless?");
-
-        //await foreach (var video in helper.ImportVideosAsync(ids))
-        //{
-        //    video.Name.Should().NotBeNullOrEmpty();
-        //    video.Description.Should().NotBeNullOrEmpty();
-        //    video.Location.Should().NotBeNullOrEmpty();
-        //    video.Thumbnails.Should().HaveCount(5);
-        //    video.Tags.Should().NotBeEmpty();
-
-        //    video.Details.Provider.Should().Be(YouTubeVideoProvider.ProviderId);
-        //    video.Details.VideoPublishedAt.Should().NotBe(DateTime.MinValue);
-        //    video.Details.VideoOwnerChannelTitle.Should().NotBeEmpty();
-        //    video.Details.VideoOwnerChannelId.Should().NotBeEmpty();
-
-
-        //    // Saves a file with the video information
-        //    var json = JsonSerializer.Serialize(video);
-        //    await File.WriteAllTextAsync($"Video-{video.Details.ProviderVideoId}.json", json);
-        //}
-    }
-
-    [Fact]
-    public async Task ImportTranscriptionsFromYouTubeVideosToJsonFile()
-    {
-        var videos = new Dictionary<VideoId, string>()
-        {
-            { 1, "n1kmKpjk_8E" }, // Aldous Huxley - The Dancing Shiva
-            { 2, "BBd3aHnVnuE" }  // If Reality is NON-DUAL, Why are there so...
-        };
-
-        await foreach (var transcript in Importer.ImportTranscriptionsAsync(videos.Select(x => x.Key)))
-        {
-            string src = videos[transcript.VideoId];
-
-            // Saves a file with the video information
-            var json = JsonSerializer.Serialize(transcript);
-            await File.WriteAllTextAsync($"Transcription-{src}.json", json);
-        }
-    }
+        var newCount = await VideoRepository.CountAsync();
+        newCount.Should().Be(count + ids.Length);
+    }   
 
 
     [Theory(Skip = "Slow to execute. use only when needed.")]
@@ -146,64 +95,9 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 
     public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistName, string playlistId)
     {
-        throw new NotImplementedException();
-        //var ids = new List<VideoId>();
-
-        //var max = 1000;
-        //var pageSize = 50;
-        //await foreach (IEnumerable<Video> videos in Importer.ImportPlaylistsAsync(new[] { playlistId }).PageAsync(pageSize))
-        //{
-        //    // Video
-        //    await VideoRepository.AddRangeAsync(videos);
-        //    ids.AddRange(videos.Select(x => x.Id));
-            
-        //    //Output.WriteLine($"[{video.Id}]: {video.Name}");            
-        //    max -= pageSize;
-        //    if (max<=0) break;
-        //}
-        //// Playlist 
-        //var playlist = await Sender.Send(new CreatePlaylistCommand(playlistName, $"Imported from YouTube playlist '{playlistId}'."));
-        //await Sender.Send(new LinkPlaylistToVideosCommand(playlist.Value.Id, ids));
-
-        //// Transcript
-        //foreach (var idPage in ids.Page(50))
-        //{
-        //    var transcripts = await Importer.ImportTranscriptionsAsync(idPage).ToListAsync();
-        //    await TranscriptRepository.AddRangeAsync(transcripts);
-
-        //    Output.WriteLine($"[{transcripts.Count}] Transcript(s) {transcripts.Sum(x => x.Lines.Count)} Line(s))");
-        //}
+        await Importer.ImportPlaylistsAsync(new[] { playlistId });
     }
 
-    //[Theory]
-    //[InlineData("PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // Alternative Living, Sustainable Future
-    //[InlineData("PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // Google I/O Keynote Films
-    //public async Task FASTImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistId)
-    //{
-    //    var ids = new List<VideoId>();
-    //    await foreach (Video video in Helper.ImportVideosOfPlaylist(playlistId))
-    //    {
-    //        // Video
-    //        await VideoRepository.AddAsync(video);
-    //        ids.Add(video.Id);
-    //
-    //        Output.WriteLine($"[{video.Id}]: {video.Name}");
-    //    }
-    //
-    //    // Transcript
-    //    try
-    //    {
-    //        Transcript transcript = await Helper.ImportTranscriptions(new[] { video.Id }).SingleAsync();
-    //        await TranscriptRepository.AddAsync(transcript);
-    //
-    //        Output.WriteLine($"[{transcript.Language}]: {transcript.Lines.Count} Line(s))");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Output.WriteLine($"[{video.Id} {video.Details.ProviderVideoId}]: {ex.Message}");
-    //    }
-    //    
-    //}
 
     [Fact(Skip = "I need to recreate the google credentials (svc acct)")]
     public async Task AuthenticateGoogleOAuth()

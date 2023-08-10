@@ -17,13 +17,13 @@ public class DbContextFixture : IAsyncLifetime
         _seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
         Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
-        if (!_dbMigrated)
-        {
-            DbContext.Database.EnsureDeleted();
-            DbContext.Database.Migrate();
-
-            _dbMigrated = true;
-        }
+        //if (!_dbMigrated)
+        //{
+        //    DbContext.Database.EnsureDeleted();
+        //    DbContext.Database.Migrate();
+        //
+        //    _dbMigrated = true;
+        //}
     }    
 
     public ITestOutputHelper Output => _outputAccessor.Output!;
@@ -37,8 +37,8 @@ public class DbContextFixture : IAsyncLifetime
     public virtual Task DisposeAsync()
     {
 #pragma warning disable CS0618 // Type or member is obsolete
-        if (!SkipDeletingDatabase)
-            return DbContext.Database.EnsureDeletedAsync();
+        //if (!SkipDeletingDatabase)
+        //    return DbContext.Database.EnsureDeletedAsync();
 #pragma warning restore CS0618 // Type or member is obsolete
 
         DbContext.Dispose();
@@ -53,6 +53,9 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
+        DbContext.Database.ExecuteSqlRaw("delete from dbo.Videos");
+        DbContext.Database.ExecuteSqlRaw("delete from dbo.Playlists");
+        
         await _seeder.SeedAsync();
 
         // TODO: Refactor
@@ -66,7 +69,7 @@ public class DbContextFixture : IAsyncLifetime
         await Task.Delay(1500);
     }
 
-    static bool _dbMigrated = false;
+    //static bool _dbMigrated = false;
     static bool _dbSeeded = false;
     readonly ITestOutputHelperAccessor _outputAccessor;
     readonly IDbSeeder _seeder;
