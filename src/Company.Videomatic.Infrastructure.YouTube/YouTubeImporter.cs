@@ -8,16 +8,12 @@ public class YouTubeImporter : IVideoImporter
     public const string ProviderId = "YOUTUBE";
 
     public YouTubeImporter(
-        YouTubeService youTubeService,
         IVideoProvider provider,
-        IPlaylistService playlistService,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         ISender sender)
     {
-        YouTubeService = youTubeService ?? throw new ArgumentNullException(nameof(youTubeService));
         Provider = provider;
-        PlaylistService = playlistService;
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
@@ -25,7 +21,6 @@ public class YouTubeImporter : IVideoImporter
     
     readonly YouTubeService YouTubeService;
     readonly IVideoProvider Provider;
-    readonly IPlaylistService PlaylistService;
     readonly IRepository<Video> VideoRepository;
     readonly IRepository<Playlist> PlaylistRepository;
     readonly ISender Sender;
@@ -37,17 +32,15 @@ public class YouTubeImporter : IVideoImporter
             var playlists = page.Select(gpl => MapToPlaylist(gpl));
             IEnumerable<Playlist> res = await PlaylistRepository.AddRangeAsync(playlists, cancellation);
 
-            PlaylistRepository.Foo();
-
             foreach (var pl in res)
             { 
-                await ImportVideosAsync(new[] { pl.Origin.Id }, cancellation);
+                await ImportVideosAsync(pl.Id, cancellation);
             }
         }
     }    
 
-    public Task ImportVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation)
-      =>  InternalImportVideosAsync(idsOrUrls, null, cancellation);  
+    public Task ImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? linkTo, CancellationToken cancellation)
+      =>  InternalImportVideosAsync(idsOrUrls, linkTo, cancellation);  
 
     public async Task ImportVideosAsync(PlaylistId playlistId, CancellationToken cancellation)
     {
@@ -64,7 +57,8 @@ public class YouTubeImporter : IVideoImporter
     }
 
 
-    public async IAsyncEnumerable<Transcript> ImportTranscriptionsAsync(IEnumerable<VideoId> videoIds, [EnumeratorCancellation] CancellationToken cancellation)
+    public async IAsyncEnumerable<Transcript> ImportTranscriptionsAsync(
+        IEnumerable<VideoId> videoIds, [EnumeratorCancellation] CancellationToken cancellation)
     {        
         var response = await Sender.Send(new GetVideoIdsOfProviderQuery(videoIds));
         Dictionary<int, string> videoIdsByVideoId = response.Value.ToDictionary(x => x.VideoId, x => x.ProviderVideoId);
@@ -201,7 +195,7 @@ public class YouTubeImporter : IVideoImporter
             IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);
 
             if (playlistId != null)
-                await PlaylistService.LinkPlaylistToVideos(playlistId, res.Select(x => x.Id).ToList());
+                await PlaylistRepository.LinkPlaylistToVideos(playlistId, res.Select(x => x.Id).ToList());
         }
     }
 }

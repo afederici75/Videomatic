@@ -2,20 +2,17 @@
 
 public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkPlaylistToVideosCommand, Result<int>>
 {
-    private readonly IPlaylistService _playlistService;
-    private readonly IMapper _mapper;
-
     public LinkVideoToPlaylistsHandler(
-        IPlaylistService playlistService,
-        IMapper mapper)
+        IRepository<Playlist> repository)
     {
-        _playlistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
+
+    public IRepository<Playlist> Repository { get; }
 
     public async Task<Result<int>> Handle(LinkPlaylistToVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var cnt = await _playlistService.LinkPlaylistToVideos(request.Id, request.VideoIds.Select(x => new VideoId(x)));
+        var cnt = await Repository.LinkPlaylistToVideos(request.Id, request.VideoIds.Select(x => new VideoId(x)));
 
         return new Result<int>(cnt);
     }

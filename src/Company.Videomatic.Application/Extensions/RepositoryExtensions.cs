@@ -1,8 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Video;
-using System.Threading;
 
 namespace Company.Videomatic.Application.Abstractions;
 
@@ -24,5 +20,20 @@ public static class RepositoryExtensions
         await repository.SaveChangesAsync();
 
         return newLinks;
+    }
+
+    public static async Task<IReadOnlyDictionary<VideoId, string>> GetProviderVideoIds(this IRepository<Video> repository, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
+    {
+        var videos = await repository.ListAsync(new VideosByIdsSpec(videoIds.ToArray()), cancellationToken);
+
+        return videos.ToDictionary(v => v.Id, v => v.Details.ProviderVideoId);
+    }
+}
+
+public class VideosByIdsSpec : Specification<Video>
+{
+    public VideosByIdsSpec(params VideoId[] ids)
+    {
+        Query.Where(v => ids.Contains(v.Id));
     }
 }

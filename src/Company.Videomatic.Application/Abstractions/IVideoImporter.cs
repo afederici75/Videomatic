@@ -4,7 +4,7 @@ public interface IVideoImporter
 {
     Task ImportPlaylistsAsync(IEnumerable<string> idOrUrls, CancellationToken cancellation = default);
 
-    Task ImportVideosAsync(IEnumerable<string> idOrUrls, CancellationToken cancellation = default);
+    Task ImportVideosAsync(IEnumerable<string> idOrUrls, PlaylistId? linkTo = null, CancellationToken cancellation = default);
 
     Task ImportVideosAsync(PlaylistId playlistId, CancellationToken cancellation = default);
 

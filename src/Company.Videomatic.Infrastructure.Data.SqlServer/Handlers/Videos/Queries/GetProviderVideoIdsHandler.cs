@@ -1,9 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using Company.Videomatic.Application.Features.Videos;
-
-namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
+﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideGetProviderVideoIdsQueryosHandler : IRequestHandler<GetVideoIdsOfProviderQuery, Result<IEnumerable<VideoIdAndProviderVideoIdDTO>>>
 {
