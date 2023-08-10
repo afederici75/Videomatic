@@ -16,7 +16,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
-        Fixture.SkipDeletingDatabase = true;
+        //Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }

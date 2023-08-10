@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
+using Company.Videomatic.Infrastructure.SqlServer.Configurations;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Tests.Data.Helpers;
 
@@ -15,21 +17,13 @@ public class DbContextFixture : IAsyncLifetime
 
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
         _seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
-        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
-        //if (!_dbMigrated)
-        //{
-        //    DbContext.Database.EnsureDeleted();
-        //    DbContext.Database.Migrate();
-        //
-        //    _dbMigrated = true;
-        //}
+        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));        
     }    
 
     public ITestOutputHelper Output => _outputAccessor.Output!;
 
-    [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
-    public bool SkipDeletingDatabase { get; set; }
+    //[Obsolete("This is a hack to check the database data if tests don't run successfully.")]
+    //public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }    
     public IConfiguration Configuration { get; }
@@ -55,6 +49,10 @@ public class DbContextFixture : IAsyncLifetime
 
         DbContext.Database.ExecuteSqlRaw("delete from dbo.Videos");
         DbContext.Database.ExecuteSqlRaw("delete from dbo.Playlists");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
         
         await _seeder.SeedAsync();
 

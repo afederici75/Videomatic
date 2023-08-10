@@ -14,7 +14,7 @@ public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLife
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
-        fixture.SkipDeletingDatabase = true;
+        //fixture.SkipDeletingDatabase = true;
     }
 
     //// Leaves time for full text indices to get updated

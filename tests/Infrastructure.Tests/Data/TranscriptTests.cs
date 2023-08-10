@@ -16,7 +16,7 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
-        Fixture.SkipDeletingDatabase = true;
+       // Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }

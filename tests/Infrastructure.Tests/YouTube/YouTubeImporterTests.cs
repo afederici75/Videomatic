@@ -36,7 +36,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         Importer = importer ?? throw new ArgumentNullException(nameof(importer));
         
-        Fixture.SkipDeletingDatabase = true;
+        //Fixture.SkipDeletingDatabase = true;
     }
 
     public ITestOutputHelper Output { get; }

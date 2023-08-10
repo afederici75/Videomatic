@@ -18,7 +18,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
-        Fixture.SkipDeletingDatabase = true;
+        //Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }
@@ -146,6 +146,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         ThumbnailResolutionDTO? selectedThumbnail,
         int expectedResults)
     {
+        
+        
         var query = new GetVideosQuery(
             //VideoIds: videoIds, 
             SearchText: searchText,

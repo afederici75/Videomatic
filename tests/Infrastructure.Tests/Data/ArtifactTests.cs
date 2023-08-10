@@ -23,7 +23,6 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         Configuration = configuration;
-        Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }
