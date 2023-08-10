@@ -18,7 +18,7 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
         var jobIds = new List<string>();
         foreach (var id in request.Urls)
         {
-            var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportPlaylistsAsync(new[] { id }, cancellationToken));
+            var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportPlaylistsAsync(new[] { id }, null, cancellationToken));
             jobIds.Add(jobId);
         }        
 

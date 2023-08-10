@@ -30,9 +30,11 @@ public class YouTubeImporter : IVideoImporter
     readonly IRepository<Transcript> TranscriptRepository;
     readonly IBackgroundJobClient JobClient;
 
-    public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation)        
+    public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, ImportOptions? options = default, CancellationToken cancellation = default)        
     {
-        await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(50))
+        options ??= new ImportOptions();
+
+        await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             var playlists = page.Select(gpl => MapToPlaylist(gpl));
 
@@ -43,47 +45,73 @@ public class YouTubeImporter : IVideoImporter
             {
                 var res = await PlaylistRepository.AddAsync(pl, cancellation);
 
-                var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(res.Id, cancellation));
+                switch (options.ExecuteWithoutJobQueue)
+                {
+                    case true:
+                        await this.ImportVideosAsync(res.Id, options, cancellation);
+                        break;
+                    case false:
+                        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(res.Id, options, cancellation));
+                        break;
+                }                
             }                                    
         }
     }
 
-    public async Task ImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? linkTo, CancellationToken cancellation)
+    public async Task ImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? linkTo, ImportOptions? options = default, CancellationToken cancellation = default)
     {
-        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(50))
-        {
-            var videos = page.Select(gv => MapToVideo(gv));
+        options ??= new ImportOptions();
 
-            IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);
+        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+        {
+            var videos = page.Select(gv => MapToVideo(gv)).ToArray();
+
+            var ids = videos.Select(x => x.Id).ToList();    
+
+
+            // TODO: figure out why AddRangeAsync does not work: it does not update the Id property!!!
+            IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);           
 
             if (linkTo != null)
                 await PlaylistRepository.LinkPlaylistToVideos(linkTo, res.Select(x => x.Id).ToList());
+
+            switch (options.ExecuteWithoutJobQueue)
+            {
+                case true:
+                    await this.ImportTranscriptionsAsync(res.Select(x => x.Id), cancellation);
+                    break;
+                case false:
+                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(res.Select(x => x.Id), cancellation));
+                    break;
+            }   
         }
     }
 
-    public async Task ImportVideosAsync(PlaylistId playlistId, CancellationToken cancellation)
+    public async Task ImportVideosAsync(PlaylistId playlistId, ImportOptions? options = default, CancellationToken cancellation = default)
     {
+        options ??= new ImportOptions();
+
         var pl = await PlaylistRepository.GetByIdAsync(playlistId, cancellation);
         if (pl?.Origin?.Id == null)
             throw new ArgumentException($"Playlist '{playlistId}' does not exist have an origin or does not exist.", nameof(playlistId));
 
-        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.Id, cancellation).PageAsync(50))
+        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.Id, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             var videoIds = videoPage.Select(v => v.Id);
 
-            await ImportVideosAsync(videoIds, playlistId, cancellation);
+            await ImportVideosAsync(videoIds, playlistId, options, cancellation);
         }        
     }
 
 
     public async Task ImportTranscriptionsAsync(
-        IEnumerable<VideoId> videoIds, CancellationToken cancellation)
+        IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
     {        
         var videoIdsByVideoId = await VideoRepository.GetProviderVideoIds(videoIds, cancellation);
                         
         using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
 
-        foreach (var responsePage in videoIdsByVideoId.Page(50))
+        foreach (var responsePage in videoIdsByVideoId.Page(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             cancellation.ThrowIfCancellationRequested();
 
@@ -126,6 +154,7 @@ public class YouTubeImporter : IVideoImporter
                     newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
                 }
                 
+                await TranscriptRepository.AddAsync(newTranscr, cancellation);
 
                 cancellation.ThrowIfCancellationRequested();
             }

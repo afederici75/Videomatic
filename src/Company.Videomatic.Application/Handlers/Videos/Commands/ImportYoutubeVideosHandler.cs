@@ -20,7 +20,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
         foreach (var url in request.Urls)
         {
             var jobId = JobClient.Enqueue<IVideoImporter>(imp => 
-                imp.ImportVideosAsync(new[] { url }, request.DestinationPlaylistId ?? 1, cancellationToken));
+                imp.ImportVideosAsync(new[] { url }, request.DestinationPlaylistId ?? 1, null, cancellationToken));
 
             jobIds.Add(jobId);
         }

@@ -5,6 +5,7 @@ namespace Company.Videomatic.Infrastructure.YouTube;
 public class YouTubeVideoProvider : IVideoProvider
 {
     public const string ProviderId = "YOUTUBE";
+    public const int MaxYouTubeItemsPerPage = 50;
 
     public YouTubeVideoProvider(YouTubeService youTubeService, ISender sender)
     {        
@@ -56,9 +57,7 @@ public class YouTubeVideoProvider : IVideoProvider
                 yield return pl;
             };
         }
-    }
-
-    const int MaxYouTubeItemsPerPage = 50;
+    }    
 
     public async IAsyncEnumerable<GenericPlaylist> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
