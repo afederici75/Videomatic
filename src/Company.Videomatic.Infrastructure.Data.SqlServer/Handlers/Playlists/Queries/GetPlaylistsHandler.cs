@@ -47,6 +47,8 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         var final = q.Select(p => new PlaylistDTO(
             p.Id,
             p.Name,
+            p.Origin!.ThumbnailUrl!,
+            p.Origin!.PictureUrl!,
             p.Description,
             p.Videos.Count()));
 

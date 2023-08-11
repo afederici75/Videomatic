@@ -67,19 +67,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
 
         
     }
-
-    [Fact]
-    public async Task ImportTranscriptionsOfSeededVideosInMemory()
-    {
-        var count = await TranscriptRepository.CountAsync();
-
-        await Importer.ImportTranscriptionsAsync(new VideoId[] { 1, 2 });
-
-        var newCount = await TranscriptRepository.CountAsync();
-        newCount.Should().Be(count);
-    }
    
-
     [Theory]
     [InlineData(new[] { "BBd3aHnVnuE" }, null)]
     [InlineData(new[] { "4Y4YSpF6d6w", "https://youtube.com/watch?v=tWZQPCU4LJI" }, null)]

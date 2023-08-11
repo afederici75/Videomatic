@@ -39,7 +39,7 @@ builder.Services.AddHangfire(configuration => configuration
                             }));
 
 // Add the processing server as IHostedService
-builder.Services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts!
+builder.Services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts! See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
 
 // Use Serilog
 builder.Logging.ClearProviders();
