@@ -1,24 +1,39 @@
-﻿
+﻿using System.Text.Json.Serialization;
+
+namespace Company.Videomatic.Infrastructure.YouTube;
+
 public class TimedTextInformation
 {
-    public Playercaptionstracklistrenderer playerCaptionsTracklistRenderer { get; set; }
+    [JsonPropertyName("playerCaptionsTracklistRenderer")]
+    public Playercaptionstracklistrenderer PlayerCaptionsTracklistRenderer { get; set; } = default!;
 }
 
 public class Playercaptionstracklistrenderer
 {
-    public Captiontrack[] captionTracks { get; set; }
+    [JsonPropertyName("captionTracks")]
+    public Captiontrack[] CaptionTracks { get; set; } = default!;
 }
 
 public class Captiontrack
 {
-    public string baseUrl { get; set; }
-    public Name name { get; set; }
-    public string vssId { get; set; }
-    public string languageCode { get; set; }
-    public bool isTranslatable { get; set; }
+    [JsonPropertyName("baseUrl")]
+    public string BaseUrl { get; set; } = default!;
+
+    [JsonPropertyName("name")]
+    public Name Name { get; set; } = default!;
+
+    [JsonPropertyName("vssId")]
+    public string VssId { get; set; } = default!;
+
+    [JsonPropertyName("languageCode")]
+    public string LanguageCode { get; set; } = default!;
+
+    [JsonPropertyName("kind")]
+    public bool IsTranslatable { get; set; } = default!;
 }
 
 public class Name
 {
-    public string simpleText { get; set; }
+    [JsonPropertyName("simpleText")]
+    public string SimpleText { get; set; } = default!;
 }

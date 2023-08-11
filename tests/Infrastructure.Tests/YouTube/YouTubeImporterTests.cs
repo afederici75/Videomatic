@@ -1,16 +1,11 @@
 ﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Playlist;
 using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Domain.Aggregates.Video;
 using Company.Videomatic.Infrastructure.YouTube;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
-using Hangfire;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 
 namespace Infrastructure.Tests.YouTube;
 
@@ -29,7 +24,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Options = options?.Value ?? throw new ArgumentException(nameof(options));
+        Options = options?.Value ?? throw new ArgumentException(nameof(options.Value));
         ArtifactRepository = artifactRepository ?? throw new ArgumentNullException(nameof(artifactRepository));
         TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
         PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
@@ -50,58 +45,46 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public ISender Sender { get; }
     public IVideoImporter Importer { get; }
 
-    ImportOptions ImportOptions = new ImportOptions(ExecuteWithoutJobQueue: true);
+    readonly ImportOptions ImportOptions = new (ExecuteWithoutJobQueue: true);
 
     [Theory]
-    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, null)] // Alternative Living, Sustainable Future
+    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
     [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, 5, null)] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, CancellationToken cancellationToken)
+    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, CancellationToken? cancellationToken)
     {
         var videoCount = await VideoRepository.CountAsync();
         var playlistCount = await PlaylistRepository.CountAsync();
 
-        await Importer.ImportPlaylistsAsync(playlistIds, ImportOptions, cancellationToken);
+        await Importer.ImportPlaylistsAsync(playlistIds, ImportOptions, cancellationToken ?? CancellationToken.None);
 
-        var newPlaylistCount = await PlaylistRepository.CountAsync();
-        newPlaylistCount.Should().Be(playlistCount + 1);
-
-        
+        (await PlaylistRepository.CountAsync()).Should().Be(playlistCount + 1);
+        (await VideoRepository.CountAsync()).Should().Be(videoCount + expectedCount);
     }
    
     [Theory]
     [InlineData(new[] { "BBd3aHnVnuE" }, null)]
     [InlineData(new[] { "4Y4YSpF6d6w", "https://youtube.com/watch?v=tWZQPCU4LJI" }, null)]
     [InlineData(new[] { "BFfb2P5wxC0", "https://youtube.com/watch?v=dQw4w9WgXcQ", "n1kmKpjk_8E" }, null)]
-    public async Task ImportVideosWithIdsOrUrls(string[] ids, CancellationToken cancellationToken)
+    public async Task ImportVideosWithIdsOrUrls(string[] ids, CancellationToken? cancellationToken)
     {
         var count = await VideoRepository.CountAsync();
 
-        await Importer.ImportVideosAsync(ids, null, this.ImportOptions, cancellationToken);
+        await Importer.ImportVideosAsync(ids, null, this.ImportOptions, cancellationToken ?? CancellationToken.None);
 
         var newCount = await VideoRepository.CountAsync();
         newCount.Should().Be(count + ids.Length);
-    }   
-
-
-    [Theory(Skip = "Slow to execute. use only when needed.")]
-    //[Theory]
-    [InlineData("Alternative Living, Sustainable Future", "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb")] // 
-    [InlineData("Google I/O Keynote Films", "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu")] // 
-    [InlineData("Nice vans", "PLLdi1lheZYVLxuwEIB09Bub14y1W83iHo")] // 
-    public async Task SLOWImportVideosOfPlaylistPlusTranscriptionInDatabase(string playlistName, string playlistId)
-    {
-        await Importer.ImportPlaylistsAsync(new[] { playlistId });
     }
 
-
+#pragma warning disable xUnit1004 // Test methods should not be skipped
     [Fact(Skip = "I need to recreate the google credentials (svc acct)")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
     public async Task AuthenticateGoogleOAuth()
     {
         String serviceAccountEmail = "videomaticserviceaccount-422@videomatic-384421.iam.gserviceaccount.com";
 
         var certificate = new X509Certificate2(@"googlekey.p12", "notasecret", X509KeyStorageFlags.Exportable);
 
-        ServiceAccountCredential credential = new ServiceAccountCredential(
+        var credential = new ServiceAccountCredential(
            new ServiceAccountCredential.Initializer(serviceAccountEmail)
            {
                Scopes = new[] { YouTubeService.Scope.Youtube }
@@ -119,31 +102,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
         request.MaxResults = 50;
         //request.Mine = false;
         Google.Apis.YouTube.v3.Data.PlaylistListResponse response = await request.ExecuteAsync();
-    }
 
-    private async Task WaitForRecords<T>(IRepository<T> repository, int expectedCount)
-        where T : class, IEntity
-    {
-        var max = 100;
-        do
-        {
-            max--;
-
-            var newVideoCount = await VideoRepository.CountAsync();
-            if (newVideoCount >= expectedCount)
-            {
-                break;
-            }
-
-            await Task.Delay(500);
-        } while (max-- > 0);
-
-        if (max == 0)
-        {
-            throw new Exception("Videos were not imported");
-        }
-
-        var finalCount = await VideoRepository.CountAsync();
-        finalCount.Should().Be(expectedCount);
+        response.Should().NotBeNull();  
     }
 }

@@ -11,7 +11,9 @@ public static class DependencyInjectionExtensions
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <returns></returns>
+#pragma warning disable IDE0060 // Remove unused parameter
     public static IServiceCollection AddVideomaticData(this IServiceCollection services, IConfiguration configuration)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         // Services
         services.AddScoped(typeof(IRepository<>), typeof(MyNewRepository<>));

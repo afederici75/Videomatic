@@ -7,13 +7,11 @@ public class YouTubeVideoProvider : IVideoProvider
     public const string ProviderId = "YOUTUBE";
     public const int MaxYouTubeItemsPerPage = 50;
 
-    public YouTubeVideoProvider(YouTubeService youTubeService, ISender sender)
+    public YouTubeVideoProvider(YouTubeService youTubeService)
     {        
         YouTubeService = youTubeService ?? throw new ArgumentNullException(nameof(youTubeService));
-        Sender = sender ?? throw new ArgumentNullException(nameof(sender));     
     }
 
-    readonly ISender Sender;
     readonly YouTubeService YouTubeService;
 
     public async IAsyncEnumerable<GenericChannel> GetChannelsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
@@ -29,8 +27,8 @@ public class YouTubeVideoProvider : IVideoProvider
             {
                 var thumbs = channel.Snippet!.Thumbnails!;
 
-                string? thubUrl = thumbs.Default__?.Url ?? thumbs.Medium?.Url ?? thumbs.High?.Url ?? thumbs.Standard?.Url ?? thumbs.Maxres?.Url;
-                string? pictUrl = thumbs.Maxres?.Url ?? thumbs.Standard?.Url ?? thumbs.High?.Url ?? thumbs.Medium?.Url ?? thumbs.Default__?.Url;
+                string thubUrl = thumbs.Default__?.Url ?? thumbs.Medium?.Url ?? thumbs.High?.Url ?? thumbs.Standard?.Url ?? thumbs.Maxres?.Url ?? string.Empty;
+                string pictUrl = thumbs.Maxres?.Url ?? thumbs.Standard?.Url ?? thumbs.High?.Url ?? thumbs.Medium?.Url ?? thumbs.Default__?.Url ?? string.Empty;
 
                 NameAndDescription? locInfo = null;
                 if (channel.Snippet.Localized != null)

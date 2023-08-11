@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
-{    
+{
     /// <summary>
     /// Adds 
     /// -MediatR
@@ -22,7 +22,9 @@ public static class DependencyInjectionExtensions
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <returns></returns>
+#pragma warning disable IDE0060 // Remove unused parameter
     public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         // IOptions
 

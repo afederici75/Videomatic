@@ -38,8 +38,8 @@ public class Video : IEntity, IAggregateRoot
     public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
     public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails.ToList();
 
-    public string ThumbnailUrl { get; private set; }
-    public string PictureUrl { get; private set; }
+    public string ThumbnailUrl { get; private set; } = default!;
+    public string PictureUrl { get; private set; } = default!;
 
     public void ClearTags()
     {

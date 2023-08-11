@@ -10,8 +10,8 @@ public record GenericChannel(
 
     DateTime? PublishedAt,
 
-    string? ThumbnailUrl,
-    string? PictureUrl,
+    string ThumbnailUrl,
+    string PictureUrl,
 
     // New
     string? DefaultLanguage,

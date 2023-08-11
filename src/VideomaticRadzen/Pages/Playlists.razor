@@ -46,7 +46,7 @@
 
 
 @code {
-    string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
+    //string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
     RadzenPager? pager;
 
     RadzenDataList<PlaylistDTO>? list;
@@ -62,7 +62,7 @@
     public int? PlaylistId { get; set; }
     
     int pageSize = 10;
-    bool isLoading = false;
+    //bool isLoading = false;
 
     async Task GoToPlaylistDetails(long playlistId)
     {
@@ -98,7 +98,7 @@
 
     async Task GetVideos(int skip, int take)
     {
-        isLoading = true;
+        //isLoading = true;
 
         await Task.Yield();
 
@@ -114,6 +114,6 @@
         playlists = results.Items;
         count = Convert.ToInt32(results.TotalCount);
 
-        isLoading = false;
+        //isLoading = false;
     }
 }

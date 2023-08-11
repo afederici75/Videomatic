@@ -23,6 +23,17 @@ builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
 
+
+// Use Serilog
+builder.Logging.ClearProviders();
+
+var cfg = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration);
+Serilog.Core.Logger logger = cfg.CreateLogger();
+builder.Services.AddLogging(bld =>
+{
+    bld.AddSerilog(logger: logger, dispose: true);
+});
+
 // Add Hangfire services.
 var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
 
@@ -35,21 +46,11 @@ builder.Services.AddHangfire(configuration => configuration
         .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName),
                             new Hangfire.SqlServer.SqlServerStorageOptions()
                             {
-                                PrepareSchemaIfNecessary = true,                                                                
+                                PrepareSchemaIfNecessary = true,
                             }));
 
 // Add the processing server as IHostedService
 builder.Services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts! See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
-
-// Use Serilog
-builder.Logging.ClearProviders();
-
-var cfg = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration);
-Serilog.Core.Logger logger = cfg.CreateLogger();
-builder.Services.AddLogging(bld =>
-{
-    bld.AddSerilog(logger: logger, dispose: true);
-});
 
 var app = builder.Build();
 

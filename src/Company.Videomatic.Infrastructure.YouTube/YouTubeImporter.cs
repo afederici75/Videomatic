@@ -18,8 +18,7 @@ public class YouTubeImporter : IVideoImporter
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         IRepository<Transcript> transcriptRepository,
-        IBackgroundJobClient jobClient,
-        ISender sender)
+        IBackgroundJobClient jobClient)
     {
         Provider = provider;
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
@@ -83,7 +82,7 @@ public class YouTubeImporter : IVideoImporter
             var videoIds = storedVideos.Select(x => x.Id).ToArray();
             if (linkTo != null)
             {                
-                await PlaylistRepository.LinkPlaylistToVideos(linkTo, videoIds);
+                await PlaylistRepository.LinkPlaylistToVideos(linkTo, videoIds, cancellation);
             }
 
 
@@ -125,13 +124,13 @@ public class YouTubeImporter : IVideoImporter
         var tasks = videoIdsByProviderId.Select(v => GetTimedTextInformation(client, v.Value, $"https://www.youtube.com/watch?v={v.Key}"));
         var results = await Task.WhenAll(tasks);
 
-        var goodResults = results.Where(r => r.IsSuccess && r.Value.TimedTextInformation.playerCaptionsTracklistRenderer?.captionTracks != null)
+        var goodResults = results.Where(r => r.IsSuccess && r.Value.TimedTextInformation.PlayerCaptionsTracklistRenderer?.CaptionTracks != null)
                                  .Select(r => r.Value)
                                  .ToArray();
         //
         var tasks2 = goodResults.Select(async result =>
         {
-            var allTracks = result.TimedTextInformation.playerCaptionsTracklistRenderer.captionTracks;
+            var allTracks = result.TimedTextInformation.PlayerCaptionsTracklistRenderer.CaptionTracks;
 
             var tasks2 = allTracks.Select(track => ConvertTranscript(client, result.VideoId, track));
             var newTranscripts = await Task.WhenAll(tasks2);
@@ -146,12 +145,12 @@ public class YouTubeImporter : IVideoImporter
 
     }
 
-    async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
+    static async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
     {
-        var newTranscr = Transcript.Create(videoId, track.languageCode);
+        var newTranscr = Transcript.Create(videoId, track.LanguageCode);
 
-        var xml = await client.GetStringAsync(track.baseUrl);
-        XmlDocument xmlDoc = new XmlDocument();
+        var xml = await client.GetStringAsync(track.BaseUrl);
+        XmlDocument xmlDoc = new ();
         xmlDoc.LoadXml(xml);
 
         XmlNodeList? textNodes = xmlDoc.SelectNodes("//text"); // Select all 'text' nodes
@@ -176,7 +175,7 @@ public class YouTubeImporter : IVideoImporter
 
     record TimedTextInfoForVideo(VideoId VideoId, TimedTextInformation TimedTextInformation);
 
-    async Task<Result<TimedTextInfoForVideo>> GetTimedTextInformation(HttpClient client, VideoId videoId, string videoUrl)
+    static async Task<Result<TimedTextInfoForVideo>> GetTimedTextInformation(HttpClient client, VideoId videoId, string videoUrl)
     {
         client.DefaultRequestHeaders.Add("User-Agent", "Videomatic");
 
@@ -199,7 +198,7 @@ public class YouTubeImporter : IVideoImporter
         }
 
         var targetHtml = tmp[1];
-        var json = targetHtml.Substring(0, targetHtml.IndexOf(']') + 1) + "}}";
+        var json = targetHtml[..(targetHtml.IndexOf(']') + 1)] + "}}";
 
         var ttInfo = JsonConvert.DeserializeObject<TimedTextInformation>(json);
         return new TimedTextInfoForVideo(videoId, ttInfo!);
