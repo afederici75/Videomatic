@@ -1,4 +1,4 @@
-﻿using Company.SharedKernel.Common.CQRS;
+﻿using Company.SharedKernel.CQRS.Commands;
 
 namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 

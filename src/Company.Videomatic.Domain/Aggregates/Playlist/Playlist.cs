@@ -2,21 +2,54 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
+public record PlaylistOrigin(
+    string Id,
+    string ETag,
+    string ChannelId,
+
+    string Name,
+    string? Description,
+
+    DateTime? PublishedAt,
+
+    string? ThumbnailUrl,
+    string? PictureUrl,
+
+    string? EmbedHtml,
+    string? DefaultLanguage);
+
 public class Playlist : IEntity, IAggregateRoot
 {
+    public static Playlist Create(PlaylistOrigin origin)
+    {
+        if (origin is null)
+        {
+            throw new ArgumentNullException(nameof(origin));
+        }
+
+        return new Playlist
+        {
+            Name = origin.Name,
+            Description = origin.Description,
+            Origin = origin,            
+        };
+    }
+
     public static Playlist Create(string name, string? description = null)
     {
         return new Playlist
         {
             Name = name,
-            Description = description
+            Description = description,            
         };
     }
 
     public PlaylistId Id { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
-    public bool IsStarred { get; private set; } = false;
+    public bool IsStarred { get; private set; } = false;    
+
+    public PlaylistOrigin? Origin { get; private set; } = default!;
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 
@@ -24,7 +57,6 @@ public class Playlist : IEntity, IAggregateRoot
     {
         Guard.Against.Null(videoIds, nameof(videoIds));
 
-        // We have _playlists fetched from the db. The 
         var goodIds = videoIds
             .Where(vid => vid is not null) // TODO: code smell?
             .Except(_videos.Select(p => p.VideoId))
@@ -48,12 +80,13 @@ public class Playlist : IEntity, IAggregateRoot
     private Playlist() { }
 
     //[JsonConstructor]
-    //private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos) 
+    //private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos, PlaylistOrigin origin) 
     //{
     //    Id = id;
     //    Name = name;
     //    IsStarred = isStarred;
     //    Description = description;
+    //    Origin = origin;
     //    _videos = videos;
     //}
 

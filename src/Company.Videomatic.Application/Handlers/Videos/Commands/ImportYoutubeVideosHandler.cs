@@ -1,65 +1,33 @@
 ﻿using Hangfire;
 using MediatR;
+using System;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
 public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVideosCommand, ImportYoutubeVideosResponse>
 {
-    readonly IRepository<Video> Repository;
-    readonly IYouTubeHelper YouTubeHelper;
-    readonly IMapper Mapper;
-    readonly IPlaylistService PlaylistService;
-    readonly IRepository<Transcript> TranscriptRepository;
-    readonly IBackgroundJobClient JobClient;
-
     public ImportYoutubeVideosHandler(
-        IBackgroundJobClient jobClient, 
-        IRepository<Video> repository, 
-        IYouTubeHelper youTubeHelper, 
-        IMapper mapper, 
-        IPlaylistService playlistService,
-        IRepository<Transcript> transcriptRepository)
+        IBackgroundJobClient jobClient)
     {
-        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
-        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        YouTubeHelper = youTubeHelper ?? throw new ArgumentNullException(nameof(youTubeHelper));
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        PlaylistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
-        TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
+        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));        
     }
 
-    public async Task<ImportYoutubeVideosResponse> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
+    public IBackgroundJobClient JobClient { get; }
+
+
+    public Task<ImportYoutubeVideosResponse> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var jobIds = new List<string>();
-        foreach (var url in request.Urls)
-        {
-            var jobId = JobClient.Enqueue<ImportYoutubeVideosHandler>(x => x.ImportVideoJob(url, request.DestinationPlaylistId));
-            jobIds.Add(jobId);
-        }
+        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, request.DestinationPlaylistId ?? 1, null, cancellationToken));
 
-        return new ImportYoutubeVideosResponse(true, jobIds, request.DestinationPlaylistId);        
-    }
+        //var jobIds = new List<string>();
+        //foreach (var url in request.Urls)
+        //{
+        //    var jobId = JobClient.Enqueue<IVideoImporter>(imp => 
+        //        imp.ImportVideosAsync(new[] { url }, request.DestinationPlaylistId ?? 1, null, cancellationToken));
+        //
+        //    jobIds.Add(jobId);
+        //}
 
-    public async Task ImportVideoJob(string url, int? playlistId)
-    {
-        await foreach (var v in YouTubeHelper.ImportVideos(new[] { url }))
-        { 
-            var savedVideo = await Repository.AddAsync(v);
-
-            JobClient.Enqueue<ImportYoutubeVideosHandler>(x => x.ImportTranscriptionsOfVideo(savedVideo.Id));
-
-            if (!playlistId.HasValue)
-                continue;
-            
-            var linkRes = await PlaylistService.LinkToPlaylists(playlistId.Value, new[] { savedVideo.Id });            
-        }
-    }
-
-    public async Task ImportTranscriptionsOfVideo(VideoId videoId)
-    {
-        await foreach (var transcript in YouTubeHelper.ImportTranscriptions(new[] { videoId }))
-        {
-            await TranscriptRepository.AddAsync(transcript);
-        }
-    }
+        return Task.FromResult(new ImportYoutubeVideosResponse(true, new[] { jobId }, request.DestinationPlaylistId));
+    }   
 }

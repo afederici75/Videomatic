@@ -5,28 +5,12 @@ namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
 public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlaylistsCommand, ImportYoutubePlaylistsResponse>
 {
-    readonly IRepository<Playlist> Repository;
-    readonly IYouTubeHelper YouTubeHelper;
-    readonly IMapper Mapper;
-    readonly IPlaylistService PlaylistService;
-    private readonly ISender Sender;
     readonly IBackgroundJobClient JobClient;
 
-
     public ImportYoutubePlaylistsHandler(
-        IBackgroundJobClient jobClient, 
-        IRepository<Playlist> repository, 
-        IYouTubeHelper youTubeHelper, 
-        IMapper mapper, 
-        IPlaylistService playlistService,
-        ISender sender)
+        IBackgroundJobClient jobClient)
     {
-        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
-        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        YouTubeHelper = youTubeHelper ?? throw new ArgumentNullException(nameof(youTubeHelper));
-        Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        PlaylistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
-        Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));        
     }
 
     public Task<ImportYoutubePlaylistsResponse> Handle(ImportYoutubePlaylistsCommand request, CancellationToken cancellationToken)
@@ -34,25 +18,10 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
         var jobIds = new List<string>();
         foreach (var id in request.Urls)
         {
-            var jobId = JobClient.Enqueue<ImportYoutubePlaylistsHandler>(x => x.ImportPlaylistJob(id));
+            var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportPlaylistsAsync(new[] { id }, null, cancellationToken));
             jobIds.Add(jobId);
         }        
 
         return Task.FromResult(new ImportYoutubePlaylistsResponse(true, jobIds));
-    }
-
-    public async Task ImportPlaylistJob(string playlistId)
-    {        
-        var videoIds = await YouTubeHelper.GetPlaylistVideoIds(playlistId);
-        var playlistInfo = await YouTubeHelper.GetPlaylistInformation(playlistId);
-
-        var newPlaylist = Playlist.Create(
-            name: $"{playlistInfo.Name} (Imported on {DateTime.Now})",
-            description: playlistInfo.Description);
-
-        var storedPlaylist = await Repository.AddAsync(newPlaylist);
-
-        var req = new ImportYoutubeVideosCommand(videoIds, storedPlaylist.Id);
-        await Sender.Send(req);
     }
 }

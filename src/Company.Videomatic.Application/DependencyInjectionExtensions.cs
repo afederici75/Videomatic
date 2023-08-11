@@ -1,6 +1,5 @@
 ﻿using Company.Videomatic.Application;
 using Company.Videomatic.Application.Behaviors;
-using Company.Videomatic.Application.Services;
 using Microsoft.Extensions.Configuration;
 
 // This is required so I can mark validators as 'internal' (i.e. instead of public) and still be able to access them from the test project.
@@ -11,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
-{    
+{
     /// <summary>
     /// Adds 
     /// -MediatR
@@ -23,13 +22,14 @@ public static class DependencyInjectionExtensions
     /// <param name="services"></param>
     /// <param name="configuration"></param>
     /// <returns></returns>
+#pragma warning disable IDE0060 // Remove unused parameter
     public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
+#pragma warning restore IDE0060 // Remove unused parameter
     {
         // IOptions
 
         // Services
-        services.AddScoped<IPlaylistService, PlaylistService>();
-
+        
         // Infrastructure
         var videomaticAssemblies = AppDomain.CurrentDomain.GetAssemblies() 
             .Where(a => a.FullName?.Contains("Videomatic") ?? false)

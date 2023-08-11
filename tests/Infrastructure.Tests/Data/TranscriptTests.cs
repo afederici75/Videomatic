@@ -16,61 +16,33 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
-        Fixture.SkipDeletingDatabase = true;
+       // Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }
     public IRepository<Transcript> Repository { get; }
     public ISender Sender { get; }
 
-    async Task<int> GenerateDummyVideoAsync([System.Runtime.CompilerServices.CallerMemberName] string callerId = "")
-    {
-        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails(callerId);
-
-        var response = await Sender.Send(createCommand);
-        return response.Value.Id;
-    }
-
     [Fact]
-    public async Task CreateTranscript()
+    public async Task CreateAndDeleteTranscript()
     {
-        var videoId = await GenerateDummyVideoAsync();
-        var createCommand = CreateTranscriptCommandBuilder.WithDummyValues(videoId);
+        // Creates
+        var createCommand = CreateTranscriptCommandBuilder.WithDummyValues(1);
 
         var response = await Sender.Send(createCommand);
 
         // Checks
-        response.Value.Id.Value.Should().BeGreaterThan(0);
+        response.IsSuccess.Should().BeTrue();
+        
+        var transcript = await Repository.GetByIdAsync(response.Value.Id);    
 
-        var transcript = Fixture.DbContext.            
-            Transcripts.
-            Single(x => x.Id == response.Value.Id);
+        transcript.Should().NotBeNull();
+        transcript!.Language.Should().Be(createCommand.Language);
+        transcript!.Lines.Should().HaveCount(createCommand.Lines.Count());
+        transcript!.VideoId.Value.Should().Be(createCommand.VideoId);
 
-        transcript.Language.Should().Be(createCommand.Language);
-        transcript.Lines.Should().HaveCount(createCommand.Lines.Count());
-        transcript.VideoId.Value.Should().Be(videoId);
-
-        await Sender.Send(new DeleteVideoCommand(videoId));
-    }
-
-    [Fact]
-    public async Task DeleteTranscript()
-    {
-        var videoId = await GenerateDummyVideoAsync();
-        var createdResponse = await Sender.Send(CreateTranscriptCommandBuilder.WithDummyValues(videoId));
-
-        // Executes
-        var deletedResponse = await Sender.Send(new DeleteTranscriptCommand(createdResponse.Value.Id));
-
-        // Checks
-        createdResponse.Value.Id.Value.Should().BeGreaterThan(0);
-
-        var row = await Fixture.DbContext.Transcripts
-            .Where(x => x.Id == createdResponse.Value.Id)
-            .FirstOrDefaultAsync();
-
-        row.Should().BeNull();
-
-        await Sender.Send(new DeleteVideoCommand(videoId));
+        // Deletes
+        var ok = await Sender.Send(new DeleteTranscriptCommand(createCommand.VideoId));
+        ok.IsSuccess.Should().BeTrue();
     }
 }

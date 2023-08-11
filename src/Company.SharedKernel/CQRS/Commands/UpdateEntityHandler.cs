@@ -1,6 +1,6 @@
 ﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.SharedKernel.Common.CQRS;
+namespace Company.SharedKernel.CQRS.Commands;
 
 public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     IRequestHandler<TUpdateCommand, Result<TEntity>>
@@ -16,7 +16,7 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
 
     protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
-    
+
     public async Task<Result<TEntity>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
         TId id = ConvertIdOfRequest(request);

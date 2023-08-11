@@ -21,7 +21,7 @@
                 AllowPaging="true">
     <Template Context="video">
         <RadzenCard Style="max-width: 340px; min-width:200px">          
-            <RadzenImage Path="@video.Thumbnail" Style="max-width: 60px, max-block-size, max-height: 40px" />
+            <RadzenImage Path="@video.PictureUrl" Style="max-width: 200px; max-lock-size;" />
 
             <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
 
@@ -45,9 +45,9 @@
 
 
 
-    @code {
+@code {
 
-    string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
+    //string pagingSummaryFormat = "Page {0}/{1}, {2} record(s).";
     RadzenPager? pager;
      
     RadzenDataList<VideoDTO>? list;
@@ -61,10 +61,10 @@
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
     public int? PlaylistId { get; set; }
-    long? _priorPlaylistId;
+    //long? _priorPlaylistId;
 
     int pageSize = 8;
-    bool isLoading = false;
+    //bool isLoading = false;
 
     async Task GoToDetails(long videoId)
     {
@@ -95,7 +95,7 @@
 
     async Task GetVideos(int skip, int take)
     {
-        isLoading = true;
+        //isLoading = true;
 
         await Task.Yield();
 
@@ -113,6 +113,6 @@
         videos = results.Items;
         count = Convert.ToInt32(results.TotalCount);
 
-        isLoading = false;        
+        //isLoading = false;        
     }
 }

@@ -12,24 +12,9 @@ public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLife
     {
         Output = outputAccessor?.Output ?? throw new ArgumentNullException(nameof(outputAccessor));
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
-        Sender = sender ?? throw new ArgumentNullException(nameof(sender));
-
-        fixture.SkipDeletingDatabase = true;
+        Sender = sender ?? throw new ArgumentNullException(nameof(sender));      
     }
-
-    //// Leaves time for full text indices to get updated
-    //static bool _waitedOnce = false;
-    //public Task InitializeAsync()
-    //{
-    //    if (_waitedOnce)
-    //        return Task.CompletedTask;
-    //
-    //    _waitedOnce = true; 
-    //    return Task.Delay(2500);        
-    //}
-    //
-    //public Task DisposeAsync() => Task.CompletedTask;
-
+  
     public ITestOutputHelper Output { get; }
     public DbContextFixture Fixture { get; }
     public ISender Sender { get; }       

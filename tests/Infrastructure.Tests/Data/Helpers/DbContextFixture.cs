@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
+using Company.Videomatic.Infrastructure.SqlServer.Configurations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Tests.Data.Helpers;
 
@@ -15,21 +18,13 @@ public class DbContextFixture : IAsyncLifetime
 
         _outputAccessor = outputAccessor ?? throw new ArgumentNullException(nameof(outputAccessor));
         _seeder = seeder ?? throw new ArgumentNullException(nameof(seeder));
-        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
-        if (!_dbMigrated)
-        {
-            DbContext.Database.EnsureDeleted();
-            DbContext.Database.Migrate();
-
-            _dbMigrated = true;
-        }
+        Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));        
     }    
 
     public ITestOutputHelper Output => _outputAccessor.Output!;
 
-    [Obsolete("This is a hack to check the database data if tests don't run successfully.")]
-    public bool SkipDeletingDatabase { get; set; }
+    //[Obsolete("This is a hack to check the database data if tests don't run successfully.")]
+    //public bool SkipDeletingDatabase { get; set; }
 
     public VideomaticDbContext DbContext { get; }    
     public IConfiguration Configuration { get; }
@@ -37,8 +32,8 @@ public class DbContextFixture : IAsyncLifetime
     public virtual Task DisposeAsync()
     {
 #pragma warning disable CS0618 // Type or member is obsolete
-        if (!SkipDeletingDatabase)
-            return DbContext.Database.EnsureDeletedAsync();
+        //if (!SkipDeletingDatabase)
+        //    return DbContext.Database.EnsureDeletedAsync();
 #pragma warning restore CS0618 // Type or member is obsolete
 
         DbContext.Dispose();
@@ -53,6 +48,23 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
+        DbContext.Database.ExecuteSqlRaw("delete from dbo.Videos");
+        DbContext.Database.ExecuteSqlRaw("delete from dbo.Playlists");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
+
+
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.TagsSequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName}  RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
+
+
         await _seeder.SeedAsync();
 
         // TODO: Refactor
@@ -66,7 +78,7 @@ public class DbContextFixture : IAsyncLifetime
         await Task.Delay(1500);
     }
 
-    static bool _dbMigrated = false;
+    //static bool _dbMigrated = false;
     static bool _dbSeeded = false;
     readonly ITestOutputHelperAccessor _outputAccessor;
     readonly IDbSeeder _seeder;

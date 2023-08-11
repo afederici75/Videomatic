@@ -6,7 +6,9 @@ global using AutoMapper;
 global using Company.SharedKernel.Abstractions;
 global using Company.Videomatic.Application.Abstractions;
 
-global using Company.SharedKernel.Common;
+global using Company.SharedKernel.CQRS.Commands;
+
+global using Company.Videomatic.Application.Model;
 
 global using Company.Videomatic.Application.Features.Artifacts;
 global using Company.Videomatic.Application.Features.Playlists;

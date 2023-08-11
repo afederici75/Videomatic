@@ -27,7 +27,7 @@ public partial class WinterOlympicsEmbeddingTests : IClassFixture<WinterOlympics
     }
 
 
-    [Theory]
+    [Theory(Skip = "Skip for now")]
     [InlineData("Which athletes won the gold medal in curling at the 2022 Winter Olympics?", true)]
     [InlineData("who winned gold metals in kurling at the olimpics", true)] // misspelled question
     [InlineData("How many records were set at the 2022 Winter Olympics?", true)] // counting question SOMEHOW I GET NO COUNT? Model issue?

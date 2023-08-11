@@ -60,6 +60,6 @@ public class VideoRequestsValidatorTests
         int expectedErrors)
     {
         ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(
-            new(filter, orderBy, page, pageSize, FullTextSearchType.FreeText, includeCounts, includeThumbnail, playlistIds), expectedErrors);
+            new(filter, orderBy, page, pageSize, TextSearchType.FreeText, includeCounts, includeThumbnail, playlistIds), expectedErrors);
     }
 }

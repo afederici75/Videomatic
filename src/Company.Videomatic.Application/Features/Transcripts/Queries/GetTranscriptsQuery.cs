@@ -6,10 +6,11 @@ public record GetTranscriptsQuery(
     string? OrderBy = null,
     int? Skip = null,
     int? Take = null,
-    FullTextSearchType? SearchType = null,
+    TextSearchType? SearchType = null,
     // Additional
     IEnumerable<int>? VideoIds = null,
-    IEnumerable<int>? TranscriptIds = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery;
+    IEnumerable<int>? TranscriptIds = null,
+    string? SearchOn = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery;
 
 internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>
 {

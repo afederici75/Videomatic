@@ -1,5 +1,9 @@
 ﻿using Company.Videomatic.Infrastructure.YouTube;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.YouTube.v3;
 using Microsoft.Extensions.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -12,12 +16,29 @@ public static class DependencyInjectionExtensions
         services.Configure<YouTubeOptions>(section);
 
         // Services
-        services.AddScoped<IYouTubeHelper, YouTubeHelper>();
-        services.AddHttpClient<YouTubeHelper>(client =>
+        services.AddTransient<YouTubeService>(sp =>
         {
-            client.BaseAddress = new Uri("https://www.googleapis.com/youtube/v3/");
-        });
+            var options = sp.GetRequiredService<IOptions<YouTubeOptions>>().Value;
+            var certificate = new X509Certificate2(@"VideomaticService.p12", options.CertificatePassword, X509KeyStorageFlags.Exportable);
 
+            ServiceAccountCredential credential = new(
+               new ServiceAccountCredential.Initializer(options.ServiceAccountEmail)
+               {
+                   Scopes = new[] { YouTubeService.Scope.Youtube }
+               }.FromCertificate(certificate));
+
+            // Create the service.
+            var service = new YouTubeService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = AppDomain.CurrentDomain.FriendlyName
+            });
+
+            return service;
+        });
+        services.AddScoped<IVideoProvider, YouTubeVideoProvider>();
+        services.AddScoped<IVideoImporter, YouTubeImporter>();
+        
         return services;
     }   
 }

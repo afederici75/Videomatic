@@ -18,7 +18,7 @@
 </RadzenRow>
 
 @code {
-    bool isLoading = false;
+    //bool isLoading = false;
     PlaylistDTO? playlist;
 
     [Parameter]
@@ -34,7 +34,7 @@
 
     async Task GetPlaylist()
     {
-        isLoading = true;
+        //isLoading = true;
 
         await Task.Yield();
 
@@ -50,6 +50,6 @@
             
         }
 
-        isLoading = false;
+        //isLoading = false;
     }
 }

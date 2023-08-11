@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Hangfire;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -23,10 +25,28 @@ public class Startup
                 services.AddVideomaticSemanticKernel(context.Configuration);
                 services.AddVidematicYouTubeInfrastructure(context.Configuration);
                 services.AddAzureSpeech(context.Configuration);
-            })
-            .ConfigureHostConfiguration(builder =>
-            {
 
+                var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
+
+                services.AddHangfire(configuration =>
+                {
+                    configuration
+                        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseRecommendedSerializerSettings()
+                        .UseActivator(new ContainerJobActivator(services.BuildServiceProvider()))
+                        .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
+                        .UseSqlServerStorage(
+                            context.Configuration.GetConnectionString(connectionName),
+                            new Hangfire.SqlServer.SqlServerStorageOptions()
+                            {
+                                PrepareSchemaIfNecessary = true
+                            });
+                });
+
+                // Add the processing server as IHostedService
+                services.AddHangfireServer();
+                
             })
             .ConfigureAppConfiguration((context, builder) =>
             {
@@ -40,5 +60,21 @@ public class Startup
 
                 builder.AddConfiguration(cfg);
             });
+    }
+}
+
+// TODO: this is copied from src\VideomaticRadzen\ContainerJobActivator.cs
+public class ContainerJobActivator : JobActivator
+{
+    readonly IServiceProvider Provider;
+
+    public ContainerJobActivator(IServiceProvider provider)
+    {
+        Provider = provider ?? throw new ArgumentNullException(nameof(provider));
+    }
+
+    public override object ActivateJob(Type type)
+    {
+        return Provider.GetRequiredService(type);
     }
 }

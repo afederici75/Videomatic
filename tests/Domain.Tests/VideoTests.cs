@@ -13,7 +13,9 @@ public class VideoTests
     {
         var video = Video.Create(
             location: DummyLocation,
-            name: nameof(CreateVideo));
+            name: nameof(CreateVideo),
+            pictureUrl: "http://1", 
+            thumbnailUrl: "http://2");
         
         video.Should().NotBeNull();
         video.Thumbnails.Should().HaveCount(5); // It got 5 default thumbnail resolutions
@@ -29,6 +31,8 @@ public class VideoTests
         var video = Video.Create(
             location: DummyLocation, 
             name: nameof(CreateVideo),
+            pictureUrl: "http://1", 
+            thumbnailUrl: "http://2",
             details: new("YOUTUBE", "ABC123", pubAt, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
             description: "A complete description");
 
@@ -55,7 +59,12 @@ public class VideoTests
     [Fact]
     public void NoDuplicateTagsAndClearTags()
     {
-        var video = Video.Create(location: DummyLocation, name: nameof(SetThumbnails));
+        var video = Video.Create(
+            location: DummyLocation, 
+            name: nameof(SetThumbnails),
+            pictureUrl: "http://1", 
+            thumbnailUrl: "http://2"
+            );
 
         // Ensures duplicate tags are not added
         video.Tags.Should().BeEmpty();
@@ -74,7 +83,9 @@ public class VideoTests
     [Fact]
     public void SetThumbnails()
     {
-        var video = Video.Create(location: DummyLocation, name: nameof(SetThumbnails));        
+        var video = Video.Create(location: DummyLocation, name: nameof(SetThumbnails),
+            pictureUrl: "http://1",
+            thumbnailUrl: "http://2");        
         var oldDefault = video.GetThumbnail(ThumbnailResolution.Default);
         var oldMedium = video.GetThumbnail(ThumbnailResolution.Medium); 
 

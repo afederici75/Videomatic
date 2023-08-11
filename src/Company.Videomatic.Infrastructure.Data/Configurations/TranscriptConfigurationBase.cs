@@ -9,7 +9,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
 
     public static class FieldLengths
     {
-        public const int Language = 2;
+        public const int Language = 10;
     }
 
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)

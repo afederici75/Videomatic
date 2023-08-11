@@ -119,8 +119,8 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("VideoId")
                         .HasColumnType("int");
@@ -157,6 +157,16 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Location");
@@ -173,6 +183,75 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.Playlist", b =>
+                {
+                    b.OwnsOne("Company.Videomatic.Domain.Aggregates.Playlist.PlaylistOrigin", "Origin", b1 =>
+                        {
+                            b1.Property<int>("PlaylistId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("ChannelId")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("DefaultLanguage")
+                                .HasMaxLength(10)
+                                .HasColumnType("nvarchar(10)");
+
+                            b1.Property<string>("Description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ETag")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("EmbedHtml")
+                                .HasMaxLength(2048)
+                                .HasColumnType("nvarchar(2048)");
+
+                            b1.Property<string>("Id")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(120)
+                                .HasColumnType("nvarchar(120)");
+
+                            b1.Property<string>("PictureUrl")
+                                .HasMaxLength(1024)
+                                .HasColumnType("nvarchar(1024)");
+
+                            b1.Property<DateTime?>("PublishedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("ThumbnailUrl")
+                                .HasMaxLength(1024)
+                                .HasColumnType("nvarchar(1024)");
+
+                            b1.HasKey("PlaylistId");
+
+                            b1.HasIndex("ChannelId");
+
+                            b1.HasIndex("DefaultLanguage");
+
+                            b1.HasIndex("ETag");
+
+                            b1.HasIndex("Id");
+
+                            b1.HasIndex("Name");
+
+                            b1.ToTable("Playlists");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PlaylistId");
+                        });
+
+                    b.Navigation("Origin");
                 });
 
             modelBuilder.Entity("Company.Videomatic.Domain.Aggregates.Playlist.PlaylistVideo", b =>

@@ -33,7 +33,7 @@
 </RadzenTabs>        
 
 @code {
-    bool isLoading = false;
+    //bool isLoading = false;
     VideoDTO? video;
     IEnumerable<TranscriptDTO> transcripts = new TranscriptDTO[0];  
 
@@ -51,7 +51,7 @@
 
     async Task GetVideo()
     {
-        isLoading = true;
+        //isLoading = true;
 
         await Task.Yield();
 
@@ -71,6 +71,6 @@
             transcripts = resp2.Items;
         }
 
-        isLoading = false;        
+        //isLoading = false;        
     }
 }

@@ -23,17 +23,6 @@ builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
 
-// Add Hangfire services.
-var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
-
-builder.Services.AddHangfire(configuration => configuration
-        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-        .UseSimpleAssemblyNameTypeSerializer()
-        .UseRecommendedSerializerSettings()
-        .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName)));
-
-// Add the processing server as IHostedService
-builder.Services.AddHangfireServer();
 
 // Use Serilog
 builder.Logging.ClearProviders();
@@ -44,6 +33,24 @@ builder.Services.AddLogging(bld =>
 {
     bld.AddSerilog(logger: logger, dispose: true);
 });
+
+// Add Hangfire services.
+var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
+
+builder.Services.AddHangfire(configuration => configuration
+        .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+        .UseSimpleAssemblyNameTypeSerializer()
+        .UseRecommendedSerializerSettings()
+        .UseActivator(new ContainerJobActivator(builder.Services.BuildServiceProvider()))
+        .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
+        .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName),
+                            new Hangfire.SqlServer.SqlServerStorageOptions()
+                            {
+                                PrepareSchemaIfNecessary = true,
+                            }));
+
+// Add the processing server as IHostedService
+builder.Services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts! See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
 
 var app = builder.Build();
 
@@ -59,16 +66,13 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
-GlobalConfiguration.Configuration.UseActivator(new ContainerJobActivator(app.Services));
-GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 0 });
-
 app.UseHangfireDashboard();
 
 
 app.UseRouting();
 
 //// Hangfire test
-//var hangfire = app.Services.GetService<IBackgroundJobClient>();
+var hangfire = app.Services.GetService<IBackgroundJobClient>();
 //var mediator = app.Services.GetService<IMediator>();
 //
 //var qry = new GetVideosQuery($"Test@({DateTime.Now})", null, 0, null, null, true, null, null, null);

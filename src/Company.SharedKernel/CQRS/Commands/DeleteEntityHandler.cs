@@ -1,7 +1,7 @@
 ﻿using Company.SharedKernel.Abstractions;
 using System;
 
-namespace Company.SharedKernel.Common.CQRS;
+namespace Company.SharedKernel.CQRS.Commands;
 
 public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId

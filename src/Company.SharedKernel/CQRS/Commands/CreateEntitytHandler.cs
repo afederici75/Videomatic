@@ -1,6 +1,6 @@
 ﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.SharedKernel.Common.CQRS;
+namespace Company.SharedKernel.CQRS.Commands;
 
 public abstract class CreateEntitytHandler<TCreateCommand, TEntity> :
     IRequestHandler<TCreateCommand, Result<TEntity>>
@@ -20,9 +20,9 @@ public abstract class CreateEntitytHandler<TCreateCommand, TEntity> :
     {
         try
         {
-            var aggRoot = Mapper.Map<TCreateCommand, TEntity>(request);
+            var entity = Mapper.Map<TCreateCommand, TEntity>(request);
 
-            var result = await Repository.AddAsync(aggRoot, cancellationToken);
+            var result = await Repository.AddAsync(entity, cancellationToken);
 
             return result;
         }

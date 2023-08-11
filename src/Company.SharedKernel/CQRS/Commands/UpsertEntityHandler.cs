@@ -1,6 +1,6 @@
 ﻿using Company.SharedKernel.Abstractions;
 
-namespace Company.SharedKernel.Common.CQRS;
+namespace Company.SharedKernel.CQRS.Commands;
 
 public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
     IRequestHandler<TUpsertCommand, Result<TEntity>>
@@ -27,9 +27,9 @@ public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
         else
         {
             return InsertAggregateRoot(request, cancellationToken);
-        }               
-                
-    } 
+        }
+
+    }
 
     async Task<Result<TEntity>> InsertAggregateRoot(TUpsertCommand request, CancellationToken cancellationToken)
     {

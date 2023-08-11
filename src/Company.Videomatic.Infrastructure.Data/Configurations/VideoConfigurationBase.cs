@@ -11,7 +11,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
     public class FieldLengths
     {
-        public const int Location = 1024;
+        public const int URL = 1024;
         public const int Title = 500;
         public const int TagName = 100;
         //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
@@ -26,12 +26,18 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                .HasConversion(x => x.Value, y => y);
 
         builder.Property(x => x.Location)
-               .HasMaxLength(FieldLengths.Location); 
+               .HasMaxLength(FieldLengths.URL); 
 
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
         
-        builder.Property(x => x.Description);        
+        builder.Property(x => x.Description);
+
+        builder.Property(x => x.ThumbnailUrl)
+               .HasMaxLength(FieldLengths.URL);
+
+        builder.Property(x => x.PictureUrl)
+               .HasMaxLength(FieldLengths.URL);
 
         #region Owned Types
         var thumbnails = builder.OwnsMany(x => x.Thumbnails,
@@ -46,7 +52,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                 builder.HasKey("Id");
                 
                 builder.Property(x => x.Location)
-                       .HasMaxLength(FieldLengths.Location);
+                       .HasMaxLength(FieldLengths.URL);
             });
 
         var tags = builder.OwnsMany(x => x.Tags,

@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="assets\transcript.xml.static">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

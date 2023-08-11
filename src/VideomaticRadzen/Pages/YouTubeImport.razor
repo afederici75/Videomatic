@@ -29,7 +29,7 @@
 </RadzenPanel>
 
 
-<RadzenPanel AllowCollapse="true" Collapsed="true">
+<RadzenPanel AllowCollapse="true" Collapsed="false">
     <HeaderTemplate>
         <RadzenText TextStyle="TextStyle.H6">
             <RadzenIcon Icon="account_box" />Import Playlists
@@ -55,11 +55,13 @@
 
 
 @code {
-    public string? VideoUrls { get; set; } = @"https://www.youtube.com/watch?v=V8WuljiJFBI
-https://www.youtube.com/watch?v=YzPhcUyZXWA
-https://www.youtube.com/watch?v=Ma8oi5MU1dk";
+    public string? VideoUrls { get; set; } = @"https://www.youtube.com/watch?v=V8WuljiJFBI";
 
-    public string? PlaylistUrls { get; set; } = @"https://www.youtube.com/playlist?list=PLLdi1lheZYVK7x4Cv6vSDJJe2DuMUZHjt
+//https://www.youtube.com/watch?v=YzPhcUyZXWA
+//https://www.youtube.com/watch?v=Ma8oi5MU1dk";
+
+    public string? PlaylistUrls { get; set; } = @"https://www.youtube.com/playlist?list=PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb
+https://www.youtube.com/playlist?list=PLLdi1lheZYVK7x4Cv6vSDJJe2DuMUZHjt
 https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
 
     public string VideoImportResult { get; set; } = "No videos imported yet...";
