@@ -1,5 +1,6 @@
 ﻿using Hangfire;
 using MediatR;
+using System;
 
 namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
@@ -16,15 +17,17 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public Task<ImportYoutubeVideosResponse> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var jobIds = new List<string>();
-        foreach (var url in request.Urls)
-        {
-            var jobId = JobClient.Enqueue<IVideoImporter>(imp => 
-                imp.ImportVideosAsync(new[] { url }, request.DestinationPlaylistId ?? 1, null, cancellationToken));
+        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, request.DestinationPlaylistId ?? 1, null, cancellationToken));
 
-            jobIds.Add(jobId);
-        }
+        //var jobIds = new List<string>();
+        //foreach (var url in request.Urls)
+        //{
+        //    var jobId = JobClient.Enqueue<IVideoImporter>(imp => 
+        //        imp.ImportVideosAsync(new[] { url }, request.DestinationPlaylistId ?? 1, null, cancellationToken));
+        //
+        //    jobIds.Add(jobId);
+        //}
 
-        return Task.FromResult(new ImportYoutubeVideosResponse(true, jobIds, request.DestinationPlaylistId));
+        return Task.FromResult(new ImportYoutubeVideosResponse(true, new[] { jobId }, request.DestinationPlaylistId));
     }   
 }

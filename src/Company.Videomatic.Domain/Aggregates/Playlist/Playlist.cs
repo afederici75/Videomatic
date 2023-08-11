@@ -57,7 +57,6 @@ public class Playlist : IEntity, IAggregateRoot
     {
         Guard.Against.Null(videoIds, nameof(videoIds));
 
-        // We have _playlists fetched from the db. The 
         var goodIds = videoIds
             .Where(vid => vid is not null) // TODO: code smell?
             .Except(_videos.Select(p => p.VideoId))

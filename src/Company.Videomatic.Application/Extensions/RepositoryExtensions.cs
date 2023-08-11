@@ -22,11 +22,11 @@ public static class RepositoryExtensions
         return newLinks;
     }
 
-    public static async Task<IReadOnlyDictionary<VideoId, string>> GetProviderVideoIds(this IRepository<Video> repository, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
+    public static async Task<IReadOnlyDictionary<string, VideoId>> GetVideoProviderIds(this IRepository<Video> repository, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
     {
         var videos = await repository.ListAsync(new VideosByIdsSpec(videoIds.ToArray()), cancellationToken);
 
-        return videos.ToDictionary(v => v.Id, v => v.Details.ProviderVideoId);
+        return videos.ToDictionary(v => v.Details.ProviderVideoId, v => v.Id);
     }
 
     //public static async Task<IReadOnlyDictionary<VideoId, string>> GetPlaylistVideoIds(this IRepository<Playlist> repository, PlaylistId playlistId, CancellationToken cancellationToken = default)

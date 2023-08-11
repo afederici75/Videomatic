@@ -55,6 +55,10 @@ namespace YoutubeTranscriptApi
                 throw new TranscriptsDisabled(videoId);
             }
 
+            var targetHtml = splitted_html[1];
+            var json = targetHtml.Substring(0, targetHtml.IndexOf(']') + 1);
+
+
             var captions_json = JsonSerializer.Deserialize<JsonElement>(
                 splitted_html[1].Split(",\"videoDetails")[0].Replace("\n", "")
                 ).GetProperty("playerCaptionsTracklistRenderer");

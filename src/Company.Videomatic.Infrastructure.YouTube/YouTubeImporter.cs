@@ -1,7 +1,11 @@
-﻿using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Google.Apis.YouTube.v3;
+﻿using Ardalis.Result;
+using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Domain.Aggregates.Video;
 using Hangfire;
+using Newtonsoft.Json;
+using System.Xml;
+using System.Xml.XPath;
+//using YoutubeTranscriptApi;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -66,24 +70,26 @@ public class YouTubeImporter : IVideoImporter
         {
             var videos = page.Select(gv => MapToVideo(gv)).ToArray();
 
-            var ids = videos.Select(x => x.Id).ToList();    
-
 
             // TODO: figure out why AddRangeAsync does not work: it does not update the Id property!!!
-            IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);           
-
-            if (linkTo != null)
-                await PlaylistRepository.LinkPlaylistToVideos(linkTo, res.Select(x => x.Id).ToList());
-
-            switch (options.ExecuteWithoutJobQueue)
+            //IEnumerable<Video> res = await VideoRepository.AddRangeAsync(videos, cancellation);           
+            foreach (var v in videos)
             {
-                case true:
-                    await this.ImportTranscriptionsAsync(res.Select(x => x.Id), cancellation);
-                    break;
-                case false:
-                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(res.Select(x => x.Id), cancellation));
-                    break;
-            }   
+                var res = await VideoRepository.AddAsync(v, cancellation);
+
+                if (linkTo != null)
+                    await PlaylistRepository.LinkPlaylistToVideos(linkTo, new[] { res.Id });
+
+                switch (options.ExecuteWithoutJobQueue)
+                {
+                    case true:
+                        await this.ImportTranscriptionsAsync(new[] { res.Id }, cancellation);
+                        break;
+                    case false:
+                        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(new[] { res.Id }, cancellation));
+                        break;
+                }
+            }            
         }
     }
 
@@ -103,64 +109,153 @@ public class YouTubeImporter : IVideoImporter
         }        
     }
 
-
     public async Task ImportTranscriptionsAsync(
         IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
     {        
-        var videoIdsByVideoId = await VideoRepository.GetProviderVideoIds(videoIds, cancellation);
-                        
-        using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
+        var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIds, cancellation);
+        using var client = new HttpClient();
 
-        foreach (var responsePage in videoIdsByVideoId.Page(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+        foreach (var v in videoIdsByProviderId)
         {
-            cancellation.ThrowIfCancellationRequested();
+            var videoUrl = $"https://www.youtube.com/watch?v={v.Key}";
 
-            var currentSet = responsePage.ToHashSet();
-            var badTranscripts = new List<Transcript>();
+            // download the url and parse the transcript
+            var ttInfo = await GetTimedTextInformation(client, videoUrl);
+            if (!ttInfo.IsSuccess || ttInfo.Value.playerCaptionsTracklistRenderer?.captionTracks == null)
+                continue;
 
-            var requestedIds = currentSet.Select(x => x.Value).ToList();
+            var allTracks = ttInfo.Value.playerCaptionsTracklistRenderer.captionTracks;
+            
+            var tasks = allTracks.Select(track => ConvertTranscript(client, v.Value, track));
+            var results = await Task.WhenAll(tasks);
 
-            var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
+            var newTranscripts = results.Where(r => r.IsSuccess)
+                                        .Select(r => r.Value)
+                                        .ToArray();
 
-            var allTranscripts = api.GetTranscripts(
-                requestedIds, 
-                languages: languages,
-                continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+            await TranscriptRepository.AddRangeAsync(newTranscripts, cancellation);            
+        }
 
-            var badOnes = allTranscripts.Item2!.Select(badId =>
+    }
+
+    async Task<Result<Transcript>> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
+    {
+        var newTranscr = Transcript.Create(videoId, track.languageCode);
+
+        var xml = await client.GetStringAsync(track.baseUrl);
+        XmlDocument xmlDoc = new XmlDocument();
+        xmlDoc.LoadXml(xml);
+
+        XmlNodeList? textNodes = xmlDoc.SelectNodes("//text"); // Select all 'text' nodes
+        if (textNodes != null)
+        {
+            foreach (XmlNode textNode in textNodes)
             {
-                var videoId = videoIdsByVideoId.First(x => x.Value == badId).Key;
-                return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
-            });
+                var text = textNode.InnerText;
+                var startTxt = textNode.Attributes?["start"]?.Value ?? "0";
+                var durTxt = textNode.Attributes?["dur"]?.Value ?? "0";
 
-            await TranscriptRepository.AddRangeAsync(badOnes);
-
-            // ------------------------------
-            Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? fetchedTranscripts = allTranscripts.Item1;
-            IReadOnlyList<string>? failedToDownload = allTranscripts!.Item2;
-
-            foreach (var v in videoIdsByVideoId)
-            {                
-                if (!fetchedTranscripts!.TryGetValue(v.Value, out var ytTranscriptItems))
-                {
-                    // No transcript?
-                    continue;
-                }
-
-                // ------------------------------
-                var newTranscr = Transcript.Create(v.Key, "US");
-                foreach (var item in ytTranscriptItems)
-                {
-                    newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
-                }
-                
-                await TranscriptRepository.AddAsync(newTranscr, cancellation);
-
-                cancellation.ThrowIfCancellationRequested();
+                newTranscr.AddLine(
+                    text,
+                    TimeSpan.FromSeconds(double.Parse(durTxt)),
+                    TimeSpan.FromSeconds(double.Parse(startTxt)));
             }
         }
+
+        return newTranscr;
     }
-   
+
+
+    async Task<Result<TimedTextInformation>> GetTimedTextInformation(HttpClient client, string videoUrl)
+    {
+        client.DefaultRequestHeaders.Add("User-Agent", "Videomatic");
+
+        var html = await client.GetStringAsync(videoUrl);
+
+        var tmp = html.Split("\"captions\":");
+        if (tmp.Length <= 1)
+        {
+            if (html.Contains("class=\"g-recaptcha\""))
+            {
+                return Result.Error($"Too many requests for video {videoUrl}.");
+            }
+
+            if (!html.Contains("\"playabilityStatus\":"))
+            {
+                return Result.Error($"Unavailable video {videoUrl}.");
+            }
+
+            return Result.Error($"Transcripts disabled in video {videoUrl}.");            
+        }
+
+        var targetHtml = tmp[1];
+        var json = targetHtml.Substring(0, targetHtml.IndexOf(']') + 1) + "}}";
+
+        var ttInfo = JsonConvert.DeserializeObject<TimedTextInformation>(json);
+        return ttInfo!;
+    }
+
+    //public async Task ImportTranscriptionsAsync2(
+    //    IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
+    //{
+    //    var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIds, cancellation);
+
+    //    using var api = new YoutubeTranscriptApi.YouTubeTranscriptApi();
+
+    //    foreach (var responsePage in videoIdsByProviderId.Page(1))//YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+    //    {
+    //        cancellation.ThrowIfCancellationRequested();
+
+    //        var requestedProviderIds = responsePage.Select(x => x.Key).ToList();
+
+    //        var languages = new List<string>() { "en", "es", "en-GB", "ko", "it" };
+
+    //        var allTranscripts = api.GetTranscripts(
+    //            requestedProviderIds, 
+    //            languages: languages,
+    //            continue_after_error: true); // Returns an ugly (Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>, IReadOnlyList<string>) 
+
+    //        var badOnes = allTranscripts.Item2!.Select(badId =>
+    //        {
+    //            var videoId = videoIdsByProviderId[badId];
+    //            return Transcript.Create(videoId, "??", new[] { $"Transcripts disabled or no transcript found for video '{badId}' [{videoId}]." });
+    //        });
+
+    //        foreach (var badOne in badOnes)
+    //        {
+    //            try
+    //            {
+    //                await TranscriptRepository.AddAsync(badOne, cancellation);
+    //            }
+    //            catch (Exception ex)
+    //            { }
+    //        }
+
+    //        // ------------------------------
+    //        Dictionary<string, IEnumerable<YoutubeTranscriptApi.TranscriptItem>>? goodOnes = allTranscripts.Item1;
+
+    //        foreach (var goodTrans in goodOnes)
+    //        {
+    //            var videoId = videoIdsByProviderId[goodTrans.Key];
+
+    //            var newTranscr = Transcript.Create(videoId, "US");
+    //            foreach (var item in goodTrans.Value)
+    //            {
+    //                newTranscr.AddLine(item.Text, TimeSpan.FromSeconds(item.Duration), TimeSpan.FromSeconds(item.Start));
+    //            }
+
+    //            try 
+    //            { 
+    //                await TranscriptRepository.AddAsync(newTranscr, cancellation);
+    //            }
+    //            catch (Exception ex)
+    //            { }
+    //        }
+
+    //        cancellation.ThrowIfCancellationRequested();
+    //    }
+    //}
+
     static string FromStringOrQueryString(string text, string parameterName)
     {
         if (string.IsNullOrWhiteSpace(text))

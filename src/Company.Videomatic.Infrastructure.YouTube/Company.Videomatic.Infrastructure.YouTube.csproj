@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
-    <ProjectReference Include="..\YoutubeTranscriptApi\YoutubeTranscriptApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
