@@ -33,27 +33,37 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         
         builder.Property(x => x.Description);
 
-        builder.Property(x => x.ThumbnailUrl)
+        builder.Property(x => x.Thumbnail)
                .HasMaxLength(FieldLengths.URL);
 
-        builder.Property(x => x.PictureUrl)
+        builder.Property(x => x.Picture)
                .HasMaxLength(FieldLengths.URL);
 
         #region Owned Types
-        var thumbnails = builder.OwnsMany(x => x.Thumbnails,
-            (builder) => 
-            {
-                builder.ToTable(TableNameForThumbnails);
+        builder.OwnsOne(x => x.Thumbnail, b => 
+        { 
+            b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);            
+        });
 
-                // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
-                // Shadow properties
-                builder.WithOwner().HasForeignKey("VideoId");
-                builder.Property("Id");
-                builder.HasKey("Id");
-                
-                builder.Property(x => x.Location)
-                       .HasMaxLength(FieldLengths.URL);
-            });
+        builder.OwnsOne(x => x.Picture, b =>
+        {
+            b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);
+        });
+
+        //var thumbnails = builder.OwnsMany(x => x.Thumbnails,
+        //    (builder) => 
+        //    {
+        //        builder.ToTable(TableNameForThumbnails);
+        //
+        //        // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
+        //        // Shadow properties
+        //        builder.WithOwner().HasForeignKey("VideoId");
+        //        builder.Property("Id");
+        //        builder.HasKey("Id");
+        //        
+        //        builder.Property(x => x.Location)
+        //               .HasMaxLength(FieldLengths.URL);
+        //    });
 
         var tags = builder.OwnsMany(x => x.Tags,
            (builder) =>

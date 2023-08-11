@@ -2,7 +2,7 @@
 
 public class VideoConfiguration : VideoConfigurationBase
 {
-    public const string ThumbnailSequenceName = "ThumbnailSequence";
+    //public const string ThumbnailSequenceName = "ThumbnailSequence";
     public const string TagsSequenceName = "TagsSequence";
     public const string SequenceName = "VideoSequence";
 
@@ -15,12 +15,12 @@ public class VideoConfiguration : VideoConfigurationBase
         builder.Property(x => x.Id)
                .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode
 
-        var thumbnails = builder.OwnsMany(x => x.Thumbnails,
-            (builder) =>
-            {
-                builder.Property("Id")
-                       .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode                
-            });
+        //var thumbnails = builder.OwnsMany(x => x.Thumbnails,
+        //    (builder) =>
+        //    {
+        //        builder.Property("Id")
+        //               .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode                
+        //    });
 
         var agss = builder.OwnsMany(x => x.Tags,
             (builder) =>

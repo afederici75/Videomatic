@@ -47,7 +47,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         // OrderBy
         q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy) : q;
 
-        var totalCount = await q.CountAsync();
+        var totalCount = await q.CountAsync(cancellationToken);
 
         // Pagination
         var skip = request.Skip ?? 0;
@@ -66,8 +66,8 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             v.Name,
             v.Description,
             request.IncludeTags ? v.Tags.Select(t => t.Name) : null,
-            v.ThumbnailUrl,
-            v.PictureUrl,
+            v.Thumbnail,
+            v.Picture,
             dbContext.Artifacts.Count(a => a.VideoId==v.Id),
             dbContext.Transcripts.Count(a => a.VideoId == v.Id),
             v.Tags.Count(),
@@ -79,7 +79,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             ));
 
         // Counts
-        var res = await final.ToListAsync();
+        var res = await final.ToListAsync(cancellationToken);
         
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    

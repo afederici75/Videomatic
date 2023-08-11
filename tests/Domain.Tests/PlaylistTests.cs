@@ -32,7 +32,7 @@ public class PlaylistTests
     public void DoesNotLinkVideoToNullPlaylistId()
     {
         var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists));
-        var video = Video.Create(DummyLocation, "http://1", "http://2", nameof(DoesNotLinkVideoToNullPlaylistId));
+        var video = Video.Create(DummyLocation, nameof(LinkVideoToPlaylists), new("", -1, -1), new("", -1, -1), new("", "", DateTime.Now, "", ""), nameof(DoesNotLinkVideoToNullPlaylistId));
         
         #pragma warning disable CS8620 
         // If you pass a newly created Playlist (which has a null Id) it would be null.

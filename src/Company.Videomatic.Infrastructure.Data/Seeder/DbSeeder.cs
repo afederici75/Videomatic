@@ -91,8 +91,8 @@ public class DbSeeder : IDbSeeder
                 "effect on its market and (4) uses no more of the original work than necessary for the video's " +
                 "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
                 "poster.",
-                pictureUrl: "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg",
-                thumbnailUrl: "https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg",
+                picture: new ("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
                 details: new VideoDetails(
                     Provider: "YOUTUBE",
                     ProviderVideoId: "n1kmKpjk_8E",
@@ -105,11 +105,11 @@ public class DbSeeder : IDbSeeder
 
 
         // Thumbnails
-        video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 90, 120);
-        video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", 180, 320);
-        video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/n1kmKpjk_8E/hqdefault.jpg", 360, 480);
-        video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", 480, 640);
-        video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 720, 1280);
+        //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 90, 120);
+        //video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", 180, 320);
+        //video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/n1kmKpjk_8E/hqdefault.jpg", 360, 480);
+        //video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", 480, 640);
+        //video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 720, 1280);
 
         await VideoRepository.AddAsync(video);        
 
@@ -171,8 +171,8 @@ public class DbSeeder : IDbSeeder
                 "\n" +
                 "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
                 "For more information, please see: https://www.arshabodha.org/",
-                pictureUrl: "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg",
-                thumbnailUrl: "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg",
+                picture: new Thumbnail("https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 1280, 720),
+                thumbnail: new Thumbnail("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 120, 90),
                 details: new VideoDetails(
                     Provider: "YOUTUBE",
                     ProviderVideoId: "BBd3aHnVnuE",
@@ -184,11 +184,11 @@ public class DbSeeder : IDbSeeder
         video.AddTags("HINDUISM");
 
         // Thumbnails
-        video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 90, 120);
-        video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", 180, 320);
-        video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", 360, 480);
-        video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", 480, 640);
-        video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
+        //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 90, 120);
+        //video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", 180, 320);
+        //video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", 360, 480);
+        //video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", 480, 640);
+        //video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
 
 
         await VideoRepository.AddAsync(video);

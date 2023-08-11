@@ -6,5 +6,5 @@ public abstract record GenericImportable(
     string Name,
     string? Description,
     DateTime? PublishedAt,
-    string PictureUrl,
-    string ThumbnailUrl);
+    Thumbnail Picture,
+    Thumbnail Thumbnail);

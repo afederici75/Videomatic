@@ -231,8 +231,10 @@ public class YouTubeImporter : IVideoImporter
         }
         catch (HttpRequestException ex)
         {
-            var msg = $"Error while getting video {videoUrl}. {ex.Message}";
+            var msg = $"Error while getting video {videoUrl}.";
+#pragma warning disable CA2254 // Template should be a static expression
             Logger.LogError(ex, msg, videoUrl);
+#pragma warning restore CA2254 // Template should be a static expression
 
             return Result.Error(msg);
         }
@@ -248,8 +250,8 @@ public class YouTubeImporter : IVideoImporter
                             Name: gpl.Name,
                             Description: gpl.Description,
                             PublishedAt: gpl.PublishedAt,
-                            ThumbnailUrl: gpl.ThumbnailUrl,
-                            PictureUrl: gpl.PictureUrl,
+                            Thumbnail: gpl.Thumbnail,
+                            Picture: gpl.Picture,
                             EmbedHtml: gpl.EmbedHtml,
                             DefaultLanguage: gpl.DefaultLanguage));
     }
@@ -259,8 +261,8 @@ public class YouTubeImporter : IVideoImporter
         var video = Video.Create(
                             location: $"https://www.youtube.com/watch?v={item.Id}",
                             name: item.Name,
-                            pictureUrl: item.PictureUrl,
-                            thumbnailUrl: item.ThumbnailUrl,
+                            picture: item.Picture,
+                            thumbnail: item.Thumbnail,
                             description: item.Description,                            
                             details: new VideoDetails(
                                 Provider: ProviderId,

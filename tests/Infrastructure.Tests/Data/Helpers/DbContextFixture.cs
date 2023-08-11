@@ -31,10 +31,10 @@ public class DbContextFixture : IAsyncLifetime
 
     public virtual Task DisposeAsync()
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        //if (!SkipDeletingDatabase)
-        //    return DbContext.Database.EnsureDeletedAsync();
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//        //if (!SkipDeletingDatabase)
+//        //    return DbContext.Database.EnsureDeletedAsync();
+//#pragma warning restore CS0618 // Type or member is obsolete
 
         DbContext.Dispose();
 
@@ -59,7 +59,7 @@ public class DbContextFixture : IAsyncLifetime
         DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.TagsSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName}  RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");

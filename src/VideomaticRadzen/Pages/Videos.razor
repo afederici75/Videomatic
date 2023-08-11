@@ -21,7 +21,7 @@
                 AllowPaging="true">
     <Template Context="video">
         <RadzenCard Style="max-width: 340px; min-width:200px">          
-            <RadzenImage Path="@video.PictureUrl" Style="max-width: 200px; max-lock-size;" />
+            <RadzenImage Path="@video.Picture?.Location" Style="max-width: 200px, max-lock-size;" />
 
             <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
 

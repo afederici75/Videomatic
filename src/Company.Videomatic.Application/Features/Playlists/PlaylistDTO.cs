@@ -1,9 +1,9 @@
 ﻿namespace Company.Videomatic.Application.Features.Playlists;
 
 public record PlaylistDTO(
-    int Id = 0,
-    string Name = "",
-    string ThumbnailUrl = "",
-    string PictureUrl = "",
-    string? Description = default,
-    int? VideoCount = 0);
+    int Id,
+    string Name,
+    Thumbnail ThumbnailUrl,
+    Thumbnail PictureUrl,
+    string? Description,
+    int VideoCount);

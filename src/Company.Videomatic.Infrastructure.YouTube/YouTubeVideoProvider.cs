@@ -27,8 +27,8 @@ public class YouTubeVideoProvider : IVideoProvider
             {
                 var thumbs = channel.Snippet!.Thumbnails!;
 
-                string thubUrl = thumbs.Default__?.Url ?? thumbs.Medium?.Url ?? thumbs.High?.Url ?? thumbs.Standard?.Url ?? thumbs.Maxres?.Url ?? string.Empty;
-                string pictUrl = thumbs.Maxres?.Url ?? thumbs.Standard?.Url ?? thumbs.High?.Url ?? thumbs.Medium?.Url ?? thumbs.Default__?.Url ?? string.Empty;
+                var thumb = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//", -1, -1);
+                var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
 
                 NameAndDescription? locInfo = null;
                 if (channel.Snippet.Localized != null)
@@ -40,8 +40,8 @@ public class YouTubeVideoProvider : IVideoProvider
                     Name: channel.Snippet.Title,
                     Description: channel.Snippet.Description,
                     PublishedAt: channel.Snippet.PublishedAtDateTimeOffset?.UtcDateTime,
-                    ThumbnailUrl: thubUrl,
-                    PictureUrl: pictUrl,
+                    Thumbnail: new (thumb.Url, Convert.ToInt32(thumb.Height), Convert.ToInt32(thumb.Width)),
+                    Picture: new (pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
                     DefaultLanguage: channel.Snippet.DefaultLanguage,
                     LocalizationInfo: locInfo,
                     Owner: channel.ContentOwnerDetails?.ContentOwner,
@@ -68,6 +68,11 @@ public class YouTubeVideoProvider : IVideoProvider
 
             foreach (var playlist in response.Items)
             {
+                var thumbs = playlist.Snippet!.Thumbnails!;
+
+                var thub = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//", -1, -1);
+                var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
+
                 var pl = new GenericPlaylist(
                     Id: playlist.Id,
                     ETag: playlist.ETag,
@@ -75,8 +80,8 @@ public class YouTubeVideoProvider : IVideoProvider
                     Name: playlist.Snippet.Title,
                     Description: playlist.Snippet.Description,
                     PublishedAt: playlist.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                    ThumbnailUrl: playlist.Snippet.Thumbnails.Default__.Url,
-                    PictureUrl: playlist.Snippet.Thumbnails.Maxres.Url,
+                    Thumbnail: new(thub.Url, Convert.ToInt32(thub.Height), Convert.ToInt32(thub.Width)),
+                    Picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
                     EmbedHtml: playlist.Player.EmbedHtml,
                     DefaultLanguage: playlist.Snippet.DefaultLanguage,
                     LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title ?? "??", playlist.Snippet.Localized?.Description), 
@@ -98,11 +103,9 @@ public class YouTubeVideoProvider : IVideoProvider
             var response = await request.ExecuteAsync(cancellation);
 
             foreach (var video in response.Items)
-            {               
-                var picUrl = video.Snippet.Thumbnails.Maxres?.Url ?? video.Snippet.Thumbnails.Standard?.Url ?? video.Snippet.Thumbnails.High?.Url ?? video.Snippet.Thumbnails.Medium?.Url ?? video.Snippet.Thumbnails.Default__?.Url
-                              ?? "http://nodata";
-                var thumbUrl  = video.Snippet.Thumbnails.Default__?.Url ?? video.Snippet.Thumbnails.Medium?.Url ?? video.Snippet.Thumbnails.High?.Url ?? video.Snippet.Thumbnails.Standard?.Url ?? video.Snippet.Thumbnails.Maxres?.Url
-                              ?? "http://nodata";
+            {
+                var pict = video.Snippet.Thumbnails.Maxres ?? video.Snippet.Thumbnails.Standard ?? video.Snippet.Thumbnails.High ?? video.Snippet.Thumbnails.Medium ?? video.Snippet.Thumbnails.Default__ ?? new();
+                var thumb = video.Snippet.Thumbnails.Default__?? video.Snippet.Thumbnails.Medium ?? video.Snippet.Thumbnails.High ?? video.Snippet.Thumbnails.Standard ?? video.Snippet.Thumbnails.Maxres ?? new();
 
                 var pl = new GenericVideo(
                     Id: video.Id,
@@ -111,8 +114,8 @@ public class YouTubeVideoProvider : IVideoProvider
                     Name: video.Snippet.Title,
                     Description: video.Snippet.Description,
                     PublishedAt: video.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                    ThumbnailUrl: thumbUrl,
-                    PictureUrl: picUrl,
+                    Thumbnail: new(thumb.Url, Convert.ToInt32(thumb.Height), Convert.ToInt32(thumb.Width)),
+                    Picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
                     EmbedHtml: video.Player.EmbedHtml,
                     DefaultLanguage: video.Snippet.DefaultLanguage,
                     LocalizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),

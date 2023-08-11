@@ -12,8 +12,8 @@ public record PlaylistOrigin(
 
     DateTime? PublishedAt,
 
-    string? ThumbnailUrl,
-    string? PictureUrl,
+    Thumbnail Thumbnail,
+    Thumbnail Picture,
 
     string? EmbedHtml,
     string? DefaultLanguage);

@@ -10,8 +10,8 @@ public record GenericChannel(
 
     DateTime? PublishedAt,
 
-    string ThumbnailUrl,
-    string PictureUrl,
+    Thumbnail Thumbnail,
+    Thumbnail Picture,
 
     // New
     string? DefaultLanguage,
@@ -25,4 +25,4 @@ public record GenericChannel(
 
     ulong? VideoCount,
     ulong? SuscriberCount,
-    ulong? ViewCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, ThumbnailUrl, PictureUrl);
+    ulong? ViewCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, Thumbnail, Picture);

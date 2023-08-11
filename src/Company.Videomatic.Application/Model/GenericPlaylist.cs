@@ -11,8 +11,8 @@ public record GenericPlaylist(
 
     DateTime? PublishedAt,
 
-    string ThumbnailUrl,
-    string PictureUrl,
+    Thumbnail Thumbnail,
+    Thumbnail Picture,
 
     // New
     string? EmbedHtml,
@@ -21,4 +21,4 @@ public record GenericPlaylist(
     NameAndDescription? LocalizationInfo,
 
     string PrivacyStatus,
-    int VideoCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, ThumbnailUrl, PictureUrl);
+    int VideoCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, Thumbnail, Picture);

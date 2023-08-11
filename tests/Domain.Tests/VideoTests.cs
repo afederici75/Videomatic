@@ -14,11 +14,10 @@ public class VideoTests
         var video = Video.Create(
             location: DummyLocation,
             name: nameof(CreateVideo),
-            pictureUrl: "http://1", 
-            thumbnailUrl: "http://2");
+            picture: new Thumbnail("http://1", -1, -1),
+            thumbnail: new Thumbnail("http://2", -1, -1));
         
         video.Should().NotBeNull();
-        video.Thumbnails.Should().HaveCount(5); // It got 5 default thumbnail resolutions
         video.Tags.Should().BeEmpty(); // No tags yet
         //video.Playlists.Should().BeEmpty(); // No playlists yet 
     }
@@ -31,8 +30,8 @@ public class VideoTests
         var video = Video.Create(
             location: DummyLocation, 
             name: nameof(CreateVideo),
-            pictureUrl: "http://1", 
-            thumbnailUrl: "http://2",
+            picture: new Thumbnail("http://1", -1, -1),
+            thumbnail: new Thumbnail("http://2", -1, -1),
             details: new("YOUTUBE", "ABC123", pubAt, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
             description: "A complete description");
 
@@ -44,7 +43,6 @@ public class VideoTests
 
         //video.Playlists.Should().BeEmpty(); // No playlists yet 
         video.Tags.Should().BeEmpty(); // No tags yet
-        video.Thumbnails.Should().HaveCount(5); // It got 5 default thumbnail resolutions
         
         video.Details.Should().NotBeNull();
         video.Details.Provider.Should().Be("YOUTUBE");
@@ -61,9 +59,9 @@ public class VideoTests
     {
         var video = Video.Create(
             location: DummyLocation, 
-            name: nameof(SetThumbnails),
-            pictureUrl: "http://1", 
-            thumbnailUrl: "http://2"
+            name: nameof(NoDuplicateTagsAndClearTags),
+            picture: new Thumbnail("http://1", -1, -1),
+            thumbnail: new Thumbnail("http://2", -1, -1)
             );
 
         // Ensures duplicate tags are not added
@@ -80,24 +78,25 @@ public class VideoTests
         video.Tags.Count.Should().Be(0);
     }
 
-    [Fact]
-    public void SetThumbnails()
-    {
-        var video = Video.Create(location: DummyLocation, name: nameof(SetThumbnails),
-            pictureUrl: "http://1",
-            thumbnailUrl: "http://2");        
-        var oldDefault = video.GetThumbnail(ThumbnailResolution.Default);
-        var oldMedium = video.GetThumbnail(ThumbnailResolution.Medium); 
+    //[Fact]
+    //public void SetThumbnails()
+    //{
+    //    var video = Video.Create(location: DummyLocation, name: nameof(SetThumbnails),
+    //        picture: new Thumbnail("http://1", -1, -1),
+    //        thumbnail: new Thumbnail("http://2", -1, -1));
 
-        video.SetThumbnail(resolution: ThumbnailResolution.Default, location: "newlocation", height: 100, width: 100);
-        var newDefault = video.GetThumbnail(ThumbnailResolution.Default);   
+    //    var oldDefault = video.GetThumbnail(ThumbnailResolution.Default);
+    //    var oldMedium = video.GetThumbnail(ThumbnailResolution.Medium); 
 
-        video.Thumbnails.Count.Should().Be(5); // Still 5 thumbnails
+    //    video.SetThumbnail(resolution: ThumbnailResolution.Default, location: "newlocation", height: 100, width: 100);
+    //    var newDefault = video.GetThumbnail(ThumbnailResolution.Default);   
 
-        newDefault.Resolution.Should().Be(oldDefault.Resolution); 
-        newDefault.Location.Should().NotBe(oldDefault.Location);
-        newDefault.Height.Should().NotBe(oldDefault.Height);
-        newDefault.Width.Should().NotBe(oldDefault.Width);
-    }
+    //    video.Thumbnails.Count.Should().Be(5); // Still 5 thumbnails
+
+    //    newDefault.Resolution.Should().Be(oldDefault.Resolution); 
+    //    newDefault.Location.Should().NotBe(oldDefault.Location);
+    //    newDefault.Height.Should().NotBe(oldDefault.Height);
+    //    newDefault.Width.Should().NotBe(oldDefault.Width);
+    //}
     
 }
