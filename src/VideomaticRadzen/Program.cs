@@ -35,11 +35,11 @@ builder.Services.AddHangfire(configuration => configuration
         .UseSqlServerStorage(builder.Configuration.GetConnectionString(connectionName),
                             new Hangfire.SqlServer.SqlServerStorageOptions()
                             {
-                                PrepareSchemaIfNecessary = true
+                                PrepareSchemaIfNecessary = true,                                                                
                             }));
 
 // Add the processing server as IHostedService
-builder.Services.AddHangfireServer();
+builder.Services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts!
 
 // Use Serilog
 builder.Logging.ClearProviders();
