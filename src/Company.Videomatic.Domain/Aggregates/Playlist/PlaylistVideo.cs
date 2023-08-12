@@ -4,13 +4,10 @@ namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
 public class PlaylistVideo
 {
-    internal static PlaylistVideo Create(PlaylistId playlistId, VideoId videoId)
-    {
-        return new PlaylistVideo
-        {
-            PlaylistId = playlistId,
-            VideoId = videoId
-        };
+    public PlaylistVideo(PlaylistId playlistId, VideoId videoId)
+    {        
+        PlaylistId = playlistId; // It's possible the Playlist Id is not yet available (e.g. we just created the Playlist)
+        VideoId = Guard.Against.Null(videoId, nameof(videoId));        
     }
 
     public PlaylistId PlaylistId { get; private set; } = default!;
@@ -18,10 +15,7 @@ public class PlaylistVideo
 
     #region Private
 
-    private PlaylistVideo()
-    {
-
-    }
+    private PlaylistVideo() { }
 
     #endregion
 }

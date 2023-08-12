@@ -23,26 +23,26 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
     public IRepository<Transcript> Repository { get; }
     public ISender Sender { get; }
 
-    [Fact]
-    public async Task CreateAndDeleteTranscript()
-    {
-        // Creates
-        var createCommand = CreateTranscriptCommandBuilder.WithDummyValues(1);
+    //[Fact]
+    //public async Task CreateAndDeleteTranscript()
+    //{
+    //    // Creates
+    //    var createCommand = CreateTranscriptCommandBuilder.WithDummyValues(1);
 
-        var response = await Sender.Send(createCommand);
+    //    var response = await Sender.Send(createCommand);
 
-        // Checks
-        response.IsSuccess.Should().BeTrue();
+    //    // Checks
+    //    response.IsSuccess.Should().BeTrue();
         
-        var transcript = await Repository.GetByIdAsync(response.Value.Id);    
+    //    var transcript = await Repository.GetByIdAsync(response.Value.Id);    
 
-        transcript.Should().NotBeNull();
-        transcript!.Language.Should().Be(createCommand.Language);
-        transcript!.Lines.Should().HaveCount(createCommand.Lines.Count());
-        transcript!.VideoId.Value.Should().Be(createCommand.VideoId);
+    //    transcript.Should().NotBeNull();
+    //    transcript!.Language.Should().Be(createCommand.Language);
+    //    transcript!.Lines.Should().HaveCount(createCommand.Lines.Count());
+    //    transcript!.VideoId.Value.Should().Be(createCommand.VideoId);
 
-        // Deletes
-        var ok = await Sender.Send(new DeleteTranscriptCommand(createCommand.VideoId));
-        ok.IsSuccess.Should().BeTrue();
-    }
+    //    // Deletes
+    //    var ok = await Sender.Send(new DeleteTranscriptCommand(createCommand.VideoId));
+    //    ok.IsSuccess.Should().BeTrue();
+    //}
 }

@@ -22,7 +22,7 @@ public class AutomappingProfile : Profile
         CreateMap<DeleteVideoCommand, Video>();
         // Transcripts
         CreateMap<CreateTranscriptCommand, Transcript>()
-            .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines.Select(TranscriptLine.FromString)));
+            .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines.Select(line => new TranscriptLine(line, null, null))));
 
         CreateMap<DeleteTranscriptCommand, Transcript>();
         // See https://stackoverflow.com/questions/24809956/automapper-and-mapping-list-within-a-complex-object-nested-mappings

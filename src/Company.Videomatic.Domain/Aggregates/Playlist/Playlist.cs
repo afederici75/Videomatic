@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Video;
-
-namespace Company.Videomatic.Domain.Aggregates.Playlist;
+﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
 public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
 {
@@ -19,22 +17,23 @@ public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
     public int LinkToVideos(IEnumerable<VideoId> videoIds)
     {
         Guard.Against.Null(videoIds, nameof(videoIds));
-
-        var goodIds = videoIds
-            .Where(vid => vid is not null) // TODO: code smell?
-            .Except(_videos.Select(p => p.VideoId))
+        
+        var newIds = videoIds
+            .Except(_videos.Select(plvid => plvid.VideoId))
             .ToArray();
 
-        foreach (var videoId in goodIds)
+        foreach (var videoId in newIds)
         {
-            _videos.Add(PlaylistVideo.Create(this.Id, videoId));
+            _videos.Add(new PlaylistVideo(this.Id, videoId));
         }
-        return goodIds.Length;
+
+        return newIds.Length;
     }  
 
     #region Private
 
-    private Playlist() : base() { }
+    private Playlist() : base() 
+    { }
 
     readonly List<PlaylistVideo> _videos = new();    
 

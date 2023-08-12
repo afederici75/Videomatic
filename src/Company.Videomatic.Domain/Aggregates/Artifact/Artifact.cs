@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Video;
-
-namespace Company.Videomatic.Domain.Aggregates.Artifact;
+﻿namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
 public class Artifact : Entity<ArtifactId>, IAggregateRoot
 {

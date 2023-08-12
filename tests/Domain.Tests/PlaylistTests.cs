@@ -32,16 +32,15 @@ public class PlaylistTests
     public void DoesNotLinkVideoToNullPlaylistId()
     {
         var playlist = new Playlist(nameof(DoesNotLinkVideoToNullPlaylistId));
-        var video = new Video(nameof(DoesNotLinkVideoToNullPlaylistId));
-        
-        #pragma warning disable CS8620 
+
+#pragma warning disable CS8620
         // If you pass a newly created Playlist (which has a null Id) it would be null.
         // Nulls should be ignored.
-        var count = playlist.LinkToVideos(new [] { default(VideoId) });
-        #pragma warning restore CS8620 
+        Assert.Throws<ArgumentNullException>(() => playlist.LinkToVideos(new[] { default(VideoId) })); 
+    
+#pragma warning restore CS8620 
 
         // Checks
-        playlist.Videos.Count.Should().Be(0);
-        count.Should().Be(0);
+        playlist.Videos.Count.Should().Be(0);        
     }
 }

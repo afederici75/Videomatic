@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
+﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
 public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkPlaylistToVideosCommand, Result<int>>
 {
@@ -12,7 +12,7 @@ public class LinkVideoToPlaylistsHandler : IRequestHandler<LinkPlaylistToVideosC
 
     public async Task<Result<int>> Handle(LinkPlaylistToVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var cnt = await Repository.LinkPlaylistToVideos(request.Id, request.VideoIds.Select(x => new VideoId(x)));
+        var cnt = await Repository.LinkPlaylistToVideos(request.Id, request.VideoIds.Select(x => new VideoId(x)), cancellationToken);
 
         return new Result<int>(cnt);
     }

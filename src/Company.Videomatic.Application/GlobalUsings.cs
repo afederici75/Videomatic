@@ -1,5 +1,6 @@
 ﻿global using FluentValidation;
 global using MediatR;
+global using Hangfire;
 global using Ardalis.Result;
 global using Ardalis.Specification;
 global using AutoMapper;

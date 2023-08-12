@@ -3,19 +3,13 @@
 public class TranscriptLine : ValueObject
 {
     public static implicit operator string(TranscriptLine x) => x.Text;
-    public static implicit operator TranscriptLine(string x) => TranscriptLine.Create(x, null, null);
-
-    public static TranscriptLine FromString(string text)
-        => TranscriptLine.Create(text, null, null);
-
-    internal static TranscriptLine Create(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
+    public static implicit operator TranscriptLine(string x) => new (x, null, null);
+    
+    public TranscriptLine(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {
-        return new TranscriptLine
-        {
-            Text = text,
-            Duration = duration,
-            StartsAt = startsAt
-        };
+        Text = text;
+        Duration = duration;
+        StartsAt = startsAt;        
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
@@ -29,8 +23,11 @@ public class TranscriptLine : ValueObject
     public TimeSpan? Duration { get; private set; }
     public TimeSpan? StartsAt { get; private set; }
 
+    #region
+
     private TranscriptLine()
     { }
 
+    #endregion
 }
 

@@ -1,11 +1,6 @@
 ﻿namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public interface IIntegerId
-{
-    int GetId();
-}
-
-public record PlaylistId(int Value = 0) : IIntegerId
+public record PlaylistId(int Value = 0)
 {
     public int GetId() => this;
 

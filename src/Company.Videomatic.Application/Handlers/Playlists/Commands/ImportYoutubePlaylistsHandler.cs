@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Hangfire;
-
-namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
+﻿namespace Company.Videomatic.Application.Handlers.Playlists.Commands;
 
 public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlaylistsCommand, ImportYoutubePlaylistsResponse>
 {
