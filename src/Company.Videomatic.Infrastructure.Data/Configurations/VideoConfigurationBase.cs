@@ -1,5 +1,6 @@
 ﻿using Company.Videomatic.Domain.Aggregates.Artifact;
 using Company.Videomatic.Domain.Aggregates.Transcript;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
@@ -19,7 +20,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
     public virtual void Configure(EntityTypeBuilder<Video> builder)
     {
-        builder.ToTable(TableName);
+        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
 
         // Fields
         builder.Property(x => x.Id)
@@ -33,9 +34,18 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         
         builder.Property(x => x.Description);
 
+
+
+        var valueComparer = new ValueComparer<IEnumerable<string>>(
+            (c1, c2) => c1!.SequenceEqual(c2!),
+            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            c => c.ToList());
+
         builder.Property(x => x.Tags)
-            .HasConversion(x => string.Join(',', x),
-                           y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet());        
+               .HasConversion(x => string.Join(',', x),
+                              y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet())
+
+               .Metadata.SetValueComparer(valueComparer);
 
         #region Owned Types
 

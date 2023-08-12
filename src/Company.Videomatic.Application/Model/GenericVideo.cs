@@ -36,8 +36,8 @@ public static class GenericVideoExtensions
                 Name: gv.Name,
                 Description: gv.Description,
                 PublishedOn: gv.PublishedAt,
-                Thumbnail: gv.Thumbnail,
-                Picture: gv.Picture,
+                //Thumbnail: gv.Thumbnail,
+                //Picture: gv.Picture,
                 EmbedHtml: gv.EmbedHtml,
                 DefaultLanguage: gv.DefaultLanguage);
 

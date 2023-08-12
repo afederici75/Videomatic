@@ -34,8 +34,8 @@ public class VideoTests
             Name: nameof(CreateVideo),
             Description: "A complete description",
             PublishedOn: pubAt,
-            Picture: Thumbnail.Empty,
-            Thumbnail: Thumbnail.Empty,
+            //Picture: Thumbnail.Empty,
+            //Thumbnail: Thumbnail.Empty,
             EmbedHtml: null,
             DefaultLanguage: null));
 
@@ -66,14 +66,14 @@ public class VideoTests
         video.Tags.Should().BeEmpty();
 
         video.AddTags("TAG1", "TAG2");
-        video.Tags.Count.Should().Be(2);
+        video.Tags.Count().Should().Be(2);
 
         video.AddTags("TAG1");
-        video.Tags.Count.Should().Be(2);
+        video.Tags.Count().Should().Be(2);
 
         // Clear tags and verifies
         video.ClearTags();
-        video.Tags.Count.Should().Be(0);
+        video.Tags.Count().Should().Be(0);
     }
 
     //[Fact]

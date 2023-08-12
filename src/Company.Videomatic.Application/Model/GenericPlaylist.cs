@@ -41,8 +41,8 @@ public static class GenericPlaylistExtensions
                 Name: gpl.Name,
                 Description: gpl.Description,
                 PublishedOn: gpl.PublishedAt,
-                Thumbnail: gpl.Thumbnail,
-                Picture: gpl.Picture,
+                //Thumbnail: gpl.Thumbnail,
+                //Picture: gpl.Picture,
                 EmbedHtml: gpl.EmbedHtml,
                 DefaultLanguage: gpl.DefaultLanguage);
 

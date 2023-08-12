@@ -11,7 +11,7 @@ public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<
 
     public virtual void Configure(EntityTypeBuilder<PlaylistVideo> builder)
     {
-        builder.ToTable(TableName);
+        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
 
         // Fields
         builder.HasKey(x => new { x.PlaylistId, x.VideoId });

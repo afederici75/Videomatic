@@ -79,7 +79,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             ));
 
         // Fetches
-        var res = await final.ToListAsync(cancellationToken);
+        var res = await final.AsNoTracking().ToListAsync(cancellationToken);
         
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    

@@ -14,8 +14,8 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
 
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
-        builder.ToTable(TableName);        
-        
+        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+
         // Fields
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => new TranscriptId(y))

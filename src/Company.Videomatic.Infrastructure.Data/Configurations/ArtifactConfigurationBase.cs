@@ -14,7 +14,7 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
 
     public virtual void Configure(EntityTypeBuilder<Artifact> builder)
     {        
-        builder.ToTable(TableName);
+        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
 
         // Fields
         builder.Property(x => x.Id)

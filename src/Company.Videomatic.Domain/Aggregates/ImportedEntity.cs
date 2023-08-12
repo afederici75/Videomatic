@@ -25,7 +25,7 @@ public abstract class ImportedEntity<TId> : Entity<TId>
     public Thumbnail Thumbnail { get; private set; } = Thumbnail.Empty;
     public Thumbnail Picture { get; private set; } = Thumbnail.Empty;
 
-    public ISet<string> Tags => _tags;
+    public IEnumerable<string> Tags => _tags;
 
     public void SetTags(params string[] tags)
     {

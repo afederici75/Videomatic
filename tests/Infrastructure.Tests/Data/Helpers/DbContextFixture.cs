@@ -48,8 +48,9 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
-        DbContext.Database.ExecuteSqlRaw("delete from dbo.Videos");
-        DbContext.Database.ExecuteSqlRaw("delete from dbo.Playlists");
+        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Videos");
+        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Playlists");
+
         DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
@@ -68,10 +69,10 @@ public class DbContextFixture : IAsyncLifetime
         await _seeder.SeedAsync();
 
         // TODO: Refactor
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Videos start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Playlists start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Transcripts start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Artifacts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Videos start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Playlists start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Transcripts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Artifacts start full population");
 
         // TODO: I should do what's described here: https://stackoverflow.com/questions/2727911/how-can-i-know-when-sql-full-text-index-population-is-finished
         // For now this seems to work on my machine.

@@ -50,10 +50,10 @@ public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery
             p.Thumbnail,
             p.Picture,
             p.Description,
-            p.Videos.Count())).AsNoTracking();
+            p.Videos.Count()));
 
         // Counts
-        var res = await final.ToListAsync(cancellationToken);
+        var res = await final.AsNoTracking().ToListAsync(cancellationToken);
 
         return new Page<PlaylistDTO>(res, skip, take, totalCount);
     }
