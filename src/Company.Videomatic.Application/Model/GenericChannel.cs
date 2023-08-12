@@ -1,9 +1,13 @@
-﻿namespace Company.Videomatic.Application.Model;
+﻿using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Aggregates;
+
+namespace Company.Videomatic.Application.Model;
 
 public record GenericChannel(
     // Inherited
-    string Id,
-    string ETag,
+    string ProviderId,
+    string ProviderItemId,
+    string ETag,    
 
     string Name,
     string? Description,
@@ -25,4 +29,4 @@ public record GenericChannel(
 
     ulong? VideoCount,
     ulong? SuscriberCount,
-    ulong? ViewCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, Thumbnail, Picture);
+    ulong? ViewCount); 

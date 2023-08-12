@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Aggregates;
 
 namespace Company.Videomatic.Application;
 
@@ -12,10 +14,10 @@ public class AutomappingProfile : Profile
         CreateMap<DeletePlaylistCommand, Playlist>();
         // Videos
         CreateMap<CreateVideoCommand, Video>()
-            .ForPath(dest => dest.Details.VideoOwnerChannelId, opt => opt.MapFrom(src => src.VideoOwnerChannelId))
-            .ForPath(dest => dest.Details.VideoOwnerChannelTitle, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
-            .ForPath(dest => dest.Details.VideoPublishedAt, opt => opt.MapFrom(src => src.VideoPublishedAt))
-            .ForPath(dest => dest.Details.Provider, opt => opt.MapFrom(src => src.Provider));
+            .ForPath(dest => dest.Origin!.ChannelId, opt => opt.MapFrom(src => src.VideoOwnerChannelId))
+            .ForPath(dest => dest.Origin!.ChannelName, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
+            .ForPath(dest => dest.Origin!.PublishedOn, opt => opt.MapFrom(src => src.VideoPublishedAt))
+            .ForPath(dest => dest.Origin!.ProviderId, opt => opt.MapFrom(src => src.Provider));
         CreateMap<UpdateVideoCommand, Video>();
         CreateMap<DeleteVideoCommand, Video>();
         // Transcripts

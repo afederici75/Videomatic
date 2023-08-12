@@ -1,11 +1,14 @@
-﻿namespace Company.Videomatic.Application.Model;
+﻿using Company.Videomatic.Domain.Aggregates;
+
+namespace Company.Videomatic.Application.Model;
 
 public record GenericPlaylist(
     // Inherited
-    string Id,
+    string ProviderId,
+    string ProviderItemId,
     string ETag,
     string ChannelId,
-
+    string ChannelName,
     string Name,
     string? Description,
 
@@ -13,6 +16,7 @@ public record GenericPlaylist(
 
     Thumbnail Thumbnail,
     Thumbnail Picture,
+    IEnumerable<string>? Tags,
 
     // New
     string? EmbedHtml,
@@ -21,4 +25,28 @@ public record GenericPlaylist(
     NameAndDescription? LocalizationInfo,
 
     string PrivacyStatus,
-    int VideoCount) : GenericImportable(Id, ETag, Name, Description, PublishedAt, Thumbnail, Picture);
+
+    int VideoCount) : GenericImportable(
+        ProviderId: ProviderId, ProviderItemId: ProviderItemId, ETag: ETag, ChannelId: ChannelId, ChannelName: ChannelName, 
+        Name: Name, Description: Description, PublishedAt: PublishedAt, Thumbnail: Thumbnail, Picture: Picture, Tags: Tags);
+
+public static class GenericPlaylistExtensions
+{
+    public static EntityOrigin ToEntityOrigin(this GenericPlaylist gpl)
+        => new (ProviderId: gpl.ProviderId,
+                ProviderItemId: gpl.ProviderItemId,
+                ETag: gpl.ETag,
+                ChannelId: gpl.ChannelId,
+                ChannelName: gpl.ChannelName,
+                Name: gpl.Name,
+                Description: gpl.Description,
+                PublishedOn: gpl.PublishedAt,
+                Thumbnail: gpl.Thumbnail,
+                Picture: gpl.Picture,
+                EmbedHtml: gpl.EmbedHtml,
+                DefaultLanguage: gpl.DefaultLanguage);
+
+
+    public static Playlist ToPlaylist(this GenericPlaylist gpl)
+        => new (gpl.ToEntityOrigin());
+}

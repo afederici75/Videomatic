@@ -1,4 +1,6 @@
-﻿namespace Domain.Tests;
+﻿using Company.Videomatic.Domain;
+
+namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.
@@ -11,15 +13,10 @@ public class VideoTests
     [Fact]
     public void VideoGetsDefault5ThumbnailsAndNoOther()
     {
-        var video = Video.Create(
-            location: DummyLocation,
-            name: nameof(CreateVideo),
-            picture: new Thumbnail("http://1", -1, -1),
-            thumbnail: new Thumbnail("http://2", -1, -1));
+        var video = new Video(name: nameof(CreateVideo));
         
         video.Should().NotBeNull();
         video.Tags.Should().BeEmpty(); // No tags yet
-        //video.Playlists.Should().BeEmpty(); // No playlists yet 
     }
 
     [Fact]
@@ -27,42 +24,43 @@ public class VideoTests
     {
         var pubAt = DateTime.UtcNow;
 
-        var video = Video.Create(
-            location: DummyLocation, 
-            name: nameof(CreateVideo),
-            picture: new Thumbnail("http://1", -1, -1),
-            thumbnail: new Thumbnail("http://2", -1, -1),
-            details: new("YOUTUBE", "ABC123", pubAt, "#videoOwnerChannelTitle", "#videoOwnerChannelId"),
-            description: "A complete description");
+        var video = new Video(name: nameof(CreateVideo));
+        video.SetOrigin(new(
+            ProviderId: "YOUTUBE",
+            ProviderItemId: "ABC123",
+            ETag: "etag",
+            ChannelId: "#videoOwnerChannelId",
+            ChannelName: "#videoOwnerChannelName",
+            Name: nameof(CreateVideo),
+            Description: "A complete description",
+            PublishedOn: pubAt,
+            Picture: Thumbnail.Empty,
+            Thumbnail: Thumbnail.Empty,
+            EmbedHtml: null,
+            DefaultLanguage: null));
+
+
+        video.SetDescription("A complete description");
 
         video.Should().NotBeNull();
         video.Id.Should().BeNull();
-        video.Location.Should().Be(DummyLocation);
         video.Name.Should().Be(nameof(CreateVideo));
         video.Description.Should().Be("A complete description");
 
-        //video.Playlists.Should().BeEmpty(); // No playlists yet 
         video.Tags.Should().BeEmpty(); // No tags yet
         
-        video.Details.Should().NotBeNull();
-        video.Details.Provider.Should().Be("YOUTUBE");
-        video.Details.VideoPublishedAt.Should().Be(pubAt);
-        //video.Details.ChannelId.Should().Be("#channelId");
-        //video.Details.PlaylistId.Should().Be("#playlist");
-        //video.Details.Position.Should().Be(1);
-        video.Details.VideoOwnerChannelTitle.Should().Be("#videoOwnerChannelTitle");
-        video.Details.VideoOwnerChannelId.Should().Be("#videoOwnerChannelId");
+        video.Origin.Should().NotBeNull();
+        video.Origin.ProviderId.Should().Be("YOUTUBE");
+        video.Origin.PublishedOn.Should().Be(pubAt);
+        video.Origin.ChannelName.Should().Be("#videoOwnerChannelName");
+        video.Origin.ChannelId.Should().Be("#videoOwnerChannelId");
     }
 
     [Fact]
     public void NoDuplicateTagsAndClearTags()
     {
-        var video = Video.Create(
-            location: DummyLocation, 
-            name: nameof(NoDuplicateTagsAndClearTags),
-            picture: new Thumbnail("http://1", -1, -1),
-            thumbnail: new Thumbnail("http://2", -1, -1)
-            );
+        var video = new Video(
+            name: nameof(NoDuplicateTagsAndClearTags));
 
         // Ensures duplicate tags are not added
         video.Tags.Should().BeEmpty();

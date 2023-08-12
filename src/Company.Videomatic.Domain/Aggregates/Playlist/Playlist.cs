@@ -2,58 +2,17 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Playlist;
 
-public record PlaylistOrigin(
-    string Id,
-    string ETag,
-    string ChannelId,
-
-    string Name,
-    string? Description,
-
-    DateTime? PublishedAt,
-
-    //Thumbnail Thumbnail,
-    //Thumbnail Picture,
-
-    string? EmbedHtml,
-    string? DefaultLanguage);
-
-public class Playlist : IEntity, IAggregateRoot
+public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
 {
-    public static Playlist Create(PlaylistOrigin origin)
+    public Playlist(string name, string? description = null)
+        : base(name, description)
     {
-        if (origin is null)
-        {
-            throw new ArgumentNullException(nameof(origin));
-        }
-
-        return new Playlist
-        {
-            Name = origin.Name,
-            Description = origin.Description,
-            Origin = origin,            
-        };
+            
     }
 
-    public static Playlist Create(string name, string? description = null)
-    {
-        return new Playlist
-        {
-            Name = name,
-            Description = description,            
-        };
-    }
-
-    public PlaylistId Id { get; private set; } = default!;
-    public string Name { get; private set; } = default!;
-    public string? Description { get; private set; }
-    public bool IsStarred { get; private set; } = false;    
-
-    public PlaylistOrigin? Origin { get; private set; } = default!;
-
-    public Thumbnail Thumbnail { get; private set; } = default!;
-    public Thumbnail Picture { get; private set; } = default!;
-
+    public Playlist(EntityOrigin origin)
+        : base(origin)
+    { } 
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 
@@ -71,32 +30,13 @@ public class Playlist : IEntity, IAggregateRoot
             _videos.Add(PlaylistVideo.Create(this.Id, videoId));
         }
         return goodIds.Length;
-    }
-
-    public void ToggleStarred()
-    {
-        IsStarred = !IsStarred;
-    }
-
+    }  
 
     #region Private
 
     private Playlist() { }
 
-    //[JsonConstructor]
-    //private Playlist(PlaylistId id, string name, bool isStarred, string? description, List<PlaylistVideo> videos, PlaylistOrigin origin) 
-    //{
-    //    Id = id;
-    //    Name = name;
-    //    IsStarred = isStarred;
-    //    Description = description;
-    //    Origin = origin;
-    //    _videos = videos;
-    //}
-
-    readonly List<PlaylistVideo> _videos = new();
-
-    int IEntity.Id => this.Id;
+    readonly List<PlaylistVideo> _videos = new();    
 
     #endregion
 }

@@ -1,4 +1,7 @@
-﻿namespace Company.Videomatic.Application.Features.Playlists;
+﻿using Company.Videomatic.Domain;
+using Company.Videomatic.Domain.Aggregates;
+
+namespace Company.Videomatic.Application.Features.Playlists;
 
 public record PlaylistDTO(
     int Id,

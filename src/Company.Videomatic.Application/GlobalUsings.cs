@@ -9,6 +9,7 @@ global using Company.Videomatic.Application.Abstractions;
 global using Company.SharedKernel.CQRS.Commands;
 
 global using Company.Videomatic.Application.Model;
+global using Company.Videomatic.Domain;
 
 global using Company.Videomatic.Application.Features.Artifacts;
 global using Company.Videomatic.Application.Features.Playlists;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialWithoutFullTextIndexing : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,9 +19,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             migrationBuilder.CreateSequence(
                 name: "TagsSequence");
-
-            migrationBuilder.CreateSequence(
-                name: "ThumbnailSequence");
 
             migrationBuilder.CreateSequence(
                 name: "TranscriptLineSequence");
@@ -39,7 +36,21 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsStarred = table.Column<bool>(type: "bit", nullable: false)
+                    IsStarred = table.Column<bool>(type: "bit", nullable: false),
+                    Origin_Id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Origin_ETag = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Origin_ChannelId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Origin_Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: true),
+                    Origin_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Origin_PublishedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Origin_EmbedHtml = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    Origin_DefaultLanguage = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Thumbnail_Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
+                    Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
+                    Picture_Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Picture_Height = table.Column<int>(type: "int", nullable: false),
+                    Picture_Width = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,7 +70,13 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                     Details_ProviderVideoId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Details_VideoPublishedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Details_VideoOwnerChannelTitle = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Details_VideoOwnerChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Details_VideoOwnerChannelId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Thumbnail_Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
+                    Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
+                    Picture_Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Picture_Height = table.Column<int>(type: "int", nullable: false),
+                    Picture_Width = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,34 +129,12 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Thumbnails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR ThumbnailSequence"),
-                    Location = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Resolution = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
-                    Width = table.Column<int>(type: "int", nullable: false),
-                    VideoId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Thumbnails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Thumbnails_Videos_VideoId",
-                        column: x => x.VideoId,
-                        principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Transcripts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
                     VideoId = table.Column<int>(type: "int", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false)
+                    Language = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -213,13 +208,33 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlaylistVideos_VideoId",
-                table: "PlaylistVideos",
-                column: "VideoId");
+                name: "IX_Playlists_Origin_ChannelId",
+                table: "Playlists",
+                column: "Origin_ChannelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Thumbnails_VideoId",
-                table: "Thumbnails",
+                name: "IX_Playlists_Origin_DefaultLanguage",
+                table: "Playlists",
+                column: "Origin_DefaultLanguage");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Playlists_Origin_ETag",
+                table: "Playlists",
+                column: "Origin_ETag");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Playlists_Origin_Id",
+                table: "Playlists",
+                column: "Origin_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Playlists_Origin_Name",
+                table: "Playlists",
+                column: "Origin_Name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlaylistVideos_VideoId",
+                table: "PlaylistVideos",
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
@@ -299,9 +314,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
                 name: "PlaylistVideos");
 
             migrationBuilder.DropTable(
-                name: "Thumbnails");
-
-            migrationBuilder.DropTable(
                 name: "TranscriptLines");
 
             migrationBuilder.DropTable(
@@ -324,9 +336,6 @@ namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 
             migrationBuilder.DropSequence(
                 name: "TagsSequence");
-
-            migrationBuilder.DropSequence(
-                name: "ThumbnailSequence");
 
             migrationBuilder.DropSequence(
                 name: "TranscriptLineSequence");

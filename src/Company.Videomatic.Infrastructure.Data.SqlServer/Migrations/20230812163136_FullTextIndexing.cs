@@ -5,7 +5,7 @@
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class AddFullTextIndexing : Migration
+    public partial class FullTextIndexing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

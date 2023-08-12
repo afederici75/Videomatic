@@ -34,9 +34,10 @@ public class YouTubeVideoProvider : IVideoProvider
                 if (channel.Snippet.Localized != null)
                     locInfo = new(channel.Snippet.Localized.Title, channel.Snippet.Localized.Description);
                 
-                var pl = new GenericChannel(
-                    Id: channel.Id,
-                    ETag: channel.ETag,
+                var gc =  new GenericChannel(
+                    ProviderId: "YOUTUBE",
+                    ProviderItemId: channel.Id,
+                    ETag: channel.ETag,                    
                     Name: channel.Snippet.Title,
                     Description: channel.Snippet.Description,
                     PublishedAt: channel.Snippet.PublishedAtDateTimeOffset?.UtcDateTime,
@@ -52,7 +53,7 @@ public class YouTubeVideoProvider : IVideoProvider
                     SuscriberCount: channel.Statistics?.SubscriberCount,
                     ViewCount: channel.Statistics?.ViewCount);
 
-                yield return pl;
+                yield return gc;
             };
         }
     }    
@@ -74,14 +75,17 @@ public class YouTubeVideoProvider : IVideoProvider
                 var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
 
                 var pl = new GenericPlaylist(
-                    Id: playlist.Id,
+                    ProviderId: "YOUTUBE",
+                    ProviderItemId: playlist.Id,
                     ETag: playlist.ETag,
-                    ChannelId: playlist.Snippet.ChannelId,
+                    ChannelId: playlist.Snippet.ChannelId,                    
+                    ChannelName: playlist.Snippet.ChannelTitle,
                     Name: playlist.Snippet.Title,
                     Description: playlist.Snippet.Description,
                     PublishedAt: playlist.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
                     Thumbnail: new(thub.Url, Convert.ToInt32(thub.Height), Convert.ToInt32(thub.Width)),
                     Picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
+                    Tags: playlist.Snippet.Tags,
                     EmbedHtml: playlist.Player.EmbedHtml,
                     DefaultLanguage: playlist.Snippet.DefaultLanguage,
                     LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title ?? "??", playlist.Snippet.Localized?.Description), 
@@ -108,9 +112,11 @@ public class YouTubeVideoProvider : IVideoProvider
                 var thumb = video.Snippet.Thumbnails.Default__?? video.Snippet.Thumbnails.Medium ?? video.Snippet.Thumbnails.High ?? video.Snippet.Thumbnails.Standard ?? video.Snippet.Thumbnails.Maxres ?? new();
 
                 var pl = new GenericVideo(
-                    Id: video.Id,
+                    ProviderId: "YOUTUBE",
+                    ProviderItemId: video.Id,
                     ETag: video.ETag,
                     ChannelId: video.Snippet.ChannelId,
+                    ChannelName: video.Snippet.ChannelTitle,
                     Name: video.Snippet.Title,
                     Description: video.Snippet.Description,
                     PublishedAt: video.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,

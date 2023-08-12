@@ -10,7 +10,7 @@ public class PlaylistTests
     [Fact]
     public void CreatePlaylist()
     {
-        var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
+        var playlist = new Playlist(nameof(CreatePlaylist), "A description");
 
         playlist.Should().NotBeNull();
         playlist.Id.Should().BeNull(); // Not assigned yet.
@@ -21,7 +21,7 @@ public class PlaylistTests
     [Fact]
     public void LinkVideoToPlaylists()
     {
-        var playlist = Playlist.Create(nameof(CreatePlaylist), "A description");
+        var playlist = new Playlist(nameof(LinkVideoToPlaylists), "A description");
         var count = playlist.LinkToVideos(new VideoId[] { 123, 342 });
         
         // Checks
@@ -31,8 +31,8 @@ public class PlaylistTests
     [Fact]
     public void DoesNotLinkVideoToNullPlaylistId()
     {
-        var playlist = Playlist.Create(name: nameof(LinkVideoToPlaylists));
-        var video = Video.Create(DummyLocation, nameof(LinkVideoToPlaylists), new("", -1, -1), new("", -1, -1), new("", "", DateTime.Now, "", ""), nameof(DoesNotLinkVideoToNullPlaylistId));
+        var playlist = new Playlist(nameof(DoesNotLinkVideoToNullPlaylistId));
+        var video = new Video(nameof(DoesNotLinkVideoToNullPlaylistId));
         
         #pragma warning disable CS8620 
         // If you pass a newly created Playlist (which has a null Id) it would be null.

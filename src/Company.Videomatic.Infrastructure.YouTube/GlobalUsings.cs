@@ -11,3 +11,4 @@ global using Company.Videomatic.Domain.Aggregates.Video;
 global using Company.Videomatic.Application.Features.Videos.Queries;
 global using Company.Videomatic.Domain.Aggregates.Playlist;
 global using Company.Videomatic.Domain.Aggregates.Transcript;
+global using Company.Videomatic.Domain;

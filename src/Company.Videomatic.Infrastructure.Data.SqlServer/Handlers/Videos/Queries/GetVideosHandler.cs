@@ -62,7 +62,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 
         var final = q.Select(v => new VideoDTO(
             v.Id,
-            v.Location,
+            $"https://www.youtube.com/videos?v=" + v.Origin.ProviderItemId,
             v.Name,
             v.Description,
             request.IncludeTags ? v.Tags.Select(t => t.Name) : null,
@@ -71,14 +71,14 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             dbContext.Artifacts.Count(a => a.VideoId==v.Id),
             dbContext.Transcripts.Count(a => a.VideoId == v.Id),
             v.Tags.Count(),
-            v.Details.Provider,
-            v.Details.ProviderVideoId,
-            v.Details.VideoPublishedAt,
-            v.Details.VideoOwnerChannelTitle,
-            v.Details.VideoOwnerChannelId
+            v.Origin.ProviderId,
+            v.Origin.ProviderItemId,
+            v.Origin.PublishedOn ?? DateTime.UtcNow,
+            v.Origin.ChannelName,
+            v.Origin.ChannelId
             ));
 
-        // Counts
+        // Fetches
         var res = await final.ToListAsync(cancellationToken);
         
         return new Page<VideoDTO>(res, skip, take, totalCount);

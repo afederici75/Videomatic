@@ -1,10 +1,18 @@
 ﻿namespace Company.Videomatic.Application.Model;
 
 public abstract record GenericImportable(
-    string Id,
+    string ProviderId,
+    string ProviderItemId,
     string ETag,
+
+    string ChannelId,
+    string ChannelName,
+
     string Name,
     string? Description,
+
     DateTime? PublishedAt,
     Thumbnail Picture,
-    Thumbnail Thumbnail);
+    Thumbnail Thumbnail,
+    
+    IEnumerable<string>? Tags);

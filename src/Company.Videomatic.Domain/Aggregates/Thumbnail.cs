@@ -1,12 +1,14 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Video;
+﻿namespace Company.Videomatic.Domain;
 
 public class Thumbnail : ValueObject
 {
+    public static Thumbnail Empty => new(string.Empty, 0, 0);
+
     public Thumbnail(string location, int height, int width)
     {
         Location = location;
         Height = height;
-        Width = width;        
+        Width = width;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

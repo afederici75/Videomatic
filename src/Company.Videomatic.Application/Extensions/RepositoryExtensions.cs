@@ -17,7 +17,7 @@ public static class RepositoryExtensions
 
         var newLinks = pl.LinkToVideos(videoIds);
 
-        await repository.SaveChangesAsync();
+        await repository.SaveChangesAsync(cancellationToken);
 
         return newLinks;
     }
@@ -26,20 +26,12 @@ public static class RepositoryExtensions
     {
         var videos = await repository.ListAsync(new VideosByIdsSpec(videoIds.ToArray()), cancellationToken);
 
-        return videos.ToDictionary(v => v.Details.ProviderVideoId, v => v.Id);
-    }
-
-    //public static async Task<IReadOnlyDictionary<VideoId, string>> GetPlaylistVideoIds(this IRepository<Playlist> repository, PlaylistId playlistId, CancellationToken cancellationToken = default)
-    //{        
-    //    var playlists = await repository.ListAsync(new PlaylistWithVideosSpec(playlistId), cancellationToken);
-    //    var videoIds = playlists.SelectMany(pl => pl.Videos)
-    //                            .Select(v => v.VideoId);
-    //
-    //    
-    //    return videos.ToDictionary(v => v.Id, v => v.Details.ProviderVideoId);
-    //}
+        return videos.Where(v => v.Origin?.ProviderItemId != null)
+                     .ToDictionary(v => v.Origin!.ProviderItemId , v => v.Id);
+    }   
 }
 
+// TODO: move somewhere else
 public class VideosByIdsSpec : Specification<Video>
 {
     public VideosByIdsSpec(params VideoId[] ids)
@@ -48,6 +40,7 @@ public class VideosByIdsSpec : Specification<Video>
     }
 }
 
+// TODO: move somewhere else
 public class PlaylistWithVideosSpec : Specification<Playlist>
 {
     public PlaylistWithVideosSpec(params PlaylistId[] playlistIds)

@@ -25,8 +25,8 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => y);
 
-        builder.Property(x => x.Location)
-               .HasMaxLength(FieldLengths.URL); 
+        //builder.Property(x => x.Location)
+        //       .HasMaxLength(FieldLengths.URL); 
 
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);
@@ -41,32 +41,9 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
         #region Owned Types
 
-        builder.OwnsOne(x => x.Thumbnail, b => 
-        { 
-            b.WithOwner().HasForeignKey("VideoId");
-            b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);            
-        });
+        builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure); 
 
-        builder.OwnsOne(x => x.Picture, b =>
-        {
-            b.WithOwner().HasForeignKey("VideoId");
-            b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);
-        });
-
-        //var thumbnails = builder.OwnsMany(x => x.Thumbnails,
-        //    (builder) => 
-        //    {
-        //        builder.ToTable(TableNameForThumbnails);
-        //
-        //        // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
-        //        // Shadow properties
-        //        builder.WithOwner().HasForeignKey("VideoId");
-        //        builder.Property("Id");
-        //        builder.HasKey("Id");
-        //        
-        //        builder.Property(x => x.Location)
-        //               .HasMaxLength(FieldLengths.URL);
-        //    });
+        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
 
         var tags = builder.OwnsMany(x => x.Tags,
            (builder) =>
@@ -86,25 +63,7 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
                builder.Property(x => x.Name).HasMaxLength(FieldLengths.TagName);
            });
 
-        var details = builder.OwnsOne(x => x.Details, (builder) => 
-        {
-            const int TempSafeLength = 100;
-            
-            builder.Property(x => x.ProviderVideoId).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.Provider).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.VideoOwnerChannelTitle).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.VideoOwnerChannelId).HasMaxLength(TempSafeLength);
-            builder.Property(x => x.VideoPublishedAt);
-            builder.Property(x => x.ProviderVideoId);
-
-            // Indices
-            builder.HasIndex(x => x.ProviderVideoId);
-            builder.HasIndex(x => x.Provider);
-            builder.HasIndex(x => x.VideoOwnerChannelTitle);
-            builder.HasIndex(x => x.VideoOwnerChannelId);
-            builder.HasIndex(x => x.VideoPublishedAt);
-            builder.HasIndex(x => x.ProviderVideoId);
-        });
+        var details = builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
 
         #endregion
 
@@ -127,7 +86,6 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
 
 
         // Indices
-        builder.HasIndex(x => x.Location);
         builder.HasIndex(x => x.Name);
         
     }

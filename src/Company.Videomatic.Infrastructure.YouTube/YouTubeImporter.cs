@@ -1,13 +1,10 @@
 ﻿using Ardalis.Result;
 using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Video;
 using Hangfire;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Xml;
-using System.Xml.XPath;
-//using YoutubeTranscriptApi;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
 
@@ -47,7 +44,7 @@ public class YouTubeImporter : IVideoImporter
         var doneCount = 0;
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
-            var playlists = page.Select(gpl => MapToPlaylist(gpl)).ToArray();
+            var playlists = page.Select(gpl => gpl.ToPlaylist()).ToArray();
 
             IEnumerable<Playlist> storedPlaylists = await PlaylistRepository.AddRangeAsync(playlists, cancellation); // Saves to database
             doneCount += storedPlaylists.Count();
@@ -85,7 +82,7 @@ public class YouTubeImporter : IVideoImporter
         var doneCount = 0;
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
-            var videos = page.Select(gv => MapToVideo(gv)).ToArray();             
+            var videos = page.Select(gv => gv.ToVideo()).ToArray();             
             IEnumerable<Video> storedVideos = await VideoRepository.AddRangeAsync(videos, cancellation); // Saves to database
             doneCount += storedVideos.Count();
 
@@ -119,12 +116,12 @@ public class YouTubeImporter : IVideoImporter
         options ??= new ImportOptions();
 
         var pl = await PlaylistRepository.GetByIdAsync(playlistId, cancellation);
-        if (pl?.Origin?.Id == null)
+        if (pl?.Origin?.ProviderItemId == null)
             throw new ArgumentException($"Playlist '{playlistId}' does not exist have an origin or does not exist.", nameof(playlistId));
 
-        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.Id, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.ProviderItemId, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
-            var videoIds = videoPage.Select(v => v.Id);
+            var videoIds = videoPage.Select(v => v.ProviderItemId);
 
             await ImportVideosAsync(videoIds, playlistId, options, cancellation);
         }        
@@ -239,52 +236,6 @@ public class YouTubeImporter : IVideoImporter
             return Result.Error(msg);
         }
     }
-
-    private static Playlist MapToPlaylist(GenericPlaylist gpl)
-    {
-        return Playlist.Create(
-                        new PlaylistOrigin(
-                            Id: gpl.Id,
-                            ETag: gpl.ETag,
-                            ChannelId: gpl.ChannelId,
-                            Name: gpl.Name,
-                            Description: gpl.Description,
-                            PublishedAt: gpl.PublishedAt,
-                            //Thumbnail: gpl.Thumbnail,
-                            //Picture: gpl.Picture,
-                            EmbedHtml: gpl.EmbedHtml,
-                            DefaultLanguage: gpl.DefaultLanguage));
-    }
-
-    private static Video MapToVideo(GenericVideo item)
-    {
-        var video = Video.Create(
-                            location: $"https://www.youtube.com/watch?v={item.Id}",
-                            name: item.Name,
-                            picture: item.Picture,
-                            thumbnail: item.Thumbnail,
-                            description: item.Description,                            
-                            details: new VideoDetails(
-                                Provider: ProviderId,
-                                ProviderVideoId: item.Id,
-                                VideoPublishedAt: item.PublishedAt ?? DateTime.UtcNow, // TODO: smell
-                                VideoOwnerChannelTitle: "",//item.ChannelTitle, // TODO: finish
-                                VideoOwnerChannelId: item.ChannelId));
-
-        // Tags
-        var tags = (item.Tags ?? Enumerable.Empty<string>()).ToArray();
-        video.AddTags(tags);
-
-        // Thumbnails
-        //video.ThumbnailUrl = item.ThumbnailUrl;
-        //var t = item.Thumbnails;
-        //video.SetThumbnail(ThumbnailResolution.Default, t.Default__?.Url ?? "", Convert.ToInt32(t.Default__?.Height ?? -1), Convert.ToInt32(t.Default__?.Width ?? -1));
-        //video.SetThumbnail(ThumbnailResolution.High, t.High?.Url ?? "", Convert.ToInt32(t.High?.Height ?? -1), Convert.ToInt32(t.High?.Width ?? -1));
-        //video.SetThumbnail(ThumbnailResolution.Standard, t.Standard?.Url ?? "", Convert.ToInt32(t.Standard?.Height ?? -1), Convert.ToInt32(t.Standard?.Width ?? -1));
-        //video.SetThumbnail(ThumbnailResolution.Medium, t.Medium?.Url ?? "", Convert.ToInt32(t.Medium?.Height ?? -1), Convert.ToInt32(t.Medium?.Width ?? -1));
-        //video.SetThumbnail(ThumbnailResolution.MaxRes, t.Maxres?.Url ?? "", Convert.ToInt32(t.Maxres?.Height ?? -1), Convert.ToInt32(t.Maxres?.Width ?? -1));
-
-        return video;
-    }
+      
 
 }

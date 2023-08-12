@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿using Company.Videomatic.Domain;
+
+namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
@@ -9,19 +11,7 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
         public const int Name = 120;
     }
 
-    public static class OriginLengths
-    { 
-        public const int Id = 50;
-        public const int ETag = 50;
-        public const int ChannelId = 50;
-        public const int Name = FieldLengths.Name;
-        public const int Description = 5000;
-
-        public const int ThumbnailUrl = 1024;
-        public const int PictureUrl = 1024;
-        public const int EmbedHtml = 2048;
-        public const int DefaultLanguage = 10;
-    }
+   
 
     public virtual void Configure(EntityTypeBuilder<Playlist> builder)
     {
@@ -35,45 +25,77 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
                .HasMaxLength(FieldLengths.Name);
 
         builder.Property(x => x.Description); // MAX
-        
+
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithOne()
                .HasForeignKey(nameof(PlaylistVideo.PlaylistId));
-       
-        builder.OwnsOne(x => x.Origin, (bld) =>
-        {
-            bld.Property(x => x.Id).HasMaxLength(OriginLengths.Id);
-            bld.Property(x => x.ETag).HasMaxLength(OriginLengths.ETag);
-            bld.Property(x => x.ChannelId).HasMaxLength(OriginLengths.ChannelId);
-            bld.Property(x => x.Name).HasMaxLength(OriginLengths.Name);
-            bld.Property(x => x.Description);// MAX
-            bld.Property(x => x.PublishedAt);
-            //bld.Property(x => x.ThumbnailUrl).HasMaxLength(OriginLengths.ThumbnailUrl);
-            //bld.Property(x => x.PictureUrl).HasMaxLength(OriginLengths.PictureUrl);            
-            bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
-            bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
 
-            bld.HasIndex(x => x.Id);
-            bld.HasIndex(x => x.ETag);
-            bld.HasIndex(x => x.ChannelId);
-            bld.HasIndex(x => x.Name);
-            bld.HasIndex(x => x.DefaultLanguage);
-        });
+        builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
 
-        builder.OwnsOne(x => x.Thumbnail, b =>
-        {
-            b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
-        });
+        builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
 
-        builder.OwnsOne(x => x.Picture, b =>
-        {
-            b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
-        });
-
+        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
 
         // Indices
         builder.HasIndex(x => x.Name);
         builder.HasIndex(x => x.Description);
+    }
+}
+
+public static class Lengths
+{
+    public static class Generic
+    {
+        public const int Url = 1024;
+        public const int Name = 120;
+        public const int ExternalId = 50;
+    }   
+}
+
+public static class ThumbnailConfigurator
+{
+    public static void Configure<T>(OwnedNavigationBuilder<T, Thumbnail> bld)
+        where T : class
+    {
+        bld.Property(x => x.Location).HasMaxLength(Lengths.Generic.Url);
+        bld.Property(x => x.Width);
+        bld.Property(x => x.Height);
+    }
+}   
+
+public static class EntityOriginConfigurator
+{
+    static class OriginLengths
+    {
+        public const int ETag = 50;
+
+        public const int EmbedHtml = 2048;
+        public const int DefaultLanguage = 10;
+    }
+
+    public static void Configure<T>(OwnedNavigationBuilder<T, EntityOrigin> bld)
+        where T : class
+    {
+        // Properties
+        bld.Property(x => x.ProviderId).HasMaxLength(Lengths.Generic.ExternalId);
+        bld.Property(x => x.ProviderItemId).HasMaxLength(Lengths.Generic.ExternalId);
+        bld.Property(x => x.ETag).HasMaxLength(OriginLengths.ETag);
+        bld.Property(x => x.ChannelId).HasMaxLength(Lengths.Generic.ExternalId);
+        bld.Property(x => x.ChannelName).HasMaxLength(Lengths.Generic.Name);
+        bld.Property(x => x.Name).HasMaxLength(Lengths.Generic.Name);
+        bld.Property(x => x.Description); // MAX
+        bld.Property(x => x.PublishedOn);
+        bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
+        bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
+        
+        // Indices
+        bld.HasIndex(x => x.ProviderId);
+        bld.HasIndex(x => x.ProviderItemId);    
+        bld.HasIndex(x => x.ETag);
+        bld.HasIndex(x => x.ChannelId);
+        bld.HasIndex(x => x.ChannelName);
+        bld.HasIndex(x => x.Name);
+        bld.HasIndex(x => x.DefaultLanguage);
     }
 }

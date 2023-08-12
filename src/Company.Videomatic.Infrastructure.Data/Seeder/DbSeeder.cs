@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data.Seeder;
+﻿using Company.Videomatic.Domain;
+
+namespace Company.Videomatic.Infrastructure.Data.Seeder;
 
 public class DbSeeder : IDbSeeder
 {
@@ -27,7 +29,7 @@ public class DbSeeder : IDbSeeder
 
     async Task<long> CreateBurningManPlaylist()
     {
-        var playlist = Playlist.Create("Burning Man", "Videos about Burning Man");
+        var playlist = new Playlist("Burning Man", "Videos about Burning Man");
         await PlaylistRepository.AddAsync(playlist);        
 
         return playlist.Id;
@@ -35,7 +37,7 @@ public class DbSeeder : IDbSeeder
 
     async Task<long> CreateEasternPhilosophyPlaylist()
     {
-        var playlist = Playlist.Create("Eastern Philosophy", "Videos about Eastern Philosophy");
+        var playlist = new Playlist("Eastern Philosophy", "Videos about Eastern Philosophy");
         await PlaylistRepository.AddAsync(playlist);
 
         // Aldous Huxley - The Dancing Shiva
@@ -53,63 +55,59 @@ public class DbSeeder : IDbSeeder
 
     async Task<Video> CreateAldousHuxleyTheDancingShivaVideo()
     {
+        var origin = new EntityOrigin(
+                    ProviderId: "YOUTUBE",
+                    ProviderItemId: "n1kmKpjk_8E",
+                    ETag: "",
+                    ChannelId: "UNKNOWN",
+                    ChannelName: "James Dearden Bush",                   
+                    PublishedOn: new DateTime(2019, 12, 12), // Bogus date
+                    Thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                    EmbedHtml: null,
+                    DefaultLanguage: "EN",
+                    //
+                    Name: "Aldous Huxley - The Dancing Shiva",
+                    Description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
+                                 "(Nataraja, Nataraj, nət̪əˈraːdʒ) of the Hindu spiritual tradition.  Aldous Huxley " +
+                                 "was the author of many excellent books and essays including; Brave New World, " +
+                                 "Island, The Perennial Philosophy and The Doors of Perception. " +
+                                 "\n\n🎬 A RevolutionLoveEvolve production\nAudio clip is taken from an interview " +
+                                 "which took place in London, England in 1961 entitled 'Aldous Huxley - Speaking " +
+                                 "Personally'." +
+                                 "\n\nhttps://en.wikipedia.org/wiki/Aldous_Huxley" +
+                                 "\nhttps://en.wikipedia.org/wiki/Nataraja" +
+                                 "\nhttps://en.wikipedia.org/wiki/Shiva" +
+                                 "\n" +
+                                 "\nSupport the channel:" +
+                                 "\n🎵 Download my music: https://jamesdeardenbush.bandcamp.com" +
+                                 "\n👕 Buy a T-Shirt etc: https://www.redbubble.com/people/revoloveevolve/shop " +
+                                 "\n" +
+                                 "\nWeb:" +
+                                 "\n🌐 Website: https://www.jamesdeardenbush.com" +
+                                 "\n🎵 Music: https://jamesdeardenbush.bandcamp.com" +
+                                 "\n👕 Merch: https://www.redbubble.com/people/jdeardenbush" +
+                                 "\n📹 LBRY: https://lbry.tv/$/invite/@jamesdeardenbush:a" +
+                                 "\n📺 YouTube https://www.youtube.com/jamesdeardenbush" +
+                                 "\n🎧 Spotify: https://open.spotify.com/artist/0Nv6I1nNV1Fb7hW5rKGHR1" +
+                                 "\n🍏 Apple Music: https://music.apple.com/gb/artist/james-dearden-bush/1537309293" +
+                                 "\n📷 Instagram: https://www.instagram.com/jdeardenbush" +
+                                 "\n🤮 Facebook: https://www.facebook.com/jamesdeardenbush" +
+                                 "\n🐦 Twitter: https://twitter.com/jdeardenbush" +
+                                 "\n" +
+                                 "\nNo copyright is claimed and to the extent that material may appear to be infringed, I " +
+                                 "assert that such alleged infringement is permissible under fair use principles in U.S. " +
+                                 "copyright laws. This video is fair use under U.S. copyright law because it is (1) noncommercial " +
+                                 "(2) transformative in nature, (3) does not compete with the original work or have any negative " +
+                                 "effect on its market and (4) uses no more of the original work than necessary for the video's " +
+                                 "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
+                                 "poster.");
+
         // Video
-        var video = Video.Create(
-                location: "https://www.youtube.com/watch?v=n1kmKpjk_8E",
-                name: "Aldous Huxley - The Dancing Shiva",
-                description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
-                "(Nataraja, Nataraj, nət̪əˈraːdʒ) of the Hindu spiritual tradition.  Aldous Huxley " +
-                "was the author of many excellent books and essays including; Brave New World, " +
-                "Island, The Perennial Philosophy and The Doors of Perception. " +
-                "\n\n🎬 A RevolutionLoveEvolve production\nAudio clip is taken from an interview " +
-                "which took place in London, England in 1961 entitled 'Aldous Huxley - Speaking " +
-                "Personally'." +
-                "\n\nhttps://en.wikipedia.org/wiki/Aldous_Huxley" +
-                "\nhttps://en.wikipedia.org/wiki/Nataraja" +
-                "\nhttps://en.wikipedia.org/wiki/Shiva" +
-                "\n" +
-                "\nSupport the channel:" +
-                "\n🎵 Download my music: https://jamesdeardenbush.bandcamp.com" +
-                "\n👕 Buy a T-Shirt etc: https://www.redbubble.com/people/revoloveevolve/shop " +
-                "\n" +
-                "\nWeb:" +
-                "\n🌐 Website: https://www.jamesdeardenbush.com" +
-                "\n🎵 Music: https://jamesdeardenbush.bandcamp.com" +
-                "\n👕 Merch: https://www.redbubble.com/people/jdeardenbush" +
-                "\n📹 LBRY: https://lbry.tv/$/invite/@jamesdeardenbush:a" +
-                "\n📺 YouTube https://www.youtube.com/jamesdeardenbush" +
-                "\n🎧 Spotify: https://open.spotify.com/artist/0Nv6I1nNV1Fb7hW5rKGHR1" +
-                "\n🍏 Apple Music: https://music.apple.com/gb/artist/james-dearden-bush/1537309293" +
-                "\n📷 Instagram: https://www.instagram.com/jdeardenbush" +
-                "\n🤮 Facebook: https://www.facebook.com/jamesdeardenbush" +
-                "\n🐦 Twitter: https://twitter.com/jdeardenbush" +
-                "\n" +
-                "\nNo copyright is claimed and to the extent that material may appear to be infringed, I " +
-                "assert that such alleged infringement is permissible under fair use principles in U.S. " +
-                "copyright laws. This video is fair use under U.S. copyright law because it is (1) noncommercial " +
-                "(2) transformative in nature, (3) does not compete with the original work or have any negative " +
-                "effect on its market and (4) uses no more of the original work than necessary for the video's " +
-                "purpose. If you believe material has been used in an unauthorized manner, please contact the " +
-                "poster.",
-                picture: new ("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
-                thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
-                details: new VideoDetails(
-                    Provider: "YOUTUBE",
-                    ProviderVideoId: "n1kmKpjk_8E",
-                    VideoPublishedAt: new DateTime(2019, 12, 12), // Bogus date
-                    VideoOwnerChannelId: "UNKNOWN",
-                    VideoOwnerChannelTitle: "James Dearden Bush"));
+        var video = new Video(origin);                
 
         // Tags
-        video.AddTags("HINDUISM", "HUXLEY");
-
-
-        // Thumbnails
-        //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 90, 120);
-        //video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/n1kmKpjk_8E/mqdefault.jpg", 180, 320);
-        //video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/n1kmKpjk_8E/hqdefault.jpg", 360, 480);
-        //video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/n1kmKpjk_8E/sddefault.jpg", 480, 640);
-        //video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 720, 1280);
+        video.AddTags("HINDUISM", "HUXLEY");        
 
         await VideoRepository.AddAsync(video);        
 
@@ -154,43 +152,40 @@ public class DbSeeder : IDbSeeder
 
     async Task<Video> CreateIfRealityIsNonDualVideo()
     {
+        var origin = new EntityOrigin(
+                    ProviderId: "YOUTUBE",
+                    ProviderItemId: "BBd3aHnVnuE",
+                    ETag: "",
+                    ChannelId: "UNKNOWN",
+                    ChannelName: "ArshaBodha - Swami Tadatmananda",
+                    PublishedOn: new DateTime(2021, 3, 23), // Bogus date
+                    Thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                    EmbedHtml: null,
+                    DefaultLanguage: "EN",
+                    //
+                    Name: "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?",
+                    Description: "Hindu scriptures offer different teachings to meet the individual needs of different " +
+                                 "people - according to the crucial principle of adhikari-bheda (individualism). Q&A with Swamiji #8. " +
+                                 "\n" +
+                                 "\n" +
+                                 "The teachings of the rishis, the sages of ancient India, are found in the Vedas. The Vedas are a " +
+                                 "compilation of their teachings, teaching meant for different groups of people. Thus the Vedas include " +
+                                 "the karma kanda, the section that teaches prayer and rituals for those who want contentment in this " +
+                                 "life and heaven (swarga) in the next live, and it also includes the jnana kanda, the section on pure " +
+                                 "spiritual teachings, for those who recognize the limitations of worldly life (samsara) and seek moksha, " +
+                                 "liberation or enlightenment, instead." +
+                                 "\n" +
+                                 "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
+                                 "For more information, please see: https://www.arshabodha.org/");
+
         // Video
-        var video = Video.Create(
-                location: "https://www.youtube.com/watch?v=BBd3aHnVnuE",
-                name: "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?",
-                description: "Hindu scriptures offer different teachings to meet the individual needs of different " +
-                "people - according to the crucial principle of adhikari-bheda (individualism). Q&A with Swamiji #8. " +
-                "\n" +
-                "\n" +
-                "The teachings of the rishis, the sages of ancient India, are found in the Vedas. The Vedas are a " +
-                "compilation of their teachings, teaching meant for different groups of people. Thus the Vedas include " +
-                "the karma kanda, the section that teaches prayer and rituals for those who want contentment in this " +
-                "life and heaven (swarga) in the next live, and it also includes the jnana kanda, the section on pure " +
-                "spiritual teachings, for those who recognize the limitations of worldly life (samsara) and seek moksha, " +
-                "liberation or enlightenment, instead." +
-                "\n" +
-                "\nSwami Tadatmananda is a traditionally-trained teacher of Advaita Vedanta, meditation, and Sanskrit. " +
-                "For more information, please see: https://www.arshabodha.org/",
-                picture: new Thumbnail("https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 1280, 720),
-                thumbnail: new Thumbnail("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 120, 90),
-                details: new VideoDetails(
-                    Provider: "YOUTUBE",
-                    ProviderVideoId: "BBd3aHnVnuE",
-                    VideoPublishedAt: new DateTime(2021, 3, 23), // Bogus date
-                    VideoOwnerChannelId: "UNKNOWN",
-                    VideoOwnerChannelTitle: "ArshaBodha - Swami Tadatmananda"));
+        var video = new Video(origin);
 
         // Tags
         video.AddTags("HINDUISM");
 
-        // Thumbnails
-        //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 90, 120);
-        //video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", 180, 320);
-        //video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", 360, 480);
-        //video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", 480, 640);
-        //video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
-
-
+        
         await VideoRepository.AddAsync(video);
 
         // Transcripts
