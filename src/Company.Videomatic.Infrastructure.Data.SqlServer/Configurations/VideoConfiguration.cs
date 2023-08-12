@@ -9,24 +9,9 @@ public class VideoConfiguration : VideoConfigurationBase
     public override void Configure(EntityTypeBuilder<Video> builder)
     {
         base.Configure(builder);
-
-        //builder.AddSequenceForId();
-
+        
         builder.Property(x => x.Id)
                .HasDefaultValueSql($"NEXT VALUE FOR {SequenceName}"); // TODO: unhardcode
-
-        //var thumbnails = builder.OwnsMany(x => x.Thumbnails,
-        //    (builder) =>
-        //    {
-        //        builder.Property("Id")
-        //               .HasDefaultValueSql($"NEXT VALUE FOR {ThumbnailSequenceName}"); // TODO: unhardcode                
-        //    });
-
-        var agss = builder.OwnsMany(x => x.Tags,
-            (builder) =>
-            {
-                builder.Property("Id")
-                       .HasDefaultValueSql($"NEXT VALUE FOR {TagsSequenceName}"); // TODO: unhardcode                
-            });
+        
     }
 }

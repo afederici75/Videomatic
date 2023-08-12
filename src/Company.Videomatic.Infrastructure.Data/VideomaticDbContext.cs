@@ -1,9 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Infrastructure.Data.Configurations;
-using Microsoft.Extensions.Configuration;
-
-namespace Company.Videomatic.Infrastructure.Data;
+﻿namespace Company.Videomatic.Infrastructure.Data;
 
 public abstract class VideomaticDbContext : DbContext
 {

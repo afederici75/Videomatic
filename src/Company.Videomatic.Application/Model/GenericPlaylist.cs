@@ -33,7 +33,7 @@ public record GenericPlaylist(
 public static class GenericPlaylistExtensions
 {
     public static EntityOrigin ToEntityOrigin(this GenericPlaylist gpl)
-        => new (ProviderId: gpl.ProviderId,
+        => new(ProviderId: gpl.ProviderId,
                 ProviderItemId: gpl.ProviderItemId,
                 ETag: gpl.ETag,
                 ChannelId: gpl.ChannelId,
@@ -48,5 +48,9 @@ public static class GenericPlaylistExtensions
 
 
     public static Playlist ToPlaylist(this GenericPlaylist gpl)
-        => new (gpl.ToEntityOrigin());
+    {
+        var res = new Playlist(gpl.Name, gpl.Description);
+        res.SetOrigin(gpl.ToEntityOrigin());
+        return res;
+    }
 }

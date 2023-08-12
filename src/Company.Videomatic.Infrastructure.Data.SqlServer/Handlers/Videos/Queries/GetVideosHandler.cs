@@ -65,7 +65,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             $"https://www.youtube.com/videos?v=" + v.Origin.ProviderItemId,
             v.Name,
             v.Description,
-            request.IncludeTags ? v.Tags.Select(t => t.Name) : null,
+            request.IncludeTags ? v.Tags : null,
             v.Thumbnail,
             v.Picture,
             dbContext.Artifacts.Count(a => a.VideoId==v.Id),

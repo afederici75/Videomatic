@@ -1,23 +1,22 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Company.Videomatic.Domain.Aggregates.Video;
+
+namespace Company.Videomatic.Domain;
 
 public abstract class ImportedEntity<TId> : Entity<TId>
 {
-    protected ImportedEntity()
-    { }
+    public ImportedEntity(string name, string? description)
+        : this()
+    {
+        SetName(name);
+        SetDescription(description);
+    }
 
     public ImportedEntity(EntityOrigin origin)
         : this(origin.Name, origin.Description)
     { 
         SetOrigin(origin);
     }
-
-    public ImportedEntity(string name, string? description)
-        : base()
-    {
-        SetName(name);
-        SetDescription(description);
-    }
-
+    
     public string Name { get; private set; } = default!;
     public string? Description { get; private set; }
     
@@ -25,6 +24,37 @@ public abstract class ImportedEntity<TId> : Entity<TId>
     public EntityOrigin Origin { get; private set; } = EntityOrigin.Empty;
     public Thumbnail Thumbnail { get; private set; } = Thumbnail.Empty;
     public Thumbnail Picture { get; private set; } = Thumbnail.Empty;
+
+    public ISet<string> Tags => _tags;
+
+    public void SetTags(params string[] tags)
+    {
+        _tags.Clear();
+
+        AddTags(tags);
+    }
+
+    public void ClearTags() => _tags.Clear();
+
+    public void AddTags(params string[] tags)
+    {
+        Guard.Against.Null(tags, nameof(tags));
+
+        foreach (var tag in tags)
+        {
+            _tags.Add(tag);
+        }
+    }
+
+    public void RemoveTags(params string[] tags)
+    {
+        Guard.Against.Null(tags, nameof(tags));
+
+        foreach (var tag in tags)
+        {
+            _tags.Remove(tag);
+        }
+    }
 
     public void SetName(string name) => Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
     public void SetDescription(string? description) => Description = description;
@@ -39,4 +69,12 @@ public abstract class ImportedEntity<TId> : Entity<TId>
     {
         IsStarred = !IsStarred;
     }
+
+    #region Private 
+    protected ImportedEntity() : base()
+    { }
+
+    readonly HashSet<string> _tags = new();
+
+    #endregion
 }

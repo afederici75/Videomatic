@@ -8,51 +8,14 @@ public class Video : ImportedEntity<VideoId>, IAggregateRoot
 
     }
 
-    public Video(EntityOrigin origin)
-        : base(origin)
-    { }
-    
-
-    public IReadOnlyCollection<VideoTag> Tags => _videoTags.ToList();
-    
-    public void ClearTags()
-    {
-        _videoTags.Clear();
-    }      
-
-    public int AddTags(params string[] names)
-    {
-        var cnt = 0;
-        foreach (var name in names)
-        {
-            if (_videoTags.Add(name))
-                cnt++;
-        }
-        return cnt;
-    }
-
+    //public Video(EntityOrigin origin)
+    //    : base(origin)
+    //{ }
+        
     #region Private
 
-    private Video()
+    private Video() : base()
     { }
-
-    //[JsonConstructor]
-    //private Video(VideoId id, string location, string name, bool isStarred, string? description, VideoDetails details, HashSet<VideoTag> tags, HashSet<Thumbnail> thumbnails)
-    //{
-    //    Id = id;
-    //    Location = location;
-    //    Name = name;
-    //    IsStarred = isStarred;
-    //    Description = description;
-    //    Details = details;
-    //    _videoTags = tags;
-    //    _thumbnails = thumbnails;        
-    //}
-
-    int IEntity.Id => this.Id;
-
-    readonly HashSet<VideoTag> _videoTags = new();
-    //HashSet<Thumbnail> _thumbnails = new(); // TODO: not readonly == code smell?
-
+    
     #endregion
 }

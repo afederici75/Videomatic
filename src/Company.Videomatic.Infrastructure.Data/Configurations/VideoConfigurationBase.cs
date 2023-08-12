@@ -33,35 +33,15 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         
         builder.Property(x => x.Description);
 
-        //builder.Property(x => x.Thumbnail)
-        //       .HasMaxLength(FieldLengths.URL);
-
-        //builder.Property(x => x.Picture)
-        //       .HasMaxLength(FieldLengths.URL);
+        builder.Property(x => x.Tags)
+            .HasConversion(x => string.Join(',', x),
+                           y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet());        
 
         #region Owned Types
 
         builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure); 
 
-        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
-
-        var tags = builder.OwnsMany(x => x.Tags,
-           (builder) =>
-           {
-               builder.ToTable(TableNameForTags);
-
-               // See https://learn.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
-               // Shadow properties
-               builder.WithOwner().HasForeignKey("VideoId");
-               builder.Property("Id");
-               builder.HasKey("Id");
-               // No Dups the video
-               builder.HasIndex(nameof(VideoTag.Name), "VideoId")
-                      .IsUnique(true);
-
-               //
-               builder.Property(x => x.Name).HasMaxLength(FieldLengths.TagName);
-           });
+        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);        
 
         var details = builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
 

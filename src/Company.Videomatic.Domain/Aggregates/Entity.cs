@@ -12,4 +12,13 @@ public abstract class Entity<TId> : IEntity
     }
 
     int IEntity.Id => Convert.ToInt32(Id);
+
+    #region Private
+
+    protected Entity()
+    {
+            
+    }
+
+    #endregion
 }

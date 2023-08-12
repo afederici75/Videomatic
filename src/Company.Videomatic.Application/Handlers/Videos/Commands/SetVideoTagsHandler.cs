@@ -1,6 +1,6 @@
 ﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
-public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result<int>>
+public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result>
 {
     private readonly IRepository<Video> _repository;    
 
@@ -9,22 +9,19 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result<int>>
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));        
     }
 
-    public async Task<Result<int>> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
+    public async Task<Result> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
     {        
         var video =await _repository.GetByIdAsync(new VideoId(request.Id), cancellationToken);
 
         if (video is null)
         {
-            return Result<int>.NotFound();
+            return Result.NotFound();
         }
 
-        var validTags = request.Tags.Except(video.Tags.Select(t => t.Name))
-            .ToArray();
-
-        video.AddTags(validTags);                        
+        video.SetTags(request.Tags);
         
         await _repository.SaveChangesAsync(cancellationToken);
 
-        return validTags.Length;
+        return Result.Success();
     }
 }

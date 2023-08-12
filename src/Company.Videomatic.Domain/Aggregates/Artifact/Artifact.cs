@@ -2,7 +2,7 @@
 
 namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
-public class Artifact : IEntity, IAggregateRoot
+public class Artifact : Entity<ArtifactId>, IAggregateRoot
 {
     public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
     {
@@ -15,7 +15,6 @@ public class Artifact : IEntity, IAggregateRoot
         };
     }
 
-    public ArtifactId Id { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string Type { get; private set; } = default!;

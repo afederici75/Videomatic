@@ -34,7 +34,7 @@ public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
 
     #region Private
 
-    private Playlist() { }
+    private Playlist() : base() { }
 
     readonly List<PlaylistVideo> _videos = new();    
 

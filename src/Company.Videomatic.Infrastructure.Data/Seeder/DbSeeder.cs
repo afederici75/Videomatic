@@ -104,10 +104,11 @@ public class DbSeeder : IDbSeeder
                                  "poster.");
 
         // Video
-        var video = new Video(origin);                
+        var video = new Video(origin.Name, origin.Description);                
+        video.SetOrigin(origin);    
 
         // Tags
-        video.AddTags("HINDUISM", "HUXLEY");        
+        video.SetTags("HINDUISM", "HUXLEY");
 
         await VideoRepository.AddAsync(video);        
 
@@ -180,12 +181,20 @@ public class DbSeeder : IDbSeeder
                                  "For more information, please see: https://www.arshabodha.org/");
 
         // Video
-        var video = new Video(origin);
+        var video = new Video(origin.Name, origin.Description);
+        video.SetOrigin(origin);
 
         // Tags
-        video.AddTags("HINDUISM");
+        video.SetTags("HINDUISM");
 
-        
+        // Thumbnails
+        //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 90, 120);
+        //video.SetThumbnail(ThumbnailResolution.Medium, "https://i.ytimg.com/vi/BBd3aHnVnuE/mqdefault.jpg", 180, 320);
+        //video.SetThumbnail(ThumbnailResolution.High, "https://i.ytimg.com/vi/BBd3aHnVnuE/hqdefault.jpg", 360, 480);
+        //video.SetThumbnail(ThumbnailResolution.Standard, "https://i.ytimg.com/vi/BBd3aHnVnuE/sddefault.jpg", 480, 640);
+        //video.SetThumbnail(ThumbnailResolution.MaxRes, "https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 720, 1280);
+
+
         await VideoRepository.AddAsync(video);
 
         // Transcripts

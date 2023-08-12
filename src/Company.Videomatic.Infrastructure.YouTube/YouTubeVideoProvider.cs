@@ -25,38 +25,12 @@ public class YouTubeVideoProvider : IVideoProvider
 
             foreach (var channel in response.Items)
             {
-                var thumbs = channel.Snippet!.Thumbnails!;
-
-                var thumb = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//", -1, -1);
-                var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
-
-                NameAndDescription? locInfo = null;
-                if (channel.Snippet.Localized != null)
-                    locInfo = new(channel.Snippet.Localized.Title, channel.Snippet.Localized.Description);
-                
-                var gc =  new GenericChannel(
-                    ProviderId: "YOUTUBE",
-                    ProviderItemId: channel.Id,
-                    ETag: channel.ETag,                    
-                    Name: channel.Snippet.Title,
-                    Description: channel.Snippet.Description,
-                    PublishedAt: channel.Snippet.PublishedAtDateTimeOffset?.UtcDateTime,
-                    Thumbnail: new (thumb.Url, Convert.ToInt32(thumb.Height), Convert.ToInt32(thumb.Width)),
-                    Picture: new (pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
-                    DefaultLanguage: channel.Snippet.DefaultLanguage,
-                    LocalizationInfo: locInfo,
-                    Owner: channel.ContentOwnerDetails?.ContentOwner,
-                    TimeCreated: channel.ContentOwnerDetails?.TimeLinkedDateTimeOffset?.UtcDateTime,
-                    TopicCategories: channel.TopicDetails?.TopicCategories ?? Enumerable.Empty<string>(),
-                    TopicIds: channel.TopicDetails?.TopicIds ?? Enumerable.Empty<string>(),
-                    VideoCount: channel.Statistics?.VideoCount,
-                    SuscriberCount: channel.Statistics?.SubscriberCount,
-                    ViewCount: channel.Statistics?.ViewCount);
-
-                yield return gc;
+                yield return channel.ToGenericChannel();
             };
         }
-    }    
+    }
+
+    
 
     public async IAsyncEnumerable<GenericPlaylist> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
@@ -69,33 +43,12 @@ public class YouTubeVideoProvider : IVideoProvider
 
             foreach (var playlist in response.Items)
             {
-                var thumbs = playlist.Snippet!.Thumbnails!;
-
-                var thub = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//", -1, -1);
-                var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
-
-                var pl = new GenericPlaylist(
-                    ProviderId: "YOUTUBE",
-                    ProviderItemId: playlist.Id,
-                    ETag: playlist.ETag,
-                    ChannelId: playlist.Snippet.ChannelId,                    
-                    ChannelName: playlist.Snippet.ChannelTitle,
-                    Name: playlist.Snippet.Title,
-                    Description: playlist.Snippet.Description,
-                    PublishedAt: playlist.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                    Thumbnail: new(thub.Url, Convert.ToInt32(thub.Height), Convert.ToInt32(thub.Width)),
-                    Picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
-                    Tags: playlist.Snippet.Tags,
-                    EmbedHtml: playlist.Player.EmbedHtml,
-                    DefaultLanguage: playlist.Snippet.DefaultLanguage,
-                    LocalizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title ?? "??", playlist.Snippet.Localized?.Description), 
-                    PrivacyStatus: playlist.Status.PrivacyStatus,
-                    VideoCount: Convert.ToInt32(playlist.ContentDetails.ItemCount));
-
-                yield return pl;
+                yield return playlist.ToGenericPlaylist();
             };
         }        
     }
+
+    
 
     public async IAsyncEnumerable<GenericVideo> GetVideosAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
@@ -108,27 +61,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
             foreach (var video in response.Items)
             {
-                var pict = video.Snippet.Thumbnails.Maxres ?? video.Snippet.Thumbnails.Standard ?? video.Snippet.Thumbnails.High ?? video.Snippet.Thumbnails.Medium ?? video.Snippet.Thumbnails.Default__ ?? new();
-                var thumb = video.Snippet.Thumbnails.Default__?? video.Snippet.Thumbnails.Medium ?? video.Snippet.Thumbnails.High ?? video.Snippet.Thumbnails.Standard ?? video.Snippet.Thumbnails.Maxres ?? new();
-
-                var pl = new GenericVideo(
-                    ProviderId: "YOUTUBE",
-                    ProviderItemId: video.Id,
-                    ETag: video.ETag,
-                    ChannelId: video.Snippet.ChannelId,
-                    ChannelName: video.Snippet.ChannelTitle,
-                    Name: video.Snippet.Title,
-                    Description: video.Snippet.Description,
-                    PublishedAt: video.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
-                    Thumbnail: new(thumb.Url, Convert.ToInt32(thumb.Height), Convert.ToInt32(thumb.Width)),
-                    Picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
-                    EmbedHtml: video.Player.EmbedHtml,
-                    DefaultLanguage: video.Snippet.DefaultLanguage,
-                    LocalizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
-                    PrivacyStatus: video.Status.PrivacyStatus,
-                    Tags: video.Snippet.Tags ?? Array.Empty<string>());
-
-                yield return pl;
+                yield return video.ToGenericVideo();
             };
         }
     }

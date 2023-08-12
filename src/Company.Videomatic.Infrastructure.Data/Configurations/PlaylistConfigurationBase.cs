@@ -26,6 +26,9 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
 
         builder.Property(x => x.Description); // MAX
 
+        builder.Property(x => x.Tags)
+            .HasConversion(x => string.Join(',', x),
+                           y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet());
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithOne()

@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates;
-
-namespace Company.Videomatic.Application.Model;
+﻿namespace Company.Videomatic.Application.Model;
 
 public record GenericVideo(
     // Inherited
@@ -42,7 +40,11 @@ public static class GenericVideoExtensions
                 Picture: gv.Picture,
                 EmbedHtml: gv.EmbedHtml,
                 DefaultLanguage: gv.DefaultLanguage);
-        
+
     public static Video ToVideo(this GenericVideo gv)
-        => new (gv.ToEntityOrigin());
+    {
+        var res = new Video(gv.Name, gv.Description);
+        res.SetOrigin(gv.ToEntityOrigin());
+        return res;
+    }
 }
