@@ -4,24 +4,17 @@ namespace Company.Videomatic.Domain.Aggregates.Transcript;
 
 public class Transcript : Entity<TranscriptId>, IAggregateRoot
 {
-    public static Transcript Create(VideoId videoId, string language)
+    public Transcript(VideoId videoId, string language)
     {
-        var t = new Transcript
-        {
-            VideoId = videoId,
-            Language = language,
-        };
-
-        return t;
-
+        VideoId = videoId;
+        Language = language;
     }
-    public static Transcript Create(VideoId videoId, string language, IEnumerable<string> lines)
+
+    public Transcript(VideoId videoId, string language, IEnumerable<string> lines)
     {
-        return new Transcript
-        {
-            VideoId = videoId,
-            Language = language,
-        }.AddLines(lines);
+        VideoId = videoId;
+        Language = language;
+        AddLines(lines);
     }
 
     public VideoId VideoId { get; private set; } = default!;
@@ -53,7 +46,6 @@ public class Transcript : Entity<TranscriptId>, IAggregateRoot
 
     private Transcript()
     { }
-
 
 
     List<TranscriptLine> _lines = new();

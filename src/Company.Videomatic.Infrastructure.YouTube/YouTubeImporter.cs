@@ -168,7 +168,7 @@ public class YouTubeImporter : IVideoImporter
 
     static async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
     {
-        var newTranscr = Transcript.Create(videoId, track.LanguageCode);
+        var newTranscr = new Transcript(videoId, track.LanguageCode);
 
         var xml = await client.GetStringAsync(track.BaseUrl);
         XmlDocument xmlDoc = new ();

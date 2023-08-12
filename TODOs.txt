@@ -5,11 +5,6 @@ SPRINT
 		- [ ] Video duplication
 		- [ ] Transcript duplication
 
-- [ ] I need thumbnails for Playlist as well. I also don't think I need 5 thumbs for Videos;
-	- [ ] Consolidate the multiple thumbs into one and add it as Owned to both Playlist and Video.
-
-- [ ] Improve logging
-	
 
 ******************
 Non UI
@@ -27,17 +22,17 @@ Non UI
 			  need to add a ParentId property or something at some point
 		- Verify we log the IP of the users and all that type of stuff.
 	- [ ] Ensure I can login at least with Google
-	- [ ] See if I can grab the YT user id and channelid from the claims!!
+		- [ ] See if I can grab the YT user id and channelid from the claims
 
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
-	- [ ] Add Owner fields to all entities so we know who made what
+	- [X] Add Owner fields to all entities so we know who made what
 	- [ ] R&D on how to do this:
 		- [ ] There's something in the EF Core docs about this
 	- More to add:
-		-CreatedOn/UpdatedOn/LastAccessedOn
-		-Vote (1 to 10 number)
-		-IsStarred (already done)	
+		-[X] CreatedOn/UpdatedOn
+		-[ ] Vote (1 to 10 number)
+		-[X] IsStarred (already done)	
 	
 - [ ] Add authorization!!
 	- [ ] At the beginning it will probably be all allowed with the 
@@ -61,6 +56,11 @@ Non UI
 - [ ] Documentation on github
 
 DONE
+
+- [X] I need thumbnails for Playlist as well. I also don't think I need 5 thumbs for Videos;
+	- [X] Consolidate the multiple thumbs into one and add it as Owned to both Playlist and Video.
+
+- [X] Improve logging
 
 - [X] Speed up the crap to get the transcripts at some point
 	- [X] Wait for queuing to be done before doing this
@@ -120,9 +120,9 @@ User interface
 		display all the videos that have been starred
 			- [ ] Will need a change to VideoDTO and related query
 		- [ ] Create a 'History' fake playlist (gray/system) which will
-		display all the videos in order of last imported 
+			  display all the videos in order of last updated ?? created 
 			- [ ] In the future we can add a 'Last Viewed' property too or 
-			something like that
+			something like that.
 	- [ ] [PLUS] This should address the issue with the menu items!
 
 - [ ] Divide the Videos page:

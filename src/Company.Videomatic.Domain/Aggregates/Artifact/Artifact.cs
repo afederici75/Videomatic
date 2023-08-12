@@ -4,15 +4,12 @@ namespace Company.Videomatic.Domain.Aggregates.Artifact;
 
 public class Artifact : Entity<ArtifactId>, IAggregateRoot
 {
-    public static Artifact Create(VideoId videoId, string name, string type, string? text = null)
+    public Artifact(VideoId videoId, string name, string type, string? text = null)
     {
-        return new Artifact // TODO: code smell with the other ctors...
-        {
-            VideoId = videoId,
-            Name = name,
-            Type = type,
-            Text = text,
-        };
+        VideoId = videoId;
+        Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+        Type = Guard.Against.NullOrWhiteSpace(type);
+        Text = text;
     }
 
     public VideoId VideoId { get; private set; } = default!;
@@ -24,17 +21,6 @@ public class Artifact : Entity<ArtifactId>, IAggregateRoot
 
     private Artifact()
     { }
-
-
-    //[JsonConstructor]
-    //private Artifact(ArtifactId id, VideoId videoId, string name, string type, string? text)
-    //{
-    //    Id = id;
-    //    VideoId = videoId;
-    //    Name = name;
-    //    Type = type;
-    //    Text = text;
-    //}
 
     int IEntity.Id => this.Id;
 
