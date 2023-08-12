@@ -250,8 +250,8 @@ public class YouTubeImporter : IVideoImporter
                             Name: gpl.Name,
                             Description: gpl.Description,
                             PublishedAt: gpl.PublishedAt,
-                            Thumbnail: gpl.Thumbnail,
-                            Picture: gpl.Picture,
+                            //Thumbnail: gpl.Thumbnail,
+                            //Picture: gpl.Picture,
                             EmbedHtml: gpl.EmbedHtml,
                             DefaultLanguage: gpl.DefaultLanguage));
     }

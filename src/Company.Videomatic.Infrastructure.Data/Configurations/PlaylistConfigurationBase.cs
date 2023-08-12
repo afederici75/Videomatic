@@ -50,18 +50,7 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
             bld.Property(x => x.Description);// MAX
             bld.Property(x => x.PublishedAt);
             //bld.Property(x => x.ThumbnailUrl).HasMaxLength(OriginLengths.ThumbnailUrl);
-            //bld.Property(x => x.PictureUrl).HasMaxLength(OriginLengths.PictureUrl);
-            bld.OwnsOne(x => x.Thumbnail, b => 
-            { 
-                b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
-            });
-
-            bld.OwnsOne(x => x.Picture, b =>
-            {
-                b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
-            });
-
-
+            //bld.Property(x => x.PictureUrl).HasMaxLength(OriginLengths.PictureUrl);            
             bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
             bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
 
@@ -71,6 +60,17 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
             bld.HasIndex(x => x.Name);
             bld.HasIndex(x => x.DefaultLanguage);
         });
+
+        builder.OwnsOne(x => x.Thumbnail, b =>
+        {
+            b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
+        });
+
+        builder.OwnsOne(x => x.Picture, b =>
+        {
+            b.Property(x => x.Location).HasMaxLength(OriginLengths.ThumbnailUrl);
+        });
+
 
         // Indices
         builder.HasIndex(x => x.Name);

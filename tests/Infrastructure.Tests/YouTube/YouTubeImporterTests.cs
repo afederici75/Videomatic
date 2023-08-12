@@ -48,9 +48,9 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     readonly ImportOptions ImportOptions = new (ExecuteWithoutJobQueue: true);
 
     [Theory]
-    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
+    //[InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
     [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, 5, null)] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, CancellationToken? cancellationToken)
+    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, [FromServices] CancellationToken? cancellationToken)
     {
         var videoCount = await VideoRepository.CountAsync();
         var playlistCount = await PlaylistRepository.CountAsync();

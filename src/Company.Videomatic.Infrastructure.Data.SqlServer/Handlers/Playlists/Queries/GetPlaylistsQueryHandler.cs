@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
-public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
+public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
 {    
-    public GetPlaylistsHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
+    public GetPlaylistsQueryHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
@@ -35,7 +35,7 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         // OrderBy
         q = !string.IsNullOrWhiteSpace(request.OrderBy) ? q.OrderBy(request.OrderBy) : q;
 
-        var totalCount = await q.CountAsync();
+        var totalCount = await q.CountAsync(cancellationToken);
 
         // Pagination
         var skip = request.Skip ?? 0;
@@ -47,13 +47,13 @@ public sealed class GetPlaylistsHandler : IRequestHandler<GetPlaylistsQuery, Pag
         var final = q.Select(p => new PlaylistDTO(
             p.Id,
             p.Name,
-            p.Origin!.Thumbnail!,
-            p.Origin!.Picture!,
+            p.Thumbnail,
+            p.Picture,
             p.Description,
             p.Videos.Count()));
 
         // Counts
-        var res = await final.ToListAsync();
+        var res = await final.ToListAsync(cancellationToken);
 
         return new Page<PlaylistDTO>(res, skip, take, totalCount);
     }

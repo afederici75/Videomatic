@@ -12,8 +12,8 @@ public record PlaylistOrigin(
 
     DateTime? PublishedAt,
 
-    Thumbnail Thumbnail,
-    Thumbnail Picture,
+    //Thumbnail Thumbnail,
+    //Thumbnail Picture,
 
     string? EmbedHtml,
     string? DefaultLanguage);
@@ -50,6 +50,10 @@ public class Playlist : IEntity, IAggregateRoot
     public bool IsStarred { get; private set; } = false;    
 
     public PlaylistOrigin? Origin { get; private set; } = default!;
+
+    public Thumbnail Thumbnail { get; private set; } = default!;
+    public Thumbnail Picture { get; private set; } = default!;
+
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 

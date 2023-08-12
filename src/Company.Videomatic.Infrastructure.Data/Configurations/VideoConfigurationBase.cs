@@ -33,20 +33,23 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         
         builder.Property(x => x.Description);
 
-        builder.Property(x => x.Thumbnail)
-               .HasMaxLength(FieldLengths.URL);
+        //builder.Property(x => x.Thumbnail)
+        //       .HasMaxLength(FieldLengths.URL);
 
-        builder.Property(x => x.Picture)
-               .HasMaxLength(FieldLengths.URL);
+        //builder.Property(x => x.Picture)
+        //       .HasMaxLength(FieldLengths.URL);
 
         #region Owned Types
+
         builder.OwnsOne(x => x.Thumbnail, b => 
         { 
+            b.WithOwner().HasForeignKey("VideoId");
             b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);            
         });
 
         builder.OwnsOne(x => x.Picture, b =>
         {
+            b.WithOwner().HasForeignKey("VideoId");
             b.Property(x => x.Location).HasMaxLength(FieldLengths.URL);
         });
 
