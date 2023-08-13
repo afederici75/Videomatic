@@ -1,6 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
-namespace Company.Videomatic.Application.Abstractions;
+﻿namespace Company.Videomatic.Application.Abstractions;
 
 public static class RepositoryExtensions
 {

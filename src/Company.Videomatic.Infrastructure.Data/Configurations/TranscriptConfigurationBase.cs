@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Company.Videomatic.Domain.Video;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
 
 namespace Company.Videomatic.Infrastructure.Data.SqlServer.Handlers.Videos.Queries;

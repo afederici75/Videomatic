@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Transcript;
+﻿namespace Company.Videomatic.Domain.Transcript;
 
 public class Transcript : Entity<TranscriptId>, IAggregateRoot
 {

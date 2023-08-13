@@ -48,7 +48,7 @@ public class VideoRequestsValidatorTests
     [InlineData(null, "filter_here", "order_here", 1, 1, 0)]
     [InlineData(null, "   ", "", -1, 0, 3)]
     [InlineData(null, null, null, -1, 0, 2)]
-    [InlineData(new int[] { }, null, null, -1, 0, 0)]
+    [InlineData(new int[] { }, null, null, -1, 0, 3)]
     public void ValidateGetVideosQuery(
         int[]? playlistIds,
         string? filter,

@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Company.Videomatic.Domain;
-using Company.Videomatic.Domain.Aggregates;
-
-namespace Company.Videomatic.Application;
+﻿namespace Company.Videomatic.Application;
 
 public class AutomappingProfile : Profile
 {

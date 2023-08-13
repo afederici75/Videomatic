@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.Data;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Infrastructure.Data;
 
 public abstract class VideomaticDbContext : DbContext
 {

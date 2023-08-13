@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Company.Videomatic.Domain.Video;
 
 namespace Company.Videomatic.Application.Features.Playlists.Commands;
 

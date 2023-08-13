@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Handlers.Videos.Commands;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Application.Handlers.Videos.Commands;
 
 public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result>
 {

@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Infrastructure.YouTube;
+﻿using Company.Videomatic.Infrastructure.YouTube;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;

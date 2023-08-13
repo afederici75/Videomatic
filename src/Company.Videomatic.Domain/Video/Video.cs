@@ -1,4 +1,4 @@
-﻿namespace Company.Videomatic.Domain.Aggregates.Video;
+﻿namespace Company.Videomatic.Domain.Video;
 
 public class Video : ImportedEntity<VideoId>, IAggregateRoot
 {
@@ -11,11 +11,11 @@ public class Video : ImportedEntity<VideoId>, IAggregateRoot
     //public Video(EntityOrigin origin)
     //    : base(origin)
     //{ }
-        
+
     #region Private
 
     private Video() : base()
     { }
-    
+
     #endregion
 }

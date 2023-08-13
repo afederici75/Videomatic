@@ -1,6 +1,4 @@
-﻿
-
-namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
 
 public class ArtifactConfiguration : ArtifactConfigurationBase 
 {

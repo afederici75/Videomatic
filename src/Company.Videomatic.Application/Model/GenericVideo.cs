@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Model;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Application.Model;
 
 public record GenericVideo(
     // Inherited

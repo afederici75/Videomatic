@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Domain.Tests;
+﻿namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.

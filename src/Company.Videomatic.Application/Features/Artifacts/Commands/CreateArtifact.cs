@@ -1,6 +1,4 @@
-﻿using Company.SharedKernel.CQRS.Commands;
-
-namespace Company.Videomatic.Application.Features.Artifacts.Commands;
+﻿namespace Company.Videomatic.Application.Features.Artifacts.Commands;
 
 public record CreateArtifactCommand(int VideoId,
                                     string Name,

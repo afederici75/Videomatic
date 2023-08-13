@@ -19,10 +19,10 @@ global using Company.Videomatic.Application.Features.Playlists;
 global using Company.Videomatic.Application.Features.Transcripts;
 global using Company.Videomatic.Application.Features.Videos;
 
-global using Company.Videomatic.Domain.Aggregates.Artifact;
-global using Company.Videomatic.Domain.Aggregates.Playlist;
-global using Company.Videomatic.Domain.Aggregates.Transcript;
-global using Company.Videomatic.Domain.Aggregates.Video;
+global using Company.Videomatic.Domain.Artifact;
+global using Company.Videomatic.Domain.Playlist;
+global using Company.Videomatic.Domain.Transcript;
+global using Company.Videomatic.Domain.Video;
 
 global using Company.Videomatic.Application.Features.Artifacts.Queries;
 global using Company.Videomatic.Application.Features.Playlists.Queries;

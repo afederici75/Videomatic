@@ -1,4 +1,6 @@
-﻿namespace Domain.Tests;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.

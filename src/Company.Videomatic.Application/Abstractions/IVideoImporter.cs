@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Application.Abstractions;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Application.Abstractions;
 
 public record ImportOptions(bool ExecuteWithoutJobQueue = false);
 

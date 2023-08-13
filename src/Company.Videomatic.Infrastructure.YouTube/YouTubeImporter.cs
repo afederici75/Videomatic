@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Domain.Video;
 using Hangfire;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

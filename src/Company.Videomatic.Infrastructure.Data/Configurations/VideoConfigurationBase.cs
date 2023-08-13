@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 

@@ -1,7 +1,4 @@
-﻿using Company.Videomatic.Domain;
-using Company.Videomatic.Domain.Aggregates;
-
-namespace Company.Videomatic.Application.Model;
+﻿namespace Company.Videomatic.Application.Model;
 
 public record GenericChannel(
     // Inherited

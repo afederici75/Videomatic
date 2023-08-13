@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
 public class VideoConfiguration : VideoConfigurationBase
 {

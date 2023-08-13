@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Video;
-
-namespace Company.Videomatic.Domain;
+﻿namespace Company.Videomatic.Domain;
 
 public abstract class ImportedEntity<TId> : Entity<TId>
 {

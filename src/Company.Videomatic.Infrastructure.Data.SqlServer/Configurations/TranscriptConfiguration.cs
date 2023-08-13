@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.SqlServer.Configurations;
 
 public class TranscriptConfiguration : TranscriptConfigurationBase
 {

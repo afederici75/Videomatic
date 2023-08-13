@@ -1,10 +1,4 @@
-﻿using Application.Tests.Helpers;
-using Ardalis.Result;
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Infrastructure.Tests.Data;
 

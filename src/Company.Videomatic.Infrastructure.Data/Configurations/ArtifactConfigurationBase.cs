@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-
-namespace Company.Videomatic.Infrastructure.Data.Configurations;
+﻿namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
 public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
 {
