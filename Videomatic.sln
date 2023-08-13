@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{E795DFD9
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
+		Done.txt = Done.txt
 		LICENSE = LICENSE
 		Notes.txt = Notes.txt
 		README.md = README.md

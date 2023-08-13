@@ -1,0 +1,84 @@
+******************
+Non UI
+******************
+
+- [X] Major cleanup of domain, EF Core schema and other things of this nature. This
+      follows the 'remove complexity' task.
+
+- [X] I need thumbnails for Playlist as well. I also don't think I need 5 thumbs for Videos;
+	- [X] Consolidate the multiple thumbs into one and add it as Owned to both Playlist and Video.
+
+- [X] Improve logging
+
+- [X] Speed up the crap to get the transcripts at some point
+	- [X] Wait for queuing to be done before doing this
+
+- [X] NEW: Generalize some interfaces and reduce complexity.
+	- See https://chat.openai.com/share/71433e49-94b4-4c7c-b0b3-f1189a2d32a7 for more info.	
+	- [X] Make sure we return Result<> from all methods that should!
+		- Like IVideoHostingProvider
+
+- [X] Add support for cancellation tokens in unit tests: the SLOWxxx tests don't 
+stop if I click the Stop button in VS.
+
+- [X] Ability to queue jobes;
+	- [X] USE HANGFIRE? Do a little R&D on it
+	- [X] Video imports from YouTube (no tune ups for Transcript at this point)		
+	- [X] Play list imports from YouTube
+
+- [X] Remove my custom code for accessing the YT API and swap to the Google nuget package
+
+- [X] Add logging
+	- [X] Add logging to files
+	- [X] Add logging to the console
+	- [X] Add logging to Seq
+	- [ ] R&D on application insights
+		- [ ] Add logging to application insights
+
+- [X] Add the ability to Star Videos by adding an extra property
+	- [X] Requires rescaffolding the database
+- [X] Add the ability to Star Playlists by adding an extra property
+	- [X] Requires rescaffolding the database
+
+- [X] This is probably the best time to change the id from long to int!	
+
+******************
+User interface
+******************
+
+DONE
+
+- [X] Make the YouTube interface a single page deal instead of adding all those submenus:
+	- [X] The page would focus on importing videos from Youtube 
+	- Sources:		
+		- [skipper] The youtube playlists of user 
+			- [skipped] I need the user's channel id from somewhere (maybe settings?)
+			- [moved] IMPORTANT: what happens if we continue reimporting the same playlist
+			over and over? We need to be sure we don't duplicate playlist and videos.
+				- [moved] At the very least it should warn the user that the playlist already exists
+				and ask if they want to continue by simply adding the new videos to the existing
+				playlist
+				- [moved] If the user accepts we would only import videos that are not already in videomatic.
+					- [moved] If the video is already in videomatic we would simply now link it to this 
+					playlist (if it isn't already)
+					- [X] If the video is not alreayd in videomatic we would import it and then link it 
+					to this playlist			
+		- [X] A simple Youtube video URL 
+			- [X] this can be either typed in a text box or dragged and dropped
+		- [X] A YouTube playlist URL
+			- [skipped] it would be nice if dragging and dropping would detect this
+			- [X] ultimately this would queue the import of videos and associate a playlist
+			tag to them for when the import is done. 
+		- [skipped] The youtube history of user (future)
+			- [skipped] this might be an issue unless I OAUTH2 this crap
+
+		- [X] Provide a button to start queueing video imports
+			- [X] This will queue the import of videos from the sources above
+			
+		- [X] This page should also display what is still being imported server side. (we have the /hangfire endpoint)
+			- [skipped] When videos are imported the user shluld get a notification in the UI
+			which allows him to go to the video or playlist which was just imported
+			- [skipped] Possibly send an email?
+
+- [X] Finish resolving the issue with the Videos menu conflicting with those under 
+ Playlists. It's basically highlighting by action uri
