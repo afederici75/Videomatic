@@ -56,16 +56,16 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         q = q.Skip(skip).Take(take);
 
         // Projection
-        var includeThumbnail = request.SelectedThumbnail != null;
-        var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
-                                .ToThumbnailResolution();
+        //var includeThumbnail = request.SelectedThumbnail != null;
+        //var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
+        //                        .ToThumbnailResolution();
 
         var final = q.Select(v => new VideoDTO(
             v.Id,
             $"https://www.youtube.com/videos?v=" + v.Origin.ProviderItemId,
             v.Name,
             v.Description,
-            request.IncludeTags ? v.Tags : null,
+            v.Tags,
             v.Thumbnail,
             v.Picture,
             dbContext.Artifacts.Count(a => a.VideoId==v.Id),

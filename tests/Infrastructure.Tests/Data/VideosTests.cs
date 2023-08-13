@@ -134,16 +134,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, null, true, null, 2)]
-    [InlineData(new int[] { 1 }, null, null, true, null, 2)]
-    [InlineData(new int[] { 1, 2 }, null, null, true, null, 2)]
-    [InlineData(new int[] { 1, 2 }, "gods", null, true, null, 1)]
+    [InlineData(null, null, null, true, 2)]
+    [InlineData(new int[] { 1 }, null, null, true, 2)]
+    [InlineData(new int[] { 1, 2 }, null, null, true, 2)]
+    [InlineData(new int[] { 1, 2 }, "gods", null, true, 1)]
     public async Task GetVideos(
         int[]? playlistIds,
         string? searchText,
         string? orderBy,
         bool includeTags,
-        ThumbnailResolutionDTO? selectedThumbnail,
         int expectedResults)
     {
         
@@ -154,8 +153,6 @@ public class VideosTests : IClassFixture<DbContextFixture>
             OrderBy: orderBy,
             Skip: null,
             Take: null, // Uses 1 by default
-            IncludeTags: includeTags, // Uses 10 by default
-            SelectedThumbnail: selectedThumbnail,
             PlaylistIds: playlistIds);
 
         if (searchText != null)
@@ -175,19 +172,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(new int[] { 1 }, null, 1)]
-    [InlineData(new int[] { 1, 2 }, null, 2)]
-    [InlineData(new int[] { 2 }, null, 1)]
-    [InlineData(new int[] { 3 }, null, 0)]
+    [InlineData(new int[] { 1 }, 1)]
+    [InlineData(new int[] { 1, 2 }, 2)]
+    [InlineData(new int[] { 2 }, 1)]
+    [InlineData(new int[] { 3 }, 0)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideosById(
         int[] videoIds,        
-        ThumbnailResolutionDTO? IncludeThumbnail,
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            VideoIds: videoIds,
-            SelectedThumbnail: IncludeThumbnail);
+            VideoIds: videoIds);
 
         Page<VideoDTO> res = await Sender.Send(query);
 

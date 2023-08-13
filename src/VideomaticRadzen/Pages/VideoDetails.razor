@@ -55,10 +55,7 @@
 
         await Task.Yield();
 
-        var query = new GetVideosQuery(
-                VideoIds: new int[] { VideoId!.Value },
-                IncludeTags: true,
-                SelectedThumbnail: ThumbnailResolutionDTO.Standard);
+        var query = new GetVideosQuery(VideoIds: new int[] { VideoId!.Value });
 
         Page<VideoDTO> results = await Sender.Send(query);
 

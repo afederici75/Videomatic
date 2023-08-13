@@ -8,8 +8,6 @@ public record GetVideosQuery(
     int? Take = null,
     TextSearchType? SearchType = null,
     // Additional
-    bool IncludeTags = false,
-    ThumbnailResolutionDTO? SelectedThumbnail = null,
     IEnumerable<int>? PlaylistIds = null,
     IEnumerable<int>? VideoIds = null,
     string? SearchOn = null) : IRequest<Page<VideoDTO>>, IBasicQuery;
