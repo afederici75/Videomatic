@@ -1,9 +1,8 @@
 ﻿using Domain;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations.Helpers;
 
-public static class EntityOriginConfigurator
+public class EntityOriginConfigurator
 {
     static class OriginLengths
     {
@@ -42,59 +41,3 @@ public static class EntityOriginConfigurator
         bld.HasIndex(x => x.DefaultLanguage);
     }
 }
-
-public static class EntityConfigurator 
-{ 
-    public static void Configure<T>(EntityTypeBuilder<T> builder) 
-        where T : class, IEntity
-    {
-        builder.Property(x => x.Id) 
-               .HasConversion(x => (int)x, y => y);        
-    }
-}
-
-public static class ImportedEntityConfigurator<TId, T> 
-    where T : ImportedEntity<TId>    
-{
-    public class FieldLengths
-    {
-        public const int URL = 1024;
-        public const int Title = 500;
-        public const int TagName = 100;
-        //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
-    }
-
-    public static void Configure(EntityTypeBuilder<T> builder)        
-    {
-        EntityConfigurator.Configure(builder);
-
-        // Fields
-        builder.Property(x => x.Name)
-               .HasMaxLength(FieldLengths.Title);
-
-        builder.Property(x => x.Description);
-
-        // Tags
-        var valueComparer = new ValueComparer<IEnumerable<string>>(
-            (c1, c2) => c1!.SequenceEqual(c2!),
-            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-            c => c.ToList());
-
-        builder.Property(x => x.Tags)
-               .HasConversion(x => string.Join(',', x),
-                              y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet())
-
-               .Metadata.SetValueComparer(valueComparer);
-
-        // ---------- Owned Types ----------
-
-        builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
-
-        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
-
-        var details = builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
-
-        // ---------- Indices ----------
-        builder.HasIndex(x => x.Name);
-    }
-}   

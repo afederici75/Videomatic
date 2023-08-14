@@ -2,7 +2,7 @@
 
 namespace Domain.Artifacts;
 
-public class Artifact : Entity<ArtifactId>, IAggregateRoot
+public class Artifact : UpdateableEntity<ArtifactId>, IAggregateRoot
 {
     public Artifact(VideoId videoId, string name, string type, string? text = null)
     {

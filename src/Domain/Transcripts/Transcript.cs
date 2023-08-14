@@ -2,7 +2,7 @@
 
 namespace Domain.Transcripts;
 
-public class Transcript : Entity<TranscriptId>, IAggregateRoot
+public class Transcript : UpdateableEntity<TranscriptId>, IAggregateRoot
 {
     public Transcript(VideoId videoId, string language)
     {

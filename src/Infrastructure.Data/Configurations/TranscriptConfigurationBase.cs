@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Configurations;
+﻿using Infrastructure.Data.Configurations.Helpers;
+
+namespace Infrastructure.Data.Configurations;
 
 public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
 {
@@ -13,19 +15,13 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
         builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
-
-        // Fields
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => new TranscriptId(y))
                .IsRequired(true);
 
-        builder.Property(x => x.VideoId)
-               .HasConversion(x => x.Value, y => new VideoId(y))
-               .IsRequired(true);
+        //ImportedEntityConfigurator<TranscriptId, Transcript>.Configure(builder);
 
-        builder.Property(x => x.Language)
-               .HasMaxLength(FieldLengths.Language);        
-
+        // ---------- Relationships ----------
         builder.OwnsMany(x => x.Lines, (builder) =>
         {
             builder.ToTable(TableNameForLines);
@@ -40,7 +36,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
             builder.HasIndex(nameof(TranscriptLine.Text));
         });
 
-        // Indices
+        // ---------- Indices ----------
         builder.HasIndex(x => x.Language);
     }
 }   

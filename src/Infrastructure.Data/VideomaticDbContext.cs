@@ -28,4 +28,48 @@ public abstract class VideomaticDbContext : DbContext
         var descendantType = GetType();
         modelBuilder.ApplyConfigurationsFromAssembly(descendantType.Assembly);
     }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        OnBeforeSaving();
+
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        OnBeforeSaving();
+
+        return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    private void OnBeforeSaving()
+    {
+        var entries = ChangeTracker.Entries();
+        var utcNow = DateTime.UtcNow;
+
+        foreach (var entry in entries)
+        {
+            if (entry.Entity is IUpdateableEntity updateable)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        // set the updated date to "now"
+                        updateable.SetUpdatedOn(utcNow);
+
+                        // mark property as "don't touch"
+                        // we don't want to update on a Modify operation
+                        entry.Property(nameof(IUpdateableEntity.CreatedOn)).IsModified = false;
+                        break;
+
+                    case EntityState.Added:
+                        // set both updated and created date to "now"
+                        updateable.SetCreatedOn(utcNow);// = utcNow;
+                        //updateable.SetUpdatedOn(utcNow);// = utcNow;
+                        break;
+                }
+            }
+        }
+    }
 }
