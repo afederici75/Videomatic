@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-using SharedKernel.Abstractions;
+﻿using SharedKernel.Abstractions;
 
 namespace SharedKernel;
 

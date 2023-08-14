@@ -17,10 +17,10 @@ public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<
         builder.HasKey(x => new { x.PlaylistId, x.VideoId });
 
         builder.Property(x => x.VideoId)
-               .HasConversion(x => x.Value, y => y);
+               .HasConversion(x => (int)x, y => y);
 
         builder.Property(x => x.PlaylistId)
-               .HasConversion(x => x.Value, y => y);
+               .HasConversion(x => (int)x, y => y);
       
     }
 }

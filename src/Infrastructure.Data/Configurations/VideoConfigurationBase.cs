@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Infrastructure.Data.Configurations.Helpers;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations;
 
@@ -23,9 +24,6 @@ public abstract class VideoConfigurationBase : IEntityTypeConfiguration<Video>
         // Fields
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => y);
-
-        //builder.Property(x => x.Location)
-        //       .HasMaxLength(FieldLengths.URL); 
 
         builder.Property(x => x.Name)
                .HasMaxLength(FieldLengths.Title);

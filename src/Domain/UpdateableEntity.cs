@@ -1,8 +1,7 @@
 ﻿namespace Domain;
 
-public abstract class Entity<TId> : IEntity
+public abstract class UpdateableEntity<TId> : Entity<TId>
 {
-    public TId Id { get; protected set; } = default!;
     public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
     public DateTime? UpdatedOn { get; private set; }
 
@@ -10,15 +9,4 @@ public abstract class Entity<TId> : IEntity
     { 
         UpdatedOn = DateTime.UtcNow;
     }
-
-    int IEntity.Id => Convert.ToInt32(Id);
-
-    #region Private
-
-    protected Entity()
-    {
-            
-    }
-
-    #endregion
 }
