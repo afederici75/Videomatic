@@ -8,6 +8,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>  
   <ItemGroup>
-    <ProjectReference Include="..\Company.SharedKernel\Company.SharedKernel.csproj" />
+    <ProjectReference Include="..\Company.SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 </Project>

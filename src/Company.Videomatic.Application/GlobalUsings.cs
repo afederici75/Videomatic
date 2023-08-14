@@ -6,7 +6,10 @@ global using Ardalis.Specification;
 global using Ardalis.GuardClauses;
 
 global using AutoMapper;
+
+global using Company.SharedKernel;
 global using Company.SharedKernel.Abstractions;
+
 global using Company.Videomatic.Application.Abstractions;
 
 global using Company.SharedKernel.CQRS.Commands;

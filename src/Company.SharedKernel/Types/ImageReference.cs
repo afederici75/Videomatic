@@ -1,6 +1,8 @@
-﻿namespace Company.Videomatic.Domain;
+﻿using Company.SharedKernel.Abstractions;
 
-public class ImageReference : ValueObject
+namespace Company.SharedKernel;
+
+public class ImageReference : ValueObject, IImageReference
 {
     public static ImageReference Empty => new(string.Empty, 0, 0);
 

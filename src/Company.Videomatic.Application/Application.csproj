@@ -16,7 +16,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Company.SharedKernel\Company.SharedKernel.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj" />
+    <ProjectReference Include="..\Company.SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\Company.Videomatic.Domain\Domain.csproj" />
   </ItemGroup>
 </Project>
