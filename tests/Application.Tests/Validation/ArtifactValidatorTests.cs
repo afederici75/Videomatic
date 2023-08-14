@@ -1,5 +1,5 @@
 ﻿using Application.Tests.Helpers;
-using Company.Videomatic.Application.Features.Artifacts.Commands;
+using Application.Features.Artifacts.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

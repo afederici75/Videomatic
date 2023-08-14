@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using Application.Abstractions;
 
 namespace Infrastructure.Tests.YouTube;
 
@@ -30,7 +30,8 @@ public class YouTubeVideoProviderTests
             count++;
             Output.WriteLine(p.ToString());
 
-            p.Id.Should().NotBeNullOrEmpty();
+            p.ProviderId.Should().NotBeNullOrEmpty();
+            p.ProviderItemId.Should().NotBeNullOrEmpty();
             p.Name.Should().NotBeNullOrEmpty();
             //p.Description.Should().NotBeNullOrEmpty();            
         }
@@ -52,7 +53,8 @@ public class YouTubeVideoProviderTests
             count++;
             Output.WriteLine(p.ToString());
 
-            p.Id.Should().NotBeNullOrEmpty();
+            p.ProviderId.Should().NotBeNullOrEmpty();
+            p.ProviderItemId.Should().NotBeNullOrEmpty();
             p.Name.Should().NotBeNullOrEmpty();
             //p.Description.Should().NotBeNullOrEmpty();            
         }
@@ -73,7 +75,8 @@ public class YouTubeVideoProviderTests
             count++;
             Output.WriteLine(p.ToString());
 
-            p.Id.Should().NotBeNullOrEmpty();
+            p.ProviderId.Should().NotBeNullOrEmpty();
+            p.ProviderItemId.Should().NotBeNullOrEmpty();
             p.Name.Should().NotBeNullOrEmpty();
             //p.Description.Should().NotBeNullOrEmpty();
         }

@@ -1,5 +1,5 @@
-﻿using Company.Videomatic.Application.Features.Artifacts.Commands;
-using Company.Videomatic.Domain.Aggregates.Video;
+﻿using Application.Features.Artifacts.Commands;
+using Domain.Videos;
 
 namespace Application.Tests.Helpers;
 

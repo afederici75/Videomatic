@@ -34,10 +34,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Company.Videomatic.Application\Company.Videomatic.Application.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data\Company.Videomatic.Infrastructure.Data.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\..\src\Application\Application.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.Data\Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.YouTube\Infrastructure.YouTube.csproj" />
   </ItemGroup>
 
   <ItemGroup>

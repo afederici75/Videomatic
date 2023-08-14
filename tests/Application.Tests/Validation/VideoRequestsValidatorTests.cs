@@ -1,6 +1,6 @@
 ﻿using Application.Tests.Helpers;
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
+using Application.Abstractions;
+using Application.Features.Videos;
 
 namespace Application.Tests.Validation;
 
@@ -45,21 +45,19 @@ public class VideoRequestsValidatorTests
     }
 
     [Theory]
-    [InlineData(null, "filter_here", "order_here", 1, 1, false, ThumbnailResolutionDTO.Standard, 0)]
-    [InlineData(null, "   ", "", -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
-    [InlineData(null, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 2)]
-    [InlineData(new int[] { }, null, null, -1, 0, false, ThumbnailResolutionDTO.Standard, 3)]
+    [InlineData(null, "filter_here", "order_here", 1, 1, 0)]
+    [InlineData(null, "   ", "", -1, 0, 3)]
+    [InlineData(null, null, null, -1, 0, 2)]
+    [InlineData(new int[] { }, null, null, -1, 0, 3)]
     public void ValidateGetVideosQuery(
         int[]? playlistIds,
         string? filter,
         string? orderBy,
-        int? page,
-        int? pageSize,
-        bool includeCounts,
-        ThumbnailResolutionDTO? includeThumbnail,
+        int? skip,
+        int? take,
         int expectedErrors)
     {
         ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(
-            new(filter, orderBy, page, pageSize, TextSearchType.FreeText, includeCounts, includeThumbnail, playlistIds), expectedErrors);
+            new(filter, orderBy, skip, take, TextSearchType.FreeText, playlistIds), expectedErrors);
     }
 }

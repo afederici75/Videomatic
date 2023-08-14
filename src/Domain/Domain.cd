@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Domain.Videos.Video" BaseTypeListCollapsed="true">
+    <Position X="9" Y="8.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Videos\Video.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Transcripts.Transcript" BaseTypeListCollapsed="true">
+    <Position X="3" Y="5.75" Width="3" />
+    <Members>
+      <Field Name="_lines" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAACAAAAAAAAAABAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
+      <FileName>Transcripts\Transcript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Playlists.Playlist" BaseTypeListCollapsed="true">
+    <Position X="12.25" Y="8.5" Width="3.5" />
+    <Members>
+      <Field Name="_videos" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Playlists\Playlist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Artifacts.Artifact" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Artifacts\Artifact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.ImportedEntity&lt;TId&gt;">
+    <Position X="10.25" Y="0.5" Width="2.75" />
+    <Members>
+      <Field Name="_tags" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AQAAgAAEBCAgIQQoAAACCAQACACYAEAAAAAAQAgAAAA=</HashCode>
+      <FileName>ImportedEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Entity&lt;TId&gt;">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAKAAAAIAAAAQAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Transcripts.TranscriptLine">
+    <Position X="4.5" Y="9" Width="2.5" />
+    <Members>
+      <Method Name="GetEqualityComponents" Hidden="true" />
+      <Method Name="implicit operator string" Hidden="true" />
+      <Method Name="implicit operator TranscriptLine" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QAAAIAAAAAACAAAAIAAAAAAAAAAQAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Transcripts\TranscriptLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Playlists.PlaylistVideo">
+    <Position X="14" Y="11" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Playlists\PlaylistVideo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.EntityOrigin">
+    <Position X="15" Y="1.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAgAAAAAAgAAAANAIACAQAAgAAAAAAAAUAAAABQAA=</HashCode>
+      <FileName>EntityOrigin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

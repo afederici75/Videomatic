@@ -1,5 +1,5 @@
-﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
-using Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Infrastructure.Data.SqlServer.Configurations;
+using Infrastructure.SqlServer.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -31,10 +31,10 @@ public class DbContextFixture : IAsyncLifetime
 
     public virtual Task DisposeAsync()
     {
-#pragma warning disable CS0618 // Type or member is obsolete
-        //if (!SkipDeletingDatabase)
-        //    return DbContext.Database.EnsureDeletedAsync();
-#pragma warning restore CS0618 // Type or member is obsolete
+//#pragma warning disable CS0618 // Type or member is obsolete
+//        //if (!SkipDeletingDatabase)
+//        //    return DbContext.Database.EnsureDeletedAsync();
+//#pragma warning restore CS0618 // Type or member is obsolete
 
         DbContext.Dispose();
 
@@ -48,8 +48,9 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
-        DbContext.Database.ExecuteSqlRaw("delete from dbo.Videos");
-        DbContext.Database.ExecuteSqlRaw("delete from dbo.Playlists");
+        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Videos");
+        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Playlists");
+
         DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
@@ -59,7 +60,7 @@ public class DbContextFixture : IAsyncLifetime
         DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.TagsSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName}  RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
@@ -68,10 +69,10 @@ public class DbContextFixture : IAsyncLifetime
         await _seeder.SeedAsync();
 
         // TODO: Refactor
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Videos start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Playlists start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Transcripts start full population");
-        DbContext.Database.ExecuteSqlRaw("alter fulltext index on dbo.Artifacts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Videos start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Playlists start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Transcripts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Artifacts start full population");
 
         // TODO: I should do what's described here: https://stackoverflow.com/questions/2727911/how-can-i-know-when-sql-full-text-index-population-is-finished
         // For now this seems to work on my machine.

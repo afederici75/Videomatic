@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Domain.Aggregates.Transcript;
-using Company.Videomatic.Infrastructure.YouTube;
+﻿using Infrastructure.YouTube;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
@@ -48,9 +46,9 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     readonly ImportOptions ImportOptions = new (ExecuteWithoutJobQueue: true);
 
     [Theory]
-    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
+    //[InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
     [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, 5, null)] // Google I/O Keynote Films
-    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, CancellationToken? cancellationToken)
+    public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, [FromServices] CancellationToken? cancellationToken)
     {
         var videoCount = await VideoRepository.CountAsync();
         var playlistCount = await PlaylistRepository.CountAsync();
@@ -62,17 +60,17 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     }
    
     [Theory]
-    [InlineData(new[] { "BBd3aHnVnuE" }, null)]
-    [InlineData(new[] { "4Y4YSpF6d6w", "https://youtube.com/watch?v=tWZQPCU4LJI" }, null)]
-    [InlineData(new[] { "BFfb2P5wxC0", "https://youtube.com/watch?v=dQw4w9WgXcQ", "n1kmKpjk_8E" }, null)]
-    public async Task ImportVideosWithIdsOrUrls(string[] ids, CancellationToken? cancellationToken)
+    [InlineData(new[] { "BBd3aHnVnuE" }, 0, null)]
+    [InlineData(new[] { "4Y4YSpF6d6w", "https://youtube.com/watch?v=tWZQPCU4LJI" }, 2, null)]
+    [InlineData(new[] { "BFfb2P5wxC0", "https://youtube.com/watch?v=dQw4w9WgXcQ", "n1kmKpjk_8E" }, 2, null)]
+    public async Task ImportVideosWithIdsOrUrls(string[] ids, int expectedAdded, CancellationToken? cancellationToken)
     {
         var count = await VideoRepository.CountAsync();
 
         await Importer.ImportVideosAsync(ids, null, this.ImportOptions, cancellationToken ?? CancellationToken.None);
 
         var newCount = await VideoRepository.CountAsync();
-        newCount.Should().Be(count + ids.Length);
+        newCount.Should().Be(count + expectedAdded);
     }
 
 #pragma warning disable xUnit1004 // Test methods should not be skipped

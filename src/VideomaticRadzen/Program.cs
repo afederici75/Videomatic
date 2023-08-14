@@ -1,5 +1,5 @@
-using Company.Videomatic.Infrastructure.Data;
-using Company.Videomatic.Infrastructure.Data.SqlServer;
+using Infrastructure.Data;
+using Infrastructure.Data.SqlServer;
 using Hangfire;
 using Radzen;
 using Serilog;

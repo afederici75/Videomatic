@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Artifact;
-
-namespace Domain.Tests;
+﻿namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.
@@ -10,7 +8,7 @@ public class ArtifactTests
     [Fact]
     public void CreateArtifact()
     {
-        var artifact = Artifact.Create(1, name: "Name", type: "AI", text: "Nothing");
+        var artifact = new Artifact(1, name: "Name", type: "AI", text: "Nothing");
 
         artifact.Should().NotBeNull();
         artifact.Id.Should().BeNull();

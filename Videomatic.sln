@@ -5,15 +5,15 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{71D366F8-EC64-4EDF-9D08-8213F4C77EE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Application", "src\Company.Videomatic.Application\Company.Videomatic.Application.csproj", "{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Application\Application.csproj", "{A5F7B9B2-6BFE-4FB8-9F9D-3CBB559F57A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BF763A0D-0B85-4487-B41B-BFC9E7401D83}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.SemanticKernel", "src\Company.Videomatic.Infrastructure.SemanticKernel\Company.Videomatic.Infrastructure.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.SemanticKernel", "src\Infrastructure.SemanticKernel\Infrastructure.SemanticKernel.csproj", "{6E299DEC-3A1D-4525-B043-05CD89AEE67B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data.SqlServer", "src\Company.Videomatic.Infrastructure.Data.SqlServer\Company.Videomatic.Infrastructure.Data.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data.SqlServer", "src\Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj", "{CD8CE0A9-0152-48F8-9034-17855A0BB4A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.YouTube", "src\Company.Videomatic.Infrastructure.YouTube\Company.Videomatic.Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.YouTube", "src\Infrastructure.YouTube\Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
 EndProject
@@ -23,25 +23,26 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Tests", "tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticWebAPI", "src\VideomaticWebAPI\VideomaticWebAPI.csproj", "{1753EB30-9EAA-4FC2-A9F2-5CC729079D69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.Data", "src\Company.Videomatic.Infrastructure.Data\Company.Videomatic.Infrastructure.Data.csproj", "{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data", "src\Infrastructure.Data\Infrastructure.Data.csproj", "{D2F096ED-A318-47D9-BBE3-7B8A1F7C6B3A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Infrastructure.AzureSpeech", "src\Company.Videomatic.Infrastructure.AzureSpeech\Company.Videomatic.Infrastructure.AzureSpeech.csproj", "{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.AzureSpeech", "src\Infrastructure.AzureSpeech\Infrastructure.AzureSpeech.csproj", "{C4D42D9F-CA05-4639-89FE-D961BB9D66B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Videomatic.Domain", "src\Company.Videomatic.Domain\Company.Videomatic.Domain.csproj", "{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{0F4F05C4-3684-4C16-A0AF-EC2C553CD707}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Misc", "_Misc", "{E795DFD9-32D7-457C-B4FC-2187DE4CD935}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{E795DFD9-32D7-457C-B4FC-2187DE4CD935}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
+		Done.txt = Done.txt
 		LICENSE = LICENSE
 		Notes.txt = Notes.txt
 		README.md = README.md
 		TODOs.txt = TODOs.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.SharedKernel", "src\Company.SharedKernel\Company.SharedKernel.csproj", "{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Tests", "tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{7C1D3050-1AD5-45CF-B680-3DEC0419165C}"
 EndProject

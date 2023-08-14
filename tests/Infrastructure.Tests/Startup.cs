@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.Data.SqlServer;
+﻿using Infrastructure.Data.SqlServer;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

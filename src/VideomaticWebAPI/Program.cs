@@ -1,6 +1,6 @@
-using Company.Videomatic.Application.Features.Videos.Commands;
-using Company.Videomatic.Infrastructure.Data;
-using Company.Videomatic.Infrastructure.Data.Seeder;
+using Application.Features.Videos.Commands;
+using Infrastructure.Data;
+using Infrastructure.Data.Seeder;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using VideomaticWebAPI;
@@ -16,10 +16,10 @@ var provider = builder.Configuration.GetValue<string>("Provider");
 //provider = "Sqlite";
 switch (provider)
 {
-    case Company.Videomatic.Infrastructure.Data.SqlServer.SqlServerVideomaticDbContext.ProviderName:
+    case Infrastructure.Data.SqlServer.SqlServerVideomaticDbContext.ProviderName:
         builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
         break;
-    //case Company.Videomatic.Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
+    //case Infrastructure.Data.Sqlite.SqliteVideomaticDbContext.ProviderName:
     //    builder.Services.AddVideomaticDataForSqlite(builder.Configuration);
     //    break;
     default:

@@ -1,6 +1,4 @@
-﻿using Company.Videomatic.Domain.Aggregates.Transcript;
-
-namespace Domain.Tests;
+﻿namespace Domain.Tests;
 
 /// <summary>
 /// Tests that ensure domain objects are well designed.
@@ -10,7 +8,7 @@ public class TranscriptTests
     [Fact]
     public void CreateTranscriptWithLines()
     {
-        var transcript = Transcript.Create(1, "EN", new[] 
+        var transcript = new Transcript(1, "EN", new[] 
         { 
             "First line",
             "Second line"
@@ -30,7 +28,7 @@ public class TranscriptTests
     [Fact]
     public void CreateEmptyTranscriptAndAddLines()
     {
-        var transcript = Transcript.Create(1, "EN");
+        var transcript = new Transcript(1, "EN");
 
         transcript.Should().NotBeNull();
         transcript.Lines.Should().BeEmpty();

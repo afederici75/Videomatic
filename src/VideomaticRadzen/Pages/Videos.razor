@@ -1,5 +1,5 @@
 ﻿@page "/videos"
-@using Company.Videomatic.Domain.Aggregates.Video;
+@using Domain.Videos;
 @using VideomaticRadzen.Components
 
 @inject ISender Sender
@@ -21,7 +21,7 @@
                 AllowPaging="true">
     <Template Context="video">
         <RadzenCard Style="max-width: 340px; min-width:200px">          
-            <RadzenImage Path="@video.PictureUrl" Style="max-width: 200px; max-lock-size;" />
+            <RadzenImage Path="@video.Picture?.Url" Style="max-width: 200px; max-lock-size;" />
 
             <RadzenText TextStyle="TextStyle.H6">@(video.Name ?? "")</RadzenText>
 
@@ -104,9 +104,7 @@
                 Skip: skip,
                 Take: take,
                 OrderBy: null,
-                SearchText: SearchText,
-                IncludeTags: true,
-                SelectedThumbnail: ThumbnailResolutionDTO.Medium);
+                SearchText: SearchText);
 
         Page<VideoDTO> results = await Sender.Send(query);
 

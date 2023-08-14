@@ -1,1 +1,0 @@
-# Company.Videomatic.Application

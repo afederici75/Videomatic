@@ -1,10 +1,4 @@
-﻿using Application.Tests.Helpers;
-using Ardalis.Result;
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
-using Company.Videomatic.Domain.Aggregates.Playlist;
-using Company.Videomatic.Domain.Aggregates.Video;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Infrastructure.Tests.Data;
 
@@ -41,13 +35,13 @@ public class VideosTests : IClassFixture<DbContextFixture>
         
         video.Name.Should().BeEquivalentTo(createCommand.Name);
         video.Description.Should().BeEquivalentTo(createCommand.Description);
-        video.Location.Should().BeEquivalentTo(createCommand.Location);
+        //video.Location.Should().BeEquivalentTo(createCommand.Location);
         //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
         //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
-        video.Details.Provider.Should().BeEquivalentTo(createCommand.Provider);
-        video.Details.VideoOwnerChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
-        video.Details.VideoOwnerChannelTitle.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
-        video.Details.VideoPublishedAt.Should().Be(createCommand.VideoPublishedAt);        
+        video.Origin.ProviderId.Should().BeEquivalentTo(createCommand.Provider);
+        video.Origin.ChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
+        video.Origin.ChannelName.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
+        video.Origin.PublishedOn.Should().Be(createCommand.VideoPublishedAt);        
 
         Fixture.DbContext.Videos.Remove(video);
         await Fixture.DbContext.SaveChangesAsync();
@@ -134,16 +128,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(null, null, null, true, null, 2)]
-    [InlineData(new int[] { 1 }, null, null, true, null, 2)]
-    [InlineData(new int[] { 1, 2 }, null, null, true, null, 2)]
-    [InlineData(new int[] { 1, 2 }, "gods", null, true, null, 1)]
+    [InlineData(null, null, null, true, 2)]
+    [InlineData(new int[] { 1 }, null, null, true, 2)]
+    [InlineData(new int[] { 1, 2 }, null, null, true, 2)]
+    [InlineData(new int[] { 1, 2 }, "gods", null, true, 1)]
     public async Task GetVideos(
         int[]? playlistIds,
         string? searchText,
         string? orderBy,
         bool includeTags,
-        ThumbnailResolutionDTO? selectedThumbnail,
         int expectedResults)
     {
         
@@ -154,8 +147,6 @@ public class VideosTests : IClassFixture<DbContextFixture>
             OrderBy: orderBy,
             Skip: null,
             Take: null, // Uses 1 by default
-            IncludeTags: includeTags, // Uses 10 by default
-            SelectedThumbnail: selectedThumbnail,
             PlaylistIds: playlistIds);
 
         if (searchText != null)
@@ -175,19 +166,17 @@ public class VideosTests : IClassFixture<DbContextFixture>
     }
 
     [Theory]
-    [InlineData(new int[] { 1 }, null, 1)]
-    [InlineData(new int[] { 1, 2 }, null, 2)]
-    [InlineData(new int[] { 2 }, null, 1)]
-    [InlineData(new int[] { 3 }, null, 0)]
+    [InlineData(new int[] { 1 }, 1)]
+    [InlineData(new int[] { 1, 2 }, 2)]
+    [InlineData(new int[] { 2 }, 1)]
+    [InlineData(new int[] { 3 }, 0)]
     // TODO: missing paging tests and should add more anyway
     public async Task GetVideosById(
         int[] videoIds,        
-        ThumbnailResolutionDTO? IncludeThumbnail,
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            VideoIds: videoIds,
-            SelectedThumbnail: IncludeThumbnail);
+            VideoIds: videoIds);
 
         Page<VideoDTO> res = await Sender.Send(query);
 
@@ -195,21 +184,25 @@ public class VideosTests : IClassFixture<DbContextFixture>
         res.Items.Should().HaveCount(expectedResults);        
     }
 
+#pragma warning disable xUnit1004 // Test methods should not be skipped
     [Theory(Skip ="Expensive!")]
+    //[Theory]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
     [InlineData("TestData//Video-n1kmKpjk_8E.json", null)]
     public async Task ImportOneVideo(string fileName, [FromServices] IRepository<Video> repository)
     {
         var json = await File.ReadAllTextAsync(fileName);
         var video = JsonConvert.DeserializeObject<Video>(json)!;
 
-        video.Location.Should().NotBeNullOrEmpty();
         video.Tags.Should().HaveCount(25);
 
         await repository.AddAsync(video);
     }
 
+#pragma warning disable xUnit1004 // Test methods should not be skipped
     [Theory(Skip = "Expensive!")]
     //[Theory]
+#pragma warning restore xUnit1004 // Test methods should not be skipped    
     [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null)]
     public async Task ImportPlaylist(string fileName, 
         [FromServices] IRepository<Video> videoRepository,
@@ -238,7 +231,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         await videoRepository.AddRangeAsync(videos);
 
         // Links to playlist
-        var pl = Playlist.Create(nameof(ImportPlaylist));
+        var pl = new Playlist(nameof(ImportPlaylist));
         await playListRepository.AddAsync(pl);  
 
         foreach (var v in videos)

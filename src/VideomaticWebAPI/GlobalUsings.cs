@@ -1,2 +1,2 @@
-﻿global using Company.Videomatic.Application.Features.Videos;
+﻿global using Application.Features.Videos;
 global using MediatR;
