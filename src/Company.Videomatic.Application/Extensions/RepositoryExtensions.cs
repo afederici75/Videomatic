@@ -1,4 +1,7 @@
-﻿namespace Company.Videomatic.Application.Abstractions;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
+
+namespace Company.Videomatic.Application.Abstractions;
 
 public static class RepositoryExtensions
 {
@@ -26,7 +29,38 @@ public static class RepositoryExtensions
 
         return videos.Where(v => v.Origin?.ProviderItemId != null)
                      .ToDictionary(v => v.Origin!.ProviderItemId , v => v.Id);
-    }   
+    }
+}
+
+public class TranscriptionByVideoId : Specification<Transcript>
+{
+    public TranscriptionByVideoId(IEnumerable<VideoId> videoIds)
+    {
+        Query.Where(t => videoIds.Contains(t.VideoId));      
+    }
+}
+
+public class PlaylistsByProviderItemId : Specification<Playlist>
+{
+    public PlaylistsByProviderItemId(string providerId, IEnumerable<string> itemIds)
+    {
+        Query.Where(v =>
+            v.Origin.ProviderId.Equals(providerId) &&
+            itemIds.Contains(v.Origin.ProviderItemId)
+        );
+    }
+}
+
+
+public class VideosByProviderItemId : Specification<Video>
+{
+    public VideosByProviderItemId(string providerId, IEnumerable<string> itemIds)
+    {
+        Query.Where(v =>
+            v.Origin.ProviderId.Equals(providerId) &&
+            itemIds.Contains(v.Origin.ProviderItemId)
+        );
+    }
 }
 
 // TODO: move somewhere else

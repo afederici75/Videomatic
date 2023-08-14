@@ -36,7 +36,7 @@ public class AutomappingProfile : Profile
         // DTOs
         CreateMap<Playlist, PlaylistDTO>();
         CreateMap<Video, VideoDTO>();
-        CreateMap<Thumbnail, ThumbnailDTO>();
+        CreateMap<ImageReference, ThumbnailDTO>();
         CreateMap<Transcript, TranscriptDTO>();
         CreateMap<Artifact, ArtifactDTO>();
 

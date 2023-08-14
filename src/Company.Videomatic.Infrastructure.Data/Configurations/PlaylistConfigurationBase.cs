@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Company.Videomatic.Infrastructure.Data.Configurations;
 
+
+
 public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playlist>
 {
     public const string TableName = "Playlists";
@@ -36,6 +38,7 @@ public abstract class PlaylistConfigurationBase : IEntityTypeConfiguration<Playl
                .HasConversion(x => string.Join(',', x),
                               y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet())
                .Metadata.SetValueComparer(valueComparer);
+        
         // Relationships
         builder.HasMany(x => x.Videos)
                .WithOne()
@@ -65,10 +68,10 @@ public static class Lengths
 
 public static class ThumbnailConfigurator
 {
-    public static void Configure<T>(OwnedNavigationBuilder<T, Thumbnail> bld)
+    public static void Configure<T>(OwnedNavigationBuilder<T, ImageReference> bld)
         where T : class
     {
-        bld.Property(x => x.Location).HasMaxLength(Lengths.Generic.Url);
+        bld.Property(x => x.Url).HasMaxLength(Lengths.Generic.Url);
         bld.Property(x => x.Width);
         bld.Property(x => x.Height);
     }
@@ -98,6 +101,9 @@ public static class EntityOriginConfigurator
         bld.Property(x => x.PublishedOn);
         bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
         bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
+        
+        // Relationships
+        bld.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
         
         // Indices
         bld.HasIndex(x => x.ProviderId);

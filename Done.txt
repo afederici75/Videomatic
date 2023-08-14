@@ -2,6 +2,11 @@
 Non UI
 ******************
 
+- [X] Make sure we don't reimport objects repeatedly
+		- [X] Playlist duplication
+		- [X] Video duplication
+		- [X] Transcript duplication
+
 - [X] Major cleanup of domain, EF Core schema and other things of this nature. This
       follows the 'remove complexity' task.
 

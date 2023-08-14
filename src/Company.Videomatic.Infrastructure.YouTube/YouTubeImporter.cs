@@ -1,10 +1,11 @@
 ﻿using Ardalis.Result;
 using Company.SharedKernel.Abstractions;
-using Company.Videomatic.Domain.Video;
 using Hangfire;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Xml;
 
 namespace Company.Videomatic.Infrastructure.YouTube;
@@ -28,7 +29,7 @@ public class YouTubeImporter : IVideoImporter
         TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
         JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
     }
-    
+
     readonly IVideoProvider Provider;
     readonly IRepository<Video> VideoRepository;
     readonly IRepository<Playlist> PlaylistRepository;
@@ -36,7 +37,7 @@ public class YouTubeImporter : IVideoImporter
     readonly IBackgroundJobClient JobClient;
     readonly ILogger<YouTubeImporter> Logger;
 
-    public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, ImportOptions? options = default, CancellationToken cancellation = default)        
+    public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, ImportOptions? options = default, CancellationToken cancellation = default)
     {
         options ??= new ImportOptions();
 
@@ -45,22 +46,26 @@ public class YouTubeImporter : IVideoImporter
         var doneCount = 0;
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
-            var playlists = page.Select(gpl => gpl.ToPlaylist()).ToArray();
+            // Finds the playlists that already exist in the database
+            var qry = new PlaylistsByProviderItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
+            var dups = await PlaylistRepository.ListAsync(qry, cancellation);
+            var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
-            IEnumerable<Playlist> storedPlaylists = await PlaylistRepository.AddRangeAsync(playlists, cancellation); // Saves to database
+            var newPlaylists = page
+                .Where(gpl => !dupIds.Contains(gpl.ProviderItemId))
+                .Select(gpl => gpl.ToPlaylist()).ToArray();
+
+            // Stores the new playlists
+            IEnumerable<Playlist> storedPlaylists = await PlaylistRepository.AddRangeAsync(newPlaylists, cancellation); // Saves to database
             doneCount += storedPlaylists.Count();
-            
+
             Logger.LogDebug("Imported {DoneCount}/{PlaylistCount} playlist(s) from YouTube.", doneCount, idsOrUrls.Count());
 
-#if DEBUG
-            if (storedPlaylists.Any(x => x.Id == null))
-                throw new Exception("Video Id is null");
-#endif
+            // Attempts to re-import each playlist's videos (new or existing)
+            var all = dups.Concat(storedPlaylists).ToArray();
 
-            foreach (var pl in storedPlaylists)
+            foreach (var pl in all)
             {
-                //var res = await PlaylistRepository.AddAsync(pl, cancellation);
-
                 switch (options.ExecuteWithoutJobQueue)
                 {
                     case true:
@@ -69,48 +74,10 @@ public class YouTubeImporter : IVideoImporter
                     case false:
                         var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(pl.Id, options, cancellation));
                         break;
-                }                
-            }                                    
+                }
+            }
         }
     }
-
-    public async Task ImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? linkTo, ImportOptions? options = default, CancellationToken cancellation = default)
-    {
-        options ??= new ImportOptions();
-
-        Logger.LogDebug("Importing {VideoCount} video(s) from YouTube. {@IdsOrUrls}", idsOrUrls.Count(), idsOrUrls);
-
-        var doneCount = 0;
-        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
-        {
-            var videos = page.Select(gv => gv.ToVideo()).ToArray();             
-            IEnumerable<Video> storedVideos = await VideoRepository.AddRangeAsync(videos, cancellation); // Saves to database
-            doneCount += storedVideos.Count();
-
-            Logger.LogDebug("Imported {DoneCount}/{VideoCount} playlist(s) from YouTube.", doneCount, idsOrUrls.Count());
-#if DEBUG
-            if (storedVideos.Any(x => x.Id == null))
-                throw new Exception("Video Id is null");            
-#endif
-
-            var videoIds = storedVideos.Select(x => x.Id).ToArray();
-            if (linkTo != null)
-            {                
-                await PlaylistRepository.LinkPlaylistToVideos(linkTo, videoIds, cancellation);
-            }
-
-
-            switch (options.ExecuteWithoutJobQueue)
-            {
-                case true:
-                    await this.ImportTranscriptionsAsync(videoIds, cancellation);
-                    break;
-                case false:
-                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(videoIds, cancellation));
-                    break;
-            }      
-        }
-    }    
 
     public async Task ImportVideosAsync(PlaylistId playlistId, ImportOptions? options = default, CancellationToken cancellation = default)
     {
@@ -125,7 +92,53 @@ public class YouTubeImporter : IVideoImporter
             var videoIds = videoPage.Select(v => v.ProviderItemId);
 
             await ImportVideosAsync(videoIds, playlistId, options, cancellation);
-        }        
+        }
+    }
+
+
+    public async Task ImportVideosAsync(IEnumerable<string> idsOrUrls, PlaylistId? linkTo, ImportOptions? options = default, CancellationToken cancellation = default)
+    {
+        options ??= new ImportOptions();
+
+        Logger.LogDebug("Importing {VideoCount} video(s) from YouTube. {@IdsOrUrls}", idsOrUrls.Count(), idsOrUrls);
+
+        var doneCount = 0;
+        await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+        {
+            // Finds the videos that already exist in the database
+            var qry = new VideosByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var dups = await VideoRepository.ListAsync(qry, cancellation);
+            var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
+
+            var newVideos = page
+                .Where(gv => !dupIds.Contains(gv.ProviderItemId))
+                .Select(gv => gv.ToVideo()).ToArray();
+
+            // Stores the new videos
+            IEnumerable<Video> storedVideos = await VideoRepository.AddRangeAsync(newVideos, cancellation); // Saves to database
+            doneCount += storedVideos.Count();
+
+            Logger.LogDebug("Imported {DoneCount}/{VideoCount} playlist(s) from YouTube.", doneCount, idsOrUrls.Count());
+
+            // Links all videos (new and old) to the playlist
+            var all = dups.Concat(storedVideos).ToArray();
+            var videoIds = all.Select(x => x.Id).ToArray();
+            if (linkTo != null)
+            {
+                await PlaylistRepository.LinkPlaylistToVideos(linkTo, videoIds, cancellation);
+            }
+
+            // Attempts to re-import each playlist's videos (new or existing)            
+            switch (options.ExecuteWithoutJobQueue)
+            {
+                case true:
+                    await this.ImportTranscriptionsAsync(videoIds, cancellation);
+                    break;
+                case false:
+                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(videoIds, cancellation));
+                    break;
+            }
+        }
     }
 
     public async Task ImportTranscriptionsAsync(
@@ -133,11 +146,18 @@ public class YouTubeImporter : IVideoImporter
     {
         var sw = Stopwatch.StartNew();
 
-        var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIds, cancellation);        
+        var qry = new TranscriptionByVideoId(videoIds);
+        var existingTrans = await TranscriptRepository.ListAsync(qry, cancellation);
+        var videoIdsToSkip = existingTrans.Select(t => t.VideoId);
+
+        var videoIdsWithoutTranscript = videoIds.Except(videoIdsToSkip).ToArray();
+        
+        // 
+        var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIdsWithoutTranscript, cancellation);        
         Logger.LogDebug("GetVideoProviderIds [{elapsed}ms]", sw.Elapsed);
 
+        
         using var client = new HttpClient();
-
         
         var tasks = videoIdsByProviderId.Select(v => GetTimedTextInformation(client, v.Value, $"https://www.youtube.com/watch?v={v.Key}"));
         var results = await Task.WhenAll(tasks);

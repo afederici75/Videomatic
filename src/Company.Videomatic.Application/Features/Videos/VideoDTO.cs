@@ -6,8 +6,8 @@ public record VideoDTO(
     string Name = "",
     string? Description = null,
     IEnumerable<string>? Tags = null,
-    Thumbnail? Thumbnail = null,
-    Thumbnail? Picture = null,
+    ImageReference? Thumbnail = null,
+    ImageReference? Picture = null,
     // 
     int ArtifactCount = 0,
     int TranscriptCount = 0,

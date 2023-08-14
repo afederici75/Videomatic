@@ -12,8 +12,8 @@ public record GenericPlaylist(
 
     DateTime? PublishedAt,
 
-    Thumbnail Thumbnail,
-    Thumbnail Picture,
+    ImageReference Thumbnail,
+    ImageReference Picture,
     IEnumerable<string>? Tags,
 
     // New
@@ -42,7 +42,9 @@ public static class GenericPlaylistExtensions
                 //Thumbnail: gpl.Thumbnail,
                 //Picture: gpl.Picture,
                 EmbedHtml: gpl.EmbedHtml,
-                DefaultLanguage: gpl.DefaultLanguage);
+                DefaultLanguage: gpl.DefaultLanguage,
+                Thumbnail: gpl.Thumbnail
+                );
 
 
     public static Playlist ToPlaylist(this GenericPlaylist gpl)

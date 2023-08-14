@@ -35,7 +35,7 @@ public class VideoTests
             Description: "A complete description",
             PublishedOn: pubAt,
             //Picture: Thumbnail.Empty,
-            //Thumbnail: Thumbnail.Empty,
+            Thumbnail: ImageReference.Empty,
             EmbedHtml: null,
             DefaultLanguage: null));
 

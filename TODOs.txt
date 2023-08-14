@@ -1,13 +1,7 @@
 SPRINT
 
-- [ ] Make sure we don't reimport objects repeatedly
-		- [ ] Playlist duplication
-		- [ ] Video duplication
-		- [ ] Transcript duplication
-
 - [ ] Resolve the issue with the thumbnails and origin. 
 	- [ ] Also rename Thumbnail to ImageReference or something like that.
-
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
 	- [X] Add Owner fields to all entities so we know who made what
@@ -17,6 +11,8 @@ SPRINT
 		-[X] CreatedOn/UpdatedOn
 		-[ ] Vote (1 to 10 number)
 		-[X] IsStarred (already done)	
+
+- [ ] Refactor E#F Core configurators to inherit from ImportedEntity
 
 ******************
 Non UI

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Company.Videomatic.Domain.Video.Video">
+    <Position X="2.25" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Video\Video.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Transcript.Transcript">
+    <Position X="5.75" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAACAAAAAAAAAABAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
+      <FileName>Transcript\Transcript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Playlist.Playlist">
+    <Position X="9.5" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Playlist\Playlist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Artifact.Artifact">
+    <Position X="12.75" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Artifact\Artifact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Company.Videomatic.Domain.Playlist.PlaylistVideo">
+    <Position X="0.5" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Playlist\PlaylistVideo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

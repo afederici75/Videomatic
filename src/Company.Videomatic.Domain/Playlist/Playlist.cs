@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Playlist;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Domain.Playlist;
 
 public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
 {

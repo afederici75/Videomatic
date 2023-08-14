@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Transcript;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Domain.Transcript;
 
 public class Transcript : Entity<TranscriptId>, IAggregateRoot
 {

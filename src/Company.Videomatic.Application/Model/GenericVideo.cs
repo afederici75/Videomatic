@@ -15,8 +15,8 @@ public record GenericVideo(
 
     DateTime? PublishedAt,
 
-    Thumbnail Thumbnail,
-    Thumbnail Picture,
+    ImageReference Thumbnail,
+    ImageReference Picture,
     IEnumerable<string>? Tags,
 
     // New
@@ -38,10 +38,11 @@ public static class GenericVideoExtensions
                 Name: gv.Name,
                 Description: gv.Description,
                 PublishedOn: gv.PublishedAt,
-                //Thumbnail: gv.Thumbnail,
-                //Picture: gv.Picture,
                 EmbedHtml: gv.EmbedHtml,
-                DefaultLanguage: gv.DefaultLanguage);
+                DefaultLanguage: gv.DefaultLanguage,
+                Thumbnail: gv.Thumbnail
+                //Picture: gv.Picture,
+                );
 
     public static Video ToVideo(this GenericVideo gv)
     {

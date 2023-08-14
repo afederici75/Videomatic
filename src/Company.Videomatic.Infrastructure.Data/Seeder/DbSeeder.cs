@@ -63,7 +63,7 @@ public class DbSeeder : IDbSeeder
                     ChannelId: "UNKNOWN",
                     ChannelName: "James Dearden Bush",                   
                     PublishedOn: new DateTime(2019, 12, 12), // Bogus date
-                    //Thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    Thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
                     //Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
                     EmbedHtml: null,
                     DefaultLanguage: "EN",
@@ -161,7 +161,7 @@ public class DbSeeder : IDbSeeder
                     ChannelId: "UNKNOWN",
                     ChannelName: "ArshaBodha - Swami Tadatmananda",
                     PublishedOn: new DateTime(2021, 3, 23), // Bogus date
-                    //Thumbnail: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    Thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
                     //Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
                     EmbedHtml: null,
                     DefaultLanguage: "EN",

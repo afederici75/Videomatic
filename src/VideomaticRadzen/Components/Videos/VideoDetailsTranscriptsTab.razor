@@ -1,15 +1,15 @@
 ﻿@using Company.Videomatic.Application.Features.Transcripts;
 
-@foreach (var t in Transcripts)
-{
-    if (t.Lines == null)
-        continue;
+@if (TranscriptList is null)
+    return;
 
+@foreach (var t in TranscriptList)
+{
     <RadzenRow>
         Transcript
-        <RadzenText Text="@(" (" + t.LineCount.ToString() + " Lines)")"></RadzenText>
+        <RadzenText Text="@(" (" + t.Key.Language  + ")")"></RadzenText>
 
-        <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@FullTranscriptText" />
+        <RadzenTextArea Style="min-width: 100%" Rows="15" Value="@t.Value" />
     </RadzenRow>
 }
 
@@ -17,15 +17,16 @@
     [Parameter]
     public required IEnumerable<TranscriptDTO> Transcripts { get; set; }
 
+    IDictionary<TranscriptDTO, string>? TranscriptList;
+
     public string FullTranscriptText { get; set; } = string.Empty;
 
-    public string GetFullTranscriptText()
+    public string GetFullTranscriptText(TranscriptDTO transcript)
     {
-        var firstEnglishTrans = Transcripts.FirstOrDefault();
-        if (firstEnglishTrans?.Lines == null)
+        if ((transcript.Lines == null) || !transcript.Lines.Any())
             return string.Empty;
 
-        var texts = firstEnglishTrans.Lines.Select(lne => 
+        var texts = transcript.Lines.Select(lne => 
             $"{lne.StartsAt?.ToString(@"hh\:mm\:ss") ?? ""} {lne.Duration?.ToString(@"hh\:mm\:ss") ?? ""} {lne.Text}");
 
         return string.Join("\n", texts);
@@ -33,7 +34,11 @@
 
     protected override void OnInitialized()
     {
-        FullTranscriptText = GetFullTranscriptText();
+        TranscriptList = new Dictionary<TranscriptDTO, string>();
+        foreach (var t in Transcripts)
+        {
+            TranscriptList.Add(t, GetFullTranscriptText(t));
+        }
 
         base.OnInitialized();
     }

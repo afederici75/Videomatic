@@ -11,8 +11,8 @@ public record GenericChannel(
 
     DateTime? PublishedAt,
 
-    Thumbnail Thumbnail,
-    Thumbnail Picture,
+    ImageReference Thumbnail,
+    ImageReference Picture,
 
     // New
     string? DefaultLanguage,

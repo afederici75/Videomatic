@@ -12,7 +12,7 @@ public abstract record GenericImportable(
     string? Description,
 
     DateTime? PublishedAt,
-    Thumbnail Picture,
-    Thumbnail Thumbnail,
+    ImageReference Picture,
+    ImageReference Thumbnail,
     
     IEnumerable<string>? Tags);

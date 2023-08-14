@@ -20,8 +20,8 @@ public abstract class ImportedEntity<TId> : Entity<TId>
     
     public bool IsStarred { get; private set; } = false;
     public EntityOrigin Origin { get; private set; } = EntityOrigin.Empty;
-    public Thumbnail Thumbnail { get; private set; } = Thumbnail.Empty;
-    public Thumbnail Picture { get; private set; } = Thumbnail.Empty;
+    public ImageReference Thumbnail { get; private set; } = ImageReference.Empty;
+    public ImageReference Picture { get; private set; } = ImageReference.Empty;
 
     public IEnumerable<string> Tags => _tags;
 
@@ -56,10 +56,10 @@ public abstract class ImportedEntity<TId> : Entity<TId>
 
     public void SetName(string name) => Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
     public void SetDescription(string? description) => Description = description;
-    public void ClearThumbnail() => Thumbnail = Thumbnail.Empty;
-    public void SetThumbnail(Thumbnail thumbnail) => Thumbnail = Guard.Against.Null(thumbnail, nameof(thumbnail));    
-    public void ClearPicture() => Picture = Thumbnail.Empty;    
-    public void SetPicture(Thumbnail picture) => Picture = Guard.Against.Null(picture, nameof(picture));
+    public void ClearThumbnail() => Thumbnail = ImageReference.Empty;
+    public void SetThumbnail(ImageReference thumbnail) => Thumbnail = Guard.Against.Null(thumbnail, nameof(thumbnail));    
+    public void ClearPicture() => Picture = ImageReference.Empty;    
+    public void SetPicture(ImageReference picture) => Picture = Guard.Against.Null(picture, nameof(picture));
     public void ClearOrigin() => Origin = EntityOrigin.Empty;
     public void SetOrigin(EntityOrigin origin) => Origin = Guard.Against.Null(origin, nameof(origin));
     

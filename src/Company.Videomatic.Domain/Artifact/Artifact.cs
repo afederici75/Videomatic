@@ -1,4 +1,6 @@
-﻿namespace Company.Videomatic.Domain.Artifact;
+﻿using Company.Videomatic.Domain.Video;
+
+namespace Company.Videomatic.Domain.Artifact;
 
 public class Artifact : Entity<ArtifactId>, IAggregateRoot
 {
@@ -19,8 +21,6 @@ public class Artifact : Entity<ArtifactId>, IAggregateRoot
 
     private Artifact()
     { }
-
-    int IEntity.Id => this.Id;
 
     #endregion
 }

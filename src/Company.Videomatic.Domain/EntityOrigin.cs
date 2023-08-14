@@ -11,12 +11,35 @@ public record EntityOrigin(
     string? Description,
 
     DateTime? PublishedOn,
-
-    //Thumbnail Thumbnail,
-    //Thumbnail Picture,
-
+    
     string? EmbedHtml,
-    string? DefaultLanguage)
+    string? DefaultLanguage,
+    ImageReference Thumbnail
+    //Thumbnail Picture,
+)
 { 
-    public static EntityOrigin Empty => new(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, null, /*Thumbnail.Empty, Thumbnail.Empty,*/ string.Empty, string.Empty);
+    private EntityOrigin() : this(string.Empty,
+                                  string.Empty,
+                                  string.Empty,
+                                  string.Empty,
+                                  string.Empty,
+                                  string.Empty,
+                                  string.Empty,
+                                  null,
+                                  string.Empty,
+                                  string.Empty,
+                                  ImageReference.Empty)
+    { }
+
+    public static EntityOrigin Empty => new(ProviderId: string.Empty,
+                                            ProviderItemId: string.Empty,
+                                            ETag: string.Empty,
+                                            ChannelId: string.Empty,
+                                            ChannelName: string.Empty,
+                                            Name: string.Empty,
+                                            Description: string.Empty,
+                                            PublishedOn: null,
+                                            EmbedHtml: string.Empty,
+                                            DefaultLanguage: string.Empty,
+                                            Thumbnail: ImageReference.Empty);
 };

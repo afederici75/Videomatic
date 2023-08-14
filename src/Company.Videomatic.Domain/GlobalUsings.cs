@@ -1,9 +1,4 @@
 ﻿global using System.Linq;
 global using Ardalis.GuardClauses;
-global using Newtonsoft.Json;
 
 global using Company.SharedKernel.Abstractions;
-global using Company.Videomatic.Domain;
-global using Company.Videomatic.Domain.Video;
-
-
