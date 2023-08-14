@@ -3,7 +3,7 @@
 public record PlaylistDTO(
     int Id,
     string Name,
-    ImageReference ThumbnailUrl,
-    ImageReference PictureUrl,
+    ImageReference Thumbnail,
+    ImageReference Picture,
     string? Description,
     int VideoCount);

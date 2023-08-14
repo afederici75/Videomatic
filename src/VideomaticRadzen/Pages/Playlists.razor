@@ -27,7 +27,8 @@
                 AllowPaging="true">
     <Template Context="playlist">
         <RadzenCard Style="max-width: 340px; min-width:200px">
-            
+            <RadzenImage Path="@playlist.Picture.Url" Style="max-width: 200px; max-lock-size;" />
+
             <RadzenText TextStyle="TextStyle.H6">@(playlist.Name ?? "")</RadzenText>
             <RadzenText TextStyle="TextStyle.Overline">@(playlist.VideoCount) Video(s)</RadzenText>
             
