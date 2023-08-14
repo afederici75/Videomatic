@@ -5,28 +5,30 @@ global using Xunit.Abstractions;
 global using Xunit.DependencyInjection;
 global using FluentAssertions;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
 
 global using Infrastructure.Tests.Data.Helpers;
 
-global using Company.SharedKernel.Abstractions;
-global using Company.Videomatic.Application.Features.Playlists;
+global using SharedKernel.Abstractions;
+global using Application.Features.Playlists;
 
-global using Company.Videomatic.Application.Features.Playlists.Commands;
-global using Company.Videomatic.Application.Features.Playlists.Queries;
-global using Company.Videomatic.Application.Features.Videos.Commands;
-global using Company.Videomatic.Application.Features.Videos.Queries;
-global using Company.Videomatic.Infrastructure.Data;
-global using Company.Videomatic.Infrastructure.Data.Seeder;
+global using Application.Features.Playlists.Commands;
+global using Application.Features.Playlists.Queries;
+global using Application.Features.Videos.Commands;
+global using Application.Features.Videos.Queries;
+global using Infrastructure.Data;
+global using Infrastructure.Data.Seeder;
 
 global using Application.Tests.Helpers;
 
-global using Company.Videomatic.Application.Features.Artifacts;
-global using Company.Videomatic.Application.Features.Artifacts.Commands;
-global using Company.Videomatic.Application.Features.Artifacts.Queries;
-global using Company.Videomatic.Domain.Artifact;
-global using Company.Videomatic.Domain.Video;
-global using Company.Videomatic.Domain.Playlist;
-global using Company.Videomatic.Domain.Transcript;
-global using Microsoft.Extensions.Configuration;
-global using Company.Videomatic.Application.Abstractions;
-global using Company.Videomatic.Application.Features.Videos;
+global using Application.Features.Artifacts;
+global using Application.Features.Artifacts.Commands;
+global using Application.Features.Artifacts.Queries;
+
+global using Domain.Artifacts;
+global using Domain.Videos;
+global using Domain.Playlists;
+global using Domain.Transcripts;
+
+global using Application.Abstractions;
+global using Application.Features.Videos;

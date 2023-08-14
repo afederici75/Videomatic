@@ -1,8 +1,8 @@
-﻿using Company.Videomatic.Application.Features.Playlists.Commands;
-using Company.Videomatic.Application.Features.Playlists.Queries;
-using Company.Videomatic.Application.Features.Transcripts.Commands;
-using Company.Videomatic.Application.Features.Videos.Commands;
-using Company.Videomatic.Application.Features.Videos.Queries;
+﻿using Application.Features.Playlists.Commands;
+using Application.Features.Playlists.Queries;
+using Application.Features.Transcripts.Commands;
+using Application.Features.Videos.Commands;
+using Application.Features.Videos.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace VideomaticWebAPI;

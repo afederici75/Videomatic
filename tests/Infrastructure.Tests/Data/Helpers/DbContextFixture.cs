@@ -1,5 +1,5 @@
-﻿using Company.Videomatic.Infrastructure.Data.SqlServer.Configurations;
-using Company.Videomatic.Infrastructure.SqlServer.Configurations;
+﻿using Infrastructure.Data.SqlServer.Configurations;
+using Infrastructure.SqlServer.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

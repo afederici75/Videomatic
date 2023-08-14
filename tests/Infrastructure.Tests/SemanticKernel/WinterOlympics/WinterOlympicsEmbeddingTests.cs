@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.SemanticKernel;
+﻿using Infrastructure.SemanticKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel.AI.ChatCompletion;

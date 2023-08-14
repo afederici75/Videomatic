@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Domain;
+﻿using Domain;
 
 namespace Domain.Tests;
 

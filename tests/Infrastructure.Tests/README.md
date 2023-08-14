@@ -1,1 +1,1 @@
-# Company.Videomatic.Integration.Tests
+# Integration.Tests

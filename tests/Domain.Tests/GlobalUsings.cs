@@ -2,11 +2,10 @@ global using Xunit;
 
 global using FluentAssertions;
 
-global using Company.SharedKernel;
-global using Company.SharedKernel.Abstractions;
+global using SharedKernel;
+global using SharedKernel.Abstractions;
 
-global using Company.Videomatic.Domain.Playlist;
-global using Company.Videomatic.Domain.Video;
-global using Company.Videomatic.Domain.Artifact;
-global using Company.Videomatic.Domain.Transcript;
-
+global using Domain.Playlists;
+global using Domain.Videos;
+global using Domain.Artifacts;
+global using Domain.Transcripts;

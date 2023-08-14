@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Application.Abstractions;
+﻿using Application.Abstractions;
 
 namespace Infrastructure.Tests.YouTube;
 

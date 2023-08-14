@@ -32,26 +32,26 @@ docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 80:80 -p 5
 ## Modules
 
 ### Shared Kernel
-1. [Shared Kernel](src/Company.SharedKernel/README.md)
+1. [Shared Kernel](src/SharedKernel/README.md)
 
 ### Core
-1. [Domain](src/Company.Videomatic.Domain/README.md)
-2. [Application](src/Company.Videomatic.Application/README.md)
+1. [Domain](src/Domain/README.md)
+2. [Application](src/Application/README.md)
 
 ### Infrastructure
-1. [Semantic Kernel](src/Company.Videomatic.Infrastructure.SemanticKernel/README.md)
-2. [SQL Server](src/Company.Videomatic.Infrastructure.SqlServer/README.md)
-3. [YouTube](src/Company.Videomatic.Infrastructure.YouTube/README.md)
-4. [Data](src/Company.Videomatic.Infrastructure.Data/README.md)
+1. [Semantic Kernel](src/Infrastructure.SemanticKernel/README.md)
+2. [SQL Server](src/Infrastructure.SqlServer/README.md)
+3. [YouTube](src/Infrastructure.YouTube/README.md)
+4. [Data](src/Infrastructure.Data/README.md)
 
 ### Presentation
 1. [Blazor](src/VideoMaticBlazorApp/README.md)	
 2. [WebAPI](src/VideomaticWebAPI/README.md)	
 
 ### Tests	
-1. [Domain Tests](tests/Company.Videomatic.Domain.Tests/README.md)
-2. [Application Tests](tests/Company.Videomatic.Application.Tests/README.md)
-1. [Semantic Kernel Tests](tests/Company.Videomatic.Infrastructure.SemanticKernel.Tests/README.md)
-2. [SQL Server Tests](tests/Company.Videomatic.Infrastructure.SqlServer.Tests/README.md)
-1. [YouTube Tests](tests/Company.Videomatic.Infrastructure.YouTube.Tests/README.md)
-1. [Integration Tests](tests/Company.Videomatic.Integration.Tests/README.md)
+1. [Domain Tests](tests/Domain.Tests/README.md)
+2. [Application Tests](tests/Application.Tests/README.md)
+1. [Semantic Kernel Tests](tests/Infrastructure.SemanticKernel.Tests/README.md)
+2. [SQL Server Tests](tests/Infrastructure.SqlServer.Tests/README.md)
+1. [YouTube Tests](tests/Infrastructure.YouTube.Tests/README.md)
+1. [Integration Tests](tests/Integration.Tests/README.md)

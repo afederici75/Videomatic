@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.AzureSpeech;
+﻿using Infrastructure.AzureSpeech;
 
 namespace Infrastructure.Tests.AzureSpeech;
 

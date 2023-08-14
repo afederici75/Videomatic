@@ -1,6 +1,6 @@
 ﻿using Application.Tests.Helpers;
-using Company.Videomatic.Application.Abstractions;
-using Company.Videomatic.Application.Features.Videos;
+using Application.Abstractions;
+using Application.Features.Videos;
 
 namespace Application.Tests.Validation;
 

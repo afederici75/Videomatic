@@ -1,4 +1,4 @@
-﻿using Company.Videomatic.Infrastructure.YouTube;
+﻿using Infrastructure.YouTube;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;

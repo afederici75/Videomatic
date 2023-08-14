@@ -31,12 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Company.SharedKernel\SharedKernel.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Application\Application.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.AzureSpeech\Infrastructure.AzureSpeech.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.SemanticKernel\Infrastructure.SemanticKernel.csproj" />
-    <ProjectReference Include="..\..\src\Company.Videomatic.Infrastructure.YouTube\Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj" />
+    <ProjectReference Include="..\..\src\Application\Application.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.AzureSpeech\Infrastructure.AzureSpeech.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.SemanticKernel\Infrastructure.SemanticKernel.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.YouTube\Infrastructure.YouTube.csproj" />
     <ProjectReference Include="..\Application.Tests\Application.Tests.csproj" />
   </ItemGroup>
 

@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Videomatic.db" />
-    <None Remove="Videomatic.db-shm" />
-    <None Remove="Videomatic.db-wal" />
+    <None Remove="db" />
+    <None Remove="db-shm" />
+    <None Remove="db-wal" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Company.Videomatic.Application\Application.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.SemanticKernel\Infrastructure.SemanticKernel.csproj" />
-    <ProjectReference Include="..\Company.Videomatic.Infrastructure.YouTube\Infrastructure.YouTube.csproj" />
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Infrastructure.Data.SqlServer\Infrastructure.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\Infrastructure.SemanticKernel\Infrastructure.SemanticKernel.csproj" />
+    <ProjectReference Include="..\Infrastructure.YouTube\Infrastructure.YouTube.csproj" />
   </ItemGroup>
 
   <ItemGroup>

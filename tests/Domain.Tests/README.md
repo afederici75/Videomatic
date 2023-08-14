@@ -1,1 +1,1 @@
-# Company.Videomatic.Domain.Tests
+# Domain.Tests
