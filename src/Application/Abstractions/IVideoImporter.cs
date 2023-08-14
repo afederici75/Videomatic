@@ -4,6 +4,9 @@ namespace Application.Abstractions;
 
 public record ImportOptions(bool ExecuteWithoutJobQueue = false);
 
+/// <summary>
+/// Funtionality to import videos, playlists and channels from video providers.
+/// </summary>
 public interface IVideoImporter
 {
     Task ImportPlaylistsAsync(IEnumerable<string> idOrUrls, ImportOptions? options = default, CancellationToken cancellation = default);

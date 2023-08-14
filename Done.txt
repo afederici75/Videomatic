@@ -2,6 +2,14 @@
 Non UI
 ******************
 
+- [X] Resolve the issue with the thumbnails and origin. 
+	- [X] Also rename Thumbnail to ImageReference or something like that.
+
+- [X] Refactor namespaces and assembly names
+	- The old naming Company.Product.Application and so on is not good. It's very redundant
+	and makes classes hard-er to follow than otherwise. 
+		- This was a MASSIVE change, but thanks toi the tests all worked well!
+
 - [X] Make sure we don't reimport objects repeatedly
 		- [X] Playlist duplication
 		- [X] Video duplication
