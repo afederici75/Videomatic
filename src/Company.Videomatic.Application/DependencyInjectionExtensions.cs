@@ -32,7 +32,7 @@ public static class DependencyInjectionExtensions
         
         // Infrastructure
         var videomaticAssemblies = AppDomain.CurrentDomain.GetAssemblies() 
-            .Where(a => a.FullName?.Contains("Videomatic") ?? false)
+            //.Where(a => a.  FullName?.Contains("Videomatic") ?? false)
             .ToArray();
 
         services.AddMediatR(cfg =>        
