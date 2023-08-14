@@ -1,8 +1,4 @@
-﻿using Application.Specifications;
-using System.Linq;
-using System.Runtime.CompilerServices;
-
-namespace Application.Abstractions;
+﻿namespace Application.Abstractions;
 
 public static class RepositoryExtensions
 {
@@ -26,7 +22,7 @@ public static class RepositoryExtensions
 
     public static async Task<IReadOnlyDictionary<string, VideoId>> GetVideoProviderIds(this IRepository<Video> repository, IEnumerable<VideoId> videoIds, CancellationToken cancellationToken = default)
     {
-        var videos = await repository.ListAsync(new VideosByIdsSpec(videoIds.ToArray()), cancellationToken);
+        var videos = await repository.ListAsync(new VideosByIds(videoIds.ToArray()), cancellationToken);
 
         return videos.Where(v => v.Origin?.ProviderItemId != null)
                      .ToDictionary(v => v.Origin!.ProviderItemId , v => v.Id);

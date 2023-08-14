@@ -1,4 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Domain.Videos.Video" BaseTypeListCollapsed="true">
+    <Position X="3.25" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Videos\Video.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Transcripts.Transcript" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="2" Width="3" />
+    <Members>
+      <Field Name="_lines" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAACAAAAAAAAAABAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
+      <FileName>Transcripts\Transcript.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Playlists.Playlist" BaseTypeListCollapsed="true">
+    <Position X="8" Y="10.75" Width="3.5" />
+    <Members>
+      <Field Name="_videos" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Playlists\Playlist.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.Artifacts.Artifact" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Artifacts\Artifact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Domain.ImportedEntity&lt;TId&gt;">
+    <Position X="5.5" Y="4" Width="2.75" />
+    <Members>
+      <Field Name="_tags" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AQAAgAAEBCAgIQQoAAACCAQACACYAEAAAAAAQAgAAAA=</HashCode>
+      <FileName>ImportedEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Entity&lt;TId&gt;">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAKAAAAIAAAAQAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

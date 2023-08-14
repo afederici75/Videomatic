@@ -14,6 +14,7 @@ global using SharedKernel;
 global using SharedKernel.Abstractions;
 
 global using Application.Abstractions;
+global using Application.Specifications;
 
 global using SharedKernel.CQRS.Commands;
 
@@ -34,8 +35,3 @@ global using Application.Features.Artifacts.Commands;
 global using Application.Features.Playlists.Commands;
 global using Application.Features.Transcripts.Commands;
 global using Application.Features.Videos.Commands;
-
-global using Application.Features.Artifacts.Queries;
-global using Application.Features.Playlists.Queries;
-global using Application.Features.Transcripts.Queries;
-global using Application.Features.Videos.Queries;
