@@ -104,7 +104,8 @@ public static class EntityOriginConfigurator
         
         // Relationships
         bld.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
-        
+        bld.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
+
         // Indices
         bld.HasIndex(x => x.ProviderId);
         bld.HasIndex(x => x.ProviderItemId);    

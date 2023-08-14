@@ -57,19 +57,19 @@ public class DbSeeder : IDbSeeder
     async Task<Video> CreateAldousHuxleyTheDancingShivaVideo()
     {
         var origin = new EntityOrigin(
-                    ProviderId: "YOUTUBE",
-                    ProviderItemId: "n1kmKpjk_8E",
-                    ETag: "",
-                    ChannelId: "UNKNOWN",
-                    ChannelName: "James Dearden Bush",                   
-                    PublishedOn: new DateTime(2019, 12, 12), // Bogus date
-                    Thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
-                    //Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
-                    EmbedHtml: null,
-                    DefaultLanguage: "EN",
+                    providerId: "YOUTUBE",
+                    providerItemId: "n1kmKpjk_8E",
+                    etag: "",
+                    channelId: "UNKNOWN",
+                    channelName: "James Dearden Bush",                   
+                    publishedOn: new DateTime(2019, 12, 12), // Bogus date
+                    thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    picture: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                    embedHtml: null,
+                    defaultLanguage: "EN",
                     //
-                    Name: "Aldous Huxley - The Dancing Shiva",
-                    Description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
+                    name: "Aldous Huxley - The Dancing Shiva",
+                    description: "Aldous Huxley beautifully describes the 'The Dancing Shiva' symbol " +
                                  "(Nataraja, Nataraj, nət̪əˈraːdʒ) of the Hindu spiritual tradition.  Aldous Huxley " +
                                  "was the author of many excellent books and essays including; Brave New World, " +
                                  "Island, The Perennial Philosophy and The Doors of Perception. " +
@@ -155,19 +155,19 @@ public class DbSeeder : IDbSeeder
     async Task<Video> CreateIfRealityIsNonDualVideo()
     {
         var origin = new EntityOrigin(
-                    ProviderId: "YOUTUBE",
-                    ProviderItemId: "BBd3aHnVnuE",
-                    ETag: "",
-                    ChannelId: "UNKNOWN",
-                    ChannelName: "ArshaBodha - Swami Tadatmananda",
-                    PublishedOn: new DateTime(2021, 3, 23), // Bogus date
-                    Thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
-                    //Picture: new Thumbnail("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
-                    EmbedHtml: null,
-                    DefaultLanguage: "EN",
+                    providerId: "YOUTUBE",
+                    providerItemId: "BBd3aHnVnuE",
+                    etag: "",
+                    channelId: "UNKNOWN",
+                    channelName: "ArshaBodha - Swami Tadatmananda",
+                    publishedOn: new DateTime(2021, 3, 23), // Bogus date
+                    thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
+                    picture: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                    embedHtml: null,
+                    defaultLanguage: "EN",
                     //
-                    Name: "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?",
-                    Description: "Hindu scriptures offer different teachings to meet the individual needs of different " +
+                    name: "If Reality is NON-DUAL, Why are there so many GODS in Hinduism?",
+                    description: "Hindu scriptures offer different teachings to meet the individual needs of different " +
                                  "people - according to the crucial principle of adhikari-bheda (individualism). Q&A with Swamiji #8. " +
                                  "\n" +
                                  "\n" +

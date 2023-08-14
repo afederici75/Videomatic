@@ -34,7 +34,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
             modelBuilder.HasSequence("VideoSequence");
 
-            modelBuilder.Entity("Domain.Artifact.Artifact", b =>
+            modelBuilder.Entity("Domain.Artifacts.Artifact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +72,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Artifacts", "Videomatic");
                 });
 
-            modelBuilder.Entity("Domain.Playlist.Playlist", b =>
+            modelBuilder.Entity("Domain.Playlists.Playlist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Playlists", "Videomatic");
                 });
 
-            modelBuilder.Entity("Domain.Playlist.PlaylistVideo", b =>
+            modelBuilder.Entity("Domain.Playlists.PlaylistVideo", b =>
                 {
                     b.Property<int>("PlaylistId")
                         .HasColumnType("int");
@@ -124,7 +124,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("PlaylistVideos", "Videomatic");
                 });
 
-            modelBuilder.Entity("Domain.Transcript.Transcript", b =>
+            modelBuilder.Entity("Domain.Transcripts.Transcript", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,7 +154,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Transcripts", "Videomatic");
                 });
 
-            modelBuilder.Entity("Domain.Video.Video", b =>
+            modelBuilder.Entity("Domain.Videos.Video", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,16 +189,16 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.ToTable("Videos", "Videomatic");
                 });
 
-            modelBuilder.Entity("Domain.Artifact.Artifact", b =>
+            modelBuilder.Entity("Domain.Artifacts.Artifact", b =>
                 {
-                    b.HasOne("Domain.Video.Video", null)
+                    b.HasOne("Domain.Videos.Video", null)
                         .WithMany()
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Playlist.Playlist", b =>
+            modelBuilder.Entity("Domain.Playlists.Playlist", b =>
                 {
                     b.OwnsOne("Domain.EntityOrigin", "Origin", b1 =>
                         {
@@ -271,7 +271,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PlaylistId");
 
-                            b1.OwnsOne("Domain.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginPlaylistId")
                                         .ValueGeneratedOnAdd()
@@ -296,11 +296,39 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginPlaylistId");
                                 });
 
+                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                                {
+                                    b2.Property<int>("EntityOriginPlaylistId")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("Height")
+                                        .HasColumnType("int");
+
+                                    b2.Property<string>("Url")
+                                        .IsRequired()
+                                        .HasMaxLength(1024)
+                                        .HasColumnType("nvarchar(1024)");
+
+                                    b2.Property<int>("Width")
+                                        .HasColumnType("int");
+
+                                    b2.HasKey("EntityOriginPlaylistId");
+
+                                    b2.ToTable("Playlists", "Videomatic");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("EntityOriginPlaylistId");
+                                });
+
+                            b1.Navigation("Picture")
+                                .IsRequired();
+
                             b1.Navigation("Thumbnail")
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("Domain.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -324,7 +352,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("PlaylistId");
                         });
 
-                    b.OwnsOne("Domain.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -358,30 +386,30 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Playlist.PlaylistVideo", b =>
+            modelBuilder.Entity("Domain.Playlists.PlaylistVideo", b =>
                 {
-                    b.HasOne("Domain.Playlist.Playlist", null)
+                    b.HasOne("Domain.Playlists.Playlist", null)
                         .WithMany("Videos")
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Video.Video", null)
+                    b.HasOne("Domain.Videos.Video", null)
                         .WithMany()
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Transcript.Transcript", b =>
+            modelBuilder.Entity("Domain.Transcripts.Transcript", b =>
                 {
-                    b.HasOne("Domain.Video.Video", null)
+                    b.HasOne("Domain.Videos.Video", null)
                         .WithMany()
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsMany("Domain.Transcript.TranscriptLine", "Lines", b1 =>
+                    b.OwnsMany("Domain.Transcripts.TranscriptLine", "Lines", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -416,7 +444,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Lines");
                 });
 
-            modelBuilder.Entity("Domain.Video.Video", b =>
+            modelBuilder.Entity("Domain.Videos.Video", b =>
                 {
                     b.OwnsOne("Domain.EntityOrigin", "Origin", b1 =>
                         {
@@ -488,7 +516,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
 
-                            b1.OwnsOne("Domain.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginVideoId")
                                         .HasColumnType("int");
@@ -512,11 +540,38 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginVideoId");
                                 });
 
+                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                                {
+                                    b2.Property<int>("EntityOriginVideoId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("Height")
+                                        .HasColumnType("int");
+
+                                    b2.Property<string>("Url")
+                                        .IsRequired()
+                                        .HasMaxLength(1024)
+                                        .HasColumnType("nvarchar(1024)");
+
+                                    b2.Property<int>("Width")
+                                        .HasColumnType("int");
+
+                                    b2.HasKey("EntityOriginVideoId");
+
+                                    b2.ToTable("Videos", "Videomatic");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("EntityOriginVideoId");
+                                });
+
+                            b1.Navigation("Picture")
+                                .IsRequired();
+
                             b1.Navigation("Thumbnail")
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("Domain.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");
@@ -540,7 +595,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("VideoId");
                         });
 
-                    b.OwnsOne("Domain.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");
@@ -574,7 +629,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Playlist.Playlist", b =>
+            modelBuilder.Entity("Domain.Playlists.Playlist", b =>
                 {
                     b.Navigation("Videos");
                 });

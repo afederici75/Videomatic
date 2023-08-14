@@ -26,18 +26,18 @@ public class VideoTests
 
         var video = new Video(name: nameof(CreateVideo));
         video.SetOrigin(new(
-            ProviderId: "YOUTUBE",
-            ProviderItemId: "ABC123",
-            ETag: "etag",
-            ChannelId: "#videoOwnerChannelId",
-            ChannelName: "#videoOwnerChannelName",
-            Name: nameof(CreateVideo),
-            Description: "A complete description",
-            PublishedOn: pubAt,
-            //Picture: Thumbnail.Empty,
-            Thumbnail: ImageReference.Empty,
-            EmbedHtml: null,
-            DefaultLanguage: null));
+            providerId: "YOUTUBE",
+            providerItemId: "ABC123",
+            etag: "etag",
+            channelId: "#videoOwnerChannelId",
+            channelName: "#videoOwnerChannelName",
+            name: nameof(CreateVideo),
+            description: "A complete description",
+            publishedOn: pubAt,
+            picture: ImageReference.Empty,
+            thumbnail: ImageReference.Empty,
+            embedHtml: null,
+            defaultLanguage: null));
 
 
         video.SetDescription("A complete description");

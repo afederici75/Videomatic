@@ -30,18 +30,18 @@ public record GenericVideo(
 public static class GenericVideoExtensions
 {
     public static EntityOrigin ToEntityOrigin(this GenericVideo gv)
-        => new (ProviderId: gv.ProviderId,
-                ProviderItemId: gv.ProviderItemId,
-                ETag: gv.ETag,
-                ChannelId: gv.ChannelId,
-                ChannelName: gv.ChannelName,
-                Name: gv.Name,
-                Description: gv.Description,
-                PublishedOn: gv.PublishedAt,
-                EmbedHtml: gv.EmbedHtml,
-                DefaultLanguage: gv.DefaultLanguage,
-                Thumbnail: gv.Thumbnail
-                //Picture: gv.Picture,
+        => new (providerId: gv.ProviderId,
+                providerItemId: gv.ProviderItemId,
+                etag: gv.ETag,
+                channelId: gv.ChannelId,
+                channelName: gv.ChannelName,
+                name: gv.Name,
+                description: gv.Description,
+                publishedOn: gv.PublishedAt,
+                embedHtml: gv.EmbedHtml,
+                defaultLanguage: gv.DefaultLanguage,
+                thumbnail: gv.Thumbnail,
+                picture: gv.Picture
                 );
 
     public static Video ToVideo(this GenericVideo gv)

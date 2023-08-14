@@ -31,20 +31,18 @@ public record GenericPlaylist(
 public static class GenericPlaylistExtensions
 {
     public static EntityOrigin ToEntityOrigin(this GenericPlaylist gpl)
-        => new(ProviderId: gpl.ProviderId,
-                ProviderItemId: gpl.ProviderItemId,
-                ETag: gpl.ETag,
-                ChannelId: gpl.ChannelId,
-                ChannelName: gpl.ChannelName,
-                Name: gpl.Name,
-                Description: gpl.Description,
-                PublishedOn: gpl.PublishedAt,
-                //Thumbnail: gpl.Thumbnail,
-                //Picture: gpl.Picture,
-                EmbedHtml: gpl.EmbedHtml,
-                DefaultLanguage: gpl.DefaultLanguage,
-                Thumbnail: gpl.Thumbnail
-                );
+        => new(providerId: gpl.ProviderId,
+               providerItemId: gpl.ProviderItemId,
+               etag: gpl.ETag,
+               channelId: gpl.ChannelId,
+               channelName: gpl.ChannelName,
+               name: gpl.Name,
+               description: gpl.Description,
+               publishedOn: gpl.PublishedAt,
+               embedHtml: gpl.EmbedHtml,
+               defaultLanguage: gpl.DefaultLanguage,
+               thumbnail: gpl.Thumbnail,
+               picture: gpl.Picture);
 
 
     public static Playlist ToPlaylist(this GenericPlaylist gpl)
