@@ -3,7 +3,7 @@
 public abstract class ImportedEntity<TId> : Entity<TId>
 {
     public ImportedEntity(string name, string? description)
-        : this()
+        : base()
     {
         SetName(name);
         SetDescription(description);
@@ -13,6 +13,8 @@ public abstract class ImportedEntity<TId> : Entity<TId>
         : this(origin.Name, origin.Description)
     { 
         SetOrigin(origin);
+        SetThumbnail(origin.Thumbnail);
+        SetPicture(origin.Picture);
     }
     
     public string Name { get; private set; } = default!;

@@ -161,8 +161,8 @@ public class DbSeeder : IDbSeeder
                     channelId: "UNKNOWN",
                     channelName: "ArshaBodha - Swami Tadatmananda",
                     publishedOn: new DateTime(2021, 3, 23), // Bogus date
-                    thumbnail: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/default.jpg", 120, 90),
-                    picture: new ImageReference("https://i.ytimg.com/vi/n1kmKpjk_8E/maxresdefault.jpg", 1280, 720),
+                    thumbnail: new ImageReference("https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 120, 90),
+                    picture: new ImageReference("https://i.ytimg.com/vi/BBd3aHnVnuE/maxresdefault.jpg", 1280, 720),
                     embedHtml: null,
                     defaultLanguage: "EN",
                     //

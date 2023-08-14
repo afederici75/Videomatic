@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Linq.Expressions;
+﻿using Microsoft.IdentityModel.Abstractions;
 
 namespace Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
@@ -47,8 +46,8 @@ public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery
         var final = q.Select(p => new PlaylistDTO(
             p.Id,
             p.Name,
-            p.Thumbnail,
-            p.Picture,
+            (p!.Thumbnail!.Url != "") ? null : p!.Origin!.Thumbnail!,
+            p.Picture ?? p.Origin.Picture,
             p.Description,
             p.Videos.Count()));
 

@@ -1,7 +1,17 @@
 SPRINT
 
-- [ ] Resolve the issue with the thumbnails and origin. 
-	- [ ] Also rename Thumbnail to ImageReference or something like that.
+- [X] Resolve the issue with the thumbnails and origin. 
+	- [X] Also rename Thumbnail to ImageReference or something like that.
+
+- [X] Refactor namespaces and assembly names
+	- The old naming Company.Product.Application and so on is not good. It's very redundant
+	and makes classes hard-er to follow than otherwise. 
+		- This was a MASSIVE change, but thanks toi the tests all worked well!
+
+- [X] Create diagrams for:
+	- [X] The domain model
+	- [X] The database model
+	- [ ] The application model	
 
 - [ ] Add whatever fields we need to make the DB multi tenant.
 	- [X] Add Owner fields to all entities so we know who made what

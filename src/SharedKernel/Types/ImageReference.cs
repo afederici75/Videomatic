@@ -1,10 +1,11 @@
-﻿using SharedKernel.Abstractions;
+﻿using Ardalis.GuardClauses;
+using SharedKernel.Abstractions;
 
 namespace SharedKernel;
 
 public class ImageReference : ValueObject, IImageReference
 {
-    public static ImageReference Empty => new(string.Empty, 0, 0);
+    public static ImageReference Empty => new("", 0, 0);
 
     public ImageReference(string location, int height, int width)
     {

@@ -75,5 +75,12 @@
       <FileName>Playlists\PlaylistVideo.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Domain.EntityOrigin">
+    <Position X="15" Y="1.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>EAAAgAAAAAAgAAAANAIACAQAAgAAAAAAAAUAAAABQAA=</HashCode>
+      <FileName>EntityOrigin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>
