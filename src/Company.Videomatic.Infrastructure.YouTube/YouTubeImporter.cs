@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using Company.SharedKernel.Abstractions;
+using Company.Videomatic.Application.Specifications;
 using Hangfire;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -106,7 +107,7 @@ public class YouTubeImporter : IVideoImporter
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the videos that already exist in the database
-            var qry = new VideosByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var qry = new VideosByProviderItemIdSpec("YOUTUBE", page.Select(v => v.ProviderItemId));
             var dups = await VideoRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 

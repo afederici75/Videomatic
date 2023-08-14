@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Company.Videomatic.Application.Specifications;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Company.Videomatic.Application.Abstractions;
@@ -49,35 +50,4 @@ public class PlaylistsByProviderItemId : Specification<Playlist>
             itemIds.Contains(v.Origin.ProviderItemId)
         );
     }
-}
-
-
-public class VideosByProviderItemId : Specification<Video>
-{
-    public VideosByProviderItemId(string providerId, IEnumerable<string> itemIds)
-    {
-        Query.Where(v =>
-            v.Origin.ProviderId.Equals(providerId) &&
-            itemIds.Contains(v.Origin.ProviderItemId)
-        );
-    }
-}
-
-// TODO: move somewhere else
-public class VideosByIdsSpec : Specification<Video>
-{
-    public VideosByIdsSpec(params VideoId[] ids)
-    {
-        Query.Where(v => ids.Contains(v.Id));
-    }
-}
-
-// TODO: move somewhere else
-public class PlaylistWithVideosSpec : Specification<Playlist>
-{
-    public PlaylistWithVideosSpec(params PlaylistId[] playlistIds)
-    {
-        Query.Where(pl => playlistIds.Contains(pl.Id))
-             .Include(pl => pl.Videos);
-    }    
 }
