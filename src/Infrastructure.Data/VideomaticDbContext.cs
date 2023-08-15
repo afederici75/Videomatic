@@ -1,5 +1,6 @@
 ﻿using Domain.Videos;
 using Infrastructure.Data.Extensions;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using SharedKernel.Model;
 
 namespace Infrastructure.Data;
@@ -51,7 +52,7 @@ public abstract class VideomaticDbContext : DbContext
     {
         var entries = ChangeTracker.Entries();
         var utcNow = DateTime.UtcNow;
-
+                
         foreach (var entry in entries)
         {
             if (entry.Entity is TrackedEntity trackable)
@@ -59,19 +60,23 @@ public abstract class VideomaticDbContext : DbContext
                 switch (entry.State)
                 {
                     case EntityState.Modified:
-                        // set the updated date to "now"
-                        //updateable.SetUpdatedOn(utcNow);
-
-                        // mark property as "don't touch"
-                        // we don't want to update on a Modify operation
+                        // Marks properties as "don't touch": we don't want to update on a Modify operation
                         entry.Property(nameof(TrackedEntity.CreatedOn)).IsModified = false;
-                        
+                        entry.Property(nameof(TrackedEntity.CreatedBy)).IsModified = false;
+
+                        // Sets CreatedBy/CreatedOn for any updated entity 
+                        var cv = entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue;
+                        entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue = utcNow;
+                        var cv2 = entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue;
+
+                        entry.Property(nameof(TrackedEntity.UpdatedBy)).CurrentValue = "UPDATE_ID2";
                         break;
 
                     case EntityState.Added:
-                        // set both updated and created date to "now"
-                        //updateable.SetCreatedOn(utcNow);// = utcNow;
-                        //updateable.SetUpdatedOn(utcNow);// = utcNow;
+                        // Sets CreatedBy/CreatedOn for any new entities
+                        entry.Property(nameof(TrackedEntity.CreatedOn)).CurrentValue = utcNow;
+                        entry.Property(nameof(TrackedEntity.CreatedBy)).CurrentValue = "CREATE_ID2";
+
                         break;
                 }
             }

@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class ArtifactConfiguration : TrackableConfiguration<Artifact>,
+public abstract class ArtifactConfiguration : TrackedEntityConfiguration<Artifact>,
     IEntityTypeConfiguration<Artifact>
 {
     public const string TableName = "Artifacts";

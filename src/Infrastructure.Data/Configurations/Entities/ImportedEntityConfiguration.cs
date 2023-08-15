@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>,
+public abstract class ImportedEntityConfiguration<T> : TrackedEntityConfiguration<T>,
     IEntityTypeConfiguration<T> // Unnecessary, but makes it easier to understand
     where T : ImportedEntity
 {

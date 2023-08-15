@@ -38,8 +38,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsStarred = table.Column<bool>(type: "bit", nullable: false),
@@ -78,8 +80,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsStarred = table.Column<bool>(type: "bit", nullable: false),
@@ -122,8 +126,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()")
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,7 +179,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     VideoId = table.Column<int>(type: "int", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
