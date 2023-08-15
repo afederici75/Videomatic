@@ -1,8 +1,6 @@
-﻿using Infrastructure.Data.Configurations.Helpers;
+﻿namespace Infrastructure.Data.Configurations.Entities;
 
-namespace Infrastructure.Data.Configurations;
-
-public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Transcript>
+public abstract class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
 {
     public const string TableName = "Transcripts";
     public const string TableNameForLines = "TranscriptLines";
@@ -15,7 +13,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
     public virtual void Configure(EntityTypeBuilder<Transcript> builder)
     {
         builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
-        
+
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => new TranscriptId(y))
                .IsRequired(true);
@@ -29,7 +27,7 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
 
             // Shadow properties
             builder.WithOwner().HasForeignKey("TranscriptId");
-            
+
             builder.Property("Id");
             builder.HasKey("Id");
 
@@ -40,4 +38,4 @@ public abstract class TranscriptConfigurationBase : IEntityTypeConfiguration<Tra
         // ---------- Indices ----------
         builder.HasIndex(x => x.Language);
     }
-}   
+}

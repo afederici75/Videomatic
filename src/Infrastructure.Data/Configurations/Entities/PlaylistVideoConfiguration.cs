@@ -1,12 +1,12 @@
-﻿namespace Infrastructure.Data.Configurations;
+﻿namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<PlaylistVideo>
+public abstract class PlaylistVideoConfiguration : IEntityTypeConfiguration<PlaylistVideo>
 {
     private const string TableName = "PlaylistVideos";
 
     public static class FieldLengths
     {
-        
+
     }
 
     public virtual void Configure(EntityTypeBuilder<PlaylistVideo> builder)
@@ -21,7 +21,7 @@ public abstract class PlaylistVideoConfigurationBase : IEntityTypeConfiguration<
 
         builder.Property(x => x.PlaylistId)
                .HasConversion(x => (int)x, y => y);
-      
+
     }
 }
 

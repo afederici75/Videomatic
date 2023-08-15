@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Data.Configurations.Helpers;
+﻿namespace Infrastructure.Data.Configurations.ValueObjects;
 
 public static class ImageReferenceConfigurator
 {

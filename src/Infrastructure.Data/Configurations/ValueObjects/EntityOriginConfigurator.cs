@@ -1,6 +1,6 @@
 ﻿using Domain;
 
-namespace Infrastructure.Data.Configurations.Helpers;
+namespace Infrastructure.Data.Configurations.ValueObjects;
 
 public class EntityOriginConfigurator
 {
@@ -15,7 +15,7 @@ public class EntityOriginConfigurator
     public static void Configure<T>(OwnedNavigationBuilder<T, EntityOrigin> bld)
         where T : class
     {
-        // Properties
+        // ----- Fields ----- //
         bld.Property(x => x.ProviderId).HasMaxLength(FieldLengths.Generic.ExternalId);
         bld.Property(x => x.ProviderItemId).HasMaxLength(FieldLengths.Generic.ExternalId);
         bld.Property(x => x.ETag).HasMaxLength(OriginLengths.ETag);
@@ -27,11 +27,11 @@ public class EntityOriginConfigurator
         bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
         bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
 
-        // Relationships
+        // ----- Relationships ----- //
         bld.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);
         bld.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);
 
-        // Indices
+        // ----- Indices ----- //
         bld.HasIndex(x => x.ProviderId);
         bld.HasIndex(x => x.ProviderItemId);
         bld.HasIndex(x => x.ETag);

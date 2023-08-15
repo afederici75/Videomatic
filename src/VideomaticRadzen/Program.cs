@@ -4,6 +4,7 @@ using Hangfire;
 using Radzen;
 using Serilog;
 using VideomaticRadzen;
+using SharedKernel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,22 +19,12 @@ builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
 
+builder.Services.AddVideomaticSharedKernel(builder.Configuration);
 builder.Services.AddVideomaticApplication(builder.Configuration);
 builder.Services.AddVideomaticData(builder.Configuration);
 builder.Services.AddVideomaticDataForSqlServer(builder.Configuration);
 builder.Services.AddVidematicYouTubeInfrastructure(builder.Configuration);
-
-
-// Use Serilog
-builder.Logging.ClearProviders();
-
-var cfg = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration);
-Serilog.Core.Logger logger = cfg.CreateLogger();
-builder.Services.AddLogging(bld =>
-{
-    bld.AddSerilog(logger: logger, dispose: true);
-});
-
+                 
 // Add Hangfire services.
 var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
 

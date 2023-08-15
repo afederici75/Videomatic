@@ -1,31 +1,31 @@
 ﻿using Domain;
+using Infrastructure.Data.Configurations.ValueObjects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Infrastructure.Data.Configurations.Helpers;
+namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>, 
+public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>,
     IEntityTypeConfiguration<T> // Unnecessary, but makes it easier to understand
-    where T : ImportedEntity    
+    where T : ImportedEntity
 {
     public class FieldLengths
     {
         public const int URL = 1024;
-        public const int Title = 500;
+        public const int Name = 500;
         public const int TagName = 100;
-        //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
     }
 
-    public override void Configure(EntityTypeBuilder<T> builder)        
+    public override void Configure(EntityTypeBuilder<T> builder)
     {
         base.Configure(builder);
 
-        // Fields
+        // ---------- Fields ----------
         builder.Property(x => x.Name)
-               .HasMaxLength(FieldLengths.Title);
+               .HasMaxLength(FieldLengths.Name);
 
         builder.Property(x => x.Description);
 
-        // Tags
+        // - Tags
         var valueComparer = new ValueComparer<IEnumerable<string>>(
             (c1, c2) => c1!.SequenceEqual(c2!),
             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
@@ -34,7 +34,6 @@ public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>
         builder.Property(x => x.Tags)
                .HasConversion(x => string.Join(',', x),
                               y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet())
-
                .Metadata.SetValueComparer(valueComparer);
 
         // ---------- Owned Types ----------
@@ -43,9 +42,9 @@ public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>
 
         builder.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);
 
-        var details = builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
+        builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
 
         // ---------- Indices ----------
         builder.HasIndex(x => x.Name);
     }
-}   
+}

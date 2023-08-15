@@ -1,8 +1,9 @@
 ﻿using Domain.Videos;
+using Infrastructure.Data.Configurations.Entities;
 
 namespace Infrastructure.SqlServer.Configurations;
 
-public class VideoConfiguration : VideoConfigurationBase
+public class SqlServerVideoConfiguration : VideoConfiguration
 {
     //public const string ThumbnailSequenceName = "ThumbnailSequence";
     public const string TagsSequenceName = "TagsSequence";

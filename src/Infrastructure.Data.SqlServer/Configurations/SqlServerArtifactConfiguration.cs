@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Data.SqlServer.Configurations;
+﻿using Infrastructure.Data.Configurations.Entities;
 
-public class ArtifactConfiguration : ArtifactConfigurationBase 
+namespace Infrastructure.Data.SqlServer.Configurations;
+
+public class SqlServerArtifactConfiguration : ArtifactConfiguration 
 {
     public const string SequenceName = "ArtifactSequence";
 

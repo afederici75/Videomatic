@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Data.SqlServer.Configurations;
+﻿using Infrastructure.Data.Configurations.Entities;
 
-public class PlaylistConfiguration : PlaylistConfigurationBase
+namespace Infrastructure.Data.SqlServer.Configurations;
+
+public class SqlServerPlaylistConfiguration : PlaylistConfiguration
 {
     public const string SequenceName = "PlaylistSequence";
 

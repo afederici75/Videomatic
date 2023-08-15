@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.SqlServer.Configurations;
+﻿using Infrastructure.Data.Configurations.Entities;
 
-public class TranscriptConfiguration : TranscriptConfigurationBase
+namespace Infrastructure.SqlServer.Configurations;
+
+public class SqlServerTranscriptConfiguration : TranscriptConfiguration
 {
     public const string SequenceName = "TranscriptSequence";
     public const string TranscriptLineSequenceName = "TranscriptLineSequence";

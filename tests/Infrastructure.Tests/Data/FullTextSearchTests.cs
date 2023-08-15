@@ -17,7 +17,16 @@ public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLife
   
     public ITestOutputHelper Output { get; }
     public DbContextFixture Fixture { get; }
-    public ISender Sender { get; }       
+    public ISender Sender { get; }
+
+    [Fact]
+    public async Task QueryStuff()
+    {
+        var db = Fixture.DbContext;
+        var res = await db.Videos.Where(v => v.Id == 1).FirstOrDefaultAsync();
+
+        res.Should().NotBeNull();
+    }
 
     [Theory]
     [InlineData("gods", 1)]

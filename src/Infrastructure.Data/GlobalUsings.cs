@@ -4,6 +4,7 @@ global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.Extensions.Configuration;
+global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 global using SharedKernel;
 global using SharedKernel.Abstractions;

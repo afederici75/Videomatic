@@ -1,15 +1,14 @@
-﻿using Infrastructure.Data.Configurations.Helpers;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Infrastructure.Data.Configurations;
+namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class VideoConfigurationBase : ImportedEntityConfiguration<Video>, 
+public abstract class VideoConfiguration : ImportedEntityConfiguration<Video>,
     IEntityTypeConfiguration<Video>
 {
     public const string TableName = "Videos";
     public const string TableNameForThumbnails = "Thumbnails";
     public const string TableNameForTags = "VideoTags";
-   
+
     public override void Configure(EntityTypeBuilder<Video> builder)
     {
         base.Configure(builder);
