@@ -5,7 +5,7 @@ namespace SharedKernel.CQRS.Commands;
 public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
     IRequestHandler<TUpsertCommand, Result<TEntity>>
     where TUpsertCommand : UpsertEntityCommand<TEntity>
-    where TEntity : class, IEntity
+    where TEntity : class
     where TId : class
 {
     protected UpsertEntityHandler(IRepository<TEntity> repository, IMapper mapper)

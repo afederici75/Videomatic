@@ -1,6 +1,6 @@
 ﻿namespace Domain;
 
-public abstract class ImportedEntity<TId> : UpdateableEntity<TId>
+public abstract class ImportedEntity : TrackableEntity
 {
     public ImportedEntity(string name, string? description)
         : base()

@@ -50,22 +50,22 @@ public abstract class VideomaticDbContext : DbContext
 
         foreach (var entry in entries)
         {
-            if (entry.Entity is IUpdateableEntity updateable)
+            if (entry.Entity is ITrackable updateable)
             {
                 switch (entry.State)
                 {
                     case EntityState.Modified:
                         // set the updated date to "now"
-                        updateable.SetUpdatedOn(utcNow);
+                        //updateable.SetUpdatedOn(utcNow);
 
                         // mark property as "don't touch"
                         // we don't want to update on a Modify operation
-                        entry.Property(nameof(IUpdateableEntity.CreatedOn)).IsModified = false;
+                        entry.Property(nameof(ITrackable.CreatedOn)).IsModified = false;
                         break;
 
                     case EntityState.Added:
                         // set both updated and created date to "now"
-                        updateable.SetCreatedOn(utcNow);// = utcNow;
+                        //updateable.SetCreatedOn(utcNow);// = utcNow;
                         //updateable.SetUpdatedOn(utcNow);// = utcNow;
                         break;
                 }

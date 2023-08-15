@@ -5,7 +5,7 @@ namespace SharedKernel.CQRS.Commands;
 public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     IRequestHandler<TUpdateCommand, Result<TEntity>>
     where TUpdateCommand : UpdateEntityCommand<TEntity>, IRequestWithId
-    where TEntity : class, IEntity
+    where TEntity : class
     where TId : class
 {
     protected UpdateEntityHandler(IRepository<TEntity> repository, IMapper mapper)

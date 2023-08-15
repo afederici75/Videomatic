@@ -3,30 +3,21 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations;
 
-public abstract class VideoConfigurationBase : ImportedEntityConfigurator<Video, VideoId>, 
+public abstract class VideoConfigurationBase : ImportedEntityConfigurator<Video>, 
     IEntityTypeConfiguration<Video>
 {
     public const string TableName = "Videos";
     public const string TableNameForThumbnails = "Thumbnails";
     public const string TableNameForTags = "VideoTags";
-
-    //public class FieldLengths
-    //{
-    //    public const int URL = 1024;
-    //    public const int Title = 500;
-    //    public const int TagName = 100;
-    //    //public const int Description = PlaylistConfigurationBase.FieldLengths.Description;
-    //}
-
+   
     public override void Configure(EntityTypeBuilder<Video> builder)
     {
         base.Configure(builder);
 
         builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => y);
-
-        //new ImportedEntityConfigurator<VideoId, Video>().Configure(builder);
 
         // ---------- Relationships ----------
 

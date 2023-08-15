@@ -5,7 +5,7 @@ namespace SharedKernel.CQRS.Commands;
 public abstract class CreateEntitytHandler<TCreateCommand, TEntity> :
     IRequestHandler<TCreateCommand, Result<TEntity>>
     where TCreateCommand : IRequest<Result<TEntity>>
-    where TEntity : class, IEntity
+    where TEntity : class
 {
     protected CreateEntitytHandler(IRepository<TEntity> repository, IMapper mapper)
     {

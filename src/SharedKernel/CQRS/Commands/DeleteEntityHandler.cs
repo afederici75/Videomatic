@@ -5,7 +5,7 @@ namespace SharedKernel.CQRS.Commands;
 
 public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
-    where TAggregateRoot : class, IEntity
+    where TAggregateRoot : class
     where TId : class
 {
     public DeleteEntityHandler(IRepository<TAggregateRoot> repository, IMapper mapper)

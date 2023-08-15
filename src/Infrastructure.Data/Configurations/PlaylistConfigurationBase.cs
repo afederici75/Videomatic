@@ -5,7 +5,8 @@ namespace Infrastructure.Data.Configurations;
 
 
 
-public abstract class PlaylistConfigurationBase : ImportedEntityConfigurator<Playlist, PlaylistId>
+public abstract class PlaylistConfigurationBase : ImportedEntityConfigurator<Playlist>,
+    IEntityTypeConfiguration<Playlist>
 {
     public const string TableName = "Playlists";
 

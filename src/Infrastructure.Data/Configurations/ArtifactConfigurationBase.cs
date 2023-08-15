@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Data.Configurations;
 
-public abstract class ArtifactConfigurationBase : UpdatableEntityConfigurator<Artifact, ArtifactId>, 
+public abstract class ArtifactConfigurationBase : TrackableConfigurator<Artifact>, 
     IEntityTypeConfiguration<Artifact>
 {
     public const string TableName = "Artifacts";

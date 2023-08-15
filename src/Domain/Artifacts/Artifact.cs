@@ -2,7 +2,7 @@
 
 namespace Domain.Artifacts;
 
-public class Artifact : UpdateableEntity<ArtifactId>, IAggregateRoot
+public class Artifact : TrackableEntity, IAggregateRoot
 {
     public Artifact(VideoId videoId, string name, string type, string? text = null)
     {
@@ -12,6 +12,7 @@ public class Artifact : UpdateableEntity<ArtifactId>, IAggregateRoot
         Text = text;
     }
 
+    public ArtifactId Id { get; private set; } = default!;
     public VideoId VideoId { get; private set; } = default!;
     public string Name { get; private set; } = default!;
     public string Type { get; private set; } = default!;
