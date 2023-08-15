@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Data.Configurations.Helpers;
 
-public static class ThumbnailConfigurator
+public static class ImageReferenceConfigurator
 {
     public static void Configure<T>(OwnedNavigationBuilder<T, ImageReference> bld)
         where T : class

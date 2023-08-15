@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230814191430_Initial")]
+    [Migration("20230815150513_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -45,7 +45,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR ArtifactSequence");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,7 +63,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<int>("VideoId")
                         .HasColumnType("int");
@@ -83,29 +87,31 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsStarred")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Tags")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Description");
 
                     b.HasIndex("Name");
 
@@ -139,8 +145,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
@@ -165,7 +170,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasDefaultValueSql("NEXT VALUE FOR VideoSequence");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -183,7 +190,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
 
@@ -382,11 +391,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Origin")
                         .IsRequired();
 
-                    b.Navigation("Picture")
-                        .IsRequired();
+                    b.Navigation("Picture");
 
-                    b.Navigation("Thumbnail")
-                        .IsRequired();
+                    b.Navigation("Thumbnail");
                 });
 
             modelBuilder.Entity("Domain.Playlists.PlaylistVideo", b =>
@@ -625,11 +632,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.Navigation("Origin")
                         .IsRequired();
 
-                    b.Navigation("Picture")
-                        .IsRequired();
+                    b.Navigation("Picture");
 
-                    b.Navigation("Thumbnail")
-                        .IsRequired();
+                    b.Navigation("Thumbnail");
                 });
 
             modelBuilder.Entity("Domain.Playlists.Playlist", b =>

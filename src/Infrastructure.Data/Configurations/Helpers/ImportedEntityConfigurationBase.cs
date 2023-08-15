@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations.Helpers;
 
-public class ImportedEntityConfigurator<T> : TrackableConfigurator<T>
+public abstract class ImportedEntityConfigurationBase<T> : TrackableConfiguration<T>
     where T : ImportedEntity    
 {
     public class FieldLengths
@@ -38,9 +38,9 @@ public class ImportedEntityConfigurator<T> : TrackableConfigurator<T>
 
         // ---------- Owned Types ----------
 
-        builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
+        builder.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);
 
-        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
+        builder.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);
 
         var details = builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
 

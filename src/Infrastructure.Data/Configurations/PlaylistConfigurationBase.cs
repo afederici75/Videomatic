@@ -5,7 +5,7 @@ namespace Infrastructure.Data.Configurations;
 
 
 
-public abstract class PlaylistConfigurationBase : ImportedEntityConfigurator<Playlist>,
+public abstract class PlaylistConfigurationBase : ImportedEntityConfigurationBase<Playlist>,
     IEntityTypeConfiguration<Playlist>
 {
     public const string TableName = "Playlists";
@@ -34,8 +34,8 @@ public abstract class PlaylistConfigurationBase : ImportedEntityConfigurator<Pla
         
         builder.OwnsOne(x => x.Origin, EntityOriginConfigurator.Configure);
         
-        builder.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
+        builder.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);
         
-        builder.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);        
+        builder.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);        
     }
 }

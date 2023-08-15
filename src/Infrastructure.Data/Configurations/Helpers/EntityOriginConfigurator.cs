@@ -28,8 +28,8 @@ public class EntityOriginConfigurator
         bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
 
         // Relationships
-        bld.OwnsOne(x => x.Thumbnail, ThumbnailConfigurator.Configure);
-        bld.OwnsOne(x => x.Picture, ThumbnailConfigurator.Configure);
+        bld.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);
+        bld.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);
 
         // Indices
         bld.HasIndex(x => x.ProviderId);

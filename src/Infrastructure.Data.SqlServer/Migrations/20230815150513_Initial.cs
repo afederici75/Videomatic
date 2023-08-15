@@ -38,48 +38,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    IsStarred = table.Column<bool>(type: "bit", nullable: false),
-                    Origin_ProviderId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ProviderItemId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ETag = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ChannelId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ChannelName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Origin_Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Origin_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Origin_PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Origin_EmbedHtml = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
-                    Origin_DefaultLanguage = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    Origin_Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Origin_Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
-                    Origin_Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
-                    Origin_Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Origin_Picture_Height = table.Column<int>(type: "int", nullable: false),
-                    Origin_Picture_Width = table.Column<int>(type: "int", nullable: false),
-                    Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
-                    Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
-                    Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Picture_Height = table.Column<int>(type: "int", nullable: false),
-                    Picture_Width = table.Column<int>(type: "int", nullable: false),
-                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Playlists", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Videos",
-                schema: "Videomatic",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()"),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsStarred = table.Column<bool>(type: "bit", nullable: false),
@@ -99,12 +59,52 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Origin_Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
                     Origin_Picture_Height = table.Column<int>(type: "int", nullable: false),
                     Origin_Picture_Width = table.Column<int>(type: "int", nullable: false),
-                    Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
-                    Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
-                    Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Picture_Height = table.Column<int>(type: "int", nullable: false),
-                    Picture_Width = table.Column<int>(type: "int", nullable: false),
+                    Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    Thumbnail_Height = table.Column<int>(type: "int", nullable: true),
+                    Thumbnail_Width = table.Column<int>(type: "int", nullable: true),
+                    Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    Picture_Height = table.Column<int>(type: "int", nullable: true),
+                    Picture_Width = table.Column<int>(type: "int", nullable: true),
+                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Playlists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Videos",
+                schema: "Videomatic",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()"),
+                    Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsStarred = table.Column<bool>(type: "bit", nullable: false),
+                    Origin_ProviderId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Origin_ProviderItemId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Origin_ETag = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Origin_ChannelId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Origin_ChannelName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Origin_Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Origin_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Origin_PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Origin_EmbedHtml = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
+                    Origin_DefaultLanguage = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Origin_Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Origin_Thumbnail_Height = table.Column<int>(type: "int", nullable: false),
+                    Origin_Thumbnail_Width = table.Column<int>(type: "int", nullable: false),
+                    Origin_Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Origin_Picture_Height = table.Column<int>(type: "int", nullable: false),
+                    Origin_Picture_Width = table.Column<int>(type: "int", nullable: false),
+                    Thumbnail_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    Thumbnail_Height = table.Column<int>(type: "int", nullable: true),
+                    Thumbnail_Width = table.Column<int>(type: "int", nullable: true),
+                    Picture_Url = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    Picture_Height = table.Column<int>(type: "int", nullable: true),
+                    Picture_Width = table.Column<int>(type: "int", nullable: true),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -122,8 +122,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETUTCDATE()")
                 },
                 constraints: table =>
                 {
@@ -171,7 +171,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
                     VideoId = table.Column<int>(type: "int", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -221,12 +221,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 schema: "Videomatic",
                 table: "Artifacts",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Playlists_Description",
-                schema: "Videomatic",
-                table: "Playlists",
-                column: "Description");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Playlists_Name",
