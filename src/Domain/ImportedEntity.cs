@@ -1,8 +1,6 @@
-﻿using SharedKernel.Model;
+﻿namespace Domain;
 
-namespace Domain;
-
-public abstract class ImportedEntity : TrackableEntity
+public abstract class ImportedEntity : TrackedEntity
 {
     public ImportedEntity(string name, string? description)
         : base()

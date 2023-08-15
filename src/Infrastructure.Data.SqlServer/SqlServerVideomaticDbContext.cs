@@ -28,7 +28,6 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.SequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.TranscriptLineSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.SequenceName); // TODO: fix this
-        //modelBuilder.HasSequence<long>(VideoConfiguration.ThumbnailSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.TagsSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerPlaylistConfiguration.SequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerArtifactConfiguration.SequenceName); // TODO: fix this

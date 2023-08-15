@@ -3,7 +3,7 @@ using SharedKernel.Model;
 
 namespace Domain.Transcripts;
 
-public class Transcript : TrackableEntity, IAggregateRoot
+public class Transcript : TrackedEntity, IAggregateRoot
 {
     public Transcript(VideoId videoId, string language)
     {

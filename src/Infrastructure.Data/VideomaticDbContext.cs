@@ -54,7 +54,7 @@ public abstract class VideomaticDbContext : DbContext
 
         foreach (var entry in entries)
         {
-            if (entry.Entity is TrackableEntity trackable)
+            if (entry.Entity is TrackedEntity trackable)
             {
                 switch (entry.State)
                 {
@@ -64,7 +64,8 @@ public abstract class VideomaticDbContext : DbContext
 
                         // mark property as "don't touch"
                         // we don't want to update on a Modify operation
-                        entry.Property(nameof(TrackableEntity.CreatedOn)).IsModified = false;
+                        entry.Property(nameof(TrackedEntity.CreatedOn)).IsModified = false;
+                        
                         break;
 
                     case EntityState.Added:

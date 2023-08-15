@@ -3,7 +3,7 @@ using SharedKernel.Model;
 
 namespace Domain.Artifacts;
 
-public class Artifact : TrackableEntity, IAggregateRoot
+public class Artifact : TrackedEntity, IAggregateRoot
 {
     public Artifact(VideoId videoId, string name, string type, string? text = null)
     {
