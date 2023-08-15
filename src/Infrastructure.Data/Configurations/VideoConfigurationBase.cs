@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations;
 
-public abstract class VideoConfigurationBase : ImportedEntityConfigurationBase<Video>, 
+public abstract class VideoConfigurationBase : ImportedEntityConfiguration<Video>, 
     IEntityTypeConfiguration<Video>
 {
     public const string TableName = "Videos";

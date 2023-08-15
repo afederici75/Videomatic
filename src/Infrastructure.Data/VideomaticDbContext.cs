@@ -1,4 +1,5 @@
 ﻿using Domain.Videos;
+using Infrastructure.Data.Extensions;
 
 namespace Infrastructure.Data;
 
@@ -27,6 +28,8 @@ public abstract class VideomaticDbContext : DbContext
 
         var descendantType = GetType();
         modelBuilder.ApplyConfigurationsFromAssembly(descendantType.Assembly);
+
+        modelBuilder.AddStronglyTypedIdValueConverters(typeof(VideomaticDbContext).Assembly);
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)

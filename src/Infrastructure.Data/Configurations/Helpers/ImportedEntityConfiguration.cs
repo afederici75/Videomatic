@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations.Helpers;
 
-public abstract class ImportedEntityConfigurationBase<T> : TrackableConfiguration<T>
+public abstract class ImportedEntityConfiguration<T> : TrackableConfiguration<T>, 
+    IEntityTypeConfiguration<T> // Unnecessary, but makes it easier to understand
     where T : ImportedEntity    
 {
     public class FieldLengths
