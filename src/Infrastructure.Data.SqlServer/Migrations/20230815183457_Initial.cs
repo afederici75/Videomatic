@@ -211,16 +211,34 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Artifacts_CreatedOn",
+                schema: "Videomatic",
+                table: "Artifacts",
+                column: "CreatedOn");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Artifacts_Name",
                 schema: "Videomatic",
                 table: "Artifacts",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Artifacts_UpdatedOn",
+                schema: "Videomatic",
+                table: "Artifacts",
+                column: "UpdatedOn");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Artifacts_VideoId",
                 schema: "Videomatic",
                 table: "Artifacts",
                 column: "VideoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Playlists_CreatedOn",
+                schema: "Videomatic",
+                table: "Playlists",
+                column: "CreatedOn");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Playlists_Name",
@@ -271,6 +289,12 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 column: "Origin_ProviderItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Playlists_UpdatedOn",
+                schema: "Videomatic",
+                table: "Playlists",
+                column: "UpdatedOn");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PlaylistVideos_VideoId",
                 schema: "Videomatic",
                 table: "PlaylistVideos",
@@ -299,6 +323,12 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 schema: "Videomatic",
                 table: "Transcripts",
                 column: "VideoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_CreatedOn",
+                schema: "Videomatic",
+                table: "Videos",
+                column: "CreatedOn");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Videos_Name",
@@ -347,6 +377,12 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 schema: "Videomatic",
                 table: "Videos",
                 column: "Origin_ProviderItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_UpdatedOn",
+                schema: "Videomatic",
+                table: "Videos",
+                column: "UpdatedOn");
         }
 
         /// <inheritdoc />

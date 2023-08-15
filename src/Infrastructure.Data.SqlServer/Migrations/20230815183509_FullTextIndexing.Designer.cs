@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230815150528_FullTextIndexing")]
+    [Migration("20230815183509_FullTextIndexing")]
     partial class FullTextIndexing
     {
         /// <inheritdoc />
@@ -72,7 +72,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.HasIndex("VideoId");
 
@@ -113,7 +117,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.ToTable("Playlists", "Videomatic");
                 });
@@ -196,7 +204,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.ToTable("Videos", "Videomatic");
                 });
@@ -283,7 +295,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PlaylistId");
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginPlaylistId")
                                         .ValueGeneratedOnAdd()
@@ -308,7 +320,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginPlaylistId");
                                 });
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginPlaylistId")
                                         .ValueGeneratedOnAdd()
@@ -340,7 +352,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -364,7 +376,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("PlaylistId");
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -526,7 +538,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginVideoId")
                                         .HasColumnType("int");
@@ -550,7 +562,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginVideoId");
                                 });
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginVideoId")
                                         .HasColumnType("int");
@@ -581,7 +593,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");
@@ -605,7 +617,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("VideoId");
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");
