@@ -1,7 +1,10 @@
-﻿namespace Domain.Playlists;
+﻿using Domain.Videos;
 
-public record PlaylistId(int Value = 0)
-{    
+namespace Domain.Playlists;
+
+// https://www.ssw.com.au/rules/do-you-use-strongly-typed-ids/
+public readonly record struct PlaylistId(int Value)
+{
     public static implicit operator int(PlaylistId x) => x.Value;
-    public static implicit operator PlaylistId(int x) => new (x);
+    public static explicit operator PlaylistId(int x) => new(x);
 }

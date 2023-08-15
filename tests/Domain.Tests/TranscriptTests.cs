@@ -17,7 +17,7 @@ public class TranscriptTests
         transcript.AddLine(text: "This is a line with something", startsAt: TimeSpan.FromSeconds(2), duration: TimeSpan.FromSeconds(2));
 
         transcript.Should().NotBeNull();
-        transcript.Id.Should().BeNull();
+        transcript.Id.Should().Be((TranscriptId)0);
         transcript.VideoId.Value.Should().Be(1);
         transcript.Language.Should().Be("EN");
         transcript.Lines.Should().HaveCount(4);

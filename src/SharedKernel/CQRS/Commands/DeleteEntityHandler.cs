@@ -5,7 +5,7 @@ namespace SharedKernel.CQRS.Commands;
 public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
     where TEntity : class
-    where TId : class
+    where TId : struct
 {
     public DeleteEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
@@ -20,8 +20,8 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
     {
         try
         {
-            object id = ConvertIdOfRequest(request);
-
+            TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            
             var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);
             if (itemToDelete == null)
             {
@@ -38,18 +38,6 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
         {
             return Result.Error(ex.Message);
         }
-    }
-
-    /// <summary>
-    /// This method converts the id contained in the request to the type of the id of the aggregate root.    
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
-    protected TId ConvertIdOfRequest(IRequestWithId request)
-    {
-        TId result = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
-
-        return result;
-    }
+    }    
 }
 

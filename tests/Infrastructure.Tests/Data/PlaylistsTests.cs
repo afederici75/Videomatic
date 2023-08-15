@@ -56,6 +56,10 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         video.Should().NotBeNull();
         video!.Name.Should().BeEquivalentTo(updateCommand.Name);
         video!.Description.Should().BeEquivalentTo(updateCommand.Description);
+
+        // Deletes
+        var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
+        ok.IsSuccess.Should().Be(true);
     }
 
     [Theory]

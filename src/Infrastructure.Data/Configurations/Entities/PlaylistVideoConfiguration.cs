@@ -20,7 +20,7 @@ public abstract class PlaylistVideoConfiguration : IEntityTypeConfiguration<Play
                .HasConversion(x => (int)x, y => y);
 
         builder.Property(x => x.PlaylistId)
-               .HasConversion(x => (int)x, y => y);
+               .HasConversion(x => (int)x, y => (PlaylistId)y);
 
     }
 }

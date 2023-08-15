@@ -44,7 +44,7 @@ public class VideoTests
         video.SetDescription("A complete description");
 
         video.Should().NotBeNull();
-        video.Id.Should().BeNull();
+        video.Id.Should().Be((VideoId)0);
         video.Name.Should().Be(nameof(CreateVideo));
         video.Description.Should().Be("A complete description");
 

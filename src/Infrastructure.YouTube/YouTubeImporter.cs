@@ -121,9 +121,9 @@ public class YouTubeImporter : IVideoImporter
             // Links all videos (new and old) to the playlist
             var all = dups.Concat(storedVideos).ToArray();
             var videoIds = all.Select(x => x.Id).ToArray();
-            if (linkTo != null)
+            if (linkTo.HasValue)
             {
-                await PlaylistRepository.LinkPlaylistToVideos(linkTo, videoIds, cancellation);
+                await PlaylistRepository.LinkPlaylistToVideos(linkTo.Value, videoIds, cancellation);
             }
 
             // Attempts to re-import each playlist's videos (new or existing)            

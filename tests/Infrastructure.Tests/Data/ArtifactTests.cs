@@ -63,8 +63,8 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
         dbArtifact!.Name.Should().BeEquivalentTo(updateCommand.Name);
 
         // Deletes
-        //var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
-        //ok.IsSuccess.Should().Be(true);
+        var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
+        ok.IsSuccess.Should().Be(true);
     }
 
     [Theory()]
