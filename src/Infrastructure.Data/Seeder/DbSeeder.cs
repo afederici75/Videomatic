@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Videos;
+using SharedKernel.Model;
 
 namespace Infrastructure.Data.Seeder;
 

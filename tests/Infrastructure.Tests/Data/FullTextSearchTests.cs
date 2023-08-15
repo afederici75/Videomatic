@@ -22,8 +22,13 @@ public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLife
     [Fact]
     public async Task QueryStuff()
     {
+        // This is an attempt to see if the following happens: https://andrewlock.net/using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-3/#custom-value-converters-result-in-client-side-evaluation        
+        // I am manually checking to see if there are any warnings in Seq and so far there seem to be none...        
         var db = Fixture.DbContext;
-        var res = await db.Videos.Where(v => v.Id == 1).FirstOrDefaultAsync();
+        db.ChangeTracker.Clear();
+
+        var res = await db.Videos.Where(v => v.Id == 1)
+            .FirstOrDefaultAsync();
 
         res.Should().NotBeNull();
     }

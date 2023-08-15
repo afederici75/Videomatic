@@ -8,6 +8,7 @@ global using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 global using SharedKernel;
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;
 
 global using Application.Abstractions;
 

@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Data.Configurations.ValueObjects;
+﻿using SharedKernel.Model;
+
+namespace Infrastructure.Data.Configurations.ValueObjects;
 
 public static class ImageReferenceConfigurator
 {

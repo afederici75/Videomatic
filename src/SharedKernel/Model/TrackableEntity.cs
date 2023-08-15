@@ -1,8 +1,6 @@
-﻿using SharedKernel.Abstractions;
+﻿namespace SharedKernel.Model;
 
-namespace SharedKernel;
-
-public abstract class TrackableEntity : ITrackable
+public abstract class TrackableEntity
 {
     public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
     public DateTime? UpdatedOn { get; private set; }

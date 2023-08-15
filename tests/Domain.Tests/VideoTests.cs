@@ -1,4 +1,5 @@
 ﻿using Domain;
+using SharedKernel.Model;
 
 namespace Domain.Tests;
 

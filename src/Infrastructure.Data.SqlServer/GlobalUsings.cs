@@ -7,6 +7,7 @@ global using MediatR;
 global using Microsoft.Extensions.Configuration;
 
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;
 global using Application.Abstractions;
 
 global using Infrastructure.Data;

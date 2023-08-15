@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Videos;
+﻿using SharedKernel.Model;
+
+namespace Application.Features.Videos;
 
 public record VideoDTO(
     int Id = 0,

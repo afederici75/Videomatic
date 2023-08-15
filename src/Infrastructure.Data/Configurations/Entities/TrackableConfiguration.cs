@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
+using SharedKernel.Model;
 
 namespace Infrastructure.Data.Configurations.Entities;
 
 public abstract class TrackableConfiguration<T> : IEntityTypeConfiguration<T>
-    where T : class, ITrackable
+    where T : TrackableEntity
 {
     public virtual void Configure(EntityTypeBuilder<T> builder)
     {

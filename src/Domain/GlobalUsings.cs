@@ -4,3 +4,4 @@ global using Ardalis.Specification;
 
 global using SharedKernel;
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;

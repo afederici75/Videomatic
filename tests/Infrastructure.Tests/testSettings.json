@@ -16,7 +16,7 @@
       "Default": "Debug",
       "Override": {
         "Microsoft": "Warning",
-        "Microsoft.EntityFrameworkCore": "Debug",
+        "Microsoft.EntityFrameworkCore": "Verbose",
         "System": "Warning",
         "System.Http": "Debug",
         "Hangfire": "Warning"

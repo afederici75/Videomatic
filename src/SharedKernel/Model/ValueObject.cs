@@ -1,4 +1,4 @@
-﻿namespace SharedKernel.Abstractions;
+﻿namespace SharedKernel.Model;
 
 /// <summary>
 /// The base class for value objects.

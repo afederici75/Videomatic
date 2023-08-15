@@ -1,8 +1,6 @@
-﻿using SharedKernel.Abstractions;
+﻿namespace SharedKernel.Model;
 
-namespace SharedKernel;
-
-public class ImageReference : ValueObject, IImageReference
+public class ImageReference : ValueObject
 {
     public static ImageReference Empty => new("", 0, 0);
 

@@ -10,6 +10,8 @@ global using Microsoft.Extensions.Configuration;
 global using Infrastructure.Tests.Data.Helpers;
 
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;
+
 global using Application.Features.Playlists;
 
 global using Application.Features.Playlists.Commands;

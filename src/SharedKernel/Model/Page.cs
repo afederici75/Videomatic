@@ -1,4 +1,4 @@
-﻿namespace SharedKernel.Abstractions;
+﻿namespace SharedKernel.Model;
 
 /// <summary>
 /// The result of a query that returns paginated results.
