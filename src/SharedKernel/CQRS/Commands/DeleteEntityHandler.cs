@@ -1,20 +1,19 @@
 ﻿using SharedKernel.Abstractions;
-using System;
 
 namespace SharedKernel.CQRS.Commands;
 
-public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
+public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
     where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
-    where TAggregateRoot : class
+    where TEntity : class
     where TId : class
 {
-    public DeleteEntityHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
+    public DeleteEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IRepository<TAggregateRoot> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
     public async Task<Result<bool>> Handle(TDeleteCommand request, CancellationToken cancellationToken)

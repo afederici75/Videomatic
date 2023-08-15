@@ -1,5 +1,9 @@
 SPRINT
 
+- [X] Create batch files to simplify scaffolding
+	- [X] AddNewMigration.bat
+	- [X] ReScaffoldFromScratch.bat
+	- [X] UpdateDb.bat
 
 - [X] Create diagrams for:
 	- [X] The domain model
