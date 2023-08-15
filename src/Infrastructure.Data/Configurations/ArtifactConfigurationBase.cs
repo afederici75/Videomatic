@@ -1,6 +1,9 @@
-﻿namespace Infrastructure.Data.Configurations;
+﻿using Infrastructure.Data.Configurations.Helpers;
 
-public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artifact>
+namespace Infrastructure.Data.Configurations;
+
+public abstract class ArtifactConfigurationBase : UpdatableEntityConfigurator<Artifact, ArtifactId>, 
+    IEntityTypeConfiguration<Artifact>
 {
     public const string TableName = "Artifacts";
 
@@ -10,13 +13,15 @@ public abstract class ArtifactConfigurationBase : IEntityTypeConfiguration<Artif
         public const int Type = 128; // TODO: Could be way smaller
     }
 
-    public virtual void Configure(EntityTypeBuilder<Artifact> builder)
+    public override void Configure(EntityTypeBuilder<Artifact> builder)
     {        
-        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+        base.Configure(builder);
 
-        // Fields
+        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => y);
+
+        //new UpdatableEntityConfigurator<Artifact>.Configure(builder);
 
         builder.Property(x => x.VideoId)
                .HasConversion(x => x.Value, y => new (y));

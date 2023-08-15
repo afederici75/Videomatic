@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure.Data.Configurations.Helpers;
 
-public class ImportedEntityConfigurator<TId, T> : UpdatableEntityConfigurator<T>
+public class ImportedEntityConfigurator<T, TId> : UpdatableEntityConfigurator<T, TId>
     where T : ImportedEntity<TId>    
 {
     public class FieldLengths

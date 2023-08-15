@@ -1,24 +1,17 @@
 ﻿namespace Infrastructure.Data.Configurations.Helpers;
 
-public class EntityConfigurator<T>
-    where T : class
-{ 
-
-}
-
-public class UpdatableEntityConfigurator<T> 
+public class UpdatableEntityConfigurator<T, TId>  : EntityConfigurator<T, TId>
     where T : class, IUpdateableEntity
-{ 
-    public virtual void Configure(EntityTypeBuilder<T> builder)
+{
+    public override void Configure(EntityTypeBuilder<T> builder)
     {
-        //builder.Property(x => x.CreatedOn)
-        //       .ValueGeneratedOnAdd()
-        //       .HasDefaultValueSql("GETUTCDATE()")
-        //       .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
-        //
-        //builder.Property(x => x.UpdatedOn)
-        //       .ValueGeneratedOnAddOrUpdate()
-        //       .HasDefaultValueSql("GETUTCDATE()")
-        //       .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        base.Configure(builder);
+
+        builder.Property(x => x.CreatedOn);
+        //.ValueGeneratedOnAdd()
+        //.HasDefaultValueSql("GETUTCDATE()")
+        //.Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
+        builder.Property(x => x.UpdatedOn);
     }
+
 }
