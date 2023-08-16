@@ -2,7 +2,7 @@
 
 namespace Application.Features.Transcripts.Commands;
 
-public record CreateTranscriptCommand(int VideoId,
+public readonly record struct CreateTranscriptCommand(int VideoId,
                                       string Language,
                                       IEnumerable<string> Lines) : IRequest<Result<Transcript>>;
 

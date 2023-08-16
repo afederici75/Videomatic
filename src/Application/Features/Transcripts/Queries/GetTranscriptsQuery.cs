@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Transcripts.Queries;
 
-public record GetTranscriptsQuery(
+public readonly record struct GetTranscriptsQuery(
     // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,

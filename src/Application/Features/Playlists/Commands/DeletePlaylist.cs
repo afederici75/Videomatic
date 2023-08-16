@@ -2,7 +2,7 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public record DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>;
+public readonly record struct DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>;
 
 internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {

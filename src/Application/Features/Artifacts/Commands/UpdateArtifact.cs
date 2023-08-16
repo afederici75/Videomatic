@@ -2,7 +2,7 @@
 
 namespace Application.Features.Artifacts.Commands;
 
-public record UpdateArtifactCommand(ArtifactId Id,
+public readonly record struct UpdateArtifactCommand(ArtifactId Id,
                                     string Name,
                                     string? Text) : IRequest<Result<Artifact>>;
 

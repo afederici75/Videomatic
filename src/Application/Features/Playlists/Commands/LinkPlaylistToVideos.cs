@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Playlists.Commands;
 
-public record LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<int> VideoIds) : IRequest<Result<int>>;
+public readonly record struct LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<int> VideoIds) : IRequest<Result<int>>;
 
 internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToVideosCommand>
 {

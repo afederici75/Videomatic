@@ -2,7 +2,7 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public record CreatePlaylistCommand(string Name,
+public readonly record struct CreatePlaylistCommand(string Name,
                                     string? Description = null) : IRequest<Result<Playlist>>;
 
 internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>

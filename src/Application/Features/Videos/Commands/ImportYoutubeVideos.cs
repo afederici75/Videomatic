@@ -1,10 +1,10 @@
 ﻿namespace Application.Features.Videos.Commands;
 
-public partial record ImportYoutubeVideosCommand(IEnumerable<string> Urls, int? DestinationPlaylistId = null) : IRequest<ImportYoutubeVideosResponse>;
+public readonly record struct ImportYoutubeVideosCommand(IEnumerable<string> Urls, int? DestinationPlaylistId = null) : IRequest<ImportYoutubeVideosResponse>;
 
-public record ImportYoutubeVideosResponse(bool Queued, IEnumerable<string> JobIds, int? PlaylistId = null);
+public readonly record struct ImportYoutubeVideosResponse(bool Queued, IEnumerable<string> JobIds, int? PlaylistId = null);
 
-//public record VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
+//public readonly record struct VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
 
 internal class ImportYoutubeVideoCommandValidator : AbstractValidator<ImportYoutubeVideosCommand>
 {

@@ -2,9 +2,9 @@
 
 // TODO: iffy names
 
-public partial record ImportYoutubePlaylistsCommand(IEnumerable<string> Urls) : IRequest<ImportYoutubePlaylistsResponse>;
+public readonly record struct ImportYoutubePlaylistsCommand(IEnumerable<string> Urls) : IRequest<ImportYoutubePlaylistsResponse>;
 
-public record ImportYoutubePlaylistsResponse(bool Queued, IEnumerable<string> JobIds);
+public readonly record struct ImportYoutubePlaylistsResponse(bool Queued, IEnumerable<string> JobIds);
 
 //public record VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
 

@@ -2,9 +2,9 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>;
+public readonly record struct UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>;
 
-public record UpdatePlaylistResponse(int Id, bool WasUpdated);
+public readonly record struct UpdatePlaylistResponse(int Id, bool WasUpdated);
 
 internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
 {

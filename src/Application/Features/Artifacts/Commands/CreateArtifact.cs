@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Artifacts.Commands;
 
-public record CreateArtifactCommand(VideoId VideoId,
+public readonly record struct CreateArtifactCommand(VideoId VideoId,
                                     string Name,
                                     string Type,
                                     string? Text) : IRequest<Result<Artifact>>;

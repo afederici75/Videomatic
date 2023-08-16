@@ -1,8 +1,8 @@
 ﻿namespace Application.Features.Artifacts.Commands;
 
-public record DeleteArtifactCommand(ArtifactId Id) : IRequest<Result>;
+public readonly record struct DeleteArtifactCommand(ArtifactId Id) : IRequest<Result>;
 
-public class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
+internal class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
 {
     public DeleteArtifactCommandValidator()
     {

@@ -3,7 +3,7 @@ using Domain.Videos;
 
 namespace Application.Features.Videos.Commands;
 
-public record CreateVideoCommand(
+public readonly record struct CreateVideoCommand(
     string Location,
     string Name,
     string? Description,

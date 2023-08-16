@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Playlists.Queries;
 
-public record GetPlaylistsQuery(
+public readonly record struct GetPlaylistsQuery(
     // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,

@@ -6,7 +6,7 @@ namespace Application.Features.Videos.Commands;
 /// <summary>
 /// This command is used to update a video in the repository.
 /// </summary>
-public record UpdateVideoCommand(
+public readonly record struct UpdateVideoCommand(
     VideoId Id, 
     string Name, 
     string? Description = default) : IRequest<Result<Video>>;

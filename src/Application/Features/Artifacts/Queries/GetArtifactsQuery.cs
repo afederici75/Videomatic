@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Artifacts.Queries;
 
-public record GetArtifactsQuery(
+public readonly record struct GetArtifactsQuery(
     // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,

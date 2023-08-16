@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Videos.Queries;
 
-public record GetVideosQuery(
+public readonly record struct GetVideosQuery(
     // IBasicQuery
     string? SearchText = null,
     string? OrderBy = null,
