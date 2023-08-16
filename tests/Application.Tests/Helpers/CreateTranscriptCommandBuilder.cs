@@ -1,13 +1,14 @@
 ﻿using Application.Features.Transcripts.Commands;
+using Domain.Transcripts;
 using Domain.Videos;
 
 namespace Application.Tests.Helpers;
 
 public class CreateTranscriptCommandBuilder
 {
-    public static CreateTranscriptCommand WithDummyValues(VideoId videoId)
+    public static UpdateTranscriptCommand WithDummyValues(TranscriptId transcriptId)
     {
-        return new CreateTranscriptCommand(videoId: videoId,
+        return new UpdateTranscriptCommand(transcriptId: transcriptId,
                                            language: "US",
                                            lines: new[] 
                                            { 
