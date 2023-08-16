@@ -8,11 +8,11 @@ public class Video : ImportedEntity, IAggregateRoot
 
     }
 
-    public VideoId Id { get; private set; } = default!;
+    public Video(EntityOrigin origin)
+        : base(origin)
+    { }
 
-    //public Video(EntityOrigin origin)
-    //    : base(origin)
-    //{ }
+    public VideoId Id { get; private set; } = default!;
 
     #region Private
 

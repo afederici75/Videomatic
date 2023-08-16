@@ -9,6 +9,7 @@ public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddVideomaticSharedKernel(this IServiceCollection services, IConfiguration configuration)
     {
+        // Adds Serilog from the configuration
         var cfg = new LoggerConfiguration().ReadFrom.Configuration(configuration);
         Serilog.Core.Logger logger = cfg.CreateLogger();
 

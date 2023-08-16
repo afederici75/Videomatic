@@ -2,8 +2,8 @@
 
 namespace SharedKernel.CQRS.Commands;
 
-public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
-    where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
+public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IRequestHandler<TDeleteCommand, Result>
+    where TDeleteCommand : IRequest<Result>, IRequestWithId
     where TEntity : class
     where TId : struct
 {
@@ -16,7 +16,7 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
     protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
-    public async Task<Result<bool>> Handle(TDeleteCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(TDeleteCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -29,10 +29,9 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
             }
 
             // TODO: this is where I could compare a version-id for the entity...
-
             await Repository.DeleteAsync(itemToDelete, cancellationToken);
 
-            return true;
+            return Result.Success();
         }
         catch (Exception ex)
         {

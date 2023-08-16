@@ -20,11 +20,11 @@ public abstract class CreateEntityHandler<TCreateCommand, TEntity> :
     {
         try
         {
-            var entity = Mapper.Map<TCreateCommand, TEntity>(request);
+            var newEntity = Mapper.Map<TCreateCommand, TEntity>(request);
 
-            var result = await Repository.AddAsync(entity, cancellationToken);
+            var final = await Repository.AddAsync(newEntity, cancellationToken);
 
-            return result;
+            return final;
         }
         catch (Exception ex)
         {

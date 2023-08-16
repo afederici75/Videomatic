@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Xml;
+using Application.Specifications;
 
 namespace Infrastructure.YouTube;
 
@@ -45,7 +46,7 @@ public class YouTubeImporter : IVideoImporter
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the playlists that already exist in the database
-            var qry = new PlaylistsByProviderItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
+            var qry = new Playlists.ByProviderItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
             var dups = await PlaylistRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -104,7 +105,7 @@ public class YouTubeImporter : IVideoImporter
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the videos that already exist in the database
-            var qry = new VideosByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var qry = new Videos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
             var dups = await VideoRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -144,7 +145,7 @@ public class YouTubeImporter : IVideoImporter
     {
         var sw = Stopwatch.StartNew();
 
-        var qry = new TranscriptionByVideoId(videoIds);
+        var qry = new Transcripts.ByVideoId(videoIds);
         var existingTrans = await TranscriptRepository.ListAsync(qry, cancellation);
         var videoIdsToSkip = existingTrans.Select(t => t.VideoId);
 

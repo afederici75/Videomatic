@@ -30,10 +30,10 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
         // TODO?: this is where I could compare a version-id for the entity...
 
         // Maps using Automapper which will access private setters to update currentAgg.
-        var res = Mapper.Map(request, currentAgg);
+        var final = Mapper.Map(request, currentAgg);
 
-        await Repository.UpdateAsync(currentAgg, cancellationToken);
+        await Repository.UpdateAsync(final, cancellationToken);
 
-        return res;
+        return Result.Success(currentAgg);
     }
 }

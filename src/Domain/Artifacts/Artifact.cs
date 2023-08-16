@@ -1,5 +1,4 @@
 ﻿using Domain.Videos;
-using SharedKernel.Model;
 
 namespace Domain.Artifacts;
 
