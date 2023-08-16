@@ -3,7 +3,7 @@ SPRINT
 - [X] Refactor commands:
 	- [X] REMOVE CreateTranscriptCommand
 	- [X] REMOVE DeleteTranscriptCommand
-	- [ ] add UpdateTranscriptCommand with limitations
+	- [X] add UpdateTranscriptCommand with limitations
 
 - [ ] Refactor transcript lines into a string
 

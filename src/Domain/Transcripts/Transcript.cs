@@ -1,5 +1,4 @@
 ﻿using Domain.Videos;
-using SharedKernel.Model;
 
 namespace Domain.Transcripts;
 
@@ -14,7 +13,7 @@ public class Transcript : TrackedEntity, IAggregateRoot
     public Transcript(VideoId videoId, string language, IEnumerable<string> lines)
     {
         VideoId = videoId;
-        Language = language;
+        Language = language;        
         AddLines(lines);
     }
 
@@ -22,20 +21,21 @@ public class Transcript : TrackedEntity, IAggregateRoot
     public VideoId VideoId { get; private set; } = default!;
     public string Language { get; private set; } = default!;
 
-    public IEnumerable<TranscriptLine> Lines => _lines;                   
+    public IList<TranscriptLine> Lines { get; private set; } = new List<TranscriptLine>();
 
     public Transcript AddLines(IEnumerable<string> allText)
     {
         var lines = allText.Select(t => (TranscriptLine)t).ToArray();
-        _lines.AddRange(lines);
+        foreach (var l in lines)
+            Lines.Add(l);
         return this;
     }
-
+    
     public Transcript AddLine(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {
         var line = new TranscriptLine(text, duration, startsAt);
-        _lines.Add(line);
-
+        Lines.Add(line);
+    
         return this;
     }
 
@@ -43,8 +43,6 @@ public class Transcript : TrackedEntity, IAggregateRoot
 
     private Transcript()
     { }
-
-    readonly List<TranscriptLine> _lines = new();    
 
     #endregion
 }

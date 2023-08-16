@@ -64,16 +64,12 @@ public static class FullTextIndexingMigrationHelper
 
         migrationBuilder.Sql(
             sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Transcript)}s (
-                                {nameof(Transcript.Language)})
+                                {nameof(Transcript.Language)},
+                                {nameof(Transcript.Lines)})
                        KEY INDEX PK_Transcripts ON FTVideomatic
                        WITH STOPLIST = OFF, CHANGE_TRACKING AUTO;",
             suppressTransaction: true);
 
-        migrationBuilder.Sql(
-            sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(TranscriptLine)}s (
-                                {nameof(TranscriptLine.Text)})
-                       KEY INDEX PK_TranscriptLines ON FTVideomatic
-                       WITH STOPLIST = OFF, CHANGE_TRACKING AUTO;",
-            suppressTransaction: true);
+        
     }
 }

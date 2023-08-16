@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230815194033_FullTextIndexing")]
-    partial class FullTextIndexing
+    [Migration("20230816230100_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,6 +164,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Lines")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -446,40 +450,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.OwnsMany("Domain.Transcripts.TranscriptLine", "Lines", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasDefaultValueSql("NEXT VALUE FOR TranscriptLineSequence");
-
-                            b1.Property<TimeSpan?>("Duration")
-                                .HasColumnType("time");
-
-                            b1.Property<TimeSpan?>("StartsAt")
-                                .HasColumnType("time");
-
-                            b1.Property<string>("Text")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<int>("TranscriptId")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("Text");
-
-                            b1.HasIndex("TranscriptId");
-
-                            b1.ToTable("TranscriptLines", "Videomatic");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TranscriptId");
-                        });
-
-                    b.Navigation("Lines");
                 });
 
             modelBuilder.Entity("Domain.Videos.Video", b =>

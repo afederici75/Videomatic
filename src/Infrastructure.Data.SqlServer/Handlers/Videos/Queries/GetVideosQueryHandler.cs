@@ -1,8 +1,8 @@
 ﻿namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
-public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
+public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {    
-    public GetVideosHandler(IDbContextFactory<VideomaticDbContext> factory)
+    public GetVideosQueryHandler(IDbContextFactory<VideomaticDbContext> factory)
     {
         Factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
