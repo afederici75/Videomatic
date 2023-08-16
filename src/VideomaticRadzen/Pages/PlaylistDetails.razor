@@ -1,55 +1,46 @@
 ﻿@page "/PlaylistDetails/{PlaylistId:int?}"
-@using VideomaticRadzen.Components.Playlists
+
 @inject ISender Sender
 
-@if (playlist == null)
-{
+@if ((PlaylistId == null) || (Playlist == null))
     return;
-}
 
 <RadzenRow>
     <RadzenColumn>
-        <PlaylistDetailHeader Playlist="@playlist" />
+        <PlaylistDetailHeader Playlist="@Playlist" />
     </RadzenColumn>
 </RadzenRow>
 
 <RadzenRow>
-    <Videos PlaylistId="@PlaylistId" />
+    <Videos PlaylistId="@((PlaylistId)PlaylistId)" />
 </RadzenRow>
 
 @code {
-    //bool isLoading = false;
-    PlaylistDTO? playlist;
+    PlaylistDTO? Playlist;
 
     [Parameter]
     public int? PlaylistId { get; set; }
 
     protected async override Task OnParametersSetAsync()
     {
-        if ((PlaylistId != null) && (playlist == null))
-            await GetPlaylist();
+        await GetPlaylist();
 
         await base.OnParametersSetAsync();
     }
 
     async Task GetPlaylist()
     {
-        //isLoading = true;
+        if (PlaylistId == null) 
+            return;
 
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: new int[] { PlaylistId!.Value });
-        //SelectedThumbnail: ThumbnailResolutionDTO.Standard);
+                playlistIds: new PlaylistId[] { (PlaylistId)this.PlaylistId });        
 
         Page<PlaylistDTO> results = await Sender.Send(query);
 
-        playlist = results.Items.SingleOrDefault();
-        if (playlist != null)
-        {
-            
-        }
-
-        //isLoading = false;
+        Playlist = results.Items.SingleOrDefault();
+               
     }
 }

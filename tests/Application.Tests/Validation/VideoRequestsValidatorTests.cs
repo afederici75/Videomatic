@@ -1,6 +1,8 @@
 ﻿using Application.Tests.Helpers;
 using Application.Abstractions;
 using Application.Features.Videos;
+using Domain.Playlists;
+using Domain.Videos;
 
 namespace Application.Tests.Validation;
 
@@ -14,23 +16,12 @@ public class VideoRequestsValidatorTests
     }
 
     [Theory]
-    [InlineData(null, null, null, 2)]
-    [InlineData("", "", null, 2)]
-    [InlineData("http://something/1", null, null, 1)]
-    [InlineData("http://somethingElse/2 ", "Video title", "Description", 0)]
-    public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
-    {
-        ValidatorHelper.Validate<CreateVideoCommandValidator, CreateVideoCommand>(
-            CreateVideoCommandBuilder.WithEmptyVideoDetails(location, title, description), expectedErrors);
-    }
-
-    [Theory]
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
-    public void ValidateDeleteVideoCommand(int id, int expectedErrors)
+    public void ValidateDeleteVideoCommand(VideoId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeleteVideoCommand.Validator, DeleteVideoCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -39,9 +30,9 @@ public class VideoRequestsValidatorTests
     [InlineData(1, null, null, 1)]
     [InlineData(1, "Play list", null, 0)]
     [InlineData(2, "Play list", "Description", 0)]
-    public void ValidateUpdateVideoCommand(int id, string title, string? description, int expectedErrors)
+    public void ValidateUpdateVideoCommand(VideoId id, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
+        ValidatorHelper.Validate<UpdateVideoCommand.Validator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
     }
 
     [Theory]
@@ -57,7 +48,7 @@ public class VideoRequestsValidatorTests
         int? take,
         int expectedErrors)
     {
-        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(
-            new(filter, orderBy, skip, take, TextSearchType.FreeText, playlistIds), expectedErrors);
+        ValidatorHelper.Validate<GetVideosQuery.GetVideosQueryValidator, GetVideosQuery>(
+            new(filter, orderBy, skip, take, TextSearchType.FreeText, playlistIds?.Select(x => (PlaylistId)x)), expectedErrors);
     }
 }

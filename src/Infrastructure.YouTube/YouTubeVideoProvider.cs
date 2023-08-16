@@ -1,4 +1,5 @@
 ﻿using Google.Apis.YouTube.v3;
+using Infrastructure.YouTube.Extensions;
 
 namespace Infrastructure.YouTube;
 
@@ -14,7 +15,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
     readonly YouTubeService YouTubeService;
 
-    public async IAsyncEnumerable<GenericChannel> GetChannelsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
+    public async IAsyncEnumerable<GenericChannelDTO> GetChannelsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
         foreach (var page in idsOrUrls.Page(MaxYouTubeItemsPerPage))
         {
@@ -32,7 +33,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
     
 
-    public async IAsyncEnumerable<GenericPlaylist> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
+    public async IAsyncEnumerable<GenericPlaylistDTO> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
         foreach (var page in idsOrUrls.Page(MaxYouTubeItemsPerPage))
         {
@@ -50,7 +51,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
     
 
-    public async IAsyncEnumerable<GenericVideo> GetVideosAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
+    public async IAsyncEnumerable<GenericVideoDTO> GetVideosAsync(IEnumerable<string> idsOrUrls, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
         foreach (var page in idsOrUrls.Page(MaxYouTubeItemsPerPage))
         {
@@ -66,7 +67,7 @@ public class YouTubeVideoProvider : IVideoProvider
         }
     }
 
-    public async IAsyncEnumerable<GenericVideo> GetVideosOfPlaylistAsync(string playlistIdOrUrl, [EnumeratorCancellation] CancellationToken cancellation = default)
+    public async IAsyncEnumerable<GenericVideoDTO> GetVideosOfPlaylistAsync(string playlistIdOrUrl, [EnumeratorCancellation] CancellationToken cancellation = default)
     {
         var request = YouTubeService.PlaylistItems.List("snippet");
         request.PlaylistId = FromStringOrQueryString(playlistIdOrUrl, "list");

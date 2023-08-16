@@ -96,10 +96,10 @@
         await base.OnInitializedAsync();
 
         var msg = new GetPlaylistsQuery(
-            SearchText: null,
-            OrderBy: null,
-            Skip: 0,
-            Take: 1024
+            searchText: null,
+            orderBy: null,
+            skip: 0,
+            take: 1024
         );
 
         Page<PlaylistDTO> response = await Sender.Send(msg);

@@ -42,7 +42,7 @@ public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery
         q = q.Skip(skip).Take(take);
 
         // Projection
-        var final = q.Select(p => new PlaylistDTO(
+        var final = q.AsNoTracking().Select(p => new PlaylistDTO(
             p.Id,
             p.Name,
             p.Thumbnail ?? p.Origin.Thumbnail,
@@ -51,7 +51,7 @@ public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery
             p.Videos.Count()));
 
         // Counts
-        var res = await final.AsNoTracking().ToListAsync(cancellationToken);
+        var res = await final.ToListAsync(cancellationToken);
 
         return new Page<PlaylistDTO>(res, skip, take, totalCount);
     }

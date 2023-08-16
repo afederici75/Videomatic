@@ -4,7 +4,7 @@ namespace SharedKernel.CQRS.Commands;
 
 public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
     IRequestHandler<TUpsertCommand, Result<TEntity>>
-    where TUpsertCommand : UpsertEntityCommand<TEntity>
+    where TUpsertCommand : IRequest<Result<TEntity>>
     where TEntity : class
     where TId : class
 {
@@ -16,32 +16,43 @@ public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
 
     protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
-    abstract protected TId ConvertIdOfRequest(TUpsertCommand request);
-
+    
     public async Task<Result<TEntity>> Handle(TUpsertCommand request, CancellationToken cancellationToken)
     {
-        if (request.Id.HasValue)
+        try
         {
-            TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            // TODO: improve this
+            var idProp = typeof(TUpsertCommand).GetProperty("Id") ?? throw new InvalidOperationException("The command must have an Id property.");
+            TId id = (TId)idProp.GetValue(request)!;
 
-            var stored = await Repository.GetByIdAsync(id, cancellationToken);
-            if (stored == null)
+            // TODO: not really tested...
+            if (id != null)
             {
-                return Result.NotFound();
+                //TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            
+                var stored = await Repository.GetByIdAsync(id, cancellationToken);
+                if (stored == null)
+                {
+                    return Result.NotFound();
+                }
+            
+                var final = Mapper.Map(request, stored);
+                await Repository.UpdateAsync(final, cancellationToken);
+            
+                return Result.Success(stored);
             }
-
-            var final = Mapper.Map(request, stored);
-            await Repository.UpdateAsync(final, cancellationToken);
-
-            return Result.Success(stored);
+            else
+            {
+                var entity = Mapper.Map<TUpsertCommand, TEntity>(request);
+            
+                var result = await Repository.AddAsync(entity, cancellationToken);
+            
+                return result;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            var entity = Mapper.Map<TUpsertCommand, TEntity>(request);
-
-            var result = await Repository.AddAsync(entity, cancellationToken);
-
-            return result;
+            return Result.Error(ex.Message);
         }
     }   
 }

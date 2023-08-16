@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Application.Features.Videos.Queries.GetVideosQuery">
+    <Position X="11.25" Y="1.75" Width="3.25" />
+    <NestedTypes>
+      <Class Name="Application.Features.Videos.Queries.GetVideosQuery.GetVideosQueryValidator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Queries\GetVideosQuery.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AJAAAAAAAAAEAAAAAAIAAAAAAAgEAAAAAAEAAAAAEAA=</HashCode>
+      <FileName>Features\Videos\Queries\GetVideosQuery.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Videos.Commands.DeleteVideoCommand" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="4" Width="2" />
+    <NestedTypes>
+      <Class Name="Application.Features.Videos.Commands.DeleteVideoCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\DeleteVideoCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Videos.Commands.DeleteVideoCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\DeleteVideoCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Videos\Commands\DeleteVideoCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="3.75" Width="2.75" />
+    <NestedTypes>
+      <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Videos.Commands.SetVideoTagsCommand" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="1.25" Width="2" />
+    <NestedTypes>
+      <Class Name="Application.Features.Videos.Commands.SetVideoTagsCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\SetVideoTagsCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Videos.Commands.SetVideoTagsCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\SetVideoTagsCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Videos\Commands\SetVideoTagsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Videos.Commands.UpdateVideoCommand" BaseTypeListCollapsed="true">
+    <Position X="1" Y="1.25" Width="2" />
+    <NestedTypes>
+      <Class Name="Application.Features.Videos.Commands.UpdateVideoCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\UpdateVideoCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Videos.Commands.UpdateVideoCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Videos\Commands\UpdateVideoCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Videos\Commands\UpdateVideoCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

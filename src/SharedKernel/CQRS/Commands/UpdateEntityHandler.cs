@@ -4,7 +4,7 @@ namespace SharedKernel.CQRS.Commands;
 
 public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     IRequestHandler<TUpdateCommand, Result<TEntity>>
-    where TUpdateCommand : UpdateEntityCommand<TEntity>, IRequestWithId
+    where TUpdateCommand : IRequest<Result<TEntity>>
     where TEntity : class
     where TId : struct
 {
@@ -19,21 +19,28 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
 
     public async Task<Result<TEntity>> Handle(TUpdateCommand request, CancellationToken cancellationToken)
     {
-        TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
-
-        TEntity? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
-        if (currentAgg == null)
+        try
         {
-            return Result.NotFound();
+            TId id = Helpers.GetIdPropertyValue<TUpdateCommand, TId>(request);
+
+            TEntity? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
+            if (currentAgg == null)
+            {
+                return Result.NotFound();
+            }
+
+            // TODO?: this is where I could compare a version-id/etag for the entity...
+
+            // Maps using Automapper which will access private setters to update currentAgg.
+            var final = Mapper.Map(request, currentAgg);
+
+            await Repository.UpdateAsync(final, cancellationToken);
+
+            return Result.Success(currentAgg);
         }
-
-        // TODO?: this is where I could compare a version-id for the entity...
-
-        // Maps using Automapper which will access private setters to update currentAgg.
-        var final = Mapper.Map(request, currentAgg);
-
-        await Repository.UpdateAsync(final, cancellationToken);
-
-        return Result.Success(currentAgg);
+        catch (Exception ex)
+        {
+            return Result.Error(ex.Message);
+        }
     }
 }

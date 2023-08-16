@@ -1,7 +1,7 @@
 ﻿using Application.Tests.Helpers;
 using Application.Features.Artifacts.Commands;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Domain.Videos;
+using Domain.Playlists;
 
 namespace Application.Tests.Validation;
 
@@ -22,16 +22,16 @@ public class ArtifactValidatorTests
     [InlineData(5, null, null, null, 3)]
     public void ValidateCreateArtifactCommand(int videoId, string type, string name, string? text, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateArtifactCommandValidator, CreateArtifactCommand>(new(videoId, name, type, text), expectedErrors);
+        ValidatorHelper.Validate<CreateArtifactCommand.Validator, CreateArtifactCommand>(new((VideoId)videoId, name, type, text), expectedErrors);
     }
 
     [Theory]
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
-    public void ValidateDeletePlaylistCommand(int id, int expectedErrors)
+    public void ValidateDeletePlaylistCommand(PlaylistId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeletePlaylistCommandValidator, DeletePlaylistCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeletePlaylistCommand.Validator, DeletePlaylistCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -40,8 +40,8 @@ public class ArtifactValidatorTests
     [InlineData(1, null, null, 1)]
     [InlineData(1, "Play list", null, 0)]
     [InlineData(2, "Play list", "Description", 0)]
-    public void ValidateUpdatePlaylistCommand(int id, string name, string? description, int expectedErrors)
+    public void ValidateUpdatePlaylistCommand(PlaylistId id, string name, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdatePlaylistCommandValidator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
+        ValidatorHelper.Validate<UpdatePlaylistCommand.Validator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
     }
 }

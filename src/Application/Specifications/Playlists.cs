@@ -13,15 +13,19 @@ public static class Playlists
 
     public class ByIds : Specification<Playlist>
     {
-        public ByIds(params PlaylistId[] playlistIds)
+        public ByIds(IEnumerable<PlaylistId> playlistIds)
         {
             Query.Where(v => playlistIds.Contains(v.Id));
         }
+
+        public ByIds(PlaylistId playlistId)
+            : this(new[] { playlistId }) 
+        { }
     }
 
-    public class ByProviderItemId : Specification<Playlist>
+    public class ByProviderAndItemId : Specification<Playlist>
     {
-        public ByProviderItemId(string providerId, IEnumerable<string> itemIds)
+        public ByProviderAndItemId(string providerId, IEnumerable<string> itemIds)
         {
             Query.Where(v =>
                 v.Origin.ProviderId.Equals(providerId) &&

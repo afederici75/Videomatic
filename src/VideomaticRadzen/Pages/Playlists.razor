@@ -104,11 +104,11 @@
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
-                Skip: skip,
-                Take: take,
-                OrderBy: null,
-                SearchText: SearchText);
+                playlistIds: (PlaylistId != null) ? new PlaylistId[] { (PlaylistId)PlaylistId } : null,
+                skip: skip,
+                take: take,
+                orderBy: null,
+                searchText: SearchText);
 
         Page<PlaylistDTO> results = await Sender.Send(query);
 

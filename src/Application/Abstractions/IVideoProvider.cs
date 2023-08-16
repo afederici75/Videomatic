@@ -7,12 +7,12 @@ namespace Application.Abstractions;
 /// </summary>
 public interface IVideoProvider
 {
-    IAsyncEnumerable<GenericChannel> GetChannelsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericChannelDTO> GetChannelsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
 
-    IAsyncEnumerable<GenericPlaylist> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericPlaylistDTO> GetPlaylistsAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
     
-    IAsyncEnumerable<GenericVideo> GetVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericVideoDTO> GetVideosAsync(IEnumerable<string> idsOrUrls, CancellationToken cancellation = default);
 
-    IAsyncEnumerable<GenericVideo> GetVideosOfPlaylistAsync(string playlistIdOrUrl, CancellationToken cancellation = default);
+    IAsyncEnumerable<GenericVideoDTO> GetVideosOfPlaylistAsync(string playlistIdOrUrl, CancellationToken cancellation = default);
 }
 

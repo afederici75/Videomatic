@@ -1,4 +1,5 @@
 ﻿@page "/youtubeimport"
+@using Domain.Playlists;
 
 @inject ISender Sender
 
@@ -68,11 +69,11 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
     public string PlaylistImportResult { get; set; } = "No playlists imported yet...";
 
     public IEnumerable<PlaylistDTO> PlaylistDTOs { get; set; } = new List<PlaylistDTO>();
-    public int? TargetPlaylistId { get; set; } = null;
+    public PlaylistId? TargetPlaylistId { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
-        var query = new GetPlaylistsQuery(OrderBy: "Name");
+        var query = new GetPlaylistsQuery(orderBy: "Name");
 
         Page<PlaylistDTO> results = await Sender.Send(query);
 
@@ -89,7 +90,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
         var urls = VideoUrls.Split(new[] { '\r', '\n' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         var cmd = new ImportYoutubeVideosCommand(urls, TargetPlaylistId);        
-        ImportYoutubeVideosResponse response = await Sender.Send(cmd);
+        var response = await Sender.Send(cmd);
 
         VideoImportResult = response.ToString();
     }

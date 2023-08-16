@@ -55,7 +55,7 @@ public abstract class VideomaticDbContext : DbContext
                 
         foreach (var entry in entries)
         {
-            if (entry.Entity is TrackedEntity trackable)
+            if (entry.Entity is TrackedEntity)
             {
                 switch (entry.State)
                 {
@@ -65,10 +65,7 @@ public abstract class VideomaticDbContext : DbContext
                         entry.Property(nameof(TrackedEntity.CreatedBy)).IsModified = false;
 
                         // Sets CreatedBy/CreatedOn for any updated entity 
-                        var cv = entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue;
-                        entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue = utcNow;
-                        var cv2 = entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue;
-
+                        entry.Property(nameof(TrackedEntity.UpdatedOn)).CurrentValue = utcNow;                        
                         entry.Property(nameof(TrackedEntity.UpdatedBy)).CurrentValue = "UPDATE_ID2";
                         break;
 

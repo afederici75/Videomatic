@@ -8,7 +8,7 @@ public class ArtifactTests
     [Fact]
     public void CreateArtifact()
     {
-        var artifact = new Artifact(1, name: "Name", type: "AI", text: "Nothing");
+        var artifact = new Artifact((VideoId)1, name: "Name", type: "AI", text: "Nothing");
 
         artifact.Should().NotBeNull();
         artifact.Id.Should().Be((ArtifactId)0);

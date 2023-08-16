@@ -16,7 +16,7 @@ public abstract class VideoConfiguration : ImportedEntityConfiguration<Video>,
         builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
 
         builder.Property(x => x.Id)
-               .HasConversion(x => x.Value, y => y);
+               .HasConversion(x => x.Value, y => (VideoId)y);
 
         // ---------- Relationships ----------
 

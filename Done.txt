@@ -2,6 +2,14 @@
 Non UI
 ******************
 
+- [X] MASSIVE refactoring of ids led to finding several bugs! Big payoff/very pleased!!!
+	- The code looks much more solid now that id-types are used everywhere!
+	- Moved STIDs all the way up to the Application level (which is where most of thr bugs were found)
+	- And more. Aggregated command + (validator/handler) in Application. 
+		- It's really clean since the implementation is almost all in Application.
+		  The only exceptions are the Query handlers, which are storage specific and belong
+		  in infra.
+
 - [X] Create batch files to simplify scaffolding
 	- [X] AddNewMigration.bat
 	- [X] ReScaffoldFromScratch.bat

@@ -7,19 +7,26 @@ public static class IRepositoryOfPlaylistExtensions
         IEnumerable<VideoId> videoIds,
         CancellationToken cancellationToken = default)
     {
-        Guard.Against.Null(repository, nameof(repository));
-        Guard.Against.Null(playlistId, nameof(playlistId));
-
-        var pl = await repository.GetByIdAsync(playlistId, cancellationToken);
-        if (pl is null)
+        try
         {
-            return Result<int>.NotFound();
+            Guard.Against.Null(repository, nameof(repository));
+            Guard.Against.Null(playlistId, nameof(playlistId));
+
+            Playlist? pl = await repository.GetByIdAsync(playlistId, cancellationToken);
+            if (pl is null)
+            {
+                return Result<int>.NotFound();
+            }
+
+            int newLinksCount = pl.LinkToVideos(videoIds);
+
+            await repository.SaveChangesAsync(cancellationToken);
+
+            return Result<int>.Success(newLinksCount);
         }
-
-        var newLinks = pl.LinkToVideos(videoIds);
-
-        await repository.SaveChangesAsync(cancellationToken);
-
-        return newLinks;
+        catch (Exception ex)
+        {
+            return Result<int>.Error(ex.Message);
+        }
     }
 }
