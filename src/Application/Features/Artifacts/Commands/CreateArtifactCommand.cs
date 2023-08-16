@@ -7,6 +7,8 @@ public class CreateArtifactCommand(VideoId videoId, string name, string type, st
     public readonly string Type = type;
     public readonly string? Text  = text;
 
+    #region Validator
+
     internal class Validator : AbstractValidator<CreateArtifactCommand>
     {
         public Validator()
@@ -18,11 +20,14 @@ public class CreateArtifactCommand(VideoId videoId, string name, string type, st
         }
     }
 
-    internal class Handler : CreateEntityHandler<CreateArtifactCommand, Artifact>
+    #endregion
+
+    #region Handler
+
+    internal class Handler(IRepository<Artifact> repository, IMapper mapper) : CreateEntityHandler<CreateArtifactCommand, Artifact>(repository, mapper)
     {
-        public Handler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
-        {
-        }
     }
+
+    #endregion
 }
 

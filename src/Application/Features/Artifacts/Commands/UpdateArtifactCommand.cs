@@ -17,11 +17,8 @@ public class UpdateArtifactCommand(ArtifactId id, string name, string? text) : I
         }
     }
 
-    internal class Handler : UpdateEntityHandler<UpdateArtifactCommand, Artifact, ArtifactId>
+    internal class Handler(IRepository<Artifact> repository, IMapper mapper) : UpdateEntityHandler<UpdateArtifactCommand, Artifact, ArtifactId>(repository, mapper)
     {
-        public Handler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
-        {
-        }
     }
 
 }

@@ -18,15 +18,9 @@ public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? de
     }
 
 
-    internal class Handler : IRequestHandler<ImportYoutubeVideosCommand, Result<string>>
+    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportYoutubeVideosCommand, Result<string>>
     {
-        public Handler(
-            IBackgroundJobClient jobClient)
-        {
-            JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
-        }
-
-        public IBackgroundJobClient JobClient { get; }
+        public IBackgroundJobClient JobClient { get; } = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
 
 
         public Task<Result<string>> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)

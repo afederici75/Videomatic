@@ -60,7 +60,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
         //var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
         //                        .ToThumbnailResolution();
 
-        var final = q.Select(v => new VideoDTO(
+        var final = q.AsNoTracking().Select(v => new VideoDTO(
             v.Id,
             $"https://www.youtube.com/videos?v=" + v.Origin.ProviderItemId,
             v.Name,
@@ -79,7 +79,7 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             ));
 
         // Fetches
-        var res = await final.AsNoTracking().ToListAsync(cancellationToken);
+        var res = await final.ToListAsync(cancellationToken);
         
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    

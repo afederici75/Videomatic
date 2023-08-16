@@ -2,7 +2,7 @@
 
 namespace Application.Features.Videos;
 
-public record VideoDTO(
+public readonly record struct VideoDTO(
     int Id = 0,
     string Location = "",
     string Name = "",

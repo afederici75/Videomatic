@@ -16,12 +16,12 @@ public class CreateVideoCommandBuilder
             location: location,
             name: name,
             description: description,
-            provider: None,
-            videoPublishedAt: DateTime.UtcNow,
+            providerId: None,
+            publishedAt: DateTime.UtcNow,
             channelId: None,
             playlistId: None,
-            videoOwnerChannelTitle: None,
-            videoOwnerChannelId: None,
+            ownerChannelTitle: None,
+            ownerChannelId: None,
             thumbnailUrl: "http://1",
             pictureUrl: "http://2");
     }

@@ -14,14 +14,9 @@ public class SetVideoTagsCommand(VideoId Id, string[] Tags) : IRequest<Result>
         }
     }
 
-    internal class Handler : IRequestHandler<SetVideoTagsCommand, Result>
+    internal class Handler(IRepository<Video> repository) : IRequestHandler<SetVideoTagsCommand, Result>
     {
-        private readonly IRepository<Video> _repository;
-
-        public Handler(IRepository<Video> repository)
-        {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-        }
+        private readonly IRepository<Video> _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
         public async Task<Result> Handle(SetVideoTagsCommand request, CancellationToken cancellationToken = default)
         {

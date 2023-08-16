@@ -20,6 +20,8 @@ public class GetArtifactsQuery(
     public IEnumerable<ArtifactId>? ArtifactIds { get; } = artifactIds;
     public string? SearchOn { get; } = SearchOn;
 
+    #region Validator
+
     internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>
     {
         public GetArtifactsQueryValidator()
@@ -49,6 +51,6 @@ public class GetArtifactsQuery(
         }
     }
 
-
+    #endregion
 }
 

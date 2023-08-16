@@ -38,10 +38,10 @@ public class VideosTests : IClassFixture<DbContextFixture>
         //video.Location.Should().BeEquivalentTo(createCommand.Location);
         //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
         //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
-        video.Origin.ProviderId.Should().BeEquivalentTo(createCommand.Provider);
-        video.Origin.ChannelId.Should().BeEquivalentTo(createCommand.VideoOwnerChannelId);
-        video.Origin.ChannelName.Should().BeEquivalentTo(createCommand.VideoOwnerChannelTitle);
-        video.Origin.PublishedOn.Should().Be(createCommand.VideoPublishedAt);        
+        video.Origin.ProviderId.Should().BeEquivalentTo(createCommand.ProviderId);
+        video.Origin.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId);
+        video.Origin.ChannelName.Should().BeEquivalentTo(createCommand.ChannelName);
+        video.Origin.PublishedOn.Should().Be(createCommand.PublishedOn);        
 
         Fixture.DbContext.Videos.Remove(video);
         await Fixture.DbContext.SaveChangesAsync();

@@ -2,7 +2,7 @@
 
 namespace Application.Features.Playlists;
 
-public record PlaylistDTO(
+public readonly record struct PlaylistDTO(
     int Id,
     string Name,
     ImageReference Thumbnail,

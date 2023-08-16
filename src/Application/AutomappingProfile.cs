@@ -11,11 +11,17 @@ public class AutomappingProfile : Profile
         CreateMap<UpdatePlaylistCommand, Playlist>();
         CreateMap<DeletePlaylistCommand, Playlist>();
         // Videos
+
         CreateMap<CreateVideoCommand, Video>()
-            .ForPath(dest => dest.Origin!.ChannelId, opt => opt.MapFrom(src => src.VideoOwnerChannelId))
-            .ForPath(dest => dest.Origin!.ChannelName, opt => opt.MapFrom(src => src.VideoOwnerChannelTitle))
-            .ForPath(dest => dest.Origin!.PublishedOn, opt => opt.MapFrom(src => src.VideoPublishedAt))
-            .ForPath(dest => dest.Origin!.ProviderId, opt => opt.MapFrom(src => src.Provider));
+            .ForPath(dest => dest.Origin!.ProviderId, opt => opt.MapFrom(src => src.ProviderId))
+            .ForPath(dest => dest.Origin!.ProviderItemId, opt => opt.MapFrom(src => src.))
+            .ForPath(dest => dest.Origin!.ChannelId, opt => opt.MapFrom(src => src.ChannelId))
+            .ForPath(dest => dest.Origin!.ChannelName, opt => opt.MapFrom(src => src.ChannelName))
+            .ForPath(dest => dest.Origin!.PublishedOn, opt => opt.MapFrom(src => src.PublishedOn))            
+            .ForPath(dest => dest.Origin!., opt => opt.MapFrom(src => src.PlaylistId))
+            .ForPath(dest => dest.Origin!., opt => opt.MapFrom(src => src.PictureUrl))
+
+
         CreateMap<UpdateVideoCommand, Video>();
         CreateMap<DeleteVideoCommand, Video>();
         // Transcripts

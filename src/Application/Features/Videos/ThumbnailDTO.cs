@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Videos;
 
-public record ThumbnailDTO(
+public readonly record struct ThumbnailDTO(
     int Id = 0,
     int VideoId = 0,
     string Location = "",

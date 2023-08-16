@@ -16,14 +16,9 @@ public class ImportYoutubePlaylistsCommand(IEnumerable<string> urls) : IRequest<
         }
     }
 
-    internal class Handler : IRequestHandler<ImportYoutubePlaylistsCommand, Result<IEnumerable<string>>>
+    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportYoutubePlaylistsCommand, Result<IEnumerable<string>>>
     {
-        readonly IBackgroundJobClient JobClient;
-
-        public Handler(IBackgroundJobClient jobClient)
-        {
-            JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
-        }
+        readonly IBackgroundJobClient JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
 
         public Task<Result<IEnumerable<string>>> Handle(ImportYoutubePlaylistsCommand request, CancellationToken cancellationToken)
         {

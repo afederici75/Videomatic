@@ -7,12 +7,12 @@ public class CreateVideoCommand(
     string location,
     string name,
     string? description,
-    string provider,
-    DateTime videoPublishedAt,
+    string providerId,
+    DateTime publishedAt,
     string channelId,
     string playlistId,
-    string videoOwnerChannelTitle,
-    string videoOwnerChannelId,
+    string ownerChannelTitle,
+    string ownerChannelId,
     string thumbnailUrl,
     string pictureUrl
     ) : IRequest<Result<Video>>
@@ -20,12 +20,12 @@ public class CreateVideoCommand(
     public string Location { get; } = location;
     public string Name { get; } = name;
     public string? Description { get; } = description;
-    public string Provider { get; } = provider;
-    public DateTime VideoPublishedAt { get; } = videoPublishedAt;
+    public string ProviderId { get; } = providerId;
+    public DateTime PublishedOn { get; } = publishedAt;
     public string ChannelId { get; } = channelId;
     public string PlaylistId { get; } = playlistId;
-    public string VideoOwnerChannelTitle { get; } = videoOwnerChannelTitle;
-    public string VideoOwnerChannelId { get; } = videoOwnerChannelId;
+    public string ChannelName { get; } = ownerChannelTitle;
+    //public string OwnerChannelId { get; } = ownerChannelId;
     public string ThumbnailUrl { get; } = thumbnailUrl;
     public string PictureUrl { get; } = pictureUrl;
 
@@ -36,24 +36,20 @@ public class CreateVideoCommand(
             RuleFor(x => x.Location).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
             //RuleFor(x => x.Description)
-            RuleFor(x => x.Provider).NotEmpty();
-            RuleFor(x => x.VideoPublishedAt).NotEmpty();
+            RuleFor(x => x.ProviderId).NotEmpty();
+            RuleFor(x => x.PublishedOn).NotEmpty();
             RuleFor(x => x.ChannelId).NotEmpty();
             RuleFor(x => x.PlaylistId).NotEmpty();
-            RuleFor(x => x.VideoOwnerChannelTitle).NotEmpty();
-            RuleFor(x => x.VideoOwnerChannelId).NotEmpty();
+            RuleFor(x => x.ChannelName).NotEmpty();
+            //RuleFor(x => x.OwnerChannelId).NotEmpty();
             RuleFor(x => x.PictureUrl).NotEmpty();
             RuleFor(x => x.ThumbnailUrl).NotEmpty();
         }
     }
 
 
-    internal class Handler : CreateEntityHandler<CreateVideoCommand, Video>
+    internal class Handler(IRepository<Video> repository, IMapper mapper) : CreateEntityHandler<CreateVideoCommand, Video>(repository, mapper)
     {
-        public Handler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
-        {
-
-        }
     }
 
 }

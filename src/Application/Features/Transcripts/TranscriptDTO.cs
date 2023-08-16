@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Transcripts;
 
-public record TranscriptDTO(
+public readonly record struct TranscriptDTO(
     int Id = 0,
     int VideoId = 0,
     string Language = "",

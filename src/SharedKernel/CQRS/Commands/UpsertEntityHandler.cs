@@ -22,12 +22,7 @@ public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
         try
         {
             // TODO: improve this
-            var idProp = typeof(TUpsertCommand).GetProperty("Id");
-            if (idProp == null)
-            {
-                throw new InvalidOperationException("The command must have an Id property.");
-            }
-
+            var idProp = typeof(TUpsertCommand).GetProperty("Id") ?? throw new InvalidOperationException("The command must have an Id property.");
             TId id = (TId)idProp.GetValue(request)!;
 
             // TODO: not really tested...

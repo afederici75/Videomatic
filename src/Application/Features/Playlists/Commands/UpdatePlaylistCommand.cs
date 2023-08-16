@@ -16,11 +16,8 @@ public class UpdatePlaylistCommand(PlaylistId id, string name, string? descripti
             RuleFor(x => x.Name).NotEmpty();
         }
     }
-    internal class Handler : UpdateEntityHandler<UpdatePlaylistCommand, Playlist, PlaylistId>
+    internal class Handler(IRepository<Playlist> repository, IMapper mapper) : UpdateEntityHandler<UpdatePlaylistCommand, Playlist, PlaylistId>(repository, mapper)
     {
-        public Handler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
-        {
-        }
     }
 
 }

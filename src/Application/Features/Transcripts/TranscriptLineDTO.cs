@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Transcripts;
 
-public record TranscriptLineDTO(
+public readonly record struct TranscriptLineDTO(
     string Text = "",
     TimeSpan? StartsAt = default,
     TimeSpan? Duration = default);

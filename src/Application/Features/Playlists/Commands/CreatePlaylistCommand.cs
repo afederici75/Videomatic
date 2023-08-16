@@ -21,11 +21,8 @@ public class CreatePlaylistCommand(
 
     #region Handler
 
-    internal class Handler : CreateEntityHandler<CreatePlaylistCommand, Playlist>
+    internal class Handler(IRepository<Playlist> repository, IMapper mapper) : CreateEntityHandler<CreatePlaylistCommand, Playlist>(repository, mapper)
     {
-        public Handler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
-        {
-        }
     }
 
     #endregion
