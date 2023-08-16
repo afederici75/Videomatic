@@ -20,14 +20,7 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
     {
         try
         {
-            var idProp = typeof(TDeleteCommand).GetProperty("Id");
-            if (idProp == null)
-            {
-                throw new InvalidOperationException("The command must have an Id property.");
-            }
-
-            TId id = (TId)idProp.GetValue(request)!;
-            //TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            TId id = Helpers.GetIdPropertyValue<TDeleteCommand, TId>(request);                    
             
             var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);
             if (itemToDelete == null)

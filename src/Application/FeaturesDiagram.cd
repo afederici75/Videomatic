@@ -21,5 +21,12 @@
       <FileName>Features\Artifacts\Commands\UpdateArtifact.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Application.Features.Artifacts.Commands.CreateArtifactCommand">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Features\Artifacts\Commands\CreateArtifact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

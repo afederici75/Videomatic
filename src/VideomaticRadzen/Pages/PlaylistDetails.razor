@@ -1,4 +1,5 @@
 ﻿@page "/PlaylistDetails/{PlaylistId:int?}"
+@using Domain.Playlists;
 @using VideomaticRadzen.Components.Playlists
 @inject ISender Sender
 
@@ -22,7 +23,7 @@
     PlaylistDTO? playlist;
 
     [Parameter]
-    public int? PlaylistId { get; set; }
+    public PlaylistId? PlaylistId { get; set; }
 
     protected async override Task OnParametersSetAsync()
     {
@@ -39,7 +40,7 @@
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: new int[] { PlaylistId!.Value });
+                PlaylistIds: new PlaylistId[] { PlaylistId!.Value });
         //SelectedThumbnail: ThumbnailResolutionDTO.Standard);
 
         Page<PlaylistDTO> results = await Sender.Send(query);

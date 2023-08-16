@@ -60,7 +60,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
-    public int? PlaylistId { get; set; }
+    public PlaylistId? PlaylistId { get; set; }
     
     int pageSize = 10;
     //bool isLoading = false;
@@ -104,7 +104,7 @@
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
+                PlaylistIds: (PlaylistId != null) ? new PlaylistId[] { PlaylistId!.Value } : null,
                 Skip: skip,
                 Take: take,
                 OrderBy: null,

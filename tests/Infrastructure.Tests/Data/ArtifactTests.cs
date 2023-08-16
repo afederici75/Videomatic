@@ -78,7 +78,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     public async Task GetArtifacts(string? searchText, string? orderBy, int expectedResults)
     {
 
-        var query = new GetArtifactsQuery(SearchText: searchText, OrderBy: orderBy);
+        var query = new GetArtifactsQuery(searchText: searchText, orderBy: orderBy);
         Page<ArtifactDTO> response = await Sender.Send(query);
 
         // Checks

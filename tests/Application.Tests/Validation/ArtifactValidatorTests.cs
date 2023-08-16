@@ -22,7 +22,7 @@ public class ArtifactValidatorTests
     [InlineData(5, null, null, null, 3)]
     public void ValidateCreateArtifactCommand(int videoId, string type, string name, string? text, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateArtifactCommandValidator, CreateArtifactCommand>(new((VideoId)videoId, name, type, text), expectedErrors);
+        ValidatorHelper.Validate<CreateArtifactCommand.CreateArtifactCommandValidator, CreateArtifactCommand>(new((VideoId)videoId, name, type, text), expectedErrors);
     }
 
     [Theory]
@@ -31,7 +31,7 @@ public class ArtifactValidatorTests
     [InlineData(1, 0)]
     public void ValidateDeletePlaylistCommand(PlaylistId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeletePlaylistCommandValidator, DeletePlaylistCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeletePlaylistCommand.DeletePlaylistCommandValidator, DeletePlaylistCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -42,6 +42,6 @@ public class ArtifactValidatorTests
     [InlineData(2, "Play list", "Description", 0)]
     public void ValidateUpdatePlaylistCommand(PlaylistId id, string name, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdatePlaylistCommandValidator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
+        ValidatorHelper.Validate<UpdatePlaylistCommand.UpdatePlaylistCommandValidator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
     }
 }

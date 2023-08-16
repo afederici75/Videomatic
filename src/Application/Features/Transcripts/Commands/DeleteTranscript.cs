@@ -1,11 +1,14 @@
 ﻿namespace Application.Features.Transcripts.Commands;
 
-public readonly record struct DeleteTranscriptCommand(int Id) : IRequest<Result>;
+public class DeleteTranscriptCommand(TranscriptId Id) : IRequest<Result>
+{ 
+    public TranscriptId Id { get; } = Id;
+}
 
 internal class DeleteTranscriptCommandValidator : AbstractValidator<DeleteTranscriptCommand>
 {
     public DeleteTranscriptCommandValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => (int)x.Id).GreaterThan(0);
     }
 }

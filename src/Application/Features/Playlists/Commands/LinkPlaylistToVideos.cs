@@ -1,6 +1,10 @@
 ﻿namespace Application.Features.Playlists.Commands;
 
-public readonly record struct LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<int> VideoIds) : IRequest<Result<int>>;
+public class LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<VideoId> VideoIds) : IRequest<Result<int>>
+{ 
+    public PlaylistId Id { get; } = Id;
+    public IEnumerable<VideoId> VideoIds { get; } = VideoIds;
+}
 
 internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToVideosCommand>
 {
@@ -9,6 +13,6 @@ internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToV
         RuleFor(x => (int)x.Id).GreaterThan(0);
 
         RuleFor(x => x.VideoIds).NotEmpty();
-        RuleForEach(x => x.VideoIds).GreaterThan(0);
+        //RuleForEach(x => x.VideoIds.Select(v => v.Value)).GreaterThan(0);
     }
 }

@@ -21,28 +21,21 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     {
         try
         {
-            var idProp = typeof(TUpdateCommand).GetProperty("Id");
-            if (idProp == null)
-            {
-                throw new InvalidOperationException("The command must have an Id property.");
-            }
-            
-            TId id = (TId)idProp.GetValue(request)!; 
-            //TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
-            
+            TId id = Helpers.GetIdPropertyValue<TUpdateCommand, TId>(request);
+
             TEntity? currentAgg = await Repository.GetByIdAsync(id, cancellationToken);
             if (currentAgg == null)
             {
                 return Result.NotFound();
             }
-            
-            // TODO?: this is where I could compare a version-id for the entity...
-            
+
+            // TODO?: this is where I could compare a version-id/etag for the entity...
+
             // Maps using Automapper which will access private setters to update currentAgg.
             var final = Mapper.Map(request, currentAgg);
-            
+
             await Repository.UpdateAsync(final, cancellationToken);
-            
+
             return Result.Success(currentAgg);
         }
         catch (Exception ex)

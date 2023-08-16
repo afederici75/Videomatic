@@ -21,30 +21,39 @@ public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
     {
         try
         {
-            throw new NotImplementedException();
-            //if (request.Id.HasValue)
-            //{
-            //    TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
-            //
-            //    var stored = await Repository.GetByIdAsync(id, cancellationToken);
-            //    if (stored == null)
-            //    {
-            //        return Result.NotFound();
-            //    }
-            //
-            //    var final = Mapper.Map(request, stored);
-            //    await Repository.UpdateAsync(final, cancellationToken);
-            //
-            //    return Result.Success(stored);
-            //}
-            //else
-            //{
-            //    var entity = Mapper.Map<TUpsertCommand, TEntity>(request);
-            //
-            //    var result = await Repository.AddAsync(entity, cancellationToken);
-            //
-            //    return result;
-            //}
+            // TODO: improve this
+            var idProp = typeof(TUpsertCommand).GetProperty("Id");
+            if (idProp == null)
+            {
+                throw new InvalidOperationException("The command must have an Id property.");
+            }
+
+            TId id = (TId)idProp.GetValue(request)!;
+
+            // TODO: not really tested...
+            if (id != null)
+            {
+                //TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            
+                var stored = await Repository.GetByIdAsync(id, cancellationToken);
+                if (stored == null)
+                {
+                    return Result.NotFound();
+                }
+            
+                var final = Mapper.Map(request, stored);
+                await Repository.UpdateAsync(final, cancellationToken);
+            
+                return Result.Success(stored);
+            }
+            else
+            {
+                var entity = Mapper.Map<TUpsertCommand, TEntity>(request);
+            
+                var result = await Repository.AddAsync(entity, cancellationToken);
+            
+                return result;
+            }
         }
         catch (Exception ex)
         {

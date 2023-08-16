@@ -113,7 +113,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Links
         var addVidsCmd = new LinkPlaylistToVideosCommand(
             playlist1.Value.Id,
-            new int[] { video1.Value.Id, video2.Value.Id });
+            new VideoId[] { video1.Value.Id, video2.Value.Id });
         
         var addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
         var emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups

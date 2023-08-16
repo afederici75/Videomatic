@@ -2,6 +2,10 @@
 Non UI
 ******************
 
+- [X] MASSIVE refactoring of ids led to finding several bugs! Big payoff/very pleased!!!
+	- The code looks much more solid now that id-types are used everywhere!
+	- Moved STIDs all the way up to the Application level (which is where most of thr bugs were found)
+
 - [X] Create batch files to simplify scaffolding
 	- [X] AddNewMigration.bat
 	- [X] ReScaffoldFromScratch.bat

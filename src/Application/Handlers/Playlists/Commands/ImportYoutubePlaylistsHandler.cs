@@ -1,6 +1,6 @@
 ﻿namespace Application.Handlers.Playlists.Commands;
 
-public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlaylistsCommand, ImportYoutubePlaylistsResponse>
+public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlaylistsCommand, Result<IEnumerable<string>>>
 {
     readonly IBackgroundJobClient JobClient;
 
@@ -10,7 +10,7 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
         JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));        
     }
 
-    public Task<ImportYoutubePlaylistsResponse> Handle(ImportYoutubePlaylistsCommand request, CancellationToken cancellationToken)
+    public Task<Result<IEnumerable<string>>> Handle(ImportYoutubePlaylistsCommand request, CancellationToken cancellationToken)
     {
         var jobIds = new List<string>();
         foreach (var id in request.Urls)
@@ -19,6 +19,6 @@ public class ImportYoutubePlaylistsHandler : IRequestHandler<ImportYoutubePlayli
             jobIds.Add(jobId);
         }        
 
-        return Task.FromResult(new ImportYoutubePlaylistsResponse(true, jobIds));
+        return Task.FromResult(Result.Success<IEnumerable<string>>(jobIds));
     }
 }

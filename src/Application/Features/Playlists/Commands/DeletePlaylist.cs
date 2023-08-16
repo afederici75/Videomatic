@@ -2,12 +2,15 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public readonly record struct DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>;
+public class DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>
+{ 
+    public PlaylistId Id { get; } = Id;
 
-internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
-{
-    public DeletePlaylistCommandValidator()
+    internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
     {
-       RuleFor(x => (int)x.Id).GreaterThan(0);
+        public DeletePlaylistCommandValidator()
+        {
+            RuleFor(x => (int)x.Id).GreaterThan(0);
+        }
     }
 }

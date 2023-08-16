@@ -2,18 +2,16 @@
 
 // TODO: iffy names
 
-public readonly record struct ImportYoutubePlaylistsCommand(IEnumerable<string> Urls) : IRequest<ImportYoutubePlaylistsResponse>;
-
-public readonly record struct ImportYoutubePlaylistsResponse(bool Queued, IEnumerable<string> JobIds);
-
-//public record VideoImportedEvent(int VideoId, int ThumbNailCount, int TranscriptCount, int ArtifactsCount) : INotification;
-
-internal class ImportYoutubePlaylistCommandValidator : AbstractValidator<ImportYoutubePlaylistsCommand>
-{
-    public ImportYoutubePlaylistCommandValidator()
+public class ImportYoutubePlaylistsCommand(IEnumerable<string> Urls) : IRequest<Result<IEnumerable<string>>>
+{ 
+    public IEnumerable<string> Urls { get; } = Urls;
+    internal class ImportYoutubePlaylistCommandValidator : AbstractValidator<ImportYoutubePlaylistsCommand>
     {
-        RuleForEach(v => v.Urls)
-            .NotEmpty();
+        public ImportYoutubePlaylistCommandValidator()
+        {
+            RuleForEach(v => v.Urls)
+                .NotEmpty();
             //.Must(url => Uri.TryCreate(url, UriKind.Absolute, out _));        
+        }
     }
 }

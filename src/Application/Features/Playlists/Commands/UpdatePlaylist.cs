@@ -2,15 +2,18 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public readonly record struct UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>;
+public class UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>
+{ 
+    public PlaylistId Id { get; } = Id; 
+    public string Name { get; } = Name;
+    public string? Description { get; } = Description;
 
-public readonly record struct UpdatePlaylistResponse(int Id, bool WasUpdated);
-
-internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
-{
-    public UpdatePlaylistCommandValidator()
+    internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
     {
-        RuleFor(x => (int)x.Id).GreaterThan(0);
-        RuleFor(x => x.Name).NotEmpty();
+        public UpdatePlaylistCommandValidator()
+        {
+            RuleFor(x => (int)x.Id).GreaterThan(0);
+            RuleFor(x => x.Name).NotEmpty();
+        }
     }
 }
