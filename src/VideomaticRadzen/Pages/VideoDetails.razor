@@ -39,7 +39,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(VideoId))]
-    public int? VideoId { get; set; }
+    public VideoId? VideoId { get; set; }
 
     protected async override Task OnParametersSetAsync()
     {
@@ -55,7 +55,7 @@
 
         await Task.Yield();
 
-        var query = new GetVideosQuery(videoIds: new int[] { VideoId!.Value });
+        var query = new GetVideosQuery(videoIds: new VideoId[] { VideoId!.Value });
 
         Page<VideoDTO> results = await Sender.Send(query);
 

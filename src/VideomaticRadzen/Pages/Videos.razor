@@ -1,4 +1,5 @@
 ﻿@page "/videos"
+@using Domain.Playlists;
 @using Domain.Videos;
 @using VideomaticRadzen.Components
 
@@ -60,7 +61,7 @@
 
     [Parameter]
     [SupplyParameterFromQuery(Name = nameof(PlaylistId))]
-    public int? PlaylistId { get; set; }
+    public PlaylistId? PlaylistId { get; set; }
     //long? _priorPlaylistId;
 
     int pageSize = 8;
@@ -100,7 +101,7 @@
         await Task.Yield();
 
         var query = new GetVideosQuery(
-                playlistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
+                playlistIds: (PlaylistId != null) ? new PlaylistId[] { PlaylistId.Value } : null,
                 skip: skip,
                 take: take,
                 orderBy: null,

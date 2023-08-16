@@ -1,4 +1,5 @@
 ﻿@page "/youtubeimport"
+@using Domain.Playlists;
 
 @inject ISender Sender
 
@@ -68,7 +69,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
     public string PlaylistImportResult { get; set; } = "No playlists imported yet...";
 
     public IEnumerable<PlaylistDTO> PlaylistDTOs { get; set; } = new List<PlaylistDTO>();
-    public int? TargetPlaylistId { get; set; } = null;
+    public PlaylistId? TargetPlaylistId { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {

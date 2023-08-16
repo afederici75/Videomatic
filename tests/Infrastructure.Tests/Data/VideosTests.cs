@@ -139,15 +139,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
         bool includeTags,
         int expectedResults)
     {
-        
-        
+
+
         var query = new GetVideosQuery(
             //VideoIds: videoIds, 
             searchText: searchText,
             orderBy: orderBy,
             skip: null,
             take: null, // Uses 1 by default
-            playlistIds: playlistIds);
+            playlistIds: playlistIds?.Select(x => (PlaylistId)x));
 
         if (searchText != null)
         { }
@@ -176,7 +176,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            videoIds: videoIds);
+            videoIds: videoIds.Select(x => (VideoId)x));
 
         Page<VideoDTO> res = await Sender.Send(query);
 

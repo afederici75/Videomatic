@@ -66,7 +66,7 @@ public class YouTubeVideoImporter : IVideoImporter
 
             foreach (var pl in all)
             {
-                switch (options.ExecuteImmediate)
+                switch (options?.ExecuteImmediate)
                 {
                     case true:
                         await this.ImportVideosAsync(pl.Id, options, cancellation);
@@ -129,7 +129,7 @@ public class YouTubeVideoImporter : IVideoImporter
             }
 
             // Attempts to re-import each playlist's videos (new or existing)            
-            switch (options.ExecuteImmediate)
+            switch (options?.ExecuteImmediate)
             {
                 case true:
                     await this.ImportTranscriptionsAsync(videoIds, cancellation);
