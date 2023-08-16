@@ -4,7 +4,7 @@ using System;
 
 namespace Application.Handlers.Videos.Commands;
 
-public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVideosCommand, ImportYoutubeVideosResponse>
+public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVideosCommand, Result<string>>
 {
     public ImportYoutubeVideosHandler(
         IBackgroundJobClient jobClient)
@@ -15,7 +15,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
     public IBackgroundJobClient JobClient { get; }
 
 
-    public Task<ImportYoutubeVideosResponse> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
+    public Task<Result<string>> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
     {
         var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, (PlaylistId?)request.DestinationPlaylistId, null, cancellationToken));
 
@@ -28,6 +28,6 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
         //    jobIds.Add(jobId);
         //}
 
-        return Task.FromResult(new ImportYoutubeVideosResponse(true, new[] { jobId }, request.DestinationPlaylistId));
+        return Task.FromResult(new Result<string>(jobId));
     }   
 }

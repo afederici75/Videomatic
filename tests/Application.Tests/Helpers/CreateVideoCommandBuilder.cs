@@ -13,17 +13,17 @@ public class CreateVideoCommandBuilder
         const string None = "None";
 
         return new CreateVideoCommand(
-            Location: location,
-            Name: name,
-            Description: description,
-            Provider: None,
-            VideoPublishedAt: DateTime.UtcNow,
-            ChannelId: None,
-            PlaylistId: None,
-            VideoOwnerChannelTitle: None,
-            VideoOwnerChannelId: None,
-            ThumbnailUrl: "http://1",
-            PictureUrl: "http://2");
+            location: location,
+            name: name,
+            description: description,
+            provider: None,
+            videoPublishedAt: DateTime.UtcNow,
+            channelId: None,
+            playlistId: None,
+            videoOwnerChannelTitle: None,
+            videoOwnerChannelId: None,
+            thumbnailUrl: "http://1",
+            pictureUrl: "http://2");
     }
 
     /// <summary>

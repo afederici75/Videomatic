@@ -100,11 +100,11 @@
         await Task.Yield();
 
         var query = new GetVideosQuery(
-                PlaylistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
-                Skip: skip,
-                Take: take,
-                OrderBy: null,
-                SearchText: SearchText);
+                playlistIds: (PlaylistId != null) ? new int[] { PlaylistId.Value } : null,
+                skip: skip,
+                take: take,
+                orderBy: null,
+                searchText: SearchText);
 
         Page<VideoDTO> results = await Sender.Send(query);
 

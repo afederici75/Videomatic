@@ -1,9 +1,9 @@
 ﻿namespace Application.Features.Playlists.Commands;
 
-public class LinkPlaylistToVideosCommand(PlaylistId Id, IEnumerable<VideoId> VideoIds) : IRequest<Result<int>>
+public class LinkPlaylistToVideosCommand(PlaylistId id, IEnumerable<VideoId> videoIds) : IRequest<Result<int>>
 { 
-    public PlaylistId Id { get; } = Id;
-    public IEnumerable<VideoId> VideoIds { get; } = VideoIds;
+    public PlaylistId Id { get; } = id;
+    public IEnumerable<VideoId> VideoIds { get; } = videoIds;
 }
 
 internal class LinkPlaylistToVideosValidator : AbstractValidator<LinkPlaylistToVideosCommand>

@@ -1,22 +1,22 @@
 ﻿namespace Application.Features.Playlists.Queries;
 
 public class GetPlaylistsQuery(
-    string? SearchText = null,
-    string? OrderBy = null,
-    int? Skip = null,
-    int? Take = null,
-    TextSearchType? SearchType = null,
+    string? searchText = null,
+    string? orderBy = null,
+    int? skip = null,
+    int? take = null,
+    TextSearchType? searchType = null,
     // 
-    IEnumerable<PlaylistId>? PlaylistIds = null,
-    string? SearchOn = null) : IRequest<Page<PlaylistDTO>>, IBasicQuery
+    IEnumerable<PlaylistId>? playlistIds = null,
+    string? searchOn = null) : IRequest<Page<PlaylistDTO>>, IBasicQuery
 { 
-    public string? SearchText { get; } = SearchText;
-    public string? OrderBy { get; } = OrderBy;
-    public int? Skip { get; } = Skip;
-    public int? Take { get; } = Take;
-    public TextSearchType? SearchType { get; } = SearchType;
-    public IEnumerable<PlaylistId>? PlaylistIds { get; } = PlaylistIds;
-    public string? SearchOn { get; } = SearchOn;
+    public string? SearchText { get; } = searchText;
+    public string? OrderBy { get; } = orderBy;
+    public int? Skip { get; } = skip;
+    public int? Take { get; } = take;
+    public TextSearchType? SearchType { get; } = searchType;
+    public IEnumerable<PlaylistId>? PlaylistIds { get; } = playlistIds;
+    public string? SearchOn { get; } = searchOn;
 
     internal class GetPlaylistsQueryValidator : AbstractValidator<GetPlaylistsQuery>
     {

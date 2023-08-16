@@ -55,14 +55,14 @@
 
         await Task.Yield();
 
-        var query = new GetVideosQuery(VideoIds: new int[] { VideoId!.Value });
+        var query = new GetVideosQuery(videoIds: new int[] { VideoId!.Value });
 
         Page<VideoDTO> results = await Sender.Send(query);
 
         video = results.Items.SingleOrDefault();
         if (video != null)
         {
-            var query2 = new GetTranscriptsQuery(VideoIds: new[] { VideoId!.Value });
+            var query2 = new GetTranscriptsQuery(videoIds: new[] { VideoId!.Value });
             var resp2 = await Sender.Send(query2);
 
             transcripts = resp2.Items;

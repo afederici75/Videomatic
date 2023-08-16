@@ -2,7 +2,7 @@
 
 namespace Application.Handlers.Videos.Commands;
 
-public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result>
+public class SetVideoTagsHandler : IRequestHandler<SetVideoTagsCommand, Result>
 {
     private readonly IRepository<Video> _repository;    
 
@@ -11,7 +11,7 @@ public class SetVideoTagsHandler : IRequestHandler<SetVideoTags, Result>
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));        
     }
 
-    public async Task<Result> Handle(SetVideoTags request, CancellationToken cancellationToken = default)
+    public async Task<Result> Handle(SetVideoTagsCommand request, CancellationToken cancellationToken = default)
     {        
         var video =await _repository.GetByIdAsync(new VideoId(request.Id), cancellationToken);
 

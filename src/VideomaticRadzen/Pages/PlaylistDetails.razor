@@ -40,7 +40,7 @@
         await Task.Yield();
 
         var query = new GetPlaylistsQuery(
-                PlaylistIds: new PlaylistId[] { PlaylistId!.Value });
+                playlistIds: new PlaylistId[] { PlaylistId!.Value });
         //SelectedThumbnail: ThumbnailResolutionDTO.Standard);
 
         Page<PlaylistDTO> results = await Sender.Send(query);

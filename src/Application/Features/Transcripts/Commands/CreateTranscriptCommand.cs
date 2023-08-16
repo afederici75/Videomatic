@@ -2,13 +2,13 @@
 
 namespace Application.Features.Transcripts.Commands;
 
-public class CreateTranscriptCommand(VideoId VideoId,
-                                      string Language,
-                                      IEnumerable<string> Lines) : IRequest<Result<Transcript>>
+public class CreateTranscriptCommand(VideoId videoId,
+                                      string language,
+                                      IEnumerable<string> lines) : IRequest<Result<Transcript>>
 { 
-    public VideoId VideoId { get; } = VideoId;
-    public string Language { get; } = Language;
-    public IEnumerable<string> Lines { get; } = Lines;
+    public VideoId VideoId { get; } = videoId;
+    public string Language { get; } = language;
+    public IEnumerable<string> Lines { get; } = lines;
 
     internal class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
     {

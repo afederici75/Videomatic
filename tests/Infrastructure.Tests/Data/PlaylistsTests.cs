@@ -76,10 +76,10 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     public async Task GetPlaylists(string? searchText, string? orderBy, int expectedResults)
     {
         var query = new GetPlaylistsQuery(
-            SearchText: searchText,
-            OrderBy: orderBy,
-            Skip: null,
-            Take: null);
+            searchText: searchText,
+            orderBy: orderBy,
+            skip: null,
+            take: null);
 
         Page<PlaylistDTO> response = await Sender.Send(query);
 

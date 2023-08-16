@@ -93,8 +93,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
     {
         // Playlist
         var createPlaylistCmd = new CreatePlaylistCommand(
-            Name: nameof(LinksTwoVideoToPlaylist),
-            Description: $"A description for my playlist {DateTime.Now}");
+            name: nameof(LinksTwoVideoToPlaylist),
+            description: $"A description for my playlist {DateTime.Now}");
         
         Result<Playlist> playlist1 = await Sender.Send(createPlaylistCmd);
 
@@ -143,11 +143,11 @@ public class VideosTests : IClassFixture<DbContextFixture>
         
         var query = new GetVideosQuery(
             //VideoIds: videoIds, 
-            SearchText: searchText,
-            OrderBy: orderBy,
-            Skip: null,
-            Take: null, // Uses 1 by default
-            PlaylistIds: playlistIds);
+            searchText: searchText,
+            orderBy: orderBy,
+            skip: null,
+            take: null, // Uses 1 by default
+            playlistIds: playlistIds);
 
         if (searchText != null)
         { }
@@ -176,7 +176,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
         int expectedResults)
     {
         var query = new GetVideosQuery(
-            VideoIds: videoIds);
+            videoIds: videoIds);
 
         Page<VideoDTO> res = await Sender.Send(query);
 

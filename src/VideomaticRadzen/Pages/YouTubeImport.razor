@@ -72,7 +72,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
 
     protected override async Task OnInitializedAsync()
     {
-        var query = new GetPlaylistsQuery(OrderBy: "Name");
+        var query = new GetPlaylistsQuery(orderBy: "Name");
 
         Page<PlaylistDTO> results = await Sender.Send(query);
 
@@ -89,7 +89,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
         var urls = VideoUrls.Split(new[] { '\r', '\n' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
         var cmd = new ImportYoutubeVideosCommand(urls, TargetPlaylistId);        
-        ImportYoutubeVideosResponse response = await Sender.Send(cmd);
+        var response = await Sender.Send(cmd);
 
         VideoImportResult = response.ToString();
     }

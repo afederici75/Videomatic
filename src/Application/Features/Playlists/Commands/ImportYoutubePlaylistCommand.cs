@@ -2,9 +2,9 @@
 
 // TODO: iffy names
 
-public class ImportYoutubePlaylistsCommand(IEnumerable<string> Urls) : IRequest<Result<IEnumerable<string>>>
+public class ImportYoutubePlaylistsCommand(IEnumerable<string> urls) : IRequest<Result<IEnumerable<string>>>
 { 
-    public IEnumerable<string> Urls { get; } = Urls;
+    public IEnumerable<string> Urls { get; } = urls;
     internal class ImportYoutubePlaylistCommandValidator : AbstractValidator<ImportYoutubePlaylistsCommand>
     {
         public ImportYoutubePlaylistCommandValidator()

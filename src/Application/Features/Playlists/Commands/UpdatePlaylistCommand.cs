@@ -2,11 +2,11 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public class UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>
+public class UpdatePlaylistCommand(PlaylistId id, string name, string? description) : IRequest<Result<Playlist>>
 { 
-    public PlaylistId Id { get; } = Id; 
-    public string Name { get; } = Name;
-    public string? Description { get; } = Description;
+    public PlaylistId Id { get; } = id; 
+    public string Name { get; } = name;
+    public string? Description { get; } = description;
 
     internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
     {

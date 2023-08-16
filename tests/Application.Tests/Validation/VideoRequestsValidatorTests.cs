@@ -22,7 +22,7 @@ public class VideoRequestsValidatorTests
     [InlineData("http://somethingElse/2 ", "Video title", "Description", 0)]
     public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateVideoCommandValidator, CreateVideoCommand>(
+        ValidatorHelper.Validate<CreateVideoCommand.CreateVideoCommandValidator, CreateVideoCommand>(
             CreateVideoCommandBuilder.WithEmptyVideoDetails(location, title, description), expectedErrors);
     }
 
@@ -32,7 +32,7 @@ public class VideoRequestsValidatorTests
     [InlineData(1, 0)]
     public void ValidateDeleteVideoCommand(VideoId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeleteVideoCommand.DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -43,7 +43,7 @@ public class VideoRequestsValidatorTests
     [InlineData(2, "Play list", "Description", 0)]
     public void ValidateUpdateVideoCommand(VideoId id, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
+        ValidatorHelper.Validate<UpdateVideoCommand.UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
     }
 
     [Theory]
@@ -59,7 +59,7 @@ public class VideoRequestsValidatorTests
         int? take,
         int expectedErrors)
     {
-        ValidatorHelper.Validate<GetVideosQueryValidator, GetVideosQuery>(
+        ValidatorHelper.Validate<GetVideosQuery.GetVideosQueryValidator, GetVideosQuery>(
             new(filter, orderBy, skip, take, TextSearchType.FreeText, playlistIds), expectedErrors);
     }
 }

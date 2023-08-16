@@ -2,9 +2,9 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public class DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>
+public class DeletePlaylistCommand(PlaylistId id) : IRequest<Result>
 { 
-    public PlaylistId Id { get; } = Id;
+    public PlaylistId Id { get; } = id;
 
     internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
     {

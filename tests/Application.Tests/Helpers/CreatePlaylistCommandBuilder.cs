@@ -12,6 +12,6 @@ public class CreatePlaylistCommandBuilder
         var name = $"{textId}";
         var description = $"The description of playlist {textId}.";
 
-        return new CreatePlaylistCommand(Name: name, Description: description);
+        return new CreatePlaylistCommand(name: name, description: description);
     }
 }
