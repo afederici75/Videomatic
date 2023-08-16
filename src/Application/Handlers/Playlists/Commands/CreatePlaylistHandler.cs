@@ -1,6 +1,4 @@
-﻿using SharedKernel.CQRS.Commands;
-
-namespace Application.Handlers.Playlists.Commands;
+﻿namespace Application.Handlers.Playlists.Commands;
 
 public sealed class CreatePlaylistHandler : CreateEntityHandler<CreatePlaylistCommand, Playlist>
 {

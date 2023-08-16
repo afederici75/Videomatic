@@ -58,7 +58,10 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
         video!.Description.Should().BeEquivalentTo(updateCommand.Description);
 
         // Deletes
-        var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
+        // !! MAJOR !!! Caught another pair of bugs here. I was using the wrong Id and I was not using the correct command either!!!
+        //var ok = await Sender.Send(new DeleteArtifactCommand(updatedResponse.Value.Id));
+        var ok = await Sender.Send(new DeletePlaylistCommand(playlist.Value.Id));
+
         ok.IsSuccess.Should().Be(true);
     }
 

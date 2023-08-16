@@ -1,8 +1,6 @@
-﻿using SharedKernel.CQRS.Commands;
+﻿namespace Application.Features.Transcripts.Commands;
 
-namespace Application.Features.Transcripts.Commands;
-
-public record DeleteTranscriptCommand(int Id) : DeleteEntityCommand<Transcript>(Id);
+public record DeleteTranscriptCommand(int Id) : IRequest<Result>;
 
 public class DeleteTranscriptCommandValidator : AbstractValidator<DeleteTranscriptCommand>
 {

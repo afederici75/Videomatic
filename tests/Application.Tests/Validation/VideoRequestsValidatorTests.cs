@@ -1,6 +1,8 @@
 ﻿using Application.Tests.Helpers;
 using Application.Abstractions;
 using Application.Features.Videos;
+using Domain.Playlists;
+using Domain.Videos;
 
 namespace Application.Tests.Validation;
 
@@ -28,7 +30,7 @@ public class VideoRequestsValidatorTests
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
-    public void ValidateDeleteVideoCommand(int id, int expectedErrors)
+    public void ValidateDeleteVideoCommand(VideoId id, int expectedErrors)
     {
         ValidatorHelper.Validate<DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
     }
@@ -39,7 +41,7 @@ public class VideoRequestsValidatorTests
     [InlineData(1, null, null, 1)]
     [InlineData(1, "Play list", null, 0)]
     [InlineData(2, "Play list", "Description", 0)]
-    public void ValidateUpdateVideoCommand(int id, string title, string? description, int expectedErrors)
+    public void ValidateUpdateVideoCommand(VideoId id, string title, string? description, int expectedErrors)
     {
         ValidatorHelper.Validate<UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
     }

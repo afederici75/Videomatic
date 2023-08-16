@@ -15,7 +15,7 @@ public record CreateVideoCommand(
     string VideoOwnerChannelId,
     string ThumbnailUrl,
     string PictureUrl
-    ) : CreateEntityCommand<Video>();
+    ) : IRequest<Result<Video>>;
 
 internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
 {

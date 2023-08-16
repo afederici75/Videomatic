@@ -7,5 +7,6 @@ public sealed class CreateVideoHandler : CreateEntityHandler<CreateVideoCommand,
 {
     public CreateVideoHandler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
     {
+
     }
 }

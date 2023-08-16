@@ -2,12 +2,12 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public record DeletePlaylistCommand(int Id) : DeleteEntityCommand<Playlist>(Id);
+public record DeletePlaylistCommand(PlaylistId Id) : IRequest<Result>;
 
 internal class DeletePlaylistCommandValidator : AbstractValidator<DeletePlaylistCommand>
 {
     public DeletePlaylistCommandValidator()
     {
-       RuleFor(x => x.Id).GreaterThan(0);
+       RuleFor(x => (int)x.Id).GreaterThan(0);
     }
 }

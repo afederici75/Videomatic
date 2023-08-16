@@ -4,7 +4,7 @@ namespace Application.Features.Transcripts.Commands;
 
 public record CreateTranscriptCommand(int VideoId,
                                       string Language,
-                                      IEnumerable<string> Lines) : CreateEntityCommand<Transcript>();
+                                      IEnumerable<string> Lines) : IRequest<Result<Transcript>>;
 
 public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {

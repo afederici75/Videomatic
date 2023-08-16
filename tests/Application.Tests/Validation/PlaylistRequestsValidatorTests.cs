@@ -1,4 +1,5 @@
 ﻿using Application.Tests.Helpers;
+using Domain.Playlists;
 
 namespace Application.Tests.Validation;
 
@@ -25,7 +26,7 @@ public class PlaylistRequestsValidatorTests
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
-    public void ValidateDeletePlaylistCommand(int id, int expectedErrors)
+    public void ValidateDeletePlaylistCommand(PlaylistId id, int expectedErrors)
     {
         ValidatorHelper.Validate<DeletePlaylistCommandValidator, DeletePlaylistCommand>(new(id), expectedErrors);
     }
@@ -36,7 +37,7 @@ public class PlaylistRequestsValidatorTests
     [InlineData(1, null, null, 1)]
     [InlineData(1, "Play list", null, 0)]
     [InlineData(2, "Play list", "Description", 0)]
-    public void ValidateUpdatePlaylistCommand(int id, string name, string? description, int expectedErrors)
+    public void ValidateUpdatePlaylistCommand(PlaylistId id, string name, string? description, int expectedErrors)
     {
         ValidatorHelper.Validate<UpdatePlaylistCommandValidator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
     }

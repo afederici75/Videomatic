@@ -1,11 +1,11 @@
 ﻿namespace Application.Features.Artifacts.Commands;
 
-public record DeleteArtifactCommand(int Id) : DeleteEntityCommand<Artifact>(Id);
+public record DeleteArtifactCommand(ArtifactId Id) : IRequest<Result>;
 
 public class DeleteArtifactCommandValidator : AbstractValidator<DeleteArtifactCommand>
 {
     public DeleteArtifactCommandValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => (int)x.Id).GreaterThan(0);
     }
 }

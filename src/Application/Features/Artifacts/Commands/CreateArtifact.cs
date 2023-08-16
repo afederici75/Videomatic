@@ -3,7 +3,7 @@
 public record CreateArtifactCommand(VideoId VideoId,
                                     string Name,
                                     string Type,
-                                    string? Text) : CreateEntityCommand<Artifact>();
+                                    string? Text) : IRequest<Result<Artifact>>;
 
 public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {

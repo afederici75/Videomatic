@@ -3,7 +3,7 @@
 namespace Application.Features.Playlists.Commands;
 
 public record CreatePlaylistCommand(string Name,
-                                    string? Description = null) : CreateEntityCommand<Playlist>();
+                                    string? Description = null) : IRequest<Result<Playlist>>;
 
 internal class CreatePlaylistCommandValidator : AbstractValidator<CreatePlaylistCommand>
 {

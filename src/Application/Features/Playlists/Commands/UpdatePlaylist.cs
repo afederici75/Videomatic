@@ -2,7 +2,7 @@
 
 namespace Application.Features.Playlists.Commands;
 
-public record UpdatePlaylistCommand(int Id, string Name, string? Description) : UpdateEntityCommand<Playlist>(Id);
+public record UpdatePlaylistCommand(PlaylistId Id, string Name, string? Description) : IRequest<Result<Playlist>>;
 
 public record UpdatePlaylistResponse(int Id, bool WasUpdated);
 
@@ -10,7 +10,7 @@ internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylist
 {
     public UpdatePlaylistCommandValidator()
     {
-        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => (int)x.Id).GreaterThan(0);
         RuleFor(x => x.Name).NotEmpty();
     }
 }
