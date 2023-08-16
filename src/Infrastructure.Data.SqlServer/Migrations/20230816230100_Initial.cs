@@ -39,8 +39,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR PlaylistSequence"),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -81,8 +81,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR VideoSequence"),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -127,8 +127,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Type = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -178,9 +178,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptSequence"),
                     VideoId = table.Column<int>(type: "int", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Lines = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -191,29 +192,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         column: x => x.VideoId,
                         principalSchema: "Videomatic",
                         principalTable: "Videos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TranscriptLines",
-                schema: "Videomatic",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR TranscriptLineSequence"),
-                    Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: true),
-                    StartsAt = table.Column<TimeSpan>(type: "time", nullable: true),
-                    TranscriptId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TranscriptLines", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TranscriptLines_Transcripts_TranscriptId",
-                        column: x => x.TranscriptId,
-                        principalSchema: "Videomatic",
-                        principalTable: "Transcripts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -309,18 +287,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_Text",
-                schema: "Videomatic",
-                table: "TranscriptLines",
-                column: "Text");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TranscriptLines_TranscriptId",
-                schema: "Videomatic",
-                table: "TranscriptLines",
-                column: "TranscriptId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_Language",
                 schema: "Videomatic",
                 table: "Transcripts",
@@ -405,15 +371,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 schema: "Videomatic");
 
             migrationBuilder.DropTable(
-                name: "TranscriptLines",
+                name: "Transcripts",
                 schema: "Videomatic");
 
             migrationBuilder.DropTable(
                 name: "Playlists",
-                schema: "Videomatic");
-
-            migrationBuilder.DropTable(
-                name: "Transcripts",
                 schema: "Videomatic");
 
             migrationBuilder.DropTable(

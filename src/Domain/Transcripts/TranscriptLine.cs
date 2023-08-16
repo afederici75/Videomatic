@@ -3,7 +3,7 @@
 public class TranscriptLine : ValueObject
 {
     public static implicit operator string(TranscriptLine x) => x.Text;
-    public static implicit operator TranscriptLine(string x) => new (x, null, null);
+    public static explicit operator TranscriptLine(string x) => new (x, null, null);
     
     public TranscriptLine(string text, TimeSpan? duration = null, TimeSpan? startsAt = null)
     {

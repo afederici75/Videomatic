@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.Data.Configurations.Entities;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
+
+namespace Infrastructure.Data.Configurations.Entities;
 
 public abstract class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
 {
@@ -18,22 +21,29 @@ public abstract class TranscriptConfiguration : IEntityTypeConfiguration<Transcr
                .HasConversion(x => x.Value, y => new TranscriptId(y))
                .IsRequired(true);
 
-        //ImportedEntityConfigurator<TranscriptId, Transcript>.Configure(builder);
-
         // ---------- Relationships ----------
-        builder.OwnsMany(x => x.Lines, (builder) =>
-        {
-            builder.ToTable(TableNameForLines);
+        var valueComparer = new ValueComparer<IList<TranscriptLine>>(
+            (c1, c2) => c1!.SequenceEqual(c2!),
+            c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+            c => c.ToList());
 
-            // Shadow properties
-            builder.WithOwner().HasForeignKey("TranscriptId");
+        builder.Property(x => x.Lines)
+               .HasConversion(x => JsonConvert.SerializeObject(x),
+                              y => JsonConvert.DeserializeObject<TranscriptLine[]>(y) ?? Array.Empty<TranscriptLine>())
+               .Metadata.SetValueComparer(valueComparer);
+        //builder.OwnsMany(x => x.Lines, (builder) =>
+        //{
+        //    builder.ToTable(TableNameForLines);
 
-            builder.Property("Id");
-            builder.HasKey("Id");
+        //    // Shadow properties
+        //    builder.WithOwner().HasForeignKey("TranscriptId");
 
-            // Indices
-            builder.HasIndex(nameof(TranscriptLine.Text));
-        });
+        //    builder.Property("Id");
+        //    builder.HasKey("Id");
+
+        //    // Indices
+        //    builder.HasIndex(nameof(TranscriptLine.Text));
+        //});
 
         // ---------- Indices ----------
         builder.HasIndex(x => x.Language);
