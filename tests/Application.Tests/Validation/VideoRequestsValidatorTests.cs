@@ -22,7 +22,7 @@ public class VideoRequestsValidatorTests
     [InlineData("http://somethingElse/2 ", "Video title", "Description", 0)]
     public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateVideoCommand.CreateVideoCommandValidator, CreateVideoCommand>(
+        ValidatorHelper.Validate<CreateVideoCommand.Validator, CreateVideoCommand>(
             CreateVideoCommandBuilder.WithEmptyVideoDetails(location, title, description), expectedErrors);
     }
 
@@ -32,7 +32,7 @@ public class VideoRequestsValidatorTests
     [InlineData(1, 0)]
     public void ValidateDeleteVideoCommand(VideoId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeleteVideoCommand.DeleteVideoCommandValidator, DeleteVideoCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeleteVideoCommand.Validator, DeleteVideoCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -43,7 +43,7 @@ public class VideoRequestsValidatorTests
     [InlineData(2, "Play list", "Description", 0)]
     public void ValidateUpdateVideoCommand(VideoId id, string title, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdateVideoCommand.UpdateVideoCommandValidator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
+        ValidatorHelper.Validate<UpdateVideoCommand.Validator, UpdateVideoCommand>(new(id, title, description), expectedErrors);
     }
 
     [Theory]

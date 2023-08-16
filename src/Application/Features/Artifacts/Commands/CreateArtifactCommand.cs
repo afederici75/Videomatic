@@ -7,14 +7,21 @@ public class CreateArtifactCommand(VideoId videoId, string name, string type, st
     public readonly string Type = type;
     public readonly string? Text  = text;
 
-    internal class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
+    internal class Validator : AbstractValidator<CreateArtifactCommand>
     {
-        public CreateArtifactCommandValidator()
+        public Validator()
         {
             RuleFor(x => (int)x.VideoId).GreaterThan(0);
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Type).NotEmpty();
             RuleFor(x => x.Text).NotEmpty();
+        }
+    }
+
+    internal class Handler : CreateEntityHandler<CreateArtifactCommand, Artifact>
+    {
+        public Handler(IRepository<Artifact> repository, IMapper mapper) : base(repository, mapper)
+        {
         }
     }
 }

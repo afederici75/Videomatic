@@ -61,7 +61,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Playlists.PlaylistVideo">
-    <Position X="14" Y="11" Width="2.5" />
+    <Position X="16" Y="10" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Playlists\PlaylistVideo.cs</FileName>

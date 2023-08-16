@@ -7,8 +7,8 @@ public class GetTranscriptsQuery(
     int? take = null,
     TextSearchType? searchType = null,
     // 
-    IEnumerable<int>? videoIds = null,
-    IEnumerable<int>? transcriptIds = null,
+    IEnumerable<VideoId>? videoIds = null,
+    IEnumerable<TranscriptId>? transcriptIds = null,
     string? searchOn = null) : IRequest<Page<TranscriptDTO>>, IBasicQuery
 { 
     public string? SearchText { get; } = searchText;
@@ -16,8 +16,8 @@ public class GetTranscriptsQuery(
     public int? Skip { get; } = skip;
     public int? Take { get; } = take;
     public TextSearchType? SearchType { get; } = searchType;
-    public IEnumerable<int>? VideoIds { get; } = videoIds;
-    public IEnumerable<int>? TranscriptIds { get; } = transcriptIds;
+    public IEnumerable<VideoId>? VideoIds { get; } = videoIds;
+    public IEnumerable<TranscriptId>? TranscriptIds { get; } = transcriptIds;
     public string? SearchOn { get; } = searchOn;
 
     internal class GetTranscriptsQueryValidator : AbstractValidator<GetTranscriptsQuery>

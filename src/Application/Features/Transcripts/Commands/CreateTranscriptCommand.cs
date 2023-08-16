@@ -10,9 +10,9 @@ public class CreateTranscriptCommand(VideoId videoId,
     public string Language { get; } = language;
     public IEnumerable<string> Lines { get; } = lines;
 
-    internal class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
+    internal class Validator : AbstractValidator<CreateTranscriptCommand>
     {
-        public CreateTranscriptCommandValidator()
+        public Validator()
         {
             RuleFor(x => (int)x.VideoId).GreaterThan(0);
             RuleFor(x => x.Language).NotEmpty();

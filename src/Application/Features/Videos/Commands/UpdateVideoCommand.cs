@@ -13,12 +13,20 @@ public class UpdateVideoCommand(
     public string? Description { get; } = Description;
 
 
-    internal class UpdateVideoCommandValidator : AbstractValidator<UpdateVideoCommand>
+    internal class Validator : AbstractValidator<UpdateVideoCommand>
     {
-        public UpdateVideoCommandValidator()
+        public Validator()
         {
             RuleFor(x => (int)x.Id).GreaterThan(0);
             RuleFor(x => x.Name).NotEmpty();
         }
     }
+
+    internal class Handler : UpdateEntityHandler<UpdateVideoCommand, Video, VideoId>
+    {
+        public Handler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
+        {
+        }
+    }
+
 }

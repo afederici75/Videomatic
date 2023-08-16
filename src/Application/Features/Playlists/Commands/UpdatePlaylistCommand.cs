@@ -8,12 +8,19 @@ public class UpdatePlaylistCommand(PlaylistId id, string name, string? descripti
     public string Name { get; } = name;
     public string? Description { get; } = description;
 
-    internal class UpdatePlaylistCommandValidator : AbstractValidator<UpdatePlaylistCommand>
+    internal class Validator : AbstractValidator<UpdatePlaylistCommand>
     {
-        public UpdatePlaylistCommandValidator()
+        public Validator()
         {
             RuleFor(x => (int)x.Id).GreaterThan(0);
             RuleFor(x => x.Name).NotEmpty();
         }
     }
+    internal class Handler : UpdateEntityHandler<UpdatePlaylistCommand, Playlist, PlaylistId>
+    {
+        public Handler(IRepository<Playlist> repository, IMapper mapper) : base(repository, mapper)
+        {
+        }
+    }
+
 }

@@ -11,11 +11,20 @@ public class DeleteVideoCommand(VideoId id) : IRequest<Result>
 { 
     public VideoId Id { get; } = id;
 
-    internal class DeleteVideoCommandValidator : AbstractValidator<DeleteVideoCommand>
+    internal class Validator : AbstractValidator<DeleteVideoCommand>
     {
-        public DeleteVideoCommandValidator()
+        public Validator()
         {
             RuleFor(x => (int)x.Id).GreaterThan(0);
         }
     }
+
+
+    internal class Handler : DeleteEntityHandler<DeleteVideoCommand, Video, VideoId>
+    {
+        public Handler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
+        {
+        }
+    }
+
 }

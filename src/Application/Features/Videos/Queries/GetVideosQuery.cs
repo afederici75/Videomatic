@@ -7,8 +7,8 @@ public class GetVideosQuery(
     int? take = null,
     TextSearchType? searchType = null,
     // Additional
-    IEnumerable<int>? playlistIds = null,
-    IEnumerable<int>? videoIds = null,
+    IEnumerable<PlaylistId>? playlistIds = null,
+    IEnumerable<VideoId>? videoIds = null,
     string? searchOn = null) : IRequest<Page<VideoDTO>>, IBasicQuery
 {
     public string? SearchText { get; } = searchText;
@@ -17,8 +17,8 @@ public class GetVideosQuery(
     public int? Take { get; } = take;
     public TextSearchType? SearchType { get; } = searchType;
     // Additional
-    public IEnumerable<int>? PlaylistIds { get; } = playlistIds;
-    public IEnumerable<int>? VideoIds { get; } = videoIds;
+    public IEnumerable<PlaylistId>? PlaylistIds { get; } = playlistIds;
+    public IEnumerable<VideoId>? VideoIds { get; } = videoIds;
     public string? SearchOn { get; } = searchOn;
 
 

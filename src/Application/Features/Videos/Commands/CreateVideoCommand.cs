@@ -29,9 +29,9 @@ public class CreateVideoCommand(
     public string ThumbnailUrl { get; } = thumbnailUrl;
     public string PictureUrl { get; } = pictureUrl;
 
-    internal class CreateVideoCommandValidator : AbstractValidator<CreateVideoCommand>
+    internal class Validator : AbstractValidator<CreateVideoCommand>
     {
-        public CreateVideoCommandValidator()
+        public Validator()
         {
             RuleFor(x => x.Location).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
@@ -46,5 +46,15 @@ public class CreateVideoCommand(
             RuleFor(x => x.ThumbnailUrl).NotEmpty();
         }
     }
+
+
+    internal class Handler : CreateEntityHandler<CreateVideoCommand, Video>
+    {
+        public Handler(IRepository<Video> repository, IMapper mapper) : base(repository, mapper)
+        {
+
+        }
+    }
+
 }
 
