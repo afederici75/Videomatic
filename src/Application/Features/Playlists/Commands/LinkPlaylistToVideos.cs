@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Domain.Videos;
-
-namespace Application.Features.Playlists.Commands;
+﻿namespace Application.Features.Playlists.Commands;
 
 public record LinkPlaylistToVideosCommand(int Id, IEnumerable<int> VideoIds) : IRequest<Result<int>>
 {

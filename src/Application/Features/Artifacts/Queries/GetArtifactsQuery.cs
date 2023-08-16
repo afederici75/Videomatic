@@ -8,8 +8,8 @@ public record GetArtifactsQuery(
     int? Take = null,
     TextSearchType? SearchType = null,
     // Additional
-    IEnumerable<long>? VideoIds = null,
-    IEnumerable<long>? ArtifactIds = null,
+    IEnumerable<int>? VideoIds = null,
+    IEnumerable<int>? ArtifactIds = null,
     string? SearchOn = null) : IRequest<Page<ArtifactDTO>>, IBasicQuery;
 
 internal class GetArtifactsQueryValidator : AbstractValidator<GetArtifactsQuery>

@@ -21,7 +21,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     public async Task CreateAndDeleteArtifact()
     {
         // Creates
-        var createCommand = CreateArtifactCommandBuilder.WithDummyValues(1);
+        var createCommand = CreateArtifactCommandBuilder.WithDummyValues((VideoId)1);
         var response = await Sender.Send(createCommand);
 
         // Checks
@@ -43,7 +43,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     public async Task UpdateArtifact()
     {
         // Creates
-        var createCommand = CreateArtifactCommandBuilder.WithDummyValues(1);
+        var createCommand = CreateArtifactCommandBuilder.WithDummyValues((VideoId)1);
         var response = await Sender.Send(createCommand);
 
         // Checks

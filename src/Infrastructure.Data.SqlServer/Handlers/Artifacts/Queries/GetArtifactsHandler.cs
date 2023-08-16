@@ -21,7 +21,8 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
         // Where
         if (request.ArtifactIds != null)
         {
-            q = q.Where(a => request.ArtifactIds.Contains(a.VideoId));
+            q = q.Where(a => request.ArtifactIds.Contains(a.VideoId)); 
+            throw new Exception("The id is incorrect!!!! ");
         }
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))

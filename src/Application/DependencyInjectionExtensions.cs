@@ -36,8 +36,8 @@ public static class DependencyInjectionExtensions
             .ToArray();
 
         services.AddMediatR(cfg =>        
-        {
-            cfg.RegisterServicesFromAssemblies(videomaticAssemblies); // TODO: where do I set scoped?            
+        {            
+            cfg.RegisterServicesFromAssemblies(videomaticAssemblies); // TODO: where do I set scoped?                        
         });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));

@@ -2,7 +2,7 @@
 
 namespace Application.Abstractions;
 
-public record ImportOptions(bool ExecuteWithoutJobQueue = false);
+public record ImportOptions(bool ExecuteImmediate = false);
 
 /// <summary>
 /// Funtionality to import videos, playlists and channels from video providers.

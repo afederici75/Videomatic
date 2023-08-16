@@ -1,4 +1,4 @@
 ﻿namespace SharedKernel.CQRS.Commands;
 
-public abstract record CreateEntityCommand<TAggregateRoot>() : IRequest<Result<TAggregateRoot>>
-    where TAggregateRoot : class;
+public abstract record CreateEntityCommand<TEntity>() : IRequest<Result<TEntity>>
+    where TEntity : class;

@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.YouTube;
+﻿namespace Infrastructure.YouTube.Extensions;
 
 public static class GenericPlaylistExtensions
 {

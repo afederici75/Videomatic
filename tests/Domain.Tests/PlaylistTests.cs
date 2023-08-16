@@ -22,7 +22,7 @@ public class PlaylistTests
     public void LinkVideoToPlaylists()
     {
         var playlist = new Playlist(nameof(LinkVideoToPlaylists), "A description");
-        var count = playlist.LinkToVideos(new VideoId[] { 123, 342 });
+        var count = playlist.LinkToVideos(new VideoId[] { (VideoId)123, (VideoId)342 });
         
         // Checks
         playlist.Videos.Count.Should().Be(2);        

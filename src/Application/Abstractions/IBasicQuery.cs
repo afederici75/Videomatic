@@ -1,5 +1,7 @@
 ﻿namespace Application.Abstractions;
 
+
+// TODO: never truly used IBasicQuery
 public interface IBasicQuery
 {
     string? SearchText { get; }

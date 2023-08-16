@@ -6,16 +6,17 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Xml;
 using Application.Specifications;
+using Infrastructure.YouTube.Custom;
 
 namespace Infrastructure.YouTube;
 
-public class YouTubeImporter : IVideoImporter
+public class YouTubeVideoImporter : IVideoImporter
 {
     public const string ProviderId = "YOUTUBE";
 
-    public YouTubeImporter(
+    public YouTubeVideoImporter(
         IVideoProvider provider,
-        ILogger<YouTubeImporter> logger,
+        ILogger<YouTubeVideoImporter> logger,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
         IRepository<Transcript> transcriptRepository,
@@ -34,7 +35,7 @@ public class YouTubeImporter : IVideoImporter
     readonly IRepository<Playlist> PlaylistRepository;
     readonly IRepository<Transcript> TranscriptRepository;
     readonly IBackgroundJobClient JobClient;
-    readonly ILogger<YouTubeImporter> Logger;
+    readonly ILogger<YouTubeVideoImporter> Logger;
 
     public async Task ImportPlaylistsAsync(IEnumerable<string> idsOrUrls, ImportOptions? options = default, CancellationToken cancellation = default)
     {
@@ -65,7 +66,7 @@ public class YouTubeImporter : IVideoImporter
 
             foreach (var pl in all)
             {
-                switch (options.ExecuteWithoutJobQueue)
+                switch (options.ExecuteImmediate)
                 {
                     case true:
                         await this.ImportVideosAsync(pl.Id, options, cancellation);
@@ -128,7 +129,7 @@ public class YouTubeImporter : IVideoImporter
             }
 
             // Attempts to re-import each playlist's videos (new or existing)            
-            switch (options.ExecuteWithoutJobQueue)
+            switch (options.ExecuteImmediate)
             {
                 case true:
                     await this.ImportTranscriptionsAsync(videoIds, cancellation);

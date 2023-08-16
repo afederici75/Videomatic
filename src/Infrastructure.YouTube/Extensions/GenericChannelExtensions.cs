@@ -1,6 +1,6 @@
 ﻿using Google.Apis.YouTube.v3.Data;
 
-namespace Infrastructure.YouTube;
+namespace Infrastructure.YouTube.Extensions;
 
 public static class GenericChannelExtensions
 {
@@ -8,8 +8,8 @@ public static class GenericChannelExtensions
     {
         var thumbs = channel.Snippet!.Thumbnails!;
 
-        var thumb = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//", -1, -1);
-        var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Google.Apis.YouTube.v3.Data.Thumbnail();//"", -1, -1);
+        var thumb = thumbs.Default__ ?? thumbs.Medium ?? thumbs.High ?? thumbs.Standard ?? thumbs.Maxres ?? new Thumbnail();//", -1, -1);
+        var pict = thumbs.Maxres ?? thumbs.Standard ?? thumbs.High ?? thumbs.Medium ?? thumbs.Default__ ?? new Thumbnail();//"", -1, -1);
 
         NameAndDescription? locInfo = null;
         if (channel.Snippet.Localized != null)

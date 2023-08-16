@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Infrastructure.YouTube;
+namespace Infrastructure.YouTube.Custom;
 
 public class TimedTextInformation
 {

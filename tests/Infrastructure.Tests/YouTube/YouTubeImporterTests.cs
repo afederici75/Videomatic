@@ -43,7 +43,7 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public ISender Sender { get; }
     public IVideoImporter Importer { get; }
 
-    readonly ImportOptions ImportOptions = new (ExecuteWithoutJobQueue: true);
+    readonly ImportOptions ImportOptions = new (ExecuteImmediate: true);
 
     [Theory]
     //[InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future

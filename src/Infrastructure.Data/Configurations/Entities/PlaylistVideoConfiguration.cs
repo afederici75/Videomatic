@@ -17,7 +17,7 @@ public abstract class PlaylistVideoConfiguration : IEntityTypeConfiguration<Play
         builder.HasKey(x => new { x.PlaylistId, x.VideoId });
 
         builder.Property(x => x.VideoId)
-               .HasConversion(x => (int)x, y => y);
+               .HasConversion(x => (int)x, y => (VideoId)y);
 
         builder.Property(x => x.PlaylistId)
                .HasConversion(x => (int)x, y => (PlaylistId)y);
