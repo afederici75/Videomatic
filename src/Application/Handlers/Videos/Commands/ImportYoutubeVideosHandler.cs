@@ -17,7 +17,7 @@ public sealed class ImportYoutubeVideosHandler : IRequestHandler<ImportYoutubeVi
 
     public Task<ImportYoutubeVideosResponse> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
     {
-        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, request.DestinationPlaylistId ?? 1, null, cancellationToken));
+        var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, (PlaylistId?)request.DestinationPlaylistId, null, cancellationToken));
 
         //var jobIds = new List<string>();
         //foreach (var url in request.Urls)

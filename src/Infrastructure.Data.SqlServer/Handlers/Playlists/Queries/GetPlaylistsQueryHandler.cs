@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Abstractions;
-
+﻿
 namespace Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>

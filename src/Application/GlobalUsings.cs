@@ -12,9 +12,9 @@ global using AutoMapper;
 
 global using SharedKernel;
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;
 
 global using Application.Abstractions;
-global using Application.Specifications;
 
 global using SharedKernel.CQRS.Commands;
 

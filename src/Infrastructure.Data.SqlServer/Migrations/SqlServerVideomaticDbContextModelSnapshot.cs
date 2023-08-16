@@ -41,6 +41,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR ArtifactSequence");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -57,6 +61,9 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
@@ -65,7 +72,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.HasIndex("VideoId");
 
@@ -79,22 +90,29 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR PlaylistSequence");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsStarred")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Tags")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
@@ -102,9 +120,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Description");
+                    b.HasIndex("CreatedOn");
 
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.ToTable("Playlists", "Videomatic");
                 });
@@ -131,13 +151,19 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR TranscriptSequence");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Language")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
@@ -161,6 +187,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR VideoSequence");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -179,12 +209,19 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Name");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.ToTable("Videos", "Videomatic");
                 });
@@ -271,7 +308,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("PlaylistId");
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginPlaylistId")
                                         .ValueGeneratedOnAdd()
@@ -296,7 +333,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginPlaylistId");
                                 });
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginPlaylistId")
                                         .ValueGeneratedOnAdd()
@@ -328,7 +365,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -352,7 +389,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("PlaylistId");
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("PlaylistId")
                                 .HasColumnType("int");
@@ -514,7 +551,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("VideoId");
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Picture", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginVideoId")
                                         .HasColumnType("int");
@@ -538,7 +575,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                         .HasForeignKey("EntityOriginVideoId");
                                 });
 
-                            b1.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b2 =>
+                            b1.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b2 =>
                                 {
                                     b2.Property<int>("EntityOriginVideoId")
                                         .HasColumnType("int");
@@ -569,7 +606,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Picture", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Picture", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");
@@ -593,7 +630,7 @@ namespace Infrastructure.Data.SqlServer.Migrations
                                 .HasForeignKey("VideoId");
                         });
 
-                    b.OwnsOne("SharedKernel.ImageReference", "Thumbnail", b1 =>
+                    b.OwnsOne("SharedKernel.Model.ImageReference", "Thumbnail", b1 =>
                         {
                             b1.Property<int>("VideoId")
                                 .HasColumnType("int");

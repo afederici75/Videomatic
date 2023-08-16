@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Playlists;
+﻿using SharedKernel.Model;
+
+namespace Application.Features.Playlists;
 
 public record PlaylistDTO(
     int Id,

@@ -1,29 +1,5 @@
 SPRINT
 
-- [X] Resolve the issue with the thumbnails and origin. 
-	- [X] Also rename Thumbnail to ImageReference or something like that.
-
-- [X] Refactor namespaces and assembly names
-	- The old naming Company.Product.Application and so on is not good. It's very redundant
-	and makes classes hard-er to follow than otherwise. 
-		- This was a MASSIVE change, but thanks toi the tests all worked well!
-
-- [X] Create diagrams for:
-	- [X] The domain model
-	- [X] The database model
-	- [ ] The application model	
-
-- [ ] Add whatever fields we need to make the DB multi tenant.
-	- [X] Add Owner fields to all entities so we know who made what
-	- [ ] R&D on how to do this:
-		- [ ] There's something in the EF Core docs about this
-	- More to add:
-		-[X] CreatedOn/UpdatedOn
-		-[ ] Vote (1 to 10 number)
-		-[X] IsStarred (already done)	
-
-- [ ] Refactor E#F Core configurators to inherit from ImportedEntity
-
 ******************
 Non UI
 ******************

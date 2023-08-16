@@ -1,28 +1,27 @@
 ﻿using SharedKernel.Abstractions;
-using System;
 
 namespace SharedKernel.CQRS.Commands;
 
-public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> : IRequestHandler<TDeleteCommand, Result<bool>>
-    where TDeleteCommand : IRequest<Result<bool>>, IRequestWithId
-    where TAggregateRoot : class, IEntity
-    where TId : class
+public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IRequestHandler<TDeleteCommand, Result>
+    where TDeleteCommand : IRequest<Result>, IRequestWithId
+    where TEntity : class
+    where TId : struct
 {
-    public DeleteEntityHandler(IRepository<TAggregateRoot> repository, IMapper mapper)
+    public DeleteEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IRepository<TAggregateRoot> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
-    public async Task<Result<bool>> Handle(TDeleteCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(TDeleteCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            object id = ConvertIdOfRequest(request);
-
+            TId id = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
+            
             var itemToDelete = await Repository.GetByIdAsync(id, cancellationToken);
             if (itemToDelete == null)
             {
@@ -30,27 +29,14 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TAggregateRoot, TId> :
             }
 
             // TODO: this is where I could compare a version-id for the entity...
-
             await Repository.DeleteAsync(itemToDelete, cancellationToken);
 
-            return true;
+            return Result.Success();
         }
         catch (Exception ex)
         {
             return Result.Error(ex.Message);
         }
-    }
-
-    /// <summary>
-    /// This method converts the id contained in the request to the type of the id of the aggregate root.    
-    /// </summary>
-    /// <param name="request"></param>
-    /// <returns></returns>
-    protected TId ConvertIdOfRequest(IRequestWithId request)
-    {
-        TId result = (TId)Activator.CreateInstance(typeof(TId), request.Id)!;
-
-        return result;
-    }
+    }    
 }
 

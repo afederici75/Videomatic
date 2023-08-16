@@ -2,7 +2,7 @@
 
 namespace Domain.Playlists;
 
-public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
+public class Playlist : ImportedEntity, IAggregateRoot
 {
     public Playlist(string name, string? description = null)
         : base(name, description)
@@ -13,6 +13,8 @@ public class Playlist : ImportedEntity<PlaylistId>, IAggregateRoot
     public Playlist(EntityOrigin origin)
         : base(origin)
     { } 
+
+    public PlaylistId Id { get; private set; } = default!;
 
     public IReadOnlyCollection<PlaylistVideo> Videos => _videos.ToList();
 

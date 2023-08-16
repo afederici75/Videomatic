@@ -1,4 +1,5 @@
 ﻿using Domain.Videos;
+using SharedKernel.Model;
 
 namespace Application.Model;
 

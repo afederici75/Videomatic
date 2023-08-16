@@ -51,19 +51,19 @@ public class DbContextFixture : IAsyncLifetime
         DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Videos");
         DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Playlists");
 
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
 
 
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {TranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
         //DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.ThumbnailSequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {VideoConfiguration.TagsSequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {PlaylistConfiguration.SequenceName}  RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {ArtifactConfiguration.SequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.TagsSequenceName} RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName}  RESTART WITH 1");
+        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
 
 
         await _seeder.SeedAsync();

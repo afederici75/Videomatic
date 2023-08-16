@@ -1,4 +1,6 @@
-﻿namespace Application.Model;
+﻿using SharedKernel.Model;
+
+namespace Application.Model;
 
 public record GenericChannel(
     // Inherited

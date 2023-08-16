@@ -1,5 +1,6 @@
 ﻿global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System.Linq;
 
 global using Ardalis.Result;
 global using AutoMapper;
@@ -7,6 +8,7 @@ global using MediatR;
 global using Microsoft.Extensions.Configuration;
 
 global using SharedKernel.Abstractions;
+global using SharedKernel.Model;
 global using Application.Abstractions;
 
 global using Infrastructure.Data;

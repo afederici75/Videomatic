@@ -1,0 +1,1 @@
+dotnet ef database --startup-project ..\VideomaticRadzen update --context SqlServerVideomaticDbContext  -- --Provider SqlServer

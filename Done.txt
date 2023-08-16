@@ -2,6 +2,41 @@
 Non UI
 ******************
 
+- [X] Create batch files to simplify scaffolding
+	- [X] AddNewMigration.bat
+	- [X] ReScaffoldFromScratch.bat
+	- [X] UpdateDb.bat
+
+- [X] Create diagrams for:
+	- [X] The domain model
+	- [X] The database model
+	- [skipped] The application model	
+
+- [X] Add whatever fields we need to make the DB multi tenant.
+	- [X] Add Owner fields to all entities so we know who made what
+	- [X] R&D on how to do this:
+		- [X] There's something in the EF Core docs about this
+	- More to add:
+		-[X] CreatedOn/UpdatedOn
+		-[skipped] Vote (1 to 10 number)
+		-[X] IsStarred (already done)	
+
+- [X] Refactor E#F Core configurators to inherit from ImportedEntity
+	- Also added Entity. Look into SharedKernel for more info.
+
+- [X] Resolve the issues with strongly typed ids
+	- Starteds with the information at https://andrewlock.net/using-strongly-typed-entity-ids-to-avoid-primitive-obsession-part-1/
+	- Then tried https://github.com/andrewlock/StronglyTypedId#installing
+	- Finally settled for 'public readonly record struct '. See https://www.ssw.com.au/rules/do-you-use-strongly-typed-ids/
+
+- [X] Resolve the issue with the thumbnails and origin. 
+	- [X] Also rename Thumbnail to ImageReference or something like that.
+
+- [X] Refactor namespaces and assembly names
+	- The old naming Company.Product.Application and so on is not good. It's very redundant
+	and makes classes hard-er to follow than otherwise. 
+		- This was a MASSIVE change, but thanks toi the tests all worked well!
+
 - [X] Make sure we don't reimport objects repeatedly
 		- [X] Playlist duplication
 		- [X] Video duplication

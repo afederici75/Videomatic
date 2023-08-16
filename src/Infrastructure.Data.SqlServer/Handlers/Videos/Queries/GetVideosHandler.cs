@@ -1,8 +1,4 @@
-﻿using Domain.Videos;
-using Microsoft.IdentityModel.Tokens;
-using System.Linq.Expressions;
-
-namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
+﻿namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {    
@@ -31,7 +27,10 @@ public class GetVideosHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
             q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
         }
 
-        q = !request.VideoIds.IsNullOrEmpty() ? q.Where(v => request.VideoIds!.Contains(v.Id)) : q;
+        if (request.VideoIds != null)
+        {
+            q = q.Where(v => request.VideoIds.Contains(v.Id));
+        }
         
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {

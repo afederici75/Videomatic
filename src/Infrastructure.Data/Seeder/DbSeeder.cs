@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Domain.Videos;
+using SharedKernel.Model;
 
 namespace Infrastructure.Data.Seeder;
 
@@ -28,7 +29,7 @@ public class DbSeeder : IDbSeeder
         await CreateBurningManPlaylist();
     }
 
-    async Task<long> CreateBurningManPlaylist()
+    async Task<int> CreateBurningManPlaylist()
     {
         var playlist = new Playlist("Burning Man", "Videos about Burning Man");
         await PlaylistRepository.AddAsync(playlist);        
@@ -51,7 +52,7 @@ public class DbSeeder : IDbSeeder
         await PlaylistRepository.LinkPlaylistToVideos(playlist.Id, new[] { shivaVideo.Id});
         await PlaylistRepository.LinkPlaylistToVideos(playlist.Id, new[] { realityNotDualVideo.Id });
 
-        return playlist.Id;
+        return playlist.Id.Value;
     }
 
     async Task<Video> CreateAldousHuxleyTheDancingShivaVideo()

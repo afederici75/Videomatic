@@ -1,4 +1,6 @@
-﻿namespace Application;
+﻿using SharedKernel.Model;
+
+namespace Application;
 
 public class AutomappingProfile : Profile
 {

@@ -25,12 +25,11 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
     {
         base.OnModelCreating(modelBuilder);
     
-        modelBuilder.HasSequence<long>(TranscriptConfiguration.SequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(TranscriptConfiguration.TranscriptLineSequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(VideoConfiguration.SequenceName); // TODO: fix this
-        //modelBuilder.HasSequence<long>(VideoConfiguration.ThumbnailSequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(VideoConfiguration.TagsSequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(PlaylistConfiguration.SequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(ArtifactConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.TranscriptLineSequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.TagsSequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerPlaylistConfiguration.SequenceName); // TODO: fix this
+        modelBuilder.HasSequence<long>(SqlServerArtifactConfiguration.SequenceName); // TODO: fix this
     }    
 }

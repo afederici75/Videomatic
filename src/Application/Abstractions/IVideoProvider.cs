@@ -3,7 +3,7 @@
 namespace Application.Abstractions;
 
 /// <summary>
-/// This interface provides access to the YouTube APIs we are interested in.
+/// Funtionality to get videos, playlists and channels from a video provider.
 /// </summary>
 public interface IVideoProvider
 {

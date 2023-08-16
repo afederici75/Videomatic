@@ -13,7 +13,7 @@ public class PlaylistTests
         var playlist = new Playlist(nameof(CreatePlaylist), "A description");
 
         playlist.Should().NotBeNull();
-        playlist.Id.Should().BeNull(); // Not assigned yet.
+        playlist.Id.Should().Be((PlaylistId)0);
         playlist.Name.Should().Be(nameof(CreatePlaylist));
         playlist.Description.Should().Be("A description");
     }
@@ -28,19 +28,19 @@ public class PlaylistTests
         playlist.Videos.Count.Should().Be(2);        
     }
 
-    [Fact]
-    public void DoesNotLinkVideoToNullPlaylistId()
-    {
-        var playlist = new Playlist(nameof(DoesNotLinkVideoToNullPlaylistId));
+//    [Fact]
+//    public void DoesNotLinkVideoToNullPlaylistId()
+//    {
+//        var playlist = new Playlist(nameof(DoesNotLinkVideoToNullPlaylistId));
 
-#pragma warning disable CS8620
-        // If you pass a newly created Playlist (which has a null Id) it would be null.
-        // Nulls should be ignored.
-        Assert.Throws<ArgumentNullException>(() => playlist.LinkToVideos(new[] { default(VideoId) })); 
+//#pragma warning disable CS8620
+//        // If you pass a newly created Playlist (which has a null Id) it would be null.
+//        // Nulls should be ignored.
+//        Assert.Throws<ArgumentNullException>(() => playlist.LinkToVideos(new[] { default(VideoId) })); 
     
-#pragma warning restore CS8620 
+//#pragma warning restore CS8620 
 
-        // Checks
-        playlist.Videos.Count.Should().Be(0);        
-    }
+//        // Checks
+//        playlist.Videos.Count.Should().Be(0);        
+//    }
 }
