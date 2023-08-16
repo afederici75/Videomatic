@@ -1,7 +1,6 @@
 ﻿using Application.Tests.Helpers;
 using Application.Features.Artifacts.Commands;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Domain.Videos;
 
 namespace Application.Tests.Validation;
 
@@ -22,7 +21,7 @@ public class ArtifactValidatorTests
     [InlineData(5, null, null, null, 3)]
     public void ValidateCreateArtifactCommand(int videoId, string type, string name, string? text, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreateArtifactCommandValidator, CreateArtifactCommand>(new(videoId, name, type, text), expectedErrors);
+        ValidatorHelper.Validate<CreateArtifactCommandValidator, CreateArtifactCommand>(new((VideoId)videoId, name, type, text), expectedErrors);
     }
 
     [Theory]

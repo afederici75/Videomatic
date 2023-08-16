@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Data.SqlServer.Handlers.Artifacts.Queries;
 
@@ -21,8 +22,9 @@ public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<Artifa
         // Where
         if (request.ArtifactIds != null)
         {
-            q = q.Where(a => request.ArtifactIds.Contains(a.VideoId)); 
-            throw new Exception("The id is incorrect!!!! ");
+            // This line contained a bug before I made the ids strongly typed in requests, too.
+            // Instead of passing a.Id I was passing a.VideoId and it did not show a problem as integer!!!
+            q = q.Where(a => request.ArtifactIds.Contains(a.Id));             
         }
 
         if (!string.IsNullOrWhiteSpace(request.SearchText))
