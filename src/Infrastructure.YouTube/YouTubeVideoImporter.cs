@@ -47,7 +47,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the playlists that already exist in the database
-            var qry = new Playlists.ByProviderItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
+            var qry = new Playlists.ByProviderAndItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
             var dups = await PlaylistRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -87,7 +87,7 @@ public class YouTubeVideoImporter : IVideoImporter
         if (pl?.Origin?.ProviderItemId == null)
             throw new ArgumentException($"Playlist '{playlistId}' does not exist have an origin or does not exist.", nameof(playlistId));
 
-        await foreach (IEnumerable<GenericVideo> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.ProviderItemId, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
+        await foreach (IEnumerable<GenericVideoDTO> videoPage in Provider.GetVideosOfPlaylistAsync(pl.Origin.ProviderItemId, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             var videoIds = videoPage.Select(v => v.ProviderItemId);
 

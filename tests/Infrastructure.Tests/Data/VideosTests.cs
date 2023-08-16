@@ -7,70 +7,72 @@ public class VideosTests : IClassFixture<DbContextFixture>
 {
     public VideosTests(
         DbContextFixture fixture,
-        ISender sender)
+        ISender sender,
+        IRepository<Video> repository)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        Repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
         //Fixture.SkipDeletingDatabase = true;
     }
 
     public DbContextFixture Fixture { get; }
     public ISender Sender { get; }
+    public IRepository<Video> Repository { get; }
 
-    [Fact]
-    public async Task CreateVideo()
-    {
-        var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
 
-        var response = await Sender.Send(createCommand);
-
-        // Checks
-        response.Value.Id.Value.Should().BeGreaterThan(0);
-
-        // Just a small test to see if LINQ creates a simpler query than
-        // the one with all owned properties just down below.
-        //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
-        var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Value.Id);
-        
-        video.Name.Should().BeEquivalentTo(createCommand.Name);
-        video.Description.Should().BeEquivalentTo(createCommand.Description);
-        //video.Location.Should().BeEquivalentTo(createCommand.Location);
-        //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
-        //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
-        video.Origin.ProviderId.Should().BeEquivalentTo(createCommand.ProviderId);
-        video.Origin.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId);
-        video.Origin.ChannelName.Should().BeEquivalentTo(createCommand.ChannelName);
-        video.Origin.PublishedOn.Should().Be(createCommand.PublishedOn);        
-
-        Fixture.DbContext.Videos.Remove(video);
-        await Fixture.DbContext.SaveChangesAsync();
-    }
+    //[Fact]
+    //public async Task CreateVideo()
+    //{
+    //    var createCommand = CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails();
+    //
+    //    var response = await Sender.Send(createCommand);
+    //
+    //    // Checks
+    //    response.Value.Id.Value.Should().BeGreaterThan(0);
+    //
+    //    // Just a small test to see if LINQ creates a simpler query than
+    //    // the one with all owned properties just down below.
+    //    //var tmp = await Fixture.DbContext.Videos.Where(x => x.Id == response.Id).Select(x=> x.Id).SingleAsync();
+    //    var video = Fixture.DbContext.Videos.Single(x => x.Id == response.Value.Id);
+    //    
+    //    video.Name.Should().BeEquivalentTo(createCommand.Name);
+    //    video.Description.Should().BeEquivalentTo(createCommand.Description);
+    //    //video.Location.Should().BeEquivalentTo(createCommand.Location);
+    //    //video.Details.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId); 
+    //    //video.Details.PlaylistId.Should().BeEquivalentTo(createCommand.PlaylistId);
+    //    video.Origin.ProviderId.Should().BeEquivalentTo(createCommand.ProviderId);
+    //    video.Origin.ChannelId.Should().BeEquivalentTo(createCommand.ChannelId);
+    //    video.Origin.ChannelName.Should().BeEquivalentTo(createCommand.ChannelName);
+    //    video.Origin.PublishedOn.Should().Be(createCommand.PublishedOn);        
+    //
+    //    Fixture.DbContext.Videos.Remove(video);
+    //    await Fixture.DbContext.SaveChangesAsync();
+    //}
 
     [Fact]
     public async Task DeleteVideo()
     {
-        var videoId = await Sender.Send(CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
+        Video newVideo = await Repository.AddAsync(new Video(nameof(DeleteVideo)));
 
         // Executes
-        var deletedResponse = await Sender.Send(new DeleteVideoCommand(videoId.Value.Id));
+        Result deletedResponse = await Sender.Send(new DeleteVideoCommand(newVideo.Id));
 
         // Checks
-        videoId.Value.Id.Value.Should().BeGreaterThan(0);
-
-        var row = await Fixture.DbContext.Videos.FirstOrDefaultAsync(x => x.Id == videoId.Value.Id);
-
+        deletedResponse.IsSuccess.Should().BeTrue();
+        
+        var row = await Fixture.DbContext.Videos.FirstOrDefaultAsync(x => x.Id == newVideo.Id);
         row.Should().BeNull();
     }
 
     [Fact]
     public async Task UpdateVideo()
     {
-        var createResponse = await Sender.Send(
-            CreateVideoCommandBuilder.WithRandomValuesAndEmptyVideoDetails());
-
+        Video newVideo = await Repository.AddAsync(new Video(nameof(DeleteVideo)));
+        
         var updateCommand = new UpdateVideoCommand(
-            createResponse.Value.Id,
+            newVideo.Id,
             "New Title",
             "New Description");
 
@@ -78,7 +80,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
         // Checks
         var video = await Fixture.DbContext.Videos
-            .Where(x => x.Id == createResponse.Value.Id)
+            .Where(x => x.Id == newVideo.Id)
             .SingleAsync();
 
         video.Id.Value.Should().Be(updateCommand.Id);
@@ -99,21 +101,15 @@ public class VideosTests : IClassFixture<DbContextFixture>
         Result<Playlist> playlist1 = await Sender.Send(createPlaylistCmd);
 
         // Video 1
-        var createVid1Cmd = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V1");
-        
-        Result<Video> video1 = await Sender.Send(createVid1Cmd);
+        Video video1 = await Repository.AddAsync(new Video(nameof(LinksTwoVideoToPlaylist) + "V1"));
 
         // Video 2
-        var createVid2Cmd = CreateVideoCommandBuilder
-            .WithRandomValuesAndEmptyVideoDetails(nameof(LinksTwoVideoToPlaylist) + "V2");
-
-        var video2 = await Sender.Send(createVid2Cmd);
+        Video video2 = await Repository.AddAsync(new Video(nameof(LinksTwoVideoToPlaylist) + "V2"));
 
         // Links
         var addVidsCmd = new LinkPlaylistToVideosCommand(
             playlist1.Value.Id,
-            new VideoId[] { video1.Value.Id, video2.Value.Id });
+            new VideoId[] { video1.Id, video2.Id });
         
         var addVidsResponse = await Sender.Send(addVidsCmd); // Should add 2 videos
         var emptyAddVidsResponse = await Sender.Send(addVidsCmd); // Should not add anything as they are both dups
@@ -123,8 +119,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
         emptyAddVidsResponse.Value.Should().Be(0);
 
         await Sender.Send(new DeletePlaylistCommand(playlist1.Value.Id));
-        await Sender.Send(new DeleteVideoCommand(video1.Value.Id));
-        await Sender.Send(new DeleteVideoCommand(video2.Value.Id));
+        await Sender.Send(new DeleteVideoCommand(video1.Id));
+        await Sender.Send(new DeleteVideoCommand(video2.Id));
     }
 
     [Theory]

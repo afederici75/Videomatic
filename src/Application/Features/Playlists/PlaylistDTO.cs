@@ -2,10 +2,19 @@
 
 namespace Application.Features.Playlists;
 
-public readonly record struct PlaylistDTO(
-    int Id,
-    string Name,
-    ImageReference Thumbnail,
-    ImageReference Picture,
-    string? Description,
-    int VideoCount);
+public class PlaylistDTO(
+    int id,
+    string name,
+    ImageReference thumbnail,
+    ImageReference picture,
+    string? description,
+    int videoCount)
+{ 
+    public int Id { get; } = id;
+    public string Name { get; } = name;
+    public ImageReference Thumbnail { get; } = thumbnail;
+    public ImageReference Picture { get; } = picture;
+    public string? Description { get; } = description;
+    public int VideoCount { get; } = videoCount;
+
+}

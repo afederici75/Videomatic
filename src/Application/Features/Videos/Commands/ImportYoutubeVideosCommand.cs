@@ -6,6 +6,7 @@ public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? de
     public IEnumerable<string> Urls { get; } = urls;
     public PlaylistId? DestinationPlaylistId { get; } = destinationPlaylistId;
 
+    #region Validator
 
     internal class Validator : AbstractValidator<ImportYoutubeVideosCommand>
     {
@@ -17,6 +18,9 @@ public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? de
         }
     }
 
+    #endregion
+
+    #region Handler
 
     internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportYoutubeVideosCommand, Result<string>>
     {
@@ -30,4 +34,6 @@ public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? de
             return Task.FromResult(new Result<string>(jobId));
         }
     }
+
+    #endregion
 }

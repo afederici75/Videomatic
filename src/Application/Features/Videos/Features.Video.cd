@@ -15,28 +15,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Application.Features.Videos.Commands.CreateVideoCommand" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="0.5" Width="2.75" />
-    <NestedTypes>
-      <Class Name="Application.Features.Videos.Commands.CreateVideoCommand.Validator" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Features\Videos\Commands\CreateVideoCommand.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Application.Features.Videos.Commands.CreateVideoCommand.Handler" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Features\Videos\Commands\CreateVideoCommand.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAA0AAAAAAIJAAQAgAAAAAAAAAQAAACQAAA=</HashCode>
-      <FileName>Features\Videos\Commands\CreateVideoCommand.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Application.Features.Videos.Commands.DeleteVideoCommand" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="6.75" Width="2" />
+    <Position X="1.25" Y="4" Width="2" />
     <NestedTypes>
       <Class Name="Application.Features.Videos.Commands.DeleteVideoCommand.Validator" Collapsed="true">
         <TypeIdentifier>
@@ -98,7 +78,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Application.Features.Videos.Commands.UpdateVideoCommand" BaseTypeListCollapsed="true">
-    <Position X="0.75" Y="4.5" Width="2" />
+    <Position X="1" Y="1.25" Width="2" />
     <NestedTypes>
       <Class Name="Application.Features.Videos.Commands.UpdateVideoCommand.Validator" Collapsed="true">
         <TypeIdentifier>

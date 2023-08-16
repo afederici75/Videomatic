@@ -16,17 +16,6 @@ public class VideoRequestsValidatorTests
     }
 
     [Theory]
-    [InlineData(null, null, null, 2)]
-    [InlineData("", "", null, 2)]
-    [InlineData("http://something/1", null, null, 1)]
-    [InlineData("http://somethingElse/2 ", "Video title", "Description", 0)]
-    public void ValidateCreateVideoCommand(string location, string title, string? description, int expectedErrors)
-    {
-        ValidatorHelper.Validate<CreateVideoCommand.Validator, CreateVideoCommand>(
-            CreateVideoCommandBuilder.WithEmptyVideoDetails(location, title, description), expectedErrors);
-    }
-
-    [Theory]
     [InlineData(0, 1)]
     [InlineData(-1, 1)]
     [InlineData(1, 0)]
