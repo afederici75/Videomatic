@@ -5,7 +5,7 @@ public readonly record struct CreateArtifactCommand(VideoId VideoId,
                                     string Type,
                                     string? Text) : IRequest<Result<Artifact>>;
 
-public class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
+internal class CreateArtifactCommandValidator : AbstractValidator<CreateArtifactCommand>
 {
     public CreateArtifactCommandValidator()
     {

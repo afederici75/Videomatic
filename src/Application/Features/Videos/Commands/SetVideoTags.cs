@@ -2,7 +2,7 @@
 
 public readonly record struct SetVideoTags(int Id, string[] Tags) : IRequest<Result>;
 
-public class SetVideoTagsValidator : AbstractValidator<SetVideoTags>
+internal class SetVideoTagsValidator : AbstractValidator<SetVideoTags>
 {
     public SetVideoTagsValidator()
     {

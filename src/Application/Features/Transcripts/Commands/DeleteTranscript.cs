@@ -2,7 +2,7 @@
 
 public readonly record struct DeleteTranscriptCommand(int Id) : IRequest<Result>;
 
-public class DeleteTranscriptCommandValidator : AbstractValidator<DeleteTranscriptCommand>
+internal class DeleteTranscriptCommandValidator : AbstractValidator<DeleteTranscriptCommand>
 {
     public DeleteTranscriptCommandValidator()
     {

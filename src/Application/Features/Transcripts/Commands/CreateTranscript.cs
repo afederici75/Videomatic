@@ -6,7 +6,7 @@ public readonly record struct CreateTranscriptCommand(int VideoId,
                                       string Language,
                                       IEnumerable<string> Lines) : IRequest<Result<Transcript>>;
 
-public class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
+internal class CreateTranscriptCommandValidator : AbstractValidator<CreateTranscriptCommand>
 {
     public CreateTranscriptCommandValidator()
     {

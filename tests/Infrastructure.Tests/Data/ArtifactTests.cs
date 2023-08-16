@@ -77,6 +77,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     // TODO: missing paging tests and should add more anyway
     public async Task GetArtifacts(string? searchText, string? orderBy, int expectedResults)
     {
+
         var query = new GetArtifactsQuery(SearchText: searchText, OrderBy: orderBy);
         Page<ArtifactDTO> response = await Sender.Send(query);
 

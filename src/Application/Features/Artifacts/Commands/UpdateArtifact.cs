@@ -6,7 +6,7 @@ public readonly record struct UpdateArtifactCommand(ArtifactId Id,
                                     string Name,
                                     string? Text) : IRequest<Result<Artifact>>;
 
-public class UpdateArtifactCommandValidator : AbstractValidator<UpdateArtifactCommand>
+internal class UpdateArtifactCommandValidator : AbstractValidator<UpdateArtifactCommand>
 {
     public UpdateArtifactCommandValidator()
     {
