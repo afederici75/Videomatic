@@ -1,0 +1,16 @@
+{
+  "DetailedErrors": true,
+
+  "Serilog": {
+    "Using": [ "SeriLog.Sinks.Console", "Serilog.Sinks.File", "Serilog.Sinks.Async", "SeriLog.Sinks.Seq" ],
+    "MinimumLevel": {
+      "Default": "Debug",
+      "Override": {
+        "Microsoft.EntityFrameworkCore": "Warning",
+        "System.Http": "Verbose",
+        "Microsoft.AspNetCore": "Verbose",
+        "Hangfire": "Warning"
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "Serilog": {
+    "Properties": {
+      "Application": "VideomaticImporter"
+    },
+
+    "Using": [ "SeriLog.Sinks.Console", "Serilog.Sinks.File", "Serilog.Sinks.Async", "SeriLog.Sinks.Seq" ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        //"Microsoft.EntityFrameworkCore": "Warning",
+        //"System.Http": "Verbose",
+        //"Microsoft.AspNetCore": "Verbose",
+        //"Hangfire": "Warning"
+      }
+    },
+    // See https://github.com/serilog/serilog/wiki/Provided-Sinks
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          // See https://github.com/serilog/serilog-sinks-console
+          "theme": "Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme::Literate, Serilog.Sinks.Console"
+          // ,"outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              // See https://github.com/serilog/serilog-sinks-file
+              "Name": "File",
+              "Args": {
+                "path": "Logs/Log.json",
+                "rollingInterval": "Day",
+                "formatter": "Serilog.Formatting.Json.JsonFormatter, Serilog"
+              }
+            }
+          ]
+        }
+      },
+
+      {
+        // See  https://github.com/datalust/serilog-sinks-seq#json-appsettingsjson-configuration
+        // https://garywoodfine.com/implement-log-monitoring-with-seq-and-serilog-in-net-core/
+        "Name": "Seq",
+        "Args": {
+          // Leave the default to Docker Compose container. 
+          "serverUrl": "http://localhost:5341",
+          "apiKey": "none"
+        }
+      }
+    ],
+    "Enrich": [
+      // See https://github.com/serilog/serilog/wiki/Enrichment
+      "FromLogContext",
+      "WithMachineName",
+      "WithThreadId",
+      "WithEnvironmentUserName",
+      "WithProcessId",
+      "WithCorrelationId",
+      "WithClientIp",
+      "WithClientAgent",
+      "WithAssemblyName",
+      "WithHttpRequestId"
+    ]
+  }
+}
