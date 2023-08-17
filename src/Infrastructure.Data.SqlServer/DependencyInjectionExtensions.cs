@@ -33,7 +33,7 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddVideomaticDataForSqlServer(
         this IServiceCollection services,
         IConfiguration configuration,
-        bool registerDbContextFactory = true)
+        bool registerDbContextFactory)
     {
         // Keep this here!
         services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>();
@@ -58,7 +58,7 @@ public static class DependencyInjectionExtensions
         public VideomaticDbContextFactory(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-            LoggerFactory = loggerFactory;
+            LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
         
         public IConfiguration Configuration { get; }

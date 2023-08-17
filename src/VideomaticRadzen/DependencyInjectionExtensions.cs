@@ -39,7 +39,7 @@ public static class DependencyInjectionExtensions
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseActivator(new ContainerJobActivator(services.BuildServiceProvider()))
-                .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
+                .UseFilter(new AutomaticRetryAttribute { Attempts = 5 })
                 .UseSqlServerStorage(configuration.GetConnectionString(connectionName),
                                     new Hangfire.SqlServer.SqlServerStorageOptions()
                                     {

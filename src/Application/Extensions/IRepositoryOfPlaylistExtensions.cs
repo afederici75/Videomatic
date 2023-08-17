@@ -1,4 +1,6 @@
-﻿namespace Application.Abstractions;
+﻿using Application.Specifications;
+
+namespace Application.Abstractions;
 
 public static class IRepositoryOfPlaylistExtensions
 {
@@ -7,12 +9,15 @@ public static class IRepositoryOfPlaylistExtensions
         IEnumerable<VideoId> videoIds,
         CancellationToken cancellationToken = default)
     {
+        Guard.Against.Null(repository, nameof(repository));
+        Guard.Against.Null(playlistId, nameof(playlistId));
+
         try
         {
-            Guard.Against.Null(repository, nameof(repository));
-            Guard.Against.Null(playlistId, nameof(playlistId));
+            Playlist? pl = await repository.SingleOrDefaultAsync(
+                new Playlists.ById(playlistId, Playlists.Include.Videos), 
+                cancellationToken);
 
-            Playlist? pl = await repository.GetByIdAsync(playlistId, cancellationToken);
             if (pl is null)
             {
                 return Result<int>.NotFound();
