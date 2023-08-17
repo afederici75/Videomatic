@@ -32,18 +32,22 @@ public static class DependencyInjectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddVideomaticDataForSqlServer(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        bool registerDbContextFactory = true)
     {
         // Keep this here!
         services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>();
 
-        services.AddDbContextFactory<VideomaticDbContext, VideomaticSqlServerDbContextFactory>(
-            (sp, builder) =>
-            {
-                var cfg = configuration;
-                Configure(builder, cfg);
-            },
-            ServiceLifetime.Scoped);
+        if (registerDbContextFactory)
+        {
+            services = services.AddDbContextFactory<VideomaticDbContext, VideomaticSqlServerDbContextFactory>(
+                (sp, builder) =>
+                {
+                    var cfg = configuration;
+                    Configure(builder, cfg);
+                },
+                ServiceLifetime.Scoped);
+        }
 
         return services;
     }

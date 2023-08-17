@@ -17,13 +17,18 @@ public static class DependencyInjectionExtensions
                .AddEnvironmentVariables();
     }
 
-    public static void AddVideomaticServer(this IServiceCollection services, IConfiguration configuration)
+    public static void AddVideomaticServer(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        bool addHangfireHostedService,
+        int? workerCount = null,
+        bool registerDbContextFactory = true)
     {
         // Videomatic
         services.AddVideomaticSharedKernel(configuration);
         services.AddVideomaticApplication(configuration);
         services.AddVideomaticData(configuration);
-        services.AddVideomaticDataForSqlServer(configuration);
+        services.AddVideomaticDataForSqlServer(configuration, registerDbContextFactory: registerDbContextFactory);
         services.AddVidematicYouTubeInfrastructure(configuration);
 
         var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
@@ -43,7 +48,16 @@ public static class DependencyInjectionExtensions
 #pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 
         // Add the processing server as IHostedService
-        services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts! See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
+        if (addHangfireHostedService)
+        {
+            // SUPER IMPORTANT to set this to 1 for Blazor hosts!
+            // See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
+            services.AddHangfireServer(options =>
+            {
+                if (workerCount != null)
+                    options.WorkerCount = workerCount.Value;
+            }); 
+        }
     }
 
     public class ContainerJobActivator : JobActivator

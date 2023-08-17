@@ -5,7 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Videomatic
 builder.Configuration.SetupVideomaticConfiguration();
-builder.Services.AddVideomaticServer(builder.Configuration);
+builder.Services.AddVideomaticServer(
+    configuration: builder.Configuration, 
+    addHangfireHostedService: false, 
+    workerCount: 1,
+    registerDbContextFactory: true);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
