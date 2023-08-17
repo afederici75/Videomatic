@@ -31,6 +31,9 @@ public static class FullTextIndexingMigrationHelper
             sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Video)}s (
                                 {nameof(Video.Name)},
                                 {nameof(Video.Description)}, 
+                                {nameof(Video.Tags)},
+                                {nameof(Video.CreatedBy)},
+                                {nameof(Video.UpdatedBy)},
                                 Origin_ProviderId,
                                 Origin_ProviderItemId,
                                 Origin_ETag,
@@ -44,6 +47,9 @@ public static class FullTextIndexingMigrationHelper
             sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Playlist)}s  (
                                 {nameof(Playlist.Name)},
                                 {nameof(Playlist.Description)},
+                                {nameof(Playlist.Tags)},
+                                {nameof(Video.CreatedBy)},
+                                {nameof(Video.UpdatedBy)},                                
                                 Origin_ProviderId,
                                 Origin_ProviderItemId,
                                 Origin_ETag,
@@ -57,7 +63,9 @@ public static class FullTextIndexingMigrationHelper
             sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Artifact)}s (
                                 {nameof(Artifact.Name)}, 
                                 {nameof(Artifact.Type)}, 
-                                {nameof(Artifact.Text)})
+                                {nameof(Artifact.Text)},
+                                {nameof(Video.CreatedBy)},
+                                {nameof(Video.UpdatedBy)})
                        KEY INDEX PK_Artifacts ON FTVideomatic
                        WITH STOPLIST = OFF, CHANGE_TRACKING AUTO;",
             suppressTransaction: true);
@@ -65,7 +73,9 @@ public static class FullTextIndexingMigrationHelper
         migrationBuilder.Sql(
             sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Transcript)}s (
                                 {nameof(Transcript.Language)},
-                                {nameof(Transcript.Lines)})
+                                {nameof(Transcript.Lines)},
+                                {nameof(Video.CreatedBy)},
+                                {nameof(Video.UpdatedBy)})
                        KEY INDEX PK_Transcripts ON FTVideomatic
                        WITH STOPLIST = OFF, CHANGE_TRACKING AUTO;",
             suppressTransaction: true);

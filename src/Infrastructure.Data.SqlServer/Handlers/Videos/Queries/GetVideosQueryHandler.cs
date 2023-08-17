@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
+﻿using LinqKit;
+using System.Linq.Expressions;
+
+namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {    
@@ -34,14 +37,16 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
         
         if (!string.IsNullOrWhiteSpace(request.SearchText))
         {
+            Expression<Func<Video, bool>> fullTextPredicate = PredicateBuilder.New<Video>(false);
+            fullTextPredicate = fullTextPredicate.Or(x => EF.Functions.Contains(x.Name, $"\"{request.SearchText}\""));
+            fullTextPredicate = fullTextPredicate.Or(x => EF.Functions.Contains(x.Description!, $"\"{request.SearchText}\""));
+            fullTextPredicate = fullTextPredicate.Or(x => EF.Functions.Contains(x.Tags!, $"\"{request.SearchText}\""));
+            
             // TODO: create a replacement of EF.Functions.FreeText so I can use this
             // in the .Data assembly and pass multiple columns. I don't have time now, but this shows how:
             // https://www.thinktecture.com/en/entity-framework-core/custom-functions-using-imethodcalltranslator-in-2-1/
             // https://www.thinktecture.com/entity-framework-core/custom-functions-using-hasdbfunction-in-2-1/
-            q = q.Where(v => 
-                EF.Functions.FreeText(v.Name, request.SearchText) ||
-                ((v.Description != null) && EF.Functions.FreeText(v.Description, request.SearchText))
-            );
+            q = q.Where(fullTextPredicate);
         }
 
         // OrderBy
@@ -60,7 +65,7 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
         //var preferredRes = (request.SelectedThumbnail ?? ThumbnailResolutionDTO.Default)
         //                        .ToThumbnailResolution();
 
-        var final = q.AsNoTracking().Select(v => new VideoDTO(
+        var final = q.Select(v => new VideoDTO(
             v.Id,
             $"https://www.youtube.com/videos?v=" + v.Origin.ProviderItemId,
             v.Name,
@@ -79,7 +84,7 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
             ));
 
         // Fetches
-        var res = await final.ToListAsync(cancellationToken);
+        var res = await final.AsNoTracking().ToListAsync(cancellationToken);
         
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    
