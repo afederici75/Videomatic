@@ -400,4 +400,5 @@ FodyWeavers.xsd
 /docs/UI/.$VideomaticUI.drawio.dtmp
 /docs/UI/.$VideomaticUI.drawio.bkp
 /src/Company.Videomatic.Infrastructure.YouTube/googlekey.p12
-/src/VideomaticRadzen/*.p12
+/src/*.p12
+/src/VideoMaticServiceImporter/VideomaticService.p12
