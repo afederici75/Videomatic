@@ -2,6 +2,13 @@
 Non UI
 ******************
 
+- [X] Refactor commands:
+	- [X] REMOVE CreateTranscriptCommand
+	- [X] REMOVE DeleteTranscriptCommand
+	- [X] add UpdateTranscriptCommand with limitations
+
+- [X] Refactor transcript lines into a string
+
 - [X] MASSIVE refactoring of ids led to finding several bugs! Big payoff/very pleased!!!
 	- The code looks much more solid now that id-types are used everywhere!
 	- Moved STIDs all the way up to the Application level (which is where most of thr bugs were found)
