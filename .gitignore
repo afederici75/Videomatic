@@ -403,3 +403,4 @@ FodyWeavers.xsd
 /src/VideomaticRadzen/googlekey.p12
 /src/VideomaticRadzen/VideomaticService.p12
 /tests/Infrastructure.Tests/VideomaticService.p12
+/src/VideoMaticServiceImporter/VideomaticService.p12
