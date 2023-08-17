@@ -36,18 +36,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="appsettings.Development.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>appsettings.json</DependentUpon>
-    </Content>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>    
     <Content Update="logsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>logsettings.json</DependentUpon>
     </Content>
     <Content Update="logsettings.json">
+      <DependentUpon>appsettings.json</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>  

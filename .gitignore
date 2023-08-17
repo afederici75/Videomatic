@@ -403,6 +403,6 @@ FodyWeavers.xsd
 /docs/UI/.$VideomaticUI.drawio.bkp
 *.p12
 
-/src/VideomaticWebAPI/Videomatic.db
-/src/VideomaticWebAPI/Videomatic.db-shm
-/src/VideomaticWebAPI/Videomatic.db-wal
+*.db
+*.db-shm
+*.db-wal
