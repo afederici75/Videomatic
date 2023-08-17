@@ -402,7 +402,7 @@ FodyWeavers.xsd
 /docs/UI/.$VideomaticUI.drawio.dtmp
 /docs/UI/.$VideomaticUI.drawio.bkp
 *.p12
-/src/VideomaticRadzen/YouTubeServiceAccount.p12
+/src/VideomaticRadzen/*.p12
 /src/VideomaticWebAPI/YouTubeServiceAccount.p12
 /src/VideoMaticServiceImporter/YouTubeServiceAccount.p12
 
