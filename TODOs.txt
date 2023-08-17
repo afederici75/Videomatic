@@ -1,6 +1,7 @@
 SPRINT
 
 
+
 - [ ] Add domain events!
 	- [ ] When a playlist or a video are imported, they should trigger a domain event
 	which then should send a message to the Blazor client.

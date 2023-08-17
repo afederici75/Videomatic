@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Data.SqlServer.Handlers.Transcripts.Queries;
 
-public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<TranscriptDTO>>
+public class GetTranscriptQueryHandler : IRequestHandler<GetTranscriptsQuery, Page<TranscriptDTO>>
 {    
-    public GetTranscriptHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
+    public GetTranscriptQueryHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
@@ -46,15 +46,15 @@ public class GetTranscriptHandler : IRequestHandler<GetTranscriptsQuery, Page<Tr
         q = q.Skip(skip).Take(take);
 
         // Projection
-        var final = q.Select(p => new TranscriptDTO(
-            p.Id,
-            p.VideoId,
-            p.Language,
-            p.Lines.Select(x => new TranscriptLineDTO(x.Text, x.StartsAt, x.Duration)).ToArray(),
-            p.Lines.Count()));
+        var final = q.Select(p => new TranscriptDTO(p));
+            //p.Id,
+            //p.VideoId,
+            //p.Language,
+            //p.Lines.Select(x => new TranscriptLineDTO(x.Text, x.StartsAt, x.Duration)),
+            //p.Lines.Count()));
 
         // Returns result
-        var res = await final.ToListAsync();
+        var res = await final.AsNoTracking().ToListAsync();
 
         return new Page<TranscriptDTO>(res, skip, take, totalCount);
     }

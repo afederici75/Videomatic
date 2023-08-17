@@ -2,6 +2,8 @@
 Non UI
 ******************
 
+- [X] Fixed an issue with DbContext: it was missing the ILoggerFactory service.
+
 - [X] Refactor commands:
 	- [X] REMOVE CreateTranscriptCommand
 	- [X] REMOVE DeleteTranscriptCommand

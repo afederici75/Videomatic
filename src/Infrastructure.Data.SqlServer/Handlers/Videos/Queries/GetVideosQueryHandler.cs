@@ -1,5 +1,8 @@
 ﻿using LinqKit;
+using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
@@ -23,11 +26,16 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
         // Where
         if (request.PlaylistIds != null)
         {
-            var vidsOfPlaylists = dbContext.PlaylistVideos
-                .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
-                .Select(pv => pv.VideoId);
+            var linkedVideoIds = from pl in dbContext.Playlists
+                                 from plVid in pl.Videos
+                                 where request.PlaylistIds.Contains(pl.Id)
+                                 select plVid.VideoId;
 
-            q = q.Where(v => vidsOfPlaylists.Contains(v.Id));
+            //var vidsOfPlaylists = dbContext.PlaylistVideos
+            //    .Where(pv => request.PlaylistIds.Contains(pv.PlaylistId))
+            //    .Select(pv => pv.VideoId);
+
+            q = q.Where(v => linkedVideoIds.Contains(v.Id));
         }
 
         if (request.VideoIds != null)
@@ -88,4 +96,37 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
         
         return new Page<VideoDTO>(res, skip, take, totalCount);
     }    
+}
+
+public static class Exts
+{
+    //public static IQueryable<T> XX<T, TId>(this IQueryable<T> source, Expression<Func<T, TId>> idProperty, IEnumerable<TId> ids)
+    //{
+    //    if ((ids == null) || !ids.Any())
+    //        return source;
+
+    //    var vidsOfPlaylists = source
+    //        .Where(pv => ids.Contains(idProperty))
+    //        .Select(pv => pv.VideoId);
+
+    //    source = source.Where(v => vidsOfPlaylists.Contains(idProperty));
+        
+
+    //    return source;
+    //}
+
+    public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
+    {
+        var type = typeof(T);
+        var parameter = Expression.Parameter(type, "p");
+        var propertyReference = Expression.Property(parameter, propertyName);
+        var lambda = Expression.Lambda(propertyReference, parameter);
+        var result = Expression.Call(
+                       typeof(Queryable),
+                                  "OrderBy",
+                                             new[] { type, propertyReference.Type },
+                                                        source.Expression,
+                                                                   lambda);
+        return source.Provider.CreateQuery<T>(result);
+    }
 }
