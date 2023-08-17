@@ -1,29 +1,42 @@
 ﻿using Domain.Videos;
 using Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 using SharedKernel.Model;
 
 namespace Infrastructure.Data;
 
 public abstract class VideomaticDbContext : DbContext
 {
+    private readonly ILoggerFactory? _loggerFactory;
+
     public VideomaticDbContext()
         : base()
     {
         
     }
 
-    public VideomaticDbContext(DbContextOptions options) 
+    public VideomaticDbContext(DbContextOptions options, ILoggerFactory loggerFactory)
         : base(options)
-    {        
+    {
+        _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
     }
+
 
     public DbSet<Artifact> Artifacts { get; set; } = null!;
     public DbSet<Transcript> Transcripts { get; set; } = null!;
     public DbSet<Playlist> Playlists { get; set; } = null!;
     public DbSet<Video> Videos { get; set; } = null!;
     public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
-   
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        if (_loggerFactory != null)
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

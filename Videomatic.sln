@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data.SqlServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.YouTube", "src\Infrastructure.YouTube\Infrastructure.YouTube.csproj", "{4D3C829C-2B96-4D13-BD40-C08194647EEA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{C354FC42-1916-406F-B2AC-7604C423A028}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{C354FC42-1916-406F-B2AC-7604C423A028}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{001657B2-5F63-469D-A6D4-873ECAD4F908}"
 EndProject
@@ -47,6 +47,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Tests", "tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{7C1D3050-1AD5-45CF-B680-3DEC0419165C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticRadzen", "src\VideomaticRadzen\VideomaticRadzen.csproj", "{2C751512-478C-4A04-A814-954D5AF2C523}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoMaticServiceImporter", "src\VideoMaticServiceImporter\VideoMaticServiceImporter.csproj", "{7E4AE488-EFF1-4078-AC62-771BE3223BF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{2C751512-478C-4A04-A814-954D5AF2C523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C751512-478C-4A04-A814-954D5AF2C523}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C751512-478C-4A04-A814-954D5AF2C523}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E4AE488-EFF1-4078-AC62-771BE3223BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4AE488-EFF1-4078-AC62-771BE3223BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4AE488-EFF1-4078-AC62-771BE3223BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4AE488-EFF1-4078-AC62-771BE3223BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{2BDAE705-DF58-4219-A6AB-14CCCA0BF89A} = {71D366F8-EC64-4EDF-9D08-8213F4C77EE0}
 		{7C1D3050-1AD5-45CF-B680-3DEC0419165C} = {001657B2-5F63-469D-A6D4-873ECAD4F908}
 		{2C751512-478C-4A04-A814-954D5AF2C523} = {C354FC42-1916-406F-B2AC-7604C423A028}
+		{7E4AE488-EFF1-4078-AC62-771BE3223BF1} = {C354FC42-1916-406F-B2AC-7604C423A028}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E192C603-AC60-4B00-B557-0378BBFD7A0A}

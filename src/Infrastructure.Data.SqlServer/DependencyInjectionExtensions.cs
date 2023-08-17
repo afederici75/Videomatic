@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Logging;
+
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjectionExtensions
 {
@@ -49,19 +51,21 @@ public static class DependencyInjectionExtensions
     public abstract class VideomaticDbContextFactory<TDBCONTEXT> : IDbContextFactory<TDBCONTEXT>
         where TDBCONTEXT : VideomaticDbContext
     {
-        public VideomaticDbContextFactory(IConfiguration configuration)
+        public VideomaticDbContextFactory(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            LoggerFactory = loggerFactory;
         }
         
         public IConfiguration Configuration { get; }
+        public ILoggerFactory LoggerFactory { get; }
 
         public TDBCONTEXT CreateDbContext()
         {
             var builder = new DbContextOptionsBuilder();
             ConfigureOptions(builder, Configuration);
 
-            return (TDBCONTEXT)Activator.CreateInstance(typeof(TDBCONTEXT), builder.Options)!;
+            return (TDBCONTEXT)Activator.CreateInstance(typeof(TDBCONTEXT), builder.Options, LoggerFactory)!;
         }
 
         protected abstract void ConfigureOptions(DbContextOptionsBuilder builder, IConfiguration configuration);
@@ -69,7 +73,7 @@ public static class DependencyInjectionExtensions
 
     public class VideomaticSqlServerDbContextFactory : VideomaticDbContextFactory<SqlServerVideomaticDbContext>, IDbContextFactory<VideomaticDbContext>
     {
-        public VideomaticSqlServerDbContextFactory(IConfiguration cfg) : base(cfg) { }
+        public VideomaticSqlServerDbContextFactory(IConfiguration cfg, ILoggerFactory loggerFactory) : base(cfg, loggerFactory) { }
 
         protected override void ConfigureOptions(DbContextOptionsBuilder builder, IConfiguration configuration)
         {

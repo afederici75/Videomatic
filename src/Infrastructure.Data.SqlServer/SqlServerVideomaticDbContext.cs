@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Data.SqlServer.Configurations;
 using Infrastructure.SqlServer.Configurations;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data.SqlServer;
 
@@ -15,7 +16,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
             
     }
 
-    public SqlServerVideomaticDbContext(DbContextOptions options) : base(options)
+    public SqlServerVideomaticDbContext(DbContextOptions options, ILoggerFactory loggerFactory) : base(options, loggerFactory)
     {
 
     }

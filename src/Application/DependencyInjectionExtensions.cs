@@ -13,8 +13,6 @@ public static class DependencyInjectionExtensions
 {    
     public static IServiceCollection AddVideomaticApplication(this IServiceCollection services, IConfiguration configuration)
     {        
-        services.AddVideomaticSharedKernel(configuration);
-
         var videomaticAssemblies = AppDomain.CurrentDomain
             .GetAssemblies() 
             //.Where(a => a.  FullName?.Contains("Videomatic") ?? false) // TODO: what is the best way to filter VM's assemblies?

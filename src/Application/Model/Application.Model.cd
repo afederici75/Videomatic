@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Application.Model.ImportableDTOBase">
-    <Position X="4.75" Y="0.5" Width="2.5" />
+    <Position X="4.75" Y="0.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>EAAAgAAAAAEgAAAAFAAACAQAAgAAAEAAAAQAAAABAAA=</HashCode>
       <FileName>Model\ImportableDTOBase.cs</FileName>
@@ -36,14 +36,14 @@
     </TypeIdentifier>
   </Class>
   <Interface Name="Application.Abstractions.IVideoImporter">
-    <Position X="12.5" Y="2.75" Width="3.25" />
+    <Position X="10.25" Y="2.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAA=</HashCode>
       <FileName>Abstractions\IVideoImporter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Application.Abstractions.IVideoProvider">
-    <Position X="11" Y="0.5" Width="4.75" />
+    <Position X="10.25" Y="0.5" Width="4.75" />
     <TypeIdentifier>
       <HashCode>ABAAAACAAAAAACAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Abstractions\IVideoProvider.cs</FileName>

@@ -1,37 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="Application.Features.Transcripts.Commands.CreateTranscriptCommand">
-    <Position X="0.75" Y="1.25" Width="2.5" />
-    <NestedTypes>
-      <Class Name="Application.Features.Transcripts.Commands.CreateTranscriptCommand.Validator" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Features\Transcripts\Commands\CreateTranscriptCommand.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAIAAAAACAAAAAAAAAAA=</HashCode>
-      <FileName>Features\Transcripts\Commands\CreateTranscriptCommand.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Application.Features.Transcripts.Commands.DeleteTranscriptCommand">
-    <Position X="0.75" Y="4.25" Width="2.25" />
-    <NestedTypes>
-      <Class Name="Application.Features.Transcripts.Commands.DeleteTranscriptCommand.Validator" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Features\Transcripts\Commands\DeleteTranscriptCommand.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Features\Transcripts\Commands\DeleteTranscriptCommand.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Application.Features.Transcripts.Queries.GetTranscriptsQuery">
-    <Position X="5.25" Y="2.25" Width="3.25" />
+    <Position X="6.75" Y="0.75" Width="3.25" />
     <NestedTypes>
       <Class Name="Application.Features.Transcripts.Queries.GetTranscriptsQuery.GetTranscriptsQueryValidator" Collapsed="true">
         <TypeIdentifier>
@@ -44,6 +14,40 @@
       <FileName>Features\Transcripts\Queries\GetTranscriptsQuery.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Transcripts.Commands.UpdateTranscriptCommand">
+    <Position X="0.5" Y="0.75" Width="3" />
+    <NestedTypes>
+      <Class Name="Application.Features.Transcripts.Commands.UpdateTranscriptCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Transcripts\Commands\UpdateTranscriptCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Transcripts.Commands.UpdateTranscriptCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Transcripts\Commands\UpdateTranscriptCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAACACAAAAAAAAA=</HashCode>
+      <FileName>Features\Transcripts\Commands\UpdateTranscriptCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Transcripts.TranscriptDTO">
+    <Position X="6.5" Y="4" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAACAAAAAAAAAAAAAQAAIAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Transcripts\TranscriptDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Application.Features.Transcripts.TranscriptLineDTO">
+    <Position X="10.5" Y="5.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Features\Transcripts\TranscriptLineDTO.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

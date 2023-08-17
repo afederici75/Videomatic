@@ -97,5 +97,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Application.Features.Videos.VideoDTO">
+    <Position X="11.25" Y="5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>IAACgAAAAAAkAAAAAAIICAQAgAAgAFAAAAAAAACAAAA=</HashCode>
+      <FileName>Features\Videos\VideoDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

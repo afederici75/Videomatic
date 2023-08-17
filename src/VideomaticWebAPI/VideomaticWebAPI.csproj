@@ -1,16 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <UserSecretsId>f3ea55af-9442-498a-9fc7-5d1945b38bd6</UserSecretsId>
-  </PropertyGroup>
+  </PropertyGroup>  
 
-  <ItemGroup>
-    <None Remove="db" />
-    <None Remove="db-shm" />
-    <None Remove="db-wal" />
+  <ItemGroup>    
+    <Compile Include="..\VideomaticRadzen\DependencyInjectionExtensions.cs" Link="DependencyInjectionExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.Core" Version="1.8.4" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.4" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
@@ -18,6 +19,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Serilog" Version="3.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -28,16 +37,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="TestData\BBd3aHnVnuE.json">
+    <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="TestData\BFfb2P5wxC0.json">
+    <Content Update="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>appsettings.json</DependentUpon>
     </Content>
-    <Content Update="TestData\dQw4w9WgXcQ.json">
+    <Content Update="logsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>logsettings.json</DependentUpon>
     </Content>
-    <Content Update="TestData\n1kmKpjk_8E.json">
+    <Content Update="logsettings.json">
+      <DependentUpon>appsettings.json</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
