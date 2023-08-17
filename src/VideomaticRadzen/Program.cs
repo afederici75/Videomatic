@@ -2,7 +2,6 @@ using Infrastructure.Data;
 using Infrastructure.Data.SqlServer;
 using Hangfire;
 using Radzen;
-using Serilog;
 using VideomaticRadzen;
 using SharedKernel;
 

@@ -117,5 +117,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Application.Features.Playlists.PlaylistDTO">
+    <Position X="10.75" Y="4.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAACgCAAAAAgAAAAAAAACAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Playlists\PlaylistDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

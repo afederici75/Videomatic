@@ -2,6 +2,8 @@
 Non UI
 ******************
 
+- [X] Learnt how to tweak the logging configuration intelligently.
+	- I can focus the logs on just waht I need very easily now!
 - [X] Fixed an issue with DbContext: it was missing the ILoggerFactory service.
 
 - [X] Refactor commands:
