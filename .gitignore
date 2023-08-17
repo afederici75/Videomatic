@@ -404,3 +404,4 @@ FodyWeavers.xsd
 *.p12
 /src/VideomaticRadzen/YouTubeServiceAccount.p12
 /src/VideomaticWebAPI/YouTubeServiceAccount.p12
+/src/VideoMaticServiceImporter/YouTubeServiceAccount.p12
