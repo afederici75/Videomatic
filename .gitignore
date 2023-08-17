@@ -406,3 +406,6 @@ FodyWeavers.xsd
 /src/VideomaticWebAPI/YouTubeServiceAccount.p12
 /src/VideoMaticServiceImporter/YouTubeServiceAccount.p12
 
+/src/VideomaticWebAPI/Videomatic.db
+/src/VideomaticWebAPI/Videomatic.db-shm
+/src/VideomaticWebAPI/Videomatic.db-wal
