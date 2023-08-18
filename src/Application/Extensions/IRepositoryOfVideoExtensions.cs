@@ -4,7 +4,7 @@ namespace Application.Abstractions;
 
 public static class IRepositoryOfVideoExtensions
 {
-    public static async Task<IReadOnlyDictionary<string, VideoId>> GetVideoProviderIds(this IRepository<Video> repository,
+    public static async Task<IReadOnlyDictionary<string, VideoId>> GetVideoProviderIds(this IMyRepository<Video> repository,
         IEnumerable<VideoId> videoIds,
         CancellationToken cancellationToken = default)
     {        

@@ -22,7 +22,7 @@ public class UpdateVideoCommand(
         }
     }
 
-    internal class Handler(IRepository<Video> repository, IMapper mapper) : UpdateEntityHandler<UpdateVideoCommand, Video, VideoId>(repository, mapper)
+    internal class Handler(IMyRepository<Video> repository, IMapper mapper) : UpdateEntityHandler<UpdateVideoCommand, Video, VideoId>(repository, mapper)
     {
     }
 

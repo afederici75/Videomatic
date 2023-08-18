@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Videomatic
 builder.Configuration.SetupVideomaticConfiguration();
-builder.Services.AddVideomaticServer(builder.Configuration);
+builder.Services.AddVideomaticServer(builder.Configuration, false);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

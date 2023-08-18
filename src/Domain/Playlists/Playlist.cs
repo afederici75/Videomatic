@@ -1,4 +1,5 @@
-﻿using Domain.Videos;
+﻿using Ardalis.Specification;
+using Domain.Videos;
 
 namespace Domain.Playlists;
 
@@ -22,16 +23,26 @@ public class Playlist : ImportedEntity, IAggregateRoot
     {
         Guard.Against.Null(videoIds, nameof(videoIds));
         
-        var newIds = videoIds
-            .Except(_videos.Select(plvid => plvid.VideoId))
-            .ToArray();
-
-        foreach (var videoId in newIds)
+        try
         {
-            _videos.Add(new PlaylistVideo(this.Id, videoId));
-        }
+            var currIds = _videos.Select(_ => _.VideoId);
 
-        return newIds.Length;
+            var newIds = videoIds
+                .Except(currIds)
+                .ToArray();
+
+            foreach (var videoId in newIds)
+            {
+                _videos.Add(new PlaylistVideo(this.Id, videoId));
+            }
+
+            return newIds.Length;
+        }
+        catch (Exception ex) 
+        {
+
+            throw;
+        }
     }  
 
     #region Private

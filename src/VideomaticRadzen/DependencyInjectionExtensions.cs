@@ -17,7 +17,11 @@ public static class DependencyInjectionExtensions
                .AddEnvironmentVariables();
     }
 
-    public static void AddVideomaticServer(this IServiceCollection services, IConfiguration configuration)
+    public static void AddVideomaticServer(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        bool addHangfireHostedService,
+        int? workerCount = null)
     {
         // Videomatic
         services.AddVideomaticSharedKernel(configuration);
@@ -34,7 +38,9 @@ public static class DependencyInjectionExtensions
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
                 .UseActivator(new ContainerJobActivator(services.BuildServiceProvider()))
-                .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
+                .UseFilter(new AutomaticRetryAttribute { 
+                    DelaysInSeconds = new[] { 1, 2, 3, 4, 5 },
+                    Attempts = 5 })
                 .UseSqlServerStorage(configuration.GetConnectionString(connectionName),
                                     new Hangfire.SqlServer.SqlServerStorageOptions()
                                     {
@@ -43,7 +49,16 @@ public static class DependencyInjectionExtensions
 #pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 
         // Add the processing server as IHostedService
-        services.AddHangfireServer(options => options.WorkerCount = 1); // SUPER IMPORTANT to set this to 1 for Blazor hosts! See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
+        if (addHangfireHostedService)
+        {
+            // SUPER IMPORTANT to set this to 1 for Blazor hosts!
+            // See ASP Net Core example pointed by https://github.com/sergezhigunov/Hangfire.EntityFrameworkCore
+            services.AddHangfireServer(options =>
+            {
+                if (workerCount != null)
+                    options.WorkerCount = 1;// workerCount.Value;
+            }); 
+        }
     }
 
     public class ContainerJobActivator : JobActivator

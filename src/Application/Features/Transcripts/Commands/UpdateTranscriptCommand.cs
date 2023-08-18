@@ -18,7 +18,7 @@ public class UpdateTranscriptCommand(TranscriptId transcriptId,
         }
     }
 
-    internal class Handler(IRepository<Transcript> repository, IMapper mapper) : UpdateEntityHandler<UpdateTranscriptCommand, Transcript, TranscriptId>(repository, mapper)
+    internal class Handler(IMyRepository<Transcript> repository, IMapper mapper) : UpdateEntityHandler<UpdateTranscriptCommand, Transcript, TranscriptId>(repository, mapper)
     {
     }
 }

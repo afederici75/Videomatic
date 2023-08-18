@@ -19,7 +19,7 @@ public static class DependencyInjectionExtensions
         services.AddTransient<YouTubeService>(sp =>
         {
             var options = sp.GetRequiredService<IOptions<YouTubeOptions>>().Value;
-            var certificate = new X509Certificate2(@"VideomaticService.p12", options.CertificatePassword, X509KeyStorageFlags.Exportable);
+            var certificate = new X509Certificate2(@"YouTubeServiceAccount.p12", options.CertificatePassword, X509KeyStorageFlags.Exportable);
 
             ServiceAccountCredential credential = new(
                new ServiceAccountCredential.Initializer(options.ServiceAccountEmail)
@@ -36,8 +36,8 @@ public static class DependencyInjectionExtensions
 
             return service;
         });
-        services.AddScoped<IVideoProvider, YouTubeVideoProvider>();
-        services.AddScoped<IVideoImporter, YouTubeVideoImporter>();
+        services.AddTransient<IVideoProvider, YouTubeVideoProvider>();
+        services.AddTransient<IVideoImporter, YouTubeVideoImporter>();
         
         return services;
     }   

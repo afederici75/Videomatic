@@ -3,7 +3,7 @@
 
 @inject ISender Sender
 
-<RadzenPanel AllowCollapse="true" Collapsed="true">
+<RadzenPanel AllowCollapse="true" Collapsed="false">
     <HeaderTemplate>
         <RadzenText TextStyle="TextStyle.H6" >
             <RadzenIcon Icon="account_box" />Import Videos
@@ -56,10 +56,10 @@
 
 
 @code {
-    public string? VideoUrls { get; set; } = @"https://www.youtube.com/watch?v=V8WuljiJFBI";
-
-//https://www.youtube.com/watch?v=YzPhcUyZXWA
-//https://www.youtube.com/watch?v=Ma8oi5MU1dk";
+    public string? VideoUrls { get; set; } = @"https://www.youtube.com/watch?v=V8WuljiJFBI
+https://www.youtube.com/watch?v=tMwLRbX66Jo
+https://www.youtube.com/watch?v=YzPhcUyZXWA
+https://www.youtube.com/watch?v=Ma8oi5MU1dk";
 
     public string? PlaylistUrls { get; set; } = @"https://www.youtube.com/playlist?list=PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb
 https://www.youtube.com/playlist?list=PLLdi1lheZYVK7x4Cv6vSDJJe2DuMUZHjt

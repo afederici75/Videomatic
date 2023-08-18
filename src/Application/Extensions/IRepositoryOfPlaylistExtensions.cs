@@ -1,18 +1,23 @@
-﻿namespace Application.Abstractions;
+﻿using Application.Specifications;
+
+namespace Application.Abstractions;
 
 public static class IRepositoryOfPlaylistExtensions
 {
-    public static async Task<Result<int>> LinkPlaylistToVideos(this IRepository<Playlist> repository,
+    public static async Task<Result<int>> LinkPlaylistToVideos(this IMyRepository<Playlist> repository,
         PlaylistId playlistId,
         IEnumerable<VideoId> videoIds,
         CancellationToken cancellationToken = default)
     {
+        Guard.Against.Null(repository, nameof(repository));
+        Guard.Against.Null(playlistId, nameof(playlistId));
+
         try
         {
-            Guard.Against.Null(repository, nameof(repository));
-            Guard.Against.Null(playlistId, nameof(playlistId));
+            Playlist? pl = await repository.SingleOrDefaultAsync(
+                new Playlists.ById(playlistId, Playlists.Include.Videos), 
+                cancellationToken);
 
-            Playlist? pl = await repository.GetByIdAsync(playlistId, cancellationToken);
             if (pl is null)
             {
                 return Result<int>.NotFound();
@@ -20,7 +25,7 @@ public static class IRepositoryOfPlaylistExtensions
 
             int newLinksCount = pl.LinkToVideos(videoIds);
 
-            await repository.SaveChangesAsync(cancellationToken);
+            await repository.SaveChangesAsync( cancellationToken);
 
             return Result<int>.Success(newLinksCount);
         }

@@ -6,16 +6,16 @@ namespace Infrastructure.Data.Seeder;
 
 public class DbSeeder : IDbSeeder
 {
-    readonly IRepository<Video> VideoRepository;
-    readonly IRepository<Playlist> PlaylistRepository;
-    readonly IRepository<Artifact> ArtifactRepository;
-    readonly IRepository<Transcript> TranscriptRepository;
+    readonly IMyRepository<Video> VideoRepository;
+    readonly IMyRepository<Playlist> PlaylistRepository;
+    readonly IMyRepository<Artifact> ArtifactRepository;
+    readonly IMyRepository<Transcript> TranscriptRepository;
 
     public DbSeeder(
-        IRepository<Video> videoRepository,
-        IRepository<Playlist> playlistRepository,
-        IRepository<Artifact> artifactRepository,
-        IRepository<Transcript> transcriptRepository)
+        IMyRepository<Video> videoRepository,
+        IMyRepository<Playlist> playlistRepository,
+        IMyRepository<Artifact> artifactRepository,
+        IMyRepository<Transcript> transcriptRepository)
     {
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));

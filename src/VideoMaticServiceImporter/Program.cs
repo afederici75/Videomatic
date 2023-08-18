@@ -10,7 +10,10 @@ var host = builder
     {
         services.AddHostedService<Worker>();
 
-        services.AddVideomaticServer(context.Configuration);
+        services.AddVideomaticServer(
+            configuration: context.Configuration,
+            addHangfireHostedService: true,
+            workerCount: null /* Leave the defaults to Hangfire */);
     })
     .Build();
 

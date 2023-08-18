@@ -17,9 +17,9 @@ public class YouTubeVideoImporter : IVideoImporter
     public YouTubeVideoImporter(
         IVideoProvider provider,
         ILogger<YouTubeVideoImporter> logger,
-        IRepository<Video> videoRepository,
-        IRepository<Playlist> playlistRepository,
-        IRepository<Transcript> transcriptRepository,
+        IMyRepository<Video> videoRepository,
+        IMyRepository<Playlist> playlistRepository,
+        IMyRepository<Transcript> transcriptRepository,
         IBackgroundJobClient jobClient)
     {
         Provider = provider;
@@ -31,9 +31,9 @@ public class YouTubeVideoImporter : IVideoImporter
     }
 
     readonly IVideoProvider Provider;
-    readonly IRepository<Video> VideoRepository;
-    readonly IRepository<Playlist> PlaylistRepository;
-    readonly IRepository<Transcript> TranscriptRepository;
+    readonly IMyRepository<Video> VideoRepository;
+    readonly IMyRepository<Playlist> PlaylistRepository;
+    readonly IMyRepository<Transcript> TranscriptRepository;
     readonly IBackgroundJobClient JobClient;
     readonly ILogger<YouTubeVideoImporter> Logger;
 

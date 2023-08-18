@@ -5,7 +5,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
 {
     public ArtifactsTests(
         DbContextFixture fixture,
-        IRepository<Artifact> repository,
+        IMyRepository<Artifact> repository,
         ISender sender)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
@@ -14,7 +14,7 @@ public class ArtifactsTests : IClassFixture<DbContextFixture>
     }
 
     public DbContextFixture Fixture { get; }
-    public IRepository<Artifact> Repository { get; }
+    public IMyRepository<Artifact> Repository { get; }
     public ISender Sender { get; }
 
     [Fact]

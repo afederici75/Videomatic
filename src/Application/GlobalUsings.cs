@@ -11,12 +11,11 @@ global using AutoMapper;
 // ------ Videomatic ------ //
 
 global using SharedKernel;
+global using SharedKernel.CQRS.Commands;
 global using SharedKernel.Abstractions;
 global using SharedKernel.Model;
 
 global using Application.Abstractions;
-
-global using SharedKernel.CQRS.Commands;
 
 global using Application.Model;
 global using Domain;

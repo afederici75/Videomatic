@@ -23,9 +23,9 @@ public class LinkPlaylistToVideosCommand(PlaylistId id, IEnumerable<VideoId> vid
     #region Handler
 
     internal class Handler(
-        IRepository<Playlist> repository) : IRequestHandler<LinkPlaylistToVideosCommand, Result<int>>
+        IMyRepository<Playlist> repository) : IRequestHandler<LinkPlaylistToVideosCommand, Result<int>>
     {
-        public IRepository<Playlist> Repository { get; } = repository ?? throw new ArgumentNullException(nameof(repository));
+        public IMyRepository<Playlist> Repository { get; } = repository ?? throw new ArgumentNullException(nameof(repository));
 
         public async Task<Result<int>> Handle(LinkPlaylistToVideosCommand request, CancellationToken cancellationToken = default)
         {

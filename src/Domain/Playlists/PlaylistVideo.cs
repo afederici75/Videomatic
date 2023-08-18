@@ -2,7 +2,7 @@
 
 namespace Domain.Playlists;
 
-public class PlaylistVideo
+public class PlaylistVideo : ValueObject
 {
     public PlaylistVideo(PlaylistId playlistId, VideoId videoId)
     {        
@@ -16,6 +16,17 @@ public class PlaylistVideo
     #region Private
 
     private PlaylistVideo() { }
+
+    public override string ToString()
+    {
+        return $"{PlaylistId} {VideoId}";
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return PlaylistId;
+        yield return VideoId;
+    }
 
     #endregion
 }
