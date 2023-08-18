@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data.SqlServer.Configurations;
+﻿using Infrastructure.Data.SqlServer;
+using Infrastructure.Data.SqlServer.Configurations;
 using Infrastructure.SqlServer.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +9,7 @@ namespace Infrastructure.Tests.Data.Helpers;
 public class DbContextFixture : IAsyncLifetime
 {
     public DbContextFixture(
-        IDbContextFactory<VideomaticDbContext> dbContextFactory,
+        IDbContextFactory<SqlServerVideomaticDbContext> dbContextFactory,
         ITestOutputHelperAccessor outputAccessor,
         IDbSeeder seeder,
         IConfiguration configuration)

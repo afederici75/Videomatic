@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using static Microsoft.Extensions.DependencyInjection.DependencyInjectionExtensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -33,7 +34,11 @@ public static partial class DependencyInjectionExtensions
             lifetime: ServiceLifetime.Transient);
 
         services.AddTransient<VideomaticDbContext, SqlServerVideomaticDbContext>();
-        
+
+        //services.AddTransient(typeof(IDbContextFactory<VideomaticDbContext>), typeof(DbContextFactory<VideomaticDbContext>));
+        //services.AddTransient(typeof(DbContextOptions<VideomaticDbContext>), typeof(DbContextOptions<SqlServerVideomaticDbContext>));
+
+
         return services;
     }
 

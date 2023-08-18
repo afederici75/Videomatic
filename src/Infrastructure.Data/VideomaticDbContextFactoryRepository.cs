@@ -6,19 +6,19 @@ using SharedKernel.Abstractions;
 
 namespace SharedKernel.EntityFrameworkCore;
 
-public class VideomaticDbContextFactoryRepository<TEntity, TDbContext> : ContextFactoryRepositoryBaseOfT<TEntity, TDbContext>,
-        IMyRepository<TEntity>
-        where TEntity : class
-        where TDbContext : DbContext
-{
-    public VideomaticDbContextFactoryRepository(IDbContextFactory<TDbContext> dbContextFactory) : base(dbContextFactory)
-    {
-    }
+//public class VideomaticDbContextFactoryRepository<TEntity, TDbContext> : ContextFactoryRepositoryBaseOfT<TEntity, TDbContext>,
+//        IMyRepository<TEntity>
+//        where TEntity : class
+//        where TDbContext : DbContext
+//{
+//    public VideomaticDbContextFactoryRepository(IDbContextFactory<TDbContext> dbContextFactory) : base(dbContextFactory)
+//    {
+//    }
 
-    public VideomaticDbContextFactoryRepository(IDbContextFactory<TDbContext> dbContextFactory, ISpecificationEvaluator specificationEvaluator) : base(dbContextFactory, specificationEvaluator)
-    {
-    }
-}
+//    public VideomaticDbContextFactoryRepository(IDbContextFactory<TDbContext> dbContextFactory, ISpecificationEvaluator specificationEvaluator) : base(dbContextFactory, specificationEvaluator)
+//    {
+//    }
+//}
 
 public class VideomaticRepositoryFactory<TEntity> : EFRepositoryFactory<IMyRepository<TEntity>, VideomaticRepository<TEntity>, VideomaticDbContext>
     where TEntity : class
