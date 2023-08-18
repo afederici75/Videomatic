@@ -1,11 +1,16 @@
 ﻿namespace SharedKernel.Model;
 
-public readonly record struct NameAndDescription(
-    string Name,
-    string? Description)
+public class NameAndDescription(
+    string name,
+    string? description) : ValueObject
 {
-    // TODO: we should add some nicer ctor(s) here
-    //public NameAndDescription(string nameCommaDescription)
-    //{
-    //}
+    public static NameAndDescription Empty => new("", null);
+
+    public string Name { get; } = name;
+    public string? Description { get; } = description;
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Name.ToUpper(); // Case insensitive        
+    }
 }

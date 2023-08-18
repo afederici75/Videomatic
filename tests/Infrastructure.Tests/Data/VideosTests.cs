@@ -8,7 +8,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     public VideosTests(
         DbContextFixture fixture,
         ISender sender,
-        IMyRepository<Video> repository)
+        IRepository<Video> repository)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
         Sender = sender ?? throw new ArgumentNullException(nameof(sender));
@@ -19,7 +19,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
 
     public DbContextFixture Fixture { get; }
     public ISender Sender { get; }
-    public IMyRepository<Video> Repository { get; }
+    public IRepository<Video> Repository { get; }
 
 
     //[Fact]
@@ -185,7 +185,7 @@ public class VideosTests : IClassFixture<DbContextFixture>
     //[Theory]
 #pragma warning restore xUnit1004 // Test methods should not be skipped
     [InlineData("TestData//Video-n1kmKpjk_8E.json", null)]
-    public async Task ImportOneVideo(string fileName, [FromServices] IMyRepository<Video> repository)
+    public async Task ImportOneVideo(string fileName, [FromServices] IRepository<Video> repository)
     {
         var json = await File.ReadAllTextAsync(fileName);
         var video = JsonConvert.DeserializeObject<Video>(json)!;
@@ -201,8 +201,8 @@ public class VideosTests : IClassFixture<DbContextFixture>
 #pragma warning restore xUnit1004 // Test methods should not be skipped    
     [InlineData("TestData//Playlist-PLLdi1lheZYVKkvX20ihB7Ay2uXMxa0Q5e.json", null, null)]
     public async Task ImportPlaylist(string fileName, 
-        [FromServices] IMyRepository<Video> videoRepository,
-        [FromServices] IMyRepository<Playlist> playListRepository        
+        [FromServices] IRepository<Video> videoRepository,
+        [FromServices] IRepository<Playlist> playListRepository        
         )
     {
         var json = await File.ReadAllTextAsync(fileName);

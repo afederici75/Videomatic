@@ -20,7 +20,7 @@ namespace SharedKernel.EntityFrameworkCore;
 //    }
 //}
 
-public class VideomaticRepositoryFactory<TEntity> : EFRepositoryFactory<IMyRepository<TEntity>, VideomaticRepository<TEntity>, VideomaticDbContext>
+public class VideomaticRepositoryFactory<TEntity> : EFRepositoryFactory<IRepository<TEntity>, VideomaticRepository<TEntity>, VideomaticDbContext>
     where TEntity : class
 {
     public VideomaticRepositoryFactory(IDbContextFactory<VideomaticDbContext> dbContextFactory) : base(dbContextFactory)
@@ -28,7 +28,7 @@ public class VideomaticRepositoryFactory<TEntity> : EFRepositoryFactory<IMyRepos
     }
 }
 
-public class VideomaticRepository<T> : RepositoryBase<T> , IMyRepository<T>
+public class VideomaticRepository<T> : RepositoryBase<T> , IRepository<T>
     where T : class
 {
     protected readonly VideomaticDbContext dbContext;

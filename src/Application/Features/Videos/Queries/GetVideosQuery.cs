@@ -22,9 +22,9 @@ public class GetVideosQuery(
     public string? SearchOn { get; } = searchOn;
 
 
-    internal class GetVideosQueryValidator : AbstractValidator<GetVideosQuery>
+    internal class Validator : AbstractValidator<GetVideosQuery>
     {
-        public GetVideosQueryValidator()
+        public Validator()
         {
             When(x => x.PlaylistIds is not null, () =>
             {

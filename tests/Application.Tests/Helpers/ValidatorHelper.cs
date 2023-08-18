@@ -12,12 +12,17 @@ public class ValidatorHelper
     public IServiceProvider ServiceProvider { get; }
 
     [DebuggerStepThrough]
-    public void Validate<TVALIDATOR, TREQUEST>(TREQUEST request, int expectedErrors)
-            where TVALIDATOR : IValidator<TREQUEST>
+    public void Validate<TCommand>(TCommand command, int expectedErrors)
+        where TCommand : class
     {
-        // This way if the validator's ctor has parameters they will get resolved.
-        var validator = ServiceProvider.GetService<TVALIDATOR>();
-        var validation = validator.TestValidate(request);
+        Type? validatorType = typeof(TCommand).GetNestedType("Validator", System.Reflection.BindingFlags.NonPublic);
+        if (validatorType == null)
+        {
+            throw new InvalidOperationException($"Validator for {typeof(TCommand).Name} not found.");
+        }
+        // create an instance of the validator
+        var validator = (IValidator<TCommand>?)Activator.CreateInstance(validatorType);
+        var validation = validator.TestValidate(command);
         validation.Errors.Should().HaveCount(expectedErrors);
     }
 }

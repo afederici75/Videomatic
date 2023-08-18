@@ -5,7 +5,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
 {
     public PlaylistsTests(
         DbContextFixture fixture,
-        IMyRepository<Playlist> repository,
+        IRepository<Playlist> repository,
         ISender sender)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
@@ -14,7 +14,7 @@ public class PlaylistsTests : IClassFixture<DbContextFixture>
     }
 
     public DbContextFixture Fixture { get; }
-    public IMyRepository<Playlist> Repository { get; }
+    public IRepository<Playlist> Repository { get; }
     public ISender Sender { get; }
 
     [Fact]

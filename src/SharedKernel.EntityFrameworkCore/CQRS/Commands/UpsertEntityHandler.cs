@@ -8,13 +8,13 @@ public abstract class UpsertEntityHandler<TUpsertCommand, TEntity, TId> :
     where TEntity : class
     where TId : class
 {
-    protected UpsertEntityHandler(IMyRepository<TEntity> repository, IMapper mapper)
+    protected UpsertEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IMyRepository<TEntity> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
     
     public async Task<Result<TEntity>> Handle(TUpsertCommand request, CancellationToken cancellationToken)

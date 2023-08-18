@@ -19,7 +19,7 @@ public class PlaylistRequestsValidatorTests
     [InlineData("Play list", "Description", 0)]
     public void ValidateCreatePlaylistCommand(string name, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<CreatePlaylistCommand.Validator, CreatePlaylistCommand>(new(name, description), expectedErrors);
+        ValidatorHelper.Validate<CreatePlaylistCommand>(new(name, description), expectedErrors);
     }
 
     [Theory]
@@ -28,7 +28,7 @@ public class PlaylistRequestsValidatorTests
     [InlineData(1, 0)]
     public void ValidateDeletePlaylistCommand(PlaylistId id, int expectedErrors)
     {
-        ValidatorHelper.Validate<DeletePlaylistCommand.Validator, DeletePlaylistCommand>(new(id), expectedErrors);
+        ValidatorHelper.Validate<DeletePlaylistCommand>(new(id), expectedErrors);
     }
 
     [Theory]
@@ -39,7 +39,7 @@ public class PlaylistRequestsValidatorTests
     [InlineData(2, "Play list", "Description", 0)]
     public void ValidateUpdatePlaylistCommand(PlaylistId id, string name, string? description, int expectedErrors)
     {
-        ValidatorHelper.Validate<UpdatePlaylistCommand.Validator, UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
+        ValidatorHelper.Validate<UpdatePlaylistCommand>(new(id, name, description), expectedErrors);
     }
 
     [Theory]
@@ -49,6 +49,6 @@ public class PlaylistRequestsValidatorTests
     [InlineData("filter", null, 1, 1, 0)]
     public void ValidateGetPlaylistQuery(string? filter, string? orderBy, int? page, int? pageSize, int expectedErrors)
     {
-        ValidatorHelper.Validate<GetPlaylistsQuery.GetPlaylistsQueryValidator, GetPlaylistsQuery>(new(filter, orderBy, pageSize, page), expectedErrors);
+        ValidatorHelper.Validate<GetPlaylistsQuery>(new(filter, orderBy, pageSize, page), expectedErrors);
     }
 }

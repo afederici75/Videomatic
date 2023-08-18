@@ -2,6 +2,9 @@
 
 // TODO: Refactor using type like UserAction(UserId, DateTime)? Instead of CBy/COn and UBy/UOn we'd have Created.By/On and Updated.By/On
 
+/// <summary>
+/// The base class for entities that are tracked. 
+/// </summary>
 public abstract class TrackedEntity
 {
     public DateTime CreatedOn { get; private set; }    
