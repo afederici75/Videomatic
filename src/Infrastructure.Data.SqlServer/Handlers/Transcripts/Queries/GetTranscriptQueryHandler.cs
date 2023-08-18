@@ -5,12 +5,12 @@ namespace Infrastructure.Data.SqlServer.Handlers.Transcripts.Queries;
 
 public class GetTranscriptQueryHandler : IRequestHandler<GetTranscriptsQuery, Page<TranscriptDTO>>
 {    
-    public GetTranscriptQueryHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
+    public GetTranscriptQueryHandler(IDbContextFactory<SqlServerVideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
+    public IDbContextFactory<SqlServerVideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<TranscriptDTO>> Handle(GetTranscriptsQuery request, CancellationToken cancellationToken)
     {

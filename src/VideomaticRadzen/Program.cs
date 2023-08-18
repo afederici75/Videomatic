@@ -8,8 +8,7 @@ builder.Configuration.SetupVideomaticConfiguration();
 builder.Services.AddVideomaticServer(
     configuration: builder.Configuration, 
     addHangfireHostedService: false, 
-    workerCount: 1,
-    registerDbContextFactory: true);
+    workerCount: 1 /* Keep this to one in Blazor! */); 
 
 // Add services to the container.
 builder.Services.AddRazorPages();

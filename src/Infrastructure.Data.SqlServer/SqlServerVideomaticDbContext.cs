@@ -9,13 +9,7 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
 {
     public const string ProviderName = "SqlServer";
     public const string SequenceName = "MainId";
-
-    public SqlServerVideomaticDbContext()
-        : base()
-    {
-            
-    }
-
+    
     public SqlServerVideomaticDbContext(DbContextOptions options, ILoggerFactory loggerFactory) : base(options, loggerFactory)
     {
 

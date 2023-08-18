@@ -8,12 +8,12 @@ namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
 public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {    
-    public GetVideosQueryHandler(IDbContextFactory<VideomaticDbContext> factory)
+    public GetVideosQueryHandler(IDbContextFactory<SqlServerVideomaticDbContext> factory)
     {
         Factory = factory ?? throw new ArgumentNullException(nameof(factory));
     }
     
-    public IDbContextFactory<VideomaticDbContext> Factory { get; }
+    public IDbContextFactory<SqlServerVideomaticDbContext> Factory { get; }
 
     // GetVideosQuery
     public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)

@@ -5,12 +5,12 @@ namespace Infrastructure.Data.SqlServer.Handlers.Artifacts.Queries;
 
 public class GetArtifactHandler : IRequestHandler<GetArtifactsQuery, Page<ArtifactDTO>>
 {    
-    public GetArtifactHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
+    public GetArtifactHandler(IDbContextFactory<SqlServerVideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
+    public IDbContextFactory<SqlServerVideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<ArtifactDTO>> Handle(GetArtifactsQuery request, CancellationToken cancellationToken)
     {

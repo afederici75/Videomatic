@@ -13,8 +13,7 @@ var host = builder
         services.AddVideomaticServer(
             configuration: context.Configuration,
             addHangfireHostedService: true,
-            workerCount: 20, 
-            registerDbContextFactory: true);
+            workerCount: null /* Leave the defaults to Hangfire */);
     })
     .Build();
 

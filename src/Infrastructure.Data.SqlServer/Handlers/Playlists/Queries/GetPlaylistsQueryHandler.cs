@@ -6,12 +6,12 @@ namespace Infrastructure.Data.SqlServer.Handlers.Playlists.Queries;
 
 public sealed class GetPlaylistsQueryHandler : IRequestHandler<GetPlaylistsQuery, Page<PlaylistDTO>>
 {    
-    public GetPlaylistsQueryHandler(IDbContextFactory<VideomaticDbContext> dbContextFactory)
+    public GetPlaylistsQueryHandler(IDbContextFactory<SqlServerVideomaticDbContext> dbContextFactory)
     {
         DbContextFactory = dbContextFactory ?? throw new ArgumentNullException(nameof(dbContextFactory));
     }
 
-    public IDbContextFactory<VideomaticDbContext> DbContextFactory { get; }
+    public IDbContextFactory<SqlServerVideomaticDbContext> DbContextFactory { get; }
 
     public async Task<Page<PlaylistDTO>> Handle(GetPlaylistsQuery request, CancellationToken cancellationToken)
     {

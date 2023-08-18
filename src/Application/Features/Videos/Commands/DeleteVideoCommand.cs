@@ -20,7 +20,7 @@ public class DeleteVideoCommand(VideoId id) : IRequest<Result>
     }
 
 
-    internal class Handler(IRepository<Video> repository, IMapper mapper) : DeleteEntityHandler<DeleteVideoCommand, Video, VideoId>(repository, mapper)
+    internal class Handler(IMyRepository<Video> repository, IMapper mapper) : DeleteEntityHandler<DeleteVideoCommand, Video, VideoId>(repository, mapper)
     {
     }
 

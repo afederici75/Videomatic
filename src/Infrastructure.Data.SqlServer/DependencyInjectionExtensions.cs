@@ -1,28 +1,12 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using Ardalis.Specification;
+using Ardalis.Specification.EntityFrameworkCore;
+using static Microsoft.Extensions.DependencyInjection.DependencyInjectionExtensions;
+
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static partial class DependencyInjectionExtensions
 {
-    private const string ConnectionStringName = "Videomatic.SqlServer";
-
-    static void Configure(DbContextOptionsBuilder builder, IConfiguration configuration)
-    {
-        // Looks for the connection string SqlServer
-        //var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
-        var connString = configuration.GetConnectionString(ConnectionStringName);
-        if (string.IsNullOrWhiteSpace(connString))
-        {
-            throw new Exception($"Required connection string '{ConnectionStringName}' missing.");
-        }
-
-        builder.EnableSensitiveDataLogging()
-               //.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-               .UseSqlServer(connString, (opts) =>
-               {
-                   opts.MigrationsAssembly(VideomaticConstants.MigrationAssemblyNamePrefix + SqlServerVideomaticDbContext.ProviderName);
-               });
-
-        // Services        
-    }
+    private const string ConnectionStringName = "Videomatic.SqlServer";    
 
     /// <summary>
     /// Adds scoped DbContext for VideomaticDbContext.
@@ -32,40 +16,26 @@ public static partial class DependencyInjectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddVideomaticDataForSqlServer(
         this IServiceCollection services,
-        IConfiguration configuration,
-        bool registerDbContextFactory)
+        IConfiguration configuration)
     {
-        // Keep this here!
-        services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(
+        services = services.AddDbContextFactory<SqlServerVideomaticDbContext>(
             (sp, builder) =>
             {
                 var cfg = configuration;
-                Configure(builder, cfg);
-            },
-            contextLifetime: ServiceLifetime.Transient,
-            optionsLifetime: ServiceLifetime.Transient
-            );
+                var connString = configuration.GetConnectionString(ConnectionStringName);
 
-        if (registerDbContextFactory)
-        {
-            services = services.AddDbContextFactory<VideomaticDbContext, VideomaticSqlServerDbContextFactory>(
-                (sp, builder) =>
-                {
-                    var cfg = configuration;
-                    Configure(builder, cfg);                    
-                },                 
-                lifetime: ServiceLifetime.Singleton);
-        }
+                builder.EnableSensitiveDataLogging()
+                       .UseSqlServer(connString, (opts) =>
+                        {
+                            opts.MigrationsAssembly(VideomaticConstants.MigrationAssemblyNamePrefix + SqlServerVideomaticDbContext.ProviderName);
+                        });
+            },                 
+            lifetime: ServiceLifetime.Transient);
 
-        //services.AddDbContext<VideomaticDbContext, SqlServerVideomaticDbContext>(
-        //    (sp, builder) =>
-        //    {
-        //        var cfg = configuration;
-        //        Configure(builder, cfg);
-        //    },  
-        //    contextLifetime: ServiceLifetime.Transient,
-        //    optionsLifetime: ServiceLifetime.Transient);
-
+        services.AddTransient<VideomaticDbContext, SqlServerVideomaticDbContext>();
+        
         return services;
     }
+
+    
 }

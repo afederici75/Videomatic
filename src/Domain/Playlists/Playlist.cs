@@ -1,4 +1,5 @@
-﻿using Domain.Videos;
+﻿using Ardalis.Specification;
+using Domain.Videos;
 
 namespace Domain.Playlists;
 
@@ -21,7 +22,7 @@ public class Playlist : ImportedEntity, IAggregateRoot
     public int LinkToVideos(IEnumerable<VideoId> videoIds)
     {
         Guard.Against.Null(videoIds, nameof(videoIds));
-
+        
         try
         {
             var currIds = _videos.Select(_ => _.VideoId);
