@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Application.Features.Artifacts.Commands.CreateArtifactCommand" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <NestedTypes>
+      <Class Name="Application.Features.Artifacts.Commands.CreateArtifactCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\CreateArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Artifacts.Commands.CreateArtifactCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\CreateArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAIAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Features\Artifacts\Commands\CreateArtifactCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Artifacts.Commands.DeleteArtifactCommand" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="5.5" Width="2.25" />
+    <NestedTypes>
+      <Class Name="Application.Features.Artifacts.Commands.DeleteArtifactCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\DeleteArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Artifacts.Commands.DeleteArtifactCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\DeleteArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Features\Artifacts\Commands\DeleteArtifactCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Artifacts.Commands.UpdateArtifactCommand" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="3.25" Width="2.25" />
+    <NestedTypes>
+      <Class Name="Application.Features.Artifacts.Commands.UpdateArtifactCommand.Validator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\UpdateArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Application.Features.Artifacts.Commands.UpdateArtifactCommand.Handler" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Commands\UpdateArtifactCommand.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Features\Artifacts\Commands\UpdateArtifactCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Artifacts.Queries.GetArtifactsQuery" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="0.75" Width="3" />
+    <NestedTypes>
+      <Class Name="Application.Features.Artifacts.Queries.GetArtifactsQuery.GetArtifactsQueryValidator" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Features\Artifacts\Queries\GetArtifactsQuery.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AJAAAAABAAAEAAAAAAIAAAAAAAAEAAAAAAEAAAAAEAA=</HashCode>
+      <FileName>Features\Artifacts\Queries\GetArtifactsQuery.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Application.Features.Artifacts.ArtifactDTO">
+    <Position X="10.75" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAKAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Features\Artifacts\ArtifactDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>
