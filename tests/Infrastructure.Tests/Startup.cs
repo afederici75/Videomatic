@@ -20,7 +20,7 @@ public class Startup
 
                 services.AddVideomaticApplication(context.Configuration);
                 services.AddVideomaticData(context.Configuration);
-                services.AddVideomaticDataForSqlServer(context.Configuration);
+                services.AddVideomaticDataForSqlServer(context.Configuration, registerDbContextFactory: true);
 
                 services.AddVideomaticSemanticKernel(context.Configuration);
                 services.AddVidematicYouTubeInfrastructure(context.Configuration);

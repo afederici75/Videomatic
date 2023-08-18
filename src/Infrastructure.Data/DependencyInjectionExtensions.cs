@@ -16,9 +16,9 @@ public static class DependencyInjectionExtensions
 #pragma warning restore IDE0060 // Remove unused parameter
     {
         // Services
-        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-        services.AddScoped(typeof(IDbSeeder), typeof(DbSeeder));
+        services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+        services.AddTransient(typeof(IReadRepository<>), typeof(EfRepository<>));
+        services.AddTransient(typeof(IDbSeeder), typeof(DbSeeder));
         return services;
     }
 }

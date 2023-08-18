@@ -36,8 +36,8 @@ public static class DependencyInjectionExtensions
 
             return service;
         });
-        services.AddScoped<IVideoProvider, YouTubeVideoProvider>();
-        services.AddScoped<IVideoImporter, YouTubeVideoImporter>();
+        services.AddTransient<IVideoProvider, YouTubeVideoProvider>();
+        services.AddTransient<IVideoImporter, YouTubeVideoImporter>();
         
         return services;
     }   
