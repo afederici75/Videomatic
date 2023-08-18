@@ -24,9 +24,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 name: "TagsSequence");
 
             migrationBuilder.CreateSequence(
-                name: "TranscriptLineSequence");
-
-            migrationBuilder.CreateSequence(
                 name: "TranscriptSequence");
 
             migrationBuilder.CreateSequence(
@@ -49,8 +46,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Origin_ProviderItemId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Origin_ETag = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Origin_ChannelId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ChannelName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Origin_Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Origin_ChannelName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Origin_Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Origin_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Origin_PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Origin_EmbedHtml = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
@@ -91,8 +88,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
                     Origin_ProviderItemId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Origin_ETag = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Origin_ChannelId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Origin_ChannelName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Origin_Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Origin_ChannelName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Origin_Name = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Origin_Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Origin_PublishedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Origin_EmbedHtml = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
@@ -287,10 +284,22 @@ namespace Infrastructure.Data.SqlServer.Migrations
                 column: "VideoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transcripts_CreatedOn",
+                schema: "Videomatic",
+                table: "Transcripts",
+                column: "CreatedOn");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_Language",
                 schema: "Videomatic",
                 table: "Transcripts",
                 column: "Language");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transcripts_UpdatedOn",
+                schema: "Videomatic",
+                table: "Transcripts",
+                column: "UpdatedOn");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transcripts_VideoId",
@@ -390,9 +399,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
             migrationBuilder.DropSequence(
                 name: "TagsSequence");
-
-            migrationBuilder.DropSequence(
-                name: "TranscriptLineSequence");
 
             migrationBuilder.DropSequence(
                 name: "TranscriptSequence");

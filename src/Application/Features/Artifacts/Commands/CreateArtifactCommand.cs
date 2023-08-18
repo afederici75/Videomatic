@@ -24,7 +24,7 @@ public class CreateArtifactCommand(VideoId videoId, string name, string type, st
 
     #region Handler
 
-    internal class Handler(IMyRepository<Artifact> repository, IMapper mapper) : 
+    internal class Handler(IRepository<Artifact> repository, IMapper mapper) : 
         CreateEntityHandler<CreateArtifactCommand, Artifact>(repository, mapper)
     {
     }

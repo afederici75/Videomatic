@@ -15,7 +15,7 @@ public class DeletePlaylistCommand(PlaylistId id) : IRequest<Result>
     }
 
 
-    internal class Handler(IMyRepository<Playlist> repository, IMapper mapper) : DeleteEntityHandler<DeletePlaylistCommand, Playlist, PlaylistId>(repository, mapper)
+    internal class Handler(IRepository<Playlist> repository, IMapper mapper) : DeleteEntityHandler<DeletePlaylistCommand, Playlist, PlaylistId>(repository, mapper)
     {
     }
 

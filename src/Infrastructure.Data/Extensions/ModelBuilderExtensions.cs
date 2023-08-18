@@ -1,4 +1,4 @@
-﻿using Infrastructure.Data.Configurations;
+﻿using Infrastructure.Data.Configurations.Converters;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Reflection;
 
@@ -15,7 +15,7 @@ public static class ModelBuilderExtensions
         var targets = assembly.GetTypes()
             .Where(t => t.IsClass && 
                         !t.IsAbstract &&
-                        (typeof(IStronglyTypedIdConverter).IsAssignableFrom(t)) && 
+                        (t.GetCustomAttribute<StronglyTypedIdConverterAttribute>() != null) &&
                         (typeof(ValueConverter).IsAssignableFrom(t)))
             .ToArray(); 
 

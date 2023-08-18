@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Abstractions;
+using SharedKernel.EntityFrameworkCore.CQRS;
 
 namespace SharedKernel.CQRS.Commands;
 
@@ -7,13 +8,13 @@ public abstract class DeleteEntityHandler<TDeleteCommand, TEntity, TId> : IReque
     where TEntity : class
     where TId : struct
 {
-    public DeleteEntityHandler(IMyRepository<TEntity> repository, IMapper mapper)
+    public DeleteEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IMyRepository<TEntity> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
     public async Task<Result> Handle(TDeleteCommand request, CancellationToken cancellationToken)

@@ -13,10 +13,10 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public YouTubeImporterTests(ITestOutputHelper output,
         DbContextFixture fixture,
         IOptions<YouTubeOptions> options,
-        IMyRepository<Artifact> artifactRepository,
-        IMyRepository<Transcript> transcriptRepository,
-        IMyRepository<Playlist> playlistRepository,
-        IMyRepository<Video> videoRepository,
+        IRepository<Artifact> artifactRepository,
+        IRepository<Transcript> transcriptRepository,
+        IRepository<Playlist> playlistRepository,
+        IRepository<Video> videoRepository,
         ISender sender,
         IVideoImporter importer)
     {
@@ -36,10 +36,10 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     public ITestOutputHelper Output { get; }
     public DbContextFixture Fixture { get; }
     public YouTubeOptions Options { get; }
-    public IMyRepository<Artifact> ArtifactRepository { get; }
-    public IMyRepository<Transcript> TranscriptRepository { get; }
-    public IMyRepository<Playlist> PlaylistRepository { get; }
-    public IMyRepository<Video> VideoRepository { get; }
+    public IRepository<Artifact> ArtifactRepository { get; }
+    public IRepository<Transcript> TranscriptRepository { get; }
+    public IRepository<Playlist> PlaylistRepository { get; }
+    public IRepository<Video> VideoRepository { get; }
     public ISender Sender { get; }
     public IVideoImporter Importer { get; }
 

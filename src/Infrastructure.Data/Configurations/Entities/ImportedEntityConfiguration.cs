@@ -7,14 +7,7 @@ namespace Infrastructure.Data.Configurations.Entities;
 public abstract class ImportedEntityConfiguration<T> : TrackedEntityConfiguration<T>,
     IEntityTypeConfiguration<T> // Unnecessary, but makes it easier to understand
     where T : ImportedEntity
-{
-    public class FieldLengths
-    {
-        public const int URL = 1024;
-        public const int Name = 500;
-        public const int TagName = 100;
-    }
-
+{    
     public override void Configure(EntityTypeBuilder<T> builder)
     {
         base.Configure(builder);
@@ -25,7 +18,7 @@ public abstract class ImportedEntityConfiguration<T> : TrackedEntityConfiguratio
 
         builder.Property(x => x.Description);
 
-        // - Tags
+        // Tags
         var valueComparer = new ValueComparer<IEnumerable<string>>(
             (c1, c2) => c1!.SequenceEqual(c2!),
             c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),

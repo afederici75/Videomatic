@@ -40,7 +40,6 @@ public class Playlist : ImportedEntity, IAggregateRoot
         }
         catch (Exception ex) 
         {
-
             throw;
         }
     }  

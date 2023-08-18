@@ -1,6 +1,4 @@
-﻿using SharedKernel.Model;
-
-namespace Application;
+﻿namespace Application;
 
 public class AutomappingProfile : Profile
 {
@@ -19,8 +17,8 @@ public class AutomappingProfile : Profile
         CreateMap<UpdateTranscriptCommand, Transcript>()
             .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines.Select(line => new TranscriptLine(line, null, null))));
                 
-        CreateMap<string, TranscriptLine>();
-        CreateMap<TranscriptLine, string>();
+       //CreateMap<string, TranscriptLine>();
+       //CreateMap<TranscriptLine, string>();
 
         // Artifacts
         CreateMap<CreateArtifactCommand, Artifact>();

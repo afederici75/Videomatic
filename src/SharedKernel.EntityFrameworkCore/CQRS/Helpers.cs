@@ -1,7 +1,7 @@
-﻿namespace SharedKernel.CQRS.Commands;
+﻿namespace SharedKernel.EntityFrameworkCore.CQRS;
 
 internal sealed class Helpers
-{ 
+{
     public static TId GetIdPropertyValue<TUpdateCommand, TId>(TUpdateCommand request)
         where TId : struct
     {

@@ -3,19 +3,12 @@ using Newtonsoft.Json;
 
 namespace Infrastructure.Data.Configurations.Entities;
 
-public abstract class TranscriptConfiguration : IEntityTypeConfiguration<Transcript>
+public abstract class TranscriptConfiguration : TrackedEntityConfiguration<Transcript>,  IEntityTypeConfiguration<Transcript>
 {
-    public const string TableName = "Transcripts";
-    public const string TableNameForLines = "TranscriptLines";
 
-    public static class FieldLengths
+    public override void Configure(EntityTypeBuilder<Transcript> builder)
     {
-        public const int Language = 10;
-    }
-
-    public virtual void Configure(EntityTypeBuilder<Transcript> builder)
-    {
-        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+        base.Configure(builder);
 
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => new TranscriptId(y))
@@ -30,20 +23,7 @@ public abstract class TranscriptConfiguration : IEntityTypeConfiguration<Transcr
         builder.Property(x => x.Lines)
                .HasConversion(x => JsonConvert.SerializeObject(x),
                               y => JsonConvert.DeserializeObject<TranscriptLine[]>(y) ?? Array.Empty<TranscriptLine>())
-               .Metadata.SetValueComparer(valueComparer);
-        //builder.OwnsMany(x => x.Lines, (builder) =>
-        //{
-        //    builder.ToTable(TableNameForLines);
-
-        //    // Shadow properties
-        //    builder.WithOwner().HasForeignKey("TranscriptId");
-
-        //    builder.Property("Id");
-        //    builder.HasKey("Id");
-
-        //    // Indices
-        //    builder.HasIndex(nameof(TranscriptLine.Text));
-        //});
+               .Metadata.SetValueComparer(valueComparer);        
 
         // ---------- Indices ----------
         builder.HasIndex(x => x.Language);

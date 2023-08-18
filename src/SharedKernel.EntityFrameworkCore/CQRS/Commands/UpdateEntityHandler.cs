@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Abstractions;
+using SharedKernel.EntityFrameworkCore.CQRS;
 
 namespace SharedKernel.CQRS.Commands;
 
@@ -8,13 +9,13 @@ public abstract class UpdateEntityHandler<TUpdateCommand, TEntity, TId> :
     where TEntity : class
     where TId : struct
 {
-    protected UpdateEntityHandler(IMyRepository<TEntity> repository, IMapper mapper)
+    protected UpdateEntityHandler(IRepository<TEntity> repository, IMapper mapper)
     {
         Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         Repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
 
-    protected IMyRepository<TEntity> Repository { get; }
+    protected IRepository<TEntity> Repository { get; }
     protected IMapper Mapper { get; }
 
     public async Task<Result<TEntity>> Handle(TUpdateCommand request, CancellationToken cancellationToken)

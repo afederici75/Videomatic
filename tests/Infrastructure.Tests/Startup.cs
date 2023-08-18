@@ -26,8 +26,6 @@ public class Startup
                 services.AddVidematicYouTubeInfrastructure(context.Configuration);
                 services.AddAzureSpeech(context.Configuration);
 
-                var connectionName = $"{VideomaticConstants.Videomatic}.{SqlServerVideomaticDbContext.ProviderName}";
-
                 services.AddHangfire(configuration =>
                 {
                     configuration
@@ -37,7 +35,7 @@ public class Startup
                         .UseActivator(new ContainerJobActivator(services.BuildServiceProvider()))
                         .UseFilter(new AutomaticRetryAttribute { Attempts = 0 })
                         .UseSqlServerStorage(
-                            context.Configuration.GetConnectionString(connectionName),
+                            context.Configuration.GetConnectionString($"Videomatic.SqlServer"), // TODO: remove magical string
                             new Hangfire.SqlServer.SqlServerStorageOptions()
                             {
                                 PrepareSchemaIfNecessary = true

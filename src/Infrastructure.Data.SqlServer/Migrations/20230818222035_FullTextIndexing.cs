@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Infrastructure.Data.SqlServer.FullTextSearch;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 

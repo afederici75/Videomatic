@@ -5,7 +5,7 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
 {
     public TranscriptTests(
         DbContextFixture fixture,
-        IMyRepository<Transcript> repository,
+        IRepository<Transcript> repository,
         ISender sender)
     {
         Fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
@@ -16,7 +16,7 @@ public class TranscriptTests : IClassFixture<DbContextFixture>
     }
 
     public DbContextFixture Fixture { get; }
-    public IMyRepository<Transcript> Repository { get; }
+    public IRepository<Transcript> Repository { get; }
     public ISender Sender { get; }
 
     //[Fact]

@@ -4,7 +4,7 @@ namespace Application.Abstractions;
 
 public static class IRepositoryOfPlaylistExtensions
 {
-    public static async Task<Result<int>> LinkPlaylistToVideos(this IMyRepository<Playlist> repository,
+    public static async Task<Result<int>> LinkPlaylistToVideos(this IRepository<Playlist> repository,
         PlaylistId playlistId,
         IEnumerable<VideoId> videoIds,
         CancellationToken cancellationToken = default)
@@ -25,7 +25,7 @@ public static class IRepositoryOfPlaylistExtensions
 
             int newLinksCount = pl.LinkToVideos(videoIds);
 
-            await repository.SaveChangesAsync( cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
 
             return Result<int>.Success(newLinksCount);
         }

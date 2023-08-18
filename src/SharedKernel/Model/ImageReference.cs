@@ -1,15 +1,16 @@
 ﻿namespace SharedKernel.Model;
 
-public class ImageReference : ValueObject
+public class ImageReference(
+    string url,
+    int height,
+    int width) : ValueObject
 {
     public static ImageReference Empty => new("", 0, 0);
 
-    public ImageReference(string location, int height, int width)
-    {
-        Url = location;
-        Height = height;
-        Width = width;
-    }
+    public string Url { get; } = url;
+    public int Height { get; } = height;
+    public int Width { get; } = width;
+
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
@@ -17,15 +18,4 @@ public class ImageReference : ValueObject
         yield return Height;
         yield return Width;
     }
-
-    public string Url { get; private set; } = default!;
-    public int Height { get; private set; }
-    public int Width { get; private set; }
-
-    #region Private 
-
-    private ImageReference()
-    { }
-
-    #endregion
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230816230100_Initial")]
+    [Migration("20230818222029_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -30,8 +30,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
             modelBuilder.HasSequence("PlaylistSequence");
 
             modelBuilder.HasSequence("TagsSequence");
-
-            modelBuilder.HasSequence("TranscriptLineSequence");
 
             modelBuilder.HasSequence("TranscriptSequence");
 
@@ -180,7 +178,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Language");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.HasIndex("VideoId");
 
@@ -257,8 +259,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("ChannelName")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("DefaultLanguage")
                                 .HasMaxLength(10)
@@ -278,8 +280,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
@@ -466,8 +468,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("ChannelName")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("DefaultLanguage")
                                 .HasMaxLength(10)
@@ -487,8 +489,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("ProviderId")
                                 .IsRequired()

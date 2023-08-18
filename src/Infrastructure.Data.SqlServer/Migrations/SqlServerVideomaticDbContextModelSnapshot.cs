@@ -28,8 +28,6 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
             modelBuilder.HasSequence("TagsSequence");
 
-            modelBuilder.HasSequence("TranscriptLineSequence");
-
             modelBuilder.HasSequence("TranscriptSequence");
 
             modelBuilder.HasSequence("VideoSequence");
@@ -177,7 +175,11 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedOn");
+
                     b.HasIndex("Language");
+
+                    b.HasIndex("UpdatedOn");
 
                     b.HasIndex("VideoId");
 
@@ -254,8 +256,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("ChannelName")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("DefaultLanguage")
                                 .HasMaxLength(10)
@@ -275,8 +277,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("ProviderId")
                                 .IsRequired()
@@ -463,8 +465,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("ChannelName")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("DefaultLanguage")
                                 .HasMaxLength(10)
@@ -484,8 +486,8 @@ namespace Infrastructure.Data.SqlServer.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasMaxLength(120)
-                                .HasColumnType("nvarchar(120)");
+                                .HasMaxLength(500)
+                                .HasColumnType("nvarchar(500)");
 
                             b1.Property<string>("ProviderId")
                                 .IsRequired()

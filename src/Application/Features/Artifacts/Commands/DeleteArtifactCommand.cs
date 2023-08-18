@@ -11,7 +11,7 @@ public class DeleteArtifactCommand(ArtifactId id) : IRequest<Result>
             RuleFor(x => (int)x.Id).GreaterThan(0);
         }
     }
-    internal class Handler(IMyRepository<Artifact> repository, IMapper mapper) : DeleteEntityHandler<DeleteArtifactCommand, Artifact, ArtifactId>(repository, mapper)
+    internal class Handler(IRepository<Artifact> repository, IMapper mapper) : DeleteEntityHandler<DeleteArtifactCommand, Artifact, ArtifactId>(repository, mapper)
     {
     }
 
