@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Abstractions;
+using SharedKernel.EntityFrameworkCore.CQRS;
 
 namespace SharedKernel.CQRS.Commands;
 
