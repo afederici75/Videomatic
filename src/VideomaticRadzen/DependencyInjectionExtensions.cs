@@ -30,7 +30,7 @@ public static class DependencyInjectionExtensions
         services.AddVideomaticDataForSqlServer(configuration);
         services.AddVidematicYouTubeInfrastructure(configuration);
 
-        var connectionName = $"VideomaticConstants.SqlServer";
+        var connectionName = $"Videomatic.SqlServer";
 
 #pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
         services.AddHangfire(cfg => cfg

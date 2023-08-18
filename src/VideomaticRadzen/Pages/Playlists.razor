@@ -9,7 +9,7 @@
 @if (playlists == null)
 {
     return;
-})
+}
 
 <RadzenRow class="sticky-top" style="background-color: #1f1f1f">
     <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
