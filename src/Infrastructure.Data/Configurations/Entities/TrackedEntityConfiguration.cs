@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using SharedKernel.Model;
-
-namespace Infrastructure.Data.Configurations.Entities;
+﻿namespace Infrastructure.Data.Configurations.Entities;
 
 public abstract class TrackedEntityConfiguration<T> : IEntityTypeConfiguration<T>
     where T : TrackedEntity

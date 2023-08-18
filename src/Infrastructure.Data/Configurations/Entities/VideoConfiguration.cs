@@ -4,16 +4,10 @@ namespace Infrastructure.Data.Configurations.Entities;
 
 public abstract class VideoConfiguration : ImportedEntityConfiguration<Video>,
     IEntityTypeConfiguration<Video>
-{
-    public const string TableName = "Videos";
-    public const string TableNameForThumbnails = "Thumbnails";
-    public const string TableNameForTags = "VideoTags";
-
+{    
     public override void Configure(EntityTypeBuilder<Video> builder)
     {
         base.Configure(builder);
-
-        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
 
         builder.Property(x => x.Id)
                .HasConversion(x => x.Value, y => (VideoId)y);

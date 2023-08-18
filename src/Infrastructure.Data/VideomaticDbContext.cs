@@ -29,13 +29,13 @@ public abstract class VideomaticDbContext : DbContext
     public DbSet<Video> Videos { get; set; } = null!;
     public DbSet<PlaylistVideo> PlaylistVideos { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-
-        if (_loggerFactory != null)
-            optionsBuilder.UseLoggerFactory(_loggerFactory);
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    base.OnConfiguring(optionsBuilder);
+    //
+    //    if (_loggerFactory != null)
+    //        optionsBuilder.UseLoggerFactory(_loggerFactory);
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

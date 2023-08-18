@@ -1,16 +1,16 @@
 ﻿using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Data.SqlServer;
+namespace Infrastructure.Data.SqlServer.FullTextSearch;
 
 public static class FullTextIndexingMigrationHelper
 {
     static string[] GetStringPropertiesOf<T>()
-    { 
+    {
         return typeof(T)
-            .GetProperties()                        
-            .Where(p => p.PropertyType == typeof(string) && p.IsPublic())                        
-            .Select(p => p.Name)                        
+            .GetProperties()
+            .Where(p => p.PropertyType == typeof(string) && p.IsPublic())
+            .Select(p => p.Name)
             .ToArray();
     }
 
@@ -28,7 +28,7 @@ public static class FullTextIndexingMigrationHelper
 
 
         migrationBuilder.Sql(
-            sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Video)}s (
+            sql: $@"CREATE FULLTEXT INDEX ON {Constants.VideomaticDbSchema}.{nameof(Video)}s (
                                 {nameof(Video.Name)},
                                 {nameof(Video.Description)}, 
                                 {nameof(Video.Tags)},
@@ -44,7 +44,7 @@ public static class FullTextIndexingMigrationHelper
             suppressTransaction: true);
 
         migrationBuilder.Sql(
-            sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Playlist)}s  (
+            sql: $@"CREATE FULLTEXT INDEX ON {Constants.VideomaticDbSchema}.{nameof(Playlist)}s  (
                                 {nameof(Playlist.Name)},
                                 {nameof(Playlist.Description)},
                                 {nameof(Playlist.Tags)},
@@ -60,7 +60,7 @@ public static class FullTextIndexingMigrationHelper
             suppressTransaction: true);
 
         migrationBuilder.Sql(
-            sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Artifact)}s (
+            sql: $@"CREATE FULLTEXT INDEX ON {Constants.VideomaticDbSchema}.{nameof(Artifact)}s (
                                 {nameof(Artifact.Name)}, 
                                 {nameof(Artifact.Type)}, 
                                 {nameof(Artifact.Text)},
@@ -71,7 +71,7 @@ public static class FullTextIndexingMigrationHelper
             suppressTransaction: true);
 
         migrationBuilder.Sql(
-            sql: $@"CREATE FULLTEXT INDEX ON {VideomaticConstants.VideomaticSchema}.{nameof(Transcript)}s (
+            sql: $@"CREATE FULLTEXT INDEX ON {Constants.VideomaticDbSchema}.{nameof(Transcript)}s (
                                 {nameof(Transcript.Language)},
                                 {nameof(Transcript.Lines)},
                                 {nameof(Video.CreatedBy)},
@@ -80,6 +80,6 @@ public static class FullTextIndexingMigrationHelper
                        WITH STOPLIST = OFF, CHANGE_TRACKING AUTO;",
             suppressTransaction: true);
 
-        
+
     }
 }

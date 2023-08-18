@@ -6,26 +6,23 @@ public class EntityOriginConfigurator
 {
     static class OriginLengths
     {
-        public const int ETag = 50;
-
-        public const int EmbedHtml = 2048;
-        public const int DefaultLanguage = 10;
+        
     }
 
     public static void Configure<T>(OwnedNavigationBuilder<T, EntityOrigin> bld)
         where T : class
     {
         // ----- Fields ----- //
-        bld.Property(x => x.ProviderId).HasMaxLength(FieldLengths.Generic.ExternalId);
-        bld.Property(x => x.ProviderItemId).HasMaxLength(FieldLengths.Generic.ExternalId);
-        bld.Property(x => x.ETag).HasMaxLength(OriginLengths.ETag);
-        bld.Property(x => x.ChannelId).HasMaxLength(FieldLengths.Generic.ExternalId);
-        bld.Property(x => x.ChannelName).HasMaxLength(FieldLengths.Generic.Name);
-        bld.Property(x => x.Name).HasMaxLength(FieldLengths.Generic.Name);
+        bld.Property(x => x.ProviderId).HasMaxLength(FieldLengths.ExternalId);
+        bld.Property(x => x.ProviderItemId).HasMaxLength(FieldLengths.ExternalId);
+        bld.Property(x => x.ETag).HasMaxLength(FieldLengths.ETag);
+        bld.Property(x => x.ChannelId).HasMaxLength(FieldLengths.ExternalId);
+        bld.Property(x => x.ChannelName).HasMaxLength(FieldLengths.Name);
+        bld.Property(x => x.Name).HasMaxLength(FieldLengths.Name);
         bld.Property(x => x.Description); // MAX
         bld.Property(x => x.PublishedOn);
-        bld.Property(x => x.EmbedHtml).HasMaxLength(OriginLengths.EmbedHtml);
-        bld.Property(x => x.DefaultLanguage).HasMaxLength(OriginLengths.DefaultLanguage);
+        bld.Property(x => x.EmbedHtml).HasMaxLength(FieldLengths.EmbedHtml);
+        bld.Property(x => x.DefaultLanguage).HasMaxLength(FieldLengths.DefaultLanguage);
 
         // ----- Relationships ----- //
         bld.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);

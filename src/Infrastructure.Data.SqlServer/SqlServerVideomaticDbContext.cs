@@ -1,6 +1,5 @@
 ﻿using Infrastructure.Data.SqlServer.Configurations;
 using Infrastructure.SqlServer.Configurations;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data.SqlServer;
@@ -21,7 +20,6 @@ public class SqlServerVideomaticDbContext : VideomaticDbContext
         base.OnModelCreating(modelBuilder);
     
         modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.SequenceName); // TODO: fix this
-        modelBuilder.HasSequence<long>(SqlServerTranscriptConfiguration.TranscriptLineSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.SequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerVideoConfiguration.TagsSequenceName); // TODO: fix this
         modelBuilder.HasSequence<long>(SqlServerPlaylistConfiguration.SequenceName); // TODO: fix this

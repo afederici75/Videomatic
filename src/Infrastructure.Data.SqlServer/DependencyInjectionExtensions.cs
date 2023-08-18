@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 using static Microsoft.Extensions.DependencyInjection.DependencyInjectionExtensions;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -26,18 +27,15 @@ public static partial class DependencyInjectionExtensions
                 var connString = configuration.GetConnectionString(ConnectionStringName);
 
                 builder.EnableSensitiveDataLogging()
+                       .UseLoggerFactory(sp.GetRequiredService<ILoggerFactory>())
                        .UseSqlServer(connString, (opts) =>
                         {
-                            opts.MigrationsAssembly(VideomaticConstants.MigrationAssemblyNamePrefix + SqlServerVideomaticDbContext.ProviderName);
+                            opts.MigrationsAssembly(typeof(SqlServerVideomaticDbContext).Assembly.FullName);                                                    
                         });
             },                 
             lifetime: ServiceLifetime.Transient);
 
-        services.AddTransient<VideomaticDbContext, SqlServerVideomaticDbContext>();
-
-        //services.AddTransient(typeof(IDbContextFactory<VideomaticDbContext>), typeof(DbContextFactory<VideomaticDbContext>));
-        //services.AddTransient(typeof(DbContextOptions<VideomaticDbContext>), typeof(DbContextOptions<SqlServerVideomaticDbContext>));
-
+        services.AddTransient<VideomaticDbContext, SqlServerVideomaticDbContext>(); // Because of inheritance
 
         return services;
     }

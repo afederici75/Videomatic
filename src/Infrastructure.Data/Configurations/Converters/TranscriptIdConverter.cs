@@ -1,9 +1,7 @@
-﻿using Infrastructure.Data.Configurations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿namespace Infrastructure.Data.Configurations.Converters;
 
-namespace Infrastructure.Data.Configurations.Converters;
-
-public class TranscriptIdConverter : ValueConverter<TranscriptId, int>, IStronglyTypedIdConverter
+[StronglyTypedIdConverter]
+public class TranscriptIdConverter : ValueConverter<TranscriptId, int>
 {
     public TranscriptIdConverter()
         : base(id => id.Value,

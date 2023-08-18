@@ -49,8 +49,8 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
-        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Videos");
-        DbContext.Database.ExecuteSqlRaw($"delete from {VideomaticConstants.VideomaticSchema}.Playlists");
+        DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Videos");
+        DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Playlists");
 
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName} RESTART WITH 1");
@@ -59,7 +59,6 @@ public class DbContextFixture : IAsyncLifetime
 
 
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.TranscriptLineSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.TagsSequenceName} RESTART WITH 1");
         DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName}  RESTART WITH 1");
@@ -69,10 +68,10 @@ public class DbContextFixture : IAsyncLifetime
         await _seeder.SeedAsync();
 
         // TODO: Refactor
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Videos start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Playlists start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Transcripts start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {VideomaticConstants.VideomaticSchema}.Artifacts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Videos start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Playlists start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Transcripts start full population");
+        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Artifacts start full population");
 
 
         // TODO: I should do what's described here: https://stackoverflow.com/questions/2727911/how-can-i-know-when-sql-full-text-index-population-is-finished

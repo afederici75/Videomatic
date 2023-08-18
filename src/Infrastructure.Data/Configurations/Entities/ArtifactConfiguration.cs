@@ -3,20 +3,13 @@
 public abstract class ArtifactConfiguration : TrackedEntityConfiguration<Artifact>,
     IEntityTypeConfiguration<Artifact>
 {
-    public const string TableName = "Artifacts";
-
-    public static class FieldLengths
-    {
-        public const int Title = 100;
-        public const int Type = 128; // TODO: Could be way smaller
-    }
-
     public override void Configure(EntityTypeBuilder<Artifact> builder)
     {
         base.Configure(builder);
 
-        // ----- Table ----- //
-        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+        builder.Property(x => x.Id)
+               .HasConversion(x => x.Value, y => new ArtifactId(y))
+               .IsRequired(true);
 
         // ----- Fields ----- //
         builder.Property(x => x.Name)

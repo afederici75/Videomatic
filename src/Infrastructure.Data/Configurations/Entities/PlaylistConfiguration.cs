@@ -5,14 +5,12 @@ namespace Infrastructure.Data.Configurations.Entities;
 public abstract class PlaylistConfiguration : ImportedEntityConfiguration<Playlist>,
     IEntityTypeConfiguration<Playlist>
 {
-    public const string TableName = "Playlists";
-
     public override void Configure(EntityTypeBuilder<Playlist> builder)
     {
         base.Configure(builder);
 
-        // ----- Table ----- //
-        builder.ToTable(TableName, VideomaticConstants.VideomaticSchema);
+        builder.Property(x => x.Id)
+               .HasConversion(x => x.Value, y => (PlaylistId)y);
 
         // ----- Fields ----- //        
         builder.HasMany(x => x.Videos)
@@ -23,8 +21,6 @@ public abstract class PlaylistConfiguration : ImportedEntityConfiguration<Playli
 
         builder.OwnsOne(x => x.Thumbnail, ImageReferenceConfigurator.Configure);
 
-        builder.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);
-
-        // ----- Indices ----- //
+        builder.OwnsOne(x => x.Picture, ImageReferenceConfigurator.Configure);     
     }
 }
