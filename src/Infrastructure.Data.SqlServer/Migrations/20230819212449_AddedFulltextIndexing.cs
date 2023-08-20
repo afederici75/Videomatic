@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     /// <inheritdoc />
-    public partial class FullTextIndexing : Migration
+    public partial class AddedFulltextIndexing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

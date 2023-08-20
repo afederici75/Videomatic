@@ -21,11 +21,11 @@ public static class GenericPlaylistExtensions
             publishedOn: playlist.Snippet.PublishedAtDateTimeOffset?.UtcDateTime ?? DateTime.UtcNow,
             thumbnail: new(thub.Url, Convert.ToInt32(thub.Height), Convert.ToInt32(thub.Width)),
             picture: new(pict.Url, Convert.ToInt32(pict.Height), Convert.ToInt32(pict.Width)),
-            etags: playlist.Snippet.Tags,
+            tags: playlist.Snippet.Tags,
             embedHtml: playlist.Player.EmbedHtml,
-            defaultLanguage: playlist.Snippet.DefaultLanguage,
             localizationInfo: new NameAndDescription(playlist.Snippet.Localized?.Title ?? "??", playlist.Snippet.Localized?.Description),
+            defaultLanguage: playlist.Snippet.DefaultLanguage,
             privacyStatus: playlist.Status.PrivacyStatus,
-            VideoCount: Convert.ToInt32(playlist.ContentDetails.ItemCount));
+            videoCount: Convert.ToInt32(playlist.ContentDetails.ItemCount));
     }
 }

@@ -42,7 +42,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
             var response = await request.ExecuteAsync(cancellation);
 
-            foreach (var playlist in response.Items)
+            foreach (Google.Apis.YouTube.v3.Data.Playlist? playlist in response.Items)
             {
                 yield return playlist.ToGenericPlaylist();
             };
@@ -55,12 +55,12 @@ public class YouTubeVideoProvider : IVideoProvider
     {
         foreach (var page in idsOrUrls.Page(MaxYouTubeItemsPerPage))
         {
-            var request = YouTubeService.Videos.List("snippet,contentDetails,status,player");
+            var request = YouTubeService.Videos.List("snippet,topicDetails,contentDetails,status,player");
             request.Id = string.Join(",", page.Select(id => FromStringOrQueryString(id, "v")));
             
             var response = await request.ExecuteAsync(cancellation);
 
-            foreach (var video in response.Items)
+            foreach (Google.Apis.YouTube.v3.Data.Video? video in response.Items)
             {
                 yield return video.ToGenericVideo();
             };
@@ -79,7 +79,7 @@ public class YouTubeVideoProvider : IVideoProvider
 
             var videoIds = response.Items.Select(i => i.Snippet.ResourceId.VideoId);
 
-            await foreach (var video in GetVideosAsync(videoIds, cancellation))
+            await foreach (GenericVideoDTO video in GetVideosAsync(videoIds, cancellation))
             {
                 yield return video;
             }

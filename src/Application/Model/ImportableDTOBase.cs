@@ -34,6 +34,5 @@ public class ImportableDTOBase(
     public ImageReference Thumbnail { get; } = thumbnail;
     public IEnumerable<string>? Tags { get; } = tags;
     public string? DefaultLanguage { get; } = defaultLanguage;
-    public NameAndDescription? LocalizationInfo { get; } = localizationInfo;
-
+    public NameAndDescription? LocalizationInfo { get; } = localizationInfo;    
 }

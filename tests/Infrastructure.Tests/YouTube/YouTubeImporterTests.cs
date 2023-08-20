@@ -46,23 +46,25 @@ public class YouTubeImporterTests : IClassFixture<DbContextFixture>
     readonly ImportOptions ImportOptions = new (ExecuteImmediate: true);
 
     [Theory]
-    //[InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 271, default)] // Alternative Living, Sustainable Future
+    [InlineData(new [] { "PLLdi1lheZYVJHCx7igCJIUmw6eGmpb4kb" }, 270, default)] // Alternative Living, Sustainable Future
     [InlineData(new [] { "PLOU2XLYxmsIKsEnF6CdfRK1Vd6XUn_QMu" }, 5, null)] // Google I/O Keynote Films
     public async Task ImportVideosOfPlaylists(string[] playlistIds, int expectedCount, [FromServices] CancellationToken? cancellationToken)
     {
-        var videoCount = await VideoRepository.CountAsync();
-        var playlistCount = await PlaylistRepository.CountAsync();
+        var origVideoCount = await VideoRepository.CountAsync();
+        var origPlaylistCount = await PlaylistRepository.CountAsync();
 
         await Importer.ImportPlaylistsAsync(playlistIds, ImportOptions, cancellationToken ?? CancellationToken.None);
 
-        (await PlaylistRepository.CountAsync()).Should().Be(playlistCount + 1);
-        (await VideoRepository.CountAsync()).Should().Be(videoCount + expectedCount);
+        (await PlaylistRepository.CountAsync()).Should().Be(origPlaylistCount + 1);
+        (await VideoRepository.CountAsync()).Should().Be(origVideoCount + expectedCount);
     }
    
     [Theory]
     [InlineData(new[] { "BBd3aHnVnuE" }, 0, null)]
     [InlineData(new[] { "4Y4YSpF6d6w", "https://youtube.com/watch?v=tWZQPCU4LJI" }, 2, null)]
-    [InlineData(new[] { "BFfb2P5wxC0", "https://youtube.com/watch?v=dQw4w9WgXcQ", "n1kmKpjk_8E" }, 2, null)]
+    [InlineData(new[] { "https://www.youtube.com/watch?v=oqet-wVkBoA&list=PLLdi1lheZYVIvA_YctNtIhbp_KJ54w7yL&index=3&pp=gAQBiAQB",
+                        "https://www.youtube.com/watch?v=8Y_HlIPRUc8", 
+                        "https://www.youtube.com/watch?v=5DrM90dg5t4&list=PLLdi1lheZYVLPVCrATDJUF_Pumjedwvyi" }, 3, null)]
     public async Task ImportVideosWithIdsOrUrls(string[] ids, int expectedAdded, CancellationToken? cancellationToken)
     {
         var count = await VideoRepository.CountAsync();

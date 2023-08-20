@@ -21,6 +21,7 @@ public static class GenericVideoExtensions
                                 defaultLanguage: video.Snippet.DefaultLanguage,
                                 localizationInfo: new NameAndDescription(video.Snippet.Localized.Title, video.Snippet.Localized.Description),
                                 privacyStatus: video.Status.PrivacyStatus,
-                                tags: video.Snippet.Tags ?? Array.Empty<string>());
+                                tags: video.Snippet.Tags ?? Array.Empty<string>(),
+                                topicCategories: video.TopicDetails?.TopicCategories ?? Array.Empty<string>());
     }
 }

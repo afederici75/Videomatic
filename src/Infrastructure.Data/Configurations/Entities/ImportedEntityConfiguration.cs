@@ -26,7 +26,13 @@ public abstract class ImportedEntityConfiguration<T> : TrackedEntityConfiguratio
 
         builder.Property(x => x.Tags)
                .HasConversion(x => string.Join(',', x),
-                              y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet())
+                              y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase))
+               .Metadata.SetValueComparer(valueComparer);
+
+        // TopicCategories
+        builder.Property(x => x.TopicCategories)
+               .HasConversion(x => string.Join(',', x),
+                              y => y.Split(',', StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase))
                .Metadata.SetValueComparer(valueComparer);
 
         // ---------- Owned Types ----------
