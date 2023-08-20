@@ -47,7 +47,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the playlists that already exist in the database
-            var qry = new Playlists.ByProviderAndItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
+            var qry = new QueryPlaylists.ByProviderAndItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
             var dups = await PlaylistRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -106,7 +106,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the videos that already exist in the database
-            var qry = new Videos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var qry = new QueryVideos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
             var dups = await VideoRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -144,11 +144,11 @@ public class YouTubeVideoImporter : IVideoImporter
     public async Task ImportTranscriptionsAsync(
         IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
     {
-        var sw = Stopwatch.StartNew();
-
-        const string LogFormat = "ImportTranscriptionsAsync({VideoIds}) [{Elapsed}ms]";
-
-        var qry = new Transcripts.ByVideoId(videoIds);
+        const string LogFormat = nameof(ImportTranscriptionsAsync) + "({VideoIds}) [{Duration}]";
+        Stopwatch sw = Stopwatch.StartNew();        
+     
+        // Gets the videos that already have a transcript
+        var qry = new QueryTranscripts.ByVideoId(videoIds);
         var existingTrans = await TranscriptRepository.ListAsync(qry, cancellation);
         var videoIdsToSkip = existingTrans.Select(t => t.VideoId);
 
@@ -186,6 +186,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await TranscriptRepository.AddRangeAsync(newTranscripts, cancellation); // Saves to database
         Logger.LogDebug("Stored transcripts [{elapsed}ms]", sw.Elapsed);
 
+        Logger.LogDebug(LogFormat, results2.Length, sw.Elapsed);    
     }
 
     static async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
@@ -222,7 +223,7 @@ public class YouTubeVideoImporter : IVideoImporter
     {
         var sw = Stopwatch.StartNew();
 
-        const string LogFormat = "GetTimedTextInformation({VideoId}, {TimedTextUrl}) [{Elapsed}ms]";
+        const string LogFormat = nameof(GetTimedTextInformation) + "({VideoId}, {TimedTextUrl}) [{Duration}]";
 
         client.DefaultRequestHeaders.Add("User-Agent", "Videomatic");
 
