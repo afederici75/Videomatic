@@ -110,7 +110,7 @@ public class DbSeeder : IDbSeeder
         video.SetOrigin(origin);    
 
         // Tags
-        video.SetTags("HINDUISM", "HUXLEY");
+        video.SetTags(new[] { "HINDUISM", "HUXLEY" });
 
         await VideoRepository.AddAsync(video);        
 
@@ -187,7 +187,7 @@ public class DbSeeder : IDbSeeder
         video.SetOrigin(origin);
 
         // Tags
-        video.SetTags("HINDUISM");
+        video.SetTags(new[] { "HINDUISM" });
 
         // Thumbnails
         //video.SetThumbnail(ThumbnailResolution.Default, "https://i.ytimg.com/vi/BBd3aHnVnuE/default.jpg", 90, 120);

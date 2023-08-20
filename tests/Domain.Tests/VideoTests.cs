@@ -66,11 +66,11 @@ public class VideoTests
         // Ensures duplicate tags are not added
         video.Tags.Should().BeEmpty();
 
-        video.AddTags("TAG1", "TAG2");
+        video.SetTags(new[] { "TAG1", "TAG2", "Tag1" });
         video.Tags.Count().Should().Be(2);
 
-        video.AddTags("TAG1");
-        video.Tags.Count().Should().Be(2);
+        video.SetTags(new[] { "TAG3" });
+        video.Tags.Count().Should().Be(1);
 
         // Clear tags and verifies
         video.ClearTags();

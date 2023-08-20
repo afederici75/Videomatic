@@ -1,4 +1,5 @@
 ﻿using SharedKernel.Model;
+using System.Diagnostics;
 
 namespace Domain;
 
@@ -15,7 +16,7 @@ public class EntityOrigin : ValueObject
                                             embedHtml: string.Empty,
                                             defaultLanguage: string.Empty,
                                             thumbnail: ImageReference.Empty,
-                                            picture: ImageReference.Empty);
+                                            picture: ImageReference.Empty                                            );
 
     public EntityOrigin(
         string providerId,

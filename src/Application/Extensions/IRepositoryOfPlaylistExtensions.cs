@@ -15,7 +15,7 @@ public static class IRepositoryOfPlaylistExtensions
         try
         {
             Playlist? pl = await repository.SingleOrDefaultAsync(
-                new Playlists.ById(playlistId, Playlists.Include.Videos), 
+                new QueryPlaylists.ById(playlistId, QueryPlaylists.Include.Videos), 
                 cancellationToken);
 
             if (pl is null)

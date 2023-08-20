@@ -10,11 +10,8 @@
   </Class>
   <Class Name="Domain.Transcripts.Transcript" BaseTypeListCollapsed="true">
     <Position X="3" Y="5.75" Width="3" />
-    <Members>
-      <Field Name="_lines" Hidden="true" />
-    </Members>
     <TypeIdentifier>
-      <HashCode>AAgCAAAACAAAAAAAAAABAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgCAAAACAAAAAAAAAAAAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
       <FileName>Transcripts\Transcript.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -49,21 +46,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Transcripts.TranscriptLine">
-    <Position X="4.5" Y="9" Width="2.5" />
+    <Position X="6" Y="8.75" Width="2.5" />
     <Members>
       <Method Name="GetEqualityComponents" Hidden="true" />
       <Method Name="implicit operator string" Hidden="true" />
-      <Method Name="implicit operator TranscriptLine" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>QAAAIAAAAAACAAAAIAAAAAAAAAAQAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>QAAAIAAAAAACAAAAIAAAAAAAAAAAAAIAAAAACAAAAAA=</HashCode>
       <FileName>Transcripts\TranscriptLine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Playlists.PlaylistVideo">
-    <Position X="16" Y="10" Width="2.5" />
+    <Position X="16.75" Y="8.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEIAABAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Playlists\PlaylistVideo.cs</FileName>
     </TypeIdentifier>
   </Class>

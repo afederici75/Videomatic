@@ -47,7 +47,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetPlaylistsAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the playlists that already exist in the database
-            var qry = new Playlists.ByProviderAndItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
+            var qry = new QueryPlaylists.ByProviderAndItemId("YOUTUBE", page.Select(pl => pl.ProviderItemId));
             var dups = await PlaylistRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -106,7 +106,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the videos that already exist in the database
-            var qry = new Videos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var qry = new QueryVideos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
             var dups = await VideoRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 
@@ -144,9 +144,11 @@ public class YouTubeVideoImporter : IVideoImporter
     public async Task ImportTranscriptionsAsync(
         IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
     {
-        var sw = Stopwatch.StartNew();
-
-        var qry = new Transcripts.ByVideoId(videoIds);
+        const string LogFormat = nameof(ImportTranscriptionsAsync) + "({VideoIds}) [{Duration}]";
+        Stopwatch sw = Stopwatch.StartNew();        
+     
+        // Gets the videos that already have a transcript
+        var qry = new QueryTranscripts.ByVideoId(videoIds);
         var existingTrans = await TranscriptRepository.ListAsync(qry, cancellation);
         var videoIdsToSkip = existingTrans.Select(t => t.VideoId);
 
@@ -161,8 +163,7 @@ public class YouTubeVideoImporter : IVideoImporter
         
         var tasks = videoIdsByProviderId.Select(v => GetTimedTextInformation(client, v.Value, $"https://www.youtube.com/watch?v={v.Key}"));
         var results = await Task.WhenAll(tasks);
-        Logger.LogDebug("GetTimedTextInformation [{elapsed}ms]", sw.Elapsed);
-
+        
         var goodResults = results.Where(r => r.IsSuccess && r.Value.TimedTextInformation.PlayerCaptionsTracklistRenderer?.CaptionTracks != null)
                                  .Select(r => r.Value)
                                  .ToArray();
@@ -185,6 +186,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await TranscriptRepository.AddRangeAsync(newTranscripts, cancellation); // Saves to database
         Logger.LogDebug("Stored transcripts [{elapsed}ms]", sw.Elapsed);
 
+        Logger.LogDebug(LogFormat, results2.Length, sw.Elapsed);    
     }
 
     static async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
@@ -217,45 +219,49 @@ public class YouTubeVideoImporter : IVideoImporter
 
     record TimedTextInfoForVideo(VideoId VideoId, TimedTextInformation TimedTextInformation);
 
-    async Task<Result<TimedTextInfoForVideo>> GetTimedTextInformation(HttpClient client, VideoId videoId, string videoUrl)
+    async Task<Result<TimedTextInfoForVideo>> GetTimedTextInformation(HttpClient client, VideoId videoId, string timedTextUrl)
     {
+        var sw = Stopwatch.StartNew();
+
+        const string LogFormat = nameof(GetTimedTextInformation) + "({VideoId}, {TimedTextUrl}) [{Duration}]";
+
         client.DefaultRequestHeaders.Add("User-Agent", "Videomatic");
 
         try
         {
-            string html = await client.GetStringAsync(videoUrl);
+            string html = await client.GetStringAsync(timedTextUrl);
 
             var tmp = html.Split("\"captions\":");
             if (tmp.Length <= 1)
             {
                 if (html.Contains("class=\"g-recaptcha\""))
                 {
-                    return Result.Error($"Too many requests for video {videoUrl}.");
+                    return Result.Error($"Too many requests for video {timedTextUrl}.");
                 }
 
                 if (!html.Contains("\"playabilityStatus\":"))
                 {
-                    return Result.Error($"Unavailable video {videoUrl}.");
+                    return Result.Error($"Unavailable video {timedTextUrl}.");
                 }
 
-                return Result.Error($"Transcripts disabled in video {videoUrl}.");
+                return Result.Error($"Transcripts disabled in video {timedTextUrl}.");
             }
 
             var targetHtml = tmp[1];
             var json = targetHtml[..(targetHtml.IndexOf(']') + 1)] + "}}";
 
             var ttInfo = JsonConvert.DeserializeObject<TimedTextInformation>(json);
+
+            Logger.LogDebug(LogFormat, videoId, timedTextUrl, sw.Elapsed);
+
             return new TimedTextInfoForVideo(videoId, ttInfo!);
         }
         catch (HttpRequestException ex)
         {
-            var msg = $"Error while getting video {videoUrl}.";
-#pragma warning disable CA2254 // Template should be a static expression
-            Logger.LogError(ex, msg, videoUrl);
-#pragma warning restore CA2254 // Template should be a static expression
+            Logger.LogError(ex, LogFormat, videoId, timedTextUrl, sw.Elapsed);
 
-            return Result.Error(msg);
-        }
+            return Result.Error($"Error getting YouTube's TimedText information for video {videoId}@{timedTextUrl}. {ex.Message}");
+        }        
     }
       
 

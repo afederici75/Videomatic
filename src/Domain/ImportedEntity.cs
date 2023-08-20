@@ -28,36 +28,31 @@ public abstract class ImportedEntity : TrackedEntity
 
     public IEnumerable<string> Tags => _tags;
 
-    public void SetTags(params string[] tags)
+    public IEnumerable<string> TopicCategories => _topicCategories;
+
+    public void SetTopicCategories(IEnumerable<string> topicCategories)
+    {
+        _topicCategories.Clear();
+
+        foreach (var x in topicCategories)
+        {
+            _topicCategories.Add(x);
+        }
+    }
+
+    public void SetTags(IEnumerable<string> tags)
     {
         _tags.Clear();
 
-        AddTags(tags);
+        foreach (var x in tags)
+        {
+            _tags.Add(x);
+        }
     }
 
     public void ClearTags() => _tags.Clear();
-
-    public void AddTags(params string[] tags)
-    {
-        Guard.Against.Null(tags, nameof(tags));
-
-        foreach (var tag in tags)
-        {
-            _tags.Add(tag);
-        }
-    }
-
-    public void RemoveTags(params string[] tags)
-    {
-        Guard.Against.Null(tags, nameof(tags));
-
-        foreach (var tag in tags)
-        {
-            _tags.Remove(tag);
-        }
-    }
-
-    public void SetName(string name) => Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+    
+    public void SetName(string name) => Name = name;
     public void SetDescription(string? description) => Description = description;
     public void ClearThumbnail() => Thumbnail = null;
     public void SetThumbnail(ImageReference thumbnail) => Thumbnail = Guard.Against.Null(thumbnail, nameof(thumbnail));    
@@ -75,7 +70,9 @@ public abstract class ImportedEntity : TrackedEntity
     protected ImportedEntity() : base()
     { }
 
-    readonly HashSet<string> _tags = new();
+    readonly HashSet<string> _tags = new(StringComparer.OrdinalIgnoreCase);
+    private HashSet<string> _topicCategories = new(StringComparer.OrdinalIgnoreCase);
+
 
     #endregion
 }

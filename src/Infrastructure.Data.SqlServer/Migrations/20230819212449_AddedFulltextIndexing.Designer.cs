@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerVideomaticDbContext))]
-    [Migration("20230818222035_FullTextIndexing")]
-    partial class FullTextIndexing
+    [Migration("20230819212449_AddedFulltextIndexing")]
+    partial class AddedFulltextIndexing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,6 +110,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicCategories")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -215,6 +219,10 @@ namespace Infrastructure.Data.SqlServer.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicCategories")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

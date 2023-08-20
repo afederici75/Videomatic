@@ -24,13 +24,14 @@ public class GenericChannelDTO(
 
     string? owner,
     DateTime? timeCreated,
-
-    IEnumerable<string> topicIds,
+    
     IEnumerable<string> topicCategories,
 
     ulong? videoCount,
     ulong? suscriberCount,
-    ulong? viewCount) : ImportableDTOBase(
+    ulong? viewCount,
+    
+    IEnumerable<string> topicIds) : ImportableDTOBase(
         providerId: providerId, providerItemId: providerItemId, etag: etag, channelId: providerItemId, channelName: name,
         name: name, description: description, publishedOn: publishedOn, thumbnail: thumbnail, picture: picture, tags: tags,
         defaultLanguage: defaultLanguage, localizationInfo: localizationInfo)
@@ -41,6 +42,5 @@ public class GenericChannelDTO(
     public IEnumerable<string> TopicCategories { get; } = topicCategories;
     public ulong? VideoCount { get; } = videoCount;
     public ulong? SuscriberCount { get; } = suscriberCount;
-    public ulong? ViewCount { get; } = viewCount;
-
+    public ulong? ViewCount { get; } = viewCount; 
 }

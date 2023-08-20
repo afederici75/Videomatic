@@ -1,5 +1,3 @@
-using VideoMaticServiceImporter;
-
 var builder = Host.CreateDefaultBuilder(args);
 var host = builder
     .ConfigureAppConfiguration((context, config) =>
@@ -8,8 +6,6 @@ var host = builder
     })
     .ConfigureServices((context, services) =>
     {
-        services.AddHostedService<Worker>();
-
         services.AddVideomaticServer(
             configuration: context.Configuration,
             addHangfireHostedService: true,

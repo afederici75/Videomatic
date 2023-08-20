@@ -1,12 +1,17 @@
 ﻿namespace Application.Specifications;
 
-public static class Videos
+public static class QueryVideos
 {
     public class ByIds : Specification<Video>
     {
-        public ByIds(params VideoId[] videoIds)
+        public ByIds(IEnumerable<VideoId> videoIds)
         {
             Query.Where(v => videoIds.Contains(v.Id));
+        }
+
+        public ByIds(VideoId videoId)
+        {
+            Query.Where(v => videoId == v.Id);
         }
     }
 
