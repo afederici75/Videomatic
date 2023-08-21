@@ -26,7 +26,7 @@ public static class QueryVideos
     //    }
     //}
 
-    public class ByProviderItemId : Specification<Video>
+    public class ByProviderItemId : Specification<Video>, ISingleResultSpecification<Video>
     {
         public ByProviderItemId(string providerId, IEnumerable<string> providerItemIds)
         {

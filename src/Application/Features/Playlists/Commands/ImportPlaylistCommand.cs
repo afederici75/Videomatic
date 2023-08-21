@@ -2,11 +2,11 @@
 
 // TODO: iffy names
 
-public class ImportYoutubePlaylistsCommand(IEnumerable<string> urls) : IRequest<Result<IEnumerable<string>>>
+public class ImportPlaylistsCommand(IEnumerable<string> urls) : IRequest<Result<IEnumerable<string>>>
 { 
     public IEnumerable<string> Urls { get; } = urls;
 
-    internal class Validator : AbstractValidator<ImportYoutubePlaylistsCommand>
+    internal class Validator : AbstractValidator<ImportPlaylistsCommand>
     {
         public Validator()
         {
@@ -16,11 +16,11 @@ public class ImportYoutubePlaylistsCommand(IEnumerable<string> urls) : IRequest<
         }
     }
 
-    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportYoutubePlaylistsCommand, Result<IEnumerable<string>>>
+    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportPlaylistsCommand, Result<IEnumerable<string>>>
     {
         readonly IBackgroundJobClient JobClient = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
 
-        public Task<Result<IEnumerable<string>>> Handle(ImportYoutubePlaylistsCommand request, CancellationToken cancellationToken)
+        public Task<Result<IEnumerable<string>>> Handle(ImportPlaylistsCommand request, CancellationToken cancellationToken)
         {
             var jobIds = new List<string>();
             foreach (var id in request.Urls)

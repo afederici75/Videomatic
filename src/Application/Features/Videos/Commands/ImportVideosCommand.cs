@@ -1,14 +1,14 @@
 ﻿namespace Application.Features.Videos.Commands;
 
 // TODO: iffy name
-public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? destinationPlaylistId = null) : IRequest<Result<string>>
+public class ImportVideosCommand(IEnumerable<string> urls, PlaylistId? destinationPlaylistId = null) : IRequest<Result<string>>
 {
     public IEnumerable<string> Urls { get; } = urls;
     public PlaylistId? DestinationPlaylistId { get; } = destinationPlaylistId;
 
     #region Validator
 
-    internal class Validator : AbstractValidator<ImportYoutubeVideosCommand>
+    internal class Validator : AbstractValidator<ImportVideosCommand>
     {
         public Validator()
         {
@@ -22,12 +22,12 @@ public class ImportYoutubeVideosCommand(IEnumerable<string> urls, PlaylistId? de
 
     #region Handler
 
-    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportYoutubeVideosCommand, Result<string>>
+    internal class Handler(IBackgroundJobClient jobClient) : IRequestHandler<ImportVideosCommand, Result<string>>
     {
         public IBackgroundJobClient JobClient { get; } = jobClient ?? throw new ArgumentNullException(nameof(jobClient));
 
 
-        public Task<Result<string>> Handle(ImportYoutubeVideosCommand request, CancellationToken cancellationToken = default)
+        public Task<Result<string>> Handle(ImportVideosCommand request, CancellationToken cancellationToken = default)
         {
             var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportVideosAsync(request.Urls, (PlaylistId?)request.DestinationPlaylistId, null, cancellationToken));
             

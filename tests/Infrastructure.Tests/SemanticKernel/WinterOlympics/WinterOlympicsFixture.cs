@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using Microsoft.SemanticKernel.Memory;
-
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
@@ -71,5 +70,4 @@ public class WinterOlympicsFixture : IAsyncLifetime
         //var tmp = LoadLocalEmbeddingsAsync(memStore, cancellation);
         //await memStore.UpsertBatchAsync(CollectionName, tmp, cancellation);
     }
-
 }

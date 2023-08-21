@@ -1,32 +1,47 @@
-﻿//using Microsoft.SemanticKernel.tex
-
+﻿using Application.Specifications;
 using Microsoft.SemanticKernel.SemanticFunctions.Partitioning;
 
-namespace Infrastructure.Tests.SemanticKernel.Chunking;
+namespace Infrastructure.Tests.SemanticKernel;
 
-public class TextChunkerTests
+[Collection("DbContextTests")]
+public class TextChunkerTests : IClassFixture<DbContextFixture>
 {
-    //[Fact]
-    //public async Task SplitHuxleysDancingShiva()
-    //{
-    //    throw new NotImplementedException();
+    public TextChunkerTests(
+        IRepository<Transcript> transcriptRepository,
+        IRepository<Video> videoRepository,
+        IVideoImporter videoImporter)
+    {
+        TranscriptRepository = transcriptRepository ?? throw new ArgumentNullException(nameof(transcriptRepository));
+        VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
+        VideoImporter = videoImporter ?? throw new ArgumentNullException(nameof(videoImporter));
+    }
 
-    //    //var video = await VideoDataGenerator.CreateVideoFromFileAsync(
-    //    //    //YouTubeVideos.AldousHuxley_DancingShiva, 
-    //    //    YouTubeVideos.SwamiTadatmananda_WhySoManyGodsInHinduism,
-    //    //    true);
-    //    //
-    //    //List<string> allTextLines = video.Transcripts
-    //    //    .SelectMany(x => x.Lines)
-    //    //    .Select(ln => ln.Text)
-    //    //    .ToList();
-    //    //
-    //    //// Basic split. Sentences are cut prematurely.
-    //    //var result1 = SemanticTextPartitioner.SplitPlainTextParagraphs(allTextLines, 200);
-    //    //
-    //    //// The following splits nicely!
-    //    //var fullText = string.Join(" ", allTextLines);
-    //    //var result2 = SemanticTextPartitioner.SplitPlainTextLines(fullText, 200);        
+    public IRepository<Transcript> TranscriptRepository { get; }
+    public IRepository<Video> VideoRepository { get; }
+    public IVideoImporter VideoImporter { get; }
 
-    //}
+    [Fact]
+    public async Task SplitHuxleysDancingShiva()
+    {
+        var ids = new string[] { YouTubeVideos.AldousHuxley_DancingShiva2 };
+
+        await VideoImporter.ImportVideosAsync(ids, options: new(ExecuteImmediate: true));
+
+        var video = await VideoRepository.SingleOrDefaultAsync(
+            new QueryVideos.ByProviderItemId("YOUTUBE", ids));
+        video.Should().NotBeNull();
+
+        var t = await TranscriptRepository.SingleOrDefaultAsync(
+            new QueryTranscripts.ByVideoId(video!.Id));
+        t.Should().NotBeNull();
+
+        var text = t!.GetFullText();
+        
+        // The following splits nicely!
+        // TODO: tweak so the fragments overlap a little bit
+        var result2 = SemanticTextPartitioner.SplitPlainTextLines(text, 200);        
+
+        result2.Should().NotBeEmpty();
+        result2.Count.Should().Be(8);
+    }
 }

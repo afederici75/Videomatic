@@ -7,18 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hangfire.Core" Version="1.8.4" />
-    <PackageReference Include="Hangfire.SqlServer" Version="1.8.4" />
-    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.4" />
+    <PackageReference Include="Hangfire.Core" Version="1.8.5" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.8.5" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.5" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="0.13.277.1-preview" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
     <PackageReference Include="xunit" Version="2.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Xunit.DependencyInjection" Version="8.7.2" />
+    <PackageReference Include="Xunit.DependencyInjection" Version="8.8.0" />
     <PackageReference Include="Xunit.DependencyInjection.Logging" Version="8.1.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -78,9 +78,6 @@
     </Content>
     <Content Include="Data\TestData\Video-tWZQPCU4LJI.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SemanticKernel\TestData\HuxleysDancingShiva.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="testSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
