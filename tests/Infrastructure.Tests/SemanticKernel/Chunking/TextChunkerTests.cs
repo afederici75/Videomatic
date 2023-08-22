@@ -22,7 +22,7 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task SemanticSearchOnMemoryStore()
     {        
-        var text = AldousHuxley_DancingShiva2;
+        var text = AldousHuxley_DancingShiva2; // Lonbg text
 
         // The following splits nicely!
         // TODO: tweak so the fragments overlap a little bit
@@ -36,6 +36,8 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
         foreach (var chunk in chunks)
         {
             var chunkId = (idx++).ToString();
+
+            // Generates and saves the embedding
             await TextMemory.SaveInformationAsync(
                 collection: collName,
                 text: chunk,
@@ -43,12 +45,13 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
                 description: $"Chunk '{chunkId}''s description",                
                 additionalMetadata: "metaForEmbedding");
 
+            // Generates and saves the reference to the embedding
             await TextMemory.SaveReferenceAsync(
                 collection: collName,
                 text: chunk, 
                 externalId: "O1pD3Ew_yu8",
                 externalSourceName: "YouTube",
-                description: "A Chunk from Aldous Huxley's video",
+                description: $"Some text from Aldous Huxley's video/chunk{chunkId}",
                 additionalMetadata: "metaForReference"
                 );  
         }
