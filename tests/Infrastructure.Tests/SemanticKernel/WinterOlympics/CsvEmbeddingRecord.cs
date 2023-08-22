@@ -22,7 +22,7 @@ public class CsvEmbeddingRecord
         var key = "PK_" + _key++.ToString();
 
         float[]? floatValues = JsonConvert.DeserializeObject<float[]>(ValuesArray);
-        Embedding<float> e = floatValues != null ? new Embedding<float>(floatValues) : new();
+        ReadOnlyMemory<float> e = floatValues != null ? new ReadOnlyMemory<float>(floatValues) : new();
 
         MemoryRecordMetadata meta = new(
             isReference: true,

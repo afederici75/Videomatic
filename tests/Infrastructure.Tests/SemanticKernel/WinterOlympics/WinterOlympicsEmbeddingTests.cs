@@ -62,7 +62,7 @@ public partial class WinterOlympicsEmbeddingTests : IClassFixture<WinterOlympics
                    semanticMatches + '\n' +
                    $"Question: {question}";
 
-        newChat.AddMessage(ChatHistory.AuthorRoles.User, ask);
+        newChat.AddMessage(AuthorRole.User, ask);
 
         string response = await chatCompletion.GenerateMessageAsync(newChat, new ChatRequestSettings
         {
