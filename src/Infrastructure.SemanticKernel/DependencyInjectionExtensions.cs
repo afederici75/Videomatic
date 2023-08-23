@@ -1,11 +1,11 @@
 ﻿using Infrastructure.SemanticKernel;
-using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.TextEmbedding;
+using Microsoft.SemanticKernel.Connectors.Memory.Redis;
 using Microsoft.SemanticKernel.Memory;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -18,10 +18,23 @@ public static class DependencyInjectionExtensions
         services.Configure<SemanticKernelOptions>(configuration.GetSection("SemanticKernel"));
 
         // Services
-        services.AddScoped<IKernel>(sp =>
+        services.AddTransient<IKernel>(sp =>
         {
             var logFact = sp.GetRequiredService<ILoggerFactory>();
             var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
+
+            var store = new RedisMemoryStore("127.0.0.1:6379");
+            //var store = new WeaviateMemoryStore(
+            //    endpoint: options.MemoryStoreEndpoint!,
+            //    apiKey: options.MemoryStoreApiKey);
+            //if (store.DoesCollectionExistAsync("Videos").Result == false)
+            //{
+            var colls = store.GetCollectionsAsync().ToBlockingEnumerable().ToList();
+
+            if (!colls.Contains("Videos"))
+            { 
+                store.CreateCollectionAsync("Videos").Wait();
+            }
 
             var kernel = Kernel.Builder
                 .WithLogger(logFact.CreateLogger<IKernel>())
@@ -40,30 +53,28 @@ public static class DependencyInjectionExtensions
                     serviceId: "textCompletion",
                     setAsDefault: false,
                     httpClient: null)
-                // TODO: switch to Weaviate asap
-                .WithMemoryStorage(new VolatileMemoryStore())
+                .WithOpenAITextEmbeddingGenerationService(
+                    modelId: options.EmbeddingModel,
+                    serviceId: "textEmbedding",
+                    apiKey: options.ApiKey,
+                    setAsDefault: false,
+                    orgId: options.Organization,
+                    httpClient: null)
+                .WithMemoryStorage(store)
                 .Build();
                                 
 
             return kernel;
         });
+   
 
-        services.AddTransient<IMemoryStore, VolatileMemoryStore>();
-        services.AddTransient<ITextEmbeddingGeneration>((sp) =>
+        services.AddTransient<ISemanticTextMemory, SemanticTextMemory>(sp =>
         {
-            var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
+            var store = sp.GetRequiredService<IMemoryStore>();
+            var embGen = sp.GetRequiredService<ITextEmbeddingGeneration>();
 
-            var service = new OpenAITextEmbeddingGeneration(
-                modelId: options.EmbeddingModel,
-                apiKey: options.ApiKey,
-                organization: options.Organization,
-                httpClient: null,
-                logger: null);
-
-            return service;
+            return new SemanticTextMemory(store, embGen);
         });
-
-        services.AddTransient<ISemanticTextMemory, SemanticTextMemory>();
 
         return services;
     }   

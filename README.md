@@ -24,7 +24,14 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d videomatic/mssql-fts 
 ```
 
+-REDIS Stack (Cache and Vector Database)
+
+```
+docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 --restart unless-stopped redis/redis-stack:latest
+```
+
 -Optional: Install SEQ to capture logs from the application in a friendly UI.
+
 ```
 docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 80:80 -p 5341:5341 datalust/seq
 ```
