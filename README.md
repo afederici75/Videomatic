@@ -8,33 +8,76 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 
 ## Prerequisites
 
+1. [Visual Studio Community Edition]
+	1. https://visualstudio.microsoft.com/vs/community/	
+2. [Docker]
+	1. https://www.docker.com/products/docker-desktop		
+3. [Microsoft SQL Server Management Studio]
+	1. https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#download-ssms
+
 ## Installation
 
--We want to install MSSQL on Linux with Full Text Search installed.
--This is a good article:
-	https://gianluigi.sellitto.it/2020/03/mssql-server-2019-on-docker-e-full-text-search/
--Steps:
+### MSSQL Server 2019 with Full Text Search enabled
 
-	-Run the following command (might take a minute or two):
+1. Build DOCKERFILE to create the image videomatic/mssql-fts (*this might take a few minutes*).
+	1. *The image contains MSSQL Server 2019 with Full Text Search enabled*
+	2. *More info [here](https://gianluigi.sellitto.it/2020/03/mssql-server-2019-on-docker-e-full-text-search/)*
 ```
-		docker build -t videomatic/mssql-fts .
-```				
-	-Run the following command:
-```
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=[...]" -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d videomatic/mssql-fts 
+> docker build -t videomatic/mssql-fts .
 ```
 
--REDIS Stack (Cache and Vector Database)
+2. Start a container from the image we just created in step 1.
+	1. *The container will be named mssql1 and will be listening on port 1433*
+	2. **MAKE SURE YOU CHANGE THE PASSWORD**
+```
+> docker run -e "MSSQL_SA_PASSWORD=[your password here]" "ACCEPT_EULA=Y" -e -p 1433:1433 --name mssql1 --restart unless-stopped --hostname mssql1 -d videomatic/mssql-fts 
+```
+
+### REDIS Stack (Cache and Vector Database) in a friendly [web UI](http://localhost:8001/redis-stack/browser).
 
 ```
 docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 --restart unless-stopped redis/redis-stack:latest
 ```
 
--Optional: Install SEQ to capture logs from the application in a friendly UI.
+### [Optional] SEQ (Logs from the application in a friendly [web UI](http://localhost/#/events).
 
 ```
 docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 80:80 -p 5341:5341 datalust/seq
 ```
+
+### Database Setup
+
+Now that everything is setup we can create the database and the tables.
+Get your command prompt to the folder \src\Infrastructure.Data.SqlServer and run the following command:
+
+```
+PS [..]\src\Infrastructure.Data.SqlServer> .\UpdateDb.bat
+```
+
+The command should produce something similar to this:
+
+```
+PS D:\Videomatic\src\Infrastructure.Data.SqlServer> .\UpdateDb.bat
+
+D:\Videomatic\src\Infrastructure.Data.SqlServer>dotnet ef database --startup-project ..\VideomaticRadzen drop --force --context SqlServerVideomaticDbContext  -- --Provider SqlServer
+Build started...
+Build succeeded.
+[15:58:00 WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+Dropping database 'Videomatic_Tests' on server 'localhost'.
+Database 'Videomatic_Tests' did not exist, no action was taken.
+
+D:\Videomatic\src\Infrastructure.Data.SqlServer>dotnet ef database --startup-project ..\VideomaticRadzen update --context SqlServerVideomaticDbContext  -- --Provider SqlServer
+Build started...
+Build succeeded.
+[15:58:06 WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+Applying migration '20230818222029_Initial'.
+Applying migration '20230819210049_AddedTopicCategories'.
+Applying migration '20230819212449_AddedFulltextIndexing'.
+Done.
+PS D:\Videomatic\src\Infrastructure.Data.SqlServer>
+```
+
+You are now able to use Microsoft SQL Server Management Studio to connect to the database and see the tables.
 
 ## Modules
 

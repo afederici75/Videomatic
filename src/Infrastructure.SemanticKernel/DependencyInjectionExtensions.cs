@@ -23,6 +23,7 @@ public static class DependencyInjectionExtensions
             var logFact = sp.GetRequiredService<ILoggerFactory>();
             var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
 
+            // TODO: fix
             var store = new RedisMemoryStore("127.0.0.1:6379");
             //var store = new WeaviateMemoryStore(
             //    endpoint: options.MemoryStoreEndpoint!,
@@ -31,10 +32,14 @@ public static class DependencyInjectionExtensions
             //{
             var colls = store.GetCollectionsAsync().ToBlockingEnumerable().ToList();
 
-            if (!colls.Contains("Videos"))
-            { 
-                store.CreateCollectionAsync("Videos").Wait();
+            if (colls.Contains("Videos"))
+            {
+                store.DeleteCollectionAsync("Videos").Wait();
             }
+
+            store.CreateCollectionAsync("Videos").Wait();
+        
+            // End of 'fix'
 
             var kernel = Kernel.Builder
                 .WithLogger(logFact.CreateLogger<IKernel>())

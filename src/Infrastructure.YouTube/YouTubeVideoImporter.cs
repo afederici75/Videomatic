@@ -144,6 +144,7 @@ public class YouTubeVideoImporter : IVideoImporter
     public async Task ImportTranscriptionsAsync(
         IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
     {
+        // TODO: refactor this method to be shorter and more readable
         const string LogFormat = nameof(ImportTranscriptionsAsync) + "({VideoIds}) [{Duration}]";
         Stopwatch sw = Stopwatch.StartNew();        
      

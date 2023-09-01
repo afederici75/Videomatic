@@ -1,6 +1,9 @@
-﻿using Microsoft.SemanticKernel;
+﻿using Hangfire.Common;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Text;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace Infrastructure.Tests.SemanticKernel;
 
@@ -12,7 +15,7 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
         IKernel kernel)
     {
         Output = output ?? throw new ArgumentNullException(nameof(output));
-        Kernel = kernel;        
+        Kernel = kernel;
     }
 
     public ITestOutputHelper Output { get; }
@@ -23,45 +26,73 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
     [Fact]
     public async Task SemanticSearchWithMemoryStore()
     {        
-        var text = AldousHuxley_DancingShiva2; // Lonbg text
+        var text = AldousHuxley_DancingShiva2; // Long text
 
         // The following splits nicely!
         // TODO: tweak so the fragments overlap a little bit
-        List<string> chunks = TextChunker.SplitPlainTextLines(text, 200);        
+        List<string> chunkTexts = TextChunker.SplitPlainTextLines(text, 200);        
 
-        chunks.Should().NotBeEmpty();     
-        chunks.Count.Should().Be(8);
+        chunkTexts.Should().NotBeEmpty();     
+        chunkTexts.Count.Should().Be(8);
 
         var collName = "Videos";            
         var allCollections = await Kernel.Memory.GetCollectionsAsync();
         
         var idx = 0;
-        foreach (var chunk in chunks)
-        {
-            var chunkId = (idx++).ToString();
-          
-            // Generates and saves the embedding
-            await Kernel.Memory.SaveInformationAsync(
-                collection: collName,
-                text: chunk,
-                id: chunkId,
-                description: $"Chunk '{chunkId}''s description",                
-                additionalMetadata: "metaForEmbedding");
+        var videoId = "O1pD3Ew_yu8";
 
-            // Generates and saves the reference to the embedding
-            await Kernel.Memory.SaveReferenceAsync(                
+        foreach (var chunkText in chunkTexts)
+        {
+            var metadata = new
+            {
+                VideoId = videoId,
+                ImportedOn = DateTime.UtcNow,
+                Url = $"https://youtube.com/watch?v={videoId}",
+                ChunkIndex = idx,
+                ChunkCount = chunkTexts.Count
+            };
+
+            var opts = new JsonSerializerSettings
+            { 
+                Formatting = Formatting.Indented,
+            };
+
+            // TODO: resove the issue with the serialization of the metadata
+            // https://discord.com/channels/1063152441819942922/1075907964667437072/1146885170872455199
+            var metaJson = JsonConvert.SerializeObject(metadata, opts);
+            metaJson = WebUtility.UrlEncode(metaJson);
+
+            // TODO: we should store only one copy of the video info.
+            // The moment users start sharing videos there will be dups!
+            var idtxt = $"YOUTUBE:{videoId}:{idx}";
+            var desctxt = $"Chunk {idx+1}/{chunkTexts.Count}";
+            var res1 = await Kernel.Memory.SaveInformationAsync(
                 collection: collName,
-                text: chunk, 
-                externalId: "O1pD3Ew_yu8",
-                externalSourceName: "YouTube",
-                description: $"Some text from Aldous Huxley's video/chunk{chunkId}",
-                additionalMetadata: "metaForReference"
-                );  
+                text: chunkText,
+                id: idtxt,
+                description: desctxt,                                
+                additionalMetadata: metaJson);
+
+            #region VM doesn't need SaveReference (at least now)
+            // Generates and saves the reference to the embedding            
+            //var res2 = await Kernel.Memory.SaveReferenceAsync(
+            //    collection: collName,
+            //    text: chunk,
+            //    externalSourceName: "YouTube",
+            //    externalId: $"YOUTUBE:{videoId}:{idx}",
+            //    description: $"Chunk {idx+1}/{chunks.Count}",
+            //    additionalMetadata: $"metaForReference_{idx}");
+            #endregion
+
+            idx++;
         }
 
         var q = "Shiva Aldous gravity";
         var expectedResults = 4;
         var cnt = 0;
+
+        //Kernel.Memory.
+
         await foreach (MemoryQueryResult res in Kernel.Memory.SearchAsync(
             collection: collName, 
             query: q,
@@ -74,5 +105,15 @@ public class TextChunkerTests : IClassFixture<DbContextFixture>
         }
 
         Assert.True(cnt==expectedResults, "Should have more results.");
+    }
+}
+
+public static class MemoryRecordExtensions
+{
+    public static async Task<string> SaveInformationAsync(this MemoryRecord instance)
+    { 
+
+
+        return "Foo";
     }
 }
