@@ -108,7 +108,7 @@ public class YouTubeVideoImporter : IVideoImporter
         await foreach (var page in Provider.GetVideosAsync(idsOrUrls, cancellation).PageAsync(YouTubeVideoProvider.MaxYouTubeItemsPerPage))
         {
             // Finds the videos that already exist in the database
-            var qry = new QueryVideos.ByProviderItemId("YOUTUBE", page.Select(v => v.ProviderItemId));
+            var qry = new QueryVideos.ByProviderItemIds("YOUTUBE", page.Select(v => v.ProviderItemId));
             var dups = await VideoRepository.ListAsync(qry, cancellation);
             var dupIds = dups.Select(v => v.Origin!.ProviderItemId).ToArray();
 

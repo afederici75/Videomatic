@@ -7,9 +7,10 @@
       "Default": "Debug",
       "Override": {
         "Microsoft.EntityFrameworkCore": "Warning",
-        "System.Http": "Verbose",
-        "Microsoft.AspNetCore": "Verbose",
-        "Hangfire": "Warning"
+        "System.Http": "Warning",
+        "Microsoft.AspNetCore": "Warning",
+        "Hangfire": "Warning",
+        "Radzen": "Warning"
       }
     }
   }
