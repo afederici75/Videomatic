@@ -1,4 +1,5 @@
-﻿using Infrastructure.SemanticKernel;
+﻿using Application.Abstractions;
+using Infrastructure.SemanticKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -23,21 +24,22 @@ public static class DependencyInjectionExtensions
             var logFact = sp.GetRequiredService<ILoggerFactory>();
             var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
 
-            // TODO: fix
+            // TODO: fix!!!
             var store = new RedisMemoryStore("127.0.0.1:6379");
             //var store = new WeaviateMemoryStore(
             //    endpoint: options.MemoryStoreEndpoint!,
             //    apiKey: options.MemoryStoreApiKey);
             //if (store.DoesCollectionExistAsync("Videos").Result == false)
             //{
-            var colls = store.GetCollectionsAsync().ToBlockingEnumerable().ToList();
 
-            if (colls.Contains("Videos"))
-            {
-                store.DeleteCollectionAsync("Videos").Wait();
-            }
-
-            store.CreateCollectionAsync("Videos").Wait();
+            //var colls = store.GetCollectionsAsync().ToBlockingEnumerable().ToList();
+            //
+            //if (colls.Contains("Videos"))
+            //{
+            //    store.DeleteCollectionAsync("Videos").Wait();
+            //}
+            //
+            //store.CreateCollectionAsync("Videos").Wait();
         
             // End of 'fix'
 
@@ -80,6 +82,8 @@ public static class DependencyInjectionExtensions
 
             return new SemanticTextMemory(store, embGen);
         });
+
+        services.AddTransient<IArtifactProducer, SemanticKernelArtifactProducer>();
 
         return services;
     }   

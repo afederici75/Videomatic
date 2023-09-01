@@ -6,7 +6,7 @@ using SharedKernel.Abstractions;
 
 namespace SharedKernel.EntityFrameworkCore;
 
-public class VideomaticRepository<T> : RepositoryBase<T> , IRepository<T>
+public class VideomaticRepository<T> : RepositoryBase<T> , IRepository<T>, IReadRepository<T>
     where T : class
 {
     protected readonly VideomaticDbContext dbContext;

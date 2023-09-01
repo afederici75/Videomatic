@@ -24,7 +24,8 @@ public static class DependencyInjectionExtensions
         services.AddTransient(typeof(IDbSeeder), typeof(DbSeeder));
         services.AddTransient(typeof(IRepositoryFactory<>), typeof(VideomaticRepositoryFactory<>));
         services.AddTransient(typeof(IRepository<>), typeof(VideomaticRepository<>));
-        
+        services.AddTransient(typeof(IReadRepository<>), typeof(VideomaticRepository<>));
+
         return services;
     }
 }

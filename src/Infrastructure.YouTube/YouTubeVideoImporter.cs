@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Xml;
-using Application.Specifications;
 using Infrastructure.YouTube.Custom;
 
 namespace Infrastructure.YouTube;
@@ -16,6 +15,7 @@ public class YouTubeVideoImporter : IVideoImporter
 
     public YouTubeVideoImporter(
         IVideoProvider provider,
+        IArtifactProducer artifactProducer,
         ILogger<YouTubeVideoImporter> logger,
         IRepository<Video> videoRepository,
         IRepository<Playlist> playlistRepository,
@@ -23,6 +23,7 @@ public class YouTubeVideoImporter : IVideoImporter
         IBackgroundJobClient jobClient)
     {
         Provider = provider;
+        ArtifactProducer = artifactProducer ?? throw new ArgumentNullException(nameof(artifactProducer));
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         VideoRepository = videoRepository ?? throw new ArgumentNullException(nameof(videoRepository));
         PlaylistRepository = playlistRepository ?? throw new ArgumentNullException(nameof(playlistRepository));
@@ -31,6 +32,7 @@ public class YouTubeVideoImporter : IVideoImporter
     }
 
     readonly IVideoProvider Provider;
+    readonly IArtifactProducer ArtifactProducer;
     readonly IRepository<Video> VideoRepository;
     readonly IRepository<Playlist> PlaylistRepository;
     readonly IRepository<Transcript> TranscriptRepository;
@@ -132,17 +134,17 @@ public class YouTubeVideoImporter : IVideoImporter
             switch (options?.ExecuteImmediate)
             {
                 case true:
-                    await this.ImportTranscriptionsAsync(videoIds, cancellation);
+                    await this.ImportTranscriptionsAsync(videoIds, options, cancellation);
                     break;
                 case false:
-                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(videoIds, cancellation));
+                    var jobId = JobClient.Enqueue<IVideoImporter>(imp => imp.ImportTranscriptionsAsync(videoIds, options, cancellation));
                     break;
             }
         }
     }
 
     public async Task ImportTranscriptionsAsync(
-        IEnumerable<VideoId> videoIds, CancellationToken cancellation = default)
+        IEnumerable<VideoId> videoIds, ImportOptions? options = default, CancellationToken cancellation = default)
     {
         // TODO: refactor this method to be shorter and more readable
         const string LogFormat = nameof(ImportTranscriptionsAsync) + "({VideoIds}) [{Duration}]";
@@ -187,7 +189,27 @@ public class YouTubeVideoImporter : IVideoImporter
         await TranscriptRepository.AddRangeAsync(newTranscripts, cancellation); // Saves to database
         Logger.LogDebug("Stored transcripts [{elapsed}ms]", sw.Elapsed);
 
-        Logger.LogDebug(LogFormat, results2.Length, sw.Elapsed);    
+        Logger.LogDebug(LogFormat, results2.Length, sw.Elapsed);    //
+
+        // Schedules the AI work
+        // TODO: refactor this         
+        switch (options?.ExecuteImmediate)
+        {
+            case true:
+                foreach (var v in videoIdsWithoutTranscript)
+                {
+                    await ArtifactProducer.CreateEncodings(v, cancellation);
+                }
+                
+                break;
+            case false:
+                foreach (var v in videoIdsWithoutTranscript)
+                {
+                    var jobId = JobClient.Enqueue<IArtifactProducer>(ap => ap.CreateEncodings(v, cancellation));
+                }
+
+                break;
+        }
     }
 
     static async Task<Transcript> ConvertTranscript(HttpClient client, VideoId videoId, Captiontrack track)
