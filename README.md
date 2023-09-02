@@ -1,5 +1,7 @@
 # Videomatic
 
+[*******NEEDS WORK*******]
+
 Videomatic is a video cataloging application that uses Open AI to analyze videos and produce 
 reviews, summaries and much more.
 
@@ -8,20 +10,28 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 
 ## Prerequisites
 
-1. [Visual Studio Community Edition]
-	1. https://visualstudio.microsoft.com/vs/community/	
-2. [Docker]
-	1. https://www.docker.com/products/docker-desktop		
-3. [Microsoft SQL Server Management Studio]
+1. [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community)
+2. [Docker](https://www.docker.com/products/docker-desktop)
+3. [*Optional*] [Microsoft SQL Server Management Studio]
 	1. https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#download-ssms
 
 ## Installation
+
+The installation of MSSQL is a bit more laborious than it should be, but I wanted to test Full Text Search
+first hand. 
+
+I think VM will have 3 search modes at the end:
+1. Classic SQL-like queries (SELECT ... FROM ... WHERE ...)
+1. Full Text Search (FTS): FreeText and Contains
+1. Vector Search (Cosine/etc. similarity)
+1. [RAG Search (AI)](https://www.youtube.com/watch?v=poRHLfVWg7E)
 
 ### MSSQL Server 2019 with Full Text Search enabled
 
 1. Build DOCKERFILE to create the image videomatic/mssql-fts (*this might take a few minutes*).
 	1. *The image contains MSSQL Server 2019 with Full Text Search enabled*
 	2. *More info [here](https://gianluigi.sellitto.it/2020/03/mssql-server-2019-on-docker-e-full-text-search/)*
+
 ```
 > docker build -t videomatic/mssql-fts .
 ```
@@ -43,6 +53,35 @@ docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 --restart unless-stop
 
 ```
 docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 80:80 -p 5341:5341 datalust/seq
+```
+
+## Configuration and User Secrets
+
+The following projects use user secrets to store sensitive information.
+1. Applications (VideomaticRadzen, VideomaticServiceImporter, VideomaticWebAPI)
+1. Tests (Infrastructure.Tests)
+ 
+This is an example of such secrets.json file. 
+
+You will need to create your own and replace the values with your own.
+
+```
+{
+  "ConnectionStrings:Videomatic.SqlServer": "Server=localhost;Database=Videomatic_Tests;User Id=sa;Password=...;TrustServerCertificate=True",
+  //"ConnectionStrings:Videomatic.SqlServer": "Server=localhost;Database=Videomatic_BlazorDEV;User Id=sa;Password=...;TrustServerCertificate=True",
+  //"ConnectionStrings:Videomatic.SqlServer": "Server=localhost;Database=Videomatic_FullTextTests;User Id=sa;Password=...;TrustServerCertificate=True",
+
+  "YouTube:ServiceAccountEmail": "videomatic@videomatic-384421.iam.gserviceaccount.com",
+  "YouTube:CertificatePassword": "...",
+
+  "SemanticKernel:ApiKey": "sk-...",
+
+  "SemanticKernel:MemoryStoreEndpoint": "https://....weaviate.network",
+  "SemanticKernel:MemoryStoreApiKey": "BG...",
+
+  "AzureSpeech:ApiKey": "...",
+  "AzureSpeech:ServiceRegion": "eastus"
+}
 ```
 
 ### Database Setup
@@ -81,9 +120,6 @@ You are now able to use Microsoft SQL Server Management Studio to connect to the
 
 ## Modules
 
-### Shared Kernel
-1. [Shared Kernel](src/SharedKernel/README.md)
-
 ### Core
 1. [Domain](src/Domain/README.md)
 2. [Application](src/Application/README.md)
@@ -95,13 +131,16 @@ You are now able to use Microsoft SQL Server Management Studio to connect to the
 4. [Data](src/Infrastructure.Data/README.md)
 
 ### Presentation
-1. [Blazor](src/VideoMaticBlazorApp/README.md)	
-2. [WebAPI](src/VideomaticWebAPI/README.md)	
+1. [Blazor](src/VideomaticRadzen/README.md)	
+1. [Blazor](src/VideomaticServiceImporter/README.md)	
+1. [WebAPI](src/VideomaticWebAPI/README.md)	
 
 ### Tests	
 1. [Domain Tests](tests/Domain.Tests/README.md)
-2. [Application Tests](tests/Application.Tests/README.md)
-1. [Semantic Kernel Tests](tests/Infrastructure.SemanticKernel.Tests/README.md)
-2. [SQL Server Tests](tests/Infrastructure.SqlServer.Tests/README.md)
-1. [YouTube Tests](tests/Infrastructure.YouTube.Tests/README.md)
-1. [Integration Tests](tests/Integration.Tests/README.md)
+2. [Application Tests](tests/Application.Tests/README.md)1. 
+1. [Infrastructure Tests](tests/Infrastructure.Tests/README.md)
+
+### Shared Kernel
+1. [Shared Kernel](src/SharedKernel/README.md)
+1. [Shared Kernel for EF Core](src/SharedKernel.EntityFrameworkCore/README.md)
+

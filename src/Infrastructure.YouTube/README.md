@@ -1,12 +1,10 @@
 # Infrastructure.YouTube.API
 
 This project contains utility classes to access the YouTube API.
-It exports the IYouTubeHelper interface which provides wrappers for the few APIs we use in 
+I use [Google Youtube API](https://developers.google.com/youtube/v3/docs) v3 to access YouTube data.
 
-## JsonModels
-The folder \JsonModels includes several classes that I've built using Visual Studio Paste Special/Paste As JSON classes.
-The JSON was build by executing requests using https://developers.google.com/youtube/v3/docs
+# Transcripts
+I couldn't find a way to get transcripts using the Download API so I took some inspiration from the convoluted 
+https://github.com/BobLd/youtube-transcript-api-sharp
 
-## TranscriptAPI
-The folder \TranscriptAPI contains source code I found at https://github.com/BobLd/youtube-transcript-api-sharp
-I could not find a simpler way to download transcripts so this will have to do right now.
+See YoutubeVideoImporter.GetTimedTextInformation() for more info.
