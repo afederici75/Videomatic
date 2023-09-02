@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Application.Features.Transcripts.Queries.GetTranscriptsQuery">
-    <Position X="6.75" Y="0.75" Width="3.25" />
+    <Position X="4.25" Y="0.5" Width="3.25" />
     <NestedTypes>
       <Class Name="Application.Features.Transcripts.Queries.GetTranscriptsQuery.GetTranscriptsQueryValidator" Collapsed="true">
         <TypeIdentifier>
@@ -36,14 +36,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Application.Features.Transcripts.TranscriptDTO">
-    <Position X="6.5" Y="4" Width="3.75" />
+    <Position X="4.25" Y="3.75" Width="3.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAACAAAAAAAAAAAAAQAAIAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Features\Transcripts\TranscriptDTO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Application.Features.Transcripts.TranscriptLineDTO">
-    <Position X="10.5" Y="5.75" Width="3.25" />
+    <Position X="8.25" Y="5.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
       <FileName>Features\Transcripts\TranscriptLineDTO.cs</FileName>

@@ -61,7 +61,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Application.Features.Artifacts.Queries.GetArtifactsQuery" BaseTypeListCollapsed="true">
-    <Position X="10.5" Y="0.75" Width="3" />
+    <Position X="3.75" Y="0.75" Width="3" />
     <NestedTypes>
       <Class Name="Application.Features.Artifacts.Queries.GetArtifactsQuery.GetArtifactsQueryValidator" Collapsed="true">
         <TypeIdentifier>
@@ -76,7 +76,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Application.Features.Artifacts.ArtifactDTO">
-    <Position X="10.75" Y="4.25" Width="2.5" />
+    <Position X="4" Y="4.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAKAAAAAAAQAACAAAAAA=</HashCode>
       <FileName>Features\Artifacts\ArtifactDTO.cs</FileName>

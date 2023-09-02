@@ -2,7 +2,10 @@
 NEXT ITEMS (in no specific order)
 ******************
 
-- [ ] Get this repo presentable so I can open source it!
+
+- [ ] Upgrade to .Net 8 and see what we can get with the new rendering options.
+
+- [ ] Get this repo presentable so I can open it to the public!
 
 - [ ] [AI and Vectors] Search bar: it should save what the user typed and the embedding we 
 receive so so we don't need to constantly regenerate the embedding for questions!
