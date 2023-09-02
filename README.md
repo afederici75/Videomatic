@@ -179,7 +179,7 @@ You are now able to use Microsoft SQL Server Management Studio to connect to the
 
 ### Tests	
 1. [Domain Tests](tests/Domain.Tests/README.md)
-2. [Application Tests](tests/Application.Tests/README.md)1. 
+2. [Application Tests](tests/Application.Tests/README.md)
 1. [Infrastructure Tests](tests/Infrastructure.Tests/README.md)
 
 ### Shared Kernel
