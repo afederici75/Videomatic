@@ -3,7 +3,7 @@
   <Class Name="Application.Features.Videos.Queries.GetVideosQuery">
     <Position X="11.25" Y="1.75" Width="3.25" />
     <NestedTypes>
-      <Class Name="Application.Features.Videos.Queries.GetVideosQuery.GetVideosQueryValidator" Collapsed="true">
+      <Class Name="Application.Features.Videos.Queries.GetVideosQuery.Validator" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Features\Videos\Queries\GetVideosQuery.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -35,24 +35,24 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand" BaseTypeListCollapsed="true">
+  <Class Name="Application.Features.Videos.Commands.ImportVideosCommand" BaseTypeListCollapsed="true">
     <Position X="6.25" Y="3.75" Width="2.75" />
     <NestedTypes>
-      <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand.Validator" Collapsed="true">
+      <Class Name="Application.Features.Videos.Commands.ImportVideosCommand.Validator" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</NewMemberFileName>
+          <NewMemberFileName>Features\Videos\Commands\ImportVideosCommand.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Application.Features.Videos.Commands.ImportYoutubeVideosCommand.Handler" Collapsed="true">
+      <Class Name="Application.Features.Videos.Commands.ImportVideosCommand.Handler" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</NewMemberFileName>
+          <NewMemberFileName>Features\Videos\Commands\ImportVideosCommand.cs</NewMemberFileName>
         </TypeIdentifier>
         <Lollipop Position="0.2" />
       </Class>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Features\Videos\Commands\ImportYoutubeVideosCommand.cs</FileName>
+      <FileName>Features\Videos\Commands\ImportVideosCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

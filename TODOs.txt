@@ -1,12 +1,39 @@
-SPRINT
+******************
+NEXT ITEMS (in no specific order)
+******************
+
+
+- [ ] Upgrade to .Net 8 and see what we can get with the new rendering options.
+
+- [ ] Get this repo presentable so I can open it to the public!
+
+- [ ] [AI and Vectors] Search bar: it should save what the user typed and the embedding we 
+receive so so we don't need to constantly regenerate the embedding for questions!
+	- [ ] we should have a place in the DB to store the questions of the user. It's a
+	separate 'table' that would go in the vector db. Say user asks 'How many videos Speak of Watts?'
 
 - [ ] Add domain events!
 	- [ ] When a playlist or a video are imported, they should trigger a domain event
-	which then should send a message to the Blazor client.
+		- [ ] The Blazor client should pick that up and notify the user of the import status
+		
+- [ ] Integrate with REDIS for semantic search/RAG
+	- [X] Install a docker-stack (REDIS + UI)
+	- [ ] Figure out what to use as key for the collections and memories
+	- [ ] Figure out the best way to store all the data we have in the system:
+		- [ ] Find samples on the best ways to index this stuff
+	
+	- [ ] Generate some test data with pre-vectorized information to save time/$ in tests.
 
-- [ ] Unify how I call FreeText and Contains 
-	- [ ] Scaffolding
-	- [ ] QUery handlers in Sql Server infra asm
+- [ ] Finish the Semantic Kernel integration and make some basic stuff work 
+	- see SemanticSearchWithMemoryStore test
+
+- [ ] Consider using a folder structure for the prompts and skills of the app instead of the db.
+      In other words, let's follow the same structure as SK expects as it's easy to 
+	  work on even outside VS or the app.
+	
+- [ ] Add caching
+	- [-] I will start with in memory cache:
+		- [X] Add Redis at a later time.
 
 ******************
 Non UI
@@ -31,12 +58,6 @@ Non UI
 	exception of the developer/tester pages so there's really 
 	a few roles to think about: ADMIN/USER/TESTER.
 
-- [ ] Finish the Semantic Kernel integration or make some basic stuff work.
-	- [ ] Consider using the database or configuration to store the Prompts		
-	
-- [ ] Add caching
-	- [ ] I will start with in memory cache:
-		- [ ] Add Redis at a later time (after MVP).
 
 - [ ] Find out how to store secrets in Azure.
 	- [ ] CONSIDERATION: I don't need to have a full CI/CD pipeline working.
@@ -52,6 +73,8 @@ Non UI
 ******************
 User interface
 ******************
+
+
 
 - [ ] Add pages to edit:
 	- [ ] Playlist		

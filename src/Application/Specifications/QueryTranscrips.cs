@@ -3,7 +3,7 @@
 public static class QueryTranscripts
 {
 
-    public class ByVideoId : Specification<Transcript>
+    public class ByVideoId : Specification<Transcript>, ISingleResultSpecification<Transcript>
     {
         /// <summary>
         /// Returns the transcripts linked to the specified videos.

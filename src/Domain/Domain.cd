@@ -11,13 +11,13 @@
   <Class Name="Domain.Transcripts.Transcript" BaseTypeListCollapsed="true">
     <Position X="3" Y="5.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAgCAAAACAAAAAAAAAAAAAAAAIAAEAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgCAAAACAAAAAAAAAAAAgAAAIAAEAACAAAAAAAAAAA=</HashCode>
       <FileName>Transcripts\Transcript.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Domain.Playlists.Playlist" BaseTypeListCollapsed="true">
-    <Position X="12.25" Y="8.5" Width="3.5" />
+    <Position X="11.75" Y="8.5" Width="3.5" />
     <Members>
       <Field Name="_videos" Hidden="true" />
     </Members>
@@ -41,7 +41,7 @@
       <Field Name="_tags" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AQAAgAAEBCAgIQQoAAACCAQACACYAEAAAAAAQAgAAAA=</HashCode>
+      <HashCode>AQAAgAAEQAAgIQQoAAACCAQACACZAEAAAAAAQAwAAAA=</HashCode>
       <FileName>ImportedEntity.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,7 +64,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.EntityOrigin">
-    <Position X="15" Y="1.5" Width="3.75" />
+    <Position X="13.5" Y="1.5" Width="3.75" />
     <TypeIdentifier>
       <HashCode>EAAAgAAAAAAgAAAANAIACAQAAgAAAAAAAAUAAAABQAA=</HashCode>
       <FileName>EntityOrigin.cs</FileName>

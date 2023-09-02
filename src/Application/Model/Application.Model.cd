@@ -22,16 +22,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Application.Model.GenericVideoExtensions">
-    <Position X="16.5" Y="4.25" Width="2.5" />
+    <Position X="14.5" Y="4.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAEAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\GenericVideoDTO.cs</FileName>
+      <FileName>Extensions\GenericVideoExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Application.Model.GenericVideoDTO">
     <Position X="8.5" Y="5.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAQAA=</HashCode>
       <FileName>Model\GenericVideoDTO.cs</FileName>
     </TypeIdentifier>
   </Class>

@@ -40,24 +40,24 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Application.Features.Playlists.Commands.ImportYoutubePlaylistsCommand" BaseTypeListCollapsed="true">
+  <Class Name="Application.Features.Playlists.Commands.ImportPlaylistsCommand" BaseTypeListCollapsed="true">
     <Position X="5" Y="2.75" Width="2.75" />
     <NestedTypes>
-      <Class Name="Application.Features.Playlists.Commands.ImportYoutubePlaylistsCommand.Validator" Collapsed="true">
+      <Class Name="Application.Features.Playlists.Commands.ImportPlaylistsCommand.Validator" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Features\Playlists\Commands\ImportYoutubePlaylistCommand.cs</NewMemberFileName>
+          <NewMemberFileName>Features\Playlists\Commands\ImportPlaylistCommand.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Application.Features.Playlists.Commands.ImportYoutubePlaylistsCommand.Handler" Collapsed="true">
+      <Class Name="Application.Features.Playlists.Commands.ImportPlaylistsCommand.Handler" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Features\Playlists\Commands\ImportYoutubePlaylistCommand.cs</NewMemberFileName>
+          <NewMemberFileName>Features\Playlists\Commands\ImportPlaylistCommand.cs</NewMemberFileName>
         </TypeIdentifier>
         <Lollipop Position="0.2" />
       </Class>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Features\Playlists\Commands\ImportYoutubePlaylistCommand.cs</FileName>
+      <FileName>Features\Playlists\Commands\ImportPlaylistCommand.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -105,7 +105,7 @@
   <Class Name="Application.Features.Playlists.Queries.GetPlaylistsQuery">
     <Position X="10.5" Y="1.25" Width="3" />
     <NestedTypes>
-      <Class Name="Application.Features.Playlists.Queries.GetPlaylistsQuery.GetPlaylistsQueryValidator" Collapsed="true">
+      <Class Name="Application.Features.Playlists.Queries.GetPlaylistsQuery.Validator" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>Features\Playlists\Queries\GetPlaylistsQuery.cs</NewMemberFileName>
         </TypeIdentifier>

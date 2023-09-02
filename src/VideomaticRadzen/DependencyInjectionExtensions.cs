@@ -29,6 +29,7 @@ public static class DependencyInjectionExtensions
         services.AddVideomaticData(configuration);
         services.AddVideomaticDataForSqlServer(configuration);
         services.AddVidematicYouTubeInfrastructure(configuration);
+        services.AddVideomaticSemanticKernel(configuration);
 
         var connectionName = $"Videomatic.SqlServer";
 

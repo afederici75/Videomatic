@@ -7,12 +7,17 @@
 @inject NavigationManager NavigationManager
 
 <RadzenRow class="sticky-top" style="background-color: #1f1f1f">
-    <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" Placeholder="Search..." />
+    <RadzenColumn>
+    <RadzenTextBox @bind-Value="SearchText" Change="@Refresh" 
+                    Placeholder="Vector Search..." />
     <RadzenButton Text="Reset" Style="margin-bottom: 20px;" Click="@Refresh" />
+    </RadzenColumn>
         
+    <RadzenColumn>
     <RadzenPager @ref="pager" ShowPagingSummary="true"
                  HorizontalAlign="HorizontalAlign.Right" Count="count"
                  PageSize="@pageSize" PageNumbersCount="5" PageChanged="@PageChanged" />
+    </RadzenColumn>
 </RadzenRow>
 
 

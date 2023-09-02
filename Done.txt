@@ -2,6 +2,12 @@
 Non UI
 ******************
 
+- [ ] Try again Weaviate (problem being looked into by Zain)
+
+- [ ] Unify how I call FreeText and Contains (ELIMINATED SINCE WE ARE USING REDIS and SK) 
+	- [ ] Scaffolding
+	- [X] QUery handlers in Sql Server infra asm
+
 - [X] Learnt how to tweak the logging configuration intelligently.
 	- I can focus the logs on just waht I need very easily now!
 - [X] Fixed an issue with DbContext: it was missing the ILoggerFactory service.

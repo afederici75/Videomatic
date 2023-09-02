@@ -1,4 +1,5 @@
 ﻿using Domain.Videos;
+using System.Web;
 
 namespace Domain.Transcripts;
 
@@ -37,6 +38,13 @@ public class Transcript : TrackedEntity, IAggregateRoot
         Lines.Add(line);
     
         return this;
+    }
+
+    public string GetFullText()
+    {
+        var text = HttpUtility.HtmlDecode(string.Join(" ", Lines.Select(l => l.Text)));
+
+        return text;
     }
 
     #region Private

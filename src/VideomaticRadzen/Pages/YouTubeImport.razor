@@ -89,7 +89,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
 
         var urls = VideoUrls.Split(new[] { '\r', '\n' }, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-        var cmd = new ImportYoutubeVideosCommand(urls, TargetPlaylistId);        
+        var cmd = new ImportVideosCommand(urls, TargetPlaylistId);        
         var response = await Sender.Send(cmd);
 
         VideoImportResult = response.ToString();
@@ -102,7 +102,7 @@ https://www.youtube.com/playlist?list=PLLdi1lheZYVK68zniHtA6hCtsaRpQvcDF";
 
         var urls = PlaylistUrls.Split(new[] { '\r','\n'}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-        var cmd = new ImportYoutubePlaylistsCommand(urls);
+        var cmd = new ImportPlaylistsCommand(urls);
         var response = await Sender.Send(cmd);
 
         PlaylistImportResult = response.ToString();

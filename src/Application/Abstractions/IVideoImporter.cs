@@ -15,5 +15,5 @@ public interface IVideoImporter
 
     Task ImportVideosAsync(PlaylistId playlistId, ImportOptions? options = default, CancellationToken cancellation = default);
 
-    Task ImportTranscriptionsAsync(IEnumerable<VideoId> videoIds, CancellationToken cancellation = default);
+    Task ImportTranscriptionsAsync(IEnumerable<VideoId> videoIds, ImportOptions? options = default, CancellationToken cancellation = default);
 }

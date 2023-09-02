@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{702FEA3D-2F40-4EDD-B9D4-1C7F8BD60A13}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifacts", "Artifacts", "{E795DFD9-32D7-457C-B4FC-2187DE4CD935}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E795DFD9-32D7-457C-B4FC-2187DE4CD935}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
@@ -50,7 +50,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideomaticRadzen", "src\Vid
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoMaticServiceImporter", "src\VideoMaticServiceImporter\VideoMaticServiceImporter.csproj", "{7E4AE488-EFF1-4078-AC62-771BE3223BF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.EntityFrameworkCore", "src\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj", "{5E09BEBC-E285-48A9-808B-5700F5D0ED01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel.EntityFrameworkCore", "src\SharedKernel.EntityFrameworkCore\SharedKernel.EntityFrameworkCore.csproj", "{5E09BEBC-E285-48A9-808B-5700F5D0ED01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

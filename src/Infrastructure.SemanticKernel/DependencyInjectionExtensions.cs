@@ -1,8 +1,12 @@
-﻿using Infrastructure.SemanticKernel;
+﻿using Application.Abstractions;
+using Infrastructure.SemanticKernel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.AI.Embeddings;
+using Microsoft.SemanticKernel.Connectors.AI.OpenAI.TextEmbedding;
+using Microsoft.SemanticKernel.Connectors.Memory.Redis;
 using Microsoft.SemanticKernel.Memory;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -15,33 +19,71 @@ public static class DependencyInjectionExtensions
         services.Configure<SemanticKernelOptions>(configuration.GetSection("SemanticKernel"));
 
         // Services
-        services.AddScoped<IKernel>(sp =>
+        services.AddTransient<IKernel>(sp =>
         {
             var logFact = sp.GetRequiredService<ILoggerFactory>();
+            var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
+
+            // TODO: fix!!!
+            var store = new RedisMemoryStore("127.0.0.1:6379");
+            //var store = new WeaviateMemoryStore(
+            //    endpoint: options.MemoryStoreEndpoint!,
+            //    apiKey: options.MemoryStoreApiKey);
+            //if (store.DoesCollectionExistAsync("Videos").Result == false)
+            //{
+
+            //var colls = store.GetCollectionsAsync().ToBlockingEnumerable().ToList();
+            //
+            //if (colls.Contains("Videos"))
+            //{
+            //    store.DeleteCollectionAsync("Videos").Wait();
+            //}
+            //
+            //store.CreateCollectionAsync("Videos").Wait();
+        
+            // End of 'fix'
 
             var kernel = Kernel.Builder
                 .WithLogger(logFact.CreateLogger<IKernel>())
-                .Configure(cfg =>
-                {
-                    var options = sp.GetRequiredService<IOptions<SemanticKernelOptions>>().Value;
-
-                    // IMPORTANT: if the model is not "gpt-3.5-turbo" we get errors in the HTTP calls later.
-                    cfg.AddOpenAIChatCompletionService("chat", options.Model, options.ApiKey);
-
-                    cfg.AddOpenAITextCompletionService(
-                        serviceId: "textCompletion",
-                        apiKey: options.ApiKey,
-                        modelId: options.Model,
-                        orgId: options.Organization ?? string.Empty);
-                })
-                // TODO: several other WithXXX to look into...
-                //.WithMemoryStorage(new VolatileMemoryStore())
+                .WithOpenAIChatCompletionService(
+                    modelId: options.Model,
+                    apiKey: options.ApiKey,
+                    orgId: options.Organization,
+                    serviceId: "chat",
+                    alsoAsTextCompletion: true,
+                    setAsDefault: false,
+                    httpClient: null)
+                .WithOpenAITextCompletionService(
+                    modelId: options.Model,
+                    apiKey: options.ApiKey,
+                    orgId: options.Organization,
+                    serviceId: "textCompletion",
+                    setAsDefault: false,
+                    httpClient: null)
+                .WithOpenAITextEmbeddingGenerationService(
+                    modelId: options.EmbeddingModel,
+                    serviceId: "textEmbedding",
+                    apiKey: options.ApiKey,
+                    setAsDefault: false,
+                    orgId: options.Organization,
+                    httpClient: null)
+                .WithMemoryStorage(store)
                 .Build();
+                                
 
             return kernel;
         });
+   
 
-        services.AddTransient<IMemoryStore, VolatileMemoryStore>();
+        services.AddTransient<ISemanticTextMemory, SemanticTextMemory>(sp =>
+        {
+            var store = sp.GetRequiredService<IMemoryStore>();
+            var embGen = sp.GetRequiredService<ITextEmbeddingGeneration>();
+
+            return new SemanticTextMemory(store, embGen);
+        });
+
+        services.AddTransient<IArtifactProducer, SemanticKernelArtifactProducer>();
 
         return services;
     }   

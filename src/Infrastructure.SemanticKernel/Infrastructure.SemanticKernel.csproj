@@ -2,7 +2,8 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="0.13.277.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.20.230821.4-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Memory.Redis" Version="0.20.230821.4-preview" />
   </ItemGroup>
 
   <ItemGroup>
