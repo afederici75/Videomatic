@@ -1,12 +1,54 @@
 # Videomatic
 
-[*******NEEDS WORK*******]
+[******* THIS README NEEDS A LOT OF WORK *******]
 
 Videomatic is a video cataloging application that uses Open AI to analyze videos and produce 
 reviews, summaries and much more.
 
 This application is used to demonstrate various software development techniques, including 
 Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
+
+## Diagrams
+
+Most of the projects in this solution contain one or multiple class diagram files (*.cd) which 
+can be used to understand the general direction of the project.
+
+The following diagram shows the high level architecture of the solution.
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/High Level Architecture.png" style="max-height: 450px" />
+</div>
+
+The following pictures show more:
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Solution Explorer.png" style="max-height: 250px" />
+	<img src="docs/Images/Diagrams/Tests.png" style="max-height: 250px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Domain.png" style="max-height: 450px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Application Model.png" style="max-height: 450px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Features.Artifacts.png" style="max-height: 450px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Features.Playlists.png" style="max-height: 450px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Features.Transcripts.png" style="max-height: 450px" />
+</div>
+
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/Features.Videos.png" style="max-height: 450px" />
+</div>
 
 ## Prerequisites
 
