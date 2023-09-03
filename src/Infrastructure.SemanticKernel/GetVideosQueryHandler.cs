@@ -11,7 +11,7 @@ using SharedKernel.Model;
 
 namespace Infrastructure.Data.SqlServer.Handlers.Videos.Queries;
 
-public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoDTO>>
+public class GetVideosQueryHandler //: IRequestHandler<GetVideosQuery, Page<VideoDTO>>
 {    
     public GetVideosQueryHandler(
         ILogger<GetVideosQueryHandler> logger,
@@ -37,11 +37,14 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
             srcText = "anything";
 
         Logger.LogDebug("Searching for vectors similar to '{SearchText}'...", request.SearchText);
+        
+
+        // TODO: how to page??
         await foreach (var x in Kernel.Memory.SearchAsync(
             collection: "Videos",
-            query: srcText,
+            query: srcText,            
             limit: request.Take ?? 10,
-            minRelevanceScore: 0.7,
+            minRelevanceScore: 0.7, // TODO: make this configurable. HACK to get more results
             withEmbeddings: false,
             cancellationToken: cancellationToken))
         {            
@@ -77,7 +80,7 @@ public class GetVideosQueryHandler : IRequestHandler<GetVideosQuery, Page<VideoD
 
 
     // GetVideosQuery
-    //public async Task<Page<VideoDTO>> Handlex(GetVideosQuery request, CancellationToken cancellationToken = default)
+    //public async Task<Page<VideoDTO>> Handle(GetVideosQuery request, CancellationToken cancellationToken = default)
     //{
     //    using var dbContext = Factory.CreateDbContext();
 
