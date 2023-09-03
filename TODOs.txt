@@ -2,6 +2,7 @@
 NEXT ITEMS (in no specific order)
 ******************
 
+- [ ] Move the contents of DONE.txt and TODO.txt in github. Create Issues or whatever
 
 - [ ] Upgrade to .Net 8 and see what we can get with the new rendering options.
 
