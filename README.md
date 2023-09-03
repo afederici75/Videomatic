@@ -33,11 +33,13 @@ It does the heavy lifting, so you can focus on absorbing the content without wor
 ```
 
 ### Import 4 Videos from YouTube
-https://github.com/afederici75/Videomatic/assets/13766049/e3cd6878-c142-4988-81f2-c41d8b742729
+
+https://github.com/afederici75/Videomatic/assets/13766049/60b825f5-d7e5-441d-93cb-fc19ea60e12e
+
 
 ### Import 4 Playlists from YouTube
-https://github.com/afederici75/Videomatic/assets/13766049/0ab53ea0-3873-4752-a6f2-f3f00e2d32b1
 
+https://github.com/afederici75/Videomatic/assets/13766049/47140af1-88a5-462c-8e0a-48f4a2a504e8
 
 
 
