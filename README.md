@@ -32,6 +32,15 @@ Videomatic condenses vast amounts of video data into concise and meaningful chun
 It does the heavy lifting, so you can focus on absorbing the content without worrying about taking notes.
 ```
 
+### Import 4 Videos from YouTube
+https://github.com/afederici75/Videomatic/assets/13766049/e3cd6878-c142-4988-81f2-c41d8b742729
+
+### Import 4 Playlists from YouTube
+https://github.com/afederici75/Videomatic/assets/13766049/0ab53ea0-3873-4752-a6f2-f3f00e2d32b1
+
+
+
+
 But that's not all!
 
 ## An AI-Enhanced Search Engine
@@ -57,6 +66,8 @@ Experience the power of Videomatic and transform videos into actionable insights
 Start harnessing the full potential of video content today.
 ```
 
+[*** MAKE VIDEOS OF VECTOR/SEMANTIC SEARCH + AI Seracg / RAG ***]
+
 ## Developer Notes
 
 1. This is a work in progress.
@@ -69,6 +80,16 @@ Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
 1. Most of the development time has been focused on creating a good server-side foundation (CA, CQRS, etc.).	
 Most of the technology hurdles have been tested (e.g. can this be done? how?) but not finalized. **Look at the unit tests**.
 1. **The Blazor project VideomaticRadzen needs a lot of work and it's very dirty**. Consider it an experiment.
+
+### Vector Database
+
+![REDISAndEmbeddings](https://github.com/afederici75/Videomatic/assets/13766049/df9805a6-6a86-4707-a9d1-25670ddb50e9)
+
+
+### RDBMS
+
+![SqlServerSchema](https://github.com/afederici75/Videomatic/assets/13766049/346053eb-6780-4dca-8d27-b336aca3a018)
+
 
 ## Diagrams
 
