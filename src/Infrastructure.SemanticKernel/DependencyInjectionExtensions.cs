@@ -24,8 +24,10 @@ public static class DependencyInjectionExtensions
             var logFact = sp.GetRequiredService<ILoggerFactory>();
             var options = (sp.GetRequiredService<IOptions<SemanticKernelOptions>>()).Value;
 
-            // TODO: fix!!!
-            var store = new RedisMemoryStore("127.0.0.1:6379");
+            // TODO: make configurable from appsettings.json
+            var store = new RedisMemoryStore(options.MemoryStoreEndpoint!);
+            
+            // TODO: fix!!!            
             //var store = new WeaviateMemoryStore(
             //    endpoint: options.MemoryStoreEndpoint!,
             //    apiKey: options.MemoryStoreApiKey);
@@ -40,7 +42,7 @@ public static class DependencyInjectionExtensions
             //}
             //
             //store.CreateCollectionAsync("Videos").Wait();
-        
+
             // End of 'fix'
 
             var kernel = Kernel.Builder

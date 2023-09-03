@@ -218,12 +218,12 @@ You will need to create your own and replace the values with your own.
   //"ConnectionStrings:Videomatic.SqlServer": "Server=localhost;Database=Videomatic_BlazorDEV;User Id=sa;Password=...;TrustServerCertificate=True",
   //"ConnectionStrings:Videomatic.SqlServer": "Server=localhost;Database=Videomatic_FullTextTests;User Id=sa;Password=...;TrustServerCertificate=True",
 
-  "YouTube:ServiceAccountEmail": "videomatic@videomatic-384421.iam.gserviceaccount.com",
+  "YouTube:ServiceAccountEmail": "videomatic@xxxxx.iam.gserviceaccount.com",
   "YouTube:CertificatePassword": "...",
 
-  "SemanticKernel:ApiKey": "sk-...",
+  "SemanticKernel:ApiKey": "sk-...", 
 
-  "SemanticKernel:MemoryStoreEndpoint": "https://....weaviate.network",
+  "SemanticKernel:MemoryStoreEndpoint": "127.0.0.1:6379", // REDIS
   "SemanticKernel:MemoryStoreApiKey": "BG...",
 
   "AzureSpeech:ApiKey": "...",

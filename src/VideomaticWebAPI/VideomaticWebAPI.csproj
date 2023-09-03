@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <UserSecretsId>f3ea55af-9442-498a-9fc7-5d1945b38bd6</UserSecretsId>
+    <UserSecretsId>dotnet-VideoMatic-a005ebf0-6cb4-4be1-9451-ecc4f6b69323</UserSecretsId>
   </PropertyGroup>  
 
   <ItemGroup>    
