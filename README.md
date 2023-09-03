@@ -1,7 +1,7 @@
 # Videomatic 
 
 <div style="text-align:center;">
-	<img src="docs/Images/VideomaticDALL-EModified.png" style="max-height: 600px" />
+	<img src="docs/Images/VideomaticDALLE.png" style="max-height: 600px" />
 </div>
 
 
