@@ -2,6 +2,8 @@
 Non UI
 ******************
 
+- [X] MAKE GITHUB REPO PUBLIC or invite selected few!
+
 - [ ] Try again Weaviate (problem being looked into by Zain)
 
 - [ ] Unify how I call FreeText and Contains (ELIMINATED SINCE WE ARE USING REDIS and SK) 

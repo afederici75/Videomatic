@@ -1,12 +1,98 @@
-# Videomatic
+# Videomatic 
 
-[******* THIS README NEEDS A LOT OF WORK *******]
+<div style="text-align:center;">
+	<img src="docs/Images/VideomaticDALL-EModified.png" style="max-height: 600px" />
+</div>
 
-Videomatic is a video cataloging application that uses Open AI to analyze videos and produce 
-reviews, summaries and much more.
 
-This application is used to demonstrate various software development techniques, including 
+## A Video Analysis Companion
+
+Videomatic (VM) revolutionizes the way you work with video and audio content. 
+
+It's a specialized video processing system **designed to extract valuable insights from video and audio sources**.
+
+Sources can be:
+1. **Media streaming platforms** such as Youtube, Vimeo, etc.
+1. **File sharing platforms** such Dropbox, Google Drive, etc.
+1. **Local (private) data**
+
+The **insights are generated using AI** and they are made accessible in the form of **text artifacts** such as:
+1. A concise and clean **summary** of the video.
+1. A **review** of the video based on factors such as its online comments or your personal preferences.
+1. **Automatic cliff-notes** for the important parts of the video.
+1. Links to similar videos, either online or in your VM collection.
+1. User-defined AI prompts.
+1. much more...
+
+The material can then be refined and used to create your own output for blogs, social media, articles, etc.
+
+```
+Say goodbye to hours spent sifting through lengthy videos and writing your notes!
+Videomatic condenses vast amounts of video data into concise and meaningful chunks of information. 
+It does the heavy lifting, so you can focus on absorbing the content without worrying about taking notes.
+```
+
+### Import 4 Videos from YouTube
+https://github.com/afederici75/Videomatic/assets/13766049/e3cd6878-c142-4988-81f2-c41d8b742729
+
+### Import 4 Playlists from YouTube
+https://github.com/afederici75/Videomatic/assets/13766049/0ab53ea0-3873-4752-a6f2-f3f00e2d32b1
+
+
+
+
+But that's not all!
+
+## An AI-Enhanced Search Engine
+
+Videomatic also equips you with **powerful search capabilities**, allowing you to quickly find the information you 
+need within your video library. 
+
+Whether you're searching for specific keywords, phrases, or topics, Videomatic's intuitive search function makes 
+knowledge retrieval a breeze. You can even use **natural language queries** to effortlessly navigate and explore 
+your video collection.
+
+```
+Imagine watching a documentary or presentation and having all the key points automatically captured and cataloged 
+for you. Then imagine being able to search through your entire video library using natural language queries.
+```
+
+Videomatic acts as your personal assistant, swiftly extracting crucial information from any video in a matter of 
+seconds. It saves you valuable time, empowering you to build a comprehensive knowledge library that's easy to 
+access, search, and share with others.
+
+```
+Experience the power of Videomatic and transform videos into actionable insights. 
+Start harnessing the full potential of video content today.
+```
+
+[*** MAKE VIDEOS OF VECTOR/SEMANTIC SEARCH + AI Seracg / RAG ***]
+
+## Developer Notes
+
+1. **I temporarely disabled Semantic Search in order to make the videos. It will be re-enabled soon.
+Search for GetVideosQueryHandler.cs in Infrastructure.Data.SqlServer AND Infrastructure.SemanticKernel**
+
+1. This is a work in progress.
+1. TODO.txt and DONE.txt show what's cooking and what's been done. *Q: Where should we put that stuff?*
+1. This application is used to demonstrate various software development techniques, including 		
 Clean Architecture (CA) and Command Query Responsibility Separation (CQRS).
+1. Most of the techniques I used are based on articles and other resources online that should be credited. (*Ardalis*, *Bogard*, etc.*)
+1. The application is built using .NET Core 7 but it will be shortly upgraded to 8-preview.
+1. The Blazor client is barely started and I am rusty with HTML. (*Iain Wilson*, more?)
+1. Most of the development time has been focused on creating a good server-side foundation (CA, CQRS, etc.).	
+Most of the technology hurdles have been tested (e.g. can this be done? how?) but not finalized. **Look at the unit tests**.
+1. **The Blazor project VideomaticRadzen needs a lot of work and it's very dirty**. Consider it an experiment.
+
+### Vector Database
+
+![REDISAndEmbeddings](https://github.com/afederici75/Videomatic/assets/13766049/df9805a6-6a86-4707-a9d1-25670ddb50e9)
+
+
+### RDBMS
+
+![SqlServerSchema](https://github.com/afederici75/Videomatic/assets/13766049/346053eb-6780-4dca-8d27-b336aca3a018)
+
 
 ## Diagrams
 
@@ -50,6 +136,10 @@ The following pictures show more:
 	<img src="docs/Images/Diagrams/Features.Videos.png" style="max-height: 450px" />
 </div>
 
+<div style="text-align:center;">
+	<img src="docs/Images/Diagrams/MsSqlSchema.png" style="max-height: 450px" />
+</div>
+
 ## Prerequisites
 
 1. [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community)
@@ -62,11 +152,21 @@ The following pictures show more:
 The installation of MSSQL is a bit more laborious than it should be, but I wanted to test Full Text Search
 first hand. 
 
+```
+The final product will either NOT use FT at all (since we have the vector search) or should be able to
+work on any MSSQL image, not just 2019.
+
+Depending on how we go with FT, I think VM's code will have 4 search "modes":
+1. Classic SQL-like queries (SELECT ... FROM ... WHERE ...)
+1. Full Text Search (FTS): FreeText and Contains
+1. [Vector Search](https://www.elastic.co/what-is/vector-search) (Cosine/etc. similarity)
+=======
 I think VM will have 4 search modes at the end:
 1. Classic SQL-like queries (SELECT ... FROM ... WHERE ...)
 1. [Full Text Search]([url](https://learn.microsoft.com/en-us/sql/relational-databases/search/full-text-search?view=sql-server-ver16) (FTS): FreeText and Contains
 1. [Vector Search]([url](https://www.algolia.com/blog/ai/what-is-vector-search/) 
 1. [RAG Search (AI)](https://www.youtube.com/watch?v=poRHLfVWg7E)
+```
 
 ### MSSQL Server 2019 with Full Text Search enabled
 
@@ -172,9 +272,9 @@ You are now able to use Microsoft SQL Server Management Studio to connect to the
 3. [YouTube](src/Infrastructure.YouTube/README.md)
 4. [Data](src/Infrastructure.Data/README.md)
 
-### Presentation
-1. [Blazor](src/VideomaticRadzen/README.md)	
-1. [Blazor](src/VideomaticServiceImporter/README.md)	
+### Executables
+1. [VideomaticRadzen](src/VideomaticRadzen/README.md)	
+1. [VideomaticServiceImporter](src/VideomaticServiceImporter/README.md)	
 1. [WebAPI](src/VideomaticWebAPI/README.md)	
 
 ### Tests	
@@ -185,4 +285,3 @@ You are now able to use Microsoft SQL Server Management Studio to connect to the
 ### Shared Kernel
 1. [Shared Kernel](src/SharedKernel/README.md)
 1. [Shared Kernel for EF Core](src/SharedKernel.EntityFrameworkCore/README.md)
-

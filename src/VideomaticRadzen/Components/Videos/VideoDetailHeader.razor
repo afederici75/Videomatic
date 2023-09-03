@@ -8,6 +8,7 @@
 
         <RadzenStack Orientation="Orientation.Horizontal">
             <RadzenText TextStyle="TextStyle.Overline">@(Video.Provider)</RadzenText>
+            <RadzenLink Path=@Url Text="Watch" target="_blank" />
             <RadzenText TextStyle="TextStyle.Overline">@(Video.ProviderVideoId)</RadzenText>
             <RadzenText TextStyle="TextStyle.Caption">@(Video.VideoOwnerChannelTitle ?? ""), @(Video.VideoPublishedAt)</RadzenText>
         </RadzenStack>
@@ -15,7 +16,17 @@
 </RadzenRow>
     
 @code
-{
+    {
     [Parameter]
-    public required VideoDTO Video { get; set; } 
+    public required VideoDTO Video { get; set; }
+
+    public string Url { get; private set; } = "";
+
+    protected override Task OnParametersSetAsync()
+    {
+        Url = $"https://youtube.com/watch?v=@{Video.ProviderVideoId}";
+
+        return Task.CompletedTask;
+    }
+    
 }
