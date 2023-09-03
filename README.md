@@ -70,6 +70,9 @@ Start harnessing the full potential of video content today.
 
 ## Developer Notes
 
+1. **I temporarely disabled Semantic Search in order to make the videos. It will be re-enabled soon.
+Search for GetVideosQueryHandler.cs in Infrastructure.Data.SqlServer AND Infrastructure.SemanticKernel**
+
 1. This is a work in progress.
 1. TODO.txt and DONE.txt show what's cooking and what's been done. *Q: Where should we put that stuff?*
 1. This application is used to demonstrate various software development techniques, including 		
