@@ -62,10 +62,10 @@ The following pictures show more:
 The installation of MSSQL is a bit more laborious than it should be, but I wanted to test Full Text Search
 first hand. 
 
-I think VM will have 3 search modes at the end:
+I think VM will have 4 search modes at the end:
 1. Classic SQL-like queries (SELECT ... FROM ... WHERE ...)
-1. Full Text Search (FTS): FreeText and Contains
-1. Vector Search (Cosine/etc. similarity)
+1. [Full Text Search]([url](https://learn.microsoft.com/en-us/sql/relational-databases/search/full-text-search?view=sql-server-ver16)) (FTS): FreeText and Contains
+1. [Vector Search]([url](https://www.algolia.com/blog/ai/what-is-vector-search/)) 
 1. [RAG Search (AI)](https://www.youtube.com/watch?v=poRHLfVWg7E)
 
 ### MSSQL Server 2019 with Full Text Search enabled
