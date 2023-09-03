@@ -96,6 +96,7 @@ Most of the technology hurdles have been tested (e.g. can this be done? how?) bu
 
 ![SqlServerSchema](https://github.com/afederici75/Videomatic/assets/13766049/f366655c-d71e-4e35-9bb9-652a73739c09)
 
+![SqlServerData](https://github.com/afederici75/Videomatic/assets/13766049/c3a63aec-9d77-4de6-8f81-c6967cad8a8f)
 
 
 ## Diagrams
