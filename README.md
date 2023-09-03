@@ -113,7 +113,7 @@ The following diagram shows the high level architecture of the solution.
 The following pictures show more:
 
 <div style="text-align:center;">
-	<img src="docs/Images/Diagrams/Solution Explorer.png" style="max-height: 250px" />
+	<img src="docs/Images/Diagrams/SolutionExplorerOpenFirstLevel.png" style="max-height: 250px" />
 	<img src="docs/Images/Diagrams/Tests.png" style="max-height: 250px" />
 </div>
 
