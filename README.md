@@ -88,12 +88,14 @@ Most of the technology hurdles have been tested (e.g. can this be done? how?) bu
 
 ### Vector Database
 
-![REDISAndEmbeddings](https://github.com/afederici75/Videomatic/assets/13766049/df9805a6-6a86-4707-a9d1-25670ddb50e9)
+![REDISAndEmbeddings](https://github.com/afederici75/Videomatic/assets/13766049/f436825e-b5e2-4966-9d0e-42f74e9e353e)
+
 
 
 ### RDBMS
 
-![SqlServerSchema](https://github.com/afederici75/Videomatic/assets/13766049/346053eb-6780-4dca-8d27-b336aca3a018)
+![SqlServerSchema](https://github.com/afederici75/Videomatic/assets/13766049/f366655c-d71e-4e35-9bb9-652a73739c09)
+
 
 
 ## Diagrams
