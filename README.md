@@ -25,7 +25,7 @@ shows some our R&D.*
 We opened this repository to the public because we have enough cooking to get to the point
 of true integration with AI, using Microsoft's Semantic Kernel as the bridge to the LLM world.
 
-Generally speaking, the code in this reposiroty will be kept open and it's meant to be freely usable by anyone.
+Generally speaking, the code in this repositiory will be kept open and it's meant to be freely usable by anyone.
 
 
 
