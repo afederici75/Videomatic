@@ -4,6 +4,30 @@
 	<img src="docs/Images/VideomaticDALLE.png" style="max-height: 600px" />
 </div>
 
+## A few introductory words
+This project is still in its infancy and this documentation will be updated as soon as possible.
+
+We believe we reached a good critical-point in which most (if not all) of the known problems either
+have a solution or there's a plan/idea for it.
+
+We didn't yet have enough time to write good documentation, but the diagrams below should provide a 
+lot of information for anybody familiar with Clean Architecture and CQRS.
+
+The files [DONE.txt](DONE.txt) and [TODO.txt.](TODO.txt) contain a list of items that have been completed or
+are in the works.
+
+Generally speaking, we reached the point in which true AI work can start and enough prototypes have been
+completed to get more serious with AI.
+
+*Our other repository [Semantic Kernel Winter Olympics](https://github.com/afederici75/SKWinterOlympics)
+shows some our R&D.*
+
+We opened this repository to the public because we have enough cooking to get to the point
+of true integration with AI, using Microsoft's Semantic Kernel as the bridge to the LLM world.
+
+Generally speaking, the code in this reposiroty will be kept open and it's meant to be freely usable by anyone.
+
+
 
 ## A Video Analysis Companion
 
