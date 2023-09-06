@@ -10,11 +10,14 @@ This project is still in its infancy and this documentation will be updated as s
 We believe we reached a good critical-point in which most (if not all) of the known problems either
 have a solution or there's a plan/idea for it.
 
-We didn't yet have enough time to write good documentation, but the diagrams below should provide a 
+We didn't yet have enough time to write enough documentation, but the diagrams below should provide a 
 lot of information for anybody familiar with Clean Architecture and CQRS.
 
-The files [DONE.txt](DONE.txt) and [TODO.txt.](TODO.txt) contain a list of items that have been completed or
-are in the works.
+1. *Most projects should contain a Readme.md file with more information on its purpose.** At the end of 
+this page you will find a list of all projects and an hyperlink to the right folder and readme.md file.
+1. **Some projects might contain class diagrams (*.cd)** They are the source of some of the images below.
+1. The files [DONE.txt](DONE.txt) and [TODO.txt.](TODO.txt) contain a list of items that have been completed or
+are in the works. *These items should go in Github or somewhere else...*
 
 Generally speaking, we reached the point in which true AI work can start and enough prototypes have been
 completed to get more serious with AI.
