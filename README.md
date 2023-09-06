@@ -30,7 +30,8 @@ of true integration with AI, using Microsoft's Semantic Kernel as the bridge to 
 
 Generally speaking, the code in this repositiory will be kept open and it's meant to be freely usable by anyone.
 
-
+**Ask us more about the future of Videomatic and how you can contribute.
+We have a big plan and even bigger dreams! :)**
 
 ## A Video Analysis Companion
 
