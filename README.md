@@ -16,7 +16,7 @@ lot of information for anybody familiar with Clean Architecture and CQRS.
 1. *Most projects should contain a Readme.md file with more information on its purpose.** At the end of 
 this page you will find a list of all projects and an hyperlink to the right folder and readme.md file.
 1. **Some projects might contain class diagrams (*.cd)** They are the source of some of the images below.
-1. The files [DONE.txt](DONE.txt) and [TODO.txt.](TODO.txt) contain a list of items that have been completed or
+1. The files [DONE.txt](https://github.com/afederici75/Videomatic/blob/alef/SemanticKernelWork/Done.txt) and [TODO.txt.](https://github.com/afederici75/Videomatic/blob/alef/SemanticKernelWork/TODOs.txt) contain a list of items that have been completed or
 are in the works. *These items should go in Github or somewhere else...*
 
 Generally speaking, we reached the point in which true AI work can start and enough prototypes have been
