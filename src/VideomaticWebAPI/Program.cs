@@ -41,7 +41,7 @@ app.Run();
 
 //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(QueryResponse<GetVideosResult>))]
 //static async Task<IResult> GetVideosDTOQuery(
-//    [AsParameters] GetVideosByIdQuery query,
+//    [AsParameters] CommandContract query,
 //    ISender sender)
 //{
 //    QueryResponse<GetVideosResult> resp = await sender.Send(query);

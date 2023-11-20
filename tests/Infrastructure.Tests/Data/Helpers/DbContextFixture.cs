@@ -49,35 +49,35 @@ public class DbContextFixture : IAsyncLifetime
         
         _dbSeeded = true;
 
-        DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Videos");
-        DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Playlists");
-
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
-
-
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.TagsSequenceName} RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName}  RESTART WITH 1");
-        DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
-
-
-        await _seeder.SeedAsync();
-
-        // TODO: Refactor
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Videos start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Playlists start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Transcripts start full population");
-        DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Artifacts start full population");
+        //DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Videos");
+        //DbContext.Database.ExecuteSqlRaw($"delete from {Constants.VideomaticDbSchema}.Playlists");
+        
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
+        
+        
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerTranscriptConfiguration.SequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.SequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerVideoConfiguration.TagsSequenceName} RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerPlaylistConfiguration.SequenceName}  RESTART WITH 1");
+        //DbContext.Database.ExecuteSqlRaw($"alter sequence {SqlServerArtifactConfiguration.SequenceName} RESTART WITH 1");
+        
+        
+        //await _seeder.SeedAsync();
+        
+        //// TODO: Refactor
+        //DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Videos start full population");
+        //DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Playlists start full population");
+        //DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Transcripts start full population");
+        //DbContext.Database.ExecuteSqlRaw($"alter fulltext index on {Constants.VideomaticDbSchema}.Artifacts start full population");
 
 
         // TODO: I should do what's described here: https://stackoverflow.com/questions/2727911/how-can-i-know-when-sql-full-text-index-population-is-finished
         // For now this seems to work on my machine but it makes the tests unreliable after a
         // full database rebuild.
-        await Task.Delay(2000);
+        //await Task.Delay(2000);
     }
 
     //static bool _dbMigrated = false;

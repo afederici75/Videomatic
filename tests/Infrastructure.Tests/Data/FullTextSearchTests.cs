@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Tests.Data.Helpers;
+using Newtonsoft.Json;
+using SharedKernel.Abstractions;
 
 namespace Infrastructure.Tests.Data;
 
@@ -99,5 +101,4 @@ public class FullTextSearchTests : IClassFixture<DbContextFixture>//, IAsyncLife
             res.Count.Should().Be(expectedResults);
         }
     }
-
 }

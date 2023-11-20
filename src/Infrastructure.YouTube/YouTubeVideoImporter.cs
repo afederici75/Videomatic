@@ -1,11 +1,11 @@
 ﻿using Ardalis.Result;
-using SharedKernel.Abstractions;
 using Hangfire;
+using Infrastructure.YouTube.Custom;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using SharedKernel.Abstractions;
 using System.Diagnostics;
 using System.Xml;
-using Infrastructure.YouTube.Custom;
 
 namespace Infrastructure.YouTube;
 
@@ -148,29 +148,29 @@ public class YouTubeVideoImporter : IVideoImporter
     {
         // TODO: refactor this method to be shorter and more readable
         const string LogFormat = nameof(ImportTranscriptionsAsync) + "({VideoIds}) [{Duration}]";
-        Stopwatch sw = Stopwatch.StartNew();        
-     
+        Stopwatch sw = Stopwatch.StartNew();
+
         // Gets the videos that already have a transcript
         var qry = new QueryTranscripts.ByVideoId(videoIds);
         var existingTrans = await TranscriptRepository.ListAsync(qry, cancellation);
         var videoIdsToSkip = existingTrans.Select(t => t.VideoId);
 
         var videoIdsWithoutTranscript = videoIds.Except(videoIdsToSkip).ToArray();
-        
+
         // 
-        var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIdsWithoutTranscript, cancellation);        
+        var videoIdsByProviderId = await VideoRepository.GetVideoProviderIds(videoIdsWithoutTranscript, cancellation);
         Logger.LogDebug("GetVideoProviderIds [{elapsed}ms]", sw.Elapsed);
 
-        
+
         using var client = new HttpClient();
-        
+
         var tasks = videoIdsByProviderId.Select(v => GetTimedTextInformation(client, v.Value, $"https://www.youtube.com/watch?v={v.Key}"));
         var results = await Task.WhenAll(tasks);
-        
+
         var goodResults = results.Where(r => r.IsSuccess && r.Value.TimedTextInformation.PlayerCaptionsTracklistRenderer?.CaptionTracks != null)
                                  .Select(r => r.Value)
                                  .ToArray();
-        
+
         var tasks2 = goodResults.Select(async result =>
         {
             var allTracks = result.TimedTextInformation.PlayerCaptionsTracklistRenderer.CaptionTracks;
@@ -200,7 +200,7 @@ public class YouTubeVideoImporter : IVideoImporter
                 {
                     await ArtifactProducer.CreateEncodings(v, cancellation);
                 }
-                
+
                 break;
             case false:
                 foreach (var v in videoIdsWithoutTranscript)
@@ -217,7 +217,7 @@ public class YouTubeVideoImporter : IVideoImporter
         var newTranscr = new Transcript(videoId, track.LanguageCode);
 
         var xml = await client.GetStringAsync(track.BaseUrl);
-        XmlDocument xmlDoc = new ();
+        XmlDocument xmlDoc = new();
         xmlDoc.LoadXml(xml);
 
         XmlNodeList? textNodes = xmlDoc.SelectNodes("//text"); // Select all 'text' nodes
@@ -284,8 +284,8 @@ public class YouTubeVideoImporter : IVideoImporter
             Logger.LogError(ex, LogFormat, videoId, timedTextUrl, sw.Elapsed);
 
             return Result.Error($"Error getting YouTube's TimedText information for video {videoId}@{timedTextUrl}. {ex.Message}");
-        }        
+        }
     }
-      
+
 
 }
