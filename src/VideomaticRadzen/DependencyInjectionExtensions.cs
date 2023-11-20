@@ -8,6 +8,7 @@ public static class DependencyInjectionExtensions
 {
     public static void SetupVideomaticConfiguration(this IConfigurationBuilder builder)
     {
+        // TODO: this might need to be improved
         builder.SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("logsettings.json", false, true)
                .AddJsonFile("logsettings.Development.json", true, true)
