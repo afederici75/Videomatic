@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Application.Specifications;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Tests.Data;
 
@@ -179,4 +180,6 @@ public class VideosTests : IClassFixture<DbContextFixture>
         // Checks
         res.Items.Should().HaveCount(expectedResults);        
     }
+
+    
 }
